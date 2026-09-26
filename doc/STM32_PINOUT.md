@@ -33,6 +33,20 @@ The [team Google Sheet](https://docs.google.com/spreadsheets/d/1dooWs_u2aW8KV9RO
 
 ## Encoder connections — confirmed by the team
 
+### Separate Part 3.4 LED board — user-confirmed wiring
+
+Tianyi is using another NUCLEO-F401RE while the teammate uses the motor board.
+Rear-left yellow is A2/PA4; rear-right blue is D15/PB8; front-left red is
+D10/PB6; front-right white is D13/PA5. Each has a 470-ohm resistor to GND,
+with the LED anode toward the GPIO (active high). All four connections are
+user-reported; actual light output and polarity await visual testing.
+The wheel and Pi UART link are available. This does not establish that the
+motor board has been rewired or shares this board's power arrangement.
+
+On the blinker branch PA5 is no longer a link indicator; the onboard green LED
+follows front-right. I2C1, SPI1 and board-default PA5 PWM are disabled to avoid
+pin conflicts. See [Part 3.4 instructions](PART3_4_START_HERE.md).
+
 Encoder VCC is connected to Nucleo **3V3** and encoder GND to Nucleo **GND**.
 
 | Signal | STM32 pin / connector | EXTI line for GPIO interrupts |

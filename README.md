@@ -1,5 +1,13 @@
 # Team 4 Lab 2
 
+**Branch `lab2-tianyi-blinkers`:** the root STM32 app now adds Part 3.4 blinkers
+to the existing Part 2 UART link, for Tianyi's separate LED bench. Follow
+[the complete start/test guide](doc/PART3_4_START_HERE.md). Motor/servo control
+is still absent. The existing Pi bridge works unchanged; no UART format change
+is required. See [Part 3.4 evidence](doc/PART3_4_RESULTS.md) for validation limits.
+The historical Part 2 description below remains the baseline; its link-only
+LED description is superseded on this branch by the guide above.
+
 The repository-root `pi/` and `stm32_zephyr/` directories contain Tianyi's
 Part 2 communication bring-up for a Raspberry Pi 4, NUCLEO-F401RE, and
 Logitech G920 on Windows. The team agreed to use this root layout rather

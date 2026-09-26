@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.28.0)
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+project(blinker_core_tests)
+target_sources(app PRIVATE src/main.c ../../stm32_zephyr/src/blinker_core.c)
+target_include_directories(app PRIVATE ../../stm32_zephyr/src)

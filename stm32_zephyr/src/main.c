@@ -1,4 +1,4 @@
-/* Part 2 link demonstrator. No motor, servo, or current sensor driver. */
+/* Part 2 UART link plus Part 3.4 blinkers. No motor/servo drivers. */
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/uart.h>
@@ -8,6 +8,8 @@
 #include <zephyr/sys/atomic.h>
 #include <string.h>
 #include <stdint.h>
+#include "blinker_core.h"
+#include "blinker_gpio.h"
 
 #define COMMAND_SIZE 28
 #define STATUS_SIZE 56
@@ -17,7 +19,7 @@ static const char *const state_names[] = {
 	"WAITING", "LINK_OK", "ERROR_TIMEOUT", "ERROR_BAD_INPUT", "ERROR_RX_OVERFLOW"
 };
 static const struct device *const link_uart = DEVICE_DT_GET(DT_NODELABEL(usart1));
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
+static struct blinker blink;
 struct packet { uint8_t bytes[COMMAND_SIZE]; uint32_t received_ms; };
 K_MSGQ_DEFINE(rx_queue, sizeof(struct packet), 8, 4);
 K_MUTEX_DEFINE(state_mutex);
@@ -28,6 +30,8 @@ static struct {
 	int32_t steer, throttle, brake;
 	uint32_t buttons;
 	bool ever_received;
+	enum blink_mode blink_mode;
+	bool blink_left, blink_right;
 } state = { .state = WAITING, .throttle = 32767, .brake = -32768 };
 
 static bool header_ok(const uint8_t *b)
@@ -155,9 +159,12 @@ static void console_thread(void *a, void *b, void *c)
 		uint32_t mode = state.state, seq = state.command_seq, bad = state.rejected;
 		uint32_t age = state.ever_received ? k_uptime_get_32() - state.received_ms : 0;
 		int32_t steer = state.steer, throttle = state.throttle, brake = state.brake;
+		enum blink_mode blink_mode = state.blink_mode;
+		bool left = state.blink_left, right = state.blink_right;
 		k_mutex_unlock(&state_mutex);
-		printk("STM %s seq=%u steer=%d thr=%d brk=%d age=%ums rejected=%u\n",
-		       state_names[mode], seq, steer, throttle, brake, age, bad);
+		printk("STM %s seq=%u steer=%d thr=%d brk=%d age=%ums rejected=%u blink=%s L=%u R=%u\n",
+		       state_names[mode], seq, steer, throttle, brake, age, bad,
+		       blinker_mode_name(blink_mode), left, right);
 		k_msleep(250);
 	}
 }
@@ -165,19 +172,21 @@ K_THREAD_DEFINE(console_tid, 1536, console_thread, NULL, NULL, NULL, 3, 0, 0);
 
 int main(void)
 {
-	if (!device_is_ready(link_uart) || !gpio_is_ready_dt(&led)) {
-		printk("ERROR: UART or LED unavailable\n");
+	if (!device_is_ready(link_uart)) {
+		printk("ERROR: UART unavailable\n");
 		return 1;
 	}
-	if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_INACTIVE) != 0 ||
+	if (blinker_gpio_init() != 0 ||
 	    uart_irq_callback_user_data_set(link_uart, rx_callback, NULL) != 0) {
 		printk("ERROR: device configuration failed\n");
 		return 1;
 	}
+	blinker_reset(&blink);
 	uart_irq_rx_enable(link_uart);
 	k_timer_start(&status_timer, K_MSEC(20), K_MSEC(20));
-	printk("PART2 LINK ONLY: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
-	printk("LED on=valid link; off=waiting/error. No actuators enabled.\n");
+	printk("PART3.4 BLINKERS: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
+	printk("FL=red D10, RL=yellow A2, FR=white D13, RR=blue D15\n");
+	printk("Paddles left=5 right=4; turn=8000 return=6000 raw counts; no motors/servo\n");
 	while (true) {
 		struct packet p;
 		if (k_msgq_get(&rx_queue, &p, K_MSEC(1)) == 0) {
@@ -193,9 +202,15 @@ int main(void)
 			set_error(TIMEOUT);
 		}
 		bool linked = state.state == LINK_OK;
+		struct blink_output output = blinker_step(&blink, k_uptime_get(),
+			linked, state.state != WAITING && !linked, state.buttons, state.steer);
+		state.blink_mode = blink.mode;
+		state.blink_left = output.left;
+		state.blink_right = output.right;
 		k_mutex_unlock(&state_mutex);
-		if (gpio_pin_set_dt(&led, linked) != 0) {
-			printk("ERROR: LED update failed\n");
+		if (blinker_gpio_write(output) != 0) {
+			(void)blinker_gpio_write((struct blink_output){0});
+			printk("ERROR: blinker GPIO update failed\n");
 			return 1;
 		}
 	}

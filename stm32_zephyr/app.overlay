@@ -1,4 +1,20 @@
 /* USART1 is the Pi link. USART2 remains the ST-LINK USB console. */
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+    zephyr,user {
+        front-left-gpios = <&gpiob 6 GPIO_ACTIVE_HIGH>;
+        rear-left-gpios = <&gpioa 4 GPIO_ACTIVE_HIGH>;
+        front-right-gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+        rear-right-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+/* Free PB8, PB6 and PA5 from board-default peripheral pin assignments. */
+&i2c1 { status = "disabled"; };
+&spi1 { status = "disabled"; };
+&pwm2 { status = "disabled"; };
+
 &usart1 {
     pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
     pinctrl-names = "default";

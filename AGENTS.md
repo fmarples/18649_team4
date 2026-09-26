@@ -22,7 +22,7 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 - **Agreed layout:** `pi/`, `stm32_zephyr/`, and `windows/` live at the repository root, not in lab/member subfolders. Tianyi agreed to this layout. Preserve his newer link implementation rather than restoring the old starter from Git history.
 - `pi/`: Python UDP-to-UART bridge and CRC-based protocol. Read `README.md` for run/build commands and logs. The course wheel proxy is external; `windows/` launches it.
-- `stm32_zephyr/`: Part 2 link-only application. Its overlay maps USART1 to PA9/PA10; motor, steering, encoder, blinker, and ADC integration is still pending. This is not the old full-control starter.
+- `stm32_zephyr/`: on `lab2-tianyi-blinkers`, Part 2 UART plus Part 3.4 blinkers on Tianyi's separate LED board. USART1 remains PA9/PA10. Motor, steering, encoder and ADC integration is pending. See `doc/PART3_4_START_HERE.md`; do not flash this over the teammate's motor bench by mistake. This is not the old full-control starter.
 - `bringup/encoder_test/`: independent encoder diagnostic. Both hand-turn tests passed; left raw counts decrease forward and right raw counts increase. Calibration and powered-speed checks remain pending in its README.
 - `test_protocol.py`: host protocol/bridge tests. `tests/test_windows_launcher.py`: relocated Windows launcher check. `tests/check_encoder_serial.py`: hardware telemetry check.
 - `PART4_START_HERE.md`: integration plan. `PART4_TASK_TABLE.md`: the single scheduling proposal, retaining Tianyi's more detailed plan plus the handout's data-exchange column. Timings remain unmeasured; current link-thread behavior is in `PROTOCOL.md`.

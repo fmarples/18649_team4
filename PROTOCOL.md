@@ -1,5 +1,13 @@
 # Part 2 UART link starter
 
+**Part 3.4 branch note:** `lab2-tianyi-blinkers` keeps every frame byte and
+link-state value below unchanged. The STM32 now drives four blinker LEDs:
+button 5 selects left, button 4 selects right; raw steering controls self-cancel;
+link errors select hazards. PA5 is front-right, no longer the link-status LED.
+No motor/servo driver is present. The link-only physical-output statements
+below describe the historical baseline. See `doc/PART3_4_START_HERE.md` for
+current behavior and the future vehicle-error integration contract.
+
 This is a team starter, not course-provided code or a complete vehicle controller.
 It is for the kit Raspberry Pi 4 and NUCLEO-F401RE. Do not attach actuators yet.
 

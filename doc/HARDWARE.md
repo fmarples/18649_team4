@@ -17,6 +17,13 @@ Latest L298N wiring report: the user confirmed all six control wires connected p
 
 ## Handout baseline and incomplete specifications
 
+**Separate blinker bench (Tianyi, 2026-09-26):** another NUCLEO-F401RE with
+red front-left, yellow rear-left, white front-right and blue rear-right LEDs.
+Each uses a 470-ohm resistor to GND; see the pin document. User reports all four
+wired and Pi UART/wheel available. No oscilloscope or logic analyzer currently
+available. This board's power setup is not independently confirmed and should
+not be assumed to match the motor bench's E5V arrangement.
+
 | Part | Target quantity | Intended role | Missing team-specific detail |
 |---|---:|---|---|
 | Raspberry Pi 4, microSD, official USB-C supply | 1 set | Receive laptop UDP, bridge commands/status to the MCU | RAM variant, storage size, OS/setup and current network address |
