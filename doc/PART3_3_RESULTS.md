@@ -4,6 +4,11 @@ Date: 2026-09-26. Branch `lab2-tianyi-steering`.
 Target: Tianyi's separate NUCLEO-F401RE, ST-LINK serial
 `066BFF485270535067124020`. This is not the motor teammate's board.
 
+Power inventory update: Tianyi confirms a second HW-688 converter is available.
+This resolves availability of a separate converter, not its current rating,
+output adjustment, wiring, or measured performance. The first converter remains
+the STM32's 5 V source; the second is planned for the servo's 6 V rail.
+
 ## Implemented
 
 - PB9/D14 TIM4_CH4, 20 ms period, 1 us timer ticks; zero pulse at boot.
@@ -18,7 +23,7 @@ Target: Tianyi's separate NUCLEO-F401RE, ST-LINK serial
 
 ## Not established by code or a successful flash
 
-- Actual installed servo marking and separate power supply.
+- Actual installed servo marking, second converter's measured output and current capability.
 - Safe mechanical endpoints, straight-ahead pulse, physical steering direction.
 - Recognition of the board's 3.3 V PWM logic by the actual servo.
 - PWM period/pulse accuracy, end-to-end response <=50 ms, or integrated load timing.

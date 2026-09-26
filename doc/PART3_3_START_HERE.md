@@ -37,6 +37,11 @@ a suitable 3.3-to-5 V buffer may be needed. Never apply 6 V or 12 V to D14.
 
 ## 1. Prepare power before connecting the servo
 
+**Inventory update:** you confirmed a second HW-688 is available. Use that
+second converter for the servo rail after verifying its output and suitability;
+the converter already supplying the STM32 stays at 5 V. The servo must remain
+disconnected while you adjust and measure the second converter's output.
+
 1. Leave the motor teammate's board and firmware alone. Support the chassis so
    it cannot drive away; keep its motor-power branch off for your steering test.
 2. Locate the servo's label. If it is not LD-1501MG, check its own rating first.
