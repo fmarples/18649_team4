@@ -10,16 +10,19 @@
 #include <stdint.h>
 #include "blinker_core.h"
 #include "blinker_gpio.h"
+#include "self_test.h"
 
 #define COMMAND_SIZE 28
 #define STATUS_SIZE 56
 #define LINK_TIMEOUT_MS 80U
-enum { WAITING = 0, LINK_OK, TIMEOUT, BAD_INPUT, RX_OVERFLOW };
+enum { WAITING = 0, LINK_OK, TIMEOUT, BAD_INPUT, RX_OVERFLOW, SELF_TEST };
 static const char *const state_names[] = {
-	"WAITING", "LINK_OK", "ERROR_TIMEOUT", "ERROR_BAD_INPUT", "ERROR_RX_OVERFLOW"
+	"WAITING", "LINK_OK", "ERROR_TIMEOUT", "ERROR_BAD_INPUT", "ERROR_RX_OVERFLOW", "SELF_TEST"
 };
 static const struct device *const link_uart = DEVICE_DT_GET(DT_NODELABEL(usart1));
 static struct blinker blink;
+/* Same main-thread owner as command acceptance and blinker outputs. */
+static struct self_test self_test;
 struct packet { uint8_t bytes[COMMAND_SIZE]; uint32_t received_ms; };
 K_MSGQ_DEFINE(rx_queue, sizeof(struct packet), 8, 4);
 K_MUTEX_DEFINE(state_mutex);
@@ -33,6 +36,12 @@ static struct {
 	enum blink_mode blink_mode;
 	bool blink_left, blink_right;
 } state = { .state = WAITING, .throttle = 32767, .brake = -32768 };
+
+/* Caller holds state_mutex. Keep link state separate from the manual latch. */
+static uint32_t reported_state(void)
+{
+	return state.state == LINK_OK && self_test.active ? SELF_TEST : state.state;
+}
 
 static bool header_ok(const uint8_t *b)
 {
@@ -107,6 +116,7 @@ static void accept_candidate(const struct packet *p)
 		state.received_ms = p->received_ms;
 		state.ever_received = true;
 		state.state = LINK_OK;
+		self_test_input(&self_test, k_uptime_get(), buttons);
 	}
 	/* Duplicate/old sequences while linked do not refresh the timeout. */
 	k_mutex_unlock(&state_mutex);
@@ -132,7 +142,7 @@ static void status_thread(void *a, void *b, void *c)
 		sys_put_le32(k_uptime_get_32(), frame + 8);
 		k_mutex_lock(&state_mutex, K_FOREVER);
 		sys_put_le32(state.command_seq, frame + 12);
-		sys_put_le32(state.state, frame + 16);
+		sys_put_le32(reported_state(), frame + 16);
 		sys_put_le32((uint32_t)state.steer, frame + 20);
 		sys_put_le32((uint32_t)state.throttle, frame + 24);
 		sys_put_le32((uint32_t)state.brake, frame + 28);
@@ -156,7 +166,7 @@ static void console_thread(void *a, void *b, void *c)
 	ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
 	while (true) {
 		k_mutex_lock(&state_mutex, K_FOREVER);
-		uint32_t mode = state.state, seq = state.command_seq, bad = state.rejected;
+		uint32_t mode = reported_state(), seq = state.command_seq, bad = state.rejected;
 		uint32_t age = state.ever_received ? k_uptime_get_32() - state.received_ms : 0;
 		int32_t steer = state.steer, throttle = state.throttle, brake = state.brake;
 		enum blink_mode blink_mode = state.blink_mode;
@@ -182,11 +192,14 @@ int main(void)
 		return 1;
 	}
 	blinker_reset(&blink);
+	self_test_reset(&self_test);
 	uart_irq_rx_enable(link_uart);
 	k_timer_start(&status_timer, K_MSEC(20), K_MSEC(20));
 	printk("PART3.4 BLINKERS: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
 	printk("FL=red D10, RL=yellow A2, FR=white D13, RR=blue D15\n");
 	printk("Paddles left=5 right=4; turn=8000 return=6000 raw counts; no motors/servo\n");
+	printk("A button=SELF_TEST: single press hazards; double within 400ms clears latch\n");
+	printk("Startup/link errors also select hazards. Physical motor braking not connected.\n");
 	while (true) {
 		struct packet p;
 		if (k_msgq_get(&rx_queue, &p, K_MSEC(1)) == 0) {
@@ -202,8 +215,9 @@ int main(void)
 			set_error(TIMEOUT);
 		}
 		bool linked = state.state == LINK_OK;
+		bool fault = self_test_fault(&self_test, linked);
 		struct blink_output output = blinker_step(&blink, k_uptime_get(),
-			linked, state.state != WAITING && !linked, state.buttons, state.steer);
+			linked, fault, state.buttons, state.steer);
 		state.blink_mode = blink.mode;
 		state.blink_left = output.left;
 		state.blink_right = output.right;

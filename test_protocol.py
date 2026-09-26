@@ -55,6 +55,15 @@ class ProtocolTests(unittest.TestCase):
         self.assertFalse(p.is_newer(4,5))
         self.assertTrue(p.is_newer(0,None))
 
+    def test_self_test_status_keeps_wire_layout(self):
+        body = p.STATUS.pack(b'L2',1,2,8,160,7,5,0,32767,-32768,
+                             -2147483648,-2147483648,-2147483648,0,0)
+        frame = body + struct.pack('<I',zlib.crc32(body))
+        self.assertEqual(len(frame),56)
+        status = list(p.pop_status(bytearray(frame)))[0]
+        self.assertEqual(p.STATES[status['state']], 'SELF_TEST')
+        self.assertEqual(struct.unpack_from('<I', p.command(9,0,32767,-32768,1),20)[0],1)
+
     def test_bridge_stops_refreshing_when_udp_stops(self):
         sys.modules['part2_protocol'] = p
         spec = importlib.util.spec_from_file_location('bridge', Path(__file__).parent/'pi'/'part2_bridge.py')

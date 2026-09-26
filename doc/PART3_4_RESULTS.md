@@ -2,6 +2,21 @@
 
 Date: 2026-09-26. Board: Tianyi's separate NUCLEO-F401RE LED bench.
 
+## Handout correction after the initial visual test
+
+The initial image below omitted startup hazards and the single/double-press
+self-test. These were real gaps, corrected after rereading the checkoff:
+startup/no link now selects hazards; G920 A (button 0) latches self-test on
+the first press and a double press within 400 ms clears that latch. Real link
+errors still override the clear. Motor braking remains an integration task.
+
+The corrected firmware builds (34,416 bytes flash, 9,600 bytes RAM).
+All 20 C tests pass in QEMU (12 blinkers + 8 self-test), and all 7 Python
+protocol tests pass. These changes have not yet been physically demonstrated
+by the user. The older startup-OFF capture below describes the original image,
+not the intended behavior of the correction. A later steering bench image
+will also include this correction. Timing measurements remain pending.
+
 ## User reports
 
 - All four LEDs connected: red front-left D10, yellow rear-left A2,

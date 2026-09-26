@@ -6,7 +6,7 @@ HEADER = b'L2\x01'
 COMMAND = struct.Struct('<2sBBIiiiI')
 STATUS = struct.Struct('<2sBBIIIIiiiiiiII')
 STATUS_SIZE = STATUS.size + 4
-STATES = ('WAITING', 'LINK_OK', 'ERROR_TIMEOUT', 'ERROR_BAD_INPUT', 'ERROR_RX_OVERFLOW')
+STATES = ('WAITING', 'LINK_OK', 'ERROR_TIMEOUT', 'ERROR_BAD_INPUT', 'ERROR_RX_OVERFLOW', 'SELF_TEST')
 
 
 def command(seq, steer, throttle, brake, buttons=0):

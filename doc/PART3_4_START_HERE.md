@@ -5,6 +5,12 @@ It has no motor, steering-servo, encoder or current-sensor drivers. The motor
 bench and the teammate's checkout are untouched. The final lab still combines
 the subsystems on one MCU. Do not describe this as completed integrated testing.
 
+**Correction after reviewing the full checkoff:** startup now flashes hazards;
+G920 A/button 0 single-press latches self-test hazards. Double-press A within
+400 ms to clear the manual latch (link must also be healthy). The old image
+started with LEDs off and lacked this button. Those were incomplete behaviors,
+not the final lab requirement. Physical motor braking still requires integration.
+
 ## Confirmed bench wiring
 
 User reports all four LEDs connected on a separate NUCLEO-F401RE:
@@ -99,12 +105,20 @@ Start with the steering wheel centered and both paddles released.
 10. Restart the same live bridge command. With the wheel proxy still sending,
     `LINK_OK` returns and hazards stop. Old turn selections do not resume.
     Release any held paddles and press one again to request a new turn.
+11. With LINK_OK, tap **A** once: all four hazards start immediately and remain
+    on after release, despite valid incoming wheel packets. Status is SELF_TEST.
+12. **Double-tap A** (two distinct presses within 400 ms): hazards clear if the
+    link is healthy. Holding A is one press, not a double press. A real link fault
+    cannot be cleared with this button. Existing turns are not restored.
 
-Before the first valid command after boot the LEDs stay off (WAITING).
+Before the first valid command after boot the LEDs flash hazards (WAITING).
 Timeout, rejected complete input and UART queue overflow activate hazards.
-This does not yet implement the later single/double-press self-test state
-machine or any physical motor brake. Those must feed the same fault input
-during integration.
+The self-test button is now implemented, but physical motor braking is absent.
+During integration the same fault predicate must override motor propulsion and
+command verified dynamic braking. A single press is processed immediately; the
+firmware does not wait 400 ms before entering failure. A release must be seen
+for at least 20 ms before another press is accepted. The handout lists 10 ms
+local response in its table and 100 ms at checkoff; neither has been measured.
 
 ## Optional automatic visual sequence from the Pi
 
@@ -146,7 +160,9 @@ live bridge starts. Run it only on this LED bench, not the motor integration.
   boundary. Units are raw G920 counts, not servo degrees. Adjust after testing.
 - Four GPIO writes are grouped without thread preemption; interrupts stay
   enabled. Front/rear <=1 ms skew and response <=100 ms must be measured.
-- `blinker_step(... ready, fault, buttons, steer)` accepts the integrated
+- `self_test_fault(..., link_ok)` is true on startup, link failure, or a latched
+  A-button self-test. It is the shared predicate to connect to motor braking.
+  `blinker_step(... ready, fault, buttons, steer)` accepts the integrated
   vehicle error flag in place of this app's link-error flag. Fault overrides
   buttons. First healthy input after a fault clears hazards and consumes held
   buttons so an old request is not restored.
@@ -154,7 +170,9 @@ live bridge starts. Run it only on this LED bench, not the motor integration.
   motor PWM, remap TIM2 to PB10 before re-enabling pwm2 (default PA5 conflicts).
   Continue USART1 remapping to PA9/PA10; PB6 belongs to front-left.
 - The existing UART command/status layout is unchanged. Current readings
-  remain unavailable. Status enum still reports the link, not blink mode.
+  remain unavailable. Status 5 = SELF_TEST was added; update Pi
+  `part2_protocol.py` with the SCP command above so it prints that name rather
+  than UNKNOWN. Other link errors take precedence. Status does not report blink phase.
 
 ## Build and test on Tianyi's Windows host
 

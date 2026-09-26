@@ -22,7 +22,7 @@ def main():
         time.sleep(0.3)
         uart.reset_input_buffer()
 
-        def segment(label, seconds, steer=0, buttons=0, transmit=True):
+        def segment(label, seconds, steer=0, buttons=0, transmit=True, expected_state=None):
             nonlocal seq
             print(label, flush=True)
             deadline = time.monotonic() + seconds
@@ -36,7 +36,7 @@ def main():
                     next_tx = now + 0.02
                 buffer.extend(uart.read(4096))
                 for status in pop_status(buffer):
-                    expected = 1 if transmit else 2
+                    expected = expected_state if expected_state is not None else (1 if transmit else 2)
                     observed_expected |= status['state'] == expected
                 time.sleep(0.001)
             if not observed_expected:
@@ -59,6 +59,12 @@ def main():
         segment('   All OFF.', 1)
         segment('8. Stop UART commands: ALL FOUR should flash at 2 Hz.', 3, transmit=False)
         segment('9. Restore neutral UART commands: all OFF.', 1)
+        segment('10. A single press: ALL FOUR hazards, even with a healthy link.', .15, buttons=1, expected_state=5)
+        segment('    Release A: hazards stay latched.', 1, expected_state=5)
+        segment('11. Double-press A: first press stays in hazards.', .08, buttons=1, expected_state=5)
+        segment('    Release between presses.', .08, expected_state=5)
+        segment('    Second press clears the self-test latch: all OFF.', .1, buttons=1)
+        segment('    Neutral commands: all OFF.', 1)
         print('Sequence finished. UART checks passed; record what you SAW separately.', flush=True)
         print('Exiting stops commands, so timeout HAZARDS will resume. Start the live bridge next.', flush=True)
 

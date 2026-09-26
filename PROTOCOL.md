@@ -1,9 +1,11 @@
 # Part 2 UART link starter
 
-**Part 3.4 branch note:** `lab2-tianyi-blinkers` keeps every frame byte and
-link-state value below unchanged. The STM32 now drives four blinker LEDs:
+**Part 3.4 branch note:** `lab2-tianyi-blinkers` keeps frame layouts and existing
+state values unchanged, and adds status state **5 = SELF_TEST**. The STM32 drives four blinker LEDs:
 button 5 selects left, button 4 selects right; raw steering controls self-cancel;
-link errors select hazards. PA5 is front-right, no longer the link-status LED.
+link errors and startup select hazards. A/button 0 single-press latches manual
+self-test hazards; a double press within 400 ms clears only that latch. Link
+faults still win. PA5 is front-right, no longer the link-status LED.
 No motor/servo driver is present. The link-only physical-output statements
 below describe the historical baseline. See `doc/PART3_4_START_HERE.md` for
 current behavior and the future vehicle-error integration contract.
@@ -58,7 +60,7 @@ assignment is implied. Pedals are 32767 released and -32768 fully pressed.
 | 4 | 4 | Unsigned status sequence |
 | 8 | 4 | STM32 uptime in milliseconds, wraps modulo 2^32 |
 | 12 | 4 | Last accepted command sequence |
-| 16 | 4 | Link state: 0 WAITING, 1 LINK_OK, 2 timeout, 3 bad input, 4 overflow |
+| 16 | 4 | State: 0 WAITING/startup fault, 1 LINK_OK/normal, 2 timeout, 3 bad input, 4 overflow, 5 manual SELF_TEST with healthy link |
 | 20, 24, 28 | 4 each | Current accepted/safe steering, throttle, brake values |
 | 32, 36, 40 | 4 each | Signed left-motor, right-motor, servo current in mA |
 | 44 | 4 | Current validity mask: bits 0, 1, 2 correspond to these sensors |
