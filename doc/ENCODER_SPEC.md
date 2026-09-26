@@ -47,7 +47,9 @@ using the average of the two encoder velocities. It does **not** require an
 odometer or prescribe m/s as the unit. RPM/RPS control is also an option if the
 units and mapping are documented consistently; wheel diameter is not needed for
 that option. Circumference is useful if the team chooses linear velocity in m/s.
-No velocity feature or calibration constants have been added to firmware yet.
+The standalone bench now transmits MCU-timestamped raw counts. Host diagnostics
+convert them to wheel RPM using the provisional 1320 count calibration; no
+closed-loop velocity feature or Part 2 integration has been added.
 
 ## Powered motion and motor polarity
 
@@ -67,6 +69,45 @@ are **not** counts during exactly 5 powered seconds or a calibrated speed result
 See the [motor-test record](../bringup/motor_test/README.md) for the capture,
 software motion guards, later scheduling correction and remaining limits.
 
+## Minimum tested startup duty
+
+The **simultaneous** operating-case results now take precedence. At the user's
+request, both motors were retested together at 10 kHz, wheels raised: 55% starts
+passed 3/3, 50% failed; after a 60% / 200 ms kick, 40% holds passed three 4-second
+trials, while 35% caused left no-progress cutoff and stopped both. These are
+lowest tested passing values, not exact or loaded-operation minima. See
+[Motor characterization](MOTOR_CHARACTERIZATION.md) for the per-wheel/average RPM
+table, raw capture paths, final flashed profile and automated reset authorization.
+Speed estimates use MCU-time deltas only during the late powered HOLD stage,
+excluding kick and coast-down. They use the calibration and sign corrections above.
+
+Earlier separate-wheel startup evidence follows; do not pool it with simultaneous
+repeat counts.
+
+The subsequent [startup sweep](../bringup/motor_test/README.md#startup-sweep-2026-09-27)
+tested each motor separately, forward from rest, with raised wheels, the team's
+12 V / 2 A supply, 10 kHz enable PWM and a maximum 200 ms pulse. The firmware
+retained its 150 ms no-progress guard.
+
+| Duty | Left | Right |
+|---|---|---|
+| 50% | Failed to start, 0/1 | Failed to start, 0/1 |
+| 55% | Started, 3/3 | Started, 3/3 |
+| 60% | Started, 1/1 | Started, 1/1 |
+
+**55% is the lowest tested successful kickstart duty**, not an exact or universal
+minimum. Duties 51–54% were not tested. The provisional bench kick setting is
+60% with a 200 ms cap to provide margin above the tested passing duty. These
+results do not establish the minimum duty needed to keep an already-moving
+motor running, a throttle-to-speed mapping, or reliable ground-loaded or
+simultaneous startup. Current and thermal limits remain unverified.
+
+Encoder counts establish movement here, not a calibrated powered speed. Use the
+provisional 1320 counts/wheel revolution above when converting count deltas;
+do not treat coast-down counts as motion during the commanded pulse. The sweep
+record links the persistent captures under `logs/motor-bench/`. The
+[hardware BOM](HARDWARE.md) records both the encoder calibration and startup duty.
+
 ## Product-page nominal value (does not match this bench result)
 
 Hiwonder's [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) and [Shopify product data](https://www.hiwonder.com/products/ackermann-steering-chassis.js) specify a **1:90 gear ratio** and **11 magnetic poles** for the chassis motor. The [STM32 tutorial](https://docs.hiwonder.com/projects/Ackermann-Chassis/en/latest/docs/2_STM32_Version_checked.html) says the motor shaft produces 11 pulses per revolution and the timer counts every rising and falling edge of phases A and B, giving x4 quadrature decoding. Its sample defines `MOTOR_JGB520_TICKS_PER_CIRCLE` as `3960.0f`.
@@ -83,6 +124,6 @@ The same [STM32 tutorial](https://docs.hiwonder.com/projects/Ackermann-Chassis/e
 
 ## Team status and safety
 
-The encoder-only app counts x4 on all A/B edges. Hand-turn testing confirmed that forward motion makes the left raw count decrease and the right raw count increase. Negate the left raw delta and retain the right raw delta before averaging velocities. The diagnostic firmware still prints raw counts; no velocity calibration constant has been applied to it. Geometric circumference is now calculated from the reported 75 mm diameter; loaded rolling circumference and powered-speed accuracy remain unmeasured. Using 3960 instead of 1320 would underestimate wheel speed by about a factor of three.
+The encoder-only app counts x4 on all A/B edges. Hand-turn testing confirmed that forward motion makes the left raw count decrease and the right raw count increase. Negate the left raw delta and retain the right raw delta before averaging velocities. The diagnostic firmware prints raw counts and MCU timestamps; the host holding-test script applies the provisional 1320 counts/rev calibration. No closed-loop speed control has been implemented. Geometric circumference is now calculated from the reported 75 mm diameter; loaded rolling circumference and powered-speed accuracy remain unmeasured. Using 3960 instead of 1320 would underestimate wheel speed by about a factor of three.
 
 The [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) specifies **3.2 A stall current**. This exceeds the team's earlier **2 A per channel** L298N concern. Avoid a powered stall test until the driver and thermal limits have been evaluated.

@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include "bench_control.h"
 
+#ifndef EXPECTED_DUTY
+#define EXPECTED_DUTY 60
+#endif
+
 static void expect_output(struct bench_control *control, int64_t now,
                           unsigned left, unsigned right)
 {
@@ -19,17 +23,17 @@ static void test_both_deadline(void)
     assert(bench_command(&control, "ARM", 1000));
     expect_output(&control, 1001, 0, 0);
     assert(bench_command(&control, "BOTH", 1100));
-    expect_output(&control, 1100, 100, 100);
+    expect_output(&control, 1100, EXPECTED_DUTY, EXPECTED_DUTY);
     /* Independent simulated input: both encoders advance forward every 50 ms. */
-    for (int64_t now = 1150; now < 6100; now += 50) {
+    for (int64_t now = 1150; now < 1300; now += 50) {
         bench_encoder_update(&control, -(int32_t)(now - 1100),
                              (int32_t)(now - 1100), now);
-        expect_output(&control, now, 100, 100);
+        expect_output(&control, now, EXPECTED_DUTY, EXPECTED_DUTY);
     }
-    expect_output(&control, 6099, 100, 100);
-    expect_output(&control, 6100, 0, 0);
-    assert(!bench_command(&control, "BOTH", 6101));
-    puts("PASS: explicit BOTH command enables both for 5000 ms, then disarms");
+    expect_output(&control, 1299, EXPECTED_DUTY, EXPECTED_DUTY);
+    expect_output(&control, 1300, 0, 0);
+    assert(!bench_command(&control, "BOTH", 1301));
+    puts("PASS: explicit BOTH command enables both for 200 ms, then disarms");
 }
 
 static void test_commands(void)
@@ -38,12 +42,12 @@ static void test_commands(void)
     bench_init(&control);
     assert(bench_command(&control, "ARM", 1000));
     assert(bench_command(&control, "LEFT", 1100));
-    expect_output(&control, 1100, 100, 0);
+    expect_output(&control, 1100, EXPECTED_DUTY, 0);
     assert(bench_command(&control, "STOP", 1101));
     expect_output(&control, 1101, 0, 0);
     assert(bench_command(&control, "ARM", 1200));
     assert(bench_command(&control, "RIGHT", 1201));
-    expect_output(&control, 1201, 0, 100);
+    expect_output(&control, 1201, 0, EXPECTED_DUTY);
     assert(!bench_command(&control, "BOTH", 1202)); /* no switching/retrigger */
     expect_output(&control, 1202, 0, 0);
     assert(bench_command(&control, "ARM", 1300));
@@ -64,7 +68,7 @@ static void test_stall_cutoff(void)
     bench_init(&control);
     assert(bench_command(&control, "ARM", 1000));
     assert(bench_command(&control, "BOTH", 1100));
-    expect_output(&control, 1249, 100, 100);
+    expect_output(&control, 1249, EXPECTED_DUTY, EXPECTED_DUTY);
     expect_output(&control, 1250, 0, 0); /* neither encoder has progressed */
     assert(!bench_command(&control, "ARM", 1251));
     assert(bench_command(&control, "STOP", 1252));
@@ -99,9 +103,9 @@ static void test_independent_wheel_guards(void)
     bench_encoder_update(&control, -100, 200, 900); /* nonzero boot/baseline counts */
     assert(bench_command(&control, "ARM", 1000));
     assert(bench_command(&control, "BOTH", 1100));
-    bench_encoder_update(&control, -104, 204, 1200);
-    expect_output(&control, 1349, 100, 100);
-    expect_output(&control, 1350, 0, 0);
+    bench_encoder_update(&control, -104, 204, 1140);
+    expect_output(&control, 1289, EXPECTED_DUTY, EXPECTED_DUTY);
+    expect_output(&control, 1290, 0, 0);
 
     bench_init(&control);
     assert(bench_command(&control, "ARM", 1000));
@@ -113,8 +117,96 @@ static void test_independent_wheel_guards(void)
     puts("PASS: either wheel stalls/reverses => BOTH off; per-wheel baselines and progress threshold");
 }
 
+/* HOLD commands preserve the kick, then hold one wheel with the same guards. */
+static void test_kick_then_hold(void)
+{
+#ifndef EXPECTED_HOLD
+#define EXPECTED_HOLD 55
+#endif
+#ifndef EXPECTED_HOLD_MS
+#define EXPECTED_HOLD_MS 2000
+#endif
+    const int64_t deadline = 1300 + EXPECTED_HOLD_MS;
+    const char *commands[] = {"HOLDLEFT", "HOLDRIGHT"};
+    for (unsigned wheel = 0; wheel < 2; ++wheel) {
+        struct bench_control control;
+        bench_init(&control);
+        assert(!bench_command(&control, commands[wheel], 0));
+        assert(bench_command(&control, "ARM", 1000));
+        assert(bench_command(&control, commands[wheel], 1100));
+        expect_output(&control, 1100, wheel == 0 ? 60 : 0, wheel == 1 ? 60 : 0);
+        for (int64_t now = 1150; now < deadline; now += 50) {
+            bench_encoder_update(&control, wheel == 0 ? -(int32_t)now : 0,
+                                 wheel == 1 ? (int32_t)now : 0, now);
+            unsigned duty = now < 1300 ? 60 : EXPECTED_HOLD;
+            expect_output(&control, now, wheel == 0 ? duty : 0, wheel == 1 ? duty : 0);
+        }
+        expect_output(&control, deadline - 1, wheel == 0 ? EXPECTED_HOLD : 0,
+                      wheel == 1 ? EXPECTED_HOLD : 0);
+        expect_output(&control, deadline, 0, 0);
+        assert(!bench_command(&control, commands[wheel], deadline + 1));
+
+        bench_init(&control);
+        assert(bench_command(&control, "ARM", 0));
+        assert(bench_command(&control, commands[wheel], 0));
+        bench_encoder_update(&control, wheel == 0 ? -10 : 0,
+                             wheel == 1 ? 10 : 0, 100);
+        expect_output(&control, 249, wheel == 0 ? EXPECTED_HOLD : 0,
+                      wheel == 1 ? EXPECTED_HOLD : 0);
+        expect_output(&control, 250, 0, 0); /* Transition does not reset progress timer. */
+        assert(control.fault == (wheel == 0 ? BENCH_LEFT_STALL : BENCH_RIGHT_STALL));
+        assert(!bench_command(&control, "ARM", 251));
+    }
+    struct bench_control control;
+    bench_init(&control);
+    assert(bench_command(&control, "ARM", 0));
+    assert(!bench_command(&control, "HOLDBOTH 40", 1));
+    expect_output(&control, 1, 0, 0);
+    assert(bench_command(&control, "ARM", 2));
+    assert(bench_command(&control, "HOLDLEFT", 3));
+    assert(bench_command(&control, "STOP", 4));
+    expect_output(&control, 4, 0, 0);
+    assert(bench_command(&control, "ARM", 5));
+    assert(bench_command(&control, "HOLDLEFT", 6));
+    assert(!bench_command(&control, "HOLDRIGHT", 7));
+    expect_output(&control, 7, 0, 0);
+    puts("PASS: isolated 60%/200ms kick + fixed-duty/bounded hold; cutoff/STOP/retrigger");
+}
+
+/* Both wheels get the same stage duty; either wheel's guard disables both. */
+static void test_hold_both(void)
+{
+    struct bench_control control;
+    bench_init(&control);
+    assert(!bench_command(&control, "HOLDBOTH", 0));
+    assert(bench_command(&control, "ARM", 0));
+    assert(bench_command(&control, "HOLDBOTH", 100));
+    expect_output(&control, 100, 60, 60);
+    for (int64_t now = 150; now < 300 + EXPECTED_HOLD_MS; now += 50) {
+        bench_encoder_update(&control, -(int32_t)now, (int32_t)now, now);
+        unsigned duty = now < 300 ? 60 : EXPECTED_HOLD;
+        expect_output(&control, now, duty, duty);
+    }
+    expect_output(&control, 300 + EXPECTED_HOLD_MS, 0, 0);
+    for (unsigned wheel = 0; wheel < 2; ++wheel) {
+        bench_init(&control);
+        assert(bench_command(&control, "ARM", 0));
+        assert(bench_command(&control, "HOLDBOTH", 0));
+        bench_encoder_update(&control, -10, 10, 100);
+        bench_encoder_update(&control, wheel == 0 ? -10 : -20,
+                             wheel == 1 ? 10 : 20, 200);
+        expect_output(&control, 249, EXPECTED_HOLD, EXPECTED_HOLD);
+        expect_output(&control, 250, 0, 0);
+        assert(control.fault == (wheel == 0 ? BENCH_LEFT_STALL : BENCH_RIGHT_STALL));
+        assert(!bench_command(&control, "ARM", 251));
+    }
+    puts("PASS: HOLDBOTH stage transition, deadline and either-wheel cutoff");
+}
+
 int main(void)
 {
+    test_hold_both();
+    test_kick_then_hold();
     test_stall_cutoff();
     test_independent_wheel_guards();
     test_both_deadline();

@@ -127,6 +127,7 @@ int bench_encoders_read(struct bench_encoder_sample *sample)
 {
     sample->errors = 0;
     k_spinlock_key_t key = k_spin_lock(&counter_lock);
+    sample->time_ms = k_uptime_get();
     for (size_t i = 0; i < ARRAY_SIZE(encoders); ++i) {
         sample->ab[i] = read_ab(&encoders[i]);
         if (sample->ab[i] < 0) { encoders[i].errors++; }

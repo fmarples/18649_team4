@@ -7,6 +7,7 @@
  * Hand-turn calibration: vehicle-forward decreases left, increases right.
  * This module observes movement only; it does not provide stall protection. */
 struct bench_encoder_sample {
+    int64_t time_ms;
     int32_t counts[2];
     uint32_t invalid[2];
     uint32_t errors;

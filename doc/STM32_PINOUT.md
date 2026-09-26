@@ -103,6 +103,16 @@ The user confirmed **ENA and ENB jumpers removed** before the motor-test flash. 
 
 The standalone [`bringup/motor_test`](../bringup/motor_test/README.md) firmware has been compiled/flashed and reports zero duty with all six MCU control-pin inputs reading low. Separate 20%-duty, nominal 500 ms left/right commands subsequently returned to disabled without firmware faults, but the user reports **neither wheel moved and a beep was heard**. A subsequent 35% trial also produced only a beep and no wheel movement. A left-only 50% trial also failed to start the wheel. Subsequently, the user confirmed wheel movement from a single LEFT-command **100% / nominal 200 ms** kick. Subsequent encoder-observed 100% / 200 ms kicks verified the channel identities: **IN1=1/IN2=0 moves the left wheel backward** (raw left count increases; also visually confirmed), and **IN3=1/IN4=0 moves the right wheel forward** (raw right count increases). The other encoder remained unchanged in each test, with no reported invalid transitions or GPIO errors. Left-forward therefore uses **IN1=0/IN2=1**, and right-forward uses **IN3=1/IN4=0**. Both forward settings were subsequently verified together in one user-requested 100% / nominal 5-second trial: left counts decreased, right counts increased, with no reported invalid transitions, GPIO errors or firmware faults. Outputs automatically returned to IN=0000/EN=00; wheels coasted afterward. Current diagnostic firmware includes a per-wheel no-progress/reversal guard, not current limiting. A post-trial console/control-priority correction was flashed and checked idle only. PWM waveform, exact physical stop timing, long-term/ground-loaded operation and current limits remain unverified. The Part 2 link application is unchanged and does not include this motor implementation.
 
+The 2026-09-27 startup sweep kept these pins and forward polarities unchanged.
+At 10 kHz, separate 200 ms forward starts failed at 50% on each motor, passed
+3/3 at 55% on each, and passed 1/1 at 60% on each. The user subsequently required
+both motors together. The simultaneous batch confirmed 55% startup 3/3 and 40%
+four-second holding 3/3 after a 60% kick; 50% startup and 35% holding failed.
+Current flashed limits are 60% / 200 ms startup, or a separate 60% / 200 ms kick
+then 55% / maximum 4000 ms hold, with the same per-wheel motion guard. This
+supersedes the five-second profile above. No pins or wiring changed; see the
+[measurement record](MOTOR_CHARACTERIZATION.md).
+
 Use a common ground between the Nucleo, encoders, and motor driver. The team confirmed changing to **converter-fed E5V, JP5 on E5V, JP1 open**, with USB for flashing/debugging connected after external power is on. For initial software/encoder bring-up, disconnect the L298N's 12 V motor-power feed separately while keeping the converter branch available to power the Nucleo. Disconnect supplies before changing wiring. See [the team BOM and power setup](HARDWARE.md#current-power-setup) for details and verification limits.
 
 ## Issues to resolve before firmware integration

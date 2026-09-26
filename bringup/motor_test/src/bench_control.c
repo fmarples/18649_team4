@@ -11,6 +11,8 @@ static void disarm(struct bench_control *control)
 {
     control->phase = BENCH_IDLE;
     control->deadline_ms = 0;
+    control->hold_test = false;
+    control->hold_at_ms = 0;
 }
 
 static void trip(struct bench_control *control, enum bench_fault fault)
@@ -36,9 +38,12 @@ struct bench_output bench_tick(struct bench_control *control, int64_t now_ms)
             break;
         }
     }
+    unsigned duty = control->hold_test ?
+        (now_ms < control->hold_at_ms ? BENCH_KICK_PERCENT : BENCH_HOLD_PERCENT) :
+        BENCH_DUTY_PERCENT;
     return (struct bench_output){
-        .left_percent = powered(control, 0) ? BENCH_DUTY_PERCENT : 0U,
-        .right_percent = powered(control, 1) ? BENCH_DUTY_PERCENT : 0U,
+        .left_percent = powered(control, 0) ? duty : 0U,
+        .right_percent = powered(control, 1) ? duty : 0U,
     };
 }
 
@@ -80,12 +85,17 @@ bool bench_command(struct bench_control *control, const char *command, int64_t n
         control->deadline_ms = now_ms + 5000;
         return true;
     }
+    bool hold_left = strcmp(command, "HOLDLEFT") == 0;
+    bool hold_right = strcmp(command, "HOLDRIGHT") == 0;
+    bool hold_both = strcmp(command, "HOLDBOTH") == 0;
     if (control->phase == BENCH_ARMED &&
         (strcmp(command, "LEFT") == 0 || strcmp(command, "RIGHT") == 0 ||
-         strcmp(command, "BOTH") == 0)) {
-        control->phase = strcmp(command, "LEFT") == 0 ? BENCH_LEFT :
-                         strcmp(command, "RIGHT") == 0 ? BENCH_RIGHT : BENCH_BOTH;
-        control->deadline_ms = now_ms + BENCH_PULSE_MS;
+         strcmp(command, "BOTH") == 0 || hold_left || hold_right || hold_both)) {
+        control->phase = (strcmp(command, "LEFT") == 0 || hold_left) ? BENCH_LEFT :
+                         (strcmp(command, "RIGHT") == 0 || hold_right) ? BENCH_RIGHT : BENCH_BOTH;
+        control->hold_test = hold_left || hold_right || hold_both;
+        control->hold_at_ms = now_ms + BENCH_PULSE_MS;
+        control->deadline_ms = control->hold_at_ms + (control->hold_test ? BENCH_HOLD_MS : 0);
         for (unsigned i = 0; i < 2; ++i) {
             control->anchors[i] = control->counts[i];
             control->progress_ms[i] = now_ms;

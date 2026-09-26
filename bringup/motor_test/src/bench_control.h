@@ -5,8 +5,24 @@
 #include <stdint.h>
 
 /* Explicitly armed forward trial; changing limits requires rebuild/reflash. */
-#define BENCH_DUTY_PERCENT 100U
-#define BENCH_PULSE_MS 5000
+#ifndef BENCH_DUTY_PERCENT
+#define BENCH_DUTY_PERCENT 60U
+#endif
+_Static_assert(BENCH_DUTY_PERCENT >= 1 && BENCH_DUTY_PERCENT <= 100,
+               "Bench duty must be 1..100 percent");
+#define BENCH_PULSE_MS 200
+/* Hold commands always start with a 60% kick; each enabled wheel is guarded. */
+#define BENCH_KICK_PERCENT 60U
+#ifndef BENCH_HOLD_MS
+#define BENCH_HOLD_MS 2000
+#endif
+_Static_assert(BENCH_HOLD_MS == 2000 || BENCH_HOLD_MS == 4000,
+               "Hold duration must be 2000 or 4000 ms");
+#ifndef BENCH_HOLD_PERCENT
+#define BENCH_HOLD_PERCENT 55U
+#endif
+_Static_assert(BENCH_HOLD_PERCENT >= 1 && BENCH_HOLD_PERCENT <= 60,
+               "Hold duty must be 1..60 percent");
 #define BENCH_STALL_MS 150
 #define BENCH_PROGRESS_COUNTS 4
 
@@ -20,6 +36,8 @@ struct bench_control {
     enum bench_phase phase;
     enum bench_fault fault;
     int64_t deadline_ms;
+    bool hold_test;
+    int64_t hold_at_ms;
     int32_t counts[2];
     int32_t anchors[2];
     int64_t progress_ms[2];

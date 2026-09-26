@@ -38,8 +38,15 @@ static atomic_t hardware_fault;
 static atomic_t accepted;
 static atomic_t rejected;
 static struct k_spinlock snapshot_lock;
-static enum bench_phase reported_phase;
-static struct bench_output reported_output;
+enum sample_stage { SAMPLE_OFF, SAMPLE_PULSE, SAMPLE_KICK, SAMPLE_HOLD };
+static const char *const phase_names[] = {"IDLE", "ARMED", "LEFT", "RIGHT", "BOTH"};
+static struct {
+    enum bench_phase phase;
+    enum sample_stage stage;
+    struct bench_output output;
+    struct bench_encoder_sample encoder;
+    int fault;
+} reported;
 
 /* F401 USART has no deep RX FIFO: sleeping/polling loses a burst at 115200.
  * Capture every byte in the ISR; parse and print only from the main thread. */
@@ -148,14 +155,13 @@ static void control_thread(void *a, void *b, void *c)
         }
         struct command cmd;
         int64_t now = k_uptime_get();
-        if (!atomic_get(&hardware_fault)) {
-            struct bench_encoder_sample sample;
-            int ret = bench_encoders_read(&sample);
-            if (ret < 0 || sample.invalid[0] || sample.invalid[1]) {
-                atomic_cas(&hardware_fault, 0, ret < 0 ? ret : -EILSEQ);
-            } else {
-                bench_encoder_update(&control, sample.counts[0], sample.counts[1], now);
-            }
+        /* Keep observing coast-down even when a motion fault is latched. */
+        struct bench_encoder_sample sample;
+        int read_ret = bench_encoders_read(&sample);
+        if (read_ret < 0 || sample.invalid[0] || sample.invalid[1]) {
+            atomic_cas(&hardware_fault, 0, read_ret < 0 ? read_ret : -EILSEQ);
+        } else if (!atomic_get(&hardware_fault)) {
+            bench_encoder_update(&control, sample.counts[0], sample.counts[1], now);
         }
         if (k_msgq_get(&commands, &cmd, K_NO_WAIT) == 0) {
             if (atomic_get(&hardware_fault) || now - cmd.received_ms > 250 ||
@@ -166,7 +172,8 @@ static void control_thread(void *a, void *b, void *c)
                 atomic_inc(&accepted);
             }
         }
-        struct bench_output output = bench_tick(&control, k_uptime_get());
+        int64_t tick_ms = k_uptime_get();
+        struct bench_output output = bench_tick(&control, tick_ms);
         if (control.fault != BENCH_OK) {
             atomic_cas(&hardware_fault, 0, control.fault);
         }
@@ -186,8 +193,13 @@ static void control_thread(void *a, void *b, void *c)
             applied = output;
         }
         k_spinlock_key_t key = k_spin_lock(&snapshot_lock);
-        reported_phase = control.phase;
-        reported_output = applied;
+        reported.phase = control.phase;
+        reported.output = applied;
+        reported.encoder = sample;
+        reported.fault = atomic_get(&hardware_fault);
+        reported.stage = !(applied.left_percent || applied.right_percent) ? SAMPLE_OFF :
+            !control.hold_test ? SAMPLE_PULSE :
+            tick_ms < control.hold_at_ms ? SAMPLE_KICK : SAMPLE_HOLD;
         k_spin_unlock(&snapshot_lock, key);
         /* This high-priority thread never logs or waits on console input. */
         k_msleep(1);
@@ -198,10 +210,9 @@ K_THREAD_DEFINE(control_tid, 2048, control_thread, NULL, NULL, NULL,
 
 static void status_print(void)
 {
-    static const char *const names[] = {"IDLE", "ARMED", "LEFT", "RIGHT", "BOTH"};
     k_spinlock_key_t key = k_spin_lock(&snapshot_lock);
-    struct bench_output output = reported_output;
-    enum bench_phase phase = reported_phase;
+    struct bench_output output = reported.output;
+    enum bench_phase phase = reported.phase;
     k_spin_unlock(&snapshot_lock, key);
     int pins[6];
     for (size_t i = 0; i < ARRAY_SIZE(directions); ++i) {
@@ -216,7 +227,7 @@ static void status_print(void)
         }
     }
     printk("MOTOR phase=%s left=%u right=%u in=%d%d%d%d en=%d%d "
-           "fault=%ld accepted=%ld rejected=%ld\n", names[phase],
+           "fault=%ld accepted=%ld rejected=%ld\n", phase_names[phase],
            output.left_percent, output.right_percent,
            pins[0], pins[1], pins[2], pins[3], pins[4], pins[5],
            (long)atomic_get(&hardware_fault), (long)atomic_get(&accepted),
@@ -238,6 +249,36 @@ static void encoder_print(void)
            (sample.ab[1] >> 1) & 1, sample.ab[1] & 1,
            (unsigned)sample.invalid[0], (unsigned)sample.invalid[1],
            (unsigned)sample.errors);
+}
+
+/* A coherent control snapshot supplies MCU time, applied duty and raw counts.
+ * No printing or host timestamps enter the high-priority cutoff loop. */
+static void sample_print(void)
+{
+    static const char *const stages[] = {"OFF", "PULSE", "KICK", "HOLD"};
+    k_spinlock_key_t key = k_spin_lock(&snapshot_lock);
+    struct bench_encoder_sample encoder = reported.encoder;
+    struct bench_output output = reported.output;
+    enum bench_phase phase = reported.phase;
+    enum sample_stage stage = reported.stage;
+    int fault = reported.fault;
+    k_spin_unlock(&snapshot_lock, key);
+    printk("SAMPLE t_ms=%lld stage=%s phase=%s left_pct=%u right_pct=%u "
+           "left=%ld right=%ld invalid_left=%u invalid_right=%u errors=%u fault=%d\n",
+           (long long)encoder.time_ms, stages[stage], phase_names[phase],
+           output.left_percent, output.right_percent,
+           (long)encoder.counts[0], (long)encoder.counts[1],
+           (unsigned)encoder.invalid[0], (unsigned)encoder.invalid[1],
+           (unsigned)encoder.errors, fault);
+}
+
+/* Report the compiled limits at boot and on STATUS before a host arms a test. */
+static void profile_print(void)
+{
+    printk("MOTOR BENCH: idle at boot; 10kHz; one-shot %u%% / %dms.\n",
+           BENCH_DUTY_PERCENT, BENCH_PULSE_MS);
+    printk("HOLD BENCH: 10kHz; kick=%u%%/%dms hold=%u%%/%dms; LEFT/RIGHT/BOTH.\n",
+           BENCH_KICK_PERCENT, BENCH_PULSE_MS, BENCH_HOLD_PERCENT, BENCH_HOLD_MS);
 }
 
 int main(void)
@@ -262,12 +303,11 @@ int main(void)
     }
     uart_irq_rx_enable(console);
     k_thread_start(control_tid);
-    printk("MOTOR BENCH: idle at boot; 10kHz; one-shot %u%% / %dms.\n",
-           BENCH_DUTY_PERCENT, BENCH_PULSE_MS);
-    printk("FORWARD TRIAL: max 5s; per-wheel 150ms motion cutoff; no automatic repeat.\n");
+    profile_print();
+    printk("FORWARD TRIAL: max 200ms; per-wheel 150ms motion cutoff; no automatic repeat.\n");
     printk("SCHED control=%d console=%d (lower number runs first).\n",
            CONTROL_PRIORITY, CONFIG_MAIN_THREAD_PRIORITY);
-    printk("Commands: STATUS, STOP, ARM then LEFT, RIGHT or BOTH within 5s.\n");
+    printk("Commands: STATUS, STOP, ARM then LEFT/RIGHT/BOTH or HOLDLEFT/HOLDRIGHT/HOLDBOTH within 5s.\n");
     printk("Forward bridge polarity: LEFT IN=01; RIGHT IN=10.\n");
     printk("Faults: 1=left-stall 2=right-stall 3=left-reversed 4=right-reversed; negative=HAL/encoder.\n");
     printk("ENCODERS: raw x4 counts; calibrated forward signs left=-1 right=+1.\n");
@@ -303,7 +343,9 @@ int main(void)
                     line[used] = '\0';
                     if (strcmp(line, "STOP") == 0) {
                         atomic_set(&stop_requested, 1);
-                    } else if (strcmp(line, "STATUS") != 0) {
+                    } else if (strcmp(line, "STATUS") == 0) {
+                        profile_print();
+                    } else {
                         struct command cmd = {.received_ms = k_uptime_get()};
                         memcpy(cmd.text, line, used + 1);
                         if (k_msgq_put(&commands, &cmd, K_NO_WAIT) != 0) {
@@ -328,6 +370,7 @@ int main(void)
         if (now >= next_report) {
             status_print();
             encoder_print();
+            sample_print();
             /* Observe motion without delaying the priority-2 control thread. */
             next_report = now + 50;
         }

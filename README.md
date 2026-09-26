@@ -31,6 +31,12 @@ the complete frame layout and timing policy.
 - `test_protocol.py` contains the host protocol/bridge tests.
 - `bringup/encoder_test/` is the separate encoder diagnostic, not integrated
   into the link firmware. See its [instructions and results](bringup/encoder_test/README.md).
+- [Encoder calibration](doc/ENCODER_SPEC.md) records the provisional 1320
+  counts/wheel revolution at x4. [Simultaneous motor measurements](doc/MOTOR_CHARACTERIZATION.md)
+  record 55% lowest tested startup and 40% lowest tested four-second holding duty
+  after a 60% kick, with both motors together. See the
+  [one-command sweep](bringup/motor_test/README.md#one-command-simultaneous-sweep)
+  for guarded operation, logs and the unvalidated electrical/loaded limits.
 - [Hardware BOM and power](doc/HARDWARE.md), [pin assignments](doc/STM32_PINOUT.md),
   and the [Lab 2 handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf)
   describe the hardware and requirements.

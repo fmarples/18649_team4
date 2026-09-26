@@ -1,11 +1,13 @@
 # L298N motor bench test — NUCLEO-F401RE
 
-> **CURRENT SOURCE AND FLASHED FIRMWARE: forward-only, 100%, maximum 5 seconds.**
-> ARM then LEFT, RIGHT or BOTH. A per-wheel 150 ms no-progress cutoff, reverse
-> motion check, and encoder-error checks stop BOTH outputs and latch a fault.
-> ONE simultaneous 5-second forward trial passed; both outputs returned to idle.
-> A subsequent scheduling-priority correction was flashed and idle-checked only;
-> the motor trial was not repeated. Bench firmware, not a closed-loop controller.
+> **CURRENT FLASHED PROFILE: startup 60% / 200 ms; kick/hold 60% / 200 ms then
+> 55% / maximum 4000 ms.** Forward only, fixed per build, no boot actuation.
+> ARM then BOTH for startup, or HOLDBOTH for the two-stage trial. Either wheel's
+> 150 ms no-progress/reversal guard stops both and latches a fault.
+> The user now requires both motors together. Simultaneous startup passed 3/3 at
+> 55% and failed at 50%; simultaneous 4-second holding passed 3/3 at 40% and failed
+> at 35%. Final reflash was idle-checked only; both outputs disabled and stationary.
+> See [measurements and limits](../../doc/MOTOR_CHARACTERIZATION.md). No velocity controller.
 
 Standalone Zephyr bring-up firmware. **No automatic drive command on boot.** It is separate
 from the Part 2 link app and replaces the encoder diagnostic when flashed.
@@ -41,12 +43,14 @@ ASCII, uppercase, newline-terminated, through **ST-LINK console**, not Pi UART:
 
 | Command | Action |
 |---|---|
-| `STATUS` | No actuation; status is already reported periodically. |
+| `STATUS` | Report both compiled profiles, stage durations and 10 kHz PWM; no actuation. |
 | `STOP` | Disarm, purge pending commands, disable both PWM outputs. |
 | `ARM` | Arm one test for 5 seconds; outputs remain disabled. |
-| `LEFT` | Only after ARM: left forward at 100%, maximum 5000 ms. |
-| `RIGHT` | Only after ARM: right forward at 100%, maximum 5000 ms. |
-| `BOTH` | Only after ARM: both forward at 100%, maximum 5000 ms. |
+| `LEFT` | Only after ARM: left forward at compiled duty, maximum 200 ms. |
+| `RIGHT` | Only after ARM: right forward at compiled duty, maximum 200 ms. |
+| `BOTH` | Only after ARM: both forward at compiled startup duty, maximum 200 ms. |
+| `HOLDBOTH` | Only after ARM: both forward at 60% for 200 ms, then compiled holding duty for its bounded duration. |
+| `HOLDLEFT` / `HOLDRIGHT` | Same two-stage profile on one wheel; retained for diagnostics, not the agreed measurement case. |
 
 A start consumes the arm. Duplicate/retrigger/invalid commands stop and disarm;
 there is no arbitrary-duty or continuous-run command. Each pulse must be armed
@@ -74,14 +78,16 @@ complete lines. Malformed/overlong serial input, RX/command queue overflow,
 UART receive errors, stale queued commands, and partial-line timeout request a stop. HAL errors latch a fault and attempt to
 reclaim the enable pins as GPIO-low; operation does not resume until reboot.
 
-The current source's 5000 ms limit is a software deadline plus scheduling/driver
-latency, **not a scope-measured guarantee**. It is not protection against a
+The startup 200 ms cap and holding-stage cap are software deadlines plus
+scheduling/driver latency, **not scope-measured guarantees**. It is not protection against a
 CPU/kernel hang, shorted driver, or overcurrent. No independent hardware cutoff/
 current limit is implemented. Neither 20% nor 35% moved either wheel; a
 50% / 500 ms left trial also failed. The subsequent unloaded 100% / 3000 ms
 measurement produced 12 V. That unloaded image was replaced before resuming
 connected-motor testing: first 50% / 1000 ms, then separate 100% / 200 ms kicks,
 then the user-requested guarded simultaneous forward trial at 100% / 5000 ms.
+The subsequent startup sweep replaced that profile with a 200 ms cap, retaining
+the motion guard and changing only the compiled duty between trials.
 
 ## Build and flash
 
@@ -89,13 +95,158 @@ Use the environment in [encoder bring-up](../encoder_test/README.md). From the
 Zephyr workspace with its virtualenv on PATH:
 
 ```powershell
-west build -b nucleo_f401re -d C:\Users\13982\18649_team4\build\motor-test C:\Users\13982\18649_team4\bringup\motor_test -o=-j4
+west build -b nucleo_f401re -d C:\Users\13982\18649_team4\build\motor-test C:\Users\13982\18649_team4\bringup\motor_test -o=-j4 -- -DMOTOR_TEST_DUTY=60 -DMOTOR_HOLD_DUTY=55 -DMOTOR_HOLD_MS=4000
 ```
 
+`MOTOR_TEST_DUTY` accepts integers 1 through 100 and defaults to 60. Pass it
+explicitly: CMake retains the previous value in an existing build directory.
+The startup pulse limit stays 200 ms for every duty. `MOTOR_HOLD_DUTY` accepts
+1–60 and defaults to 55; `MOTOR_HOLD_MS` accepts only 2000 or 4000 and defaults
+to 2000 in a fresh build. The current flashed image and batch runner explicitly
+select 4000. HOLD commands always kick at 60%, independently of the startup-test
+duty. Each profile change requires rebuild/reflash. No serial command changes duty.
 `build/` is gitignored. Rediscover the board drive and COM port before use. On
 this host they were `D:` (`NOD_F401RE`) and `COM4` for the recorded flash. Copy
 `build/motor-test/zephyr/zephyr.bin` to the board drive as `motor.bin`, check for
 `FAIL.TXT`, then verify runtime over serial. Copy success alone is insufficient.
+
+## One-command simultaneous sweep
+
+**This physically drives both motors.** Rediscover COM port and board drive,
+confirm raised wheels/common ground/power, and retain access to the motor-power
+cutoff. The shared 12 V / 2 A adapter has not been qualified for motor current.
+Never run a powered sweep as part of a general test or commit workflow.
+
+On this Windows host, from the repo root, with an external 900-second timeout:
+
+```text
+C:\Users\13982\zephyrproject\.venv\Scripts\python.exe tests/run_motor_sweep.py --port COM4 --drive D --run --allow-stall-reset
+```
+
+Omit `--run` to print the plan without touching hardware. The script uses the
+installed Zephyr workspace and GCC paths documented in the bring-up instructions.
+It verifies the NOD_F401RE volume label before each flash and verifies the runtime
+profile after flashing. It does not install drivers or repair the power setup.
+
+- Startup duties: 60%, 55%, 50%, each from stationary encoders, capped at 200 ms.
+- Holding duties: 55%, 50%, 45%, 40%, 35%, each after the 60% / 200 ms kick, capped
+  at 4 seconds. Both wheels get the same duty; either wheel's guard stops both.
+- Each descent stops at its first failure. Two further trials confirm the lowest
+  passing setting. An inconsistent confirmation aborts rather than silently raising
+  duty or retrying the failure. Untested values between steps remain unknown.
+- A three-second warning and verified rest precede each trial. The runner records
+  failed starts as failures even when the measurement process exits normally.
+- `--allow-stall-reset` is explicit permission to proceed after expected latched
+  stall faults 1/2, after verifying disabled outputs and stationary encoders and
+  reflashing. Without it, the first motion fault aborts the batch. Failed duties
+  are never retried automatically. Reverse/HAL/encoder/reset errors always abort.
+- Success restores startup 60% / 200 ms and hold 55% / 4000 ms, then checks idle.
+  Error exit requests STOP and attempts to verify rest without clearing the fault.
+
+The batch writes `logs/motor-bench/sweep-<timestamp>/summary.json`, per-step build,
+flash and trial logs, and `crash.txt` / `cleanup-crash.txt` on errors. Individual
+raw traces remain in `logs/motor-bench/startup-both-*.json` and `hold-both-*.json`;
+exceptions also write matching `.crash.txt` stack traces. Native MCU crash dumps
+are unavailable over the configured serial/mass-storage interface.
+
+For a single authorized holding trial, external timeout 25 seconds:
+
+```text
+C:\Users\13982\zephyrproject\.venv\Scripts\python.exe tests/check_motor_hold.py --port COM4 --side BOTH --hold-duty 55 --hold-ms 4000 --run
+```
+
+Those arguments verify the flashed profile; they do not change it. `SAMPLE` frames
+pair MCU-timestamped encoder counts with stage/applied duty/fault. Speeds use the
+last approximately one second of HOLD, calibrated at 1320 counts/rev, with LEFT
+negated before averaging. `ENC` and `MOTOR` frames remain available. The transition
+briefly disables PWM while updating outputs, about one configured PWM period;
+late speed windows exclude the transition and subsequent coast-down.
+
+The complete batch and preliminary separate-wheel results are documented in
+[Motor characterization](../../doc/MOTOR_CHARACTERIZATION.md). The final batch
+completed 12 powered trials: ten passes and two expected cutoff failures, then
+verified idle after the final reflash. This is not current-limit or loaded testing.
+
+## Startup sweep, 2026-09-27
+
+This earlier section records **separate-wheel tests**, superseded as the operating
+case by the simultaneous measurements above. The user later selected automated
+sequencing with checked resets after expected stall faults.
+
+The user reconfirmed raised wheels, unchanged wiring and power ready, and selected
+both motors tested separately. Every pulse began after at least one second of
+stationary encoder telemetry and a three-second warning. PWM stayed at 10 kHz;
+forward polarity and the shared 12 V / 2 A supply were unchanged. Each image had
+a 200 ms cap and the same 150 ms no-progress guard. No ramp, running-duty test,
+frequency change or simultaneous start was performed.
+
+| Duty | Left starts | Right starts | Result |
+|---|---|---|---|
+| 50% | 0/1 | 0/1 | Only 1–2 forward counts; guard latched fault 1/2 and disabled outputs. |
+| 55% | 3/3 | 3/3 | Forward motion during powered telemetry, no faults. |
+| 60% | 1/1 | 1/1 | Forward motion during powered telemetry, no faults; user also confirmed movement. |
+
+Execution order was 60% left/right, 55% left/right, 50% left/right with a deliberate
+same-duty reflash between faulted trials, then two more 55% starts per side.
+Reflashes never armed a motor. Ten powered trials total. Every trial ended with
+disabled outputs and stationary encoder counts; no invalid transitions or GPIO
+errors were reported. The unselected encoder stayed unchanged during each pulse.
+The initial 50% tests in earlier sessions drove LEFT backward; today's 50%
+forward recheck independently established the lower failed setting.
+
+**Lowest tested passing duty: 55% on both motors.** The observed transition lies
+above 50% and at or below 55% for these short, unloaded starts. 51–54% are untested,
+and three passes are not a reliability qualification. Use 60% as a provisional
+startup-kick candidate with margin, not a validated ground-loaded or simultaneous
+startup guarantee. Holding duty, target speed, startup current and temperature
+remain unmeasured. The sweep does not identify the electrical cause of the threshold.
+
+The last encoder samples paired with active status showed absolute forward deltas
+of 70/73/76 counts for LEFT at 55%, 79/75/79 for RIGHT at 55%, and 111/141 at 60%.
+These are discrete telemetry observations, not exact powered-interval totals.
+Coast-down counts are excluded from the startup verdict and are not divided by
+200 ms to infer speed. Host command-to-IDLE observations were about 0.20 seconds
+for guard-aborted starts and 0.25–0.27 seconds for completed pulses. USB/console
+latency means those are not physical PWM timing measurements.
+
+Local evidence, under `logs/motor-bench/`:
+
+- `startup-left-60-20260927-035157.json`, `startup-right-60-20260927-035229.json`
+- `startup-left-55-20260927-035314.json`, `startup-right-55-20260927-035323.json`
+- `startup-left-50-20260927-035414.json`, `startup-right-50-20260927-035505.json`
+- `startup-left-55-20260927-035554.json`, `startup-right-55-20260927-035606.json`
+- `startup-left-55-20260927-035616.json`, `startup-right-55-20260927-035625.json`
+- Build/flash captures: `startup-prepare-*.log` and `startup-prepare-*.json`.
+  Final image/idle capture: `startup-prepare-60-20260927-035649.json`.
+
+The initial old-image idle check lost telemetry without any actuation; its cause
+was not diagnosed. Reflash restored streaming. One right-60 invocation stopped
+before ARM because the opening serial fragment joined the profile response.
+`startup-right-60-20260927-035209.json` and `.crash.txt` preserve that failure.
+The script now drains opening fragments before requesting STATUS; the subsequent
+real-board run passed. No powered pulse was retried automatically.
+
+Run exactly one authorized startup trial, with an external 20-second timeout:
+
+```text
+C:\Users\13982\zephyrproject\.venv\Scripts\python.exe tests/check_motor_startup.py --port COM4 --side LEFT --duty 60 --pulse
+```
+
+`--duty` is an expected-profile interlock, not a command to change firmware duty.
+The script requires matching STATUS, disabled outputs and rest before ARM, checks
+forward encoder motion and the other channel, waits for coast-down, and sends STOP
+on exit. A selected-wheel no-progress fault is recorded as `NO_START`, not a
+successful start. Partial starts and insufficient movement are explicit failed
+verdicts, not successful tests. Reverse/encoder/HAL faults abort. Faults stay latched
+until reboot. The individual checker never clears or retries a fault; only the
+explicitly authorized batch workflow above may reflash after an expected stall.
+The old `check_motor_direction.py` entry point calls this bounded check and also
+requires `--duty`; its former five-second behavior is retired. BOTH now uses 200 ms.
+
+Captures persist as `logs/motor-bench/startup-<side>-<duty>-<timestamp>.json`.
+Failures also persist stack traces as matching `.crash.txt` files. This host cannot
+produce native MCU crash dumps over mass-storage/serial; serial errors and reset
+banners are captured instead. Local `build/` and `logs/` remain ignored.
 
 ## Tests and verification status
 
@@ -114,6 +265,20 @@ Board idle check (external timeout 15 seconds; sends only STOP/STATUS):
 ```text
 C:\Users\13982\zephyrproject\.venv\Scripts\python.exe tests/check_motor_idle.py --port COM4 --seconds 4
 ```
+
+Current-profile verification: host output/deadline/guard tests passed for 50%,
+55% and 60% builds; holding tests also cover single/BOTH stage transitions,
+2000/4000 ms caps and either-wheel cutoff. Startup, MCU-speed and automated
+sequence regression tests passed; built PWM configuration
+remained 100000 ns for both channels. Hardware results are in the sweep above.
+For a nondefault host profile, pass both `-DBENCH_DUTY_PERCENT=55` and
+`-DEXPECTED_DUTY=55` to GCC. Run verdict tests with an external timeout:
+
+```text
+python -m unittest discover -s tests -p "test_motor_*.py"
+```
+
+Historical verification follows; profile values below describe those earlier images.
 
 Completed:
 
