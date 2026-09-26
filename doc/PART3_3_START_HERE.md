@@ -1,14 +1,12 @@
 # Part 3.3 — steering, one small step at a time
 
-**Power correction (2026-09-26):** do not assume an HW-688 is adjustable to
-6 V. The earlier instruction to set the second HW-688 to 6 V was premature.
-HW-688 listings commonly specify fixed 5/5.2 V outputs; an equivalent module's
-[supplier specifications](https://www.jzk-jzk.com/collections/electronic-component/products/24v-12v-to-5v-5a-power-buck-module-dc-dc-step-down-power-supply-converter-with-led)
-specify 5.2 V. The user's exact board has not been visually identified. Keep
-the second converter/servo unpowered and obtain clear top/bottom photos before
-assigning its terminals or describing an adjustment control. The 6 V procedure
-below applies only to a confirmed suitable adjustable converter or supply.
-An available second fixed 5 V module does not establish a valid 6 V servo rail.
+**Power correction, now photo-confirmed (2026-09-26):** the second HW-688 has
+fixed nominal 5 V output: underside labels VIN+/VIN- and 5V/GND, no adjustment
+potentiometer. The earlier instruction to adjust this board to 6 V was wrong.
+See [the exact terminal and multimeter check](HW688_OUTPUT_CHECK.md). Actual
+output voltage/current performance still need measurement. The 6 V procedure
+below requires a different, suitable adjustable converter or regulated supply;
+do not run servo ARM using this fixed-output board for the listed LD-1501MG.
 
 Use Tianyi's **separate LED/servo NUCLEO-F401RE**, not the teammate's motor board.
 Branch: `lab2-tianyi-steering`. This includes the corrected Part 3.4 blinkers.
@@ -47,10 +45,9 @@ a suitable 3.3-to-5 V buffer may be needed. Never apply 6 V or 12 V to D14.
 
 ## 1. Prepare power before connecting the servo
 
-**Inventory update:** you confirmed a second HW-688 is available. Its suitability
-for the servo is unresolved: do not assume it has adjustable output. Identify
-the exact board first, as explained in the correction above. Preserve the
-converter already supplying the STM32 at its existing 5 V output.
+**Inventory update:** the second HW-688 is photo-identified as fixed nominal
+5 V, so it cannot implement the 6 V step below. Obtain a suitable servo supply
+first. Preserve the converter already supplying the STM32 at its existing output.
 
 1. Leave the motor teammate's board and firmware alone. Support the chassis so
    it cannot drive away; keep its motor-power branch off for your steering test.

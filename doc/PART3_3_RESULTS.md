@@ -7,9 +7,12 @@ Target: Tianyi's separate NUCLEO-F401RE, ST-LINK serial
 Power inventory update: Tianyi confirms a second HW-688 converter is available.
 This confirms availability of another converter, not suitability for a 6 V
 servo rail. Subsequent source checking found HW-688 listings for fixed 5/5.2 V
-outputs. The earlier instruction to adjust it to 6 V was premature. Exact board
-photos, output type, current rating and measurements remain pending; the first
-converter remains the STM32's 5 V source. See the guide's power correction.
+outputs. The earlier instruction to adjust it to 6 V was premature. Subsequent
+user photos confirm fixed nominal 5 V output, VIN+/VIN- and 5V/GND terminals,
+and no adjustment potentiometer. An Extech MN35 meter is available with leads
+already in COM and V/ohm/mA/Temp. Actual output/current measurements remain
+pending. The first converter remains the STM32's 5 V source; a suitable servo
+supply is still required. See `HW688_OUTPUT_CHECK.md`.
 
 ## Implemented
 
