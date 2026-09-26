@@ -111,7 +111,10 @@ four-second holding 3/3 after a 60% kick; 50% startup and 35% holding failed.
 Current flashed limits are 60% / 200 ms startup, or a separate 60% / 200 ms kick
 then 55% / maximum 4000 ms hold, with the same per-wheel motion guard. This
 supersedes the five-second profile above. No pins or wiring changed; see the
-[measurement record](MOTOR_CHARACTERIZATION.md).
+[measurement record](MOTOR_CHARACTERIZATION.md). The current bench image also
+supports average-speed PID; the first bounded 45 RPM BOTH-wheel test passed its
+provisional tolerance. No pins or wiring changed for that test; details and
+limits are in the same measurement record.
 
 Use a common ground between the Nucleo, encoders, and motor driver. The team confirmed changing to **converter-fed E5V, JP5 on E5V, JP1 open**, with USB for flashing/debugging connected after external power is on. For initial software/encoder bring-up, disconnect the L298N's 12 V motor-power feed separately while keeping the converter branch available to power the Nucleo. Disconnect supplies before changing wiring. See [the team BOM and power setup](HARDWARE.md#current-power-setup) for details and verification limits.
 
@@ -134,3 +137,11 @@ Checked against Zephyr's board and STM32 pinctrl definitions:
 - [STM32F401R pinctrl definitions (hal_stm32 main)](https://github.com/zephyrproject-rtos/hal_stm32/blob/main/dts/st/f4/stm32f401r(d-e)tx-pinctrl.dtsi): `tim4_ch4_pb9` uses AF2.
 
 See also: [Lab 2 handout](18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf).
+
+## Local motor stop button
+
+The motor bench configures the Nucleo B1 USER button through board alias `sw0`,
+PC13 active-low, with a pull-up, edge interrupt and control-thread polling. EXTI13
+does not conflict with the four encoder EXTI inputs. A press latches both motor
+outputs off until reset. The initial flashed idle check reported B1 released; a
+physical press-to-stop result must be recorded separately from this pin mapping.

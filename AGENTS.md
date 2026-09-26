@@ -31,6 +31,8 @@ For UART changes, read `PROTOCOL.md` and update `pi/part2_protocol.py`, the enco
 
 ## Hardware and evidence rules
 
+- **Operating limits need a source:** add caps, cutoffs or restrictions only when required by the lab handout, the confirmed component's datasheet, or an explicit user request. Record that source. Do not substitute an agent-chosen precaution for the requested behavior.
+- **Motor PID decisions:** the user explicitly wants continuous operation until Nucleo B1/STOP, no PID run timer or stall/reversal cutoff, and full PWM authority while retaining the measured startup/sustaining thresholds. Read `bringup/motor_test/README.md` for the current implementation and logs before changing or running it. Startup/holding diagnostic modes have separate behavior.
 - Preserve the distinction between **team-confirmed wiring**, **planned wiring**, and **starter code**. A sheet edit or successful build does not establish that hardware was rewired or tested.
 - The sheet's former motor "DIR A/B" names refer to **encoder inputs**, not L298N direction outputs. Use the corrected assignments in the pin document.
 - The team chose and confirmed **external E5V power**, with **JP5 on E5V and JP1 open**; connect USB for flashing/debugging after external power is on. This supersedes the earlier 5V/U5V hookup and interim USB-only recommendation. See `doc/HARDWARE.md` for details and unverified measurements.

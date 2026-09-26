@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "velocity_control.h"
 
 /* Explicitly armed forward trial; changing limits requires rebuild/reflash. */
 #ifndef BENCH_DUTY_PERCENT
@@ -11,8 +12,10 @@
 _Static_assert(BENCH_DUTY_PERCENT >= 1 && BENCH_DUTY_PERCENT <= 100,
                "Bench duty must be 1..100 percent");
 #define BENCH_PULSE_MS 200
+/* Zero in the reported PID profile means continuous, not a zero-length trial. */
+#define BENCH_PID_MS 0
 /* Hold commands always start with a 60% kick; each enabled wheel is guarded. */
-#define BENCH_KICK_PERCENT 60U
+#define BENCH_KICK_PERCENT VELOCITY_START_DUTY
 #ifndef BENCH_HOLD_MS
 #define BENCH_HOLD_MS 2000
 #endif
@@ -30,21 +33,24 @@ _Static_assert(BENCH_HOLD_PERCENT >= 1 && BENCH_HOLD_PERCENT <= 60,
 enum bench_phase { BENCH_IDLE, BENCH_ARMED, BENCH_LEFT, BENCH_RIGHT, BENCH_BOTH };
 enum bench_fault {
     BENCH_OK, BENCH_LEFT_STALL, BENCH_RIGHT_STALL,
-    BENCH_LEFT_REVERSED, BENCH_RIGHT_REVERSED
+    BENCH_LEFT_REVERSED, BENCH_RIGHT_REVERSED, BENCH_VELOCITY_FAULT, BENCH_USER_STOP
 };
 struct bench_control {
     enum bench_phase phase;
     enum bench_fault fault;
     int64_t deadline_ms;
     bool hold_test;
+    bool pid_test;
+    unsigned target_rpm;
+    struct velocity_control velocity;
     int64_t hold_at_ms;
     int32_t counts[2];
     int32_t anchors[2];
     int64_t progress_ms[2];
 };
 struct bench_output {
-    unsigned left_percent;
-    unsigned right_percent;
+    float left_percent;
+    float right_percent;
 };
 
 /* Boot/reset only. STOP does not clear a latched motion fault. */
@@ -52,6 +58,8 @@ void bench_init(struct bench_control *control);
 /* Raw calibrated counts: left must decrease forward, right must increase. */
 void bench_encoder_update(struct bench_control *control, int32_t left,
                           int32_t right, int64_t now_ms);
+/* B1 press latches both outputs off until reset, including queued/held ARM. */
+void bench_button_update(struct bench_control *control, bool pressed);
 bool bench_command(struct bench_control *control, const char *command, int64_t now_ms);
 struct bench_output bench_tick(struct bench_control *control, int64_t now_ms);
 

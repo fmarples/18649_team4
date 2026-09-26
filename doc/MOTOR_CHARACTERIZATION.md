@@ -1,4 +1,4 @@
-# Motor startup and holding measurements
+# Motor startup, holding and PID measurements
 
 ## Use the simultaneous results
 
@@ -64,7 +64,12 @@ operation or label it an exact steady-state speed.
 inferring whether the right motor alone could have continued. 36–39% are untested.
 For initial low-speed closed-loop work, 45% has more observed holding margin than
 40%, but it is a starting point for testing, not a guaranteed operating floor.
-No throttle-to-target-speed mapping or velocity controller was implemented here.
+These open-loop measurements did not use a velocity controller. A subsequent
+bench PID implementation initially used this table for feedforward and provisional
+gains; the [current plain PID](../bringup/motor_test/README.md#continuous-pid-speed-control)
+no longer uses feedforward. The first powered
+45 RPM test is recorded below. No throttle-to-target-speed mapping or Pi
+integration is implemented.
 
 ### How speed was measured
 
@@ -116,10 +121,68 @@ invalid transitions, GPIO errors, unexpected resets or reversal faults occurred
 in this simultaneous batch. The two expected failures latched fault 1; the runner
 verified rest before the user-authorized reflash.
 
-The final image restores **startup 60% / 200 ms; holding 60% / 200 ms then 55% /
-4000 ms**. The final reflash was idle-checked only. Final telemetry reported
+The sweep's final image restored **startup 60% / 200 ms; holding 60% / 200 ms then
+55% / 4000 ms**. That reflash was idle-checked only. Final telemetry reported
 IDLE, stage OFF, both duties zero, both encoder counts zero, no fault/errors.
 The app is still the independent bench diagnostic, not the Part 2 link app.
+
+## First bounded PID trial
+
+On 2026-09-27 the user requested full PID, reconfirmed securely raised wheels and
+unchanged wiring/power, and authorized one flash plus one BOTH-wheel 45 RPM trial.
+Interfaces were rediscovered as COM4 and D: / NOD_F401RE. Idle checks passed before
+and after flashing. No pins, power setup, PWM frequency or motion guards changed.
+
+That revision used average forward encoder RPM for PID, as Part 3.1 requires,
+plus bounded proportional wheel balancing. It used actual MCU elapsed time and the
+1320-count calibration. Initial gains are Kp=0.12, Ki=0.35, Kd=0.003 in duty-point
+and RPM units; see the [controller details](../bringup/motor_test/README.md#continuous-pid-speed-control).
+These are provisional gains, not a completed tuning study.
+
+The single trial used a 60% / 200 ms startup kick, then at most 4000 ms of PID,
+with each duty bounded to 0..60% and both wheels driving forward.
+
+| Measurement | Left | Right | Average |
+|---|---:|---:|---:|
+| Target RPM | 45 | 45 | 45 |
+| Raw-count RPM over the last powered 1000 ms | 42.45 | 45.73 | 44.09 |
+| Second-half minus first-half speed, RPM | +0.72 | +1.46 | +1.09 |
+| Mean commanded duty over the last approximately 1 second | 45.99% | 45.08% | 45.53% |
+
+The checker returned `AT_TARGET`: each wheel was within the provisional +/-5 RPM
+band, and half-window drift was less than 5 RPM. Both were still gaining a little
+speed. This is one passing bounded run, **not proof of exact steady state,
+repeatability, load rejection or long-term stability**. The proportional balance
+correction reduces wheel mismatch but does not force identical individual RPM.
+
+The last filtered controller report averaged 44.96 RPM. The table deliberately
+uses the independent raw-count window instead. There were 84 PID telemetry
+frames and 85 trial-stage samples including the first OFF record; the largest
+sample gap was 59 ms. First observed KICK/PID/OFF timestamps were 5443/5643/9656 ms.
+Their boundaries are serial telemetry observations, not scope-measured physical
+PWM durations. Reported duty never exceeded 60%.
+
+No encoder errors, reversal/stall faults, HAL errors or resets were reported.
+Both outputs disabled, all six pin readbacks returned low, and final raw counts
+became stationary at left -4217 / right +4510 with fault zero. A separate final
+STOP/rest check confirmed the same state. No automatic retry or gain change
+occurred during that trial; subsequent user-requested revisions are recorded below.
+
+Persistent local evidence:
+
+- `logs/motor-bench/pid-first-20260927-052513/summary.json`: image SHA-256,
+  pre/post-flash checks, the one trial result and final STOP verification.
+- The same directory's `analysis.json`, `trial.log`, `pre-flash-idle.log`,
+  `post-flash-idle.log` and `final-stop.log`.
+- `logs/motor-bench/pid-45-20260927-052521.json` and matching `.serial.log`: raw
+  MCU telemetry and host events. Errors would also create `.crash.txt` and
+  `.cleanup-crash.txt`; neither was needed for this successful run.
+
+At the end of that first bounded trial, the image included PID plus startup
+60% / 200 ms and holding 55% / 4000 ms profiles, and was idle and fault-free.
+The subsequent continuous-mode revisions below supersede that PID configuration. The root
+Part 2 link app remains unchanged. Other targets, target transitions, externally
+applied load, ground operation and current/thermal margins remain untested.
 
 ## Earlier single-wheel investigation, not the operating-case table
 
@@ -145,3 +208,36 @@ These are diagnostic history. Use the simultaneous table above for the requested
 both-motors operating case, and do not pool separate-wheel trials into its repeat
 counts. Wiring, current limits, loaded operation and long-term behavior still
 require independent validation.
+
+## Continuous PID decision and first load attempt
+
+The user replaced the four-second cap with continuous PID and B1 stop, then
+explicitly removed the PID stall/reversal cutoffs and 60% duty ceiling. The user
+retained measured startup/sustaining thresholds: existing 60% / 200 ms kick, then
+40..100% running duty. B1/STOP overrides the floor to zero. The current controller
+is plain average-speed PID, with no feedforward or balancing correction. Earlier
+PID results above used the earlier controller and are not validation of this revision.
+
+The first continuous attempt still had the old motion guard. During the user's
+manual-load experiment, the right wheel slowed and its commanded duty rose from
+about 45% to 54.25%. Right encoder progress ceased and fault 2 stopped both, not
+a duration timer. B1 telemetry remained released/unlatched. Outputs and rest
+were verified at raw counts -4033/+3864. No automatic restart followed the fault.
+Evidence: `logs/motor-bench/pid-45-20260927-053958.serial.log` and matching JSON/crash
+reports. This demonstrated increasing PWM effort, not a measured torque/current.
+The subsequent user requests caused the controller revision described above.
+
+The revised plain PID image was flashed and idle-verified, then started at 45 RPM
+on both wheels on 2026-09-27 at 05:51. After approximately 12 seconds it remained
+RUNNING with fault zero, reporting filtered left/right speeds of 43.11/46.80 RPM,
+average 44.95 RPM, and equal 45.47% duties. This confirms operation beyond the old
+four-second cap; it is not a long-term/current/thermal qualification. The user
+explicitly requested leaving it running until B1/STOP. No automatic stop was sent.
+The background logger PID was 3008; its current status, including a later B1 stop,
+is in `logs/motor-bench/continuous-20260927-055111/state.json`. Raw telemetry:
+`logs/motor-bench/pid-45-20260927-055111.serial.log`. Flash/profile evidence:
+`logs/motor-bench/continuous-flash-20260927-055105/summary.json`.
+
+An earlier logger attempt failed before ARM due to a Windows state-file replace
+lock. It never drove a motor. Its logs end in `053907`; the host now retries that
+specific transient filesystem error, with a regression test.

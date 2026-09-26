@@ -40,8 +40,16 @@ These are lowest tested passing duties, not exact or universal minima. 51–54%
 startup and 36–39% holding duties remain untested. Ground-loaded performance,
 long-term holding, current and thermal margins remain unverified. The current
 flashed diagnostic supports 60% / 200 ms startup pulses and a separate two-stage
-60% / 200 ms kick followed by 55% / maximum 4000 ms hold. All motion guards remain.
-The final reflash was idle-checked only; outputs disabled and encoders stationary.
+60% / 200 ms kick followed by 55% / maximum 4000 ms hold. Those fixed-duty modes
+retain their motion guards.
+The sweep's final reflash was idle-checked only; outputs disabled and encoders stationary.
+A later user-authorized PID image and single BOTH-wheel 45 RPM test passed the
+provisional speed tolerance, averaging 44.09 RPM over the last powered second.
+Both outputs then disabled and counts became stationary with no faults. The
+current image retains the startup/holding profiles and now runs continuous PID
+with B1 stop and user-selected startup/sustaining thresholds; wiring
+and power are unchanged. See the [PID record](MOTOR_CHARACTERIZATION.md#first-bounded-pid-trial).
+This does not establish current/thermal margins or loaded performance.
 
 ## Handout baseline and incomplete specifications
 

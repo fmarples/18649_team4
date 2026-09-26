@@ -16,7 +16,7 @@ import serial
 from check_motor_idle import FRAME as MOTOR
 
 FRAME = re.compile(
-    r'SAMPLE t_ms=(\d+) stage=(OFF|PULSE|KICK|HOLD) phase=(IDLE|ARMED|LEFT|RIGHT|BOTH) '
+    r'SAMPLE t_ms=(\d+) stage=(OFF|PULSE|KICK|HOLD|PID) phase=(IDLE|ARMED|LEFT|RIGHT|BOTH) '
     r'left_pct=(\d+) right_pct=(\d+) left=(-?\d+) right=(-?\d+) '
     r'invalid_left=(\d+) invalid_right=(\d+) errors=(\d+) fault=(-?\d+)'
 )

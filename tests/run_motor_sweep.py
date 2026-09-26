@@ -145,7 +145,7 @@ def main():
                      f'-DBENCH_HOLD_PERCENT={hold}', f'-DEXPECTED_HOLD={hold}',
                      '-DBENCH_HOLD_MS=4000', '-DEXPECTED_HOLD_MS=4000',
                      'tests/test_motor_bench.c', 'bringup/motor_test/src/bench_control.c',
-                     '-o', 'build/motor-host-test/test.exe'], name + '-host-build', 30)
+                     'bringup/motor_test/src/velocity_control.c', '-o', 'build/motor-host-test/test.exe'], name + '-host-build', 30)
             command([repo / 'build/motor-host-test/test.exe'], name + '-host-test', 20)
             command([ws / '.venv/Scripts/west.exe', 'build', '-b', 'nucleo_f401re',
                      '-d', repo / 'build/motor-test', repo / 'bringup/motor_test', '-o=-j4', '--',

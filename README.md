@@ -37,6 +37,9 @@ the complete frame layout and timing policy.
   after a 60% kick, with both motors together. See the
   [one-command sweep](bringup/motor_test/README.md#one-command-simultaneous-sweep)
   for guarded operation, logs and the unvalidated electrical/loaded limits.
+  The separate bench app also has [continuous PID speed control](bringup/motor_test/README.md#continuous-pid-speed-control).
+  One 45 RPM BOTH-wheel trial passed the provisional tolerance, averaging 44.1 RPM;
+  broader tuning and load tests remain pending. The Part 2 link app is unchanged.
 - [Hardware BOM and power](doc/HARDWARE.md), [pin assignments](doc/STM32_PINOUT.md),
   and the [Lab 2 handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf)
   describe the hardware and requirements.

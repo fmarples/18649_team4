@@ -1,19 +1,18 @@
 # L298N motor bench test — NUCLEO-F401RE
 
-> **CURRENT FLASHED PROFILE: startup 60% / 200 ms; kick/hold 60% / 200 ms then
-> 55% / maximum 4000 ms.** Forward only, fixed per build, no boot actuation.
-> ARM then BOTH for startup, or HOLDBOTH for the two-stage trial. Either wheel's
-> 150 ms no-progress/reversal guard stops both and latches a fault.
-> The user now requires both motors together. Simultaneous startup passed 3/3 at
-> 55% and failed at 50%; simultaneous 4-second holding passed 3/3 at 40% and failed
-> at 35%. Final reflash was idle-checked only; both outputs disabled and stationary.
-> See [measurements and limits](../../doc/MOTOR_CHARACTERIZATION.md). No velocity controller.
+> **Current PID contract, explicitly selected by the user:** run continuously
+> until B1/STOP, with no run timer or no-motion/reversal cutoff in PID mode.
+> Both wheels use the same average-speed PID output. Preserve the measured
+> startup/sustaining thresholds: 60% / 200 ms startup kick, then **40..100% PWM**
+> while running. B1/STOP bypasses the floor and disables both outputs.
+> B1 latches off until reset. There is no current or thermal protection.
+> Startup and fixed-duty HOLD diagnostics retain their separate timed profiles
+> and motion guards; they are not the continuous PID command.
 
 Standalone Zephyr bring-up firmware. **No automatic drive command on boot.** It is separate
 from the Part 2 link app and replaces the encoder diagnostic when flashed.
-It now reports raw x4 encoder counts alongside motor status. It does not run PID,
-steering, current sensors, blinkers, or the Pi protocol. Encoder counts now drive
-a motion cutoff, but not closed-loop speed regulation or current limiting.
+It reports raw x4 encoder counts alongside motor status and supports explicitly armed continuous PID speed control. Steering, current sensors, blinkers and the Pi
+protocol remain absent. Motion cutoffs and PID duty bounds are not current limiting.
 
 ## Hardware and startup
 
@@ -43,7 +42,7 @@ ASCII, uppercase, newline-terminated, through **ST-LINK console**, not Pi UART:
 
 | Command | Action |
 |---|---|
-| `STATUS` | Report both compiled profiles, stage durations and 10 kHz PWM; no actuation. |
+| `STATUS` | Report compiled startup, holding and PID profiles; no actuation. |
 | `STOP` | Disarm, purge pending commands, disable both PWM outputs. |
 | `ARM` | Arm one test for 5 seconds; outputs remain disabled. |
 | `LEFT` | Only after ARM: left forward at compiled duty, maximum 200 ms. |
@@ -51,19 +50,24 @@ ASCII, uppercase, newline-terminated, through **ST-LINK console**, not Pi UART:
 | `BOTH` | Only after ARM: both forward at compiled startup duty, maximum 200 ms. |
 | `HOLDBOTH` | Only after ARM: both forward at 60% for 200 ms, then compiled holding duty for its bounded duration. |
 | `HOLDLEFT` / `HOLDRIGHT` | Same two-stage profile on one wheel; retained for diagnostics, not the agreed measurement case. |
+| `PID <RPM>` | Only after ARM: both forward with 60% / 200 ms kick, then continuous average-speed PID. Positive integer wheel RPM; no invented target-speed bounds. |
+| B1 USER button | PC13 active-low; stop both and latch off until reset, independent of the host. |
+| `PID 0` | Same stop/coast action as STOP, without requiring ARM. |
 
 A start consumes the arm. Duplicate/retrigger/invalid commands stop and disarm;
-there is no arbitrary-duty or continuous-run command. Each pulse must be armed
-again. LEFT now selects IN1=0/IN2=1 (forward); RIGHT selects IN3=1/IN4=0
+PID has no duration cap; startup pulses and HOLD diagnostics remain bounded.
+A stopped session never restarts automatically. LEFT now selects IN1=0/IN2=1 (forward); RIGHT selects IN3=1/IN4=0
 (forward). BOTH uses IN=0110. An unselected channel remains disabled. Stopping
 sets enable PWM to zero and IN1–IN4 low: **coast**, not dynamic braking. Encoder
 traces show substantial movement continuing after enable goes low.
 
-Each enabled wheel must advance at least 4 raw counts in its calibrated forward
+In startup and fixed-duty HOLD modes only, each enabled wheel must advance at least 4 raw counts in its calibrated forward
 direction within 150 ms of starting and of each progress event. Left-forward is
 negative raw counts; right-forward is positive. Four reverse counts also trip.
 Motion faults latch: 1=left stalled, 2=right stalled, 3=left reversed, 4=right
-reversed. Any invalid quadrature transition or GPIO error also stops both outputs
+reversed. PID intentionally permits a held or backdriven wheel. Fault 5 denotes
+invalid PID data/time, not a no-motion or elapsed-time cutoff. Fault 6 is B1 stop. A malformed serial target stops without clearing or creating a motion
+fault. Any invalid quadrature transition or GPIO error also stops both outputs
 (negative HAL/error code). STOP does not clear a fault; reboot is required.
 These are software checks, **not overcurrent protection** or a hardware watchdog.
 
@@ -89,6 +93,82 @@ then the user-requested guarded simultaneous forward trial at 100% / 5000 ms.
 The subsequent startup sweep replaced that profile with a 200 ms cap, retaining
 the motion guard and changing only the compiled duty between trials.
 
+## Continuous PID speed control
+
+The user explicitly removed the former four-second duration limit, motion
+cutoffs, 60% duty ceiling and invented target-speed restrictions. The user also
+explicitly retained the experimentally measured startup and sustaining duty
+thresholds. These decisions supersede the earlier bounded-trial configuration.
+
+`origin/part3_starter` contains PI, not full PID, and uses the old 3960-count
+calibration. This bench uses the measured 1320 counts/revolution, left-negative
+and right-positive forward signs, and actual MCU encoder-snapshot elapsed time.
+Part 3.1 requires average encoder velocity for control:
+
+```text
+average_rpm = (filtered_left_rpm + filtered_right_rpm) / 2
+error = target_rpm - average_rpm
+output = Kp*error + integral(error)*Ki - Kd*d(average_rpm)/dt
+both duties = clamp(output, 40%, 100%) while running
+B1 / STOP / PID 0 -> both duties 0%, coast
+```
+
+There is no feedforward table, wheel-balancing correction, separate integral
+clamp, 600 RPM plausibility ceiling or 100 ms estimator cutoff. Anti-windup only
+prevents accumulating error farther into the selected output bounds. The
+integral starts at the existing 60% kick duty for handoff to PID.
+
+Initial gains remain Kp=0.12, Ki=0.35, Kd=0.003 in duty-point/RPM units. These are
+tuning parameters, not component ratings. The 20 ms feedback update interval and
+60 ms measurement-filter time constant remain; longer intervals use actual dt.
+D acts on the filtered measurement. Both wheels receive the same duty.
+
+55% was the lowest tested successful startup duty; the existing 60% / 200 ms kick
+retains startup margin. 40% sustained both raised wheels through three four-second
+holds. That supports the user-selected running floor, not a guarantee against
+stall under arbitrary load. Actual encoder/GPIO faults or invalid data still
+stop control. No current limiting or thermal protection is implemented.
+
+B1 uses the board's `sw0`, PC13 active-low, configured before motor operation.
+A GPIO interrupt latches a press; the high-priority motor thread also polls B1.
+A held button prevents arming. Releasing it cannot resume motion; reset is needed
+after B1. STOP/PID 0 disarms without requiring a reset. There is no run heartbeat
+or auto-restart. This is a software stop, not a hardware emergency-stop circuit.
+
+### Start and stop
+
+After bench readiness confirmation and rediscovering the port:
+
+```text
+python bringup/motor_test/start.py --port COM4 --rpm 45 --run
+python bringup/motor_test/stop.py
+```
+
+`start.py` leaves a serial logger in the background without opening a child
+terminal. On Windows it can also be invoked through the installed `pythonw.exe`.
+Omit `--run` to display the plan without hardware access. `stop.py` requests STOP
+through the logger and waits for its disabled/rest verification. B1 does not
+need the logger or laptop connection. Neither script flashes, resets faults or
+retries motor runs. A B1/fault stop closes the capture after coast-down.
+
+The foreground equivalent is `tests/check_motor_pid.py --port COM4 --rpm 45 --run`.
+It has no duration deadline and uses constant memory. Historical four-second
+verdict analysis remains in `summarize_pid` for old recordings; it does not limit
+continuous runs. The integer command representation is unsigned 32-bit, not a
+physical RPM rating. Very low targets may be unattainable with the selected 40%
+running floor, and high targets can saturate the available PWM.
+
+Live telemetry is saved to `logs/motor-bench/pid-<rpm>-<timestamp>.serial.log`.
+`continuous-session.json` records the background PID, state file and STOP-request
+file; `continuous-<timestamp>/state.json` holds the latest RPM/duty state, and
+`process.log` records host diagnostics. Completion writes the matching PID JSON
+summary. Exceptions write `.crash.txt` and `.cleanup-crash.txt`. Native MCU crash
+dumps are unavailable through this interface. Windows state-file reader locks
+are retried briefly; persistent file errors remain explicit failures.
+
+This is still a standalone bench, not integrated Pi control, vehicle braking,
+current protection or verified Lab 2 end-to-end response timing.
+
 ## Build and flash
 
 Use the environment in [encoder bring-up](../encoder_test/README.md). From the
@@ -104,7 +184,9 @@ The startup pulse limit stays 200 ms for every duty. `MOTOR_HOLD_DUTY` accepts
 1–60 and defaults to 55; `MOTOR_HOLD_MS` accepts only 2000 or 4000 and defaults
 to 2000 in a fresh build. The current flashed image and batch runner explicitly
 select 4000. HOLD commands always kick at 60%, independently of the startup-test
-duty. Each profile change requires rebuild/reflash. No serial command changes duty.
+duty. Startup/holding limits and PID gains require rebuild/reflash. PID commands
+choose a positive integer RPM target. Continuous PID has no duration cap and
+uses the user-selected 40..100% running range; STOP/B1 overrides it to zero.
 `build/` is gitignored. Rediscover the board drive and COM port before use. On
 this host they were `D:` (`NOD_F401RE`) and `COM4` for the recorded flash. Copy
 `build/motor-test/zephyr/zephyr.bin` to the board drive as `motor.bin`, check for
@@ -253,8 +335,10 @@ banners are captured instead. Local `build/` and `logs/` remain ignored.
 Host command/output tests (run with an external 20-second timeout):
 
 ```text
-gcc -std=c11 -Wall -Wextra -Werror -Ibringup/motor_test/src tests/test_motor_bench.c bringup/motor_test/src/bench_control.c -o build/motor-host-test/test.exe
+gcc -std=c11 -Wall -Wextra -Werror -Ibringup/motor_test/src tests/test_motor_bench.c bringup/motor_test/src/bench_control.c bringup/motor_test/src/velocity_control.c -o build/motor-host-test/test.exe
 build/motor-host-test/test.exe
+gcc -std=c11 -Wall -Wextra -Werror -Ibringup/motor_test/src tests/test_velocity_control.c bringup/motor_test/src/velocity_control.c -o build/motor-host-test/velocity-test.exe
+build/motor-host-test/velocity-test.exe
 ```
 
 Create `build/motor-host-test/` first. On this machine the compiler is
@@ -266,7 +350,26 @@ Board idle check (external timeout 15 seconds; sends only STOP/STATUS):
 C:\Users\13982\zephyrproject\.venv\Scripts\python.exe tests/check_motor_idle.py --port COM4 --seconds 4
 ```
 
-Current-profile verification: host output/deadline/guard tests passed for 50%,
+PID source verification: controller and command tests pass, including nonzero
+P/I/D, real timestep/calibration, anti-windup, no derivative kick from target
+changes, the selected duty floor/full PWM range, malformed/zero/retrigger commands,
+continuous operation past 30 seconds, intentional hold/backdrive and latched B1 stop. A synthetic first-order plant using the measured static
+speed points reaches the 45 RPM neighborhood and increases duty after added
+drag. That is a software regression, **not measured motor performance**. Ten
+holding-profile combinations, Python regressions and the Nucleo Zephyr build
+pass. Logs are in `logs/motor-bench/pid-host-verification/`.
+
+For the first bounded controller revision, the PID image was flashed on
+2026-09-27, its idle profile verified, and exactly one 45 RPM BOTH trial run.
+The final powered-second speeds were 42.45/45.73 RPM, mean 44.09 RPM. Late mean
+duties were approximately 45.99% left and 45.08% right. The trial and subsequent
+STOP/rest verification reported no encoder or firmware faults. See the
+[PID measurement record](../../doc/MOTOR_CHARACTERIZATION.md#first-bounded-pid-trial)
+for raw evidence and limitations. The later continuous revisions and load attempt
+are recorded there separately. Broader stability, physical stop timing and
+current/thermal margins remain unverified.
+
+Prior flashed-profile verification: host output/deadline/guard tests passed for 50%,
 55% and 60% builds; holding tests also cover single/BOTH stage transitions,
 2000/4000 ms caps and either-wheel cutoff. Startup, MCU-speed and automated
 sequence regression tests passed; built PWM configuration

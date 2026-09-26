@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20.0)
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(motor_bench)
-target_sources(app PRIVATE src/main.c src/bench_control.c src/bench_encoders.c)
-# Fixed per image. No runtime duty escalation or automatic sweep.
+target_sources(app PRIVATE src/main.c src/bench_control.c src/bench_encoders.c src/velocity_control.c)
+# Startup and HOLD diagnostic profiles are fixed per image; PID controls duty at runtime.
 set(MOTOR_TEST_DUTY "60" CACHE STRING "Startup-test duty percent, 1..100")
 if(NOT MOTOR_TEST_DUTY MATCHES "^[1-9][0-9]?$|^100$")
   message(FATAL_ERROR "MOTOR_TEST_DUTY must be an integer from 1 to 100")
