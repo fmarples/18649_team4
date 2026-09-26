@@ -48,10 +48,12 @@ positive/negative screw, since flipping the board changes apparent orientation.
 9. Unplug the adapter, then remove the probes and switch the meter OFF.
 
 There is no voltage adjustment screw. Do not try to change the output by
-turning terminal screws. A successful 5 V measurement does not establish a
-suitable supply for the listed LD-1501MG servo, specified at 6–8.4 V. Obtain
-a suitable adjustable supply/converter or confirm an alternative with course
-staff before servo calibration. Do not run ARM from this fixed 5 V supply.
+turning terminal screws. Tianyi subsequently reports the TA said to use 5 V
+and that it will work. Proceed with that bench plan after the output check:
+power off, connect converter 5V to servo red, converter GND to servo black
+and Nucleo GND, and Nucleo D14 to servo white. Then follow the calibration guide.
+Published LD-1501MG specifications still say 6–8.4 V; actual operation under
+the linkage load at the TA's recommended 5 V remains an unmeasured bench result.
 
 Sources: user's three photos, the [Extech MN35 product specifications](https://www.flir.com/en-ca/products/mn35/),
 an equivalent [module supplier's 5.2 V specification](https://www.jzk-jzk.com/collections/electronic-component/products/24v-12v-to-5v-5a-power-buck-module-dc-dc-step-down-power-supply-converter-with-led),

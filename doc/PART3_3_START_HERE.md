@@ -1,12 +1,12 @@
 # Part 3.3 — steering, one small step at a time
 
-**Power correction, now photo-confirmed (2026-09-26):** the second HW-688 has
-fixed nominal 5 V output: underside labels VIN+/VIN- and 5V/GND, no adjustment
-potentiometer. The earlier instruction to adjust this board to 6 V was wrong.
-See [the exact terminal and multimeter check](HW688_OUTPUT_CHECK.md). Actual
-output voltage/current performance still need measurement. The 6 V procedure
-below requires a different, suitable adjustable converter or regulated supply;
-do not run servo ARM using this fixed-output board for the listed LD-1501MG.
+**Latest power plan (2026-09-26):** Tianyi reports the TA explicitly said to
+use 5 V and that it will work. Follow that bench plan with the second fixed-output
+HW-688. Its underside labels are VIN+/VIN- and 5V/GND; there is no adjustment
+potentiometer. The earlier instruction to adjust it to 6 V was wrong.
+See [the exact terminal and multimeter check](HW688_OUTPUT_CHECK.md). Measure
+the output before attaching the servo; actual steering performance at 5 V
+remains to be tested. No firmware change is needed for the supply choice.
 
 Use Tianyi's **separate LED/servo NUCLEO-F401RE**, not the teammate's motor board.
 Branch: `lab2-tianyi-steering`. This includes the corrected Part 3.4 blinkers.
@@ -34,9 +34,10 @@ lists an **LD-1501MG** servo with **6–8.4 V** operating voltage, **500–2500 
 command range and **2.4–3 A stall current**. Its
 [STM32 tutorial](https://docs.hiwonder.com/projects/Ackermann-Chassis/en/latest/docs/2_STM32_Version_checked.html)
 specifies a **20 ms / 50 Hz** period. Compare the actual label before using these
-ratings. The handout's generic +5 V description is not this model's supply rating.
-Use a separate regulated **6.0 V** supply for the initial test, capable of the
-specified current peaks; do not deliberately stall the servo.
+ratings. The TA-approved 5 V bench plan is below that published 6–8.4 V range;
+retain that distinction in the report. Verify actual motion under the linkage
+load and record the result rather than treating the TA's guidance as a completed
+measurement. Do not deliberately stall the servo.
 
 The manufacturer's available specifications do not establish a minimum accepted
 logic-high voltage. This Nucleo emits **3.3 V logic**. If the correctly powered
@@ -45,20 +46,21 @@ a suitable 3.3-to-5 V buffer may be needed. Never apply 6 V or 12 V to D14.
 
 ## 1. Prepare power before connecting the servo
 
-**Inventory update:** the second HW-688 is photo-identified as fixed nominal
-5 V, so it cannot implement the 6 V step below. Obtain a suitable servo supply
-first. Preserve the converter already supplying the STM32 at its existing output.
+**Inventory update:** use the second fixed nominal 5 V HW-688 for the servo,
+following the TA's guidance. Preserve the existing STM32 power arrangement.
 
 1. Leave the motor teammate's board and firmware alone. Support the chassis so
    it cannot drive away; keep its motor-power branch off for your steering test.
 2. Locate the servo's label. If it is not LD-1501MG, check its own rating first.
-3. Identify a **separate** regulated servo supply/converter. The converter
-   already feeding the motor-board Nucleo E5V must stay at **5 V**. Do not turn
-   that shared rail up to 6 V. If it is your only converter, prepare the code
-   now but wait for an appropriate separate servo supply before `arm`.
-4. With the servo disconnected, set/check the separate supply to **6.0 V** with
-   a multimeter. Verify polarity and its current rating. The existing shared
-   12 V, 2 A source has not been validated for simultaneous motor/servo loads.
+3. With the lab 12 V adapter unplugged, wire its positive DC output to the second
+   converter's VIN+ and its negative DC output to VIN-. These are the blue input
+   terminals beside the black barrel jack. Use the printed underside labels.
+   The output blue terminals beside USB are 5V and GND. Keep the servo detached.
+4. Power the converter and measure from output 5V (red probe) to GND (black),
+   using the photographed MN35's 20 V DC range. Expect about 5–5.2 V; no screw
+   adjustment is involved. Unplug the adapter before attaching the servo.
+   The shared 12 V, 2 A source is not yet validated for simultaneous motor/servo
+   loads; keep the motor-power branch off for this steering bench test.
 5. Turn supplies off before adding wires. Preserve this bench board's existing
    working power arrangement; do not assume it uses the motor board's E5V setup.
 
@@ -70,7 +72,7 @@ the actual connector rather than trusting replacement-cable colors.
 | Servo connection | Goes to |
 | --- | --- |
 | White signal | Nucleo **D14**, which is **PB9** |
-| Red positive | Separate regulated **6 V positive** |
+| Red positive | Second HW-688 terminal labeled **5V** |
 | Black ground | Separate supply ground **and Nucleo GND** |
 
 The Pi and Nucleo retain the shared ground from the working UART link.
@@ -82,6 +84,12 @@ After wiring, power the Nucleo normally, then the separate servo supply. Keep
 hands clear: even without command pulses, a servo may twitch during power-up.
 Have its supply switch/connector accessible. Removing servo power is the
 physical stop; removing PWM alone does not guarantee zero holding torque.
+
+Connect the servo's black wire directly to the converter's GND output junction,
+then add a separate wire from that junction to Nucleo GND. The servo's power
+return must not pass through the Nucleo. Use a suitable terminal junction and
+servo extension/breakout for a three-position servo plug; do not force loose
+wires into its female contacts or cut the connector to make it fit.
 
 ## 3. Open the calibration console on Windows
 

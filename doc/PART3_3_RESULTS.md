@@ -11,8 +11,11 @@ outputs. The earlier instruction to adjust it to 6 V was premature. Subsequent
 user photos confirm fixed nominal 5 V output, VIN+/VIN- and 5V/GND terminals,
 and no adjustment potentiometer. An Extech MN35 meter is available with leads
 already in COM and V/ohm/mA/Temp. Actual output/current measurements remain
-pending. The first converter remains the STM32's 5 V source; a suitable servo
-supply is still required. See `HW688_OUTPUT_CHECK.md`.
+pending. The first converter remains the STM32's 5 V source. Tianyi subsequently
+reports the TA said to use 5 V and that it will work: the selected bench plan
+now uses the second fixed-output converter for the servo. This guidance does
+not change the published 6–8.4 V specification or establish a measured success
+at 5 V. See `HW688_OUTPUT_CHECK.md`.
 
 ## Implemented
 
