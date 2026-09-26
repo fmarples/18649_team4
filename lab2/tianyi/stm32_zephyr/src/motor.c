@@ -130,8 +130,8 @@ int motor_set_velocity(float left_mps, float right_mps)
 {
 	left_target = left_mps;
 	right_target = right_mps;
-	left_integral = 0.0f;
-	right_integral = 0.0f;
+	//left_integral = 0.0f;
+	//right_integral = 0.0f;
 	braking = false;
 	return 0;
 }
