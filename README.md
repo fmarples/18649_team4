@@ -1,5 +1,11 @@
 # Team 4 Lab 2
 
+**Branch `lab2-tianyi-steering`: start with [Part 3.3 instructions](doc/PART3_3_START_HERE.md).**
+Adds disabled-at-boot, opt-in steering calibration on D14/PB9, a Windows console,
+saved measured calibration, and wheel tracking to the corrected Part 3.4 build.
+Safe linkage endpoints, actual power and waveform/timing validation remain
+physical bench tasks. The section below describes the earlier blinker-only branch.
+
 **Branch `lab2-tianyi-blinkers`:** the root STM32 app now adds Part 3.4 blinkers
 to the existing Part 2 UART link, for Tianyi's separate LED bench. Follow
 [the complete start/test guide](doc/PART3_4_START_HERE.md). Motor/servo control

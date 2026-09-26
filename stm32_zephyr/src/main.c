@@ -1,4 +1,4 @@
-/* Part 2 UART link plus Part 3.4 blinkers. No motor/servo drivers. */
+/* Part 2 UART, Part 3.4 blinkers, opt-in Part 3.3 servo bench. No motor driver. */
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/uart.h>
@@ -11,6 +11,7 @@
 #include "blinker_core.h"
 #include "blinker_gpio.h"
 #include "self_test.h"
+#include "servo_bench.h"
 
 #define COMMAND_SIZE 28
 #define STATUS_SIZE 56
@@ -186,7 +187,7 @@ int main(void)
 		printk("ERROR: UART unavailable\n");
 		return 1;
 	}
-	if (blinker_gpio_init() != 0 ||
+	if (blinker_gpio_init() != 0 || servo_bench_init() != 0 ||
 	    uart_irq_callback_user_data_set(link_uart, rx_callback, NULL) != 0) {
 		printk("ERROR: device configuration failed\n");
 		return 1;
@@ -197,7 +198,8 @@ int main(void)
 	k_timer_start(&status_timer, K_MSEC(20), K_MSEC(20));
 	printk("PART3.4 BLINKERS: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
 	printk("FL=red D10, RL=yellow A2, FR=white D13, RR=blue D15\n");
-	printk("Paddles left=5 right=4; turn=8000 return=6000 raw counts; no motors/servo\n");
+	printk("Paddles left=5 right=4; turn=8000 return=6000 raw counts; no motors\n");
+	printk("PART3.3 SERVO: D14/PB9 TIM4_CH4 50Hz; boot DISABLED; USB calibration console\n");
 	printk("A button=SELF_TEST: single press hazards; double within 400ms clears latch\n");
 	printk("Startup/link errors also select hazards. Physical motor braking not connected.\n");
 	while (true) {
@@ -215,6 +217,8 @@ int main(void)
 			set_error(TIMEOUT);
 		}
 		bool linked = state.state == LINK_OK;
+		bool manual_test = self_test.active;
+		int32_t current_steer = state.steer;
 		bool fault = self_test_fault(&self_test, linked);
 		struct blink_output output = blinker_step(&blink, k_uptime_get(),
 			linked, fault, state.buttons, state.steer);
@@ -222,7 +226,9 @@ int main(void)
 		state.blink_left = output.left;
 		state.blink_right = output.right;
 		k_mutex_unlock(&state_mutex);
+		if (servo_bench_service(linked, manual_test, current_steer) != 0) return 1;
 		if (blinker_gpio_write(output) != 0) {
+			servo_bench_off();
 			(void)blinker_gpio_write((struct blink_output){0});
 			printk("ERROR: blinker GPIO update failed\n");
 			return 1;

@@ -1,5 +1,12 @@
 # Part 2 UART link starter
 
+**Part 3.3 steering branch:** binary layouts remain unchanged. The separate
+bench adds opt-in servo PWM and the Part 3.4 state 5 below. USB/USART2 now has
+an interrupt-buffered ASCII calibration console; it is separate from the
+binary Pi UART. `SERVO KEEPALIVE` refreshes a 500 ms bench lease; losing that
+lease disables PWM. The motor controller is still absent. Status axes remain
+command readbacks, not measured servo positions. See `doc/PART3_3_START_HERE.md`.
+
 **Part 3.4 branch note:** `lab2-tianyi-blinkers` keeps frame layouts and existing
 state values unchanged, and adds status state **5 = SELF_TEST**. The STM32 drives four blinker LEDs:
 button 5 selects left, button 4 selects right; raw steering controls self-cancel;

@@ -84,6 +84,12 @@ unmeasured.
 
 ## Recommended revision — proposed, not yet confirmed wired
 
+On `lab2-tianyi-steering`, the separate bench firmware now configures
+**D14/PB9/TIM4_CH4** at 20 ms, initially zero pulse width. Physical servo wiring
+and endpoint calibration are still unconfirmed. PB8/D15 remains the blue LED.
+TIM4 uses prescaler 83 from the board's 84 MHz timer clock (1 us ticks).
+This does not reassign the motor teammate's pins or modify that board.
+
 **Move only the steering PWM assignment from PC7/D9 (`TIM3_CH2`) to PB9/D14 (`TIM4_CH4`, AF2).** Keep both motor PWM assignments and all encoder connections unchanged. PB9/D14 was unused in the original table.
 
 | PWM function | STM32 pin | Header label | Timer channel |

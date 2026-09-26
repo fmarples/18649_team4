@@ -17,6 +17,11 @@ by the user. The older startup-OFF capture below describes the original image,
 not the intended behavior of the correction. A later steering bench image
 will also include this correction. Timing measurements remain pending.
 
+Update: the combined `lab2-tianyi-steering` image was subsequently flashed and
+verified on this same board. Its boot console confirms startup HAZARD mode;
+see `PART3_3_RESULTS.md`. A physical A-button single/double test and motor
+braking verification are still pending.
+
 ## User reports
 
 - All four LEDs connected: red front-left D10, yellow rear-left A2,

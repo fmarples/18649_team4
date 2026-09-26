@@ -20,6 +20,12 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 ## Code and current state
 
+- **Steering branch `lab2-tianyi-steering`:** read `doc/PART3_3_START_HERE.md`.
+  Same separate board, opt-in PB9/TIM4_CH4 servo, no motor output. Keep servo
+  output disabled until the operator arms it after checking power/wiring.
+  Mechanical calibration is unknown until user-measured. Do not auto-arm it
+  while testing host commands or flash the teammate's motor board.
+
 - **Agreed layout:** `pi/`, `stm32_zephyr/`, and `windows/` live at the repository root, not in lab/member subfolders. Tianyi agreed to this layout. Preserve his newer link implementation rather than restoring the old starter from Git history.
 - `pi/`: Python UDP-to-UART bridge and CRC-based protocol. Read `README.md` for run/build commands and logs. The course wheel proxy is external; `windows/` launches it.
 - `stm32_zephyr/`: on `lab2-tianyi-blinkers`, Part 2 UART plus Part 3.4 blinkers on Tianyi's separate LED board. USART1 remains PA9/PA10. Motor, steering, encoder and ADC integration is pending. See `doc/PART3_4_START_HERE.md`; do not flash this over the teammate's motor bench by mistake. This is not the old full-control starter.

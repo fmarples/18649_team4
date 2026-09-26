@@ -17,6 +17,13 @@ Latest L298N wiring report: the user confirmed all six control wires connected p
 
 ## Handout baseline and incomplete specifications
 
+**Servo source verification, 2026-09-26:** the exact Hiwonder kit page lists
+LD-1501MG, 6–8.4 V, 500–2500 us, 2.4–3 A stall current. Its STM32 tutorial
+specifies 20 ms/50 Hz. Actual installed marking, separate supply, 3.3 V signal
+acceptance and safe linkage endpoints still need verification. See
+[Part 3.3](PART3_3_START_HERE.md) for source links and the disabled-by-default
+bench workflow. Do not raise the converter powering Nucleo E5V above 5 V.
+
 **Separate blinker bench (Tianyi, 2026-09-26):** another NUCLEO-F401RE with
 red front-left, yellow rear-left, white front-right and blue rear-right LEDs.
 Each uses a 470-ohm resistor to GND; see the pin document. User reports all four
