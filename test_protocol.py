@@ -49,6 +49,16 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(len(list(p.pop_status(buffer))),1)
         self.assertEqual(len(buffer),0)
 
+    def test_motor_fault_status_keeps_existing_frame_layout(self):
+        self.assertEqual(p.STATES[5], 'ERROR_MOTOR')
+        body = p.STATUS.pack(b'L2', 1, 2, 1, 200, 9, 5, 0, 32767, -32768,
+                             -2147483648, -2147483648, -2147483648, 0, 0)
+        frame = body + struct.pack('<I', zlib.crc32(body))
+        self.assertEqual(len(frame), 56)
+        status = list(p.pop_status(bytearray(frame)))[0]
+        self.assertEqual(status['state'], 5)
+        self.assertEqual(status['current_valid_mask'], 0)
+
     def test_counter_wrap_duplicates_and_old_packets(self):
         self.assertTrue(p.is_newer(0,0xffffffff))
         self.assertFalse(p.is_newer(5,5))
@@ -93,6 +103,12 @@ class ProtocolTests(unittest.TestCase):
         self.assertGreaterEqual(len(writes),4)
         self.assertLess(writes[-1][0],0.100)
         self.assertTrue(all(len(frame)==28 for _,frame in writes))
+        # Stop the held pedal explicitly instead of adding Pi freshness and MCU
+        # timeout delays. This is a valid next-sequence brake frame, then silence.
+        self.assertLessEqual(writes[-1][0], 0.085)
+        last = struct.unpack_from('<IiiiI', writes[-1][1], 4)
+        self.assertEqual(last[1:4], (0, 32767, -32768))
+        self.assertEqual(last[0], len(writes) - 1)
 
 
 if __name__=='__main__': unittest.main()

@@ -1,4 +1,4 @@
-/* Part 2 link demonstrator. No motor, servo, or current sensor driver. */
+/* CRC Pi link with encoder/PID motor control. Servo/lamps/ADC remain pending. */
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/uart.h>
@@ -8,14 +8,18 @@
 #include <zephyr/sys/atomic.h>
 #include <string.h>
 #include <stdint.h>
+#include "throttle_mapping.h"
+#include "motor_driver.h"
 
 #define COMMAND_SIZE 28
 #define STATUS_SIZE 56
 #define LINK_TIMEOUT_MS 80U
-enum { WAITING = 0, LINK_OK, TIMEOUT, BAD_INPUT, RX_OVERFLOW };
+enum { WAITING = 0, LINK_OK, TIMEOUT, BAD_INPUT, RX_OVERFLOW, MOTOR_FAULT };
 static const char *const state_names[] = {
-	"WAITING", "LINK_OK", "ERROR_TIMEOUT", "ERROR_BAD_INPUT", "ERROR_RX_OVERFLOW"
+	"WAITING", "LINK_OK", "ERROR_TIMEOUT", "ERROR_BAD_INPUT", "ERROR_RX_OVERFLOW", "ERROR_MOTOR"
 };
+BUILD_ASSERT(CONFIG_MAIN_THREAD_PRIORITY < 2,
+             "Link/motor owner must outrank status and console threads");
 static const struct device *const link_uart = DEVICE_DT_GET(DT_NODELABEL(usart1));
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
 struct packet { uint8_t bytes[COMMAND_SIZE]; uint32_t received_ms; };
@@ -26,7 +30,8 @@ static atomic_t overflow;
 static struct {
 	uint32_t state, command_seq, received_ms, rejected;
 	int32_t steer, throttle, brake;
-	uint32_t buttons;
+	uint32_t buttons, target_mrpm;
+	struct motor_report motor;
 	bool ever_received;
 } state = { .state = WAITING, .throttle = 32767, .brake = -32768 };
 
@@ -68,8 +73,9 @@ static void set_error(uint32_t reason)
 	state.state = reason;
 	state.steer = 0;
 	state.throttle = 32767; /* Released pedal in this Windows mapping. */
-	state.brake = -32768;  /* Fully pressed pedal; no hardware output yet. */
+	state.brake = -32768;  /* Link/input errors request dynamic braking. */
 	state.buttons = 0;
+	state.target_mrpm = 0;
 }
 
 static void accept_candidate(const struct packet *p)
@@ -99,6 +105,8 @@ static void accept_candidate(const struct packet *p)
 		state.throttle = throttle;
 		state.brake = brake;
 		state.buttons = buttons;
+		/* Any brake input overrides throttle, including its startup request. */
+		state.target_mrpm = pedal_target_mrpm(throttle, brake);
 		state.command_seq = seq;
 		state.received_ms = p->received_ms;
 		state.ever_received = true;
@@ -155,29 +163,57 @@ static void console_thread(void *a, void *b, void *c)
 		uint32_t mode = state.state, seq = state.command_seq, bad = state.rejected;
 		uint32_t age = state.ever_received ? k_uptime_get_32() - state.received_ms : 0;
 		int32_t steer = state.steer, throttle = state.throttle, brake = state.brake;
+		uint32_t target = state.target_mrpm;
+		struct motor_report motor = state.motor;
 		k_mutex_unlock(&state_mutex);
-		printk("STM %s seq=%u steer=%d thr=%d brk=%d age=%ums rejected=%u\n",
-		       state_names[mode], seq, steer, throttle, brake, age, bad);
+		printk("STM %s seq=%u steer=%d thr=%d brk=%d target_mrpm=%u age=%ums rejected=%u\n",
+		       state_names[mode], seq, steer, throttle, brake, target, age, bad);
+		printk("DRIVE mode=%u target_mrpm=%u left_mrpm=%d right_mrpm=%d avg_mrpm=%d "
+		       "duty_mpercent=%u left_count=%d right_count=%d t_ms=%lld fault=%d\n",
+		       (unsigned)motor.mode, motor.target_mrpm, motor.left_mrpm, motor.right_mrpm,
+		       motor.average_mrpm, motor.duty_mpercent, motor.left_count, motor.right_count,
+		       (long long)motor.sample_ms, motor.fault);
 		k_msleep(250);
 	}
 }
 K_THREAD_DEFINE(console_tid, 1536, console_thread, NULL, NULL, NULL, 3, 0, 0);
 
+/* Returning from main must never leave enabled bridges without a B1 owner. */
+static void stop_on_init_failure(void)
+{
+	struct motor_report report = motor_update((struct drive_input){.sensor_fault = true});
+	k_mutex_lock(&state_mutex, K_FOREVER);
+	state.motor = report;
+	set_error(MOTOR_FAULT);
+	k_mutex_unlock(&state_mutex);
+}
+
 int main(void)
 {
+	/* Initialize outputs first. Until the first valid command, request braking. */
+	int motor_error = motor_init();
+	struct motor_report initial = motor_update((struct drive_input){0});
+	k_mutex_lock(&state_mutex, K_FOREVER);
+	state.motor = initial;
+	if (motor_error || initial.fault) { set_error(MOTOR_FAULT); }
+	k_mutex_unlock(&state_mutex);
 	if (!device_is_ready(link_uart) || !gpio_is_ready_dt(&led)) {
+		stop_on_init_failure();
 		printk("ERROR: UART or LED unavailable\n");
 		return 1;
 	}
 	if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_INACTIVE) != 0 ||
 	    uart_irq_callback_user_data_set(link_uart, rx_callback, NULL) != 0) {
+		stop_on_init_failure();
 		printk("ERROR: device configuration failed\n");
 		return 1;
 	}
 	uart_irq_rx_enable(link_uart);
 	k_timer_start(&status_timer, K_MSEC(20), K_MSEC(20));
-	printk("PART2 LINK ONLY: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
-	printk("LED on=valid link; off=waiting/error. No actuators enabled.\n");
+	printk("PI MOTOR CONTROL: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
+	printk("1320 counts/rev; cutoff=23 RPM; full pedal=300 RPM; start=60%%/200ms; PID=40..100%%.\n");
+	printk("Brake/link error=dynamic brake; released pedal=coast; B1=latch off until reset.\n");
+	printk("DRIVE modes: 0=coast 1=forward 2=brake; faults: 1=B1 2=sensor/GPIO 3=PID data negative=HAL.\n");
 	while (true) {
 		struct packet p;
 		if (k_msgq_get(&rx_queue, &p, K_MSEC(1)) == 0) {
@@ -192,11 +228,19 @@ int main(void)
 		    k_uptime_get_32() - state.received_ms >= LINK_TIMEOUT_MS) {
 			set_error(TIMEOUT);
 		}
-		bool linked = state.state == LINK_OK;
+		struct drive_input input = {
+			.linked = state.state == LINK_OK && state.motor.fault == 0,
+			.brake = state.brake != 32767,
+			.target_mrpm = state.target_mrpm,
+		};
 		k_mutex_unlock(&state_mutex);
-		if (gpio_pin_set_dt(&led, linked) != 0) {
-			printk("ERROR: LED update failed\n");
-			return 1;
-		}
+		/* This priority-1 thread owns validation, timeout and all motor writes.
+		 * No stale lower-priority drive job can overwrite a newer stop. */
+		input.sensor_fault = gpio_pin_set_dt(&led, input.linked) != 0;
+		struct motor_report report = motor_update(input);
+		k_mutex_lock(&state_mutex, K_FOREVER);
+		state.motor = report;
+		if (report.fault) { set_error(MOTOR_FAULT); }
+		k_mutex_unlock(&state_mutex);
 	}
 }

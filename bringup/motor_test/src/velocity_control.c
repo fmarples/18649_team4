@@ -12,6 +12,25 @@ void velocity_init(struct velocity_control *control, int32_t left, int32_t right
     };
 }
 
+/* Apply PID terms without changing encoder time, integral or derivative history. */
+int velocity_retarget(struct velocity_control *control, float target_rpm)
+{
+    if (!isfinite(target_rpm) || target_rpm <= 0) {
+        control->command[0] = control->command[1] = 0;
+        return -1;
+    }
+    control->p_term = VELOCITY_KP * (target_rpm - control->average_rpm);
+    float output = control->p_term + control->i_term + control->d_term;
+    if (!isfinite(output)) {
+        control->command[0] = control->command[1] = 0;
+        return -1;
+    }
+    if (output < VELOCITY_RUN_MIN_DUTY) { output = VELOCITY_RUN_MIN_DUTY; }
+    if (output > VELOCITY_MAX_DUTY) { output = VELOCITY_MAX_DUTY; }
+    control->command[0] = control->command[1] = output;
+    return 0;
+}
+
 int velocity_update(struct velocity_control *control, int32_t left, int32_t right,
                     int64_t now_ms, float target_rpm, bool regulate)
 {
@@ -57,10 +76,6 @@ int velocity_update(struct velocity_control *control, int32_t left, int32_t righ
           (candidate < VELOCITY_RUN_MIN_DUTY && error < 0))) {
         control->i_term = candidate_i;
     }
-    float output = control->p_term + control->i_term + control->d_term;
-    if (output < VELOCITY_RUN_MIN_DUTY) { output = VELOCITY_RUN_MIN_DUTY; }
-    if (output > VELOCITY_MAX_DUTY) { output = VELOCITY_MAX_DUTY; }
     control->regulating = true;
-    control->command[0] = control->command[1] = output;
-    return 0;
+    return velocity_retarget(control, target_rpm);
 }

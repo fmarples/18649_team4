@@ -13,6 +13,32 @@ def sample(t, stage, left, duty=55, fault=0, invalid=0):
 
 
 class HoldingSpeedTests(unittest.TestCase):
+    def test_full_duty_reports_raw_endpoints_and_mcu_interval_using_1320(self):
+        samples = [parse_sample(line) for line in (
+            'SAMPLE t_ms=0 stage=KICK phase=BOTH left_pct=60 right_pct=60 left=0 right=0 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=200 stage=HOLD phase=BOTH left_pct=100 right_pct=100 left=-100 right=200 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=3200 stage=HOLD phase=BOTH left_pct=100 right_pct=100 left=-10000 right=20000 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=3450 stage=HOLD phase=BOTH left_pct=100 right_pct=100 left=-11650 right=21760 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=3700 stage=HOLD phase=BOTH left_pct=100 right_pct=100 left=-13300 right=23520 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=3950 stage=HOLD phase=BOTH left_pct=100 right_pct=100 left=-14950 right=25280 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=4150 stage=HOLD phase=BOTH left_pct=100 right_pct=100 left=-16270 right=26688 invalid_left=0 invalid_right=0 errors=0 fault=0',
+            'SAMPLE t_ms=4200 stage=OFF phase=IDLE left_pct=0 right_pct=0 left=-17000 right=28000 invalid_left=0 invalid_right=0 errors=0 fault=0',
+        )]
+        result = summarize_hold(samples, 'BOTH', 100, 4000)
+        self.assertEqual(result['counts_per_rev'], 1320)
+        self.assertEqual(result['late_start_t_ms'], 3200)
+        self.assertEqual(result['late_end_t_ms'], 4150)
+        self.assertEqual(result['late_window_ms'], 950)
+        left, right = result['wheels']['LEFT'], result['wheels']['RIGHT']
+        self.assertEqual((left['raw_start_count'], left['raw_end_count'], left['forward_count_delta']),
+                         (-10000, -16270, 6270))
+        self.assertEqual((right['raw_start_count'], right['raw_end_count'], right['forward_count_delta']),
+                         (20000, 26688, 6688))
+        self.assertAlmostEqual(left['late_rpm'], 300)
+        self.assertAlmostEqual(right['late_rpm'], 320)
+        self.assertAlmostEqual(result['late_rpm'], 310)
+        self.assertTrue(result['settled_in_late_window'])
+
     def test_both_reports_each_wheel_and_average_not_cancelling_raw_signs(self):
         original = [sample(0, 'KICK', 0), sample(200, 'HOLD', -100),
                     sample(1200, 'HOLD', -760), sample(1450, 'HOLD', -925),

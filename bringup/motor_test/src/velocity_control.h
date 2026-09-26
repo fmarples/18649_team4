@@ -40,5 +40,9 @@ void velocity_init(struct velocity_control *control, int32_t left, int32_t right
  * their actual elapsed time. The caller implements zero-target STOP. */
 int velocity_update(struct velocity_control *control, int32_t left, int32_t right,
                     int64_t now_ms, float target_rpm, bool regulate);
+/* Running target changes update P/output immediately between encoder samples.
+ * Call only after regulation has begun; I/D history and sample time are retained.
+ * Returns -1 with zero commands for invalid target/controller data. */
+int velocity_retarget(struct velocity_control *control, float target_rpm);
 
 #endif

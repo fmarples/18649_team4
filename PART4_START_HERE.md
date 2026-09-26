@@ -3,7 +3,9 @@
 Part 4 runs on the STM32. It combines the Part 3 components under Zephyr's
 scheduler. The existing Part 2 Pi bridge remains the command source.
 
-This is a work plan, not new firmware. The task table is a proposal. Part 4
+Motor integration is now implemented in the root app and built/host-tested,
+but not flashed or tested through the Pi. `PROTOCOL.md` records its current
+behavior. This plan covers the remaining work; the task table is a proposal. Part 4
 is finished only after the real Part 3 drivers run together and their timing
 has been measured on the board.
 
@@ -45,7 +47,7 @@ Open `stm32_zephyr/src/main.c`. Search these names:
 | --- | --- |
 | rx_callback | Collects UART bytes and queues candidate frames in an interrupt |
 | accept_candidate | Checks a frame and updates accepted command values |
-| set_error | Sets safe internal values; it does not brake a real motor |
+| set_error | Sets safe inputs; the same main loop's motor owner applies the stop policy |
 | status_thread | Sends status to the Pi when the 20 ms timer signals it |
 | console_thread | Prints diagnostic information at a lower priority |
 | state_mutex | Protects the shared command/state structure |
@@ -111,6 +113,6 @@ link-loss, invalid-input, and recovery demonstrations with your teammate.
 The handout has conflicting numbers: self-test is 10 ms in its requirements
 table and 100 ms in checkoff; cable loss is 150 ms in Part 2 and 100 ms in
 checkoff. Plan for the stricter figures and ask the TA to clarify them.
-Current STM32 link timeout is configured at 80 ms. A lost wheel UDP stream
-currently adds up to roughly 100 ms on the Pi before UART commands stop;
-review that complete path before enabling actuators.
+Current STM32 link timeout is 80 ms. The Pi now sends a brake frame after
+80 ms of stale wheel UDP, then pauses commands. Measure the complete path
+before claiming the timing requirement is met.

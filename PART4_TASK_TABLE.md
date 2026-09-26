@@ -7,9 +7,11 @@ template because it separates safety, actuation, ADC, and logging work and
 tracks measurements explicitly. The data-exchange column retains the old
 template's "talks to" information required by the handout.
 
-The current `stm32_zephyr/src/main.c` still has its original link-only threads
-and priorities, documented in [PROTOCOL.md](PROTOCOL.md#thread-responsibilities).
-None of the proposed new tasks below is implemented by adding this document.
+The current `stm32_zephyr/src/main.c` uses one priority-1 owner for command
+validation, timeout, encoder/PID and motor writes; status remains priority 2
+and console priority 3. See [PROTOCOL.md](PROTOCOL.md#thread-responsibilities).
+The integrated image is built/host-tested, not flashed or hardware-timed.
+The table below remains the broader scheduling proposal, not current task layout.
 
 All proposed thread priorities are nonnegative/preemptible. Smaller numbers
 mean higher priority in Zephyr. Confirm execution times and adjust priorities
@@ -44,8 +46,9 @@ for the integration, not a completed response-time guarantee.
   clarification (checkoff says 100 ms).
 - Cable-loss response target: use 100 ms pending TA clarification (Part 2 says
   150 ms). Existing STM32 detection is configured at 80 ms, not measured here.
-- Review upstream UDP freshness as well as the STM32 cable timeout before
-  connecting actuation; their delays can accumulate.
+- Measure upstream UDP freshness as well as the STM32 cable timeout. Pi now
+  sends a brake frame after 80 ms of stale UDP instead of waiting for the MCU
+  timeout too; OS scheduling and wire/output timing remain unmeasured.
 - Use queues and short protected snapshots for commands/state/measurements.
   Never hold the shared-state mutex during logging or UART/ADC/driver waits.
 - Document data age and validity when status reports the latest sensor sample.

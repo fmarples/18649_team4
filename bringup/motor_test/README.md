@@ -181,7 +181,7 @@ west build -b nucleo_f401re -d C:\Users\13982\18649_team4\build\motor-test C:\Us
 `MOTOR_TEST_DUTY` accepts integers 1 through 100 and defaults to 60. Pass it
 explicitly: CMake retains the previous value in an existing build directory.
 The startup pulse limit stays 200 ms for every duty. `MOTOR_HOLD_DUTY` accepts
-1–60 and defaults to 55; `MOTOR_HOLD_MS` accepts only 2000 or 4000 and defaults
+1–100 and defaults to 55; `MOTOR_HOLD_MS` accepts only 2000 or 4000 and defaults
 to 2000 in a fresh build. The current flashed image and batch runner explicitly
 select 4000. HOLD commands always kick at 60%, independently of the startup-test
 duty. Startup/holding limits and PID gains require rebuild/reflash. PID commands
@@ -191,6 +191,53 @@ uses the user-selected 40..100% running range; STOP/B1 overrides it to zero.
 this host they were `D:` (`NOD_F401RE`) and `COM4` for the recorded flash. Copy
 `build/motor-test/zephyr/zephyr.bin` to the board drive as `motor.bin`, check for
 `FAIL.TXT`, then verify runtime over serial. Copy success alone is insufficient.
+
+## Full-duty speed measurement
+
+The user requested a direct 100%-duty speed measurement using the validated
+**1320 counts/wheel revolution**, not a gearbox-derived speed or advertised
+rated speed. After this measurement, the user selected a 300 RPM full-throttle
+target and a low-pedal cutoff based on measured 40%-duty speed. The root app
+connects the target described in [PROTOCOL.md](../../PROTOCOL.md) to
+encoder/PID/motor outputs. That integrated image is built/host-tested but
+not flashed or Pi end-to-end tested.
+
+A separate image in `build/motor-full-duty/` is built with
+`-DMOTOR_TEST_DUTY=60 -DMOTOR_HOLD_DUTY=100 -DMOTOR_HOLD_MS=4000`.
+`HOLDBOTH` uses the existing 60% / 200 ms kick, then applies **100% to both
+motors for four seconds**, then disables both. This diagnostic retains its
+existing motion guards and B1 stop; continuous PID behavior is unchanged.
+No actuation occurs on boot. Confirm bench power/wiring/readiness before
+flashing or running. Do not use this as authorization for another powered run.
+
+After an authorized flash and verified idle/profile, run once with an external
+25-second timeout:
+
+```text
+python tests/check_motor_hold.py --port COM4 --side BOTH --hold-duty 100 --hold-ms 4000 --run
+```
+
+Rediscover COM4 before use. The report uses only late HOLD samples at 100%,
+with MCU timestamps. It includes start/end counts, forward count deltas,
+start/end times, elapsed milliseconds, left/right RPM and their average:
+
+`RPM = forward_count_delta * 60000 / (1320 * elapsed_ms)`
+
+Startup and coast counts are excluded. The two halves of the late window
+are compared to flag a still-changing speed; an unsettled result is not a
+steady-speed measurement. Captures persist as `logs/motor-bench/hold-both-100-*.json`,
+with `.crash.txt` on errors. Build and host checks are in
+`logs/motor-bench/full-duty-verification/`; its `prepare.crash.txt` records
+preparation failures when produced. The 55% and 100% host controller profiles,
+Python motor regressions and separate Nucleo build passed. The image was then
+flashed and idle/profile-verified, and exactly one trial completed. In a late
+901 ms MCU-time window, left/right forward deltas were 6285/6266 counts,
+yielding **317.07/316.11 RPM, mean 316.59 RPM**, at 1320 counts/revolution.
+Both motors then stopped with verified disabled outputs and stationary counts,
+without encoder or firmware faults. The board remains on this 100%-HOLD image,
+unarmed and idle. Raw capture: `logs/motor-bench/hold-both-100-20260927-065715.json`;
+flash/run evidence: `logs/motor-bench/full-duty-20260927-065706/`.
+See the [measurement record](../../doc/MOTOR_CHARACTERIZATION.md#full-duty-measurement-2026-09-27).
 
 ## One-command simultaneous sweep
 

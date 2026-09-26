@@ -18,6 +18,50 @@ forward polarities documented in [HARDWARE.md](HARDWARE.md) and
 [STM32_PINOUT.md](STM32_PINOUT.md). Wheels were unloaded and raised. No current,
 temperature, rail transients or PWM waveform measurements were made.
 
+## Full-duty measurement, 2026-09-27
+
+The user requested a fresh direct count/time measurement at **100% duty**, using
+only the validated **1320 counts/wheel revolution**. Exactly one BOTH-wheel
+trial completed: the existing 60% / 200 ms kick, then 100% for four seconds.
+No PID speed target was used. The late powered measurement window was MCU
+**9745 to 10646 ms**, an elapsed **901 ms**; startup and coast are excluded.
+
+| Wheel | Raw starting count | Raw ending count | Forward count change | RPM |
+|---|---:|---:|---:|---:|
+| Left | -20942 | -27227 | 6285 | 317.07 |
+| Right | 20838 | 27104 | 6266 | 316.11 |
+| Average | | | | **316.59** |
+
+`Left RPM = 6285 * 60000 / (1320 * 901) = 317.07194`
+
+`Right RPM = 6266 * 60000 / (1320 * 901) = 316.11341`
+
+The late-window halves were 316.97/317.17 RPM on the left and
+315.96/316.26 RPM on the right, supporting a nearly constant speed in this
+window. This is a measured raised-wheel full-duty result for this setup,
+not a motor rating, guaranteed loaded speed, or selected full-throttle PID
+target. No gearbox-ratio calculation enters these results.
+
+The run reported zero encoder invalid transitions, GPIO errors and firmware
+faults. Both outputs returned to IDLE, duty zero, IN=0000 and EN=00. After
+coasting, counts remained stationary for at least one second at
+left=-33718, right=33727. Nothing restarted afterward. The board remains
+flashed with the **60% startup / 100% HOLD / 4000 ms** diagnostic profile;
+continuous PID behavior is unchanged and is not running.
+
+Evidence, under `logs/motor-bench/`:
+
+- `hold-both-100-20260927-065715.json`: raw serial records and count/time/RPM report.
+- `full-duty-20260927-065706/summary.json`: successful flash/trial summary and image hash.
+- The same directory's `flash.serial.log`, `pre-flash-idle.log`,
+  `post-flash-idle.log`, and `trial.log`.
+- `full-duty-verification/`: default/full-duty C controller tests, Python motor
+  regressions and Nucleo build logs.
+- `full-duty-20260927-065614/crash.txt`: first preparation stopped on a
+  pre-existing board `FAIL.TXT`, before flashing or driving. Its cleanup
+  verified live idle/rest telemetry. The subsequent authorized flash cleared
+  that old error and its new runtime profile was verified before the one trial.
+
 ## Simultaneous startup
 
 Each test starts both wheels from rest with the same duty, without a preceding
@@ -88,8 +132,8 @@ windows are well away from that boundary.
 `RPM = forward_count_delta * 60000 / (1320 * elapsed_ms)`
 
 Negate LEFT raw deltas and retain RIGHT raw deltas, then average the two wheel
-speeds. The provisional **1320 x4 counts/wheel revolution** comes from
-[ENCODER_SPEC.md](ENCODER_SPEC.md), not the conflicting vendor count of 3960.
+speeds. The validated **1320 x4 counts/wheel revolution** comes from
+[ENCODER_SPEC.md](ENCODER_SPEC.md).
 Host USB timestamps are diagnostic only and do not enter the speed calculation.
 
 JSON also records peripheral m/s using the reported 75 mm wheel diameter. That

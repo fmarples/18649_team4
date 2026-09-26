@@ -1,101 +1,89 @@
-# Handoff: motor bring-up and next velocity-control work
+# Handoff: continuous motor PID bench
 
-## Continuation update, 2026-09-27
-
-Startup/holding characterization is complete. **The user superseded separate-wheel
-tests with both motors together**, retaining raised wheels, 10 kHz PWM, 200 ms
-startup kicks and up to four-second holds. Units remain RPM and ms/s. They requested
-one-command automation and explicitly authorized checked reflashing after expected
-stall faults, without retrying failed duties. Reverse/HAL/encoder/reset faults
-still abort; no guard was weakened and no firmware fault-clear command was added.
-
-`tests/run_motor_sweep.py --port COM4 --drive D --run --allow-stall-reset` completed
-12 simultaneous trials. Startup: 55% passed 3/3, 50% failed. After a 60% / 200 ms
-kick, 40% holding passed 3/3 for four seconds, 35% stalled the left motor and stopped
-both. These are lowest tested passing values, not exact or loaded-operation minima.
-See `doc/MOTOR_CHARACTERIZATION.md` for per-wheel and average RPM, preliminary
-single-wheel history, limitations and captures. Full batch summary:
-`logs/motor-bench/sweep-20260927-044102/summary.json`, status COMPLETE.
-
-Final flashed profile: startup 60% / 200 ms; HOLD commands kick at 60% / 200 ms
-then hold at 55% / maximum 4000 ms. Final reflash was verified idle only; both
-outputs disabled, encoders stationary, fault zero. Build variables are
-`MOTOR_TEST_DUTY=60`, `MOTOR_HOLD_DUTY=55`, `MOTOR_HOLD_MS=4000`. A fresh CMake build
-defaults hold duration to 2000, so pass 4000 explicitly for this profile.
-
-The firmware remains a separate bench diagnostic. No closed-loop velocity control
-or Part 2 integration was added. Ground load, long-term holding, current and
-thermal margins remain unverified. No powered trial is pending. See Git history for the continuation commit.
-The original handoff below describes the earlier five-second profile.
+> Historical handoff, superseded by the subsequent full-duty measurement and
+> Pi-link motor integration. The board was last verified stopped after the
+> 100%-duty trial and remains on that bench image. The integrated root image is
+> built/host-tested but not flashed; the Pi end-to-end test was deferred.
+> Use `AGENTS.md`, `PROTOCOL.md` and `doc/MOTOR_CHARACTERIZATION.md` for current
+> decisions and state. References below to a running session or missing motor
+> integration describe the earlier session, not the present checkout.
 
 ## Session endpoint
 
-The user requested a handoff after asking for current progress. No new powered trial is pending or authorized by this handoff itself. Recommended next work is to diagnose low-duty startup behavior, then implement encoder-based velocity control. Do not treat the existing bench diagnostic as completed Lab 2 motor control.
+Startup/holding characterization and continuous encoder-based PID are implemented in the independent `bringup/motor_test/` application. Commit `f26e131eff31c9e411e16b7bed47f1f4cb5b6b94`, `feat: add continuous motor PID control with latched B1 stop`, is pushed to `origin/main`. The preceding characterization commit is `f707e59`.
 
-Repository was clean and synchronized on `main` at **`058f66d` — `feat: add guarded motor bring-up and encoder verification`** immediately before this document was created. The commit is pushed to `origin/main`. This handoff is a new, uncommitted file.
+The working tree was clean before this handoff update. This document update is not yet committed. Root `stm32_zephyr/` remains the team's link-only application. PID is not integrated with the Pi command path.
 
-## Read these artifacts instead of reconstructing the session
+## Check hardware state before doing anything
 
-- `AGENTS.md`: repository context, authoritative sources, hardware evidence rules.
-- `bringup/motor_test/README.md`: **current flashed profile**, command protocol, chronological diagnostic results, test commands, captures, and safety limitations. Its opening sections describe current behavior; later bullets include superseded experimental configurations.
-- `doc/STM32_PINOUT.md`: actual signal mapping and verified forward motor polarities. Encoder A/B pins are not H-bridge direction outputs.
-- `doc/HARDWARE.md`: confirmed power setup, supply rating, jumper states, measurements, and unresolved electrical limits.
-- `doc/ENCODER_SPEC.md`: measured calibration, wheel dimensions, encoder direction conventions, conflicting vendor specifications, and powered-test evidence.
-- `bringup/encoder_test/README.md`: installed Windows/Zephyr tooling, environment setup, flashing and encoder-check instructions.
-- `doc/18-449_649 Lab2 - Sensors and Actuators v1_0.pdf`: assignment requirements, especially section 3.1.
-- `PART4_START_HERE.md`, `PART4_TASK_TABLE.md`, and `PROTOCOL.md`: integration/scheduling plan and current Part 2 protocol.
-- Commit `058f66d`: implementation and test changes. Root `stm32_zephyr/` remains the team's link-only application; do not resurrect the obsolete full-control starter.
+**The user requested leaving both motors running continuously at 45 RPM until B1 or STOP.** No stop, reset, reflash, or restart was performed during commit or this handoff update. Do not interrupt that operation as incidental cleanup, and do not restart automatically if it has stopped.
 
-## Operational state at handoff
+The latest saved state inspected during this update says RUNNING, fault zero, at MCU time 70528 ms. The serial log ends at MCU time 70575 ms with filtered left/right RPM 42.136/48.057, average 45.096, and equal 45.171% duty. The last button record is released and unlatched. These are saved observations, not proof of current operation or logger health. No final stop verification or physical B1 press-to-stop result appears in the inspected tail.
 
-- The Nucleo last ran the separate `bringup/motor_test` image. Only one firmware image runs on this board; this replaces, rather than concurrently supplements, the Part 2 link application.
-- Last verification showed both outputs disabled and stationary encoder counts. **Recheck physical/serial state before future actuation; a handoff cannot guarantee that hardware remains unchanged.**
-- One simultaneous five-second forward trial passed. Afterwards, a console/control-priority issue was corrected, rebuilt, flashed, and checked **idle only**. Do not describe the final priority-corrected image as having repeated that powered trial.
-- The current firmware accepts explicit ARM followed by LEFT, RIGHT, or BOTH. Those commands are longer forward trials now, **not the earlier 200 ms kicks**. Consult its README before using any actuation script.
-- The software motion guard is not current limiting, dynamic braking, or an independent hardware cutoff. Physical induced-stall protection latency has not been validated.
-- Last observed interfaces were COM4 and drive D: labeled `NOD_F401RE`. Rediscover both before use. Mass-storage flashing and console serial work; the missing ST-LINK debug driver was not repaired.
-- Toolchain paths and build invocation are documented in the bring-up READMEs. The Zephyr workspace is under the local user's home directory, using its `.venv`; SDK version is recorded there. Avoid depending on a specific account name.
-- Local `build/` and `logs/` remain ignored and must stay untracked. Detailed captures are under `logs/motor-bench/`; they are local evidence, not files guaranteed to exist in a fresh clone.
+Use these local artifacts before opening serial or taking hardware action:
 
-## What the next investigation must distinguish
+- `logs/motor-bench/continuous-session.json`: background session ownership and stop route; recorded logger PID 3008. Verify ownership before relying on a PID that could be reused.
+- `logs/motor-bench/continuous-20260927-055111/state.json`: last published status.
+- `logs/motor-bench/continuous-20260927-055111/process.log`: logger output and exceptions.
+- `logs/motor-bench/pid-45-20260927-055111.serial.log`: flushed telemetry.
+- `logs/motor-bench/continuous-flash-20260927-055105/summary.json`: flash and idle/profile evidence.
 
-The unresolved issue is **low-duty startup**, not whether either motor can turn or which direction is forward. The measurement sequence and exact values are already in the motor-test README.
+Do not contend with an existing logger for the serial port. Last observed interfaces were COM4 and D: labeled `NOD_F401RE`; rediscover them before future hardware use. B1 is the independent local software stop. On a user-requested host stop, `python bringup/motor_test/stop.py` asks the existing logger to send STOP and verify outputs/rest. It does not kill the logger or reset the MCU.
 
-Important interpretation limits:
+## Decisions the next session must preserve
 
-- The successful unloaded DC measurement and earlier loaded low-duty measurement changed **both load and duty**. They do not independently prove a defective bridge.
-- The user saw no obvious input-supply dip, but the multimeter has no MIN/MAX capture and may miss short transients. Supply sag was not conclusively excluded.
-- A lower PWM-frequency comparison was proposed but **never implemented or run**. Do not report it as a failed or successful experiment.
-- Full-duty rotation and a short dual-motor run do not establish acceptable startup current, thermal margins, or ground-loaded performance.
-- Encoder counts captured after output disable include coast-down. Do not divide a run-plus-coast total by the powered interval and call it measured velocity.
+The user explicitly superseded the earlier four-second PID trial and agent-added operating limits:
 
-Candidate next steps, not commitments:
+- Continuous PID has no duration limit or heartbeat cutoff.
+- Intentional manual holding/backdriving is allowed. PID has no stall/no-progress or reversal cutoff.
+- Retain the measured startup/sustaining thresholds: 60% for a 200 ms startup kick, then a user-selected 40% running floor and full 100% PWM authority.
+- B1, STOP, and PID 0 override the floor to zero and coast both motors. B1 latches off until reset; releasing it must not restart motors.
+- Actual sensor/GPIO failures and invalid controller data still stop control.
+- Do not add operating caps or restrictions without a lab requirement, confirmed component datasheet, or explicit user decision. See `AGENTS.md`.
 
-1. Read the recorded evidence and select one discriminating low-duty/PWM experiment. Keep duty, duration, loading, and frequency changes explicit rather than changing several at once. Verify L298N enable-PWM/decay behavior against primary documentation if using it to explain the symptom.
-2. Maintain bounded commands and explicit reporting of any motion-guard abort; do not silently retry or raise duty. Existing guarded firmware may abort low-duty experiments before a slow meter can provide a useful reading.
-3. Once startup and speed response are understood, add timestamped velocity measurement and a documented throttle-to-target-speed mapping, then closed-loop control. Use the calibration and sign conventions in `doc/ENCODER_SPEC.md`; do not re-adopt the vendor's contradictory nominal count.
-4. Integrate only after respecting the current CRC protocol and the separate link application. Servo, blinkers, current sensors, braking, and complete system validation remain unfinished.
+The current controller is plain PID on average forward encoder RPM, with equal duty to both wheels. Feedforward, wheel balancing, and a separate integral clamp were removed. Average-speed regulation does not promise equal individual wheel speeds. Startup/HOLD diagnostics still have their own bounded profiles and motion guards; do not apply their restrictions to PID.
 
-## Working style and practical lessons
+There is no implemented current limiting or thermal protection. The thresholds came from raised-wheel tests, not indefinite stall qualification. B1 is not a hardware emergency-stop circuit. Detailed controller constants, calibration, timing, and commands belong in the bench README, not a second specification here.
 
-- The user wants the assistant to perform software installation, editing, builds, flashing, serial operations, and documentation directly. Ask the user only for physical observations/actions or genuine decisions the tools cannot resolve.
-- Proceed in clear steps and announce powered trials immediately before they occur. Avoid repeatedly asking for already-established wiring or safety confirmations unless conditions change.
-- The user previously accepted startup-motion risk with raised wheels and preferred flashing without repeatedly isolating motor power. This is **not** evidence that reset behavior is electrically safe or blanket authorization for arbitrary future trials.
-- Physical equipment available was the shared wall adapter and a basic multimeter, not a current-limited bench supply. The user performed measurements when given precise terminals and meter mode.
-- Encoder telemetry resolved direction more reliably than asking the user to judge brief movement by eye. Preserve this feedback loop.
-- A transient Windows drive-access error occurred immediately after one flash; a later drive recheck succeeded. Require both a clean flash result and the expected runtime banner before actuation, rather than trusting a file copy alone.
-- Keep safety claims qualified: software-disabled outputs do not mean the wheel has mechanically stopped, and successful telemetry is not a waveform/current measurement.
+## Read these artifacts
 
-## Verification and closure
+- `AGENTS.md`: project scope, operating-limit decision, and hardware evidence rules.
+- `bringup/motor_test/README.md`: current PID behavior, launch/stop commands, build/test commands, profiles, and persistent log/crash-report locations.
+- `doc/MOTOR_CHARACTERIZATION.md`: simultaneous startup/holding measurements, first bounded PID result, subsequent continuous revisions, and evidence paths. Earlier feedforward/balancing results do not validate the current plain PID revision.
+- `doc/HARDWARE.md`, `doc/STM32_PINOUT.md`, `doc/ENCODER_SPEC.md`: power, wiring, B1 mapping, calibration, and remaining electrical uncertainties.
+- `bringup/encoder_test/README.md`: installed Windows/Zephyr tools and flashing workflow.
+- `doc/18-449_649 Lab2 - Sensors and Actuators v1_0.pdf`: Lab 2 requirements, including average encoder velocity for control. `doc/18-449_649 Lab 1 - Requirements.pdf` is also tracked; do not import its later-system scope into this bench task.
+- `PART4_START_HERE.md`, `PART4_TASK_TABLE.md`, `PROTOCOL.md`: integration plan and current CRC link protocol.
 
-Host motor-control tests, existing Python tests, PWM configuration checks, and whitespace checks passed before commit. Hardware results and the distinction between tested revisions are recorded in the bring-up README. Do not rerun hardware actuation as an incidental part of a general test or commit workflow.
+## Implementation and verification
 
-For future git closure, the user uses the `commit` skill: inspect all changes, stage exact non-secret paths, review, commit, and push this standalone checkout. Do not wait for or repair background documentation jobs.
+Commit `f26e131` contains the implementation and regressions:
+
+- `bringup/motor_test/src/velocity_control.c` and `.h`: actual-dt velocity estimation, filtered measurement, full PID, and output saturation anti-windup.
+- `bench_control.c` and `.h`: ARM/PID/STOP transitions, continuous mode, and latched B1 stop.
+- `main.c`, `prj.conf`: fractional PWM, B1 interrupt plus control-thread polling, telemetry, and FPU sharing.
+- `bringup/motor_test/start.py`, `stop.py`, `tests/check_motor_pid.py`: detached capture, ownership publication, graceful stop, constant-memory flushed logs, and Windows state-file lock retries.
+- `tests/test_velocity_control.c`, `tests/test_motor_bench.c`, `tests/test_motor_pid.py`: controller behavior, continuous operation, hold/backdrive, stop/fault handling, and host failure paths.
+
+Host controller tests, ten diagnostic profile combinations, Python regressions, protocol tests, Nucleo build, and whitespace checks passed before commit. Local verification reports are in `logs/motor-bench/pid-host-verification/`. Temporary verification/flash/analysis scripts from this session were removed before commit; use the documented commands rather than assuming those helpers still exist.
+
+Hardware evidence supports a first bounded 45 RPM trial and operation of the revised continuous image beyond the old four-second cap. It does not establish load rejection, long-term stability, current/thermal margins, or physical stop timing. The first continuous manual-load attempt stopped on the old right-wheel motion guard. That prompted the explicitly requested guard removal; it was not a B1 test.
+
+All `logs/` and `build/` artifacts are local and ignored. A fresh clone will not contain the evidence captures. Runtime errors persist as `.crash.txt` and `.cleanup-crash.txt` beside the PID capture when produced; background exceptions also appear in `process.log`.
+
+## Next work, only when requested
+
+1. Establish current session/hardware state without silently stopping or restarting it. If B1 was pressed, verify the recorded disabled outputs and stationary counts, then document the physical result.
+2. Analyze the continuous log for response to the user's manual loading. Increased PWM is not measured torque or current.
+3. Tune or extend control only against the requested behavior. Ground-loaded operation, thermal/current measurements, and timing qualification remain open.
+4. For integration, preserve the current CRC protocol and root layout. Pi integration, braking, servo, blinkers, current sensing, and end-to-end Lab 2 timing remain separate unfinished work.
+
+Do not rerun powered tests during documentation, test-suite, or Git closure work. Earlier sweep authorization for checked reflashing after expected stalls is not blanket authorization to reset continuous PID.
 
 ## Suggested skills
 
-- **diagnosing-bugs**: continue the evidence-driven low-duty investigation with a reproducible, bounded feedback loop.
-- **tdd**: before firmware features or fixes; existing command/output tests and serial entry points provide established seams.
-- **codebase-design**: if defining the velocity-controller/driver boundary or preparing Part 2 integration, rather than growing the bench app into the final controller ad hoc.
-- **research** and **ketch**: for primary L298N/Zephyr documentation or PWM/decay questions. Use **browser-harness** for browser interaction, particularly authenticated shared documents.
-- **commit**: when the user requests committing/pushing subsequent changes.
+- `diagnosing-bugs` for a reported control, telemetry, or launcher failure.
+- `tdd` before firmware or host feature/fix implementation.
+- `codebase-design` when defining the controller/link integration boundary.
+- `research` and `ketch` for component or Zephyr primary sources; `browser-harness` for browser interaction.
+- `commit` when asked to commit this handoff or subsequent changes. Push this standalone checkout, verify synchronization, and do not wait for background documentation jobs.

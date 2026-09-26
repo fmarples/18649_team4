@@ -14,16 +14,43 @@ The other wheel's count remained unchanged in each measurement. Both invalid
 transition counters and GPIO error counters remained zero. The user determined
 one revolution by aligning a tire mark with a fixed reference.
 
-**Use 1320 counts per wheel revolution as the provisional x4 calibration for
-this chassis, not 3960.** The measurements differ from 1320 by about -0.08% and
-+0.53%, respectively; manual endpoint alignment is a plausible explanation,
-not a proven cause. Repeat over several revolutions before treating 1320 as a
-precision calibration. Zero detected invalid transitions alone does not prove
-that no edges were missed.
+**Use the validated 1320 counts per wheel revolution for this chassis.**
+The measurements differ from 1320 by about -0.08% and +0.53%, respectively.
+The user has reconfirmed this calibration; do not request another hand-turn
+measurement. Zero detected invalid transitions alone does not prove that no
+edges were missed.
 
-The result is consistent with `11 * 4 * 30 = 1320` and therefore suggests a
-30:1 gearbox if the documented 11 pulses/motor revolution applies. Gearbox ratio
-and motor model have not been independently verified from the physical label.
+## Current decision: measure full-duty speed directly
+
+On 2026-09-27, the user explicitly requested a powered **100% duty-cycle**
+measurement using **1320 counts/revolution** and the encoder count change
+across a measured time interval. Use MCU sample timestamps, exclude startup
+and coast-down, and show the raw endpoints as well as each wheel's RPM and
+their average:
+
+`RPM = forward_count_delta * 60000 / (1320 * elapsed_ms)`
+
+**After the measurement, the user selected 300 RPM at full throttle.**
+The earlier claim that the user selected 85 RPM was incorrect. The chosen
+pedal mapping uses the validated 1320 counts/revolution and a linear
+300 RPM endpoint, with a low-pedal STOP region below the measured sustaining
+speed. The initial cutoff is 23 RPM, about 7.67% pedal travel, from the existing
+40%-duty measurements. See [the integrated motor-control policy](../PROTOCOL.md#motor-control).
+The measured full-duty speed remains 316.59 RPM; it is not the mapping endpoint. Gearbox-based calculations and extrapolated speeds
+have been removed. Continuous PID's existing
+60% / 200 ms startup kick and 40..100% running PWM authority remain unchanged.
+A bounded fixed-duty diagnostic measures speed independently of PID.
+
+The requested trial subsequently completed. At 100% duty, over MCU time
+9745..10646 ms (901 ms), forward count changes were **6285 left** and
+**6266 right**: **317.07/316.11 RPM**, average **316.59 RPM**. Both outputs
+were disabled and rest verified afterward. These values use 1320 directly;
+see [raw endpoints and evidence](MOTOR_CHARACTERIZATION.md#full-duty-measurement-2026-09-27).
+
+The abandoned ten-turn recheck obtained no serial data and produced no new
+calibration result. Its failed captures are in
+`logs/motor-bench/encoder-calibration-20260927-062012/` and
+`encoder-calibration-20260927-062116/`, with `crash.txt` in each directory.
 
 ## Wheel size and optional linear-velocity conversion
 
@@ -48,8 +75,9 @@ odometer or prescribe m/s as the unit. RPM/RPS control is also an option if the
 units and mapping are documented consistently; wheel diameter is not needed for
 that option. Circumference is useful if the team chooses linear velocity in m/s.
 The standalone bench now transmits MCU-timestamped raw counts. Host diagnostics
-convert them to wheel RPM using the provisional 1320 count calibration; no
-closed-loop velocity feature or Part 2 integration has been added.
+convert them to wheel RPM using 1320 counts/revolution. Continuous PID is
+implemented in the standalone bench and connected to the root Pi-link app.
+That integrated image is built/host-tested but not flashed or hardware-tested.
 
 ## Powered motion and motor polarity
 
@@ -108,22 +136,16 @@ do not treat coast-down counts as motion during the commanded pulse. The sweep
 record links the persistent captures under `logs/motor-bench/`. The
 [hardware BOM](HARDWARE.md) records both the encoder calibration and startup duty.
 
-## Product-page nominal value (does not match this bench result)
+## Advertised speeds
 
-Hiwonder's [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) and [Shopify product data](https://www.hiwonder.com/products/ackermann-steering-chassis.js) specify a **1:90 gear ratio** and **11 magnetic poles** for the chassis motor. The [STM32 tutorial](https://docs.hiwonder.com/projects/Ackermann-Chassis/en/latest/docs/2_STM32_Version_checked.html) says the motor shaft produces 11 pulses per revolution and the timer counts every rising and falling edge of phases A and B, giving x4 quadrature decoding. Its sample defines `MOTOR_JGB520_TICKS_PER_CIRCLE` as `3960.0f`.
-
-Combining those values gives the nominal count:
-
-`11 pulses/motor revolution * 4 counts/pulse * 90 motor revolutions/output revolution = 3960 counts/output revolution`
-
-Those specifications predict **3960 counts per gearbox-output revolution**, and 3960 counts per wheel revolution if the wheel is directly driven by that output. This was the original expectation, but the actual chassis measurements above do not support it.
-
-## Source conflict
-
-The same [STM32 tutorial](https://docs.hiwonder.com/projects/Ackermann-Chassis/en/latest/docs/2_STM32_Version_checked.html) contains a contradictory paragraph that calls the ratio 45:1, calculates with 30:1, reports 1320 pulses per revolution, and then says the counter increases by 3960. That paragraph conflicts internally and with the tutorial's 90:1 code comment and `3960.0f` constant. The prose alone cannot resolve which motor variant is installed. The independent bench measurements above support approximately 1320 for this particular chassis.
+The [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503)
+reports **85 RPM rated** and **110 RPM no-load** at **12 V**. These are vendor
+specifications, not the result of our requested full-duty measurement and not
+a selected full-throttle target. Encoder-to-RPM calculations use only the
+team's validated **1320 counts/revolution** and measured elapsed time.
 
 ## Team status and safety
 
-The encoder-only app counts x4 on all A/B edges. Hand-turn testing confirmed that forward motion makes the left raw count decrease and the right raw count increase. Negate the left raw delta and retain the right raw delta before averaging velocities. The diagnostic firmware prints raw counts and MCU timestamps; the host holding-test script applies the provisional 1320 counts/rev calibration. No closed-loop speed control has been implemented. Geometric circumference is now calculated from the reported 75 mm diameter; loaded rolling circumference and powered-speed accuracy remain unmeasured. Using 3960 instead of 1320 would underestimate wheel speed by about a factor of three.
+The encoder-only app counts x4 on all A/B edges. Hand-turn testing confirmed that forward motion makes the left raw count decrease and the right raw count increase. Negate the left raw delta and retain the right raw delta before averaging velocities. The diagnostic firmware prints raw counts and MCU timestamps; the host holding-test script applies the provisional 1320 counts/rev calibration. Continuous PID is implemented in the standalone motor bench. Geometric circumference is now calculated from the reported 75 mm diameter; loaded rolling circumference and powered-speed accuracy remain unmeasured.
 
 The [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) specifies **3.2 A stall current**. This exceeds the team's earlier **2 A per channel** L298N concern. Avoid a powered stall test until the driver and thermal limits have been evaluated.

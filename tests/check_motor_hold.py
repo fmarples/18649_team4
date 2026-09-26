@@ -107,11 +107,15 @@ def summarize_hold(samples, side, duty, hold_ms=2000):
         first_rpm = rpm(late[0], middle)
         last_rpm = rpm(middle, late[-1])
         mean_rpm = rpm(late[0], late[-1])
-        wheels[wheel] = dict(late_rpm=mean_rpm,
+        wheels[wheel] = dict(raw_start_count=getattr(late[0], selected),
+                            raw_end_count=getattr(late[-1], selected),
+                            forward_count_delta=sign * (getattr(late[-1], selected) - getattr(late[0], selected)),
+                            late_rpm=mean_rpm,
                             late_m_per_s=mean_rpm / 60 * math.pi * WHEEL_DIAMETER_M,
                             late_first_half_rpm=first_rpm, late_second_half_rpm=last_rpm,
                             settled_in_late_window=abs(last_rpm - first_rpm) <= max(1, mean_rpm * 0.1))
     result.update(verdict='HELD', wheels=wheels,
+                  late_start_t_ms=late[0].t_ms, late_end_t_ms=late[-1].t_ms,
                   late_window_ms=late[-1].t_ms - late[0].t_ms,
                   settled_in_late_window=all(w['settled_in_late_window'] for w in wheels.values()))
     # Correct each encoder's forward sign before averaging wheel speeds.
@@ -129,8 +133,8 @@ def main():
     parser.add_argument('--hold-ms', type=int, choices=(2000, 4000), default=2000)
     parser.add_argument('--run', action='store_true')
     args = parser.parse_args()
-    if not args.run or not 1 <= args.hold_duty <= 60:
-        parser.error('--run and --hold-duty 1..60 are required; this actuates a motor')
+    if not args.run or not 1 <= args.hold_duty <= 100:
+        parser.error('--run and --hold-duty 1..100 are required; this actuates a motor')
     stem = Path('logs/motor-bench') / f'hold-{args.side.lower()}-{args.hold_duty}-{time.strftime("%Y%m%d-%H%M%S")}'
     stem.parent.mkdir(parents=True, exist_ok=True)
     records, samples = [], []

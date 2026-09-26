@@ -59,6 +59,17 @@ int main(void)
     assert(c.sample_ms == 150);
     assert(velocity_update(&c, -396, 396, 300, 90, true) == 0); /* No invented 100ms cutoff. */
     near(c.rpm[0], 60);
+    float integral = c.i_term, derivative = c.d_term;
+    assert(velocity_retarget(&c, 120) == 0);
+    near(c.i_term, integral);
+    near(c.d_term, derivative);
+    near(c.p_term, 7.2f);
+    assert(c.sample_ms == 300);
+    assert(velocity_retarget(&c, NAN) == -1);
+    near(c.command[0], 0);
+    c.i_term = NAN;
+    assert(velocity_retarget(&c, 120) == -1);
+    near(c.command[1], 0);
     assert(velocity_update(&c, 0, 0, 350, NAN, true) == -1);
     near(c.command[0], 0);
     assert(velocity_update(&c, 0, 0, -1, 45, true) == -1);

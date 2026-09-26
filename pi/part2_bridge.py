@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Part 2 link-only bridge: wheel UDP -> UART; STM status -> console/CSV.
+"""Wheel UDP -> CRC UART motor commands; STM status -> console/CSV.
 
-This demonstrator must be extended before driving motors or a servo.
+Matching STM32 firmware drives motors. Stale/invalid UDP sends a brake command.
 """
 import argparse
 import csv
@@ -11,7 +11,9 @@ from pathlib import Path
 from part2_protocol import command, wheel_packet, pop_status, is_newer, STATES
 
 TX_PERIOD = 0.020
-UDP_FRESH = 0.100
+# 80 ms plus one brake frame targets the handout's stricter 100 ms response.
+# This is a timing budget, not a measured whole-chain guarantee.
+UDP_FRESH = 0.080
 
 
 def main():
@@ -47,9 +49,10 @@ def main():
             previous_stm_ms = None
             no_status_notice = started + 2
             was_streaming = False
-            print('LINK-ONLY mode=%s; UART=%s 115200 8N1; Ctrl+C stops TX.' %
+            discard_udp = False
+            print('MOTOR LINK mode=%s; UART=%s 115200 8N1; Ctrl+C stops TX.' %
                   (args.mode, args.serial), flush=True)
-            print('Current sensors are UNAVAILABLE in this starter. No actuator control.', flush=True)
+            print('Live pedal commands can drive motors. Current sensors remain UNAVAILABLE.', flush=True)
             while True:
                 now = time.monotonic()
                 incoming = uart.read(4096)
@@ -67,6 +70,7 @@ def main():
                             writer = csv.DictWriter(log, fieldnames=list(status))
                             writer.writeheader()
                         writer.writerow(status)
+                        log.flush()
                     if now >= next_display:
                         mode = status['state']
                         name = STATES[mode] if mode < len(STATES) else 'UNKNOWN'
@@ -79,11 +83,14 @@ def main():
                     no_status_notice = now + 2
                 # Flush expired input before accepting a restarted UDP sequence.
                 if last_udp is not None and now - last_udp >= UDP_FRESH:
+                    uart.write(command(seq, 0, 32767, -32768, 0))
+                    seq = (seq + 1) & 0xffffffff
                     axes = None
                     previous_counter = None
                     last_udp = None
+                    discard_udp = True
                     if was_streaming:
-                        print('UDP stale: UART command transmission stopped.', flush=True)
+                        print('UDP stale: brake sent; command transmission paused.', flush=True)
                         was_streaming = False
                 if args.mode == 'live':
                     # Bounded batch: still return to status handling under excess UDP load.
@@ -91,15 +98,24 @@ def main():
                         try:
                             data, address = udp.recvfrom(4096)
                         except BlockingIOError:
+                            discard_udp = False
                             break
+                        # A scheduling pause must not turn old queued pedals into
+                        # fresh input. Drain to empty before accepting recovery.
+                        if discard_udp:
+                            continue
                         if args.sender and address[0] != args.sender:
                             continue
                         try:
                             counter, *new_axes = wheel_packet(data)
                         except ValueError as err:
+                            uart.write(command(seq, 0, 32767, -32768, 0))
+                            seq = (seq + 1) & 0xffffffff
                             axes = None
-                            last_udp = None
-                            print('Rejected UDP input; TX paused: '+str(err), flush=True)
+                            # Keep the last valid counter/time while paused. Only
+                            # a real freshness timeout permits a new baseline.
+                            was_streaming = False
+                            print('Rejected UDP input; brake sent; TX paused: '+str(err), flush=True)
                             continue
                         if not is_newer(counter, previous_counter):
                             continue

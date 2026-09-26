@@ -10,11 +10,13 @@ format is incompatible with the current CRC-based protocol.
 The team reports completing the ten hardware bring-up steps: wheel input
 reached the STM32, a disconnected Pi-to-STM32 command wire caused a link
 fault, the link recovered, and invalid frames were rejected. Exact hardware
-latencies were not supplied with this commit. The code here is still a link
-starter: it does not drive motors, a brake, the steering servo, or lamps.
-Its current sensor values are marked unavailable and its state field is the
-link state, not yet the vehicle zone state. See [PROTOCOL.md](PROTOCOL.md) for
-the complete frame layout and timing policy.
+latencies were not supplied with this commit. The code now connects the CRC link to encoder/PID motor control: a low-pedal
+cutoff near 7.67%, active targets of 23..300 RPM, a 60% / 200 ms start kick,
+40..100% running PWM, brake priority, B1 latch and link-loss braking.
+**This integrated image is built and host-tested, not flashed or hardware-tested.**
+The user deferred the Pi end-to-end run. Servo, lamps, current sensing and wheel
+self-test remain pending. Current readings stay unavailable; status is link/motor
+fault state, not full vehicle zone state. See [PROTOCOL.md](PROTOCOL.md).
 
 ## Contents
 
@@ -29,8 +31,8 @@ the complete frame layout and timing policy.
   Tianyi's Windows installation if the course proxy raises a `sip.voidptr`
   TypeError on Connect. Apply it in the **course proxy repository**, not here.
 - `test_protocol.py` contains the host protocol/bridge tests.
-- `bringup/encoder_test/` is the separate encoder diagnostic, not integrated
-  into the link firmware. See its [instructions and results](bringup/encoder_test/README.md).
+- `bringup/encoder_test/` is the separate encoder diagnostic. Its decoder is
+  reused through the motor-bench module in the integrated firmware. See its [instructions and results](bringup/encoder_test/README.md).
 - [Encoder calibration](doc/ENCODER_SPEC.md) records the provisional 1320
   counts/wheel revolution at x4. [Simultaneous motor measurements](doc/MOTOR_CHARACTERIZATION.md)
   record 55% lowest tested startup and 40% lowest tested four-second holding duty
@@ -39,7 +41,7 @@ the complete frame layout and timing policy.
   for guarded operation, logs and the unvalidated electrical/loaded limits.
   The separate bench app also has [continuous PID speed control](bringup/motor_test/README.md#continuous-pid-speed-control).
   One 45 RPM BOTH-wheel trial passed the provisional tolerance, averaging 44.1 RPM;
-  broader tuning and load tests remain pending. The Part 2 link app is unchanged.
+  broader tuning and load tests remain pending. The root app now reuses that PID.
 - [Hardware BOM and power](doc/HARDWARE.md), [pin assignments](doc/STM32_PINOUT.md),
   and the [Lab 2 handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf)
   describe the hardware and requirements.
@@ -109,8 +111,10 @@ west build -b nucleo_f401re "%TEAM_REPO%\stm32_zephyr" -d "%TEAM_REPO%\build\par
 west flash -d "%TEAM_REPO%\build\part2"
 ```
 
-Only flash when changing Nucleo firmware, with motor power disconnected.
-Flashing the link app replaces the encoder diagnostic and vice versa.
+Flashing replaces the current bench image. The integrated app can drive motors
+as soon as fresh Pi pedal commands arrive. Coordinate deployment before flashing.
+For the raised-wheel motor bench, the user accepts possible reset/startup motion
+and permits motor power to remain connected; see `AGENTS.md`.
 `west flash` requires a working debug-probe driver; see the
 [host setup and USB-drive alternative](bringup/encoder_test/README.md) if it is
 unavailable, using this app's `build/part2/zephyr/zephyr.bin` rather than the
@@ -140,12 +144,21 @@ stdout and stderr to a separate file in the same directory, for example
 configured. STM32 fatal output is on ST-LINK serial and must be captured by the
 host; no on-board persistent crash storage is configured.
 
+Pedal-mapping regression tests compile the real C mapper with a host GCC and
+exercise every valid throttle value plus the cutoff boundary and brake priority.
+Their logs are `logs/throttle-mapping/host-build.log` and `host-test.log`.
+The integrated Nucleo binary is `build/pi-motor/zephyr/zephyr.bin`.
+Integration build/test logs are in `logs/motor-integration/`, with
+`verify.crash.txt` for preparation exceptions when produced. The bench image
+was rebuilt as a compatibility check. Neither image was flashed for integration;
+the physical Pi UART/motor end-to-end test remains deferred.
+
 ## Next integration work
 
 Confirm the actual chassis component models and wiring before assigning new
-Nucleo pins. Implement both encoders and motor velocity control, brake
-override and verified dynamic braking, steering servo limits, blinkers and
-hazards, and three calibrated current readings. Then replace the link-only
-status and LED fail-safe with the vehicle zone state and safe physical outputs.
+Nucleo pins. Verify the integrated pedal/PID/brake/link-loss behavior on hardware.
+Then add steering servo limits, blinkers/hazards, wheel-button self-test and
+three calibrated current readings. Replace the partial link/motor-fault state
+with the full vehicle zone state.
 Measure timing on hardware for the handout's checkoff and document the final
 schematic and task table.
