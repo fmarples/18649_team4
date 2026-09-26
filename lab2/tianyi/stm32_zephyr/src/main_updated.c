@@ -204,33 +204,37 @@ static void accept_candidate(const struct packet *p)
 		brake >= -32768 && brake <= 32767 &&
 		(buttons & ~0x7ffU) == 0;
 
+	bool need_safe_outputs = false;
+	
 	k_mutex_lock(&state_mutex, K_FOREVER);
-
+	
 	if (!fresh) {
-		state.rejected++;
-		set_error(TIMEOUT);
+	    state.rejected++;
+	    set_error(TIMEOUT);
+	    need_safe_outputs = true;
 	} else if (!valid) {
-		state.rejected++;
-		set_error(BAD_INPUT);
-	} else if (!state.ever_received ||
-		   state.state != LINK_OK ||
-		   (seq - state.command_seq > 0U &&
-		    seq - state.command_seq < 0x80000000U)) {
-
-		state.steer = steer;
-		state.throttle = throttle;
-		state.brake = brake;
-		state.buttons = buttons;
-		state.command_seq = seq;
-		state.received_ms = p->received_ms;
-		state.ever_received = true;
-		state.state = LINK_OK;
-
-		apply_normal_outputs(
-			steer, throttle, brake, buttons);
+	    state.rejected++;
+	    set_error(BAD_INPUT);
+	    need_safe_outputs = true;
+	} else if (!state.ever_received || state.state != LINK_OK ||
+	           (seq - state.command_seq > 0U &&
+	            seq - state.command_seq < 0x80000000U)) {
+	
+	    state.steer = steer;
+	    state.throttle = throttle;
+	    state.brake = brake;
+	    state.buttons = buttons;
+	    state.command_seq = seq;
+	    state.received_ms = p->received_ms;
+	    state.ever_received = true;
+	    state.state = LINK_OK;
 	}
-
+	
 	k_mutex_unlock(&state_mutex);
+	
+	if (need_safe_outputs) {
+	    apply_safe_outputs();
+	}
 }
 
 static void status_tick(struct k_timer *timer)
