@@ -1,4 +1,7 @@
+# Python hardware-check artifacts
 __pycache__/
-*.pyc
+*.py[cod]
+
+# Generated Zephyr build output and local run logs
 build/
 logs/

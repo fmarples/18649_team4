@@ -34,8 +34,11 @@ tests and the user's confirmation of forward-first movement established:
 **vehicle-forward decreases the left raw count and increases the right raw
 count**. Future control code must negate the left count delta and retain the
 right count delta before averaging velocities. This diagnostic intentionally
-continues to print raw signed counts. There is no counts-per-wheel-revolution
-calibration or velocity estimate in this test.
+continues to print raw signed counts and does not calculate velocity. Subsequent
+one-revolution hand measurements gave 1319 left and 1327 right absolute counts,
+supporting **1320 counts/wheel revolution as the provisional x4 calibration**.
+See [the calibration record](../../doc/ENCODER_SPEC.md) for the source conflict
+and measurement limitations.
 
 ## Installed environment on the current Windows host
 
@@ -140,6 +143,19 @@ independently verify supply voltage or jumper positions.
 - The user confirmed forward-first movement for both wheels: left forward is
   negative raw count; right forward is positive raw count. These signs are
   consistent with mirrored motor installation.
-- **Pending:** counts per wheel revolution, wheel circumference, and behavior at
-  powered operating speeds. Hand-turn checks do not establish high-speed accuracy
-  or closed-loop motor performance.
+- One marked forward revolution per wheel measured left `-37 -> -1356`
+  (delta `-1319`) and right `-67 -> 1260` (delta `+1327`). The other count stayed
+  fixed in each capture, with zero invalid transitions and GPIO errors.
+- These support a provisional **1320 counts/wheel revolution**, not the product
+  page's predicted 3960. A multi-revolution repeat remains advisable.
+- User reports wheel outside diameter **75 mm**, giving a geometric circumference
+  of approximately **235.6 mm**. At provisional 1320 counts/rev this is about
+  **0.1785 mm/count**, if linear velocity in m/s is used later.
+- The separate [motor-test app](../motor_test/README.md) now reuses this x4
+  decoder and pin mapping. Individual powered kicks verified channel identity
+  and motor polarity; one simultaneous 5-second forward trial reported no invalid
+  transitions or GPIO errors. This encoder-only image remains hand-turn-only.
+- **Pending:** refined counts-per-revolution measurement, loaded rolling
+  circumference if needed, independently verified high-speed accuracy, and
+  closed-loop motor performance. Clean powered counts alone do not establish
+  that every edge was captured.

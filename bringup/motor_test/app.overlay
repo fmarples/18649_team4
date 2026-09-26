@@ -1,0 +1,56 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pwm/pwm.h>
+
+/ {
+    encoder_inputs {
+        compatible = "gpio-keys";
+        left_a: left_a { gpios = <&gpiob 3 GPIO_PULL_UP>; };
+        left_b: left_b { gpios = <&gpioa 8 GPIO_PULL_UP>; };
+        right_a: right_a { gpios = <&gpiob 5 GPIO_PULL_UP>; };
+        right_b: right_b { gpios = <&gpioa 7 GPIO_PULL_UP>; };
+    };
+    bench_pwm {
+        compatible = "pwm-leds";
+        left_pwm: left { pwms = <&pwm3 1 PWM_USEC(100) PWM_POLARITY_NORMAL>; };
+        right_pwm: right { pwms = <&pwm2 3 PWM_USEC(100) PWM_POLARITY_NORMAL>; };
+    };
+    bench_gpio {
+        compatible = "gpio-leds";
+        in1: in1 { gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>; };
+        in2: in2 { gpios = <&gpioa 6 GPIO_ACTIVE_HIGH>; };
+        in3: in3 { gpios = <&gpioc 1 GPIO_ACTIVE_HIGH>; };
+        in4: in4 { gpios = <&gpioc 0 GPIO_ACTIVE_HIGH>; };
+        ena: ena { gpios = <&gpiob 4 GPIO_ACTIVE_HIGH>; };
+        enb: enb { gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>; };
+    };
+};
+
+/* Only ST-LINK USART2 is used. Release encoder pins from other peripherals;
+ * leave the servo signal alone. */
+&usart1 { status = "disabled"; };
+&i2c1 { status = "disabled"; };
+&i2c3 { status = "disabled"; };
+&spi1 { status = "disabled"; };
+&spi2 { status = "disabled"; };
+&adc1 { status = "disabled"; };
+
+/* Internal pulldowns apply only once pinctrl initializes: not reset protection. */
+&tim3_ch1_pb4 { bias-pull-down; };
+&tim2_ch3_pb10 { bias-pull-down; };
+
+&timers3 {
+    status = "okay";
+    pwm3: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim3_ch1_pb4>;
+        pinctrl-names = "default";
+    };
+};
+&timers2 {
+    status = "okay";
+    pwm2: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim2_ch3_pb10>;
+        pinctrl-names = "default";
+    };
+};

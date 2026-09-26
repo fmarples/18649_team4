@@ -60,8 +60,13 @@ wheel vehicle-forward first:
 | Right | Positive | Keep raw delta |
 
 Apply these sign corrections **before averaging wheel velocities**, otherwise
-forward travel can cancel out. Firmware currently prints raw counts; calibration
-for counts per wheel revolution and circumference is still pending.
+forward travel can cancel out. Firmware currently prints raw counts. One marked
+wheel revolution measured 1319 counts on the left and 1327 on the right, supporting
+**1320 counts/wheel revolution as the provisional x4 calibration** (not 3960).
+See [the calibration record](ENCODER_SPEC.md). The user reports a **75 mm** wheel
+outside diameter, giving geometric circumference **235.6 mm**. A refined
+multi-revolution count calibration and loaded rolling circumference remain
+unmeasured.
 
 ## Recommended revision — proposed, not yet confirmed wired
 
@@ -75,9 +80,9 @@ for counts per wheel revolution and circumference is still pending.
 
 Each PWM now has its own timer period. Start with a servo period supported by the actual servo (commonly 20 ms / 50 Hz); choose motor PWM frequency independently after checking the driver and motor behavior. Moving the servo signal does not change its power supply requirements.
 
-## L298N direction inputs — currently disconnected; proposed assignment
+## L298N controls — user-confirmed wired; first powered movement observed
 
-The team confirmed **IN1–IN4 are not connected to anything**. The following proposal uses the newly freed D9 and three other unused Arduino-style pins; it does not reuse encoder pins.
+The user subsequently reported **all six motor-control wires connected** according to the table below and confirmed **ENA/ENB jumper caps removed**. This supersedes the earlier IN1–IN4-disconnected report. Physical wiring has not been independently inspected. These assignments use the newly freed D9 and three other Arduino-style pins without reusing encoder pins.
 
 Assuming the left motor is on OUT1/OUT2 and the right motor is on OUT3/OUT4:
 
@@ -94,7 +99,9 @@ A4 and A5 are usable as digital GPIO outputs; their header names do not restrict
 
 Do not apply motor power with IN1–IN4 floating. Before powered tests, establish defined inactive control levels during boot/reset as well as after firmware initialization.
 
-The team reported ENA and ENB jumpers are currently installed. **Remove those jumpers with power off before connecting MCU PWM outputs.** They hold the channels enabled and are separate from the module's 5 V regulator jumper. Verify which header pin is the enable signal rather than the jumper's supply side.
+The user confirmed **ENA and ENB jumpers removed** before the motor-test flash. Keep those jumpers removed while MCU PWM wires are connected. They would otherwise hold the channels enabled and are separate from the module's 5 V regulator jumper. The user subsequently confirmed the separate 5V-EN regulator jumper is installed and measured the driver's +5V terminal relative to GND at **5 V** with a multimeter.
+
+The standalone [`bringup/motor_test`](../bringup/motor_test/README.md) firmware has been compiled/flashed and reports zero duty with all six MCU control-pin inputs reading low. Separate 20%-duty, nominal 500 ms left/right commands subsequently returned to disabled without firmware faults, but the user reports **neither wheel moved and a beep was heard**. A subsequent 35% trial also produced only a beep and no wheel movement. A left-only 50% trial also failed to start the wheel. Subsequently, the user confirmed wheel movement from a single LEFT-command **100% / nominal 200 ms** kick. Subsequent encoder-observed 100% / 200 ms kicks verified the channel identities: **IN1=1/IN2=0 moves the left wheel backward** (raw left count increases; also visually confirmed), and **IN3=1/IN4=0 moves the right wheel forward** (raw right count increases). The other encoder remained unchanged in each test, with no reported invalid transitions or GPIO errors. Left-forward therefore uses **IN1=0/IN2=1**, and right-forward uses **IN3=1/IN4=0**. Both forward settings were subsequently verified together in one user-requested 100% / nominal 5-second trial: left counts decreased, right counts increased, with no reported invalid transitions, GPIO errors or firmware faults. Outputs automatically returned to IN=0000/EN=00; wheels coasted afterward. Current diagnostic firmware includes a per-wheel no-progress/reversal guard, not current limiting. A post-trial console/control-priority correction was flashed and checked idle only. PWM waveform, exact physical stop timing, long-term/ground-loaded operation and current limits remain unverified. The Part 2 link application is unchanged and does not include this motor implementation.
 
 Use a common ground between the Nucleo, encoders, and motor driver. The team confirmed changing to **converter-fed E5V, JP5 on E5V, JP1 open**, with USB for flashing/debugging connected after external power is on. For initial software/encoder bring-up, disconnect the L298N's 12 V motor-power feed separately while keeping the converter branch available to power the Nucleo. Disconnect supplies before changing wiring. See [the team BOM and power setup](HARDWARE.md#current-power-setup) for details and verification limits.
 
