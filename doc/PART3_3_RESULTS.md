@@ -5,9 +5,11 @@ Target: Tianyi's separate NUCLEO-F401RE, ST-LINK serial
 `066BFF485270535067124020`. This is not the motor teammate's board.
 
 Power inventory update: Tianyi confirms a second HW-688 converter is available.
-This resolves availability of a separate converter, not its current rating,
-output adjustment, wiring, or measured performance. The first converter remains
-the STM32's 5 V source; the second is planned for the servo's 6 V rail.
+This confirms availability of another converter, not suitability for a 6 V
+servo rail. Subsequent source checking found HW-688 listings for fixed 5/5.2 V
+outputs. The earlier instruction to adjust it to 6 V was premature. Exact board
+photos, output type, current rating and measurements remain pending; the first
+converter remains the STM32's 5 V source. See the guide's power correction.
 
 ## Implemented
 

@@ -1,5 +1,15 @@
 # Part 3.3 — steering, one small step at a time
 
+**Power correction (2026-09-26):** do not assume an HW-688 is adjustable to
+6 V. The earlier instruction to set the second HW-688 to 6 V was premature.
+HW-688 listings commonly specify fixed 5/5.2 V outputs; an equivalent module's
+[supplier specifications](https://www.jzk-jzk.com/collections/electronic-component/products/24v-12v-to-5v-5a-power-buck-module-dc-dc-step-down-power-supply-converter-with-led)
+specify 5.2 V. The user's exact board has not been visually identified. Keep
+the second converter/servo unpowered and obtain clear top/bottom photos before
+assigning its terminals or describing an adjustment control. The 6 V procedure
+below applies only to a confirmed suitable adjustable converter or supply.
+An available second fixed 5 V module does not establish a valid 6 V servo rail.
+
 Use Tianyi's **separate LED/servo NUCLEO-F401RE**, not the teammate's motor board.
 Branch: `lab2-tianyi-steering`. This includes the corrected Part 3.4 blinkers.
 The existing checkout folder still ends in `18649_team4_blinkers`; that is normal.
@@ -37,10 +47,10 @@ a suitable 3.3-to-5 V buffer may be needed. Never apply 6 V or 12 V to D14.
 
 ## 1. Prepare power before connecting the servo
 
-**Inventory update:** you confirmed a second HW-688 is available. Use that
-second converter for the servo rail after verifying its output and suitability;
-the converter already supplying the STM32 stays at 5 V. The servo must remain
-disconnected while you adjust and measure the second converter's output.
+**Inventory update:** you confirmed a second HW-688 is available. Its suitability
+for the servo is unresolved: do not assume it has adjustable output. Identify
+the exact board first, as explained in the correction above. Preserve the
+converter already supplying the STM32 at its existing 5 V output.
 
 1. Leave the motor teammate's board and firmware alone. Support the chassis so
    it cannot drive away; keep its motor-power branch off for your steering test.
