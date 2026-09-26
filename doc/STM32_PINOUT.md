@@ -4,7 +4,7 @@ Board: **NUCLEO-F401RE** (confirmed by the team).
 
 Source: team-provided screenshot of **Lab 2 - Part 1 Wheel Input Results**, section **Tentative pin assignments for STM32** (rows 35–50).
 
-These are tentative assignments transcribed from the screenshot, with the team's subsequent clarification: **the four rows labeled “motor DIR A/B” actually mean motor encoder A/B inputs, not L298N direction outputs.** The encoder assignments below reflect that clarification; the rest is not a verified as-built wiring record. The starter's `stm32_zephyr/app.overlay` does not yet implement these assignments. Connector and alternate-function mappings must be checked against the board documentation before use.
+These are tentative assignments transcribed from the screenshot, with the team's subsequent clarification: **the four rows labeled “motor DIR A/B” actually mean motor encoder A/B inputs, not L298N direction outputs.** The encoder assignments below reflect that clarification; the rest is not a verified as-built wiring record. The current link-only `stm32_zephyr/app.overlay` implements the UART assignment only; the remaining assignments are not integrated. Connector and alternate-function mappings must be checked against the board documentation before use.
 
 The [team Google Sheet](https://docs.google.com/spreadsheets/d/1dooWs_u2aW8KV9ROrJsESd9B8kbxStf5QkPFaePCx2k/edit?gid=177898744#gid=177898744) has now been updated to the recommended revision below: encoder names corrected in rows 39–42, steering moved to PB9/D14/TIM4_CH4 in row 43, and L298N IN1–IN4 assignments added in rows 51–54. Changes were verified saved to Drive. This records the wiring plan, not confirmation that the hardware has been rewired.
 
@@ -46,6 +46,23 @@ These four signals use distinct EXTI line numbers, so there is no EXTI source-se
 
 **Do not configure these pins as motor-control outputs or connect L298N IN1–IN4 to them while the encoders are attached.**
 
+### Hand-turn verification
+
+Both encoders passed separate 20-second USB-serial captures using the standalone
+[`bringup/encoder_test`](../bringup/encoder_test/README.md) firmware. Each selected
+wheel counted in both directions while the other count stayed fixed, with zero
+invalid transitions and zero GPIO read errors. The user confirmed turning each
+wheel vehicle-forward first:
+
+| Wheel | Raw count change for vehicle-forward | Future velocity delta correction |
+|---|---|---|
+| Left | Negative | Negate raw delta |
+| Right | Positive | Keep raw delta |
+
+Apply these sign corrections **before averaging wheel velocities**, otherwise
+forward travel can cancel out. Firmware currently prints raw counts; calibration
+for counts per wheel revolution and circumference is still pending.
+
 ## Recommended revision — proposed, not yet confirmed wired
 
 **Move only the steering PWM assignment from PC7/D9 (`TIM3_CH2`) to PB9/D14 (`TIM4_CH4`, AF2).** Keep both motor PWM assignments and all encoder connections unchanged. PB9/D14 was unused in the original table.
@@ -83,13 +100,13 @@ Use a common ground between the Nucleo, encoders, and motor driver. The team con
 
 ## Issues to resolve before firmware integration
 
-1. **Shared PWM timer:** left motor PB4 (`TIM3_CH1`) and steering PC7 (`TIM3_CH2`) share TIM3's period, though their pulse widths can differ. Using both at 50 Hz is technically possible if the servo supports that rate; the starter currently sets the motor period to 20 ms too. However, 50 Hz motor PWM gives long on/off intervals and may cause torque ripple or audible operation. Timer compare preloading can also delay a duty update until a period boundary, up to nearly 20 ms, which is unsuitable for guaranteeing the handout's 2 ms throttle response. Prefer a separate timer for the servo and a higher motor PWM frequency, selected against driver limits and measured behavior. The servo's actual supported period still needs confirmation.
-2. **Blinky shares PA5:** on this board, the onboard user LED uses PA5/D13, also assigned above to the front-right blinker. Check what is physically connected there before flashing the stock blinky sample.
-3. **Motor direction implementation missing:** the sheet's four “DIR” rows are encoder inputs, not driver outputs. The proposed IN1–IN4 assignment above supplies four independent GPIOs, but the starter `motor.c` exposes only two direction GPIOs. Update the driver and devicetree before using this proposal.
-4. **Dynamic braking:** the starter sets enable PWM to zero before setting direction inputs equal. L298N enable-low is coast, not dynamic braking. For dynamic braking, the channel must be enabled with its two direction inputs equal; verify the module truth table before powered tests.
+1. **Shared PWM timer:** left motor PB4 (`TIM3_CH1`) and steering PC7 (`TIM3_CH2`) share TIM3's period, though their pulse widths can differ. Using both at 50 Hz is technically possible if the servo supports that rate; the removed full-control starter used a 20 ms motor period. The current link app has no motor PWM configuration. However, 50 Hz motor PWM gives long on/off intervals and may cause torque ripple or audible operation. Timer compare preloading can also delay a duty update until a period boundary, up to nearly 20 ms, which is unsuitable for guaranteeing the handout's 2 ms throttle response. Prefer a separate timer for the servo and a higher motor PWM frequency, selected against driver limits and measured behavior. The servo's actual supported period still needs confirmation.
+2. **Blinky shares PA5:** on this board, the onboard user LED uses PA5/D13, also assigned above to the front-right blinker. Check what is physically connected there before flashing the stock blinky sample or the current link app, which also drives that LED.
+3. **Motor direction implementation missing:** the sheet's four “DIR” rows are encoder inputs, not driver outputs. The proposed IN1–IN4 assignment above requires four independent GPIOs. The current link app has no motor driver; implement the driver and devicetree before using this proposal. The removed full-control starter's two-direction-GPIO interface was insufficient.
+4. **Dynamic braking:** the removed full-control starter set enable PWM to zero before setting direction inputs equal; the current link app does not brake a motor. L298N enable-low is coast, not dynamic braking. For dynamic braking, the channel must be enabled with its two direction inputs equal; verify the module truth table before powered tests.
 5. **Missing test-point assignments:** additional software timing test points (`CMD_RX`, `PWM_SET`) are not present in this screenshot. Allocate them without conflicts before integration.
 
-6. **Board-default peripheral conflicts:** the Zephyr v4.3.0 board DTS assigns USART1 to PB6/PB7, enables I2C1 on PB8/PB9 and I2C3 on PA8/PC9, describes SPI1 on PA5/PA6/PA7 with PB6 chip select, and maps TIM2 PWM to PA5. The application overlay must remap USART1 to PA9/PA10, remap TIM2 PWM to PB10, and disable unused conflicting peripherals/pin configurations. Do not assume selecting aliases alone frees those pins.
+6. **Board-default peripheral conflicts:** the Zephyr v4.3.0 board DTS assigns USART1 to PB6/PB7, enables I2C1 on PB8/PB9 and I2C3 on PA8/PC9, describes SPI1 on PA5/PA6/PA7 with PB6 chip select, and maps TIM2 PWM to PA5. The link app's overlay already remaps USART1 to PA9/PA10. Actuator integration must also remap TIM2 PWM to PB10 and disable unused conflicting peripherals/pin configurations. Do not assume selecting aliases alone frees those pins.
 
 ## Mapping references
 

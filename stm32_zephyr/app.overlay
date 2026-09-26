@@ -1,30 +1,7 @@
-/* ===================== EDIT THIS FILE =====================
- * This is intentionally a BOARD-SPECIFIC TEMPLATE.
- * Replace every placeholder below with nodes/pins from your exact Nucleo.
- * Do not assume USART2 or these GPIOs exist on your board.
- *
- * Required aliases used by the starter code:
- *   app-uart, motor-left-pwm, motor-right-pwm, motor-dir-a, motor-dir-b,
- *   steering-servo, blinker-fl/blinker-fr/blinker-rl/blinker-rr,
- *   current-motor-left/current-motor-right/current-servo.
- *
- * Your final overlay will also need pinctrl configuration for the UART/PWM/ADC
- * peripherals. Consult the board's Zephyr devicetree and pinout.
- */
-/ {
-    aliases {
-        /* TODO: e.g. app-uart = &usart2; */
-        /* TODO: motor-left-pwm = &pwm...; */
-        /* TODO: motor-right-pwm = &pwm...; */
-        /* TODO: motor-dir-a = &gpio...; */
-        /* TODO: motor-dir-b = &gpio...; */
-        /* TODO: steering-servo = &pwm...; */
-        /* TODO: blinker-fl = &gpio...; */
-        /* TODO: blinker-fr = &gpio...; */
-        /* TODO: blinker-rl = &gpio...; */
-        /* TODO: blinker-rr = &gpio...; */
-        /* TODO: current-motor-left = &adc...; */
-        /* TODO: current-motor-right = &adc...; */
-        /* TODO: current-servo = &adc...; */
-    };
+/* USART1 is the Pi link. USART2 remains the ST-LINK USB console. */
+&usart1 {
+    pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+    pinctrl-names = "default";
+    current-speed = <115200>;
+    status = "okay";
 };

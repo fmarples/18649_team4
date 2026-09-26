@@ -1,6 +1,6 @@
 # Encoder-only bring-up — NUCLEO-F401RE
 
-This is a separate Zephyr application, **not** the full `stm32_zephyr/` starter.
+This is a separate Zephyr application, **not** the `stm32_zephyr/` Part 2 link app.
 It does not link the motor driver, PWM, PID, steering, Pi command parser, or
 watchdog. It reads four encoder inputs and prints telemetry over ST-LINK USB
 serial (USART2, 115200 baud, 8-N-1) every 250 ms.
@@ -29,10 +29,13 @@ transition counter and resynchronizes to the new state without inventing a
 count. GPIO initialization/read errors are explicitly reported. Printing the
 current A/B states is diagnostic; 250 ms telemetry cannot show every fast edge.
 
-Positive is defined electrically as `00 -> 01 -> 11 -> 10 -> 00`. This is **not
-yet calibrated to vehicle-forward**. Mirrored motors may need opposite signs
-later. There is no counts-per-wheel-revolution calibration or velocity estimate
-in this test.
+Positive is defined electrically as `00 -> 01 -> 11 -> 10 -> 00`. The hand-turn
+tests and the user's confirmation of forward-first movement established:
+**vehicle-forward decreases the left raw count and increases the right raw
+count**. Future control code must negate the left count delta and retain the
+right count delta before averaging velocities. This diagnostic intentionally
+continues to print raw signed counts. There is no counts-per-wheel-revolution
+calibration or velocity estimate in this test.
 
 ## Installed environment on the current Windows host
 
@@ -65,9 +68,10 @@ Set-Location "$ws\zephyr"
 west build -b nucleo_f401re -d "$ws\build-encoder-test" "$repo\bringup\encoder_test" -o=-j4
 ```
 
-Build output is outside the repository. Do not build/flash the full starter by
-mistake. Initial toolchain configuration can take several minutes on this host;
-use a command timeout of at least 300 seconds for a new build directory.
+Build output is outside the repository. Do not build/flash the Part 2 link app by
+mistake; it replaces this encoder diagnostic. Initial toolchain configuration
+can take several minutes on this host; use a command timeout of at least 300
+seconds for a new build directory.
 
 ## Flash via the Nucleo USB drive
 
@@ -117,8 +121,9 @@ ENC left=0 right=0 left_ab=11 right_ab=01 invalid_left=0 invalid_right=0 errors=
 
 ## Verification so far
 
-The captures below predate the team's confirmation of the corrected external
-E5V power setup. USB/serial operation has not yet been rechecked after that change.
+The initial streaming capture predates the team's confirmation of the corrected
+external E5V power setup. Later hand-turn results are recorded below; they do not
+independently verify supply voltage or jumper positions.
 
 - Stock Zephyr blinky built and flashed; alternating `LED state: ON/OFF` messages
   were captured from the real board. Physical LED appearance was not separately
@@ -127,6 +132,14 @@ E5V power setup. USB/serial operation has not yet been rechecked after that chan
 - Encoder-only application built and flashed successfully.
 - GREEN: 5-second serial check received 20 encoder frames, both counts zero,
   left A/B `11`, right A/B `01`, zero invalid transitions and zero read errors.
-- **Pending:** left/right hand-turn checks, vehicle-forward polarity, counts per
-  wheel revolution, and behavior at powered operating speeds. Streaming alone
-  does not establish that the encoders actually count movement correctly.
+- Left-wheel hand-turn check passed (20 seconds, 79 frames): left counts moved
+  in both directions (observed range -242 to 0), while the right count stayed 0.
+- Right-wheel hand-turn check passed (20 seconds, 79 frames): right counts moved
+  in both directions (observed range -66 to 169), while the left count stayed -36.
+- Both hand-turn captures had zero invalid transitions and zero GPIO read errors.
+- The user confirmed forward-first movement for both wheels: left forward is
+  negative raw count; right forward is positive raw count. These signs are
+  consistent with mirrored motor installation.
+- **Pending:** counts per wheel revolution, wheel circumference, and behavior at
+  powered operating speeds. Hand-turn checks do not establish high-speed accuracy
+  or closed-loop motor performance.

@@ -8,7 +8,8 @@ This is a working BOM, not a completed purchasing list or an as-built schematic.
 |---|---:|---|---|
 | ST NUCLEO-F401RE | 1 | STM32F401RE target; Zephyr board `nucleo_f401re`; team confirms external E5V power, JP5 on E5V, JP1 open; ST-LINK USB for flashing/debugging/serial | Board revision; post-change USB/serial verification |
 | L298N dual H-bridge module | 1 | Driver for left and right DC motors; ENA/ENB and IN1–IN4 interfaces | Exact module/vendor, module schematic, 5 V regulator-jumper state, thermal/current limits for these motors |
-| Left and right motor encoders | 2 | A/B quadrature signals; encoder VCC wired to Nucleo 3V3 and GND to GND; pin assignments in [STM32_PINOUT.md](STM32_PINOUT.md) | Model, rated supply/output circuitry, counts per wheel revolution, vehicle-forward signs; successful hand-turn tests |
+| Hiwonder Ackermann steering chassis kit | 1 | [Exact kit link confirmed by the user](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503), including its motors and steering servo; team uses an L298N motor driver | Installed motor/servo markings and their electrical/mechanical ratings |
+| Left and right motor encoders | 2 | A/B quadrature signals; encoder VCC wired to Nucleo 3V3 and GND to GND; both hand-turn tests passed; forward raw counts decrease on the left and increase on the right; see [STM32_PINOUT.md](STM32_PINOUT.md) | Model, rated supply/output circuitry, counts per wheel revolution, powered-speed accuracy |
 | HW-688 DC-to-DC step-down buck converter module | 1 reported | Model/type confirmed by the user; used for 12 V to 5 V conversion feeding Nucleo E5V with a common ground; apply external power before connecting USB | Module vendor/revision and datasheet, output measured under load, continuous/peak rating, other attached loads |
 | Laptop-to-Nucleo USB connection | 1 | ST-LINK programming and serial diagnostics; USB telemetry has been observed | Cable/board connection and current enumeration should be checked before each flash |
 
@@ -19,9 +20,9 @@ Last recorded L298N wiring report: ENA and ENB jumpers fitted, IN1–IN4 disconn
 | Part | Target quantity | Intended role | Missing team-specific detail |
 |---|---:|---|---|
 | Raspberry Pi 4, microSD, official USB-C supply | 1 set | Receive laptop UDP, bridge commands/status to the MCU | RAM variant, storage size, OS/setup and current network address |
-| Logitech wheel, pedals, 24 V power brick | 1 set | Laptop cockpit input; wheel buttons provide self-test and turn signals | Exact wheel model, selected proxy, measured axes/button indices; consult the team results sheet |
-| Car chassis and DC motors | 1 chassis, 2 motors | Drive and steering mechanics; motors have encoder feedback | Exact chassis/motor models, gear ratio, wheel diameter, rated voltage and stall current |
-| Steering servo | 1 | Steer the linkage from an independently powered rail | Model, supply/current rating, accepted signal voltage, safe pulse endpoints and period |
+| Logitech G920 wheel, pedals, 24 V power brick | 1 set | G920 and Windows course proxy reported in Tianyi's [Part 2 bring-up record](../README.md); wheel buttons provide self-test and turn signals | Final vehicle-function button assignments; consult the team results sheet |
+| Car chassis and DC motors | 1 chassis, 2 motors | Team-confirmed Hiwonder kit above; motors have encoder feedback | Exact motor markings, gear ratio, wheel diameter, rated voltage and stall current |
+| Steering servo | 1 | Included with the team-confirmed Hiwonder kit; steer the linkage from an independently powered rail | Exact servo marking, supply/current rating, accepted signal voltage, safe pulse endpoints and period |
 | Current sensors | 3 | One per motor and one for the servo; telemetry only in Lab 2 | Models, ranges, supply voltage, output transfer functions and ADC-safe conditioning |
 | Blinker LEDs and series resistors | 4 LED channels | Front/rear left/right signals | LED specifications, resistor values, polarity and any required driver circuitry |
 | 12 V wall adapter and barrel-jack screw-terminal splitters | 1 supply; splitters as needed | Motor rail and converter input | Adapter current rating, polarity and actual distribution wiring |
@@ -29,7 +30,7 @@ Last recorded L298N wiring report: ENA and ENB jumpers fitted, IN1–IN4 disconn
 | Breadboards, jumpers, 22 AWG solid wire | As needed | Subsystem wiring and labeled scope test points | Actual quantities and suitability of motor/power-current paths |
 | USB/network/display accessories and tools | As needed | Pi setup, wired networking, assembly | Actual inventory; see the handout for the kit list |
 
-The handout links a [Hiwonder Ackermann chassis](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) for component information. Treat this as a reference until the team's exact chassis/motor/servo markings are checked. The included encoder motor controller mentioned there is not a substitute for the team's confirmed L298N module.
+The user confirmed that this [Hiwonder Ackermann steering chassis kit](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) is the team's car kit, including the motors and steering servo. Use that exact variant link when checking component information, then verify the installed component markings before adopting ratings or calibration values. The included encoder motor controller mentioned in the handout is not a substitute for the team's confirmed L298N module.
 
 ## Current power setup
 

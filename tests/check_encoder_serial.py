@@ -1,6 +1,7 @@
 """Hardware checks for the encoder-only firmware (requires pyserial).
 
-Run from the Zephyr virtualenv. Keep the 12 V supply OFF.
+Run from the Zephyr virtualenv. Disconnect the L298N motor-power feed;
+keep the converter branch available to power the Nucleo via E5V.
 --expect streaming checks telemetry; --expect left/right checks that only the
 named wheel counts, in BOTH directions, while a human turns it during the run.
 """

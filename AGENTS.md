@@ -20,13 +20,14 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 ## Code and current state
 
-- `pi/`: C UDP-to-UART bridge starter. The laptop wheel proxy is external; see the handout's Appendix A for its source and setup.
-- `stm32_zephyr/`: full-control application starter, **not a hardware-ready implementation**. Read `README.txt` for placeholders and `doc/STM32_PINOUT.md` for known mismatches. Its overlay does not yet implement the team's pin plan.
-- `bringup/encoder_test/`: separate encoder-only Zephyr application. It excludes motor, steering, and Pi-link control. USB telemetry was verified; wheel-motion checks and calibration remain pending in its README.
-- `tests/check_encoder_serial.py`: checks actual encoder telemetry. A streaming pass does not establish correct motion counting.
-- `TASK_TABLE_STARTER.md`: scheduling template, not measured timing evidence.
+- **Agreed layout:** `pi/`, `stm32_zephyr/`, and `windows/` live at the repository root, not in lab/member subfolders. Tianyi agreed to this layout. Preserve his newer link implementation rather than restoring the old starter from Git history.
+- `pi/`: Python UDP-to-UART bridge and CRC-based protocol. Read `README.md` for run/build commands and logs. The course wheel proxy is external; `windows/` launches it.
+- `stm32_zephyr/`: Part 2 link-only application. Its overlay maps USART1 to PA9/PA10; motor, steering, encoder, blinker, and ADC integration is still pending. This is not the old full-control starter.
+- `bringup/encoder_test/`: independent encoder diagnostic. Both hand-turn tests passed; left raw counts decrease forward and right raw counts increase. Calibration and powered-speed checks remain pending in its README.
+- `test_protocol.py`: host protocol/bridge tests. `tests/test_windows_launcher.py`: relocated Windows launcher check. `tests/check_encoder_serial.py`: hardware telemetry check.
+- `PART4_START_HERE.md`: integration plan. `PART4_TASK_TABLE.md`: the single scheduling proposal, retaining Tianyi's more detailed plan plus the handout's data-exchange column. Timings remain unmeasured; current link-thread behavior is in `PROTOCOL.md`.
 
-Keep the Pi and STM32 `protocol.h` definitions consistent when changing the team-designed UART protocol. The handout does not prescribe that binary layout.
+For UART changes, read `PROTOCOL.md` and update `pi/part2_protocol.py`, the encoder/decoder in `stm32_zephyr/src/main.c`, and host tests together. The old additive-checksum protocol is incompatible; no shared `protocol.h` remains in the current app.
 
 ## Hardware and evidence rules
 
@@ -34,6 +35,6 @@ Keep the Pi and STM32 `protocol.h` definitions consistent when changing the team
 - The sheet's former motor "DIR A/B" names refer to **encoder inputs**, not L298N direction outputs. Use the corrected assignments in the pin document.
 - The team chose and confirmed **external E5V power**, with **JP5 on E5V and JP1 open**; connect USB for flashing/debugging after external power is on. This supersedes the earlier 5V/U5V hookup and interim USB-only recommendation. See `doc/HARDWARE.md` for details and unverified measurements.
 - For encoder-only bring-up, disconnect the L298N's 12 V motor-power feed separately from the converter branch powering the Nucleo. Change wiring only with supplies off. Before powered actuator tests, verify common ground, voltage limits, driver jumper states, inactive boot/reset outputs, and mechanical safety.
-- Verify L298N braking against its truth table. Enable-low coasts; the starter's brake function is not evidence of dynamic braking.
-- Flag conflicting requirements rather than silently resolving them: the handout describes 150 ms link loss in Part 2 but 100 ms at checkoff; the starter chooses 100 ms. Record the team's eventual interpretation and measured results.
+- Verify L298N braking against its truth table. Enable-low coasts; the current link app has no physical brake control.
+- Flag conflicting requirements: link loss is 150 ms in Part 2 but 100 ms at checkoff; self-test is 10 ms in the requirements table but 100 ms at checkoff. `PART4_TASK_TABLE.md` plans for the stricter targets pending TA clarification. Current MCU timeout is 80 ms, with up to about 100 ms upstream UDP freshness delay; neither is a measured end-to-end result.
 - Update the relevant hardware or bring-up document when the team confirms a model, wiring change, or test result. Keep detailed pin tables in the pin document rather than duplicating them here.

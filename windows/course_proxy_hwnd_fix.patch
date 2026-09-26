@@ -1,0 +1,24 @@
+diff --git a/logitech_steering_wheel/_wrapper.py b/logitech_steering_wheel/_wrapper.py
+index 77ee24e..06549a6 100644
+--- a/logitech_steering_wheel/_wrapper.py
++++ b/logitech_steering_wheel/_wrapper.py
+@@ -13,6 +13,7 @@ _dll_handle = ctypes.windll.LoadLibrary(os.path.join(os.path.dirname(os.path.abs
+ 
+ _dll_handle.LogiSteeringInitialize.restype = ctypes.c_bool
+ _dll_handle.LogiSteeringInitializeWithWindow.restype = ctypes.c_bool
++_dll_handle.LogiSteeringInitializeWithWindow.argtypes = [ctypes.c_bool, ctypes.c_void_p]
+ _dll_handle.LogiSteeringInitialize.restype = ctypes.c_bool
+ _dll_handle.LogiSteeringGetSdkVersion.restype = ctypes.c_bool
+ _dll_handle.LogiUpdate.restype = ctypes.c_bool
+@@ -64,7 +65,10 @@ def initialize_with_window(ignore_x_input_controllers: bool, hwnd: int):
+     Call this function to initialize if you have already the window handle
+     """
+ 
+-    return _dll_handle.LogiSteeringInitializeWithWindow(ctypes.c_bool(ignore_x_input_controllers), ctypes.c_long(hwnd))
++    # PyQt returns sip.voidptr; HWND must retain pointer width on 64-bit Windows.
++    return _dll_handle.LogiSteeringInitializeWithWindow(
++        ctypes.c_bool(ignore_x_input_controllers), ctypes.c_void_p(int(hwnd))
++    )
+ 
+ 
+ def initialize(ignore_x_input_controllers: bool):
