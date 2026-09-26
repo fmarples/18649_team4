@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.28.0)
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+project(lab2_part3)
+target_sources(app PRIVATE
+    src/main_updated.c
+    src/encoder.c
+    src/motor.c
+    src/servo.c
+    src/blinker.c
+    src/current.c
+)

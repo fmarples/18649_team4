@@ -1,0 +1,71 @@
+
+#include <zephyr/dt-bindings/pwm/pwm.h>
+
+/* UART used by the existing Pi protocol. */
+&usart1 {
+	pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};
+
+/* PWM outputs from the supplied pin map. */
+&timers2 {
+	status = "okay";
+	pwm2: pwm {
+		status = "okay";
+		pinctrl-0 = <&tim2_ch3_pb10>;
+		pinctrl-names = "default";
+	};
+};
+
+&timers3 {
+	status = "okay";
+	pwm3: pwm {
+		status = "okay";
+		pinctrl-0 = <&tim3_ch1_pb4>;
+		pinctrl-names = "default";
+	};
+};
+
+&timers4 {
+	status = "okay";
+	pwm4: pwm {
+		status = "okay";
+		pinctrl-0 = <&tim4_ch4_pb9>;
+		pinctrl-names = "default";
+	};
+};
+
+&adc1 {
+	status = "okay";
+	pinctrl-0 = <&adc1_in0_pa0 &adc1_in1_pa1 &adc1_in8_pb0>;
+	pinctrl-names = "default";
+};
+
+/ {
+	zephyr,user {
+		pwms = <&pwm3 1 PWM_MSEC(1) PWM_POLARITY_NORMAL>,
+			<&pwm2 3 PWM_MSEC(1) PWM_POLARITY_NORMAL>,
+			<&pwm4 4 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		pwm-names = "left_motor_pwm", "right_motor_pwm", "steering_servo_pwm";
+
+		left_motor_in1_gpios = <&gpioc 7 GPIO_ACTIVE_HIGH>;
+		left_motor_in2_gpios = <&gpioa 6 GPIO_ACTIVE_HIGH>;
+		right_motor_in3_gpios = <&gpioc 1 GPIO_ACTIVE_HIGH>;
+		right_motor_in4_gpios = <&gpioc 0 GPIO_ACTIVE_HIGH>;
+
+		left_encoder_a_gpios = <&gpiob 3 GPIO_ACTIVE_HIGH>;
+		left_encoder_b_gpios = <&gpioa 8 GPIO_ACTIVE_HIGH>;
+		right_encoder_a_gpios = <&gpiob 5 GPIO_ACTIVE_HIGH>;
+		right_encoder_b_gpios = <&gpioa 7 GPIO_ACTIVE_HIGH>;
+
+		front_left_blinker_gpios = <&gpiob 6 GPIO_ACTIVE_HIGH>;
+		front_right_blinker_gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+		rear_left_blinker_gpios = <&gpioa 4 GPIO_ACTIVE_HIGH>;
+		rear_right_blinker_gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
+
+		io-channels = <&adc1 0>, <&adc1 1>, <&adc1 8>;
+		io-channel-names = "left_motor_current", "right_motor_current", "servo_current";
+	};
+};
