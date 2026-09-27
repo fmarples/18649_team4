@@ -8,9 +8,10 @@
 
 const struct device test_adc = {0};
 static int16_t input[3] = {3103, 3332, 2873}; /* ~2.5 V, +1 A, -1 A. */
-static bool clip_first_scan, noisy;
+static bool clip_first_scan, noisy, delayed_isr;
 static bool ready;
 static int setup_error, read_error;
+static uint32_t read_error_channels = 0x103;
 
 bool device_is_ready(const struct device *dev)
 {
@@ -28,16 +29,31 @@ int adc_channel_setup(const struct device *dev, const struct adc_channel_cfg *cf
 int adc_read(const struct device *dev, const struct adc_sequence *sequence)
 {
     assert(dev == &test_adc);
-    if (read_error) return read_error;
-    assert(sequence->channels == 0x103 && sequence->resolution == 12);
+    if (read_error && (sequence->channels & read_error_channels)) return read_error;
+    assert(sequence->channels && !(sequence->channels & ~0x103U));
+    assert(sequence->resolution == 12);
     assert(sequence->oversampling == 0); /* F401 has no hardware oversampling. */
+    const unsigned channel_bits[] = {1U, 2U, 256U};
+    unsigned count = 0;
+    for (unsigned channel = 0; channel < 3; channel++)
+        count += !!(sequence->channels & channel_bits[channel]);
+    /* Hardware reproduction: a delayed ISR loses conversions in a non-DMA
+     * multi-channel scan and never completes. Return a bounded failure here
+     * rather than hanging the host test. Single-channel repeats wait for ISR. */
+    if (delayed_isr && count > 1) return -ETIMEDOUT;
     size_t scans = sequence->options ? sequence->options->extra_samplings + 1U : 1U;
-    assert(sequence->buffer_size == scans * sizeof(input));
-    for (size_t i = 0; i < scans; i++) {
-        memcpy((int16_t *)sequence->buffer + i * 3, input, sizeof(input));
-        if (noisy) ((int16_t *)sequence->buffer)[i * 3] += i % 2 ? 200 : -200;
+    assert(scans == 8);
+    assert(sequence->buffer_size == scans * count * sizeof(int16_t));
+    int16_t *out = sequence->buffer;
+    for (size_t scan = 0; scan < scans; scan++) {
+        for (unsigned channel = 0; channel < 3; channel++) {
+            if (!(sequence->channels & channel_bits[channel])) continue;
+            int16_t value = input[channel];
+            if (channel == 0 && noisy) value += scan % 2 ? 200 : -200;
+            if (channel == 0 && clip_first_scan && scan == 0) value = 4095;
+            *out++ = value;
+        }
     }
-    if (clip_first_scan) ((int16_t *)sequence->buffer)[0] = 4095;
     return 0;
 }
 int main(void)
@@ -51,7 +67,9 @@ int main(void)
     assert(current_backend_read(ma, &mask) == -EIO);
     assert(mask == 0);
     setup_error = 0;
+    delayed_isr = true;
     assert(current_backend_read(ma, &mask) == 0);
+    puts("PASS: acquired currents remain available with delayed non-DMA ISR service");
     assert(mask == 7);
     /* Independent ADC-code fixtures, tolerance below one ADC LSB (~4.36 mA). */
     assert(ma[0] >= -4 && ma[0] <= 4);
@@ -82,6 +100,19 @@ int main(void)
     assert(current_cache_snapshot(&cache, 40, 100).valid_mask == 0);
     read_error = 0;
     assert(current_backend_read(ma, &mask) == 0 && mask == 7);
-    puts("PASS: initialization/read errors invalidate data; retry and expiry work");
+    /* A failure after earlier channels succeeded must not publish a partial
+     * batch or leave values from the preceding successful call. */
+    const uint32_t later_channels[] = {2U, 256U};
+    for (unsigned channel = 0; channel < 2; channel++) {
+        read_error_channels = later_channels[channel];
+        read_error = -EIO;
+        assert(current_backend_read(ma, &mask) == -EIO);
+        assert(mask == 0);
+        for (unsigned i = 0; i < 3; i++) assert(ma[i] == CURRENT_UNAVAILABLE);
+        read_error = 0;
+        assert(current_backend_read(ma, &mask) == 0 && mask == 7);
+        assert(ma[2] >= -1004 && ma[2] <= -996);
+    }
+    puts("PASS: initialization/read errors invalidate whole batch; retry and expiry work");
     return 0;
 }

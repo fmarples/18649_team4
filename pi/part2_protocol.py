@@ -8,6 +8,10 @@ STATUS = struct.Struct('<2sBBIIIIiiiiiiII')
 STATUS_SIZE = STATUS.size + 4
 # User-selected direct-ADC current ceiling; numeric CSV/wire values stay signed mA.
 CURRENT_REPORT_MAX_MA = 4320
+STATUS_UDP_PORT = 8002  # Never use the course proxy's force-feedback input on 8001.
+STATUS_FIELDS = ('status_seq', 'stm_ms', 'command_seq', 'state', 'steer', 'throttle',
+                 'brake', 'current_left_mA', 'current_right_mA', 'current_servo_mA',
+                 'current_valid_mask', 'rejected')
 STATES = ('WAITING', 'LINK_OK', 'ERROR_TIMEOUT', 'ERROR_BAD_INPUT', 'ERROR_RX_OVERFLOW',
           'ERROR_MOTOR', 'SELF_TEST', 'ERROR_ACTUATOR')
 
@@ -29,6 +33,12 @@ def wheel_packet(data):
     return seq, steer, throttle, brake, buttons
 
 
+# Re-encode a validated MCU status for read-only UDP forwarding, ignoring CSV metadata.
+def status_frame(status):
+    payload = STATUS.pack(b'L2', 1, 2, *(status[name] for name in STATUS_FIELDS))
+    return payload + struct.pack('<I', zlib.crc32(payload))
+
+
 def pop_status(buffer):
     """Yield complete valid frames; resynchronise after junk or corruption."""
     magic = HEADER + b'\x02'
@@ -46,10 +56,7 @@ def pop_status(buffer):
             continue
         fields = STATUS.unpack(frame[:-4])
         del buffer[:STATUS_SIZE]
-        names = ('status_seq', 'stm_ms', 'command_seq', 'state', 'steer', 'throttle',
-                 'brake', 'current_left_mA', 'current_right_mA', 'current_servo_mA',
-                 'current_valid_mask', 'rejected')
-        yield dict(zip(names, fields[3:]))
+        yield dict(zip(STATUS_FIELDS, fields[3:]))
 
 
 def is_newer(seq, previous):

@@ -5,10 +5,12 @@ Matching STM32 firmware drives motors. Stale/invalid UDP sends a brake command.
 """
 import argparse
 import csv
+import ipaddress
 import socket
 import time
 from pathlib import Path
-from part2_protocol import command, wheel_packet, pop_status, is_newer, STATES, CURRENT_REPORT_MAX_MA
+from part2_protocol import (command, wheel_packet, pop_status, is_newer, STATES,
+                            CURRENT_REPORT_MAX_MA, STATUS_UDP_PORT, status_frame)
 from timing_gpio import create_trace
 
 TX_PERIOD = 0.020
@@ -38,7 +40,15 @@ def main():
     ap.add_argument('--log', help='New CSV path for every received status frame')
     ap.add_argument('--trace-gpio', action='store_true', help='Reserve Pi BCM17/27 for scope markers (libgpiod v2)')
     ap.add_argument('--gpiochip', default='/dev/gpiochip0', help='Pi 4 BCM GPIO chip; verify using gpioinfo')
+    ap.add_argument('--telemetry-host', type=ipaddress.IPv4Address,
+                    help='Forward statuses to this laptop; otherwise learn its IP from valid wheel UDP')
+    ap.add_argument('--telemetry-port', type=int, default=STATUS_UDP_PORT,
+                    help='Laptop status listener; must not be command/force ports 8000/8001')
     args = ap.parse_args()
+    if not 1 <= args.telemetry_port <= 65535 or args.telemetry_port in (8000, 8001):
+        ap.error('Telemetry needs a separate port, not 8000 or 8001')
+    telemetry_host = str(args.telemetry_host) if args.telemetry_host else None
+    telemetry_error = None
     import serial
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     if args.mode == 'live':
@@ -79,6 +89,15 @@ def main():
                 incoming = uart.read(4096)
                 buffer.extend(incoming)
                 for status in pop_status(buffer):
+                    # Read-only, nonblocking return path. Never feed the proxy's force input.
+                    if telemetry_host:
+                        try:
+                            udp.sendto(status_frame(status), (telemetry_host, args.telemetry_port))
+                            telemetry_error = None
+                        except OSError as error:
+                            if telemetry_error != str(error):
+                                print('Telemetry forwarding failed; vehicle link continues: ' + str(error), flush=True)
+                            telemetry_error = str(error)
                     status['pi_receive_s'] = now - started
                     gap = None if previous_status_seq is None else ((status['status_seq'] - previous_status_seq) & 0xffffffff)
                     interval = None if previous_stm_ms is None else ((status['stm_ms'] - previous_stm_ms) & 0xffffffff)
@@ -144,6 +163,8 @@ def main():
                         if not is_newer(counter, previous_counter):
                             continue
                         previous_counter = counter
+                        if not args.telemetry_host:
+                            telemetry_host = address[0]
                         axes = new_axes
                         last_udp = time.monotonic()
                         # Forward every valid new UDP state immediately.

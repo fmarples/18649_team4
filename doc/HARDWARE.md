@@ -165,7 +165,32 @@ motor-bench application is unchanged. Failed/stale acquisition is unavailable,
 not zero; a ceiling reading is not an exact overrange measurement. See
 [Part 3.5 implementation and bench checklist](CURRENT_SENSOR_HANDOFF.md).
 The planned ADC assignments remain in [STM32_PINOUT.md](STM32_PINOUT.md).
-This software change does not establish that the connections are wired or tested,
+During current-sensor debugging on 2026-09-28, the user confirmed sensor outputs
+are connected to **A0 and A3**, not A1. This confirms the reported input pins,
+not sensor identity, supply/ground wiring, measured output voltage or calibration.
+The GUI labels these channels Left motor and Servo; its Right motor/A1 channel
+is presently unconnected and any numeric reading there is not usable current.
+An ADC validity bit alone does not detect this disconnected input. At the
+user's request, the GUI now defaults to left/A0 and servo/A3 only, emits one
+startup error for disconnected right/A1 and excludes it from chart values,
+traces and scale. Raw capture still retains the ADC field. This does not change
+firmware sampling or calibration; see [GUI telemetry](GUI_TELEMETRY.md).
+The user subsequently identified missing sensor grounds and confirmed connecting
+them. Before that correction, the module OUT pins measured 3.824 V and 3.695 V
+relative to **Nucleo GND**, not the respective module GND. Those readings had an
+unverified ground reference and must not be treated as calibrated sensor outputs.
+The user also reported supplies around 5.22 V; post-correction supply, zero
+offset and ADC reference still need measurement.
+
+A passive capture after grounding (`logs/current-sense/console-20260928-002435.log`)
+recorded 31 fresh samples, validity 7, error 0 and age 2..20 ms with LINK_OK,
+zero propulsive duty and stationary encoder counts. Nominally converted A0
+readings were 577..782 mA, mean 680.1; A3 were 814..1047 mA, mean 899.1. Neither
+was clipped. These are uncalibrated readings, not accepted physical currents.
+A1 remained unconnected and its negative readings are not usable current.
+The earlier firmware acquisition stall was separately fixed; see
+[ADC diagnosis](CURRENT_ADC_DIAGNOSIS.md).
+This software change does not verify electrical correctness or calibration,
 and adds no overcurrent protection.
 
 ## Current power setup

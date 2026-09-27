@@ -182,6 +182,23 @@ The state enum describes transport, self-test and latched motor/actuator faults;
 current errors never change actuator policy in this read-only lab. Steering
 status is commanded input, not an angle measurement.
 
+## Read-only laptop telemetry
+
+The Pi bridge forwards each validated 56-byte status as one UDP datagram to
+laptop port **8002**. It learns the destination IP from an accepted advancing
+wheel packet, or uses `--telemetry-host`. Forwarding continues after wheel input
+stops so the GUI can show timeout/error status. This path never targets the
+course proxy's force-feedback port 8001; ports 8000/8001 are rejected as telemetry
+port overrides. UART framing, CRC and the command path are unchanged.
+
+The laptop launcher provides separate Raw log and Current chart windows, checks
+the Pi source IP and frame CRC, and rejects duplicates/reordering while linked.
+After 500 ms without accepted data, it shows stale readings and permits a new
+sequence baseline for a reboot/reconnect. An identical sequence/uptime duplicate
+never refreshes the display. The 500 ms value is a GUI freshness rule only, not
+a vehicle timeout. UDP send errors do not stop the Pi's command processing.
+See [GUI telemetry](doc/GUI_TELEMETRY.md) for deployment and log/crash paths.
+
 ## Timing and failure behavior
 
 - Pi forwards each newly received, valid, advancing wheel UDP packet.

@@ -1,5 +1,9 @@
 # Team 4 Lab 2
 
+**Managed session:** `start.py` starts/connects the Pi bridge and wheel GUI;
+`stop.py` stops only the managed pair. Start can cause motion; keep hands clear
+and pedals released. See [session ownership and logs](doc/ONE_CLICK_START.md).
+
 `main` contains the combined Part 3 actuator implementation and Part 4 Zephyr
 scheduling. Use the current firmware for combined motor, brake, steering and
 blinker testing; there is no separate Part 4 application or required rollback.
@@ -11,7 +15,8 @@ Part 3.5 ADC acquisition is implemented with nominal ACS712 5A calibration and
 - `stm32_zephyr/`: NUCLEO-F401RE firmware, UART parsing, motor/PID control,
   steering, blinkers, self-test, scheduling, current interface and timing markers.
 - `pi/`: UDP-to-UART bridge, CRC protocol and optional GPIO timing markers.
-- `windows/`: wheel-proxy launcher, servo console and firmware build helper.
+- `windows/`: wheel-proxy launcher with event-filtered physical-input logs and
+  read-only current charts, servo console and firmware build helper.
 - `bringup/encoder_test/` and `bringup/motor_test/`: independent diagnostics.
 - `tests/` and `test_protocol.py`: software and explicitly invoked hardware tests.
 - `tools/`: generated-build checks, bounded QEMU runner and status-log summary.
@@ -25,7 +30,8 @@ The Part 3 integration commit is `3b04a43`; the Part 4 implementation commit is
 
 The Pi link uses 115200 baud, 8N1. Commands carry raw wheel/pedal values and
 buttons; status carries system state and current validity. Deploy matching
-Pi and STM32 versions and all `pi/*.py` dependencies together.
+Pi and STM32 versions and all `pi/*.py` dependencies together. Read-only status
+returns to the laptop on UDP 8002, separate from force-feedback UDP 8001.
 
 One priority-1 owner applies motor outputs before steering and lamps. Status,
 current sampling and USB diagnostics run at priorities 2, 3 and 4 respectively.
@@ -44,6 +50,8 @@ The servo console's OFF command does not stop motors. See the
 - [Hardware BOM/power record](doc/HARDWARE.md) and [pin assignments](doc/STM32_PINOUT.md)
 - [Encoder calibration](doc/ENCODER_SPEC.md) and [motor characterization](doc/MOTOR_CHARACTERIZATION.md)
 - [Current-sensor backend contract](doc/CURRENT_SENSOR_HANDOFF.md)
+- [GUI telemetry and physical input logging](doc/GUI_TELEMETRY.md)
+- [ADC hang diagnosis and grounding verification](doc/CURRENT_ADC_DIAGNOSIS.md)
 - [Centered-start steering policy and evidence](doc/STEERING_AUTONOMOUS.md)
 - [Timing points and measurement method](doc/PART4_TIMING.md)
 - [Blank measurement worksheet](doc/PART4_MEASUREMENTS.csv)

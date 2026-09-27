@@ -11,8 +11,8 @@ if not exist "%LOGITECH_WHEEL_REPO%\proxy_gui.py" (
   exit /b 1
 )
 if exist "%LOGITECH_WHEEL_REPO%\.venv\Scripts\python.exe" (
-  "%LOGITECH_WHEEL_REPO%\.venv\Scripts\python.exe" "%~dp0start_wheel_proxy.py"
+  "%LOGITECH_WHEEL_REPO%\.venv\Scripts\python.exe" "%~dp0start_wheel_proxy.py" %*
 ) else (
-  python "%~dp0start_wheel_proxy.py"
+  python "%~dp0start_wheel_proxy.py" %*
 )
 exit /b %ERRORLEVEL%

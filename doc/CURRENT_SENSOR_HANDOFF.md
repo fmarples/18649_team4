@@ -64,8 +64,11 @@ servo may already draw current at boot.
 
 ## Acquisition, filtering and status
 
-`current_backend_read()` configures ADC1 channels 0, 1 and 8 once, then reads
-eight complete scans per work item. ADC clock is 84 MHz / 4 = 21 MHz; each
+`current_backend_read()` configures ADC1 channels 0, 1 and 8 once, then makes
+three single-channel reads per work item, each containing eight samples. The
+STM32 non-DMA driver starts each repeat only after consuming the prior sample.
+This avoids the multi-channel overrun/completion hang demonstrated in the
+[ADC diagnostic record](CURRENT_ADC_DIAGNOSIS.md). ADC clock is 84 MHz / 4 = 21 MHz; each
 channel uses 480 acquisition cycles, 12-bit resolution and no hardware
 oversampling. A batch mean reduces noise without carrying old readings across
 work periods. Nominal conversion time for 24 readings is about 0.56 ms,
@@ -131,10 +134,16 @@ Software checks for this change:
 - Existing QEMU cache tests were updated to remove the obsolete ENOSYS backend
   expectation. QEMU was not rerun on this host, which has no QEMU executable.
 
-Firmware: `build/part4/zephyr/zephyr.bin`. This build is **byte-identical**
-(SHA-256 `5ddeafc5992a8c8cdda168164524020d3add0fd44ee09199823e18f95e88f5a7`)
-to the image the user authorized flashing for the steering task, so the ADC
-backend is already running on that Nucleo; no separate sensor flash is pending.
+The earlier image was SHA-256
+`5ddeafc5992a8c8cdda168164524020d3add0fd44ee09199823e18f95e88f5a7`.
+On 2026-09-28, authorized current-only diagnosis replaced it with the
+single-channel acquisition fix. Final `build/part4/zephyr/zephyr.bin` SHA-256:
+`eb46d9cf7c2ab5e5d3a50b768c70a7b0becd76180772ecc8887aeabcd8e3e924`.
+A passive boot capture contains 243 fresh, valid samples over 62.8 seconds with
+no commanded movement. The managed wheel session was stopped for that capture;
+a later live-session check passed after the user corrected sensor grounding. See the
+[diagnostic record](CURRENT_ADC_DIAGNOSIS.md) for the controlled overrun evidence,
+external driver restoration, logs and limits of the result.
 Build and verification logs are in
 `logs/current-sense/`: `build.log`, `generated-check.log`, `host-0.log`,
 `host-1.log`, `python-tests.log`, `protocol-tests.log`. Verification exceptions
@@ -150,7 +159,7 @@ every received status frame. No native MCU crash dump is configured; the full
 USB capture is the persistent MCU fatal-report evidence. Retain the matching
 `zephyr.elf` for symbol lookup. Never assume the previous COM port or board drive.
 
-## Observed hardware reading, not yet explained
+## Hardware observations and grounding correction
 
 The first flashed run of this backend reported **about -8 A on all three channels,
 with validity bits set**, at rest and with no load. That is a real acquisition
@@ -159,6 +168,29 @@ unconnected/floating ADC inputs, an unpowered sensor, a wrong module output pin,
 or a zero offset far from the assumed 2.5 V. Until wiring and offsets are checked,
 treat these numbers as evidence that the ADC path runs, not that it measures.
 No user-visible alarm or actuator action depends on them.
+
+After the acquisition fix, the final passive capture reported left and servo
+at +4320 mA throughout, and right at -6131 to -4908 mA. These remain implausible
+unvalidated readings, not calibrated rest currents. The diagnostic scan image
+had reported substantially different values. Check the actual sensor outputs,
+supply, ground and ADC connection with a meter before interpreting the numbers.
+No zeros, offsets, sign changes or ceiling changes were introduced to hide them.
+
+The user subsequently confirmed only A0 and A3 are connected, identified missing
+sensor grounds, and reported connecting them. Before grounding, OUT measured
+3.824 V and 3.695 V relative to Nucleo GND, an invalid reference for ungrounded
+modules. After correction, an eight-second passive capture under LINK_OK showed
+31 fresh samples, error 0, age 2..20 ms; clipping disappeared. A0 averaged
+680.1 mA, range 577..782; A3 averaged 899.1 mA, range 814..1047, under the
+unchanged nominal conversion. These still need measured zero offsets/reference
+and a known-current check. A1 is physically unconnected; its negative numeric
+readings are not meaningful current even though ADC acquisition succeeds.
+
+The live Pi CSV and GUI sample-file checks now pass. The original ADC hang and
+the missing sensor grounds were separate issues. Full details and persistent
+artifacts are in [ADC diagnosis](CURRENT_ADC_DIAGNOSIS.md). The user's new live
+session was preserved. Final combined software suite: 63 host tests and 10
+protocol tests passed.
 
 ## Remaining Part 3.5 bench record
 

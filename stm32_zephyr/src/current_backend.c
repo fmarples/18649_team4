@@ -3,7 +3,7 @@
 #include <errno.h>
 
 static const struct device *const adc = DEVICE_DT_GET(DT_NODELABEL(adc1));
-/* ADC scans selected channels in ascending order: PA0, PA1, PB0. */
+/* Status order: PA0, PA1, PB0. */
 static const uint8_t channels[CURRENT_CHANNELS] = {0, 1, 8};
 static const int32_t zero_mv[CURRENT_CHANNELS] = {
     CONFIG_LAB_CURRENT_LEFT_ZERO_MV, CONFIG_LAB_CURRENT_RIGHT_ZERO_MV,
@@ -35,25 +35,30 @@ int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
         }
         configured = true;
     }
-    /* Eight complete scans, no inter-scan delay or cross-period filter state. */
+    /* One channel per sequence: the non-DMA STM32 driver must consume each
+     * conversion before starting the next. Multi-channel scans can overrun
+     * during ISR latency and leave adc_read waiting forever for a lost sample.
+     * Keep eight samples per channel and no cross-period filter state. */
     enum { SCANS = 8 };
-    int16_t raw[SCANS][CURRENT_CHANNELS];
+    int16_t raw[CURRENT_CHANNELS][SCANS];
     const struct adc_sequence_options options = {.extra_samplings = SCANS - 1};
-    const struct adc_sequence sequence = {
-        .options = &options,
-        .channels = (1U << 0) | (1U << 1) | (1U << 8),
-        .buffer = raw,
-        .buffer_size = sizeof(raw),
-        .resolution = 12,
-    };
-    int error = adc_read(adc, &sequence);
-    if (error) return error;
+    for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
+        const struct adc_sequence sequence = {
+            .options = &options,
+            .channels = 1U << channels[i],
+            .buffer = raw[i],
+            .buffer_size = sizeof(raw[i]),
+            .resolution = 12,
+        };
+        int error = adc_read(adc, &sequence);
+        if (error) return error;
+    }
     for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
         int32_t sum = 0;
         bool clipped = false;
         for (unsigned scan = 0; scan < SCANS; scan++) {
-            sum += raw[scan][i];
-            clipped |= raw[scan][i] == 4095;
+            sum += raw[i][scan];
+            clipped |= raw[i][scan] == 4095;
         }
         int64_t uv = (int64_t)sum * DT_PROP(DT_NODELABEL(adc1), vref_mv) * 1000 /
                      (4096 * SCANS);

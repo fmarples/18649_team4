@@ -21,7 +21,8 @@ def wheel(seq, throttle):
 
 
 # Run the real bridge until an external KeyboardInterrupt, recording its UART frames.
-def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None):
+def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None,
+            received_status=b'', forwarded=None, fail_forward=False, extra_args=()):
     queue = deque(events)
     clock = SimpleNamespace(now=0.0, slept=False)
     writes = []
@@ -37,16 +38,24 @@ def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None):
         def bind(self, address): pass
         def setblocking(self, value): pass
         def close(self): pass
+        def sendto(self, data, address):
+            if fail_forward: raise OSError('Simulated unreachable monitor')
+            if forwarded is not None: forwarded.append((data, address))
+            return len(data)
         def recvfrom(self, size):
             if not queue or queue[0][0] > clock.now:
                 raise BlockingIOError
             return queue.popleft()[1], ('127.0.0.1', 9000)
 
     class Uart:
+        delivered = False
         def __enter__(self): return self
         def __exit__(self, *args): pass
         def reset_input_buffer(self): pass
-        def read(self, size): return b''
+        def read(self, size):
+            if clock.now <= 0 or self.delivered: return b''
+            self.delivered = True
+            return received_status
         def write(self, data):
             if trace_events is not None: trace_events.append('write')
             writes.append((clock.now, struct.unpack_from('<IiiiI', data, 4)))
@@ -62,13 +71,45 @@ def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None):
          patch.object(bridge.socket, 'socket', return_value=Udp()), \
          patch.object(bridge, 'create_trace', return_value=Trace()), \
          patch.dict(sys.modules, {'serial': SimpleNamespace(Serial=lambda *a, **kw: Uart())}), \
-         patch.object(sys, 'argv', ['part2_bridge.py', '--mode', 'live']), \
+         patch.object(sys, 'argv', ['part2_bridge.py', '--mode', 'live', *extra_args]), \
          patch('builtins.print'):
         bridge.main()
     return writes
 
 
 class BridgeFreshnessTests(unittest.TestCase):
+    def test_forwards_only_valid_status_to_separate_laptop_port(self):
+        import zlib
+        body = protocol.STATUS.pack(b'L2', 1, 2, 1, 20, 0, 1, 0, 32767, 32767,
+                                    -1000, 0, 4320, 7, 0)
+        status = body + struct.pack('<I', zlib.crc32(body))
+        corrupt = status[:-1] + bytes([status[-1] ^ 1])
+        forwarded = []
+        capture([(0, wheel(1, 32767))], .03, received_status=corrupt + status,
+                forwarded=forwarded)
+        self.assertEqual(forwarded, [(status, ('127.0.0.1', 8002))])
+
+    def test_missing_or_unreachable_gui_does_not_change_command_path(self):
+        import zlib
+        body = protocol.STATUS.pack(b'L2', 1, 2, 1, 20, 0, 1, 0, 32767, 32767,
+                                    -1000, 0, 4320, 7, 0)
+        status = body + struct.pack('<I', zlib.crc32(body))
+        events = [(0, wheel(1, -32768))]
+        baseline = capture(events, .1)
+        failed = capture(events, .1, received_status=status, fail_forward=True)
+        self.assertEqual(failed, baseline)
+        forwarded = []
+        capture([], .01, received_status=status, forwarded=forwarded,
+                extra_args=('--telemetry-host', '127.0.0.2', '--telemetry-port', '8123'))
+        self.assertEqual(forwarded, [(status, ('127.0.0.2', 8123))])
+        self.assertNotEqual(forwarded[0][1][1], 8001)
+
+    def test_telemetry_cannot_target_force_or_command_port(self):
+        for port in ('8000', '8001', '0', '65536'):
+            with self.subTest(port=port), self.assertRaises(SystemExit) as error:
+                capture([], .01, extra_args=('--telemetry-port', port))
+            self.assertEqual(error.exception.code, 2)
+
     def test_trace_includes_invalid_udp_and_stop_frames(self):
         edges = []
         writes = capture([(0, wheel(1, 32767)), (0.001, b'bad')], .090, trace_events=edges)

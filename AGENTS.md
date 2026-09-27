@@ -20,6 +20,14 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 ## Code and current state
 
+- **Starting/stopping the wheel session:** use root `start.py` / `stop.py`, not
+  ad-hoc background launches. Read `doc/ONE_CLICK_START.md` for ownership, SSH
+  setup and persistent logs. Start auto-connects the wheel and can cause motion;
+  stop targets only the recorded GUI tree and unique Pi service. The scripts
+  do not deploy Pi files or flash firmware. The user wants Python scripts only,
+  without .lnk shortcuts. This laptop has passwordless SSH alias `wheelpi` with a dedicated
+  local key; private key material stays outside the repo.
+
 - **`main`:** combines the motor/PID link with Tianyi's blinkers,
   self-test and Pi-controlled steering. Read `doc/INTEGRATION.md` first.
   State 5 remains motor fault; self-test is 6 and actuator fault is 7. PA5 is
