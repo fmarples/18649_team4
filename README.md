@@ -1,6 +1,8 @@
 # Team 4 Lab 2
 
-**Use `main`: start with [tomorrow's step-by-step Part 4 guide](PART4_START_HERE.md).**
+**Use `main`: start with [the combined Part 3 test and Part 4 guide](PART4_START_HERE.md).**
+For the five handout answers, C versus Zephyr and what integration changed,
+read [Part 4 explained in plain language](doc/PART4_EXPLAINED.md).
 The integrated code is now on main. The five completed/retired branches were
 deleted after saving their tips as [archive tags](doc/BRANCH_ARCHIVE.md).
 The [actual task table](PART4_TASK_TABLE.md), [probe-board instructions](doc/PART4_TIMING.md)

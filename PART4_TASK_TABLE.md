@@ -1,10 +1,11 @@
 # Part 4 task table: implemented schedule, hardware measurements pending
 
-This table describes `lab2-integration`, not the earlier proposed thread split.
+This table describes the integrated firmware now on `main`, not the earlier proposed thread split.
 Tianyi reports Parts 3.3 and 3.4 tested individually. Combined-board behavior
 and scope measurements remain pending; Part 3.5 is unfinished.
 Requirements come from the [handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf),
 Part 4, the requirements table and checkoff.
+For beginner explanations and examples, read [Part 4 explained](doc/PART4_EXPLAINED.md).
 
 All application threads are **preemptible**. Smaller priority numbers run first.
 Priorities and periods live in `stm32_zephyr/src/schedule.h`; main priority is
@@ -74,7 +75,7 @@ can miss a deadline, which is why timing is measured under simultaneous load.
 - B1 retains the teammate's **latched enable-low/coast** stop until reset.
   B1 is not the checkoff's A-button dynamic-braking self-test.
 - The STM32 timeout was changed from 80 to **60 ms** to implement the handout's
-  explicit three missed 20 ms updates. Hardware deadline includes the next
+  three-missed-update policy at our 20 ms command cadence. Hardware deadline includes the next
   owner iteration and actual output change. The older 150 ms Part 2 and 100 ms
   checkoff bounds remain looser; self-test uses the stricter 10 ms figure.
 - Pi UDP freshness remains 80 ms. It sends a brake frame then stops refreshing.

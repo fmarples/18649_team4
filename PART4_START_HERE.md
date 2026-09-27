@@ -1,4 +1,4 @@
-# Part 4: tomorrow at 10 AM, step by step
+# Combined Part 3 test and Part 4 checkoff: step by step
 
 Use branch **main**. This guide is for the combined **motor Nucleo**.
 Tianyi reports steering (3.3) and blinkers (3.4) already tested on their separate
@@ -7,6 +7,13 @@ outputs to one board. Part 3.5 current sensors are unfinished.
 
 The software has been prepared without commanding, flashing or connecting to
 your hardware. Timing and combined-car tests below are tasks for the meeting.
+For what the code does and answers to the five Part 4 questions, read
+[Part 4 explained](doc/PART4_EXPLAINED.md).
+
+Use three separate operating windows: **A = USB servo/diagnostics**,
+**B = SSH into Pi running the bridge**, **C = Windows wheel proxy**.
+Commands at `servo>` are console words such as `status`, not PowerShell commands.
+Commands at `labuser@wheelpi` run on the Pi. Keep these windows open during tests.
 
 ## 1. Agree on roles before powering up
 
@@ -120,7 +127,7 @@ In that PowerShell window:
 ```powershell
 $nucleoPort = Read-Host 'Verified final Nucleo COM port, for example COM11'
 $usbLog = Join-Path $repoPath ('logs\part4\usb-' + (Get-Date -Format yyyyMMdd-HHmmss) + '.log')
-& "$repoPath\windows\start_servo_console.cmd" --port $nucleoPort --log $usbLog
+& "$repoPath\windows\start_servo_console.cmd" --port $nucleoPort --file "$repoPath\config\servo_calibration.json" --log $usbLog
 ```
 
 At the `servo>` prompt type these individually, pressing Enter after each:
@@ -141,6 +148,8 @@ Expected:
   behavior/pin state; a printed mode is only the requested software state.
 
 Keep this window open. It is the servo's heartbeat source and records USB logs.
+The explicit `--file` selects the tracked 1200/1600/2000 preset rather than an
+older locally saved calibration. Recheck it if the actual linkage changed.
 Do not open miniterm on the same COM port. `off` and `quit` only stop servo PWM;
 they are **not motor-stop commands**. Use the brake pedal/A self-test, or the
 existing B1 latched coast stop as appropriate.
@@ -236,20 +245,106 @@ status
 `arm` moves toward the saved center, 1600 us. `live` follows the Logitech wheel
 only when centered, linked and free of faults. Expected mode: **LIVE**.
 
-Test one item at a time, then together:
+Perform these tests in this order. Keep the driven wheels raised and the
+chassis stable. One person operates the wheel/pedals; the motor teammate watches
+the drivetrain and has access to B1/power; the third records observations.
 
-1. Wheel left/center/right: same tested mapping, no strain. Check both LED pairs
-   still work when steering is active.
-2. Left paddle (5): red + yellow blink. Right paddle (4): white + blue blink.
-   Turn past the selected-side threshold and return: that signal cancels.
-3. Motor teammate tests quarter/half/full throttle on the raised-wheel bench.
-   Live firmware targets approximately 75/150/300 RPM. Use USB `diag` for
-   target and actual milli-RPM; divide by 1000 to get RPM.
-4. At speed, brake: motor mode=2; physical wheels stop in braking mode.
-   Hold throttle and brake together: brake must win.
-5. While motor, steering and blinkers run together, observe resets, stalls,
-   encoder faults or supply problems. Record observations; don't infer timing
-   from how quickly the GUI refreshes.
+### 8A. Released controls
+
+1. Release both pedals and center the Logitech wheel.
+2. Type `diag` in window A. Look for `STM LINK_OK`, `DRIVE mode=0`,
+   `target_mrpm=0` and `fault=0`.
+3. Motors should not propel the car. LEDs should be off after recovery.
+4. Type `status`: servo should be LIVE, with pulse near 1600 us when centered.
+5. In window B, verify all three currents are UNAVAILABLE; that is expected
+   until 3.5, not a successful current-sensor measurement.
+
+### 8B. Steering (3.3) with the motor link active
+
+1. Keep both pedals released. Slowly turn the Logitech wheel left, then return
+   to center; repeat right and return. Use the already tested mechanical limits.
+2. Type `status` at each position. Fully left/center/right should report about
+   1200/1600/2000 us; halfway positions should be between these values.
+3. Confirm the car wheels actually move in the correct direction and smoothly
+   return to straight. Stop further motion if the changed installation binds
+   or strains. A correct printed pulse does not prove correct mechanics.
+4. Save the USB log and, if useful, a short video. For timing, measure SRV with
+   the scope as described in PART4_TIMING; physical angle is separate evidence.
+
+### 8C. Blinkers (3.4) and cancellation
+
+1. Keep the Logitech wheel centered. Press and release the **left paddle (5)**:
+   red front-left and yellow rear-left should blink together. Both right LEDs
+   should remain off. The normal cycle is about 0.5 s on, 0.5 s off.
+2. Press and release the same paddle again: both left LEDs turn off.
+3. Press the left paddle, then the **right paddle (4)**: left cancels, and white
+   front-right plus blue rear-right blink together.
+4. With right selected, turn until the Pi's `steer` is at least +8000. Return
+   toward center until it is +6000 or less. Right should cancel.
+5. Center, select left, turn until `steer` is -8000 or less, then return until
+   it is -6000 or more. Left should cancel.
+6. Turn the wheel without selecting a paddle: it should not start a blinker.
+   Steering only cancels a previously selected signal.
+7. Scope each front/rear pair for period, duty and skew. Looking synchronized
+   is a functional observation, not proof of the 1 ms skew requirement.
+
+### 8D. Motor speed and encoders (3.1)
+
+1. Center the steering and leave blinkers off initially. Brake pedal must be
+   fully released; the current policy treats any value other than 32767 as brake.
+2. Press throttle gradually. Below about 7.67% travel, no drive target is
+   requested. Once the target crosses 23 RPM, the existing startup kick runs.
+3. Hold roughly quarter throttle steady and type `diag`. Then repeat at half
+   and full throttle if the motor bench is operating correctly.
+
+   | Pedal position | Requested target | Typical target_mrpm field |
+   | --- | --- | --- |
+   | Released | 0 RPM | 0 |
+   | About quarter | About 75 RPM | About 75000 |
+   | About half | About 150 RPM | About 150000 |
+   | Full | 300 RPM | 300000 |
+
+4. `left_mrpm`, `right_mrpm`, and `avg_mrpm` are measured speeds in
+   thousandths of RPM: 150000 means 150 RPM. Both corrected speeds should be
+   positive when driving forward, even though raw left counts decrease.
+   `duty_mpercent=60000` means 60%, not 60000%.
+5. Record requested target and settled average speed at each setting. Target
+   values are not measured results. If the controller saturates at 100% and
+   cannot reach a target, record that; do not mark velocity tracking passed.
+6. Have the motor teammate perform their controlled-load/PID check from 3.1:
+   a load disturbance should produce corrective PWM and recovery toward the
+   target when feasible. Keep fingers/cables clear of the drivetrain; do not
+   deliberately lock a powered motor for this speed test.
+7. Release throttle: drive mode returns to 0/coast. Verify the wheels are free
+   to spin down. Save the log; don't change PID gains just to make a plot look good.
+
+### 8E. Brake priority and dynamic braking (3.2)
+
+1. Bring the wheels to a repeatable speed. Release throttle and observe the
+   coast stop. Then repeat from approximately the same speed and press brake.
+2. With brake pressed, `diag` should show mode=2 and target_mrpm=0. The wheels
+   should stop through dynamic braking; compare stop behavior with coasting.
+3. Hold the brake, then press throttle: no forward drive should be restored.
+   Release throttle **before** releasing brake to avoid an intended restart.
+4. Measure the driver input states to confirm it is braking, not only printing
+   a brake request. Current L298N policy has both inputs equal/low and enables
+   steady high for braking. The propulsive PWM pulse train stops; ENA/ENB are
+   not low. Enable-low is the separate coast mode.
+5. Scope the brake command marker to the direction-pin change for the 2 ms
+   response requirement. A millisecond response means the electrical command
+   changes promptly, not that a moving wheel mechanically stops within 2 ms.
+
+### 8F. All currently implemented functions together
+
+1. Run a steady motor target while steering gently within the calibrated range.
+2. Select a blinker, turn and return to cancel; test the other side.
+3. While steering and blinking, apply brake with throttle still pressed.
+   Brake must win, with no spontaneous reboot or lost link.
+4. Keep status logging and the USB console running throughout. Record any
+   supply reset, encoder fault, unexpected LED output or control delay.
+5. Release throttle/brake and center steering before fault tests below.
+6. Repeat this combined test after 3.5 is implemented, with real ADC acquisition
+   active. The current unavailable stub does not test the final ADC workload.
 
 ## 9. Run fault and recovery checks
 
@@ -262,6 +357,23 @@ Use the [measurement worksheet](doc/PART4_MEASUREMENTS.csv).
 | Press Nucleo B1 | Latched ERROR_MOTOR, enables off/coast, hazards, servo OFF | Stop proxy/bridge before reset; reset Nucleo, then repeat startup/load/arm/live |
 | Stop Pi bridge (Ctrl+C) | No new UART commands; timeout/brake/hazards | Restart bridge; release throttle before recovery; re-arm servo |
 | Close servo console | Servo PWM expires within its 500 ms lease | Motors are independent; reopening does not auto-arm servo |
+
+For the A-button self-test, first let the car run at a repeatable motor target,
+then press and release **A once**. Confirm the wheels brake, all four LEDs
+flash as hazards, and `status` reports servo OFF. Release throttle. To clear
+an already latched self-test, perform a fresh double-press of A (press-release-
+press within 400 ms). Confirm LINK_OK, center the Logitech wheel, then type
+`arm`, `live`, `status`. Clearing A cannot clear a real link or motor fault.
+
+For the UART-loss test, remove only the **Pi pin 8 -> STM32 D2 signal jumper**,
+keeping grounds and power connected. Initially test at rest; once that passes,
+repeat at the agreed motor test speed to observe braking. Window B can still
+receive ERROR_TIMEOUT over the other UART direction. Release throttle before
+reconnecting. Observe recovery, then explicitly re-arm LIVE steering.
+
+Do not label a stopped proxy/UDP test as the same cable-loss test. On stale UDP,
+the Pi sends a brake frame after 80 ms, then stops sending; UART timeout hazards
+can follow 60 ms later. A <=100 ms upstream-UDP-to-hazards result is not claimed.
 
 To demonstrate rejected input, first release throttle, issue servo `off`,
 and stop the live bridge. In the Pi terminal run each test separately:
@@ -338,6 +450,12 @@ deliberately. No measurement has been invented or pre-filled.
 - [ ] Required scope captures meet the deadlines under simultaneous load.
 - [ ] Actual task table, measurement evidence and team values are updated.
 - [ ] Team can explain ISR/thread/work/timer roles and synchronization.
+
+For shutdown: release throttle, stop the Pi bridge with Ctrl+C, verify the
+motor stop/fault behavior, type `quit` in the servo console, and close the
+proxy. Shut the Pi down cleanly with `sudo poweroff` before removing its supply.
+Then remove actuator/board power. Do not use closing the servo console as a
+substitute for stopping the motors.
 
 The USB-dependent servo recovery remains a documented bench policy. Confirm
 with the TA whether checkoff requires automatic steering recovery after link
