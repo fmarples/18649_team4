@@ -5,7 +5,6 @@ Tianyi reports Parts 3.3 and 3.4 tested individually. Combined-board behavior
 and scope measurements remain pending; Part 3.5 is unfinished.
 Requirements come from the [handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf),
 Part 4, the requirements table and checkoff.
-For beginner explanations and examples, read [Part 4 explained](doc/PART4_EXPLAINED.md).
 
 All application threads are **preemptible**. Smaller priority numbers run first.
 Priorities and periods live in `stm32_zephyr/src/schedule.h`; main priority is

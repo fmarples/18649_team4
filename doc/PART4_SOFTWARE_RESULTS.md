@@ -60,28 +60,14 @@ the test harness; the final protocol run passes. No hardware was used to fix it.
 
 ## Reproduce software checks
 
-From this checkout in PowerShell on Tianyi's laptop:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\windows\build_part4.ps1
-$labPython = 'C:\Users\hetia\CMU\18649\zephyrproject\.venv\Scripts\python.exe'
-& $labPython -m unittest discover -s tests -p 'test_*.py' -v
-& $labPython test_protocol.py -v
-$integrationRepo = (Get-Location).Path
-$env:Path = 'C:\Users\hetia\CMU\18649\zephyrproject\.venv\Scripts;' + $env:Path
-$env:ZEPHYR_SDK_INSTALL_DIR = 'C:\Users\hetia\zephyr-sdk-1.0.1'
-Push-Location 'C:\Users\hetia\CMU\18649\zephyrproject'
-west build -b qemu_cortex_m3 "$integrationRepo\tests\integration" -d "$integrationRepo\build\integration-tests" -o=-j4
-Pop-Location
-& $labPython tools/run_qemu_tests.py --qemu C:\Users\hetia\zephyr-sdk-1.0.1\hosttools\qemu\qemu-system-arm.exe --log ('logs/integration/qemu-' + (Get-Date -Format yyyyMMdd-HHmmss) + '.log')
-```
-
-These commands do not flash or use COM ports. The QEMU runner stops only the
-emulator it launched, after a success/failure result or a bounded timeout.
+Build commands are in the repository README. The production app is
+`stm32_zephyr/`; the ARM/QEMU suite is `tests/integration/`. The bounded
+runner is `tools/run_qemu_tests.py`. Use the installed Zephyr environment
+and SDK; no machine-specific paths are required by the test source.
 
 ## Required next evidence
 
-Follow [PART4_START_HERE](../PART4_START_HERE.md) with the team: identify the
+Use the [integration design](INTEGRATION.md) and [timing specification](PART4_TIMING.md): identify the
 final motor board, deploy matching firmware/Pi modules, test all outputs and
 fault/recovery behavior together, complete 3.5 and measure deadlines while
 all normal tasks are active. Record the actual timing in the task table and

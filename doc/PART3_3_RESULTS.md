@@ -21,7 +21,7 @@ pending. The first converter remains the STM32's 5 V source. Tianyi subsequently
 reports the TA said to use 5 V and that it will work: the selected bench plan
 now uses the second fixed-output converter for the servo. This guidance does
 not change the published 6–8.4 V specification or establish a measured success
-at 5 V. See `HW688_OUTPUT_CHECK.md`.
+at 5 V. See [the hardware record](HARDWARE.md).
 
 ## Implemented
 

@@ -58,7 +58,7 @@ motor board has been rewired or shares this board's power arrangement.
 
 On the blinker branch PA5 is no longer a link indicator; the onboard green LED
 follows front-right. I2C1, SPI1 and board-default PA5 PWM are disabled to avoid
-pin conflicts. See [Part 3.4 instructions](PART3_4_START_HERE.md).
+pin conflicts. See [Part 3.4 verification results](PART3_4_RESULTS.md).
 
 Encoder VCC is connected to Nucleo **3V3** and encoder GND to Nucleo **GND**.
 

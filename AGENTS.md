@@ -21,7 +21,7 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 ## Code and current state
 
 - **`main`:** combines the motor/PID link with Tianyi's blinkers,
-  self-test and opt-in servo bench. Read `doc/INTEGRATION_START_HERE.md` first.
+  self-test and opt-in servo bench. Read `doc/INTEGRATION.md` first.
   State 5 remains motor fault; self-test is 6 and actuator fault is 7. PA5 is
   exclusively the front-right blinker. TIM2/PB10 must remain enabled for the
   right motor; TIM4/PB9 drives steering. `config/servo_calibration.json` contains
@@ -43,7 +43,13 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 - `stm32_zephyr/`: CRC Pi link, encoder/PID and L298N driver with pedal cutoff, kick, braking, B1 and link-loss handling, now combined with blinkers/self-test and opt-in steering. ADC and console-independent steering operation remain pending. This is not the old full-control starter.
 - `bringup/encoder_test/`: independent encoder diagnostic. Both hand-turn tests passed; left raw counts decrease forward and right raw counts increase. Use the user-validated **1320 counts/wheel revolution**. For the completed 100%-duty count/time measurement, read `doc/MOTOR_CHARACTERIZATION.md`; the user selected **300 RPM at full throttle** and a low-pedal cutoff based on measured 40%-duty speed. See `PROTOCOL.md` for the implemented target/output policy and pending hardware verification.
 - `test_protocol.py`: host protocol/bridge tests. `tests/test_windows_launcher.py`: relocated Windows launcher check. `tests/check_encoder_serial.py`: hardware telemetry check.
-- `PART4_START_HERE.md`: detailed meeting/deployment/test guide. `PART4_TASK_TABLE.md` now describes the actual implementation: owner 1, status 2, dedicated current-sampling workqueue 3, console 4. Current backend is deliberately unavailable until Part 3.5 is ready. PC2/CN7-35 and PC3/CN7-37 are newly allocated timing outputs; Pi trace uses BCM17/27 only with `--trace-gpio`. Follow `doc/PART4_TIMING.md`; hardware timing is unmeasured.
+- `PART4_TASK_TABLE.md` describes the actual implementation: owner 1, status 2, dedicated current-sampling workqueue 3, console 4. Current backend is deliberately unavailable until Part 3.5 is ready. PC2/CN7-35 and PC3/CN7-37 are newly allocated timing outputs; Pi trace uses BCM17/27 only with `--trace-gpio`. Follow `doc/PART4_TIMING.md`; hardware timing is unmeasured.
+
+- **Documentation preference:** personal step-by-step operating instructions,
+  tutoring explanations and host-specific session plans must stay outside the
+  repository and must not be pushed to GitHub unless explicitly requested.
+  Keep team code, technical specifications, task tables and verification records
+  in Git. An ignored `.local-notes/` directory may point to local personal guides.
 
 For UART changes, read `PROTOCOL.md` and update `pi/part2_protocol.py`, the encoder/decoder in `stm32_zephyr/src/main.c`, and host tests together. The old additive-checksum protocol is incompatible; no shared `protocol.h` remains in the current app.
 

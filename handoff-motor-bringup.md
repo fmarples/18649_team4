@@ -53,7 +53,7 @@ There is no implemented current limiting or thermal protection. The thresholds c
 - `doc/HARDWARE.md`, `doc/STM32_PINOUT.md`, `doc/ENCODER_SPEC.md`: power, wiring, B1 mapping, calibration, and remaining electrical uncertainties.
 - `bringup/encoder_test/README.md`: installed Windows/Zephyr tools and flashing workflow.
 - `doc/18-449_649 Lab2 - Sensors and Actuators v1_0.pdf`: Lab 2 requirements, including average encoder velocity for control. `doc/18-449_649 Lab 1 - Requirements.pdf` is also tracked; do not import its later-system scope into this bench task.
-- `PART4_START_HERE.md`, `PART4_TASK_TABLE.md`, `PROTOCOL.md`: integration plan and current CRC link protocol.
+- `doc/INTEGRATION.md`, `PART4_TASK_TABLE.md`, `PROTOCOL.md`: integration design and current CRC link protocol.
 
 ## Implementation and verification
 

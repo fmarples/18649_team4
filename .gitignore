@@ -5,3 +5,14 @@ __pycache__/
 # Generated Zephyr build output and local run logs
 build/
 logs/
+
+# Personal operator/tutoring material stays local, outside team documentation.
+.local-notes/
+personal-notes/
+personal-guides/
+PART4_START_HERE.md
+doc/PART4_EXPLAINED.md
+doc/PART3_3_START_HERE.md
+doc/PART3_4_START_HERE.md
+doc/INTEGRATION_START_HERE.md
+doc/HW688_OUTPUT_CHECK.md

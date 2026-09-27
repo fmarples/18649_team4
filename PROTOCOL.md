@@ -4,7 +4,7 @@ The root application combines main's encoder/PID motor driver with Tianyi's
 blinkers, wheel-button self-test and opt-in servo bench on one NUCLEO-F401RE.
 The current-sampling interface is prepared, but the actual Part 3.5 backend and
 console-independent steering operation remain pending.
-See `doc/INTEGRATION_START_HERE.md` for verification and deployment limits.
+See `doc/INTEGRATION.md` for integration behavior and verification limits.
 
 ## Wiring and transport
 
