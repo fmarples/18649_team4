@@ -7,11 +7,12 @@ current-sampling workqueue with unavailable backend, and a 60 ms UART timeout.
 Use `build/part4` for the new image, and deploy all `pi/*.py` files together.
 Tianyi reports 3.3 and 3.4 individually tested; combined tests remain pending.
 
-Branch: **lab2-integration**. Base: main commit `983cb1b`; merged steering branch
-commit `1d11ef2`, which already includes the blinkers. Main and the standalone
-bench branches remain unchanged. The combined image has not been flashed or
-tested on the physical car. This guide supersedes the standalone guides when
-using this integration branch.
+Current branch: **main**. Originally integrated from motor commit `983cb1b`
+and steering commit `1d11ef2`, which already includes the blinkers. The
+integration was promoted to main; the retired branches are preserved as
+[archive tags](BRANCH_ARCHIVE.md). The combined image has not been flashed or
+tested on the physical car. Use the current Part 4 guide above for deployment;
+the details below record the earlier merge baseline.
 
 ## What is combined
 

@@ -1,6 +1,6 @@
 # Part 4: tomorrow at 10 AM, step by step
 
-Use branch **lab2-integration**. This guide is for the combined **motor Nucleo**.
+Use branch **main**. This guide is for the combined **motor Nucleo**.
 Tianyi reports steering (3.3) and blinkers (3.4) already tested on their separate
 bench. Preserve that working setup until the team is ready to connect all
 outputs to one board. Part 3.5 current sensors are unfinished.
@@ -32,7 +32,7 @@ git status --short --branch
 git log -1 --oneline
 ```
 
-Expected branch: `lab2-integration`. If there are local changes you don't
+Expected branch: `main`. If there are local changes you don't
 recognize, keep them and resolve with the teammate before pulling/flashing.
 
 To retrieve future updates when this checkout is clean:

@@ -1,6 +1,8 @@
 # Team 4 Lab 2
 
-**Branch `lab2-integration`: start with [tomorrow's step-by-step Part 4 guide](PART4_START_HERE.md).**
+**Use `main`: start with [tomorrow's step-by-step Part 4 guide](PART4_START_HERE.md).**
+The integrated code is now on main. The five completed/retired branches were
+deleted after saving their tips as [archive tags](doc/BRANCH_ARCHIVE.md).
 The [actual task table](PART4_TASK_TABLE.md), [probe-board instructions](doc/PART4_TIMING.md)
 and [current-sensor handoff](doc/CURRENT_SENSOR_HANDOFF.md) are ready. The current
 backend intentionally reports unavailable data; Part 3.5 and combined timing
@@ -12,13 +14,13 @@ pin/timer and status-code conflicts. The tracked steering preset is
 verification has been completed. The branch-specific notes below describe
 the original standalone benches, not this integrated image.
 
-**Branch `lab2-tianyi-steering`: start with [Part 3.3 instructions](doc/PART3_3_START_HERE.md).**
+**Archived steering bench (`archive-lab2-tianyi-steering-2026-09-26`): [Part 3.3 instructions](doc/PART3_3_START_HERE.md).**
 Adds disabled-at-boot, opt-in steering calibration on D14/PB9, a Windows console,
 saved measured calibration, and wheel tracking to the corrected Part 3.4 build.
 Safe linkage endpoints, actual power and waveform/timing validation remain
 physical bench tasks. The section below describes the earlier blinker-only branch.
 
-**Branch `lab2-tianyi-blinkers`:** the root STM32 app now adds Part 3.4 blinkers
+**Archived blinker bench (`archive-lab2-tianyi-blinkers-2026-09-26`):** the root STM32 app adds Part 3.4 blinkers
 to the existing Part 2 UART link, for Tianyi's separate LED bench. Follow
 [the complete start/test guide](doc/PART3_4_START_HERE.md). Motor/servo control
 is still absent. The existing Pi bridge works unchanged; no UART format change
@@ -184,7 +186,7 @@ the physical Pi UART/motor end-to-end test remains deferred.
 Confirm the actual chassis component models and wiring before assigning new
 Nucleo pins. Verify the integrated pedal/PID/brake/link-loss behavior on hardware.
 Steering, blinkers/hazards and wheel-button self-test are combined on
-`lab2-integration`; verify them together with motors on the final board. Add
+`main`; verify them together with motors on the final board. Add
 three calibrated current readings and a reviewed steering operating policy
 that no longer depends on the development console. Complete the vehicle state.
 Measure timing on hardware for the handout's checkoff and document the final
