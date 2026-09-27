@@ -2,7 +2,8 @@
 
 The root application combines main's encoder/PID motor driver with Tianyi's
 blinkers, wheel-button self-test and opt-in servo bench on one NUCLEO-F401RE.
-Current sensing and console-independent steering operation remain pending.
+The current-sampling interface is prepared, but the actual Part 3.5 backend and
+console-independent steering operation remain pending.
 See `doc/INTEGRATION_START_HERE.md` for verification and deployment limits.
 
 ## Wiring and transport
@@ -149,9 +150,12 @@ cannot guarantee physical braking or lamp output.
 | 48 | 4 | Rejected-frame/overflow counter |
 | 52 | 4 | CRC-32/IEEE of bytes 0 through 51 |
 
-Current values are INT32_MIN and validity is zero in this starter, because no
-sensors are wired. These are unavailable readings, NOT measured 0 mA. Replace
-them with calibrated readings after the sensors are connected. The state enum
+Current values are INT32_MIN and validity is zero because the backend deliberately
+returns unavailable data until Part 3.5 is implemented. A dedicated priority-3
+workqueue calls it every 20 ms and publishes a short mutex-protected snapshot.
+Status never waits for ADC conversion. Validity expires at 100 ms sample age;
+both intervals are configurable telemetry choices. These are unavailable
+readings, NOT measured 0 mA. See `doc/CURRENT_SENSOR_HANDOFF.md`. The state enum
 describes transport, self-test and latched motor/actuator faults; sensor fault
 integration remains pending. Steering status is commanded input, not an angle measurement.
 
@@ -165,17 +169,21 @@ integration remains pending. Steering status is commanded input, not an angle me
   refresh input. A new sequence baseline is allowed only after input timeout.
   Invalid UDP also sends a brake frame and pauses; it preserves the previous
   valid counter/time until a real timeout.
-- STM32 checks for command timeout every roughly 1 ms and enters its link
-  error state at 80 ms since the last accepted frame's reception time.
+- STM32 checks for command timeout each owner iteration (1 ms wait when idle)
+  and enters its link error state at 60 ms since the last accepted frame's
+  reception time: three missed 20 ms updates, as required by the handout.
 - A periodic Zephyr timer requests status every 20 ms. Actual wire timing
   must be measured; successful compilation does not prove the +/-10% limit.
-- The handout says 150 ms in Part 2 and 100 ms in final checkoff. The 80 ms
-  timeout targets the stricter checkoff with margin; confirm the conflict
-  with the TA. This is a proposed implementation setting, not a measured result.
+- The handout says 150 ms in Part 2 and 100 ms in final checkoff; 60 ms also
+  targets the explicit three-missed-update requirement. It is an implementation
+  threshold, not a measured physical stopping time.
 - The explicit upstream brake avoids waiting for both freshness and MCU timeout
-  before stopping. The 80 ms budgets target the stricter 100 ms requirement,
+  before braking. Upstream UDP freshness is 80 ms; cable timeout is 60 ms,
   but Python/OS scheduling, UART transmission and output latency still need
-  measurement. A crashed Pi bridge is handled by the MCU's 80 ms timeout.
+  measurement. A crashed Pi bridge is handled by the MCU's 60 ms timeout.
+  A UDP-stale brake frame still looks like a healthy-link brake command, so
+  hazards follow after a further MCU timeout. No <=100 ms UDP-loss-to-hazards
+  claim is made; UART cable loss and upstream UDP loss are different cases.
 - Bad CRC/range/button masks cannot update control values or refresh the
   timeout. Invalid complete candidates set ERROR_BAD_INPUT. Header noise or
   incomplete frames are ignored and eventually time out. A valid later frame
@@ -198,7 +206,8 @@ integration remains pending. Steering status is commanded input, not an angle me
 | UART ISR | Collect candidate frames; timestamp completion; enqueue |
 | Main, priority 1 | Validate commands; timeout; self-test; encoders/B1/PID; own motor, lamp and servo writes |
 | Status, priority 2 | Transmit one binary status after each 20 ms timer event |
-| Console, priority 3 | Print queued servo replies; human-readable diagnostics approximately every 250 ms |
+| Dedicated current workqueue, priority 3 | Delayed work samples backend and publishes current validity; no actuator policy |
+| Console, priority 4 | Print queued servo replies; human-readable diagnostics approximately every 250 ms |
 
 Lower Zephyr priority numbers here have higher scheduling priority. Console
 prints are throttled so debugging does not define the link's heartbeat rate.
@@ -209,6 +218,11 @@ interleave with periodic diagnostics. That thread checks for replies every
 10 ms between diagnostic bursts; host request timeouts still apply.
 
 ## Files and validation
+
+For current Part 4 build/test evidence use `doc/PART4_SOFTWARE_RESULTS.md`.
+Build output is `build/part4`; deploy all `pi/*.py` files together because the
+bridge now imports `timing_gpio.py` even when markers are off. The remaining
+paths below describe the previous main-branch motor integration.
 
 - stm32_zephyr/: root application; the integration was built in `build/pi-motor/`.
 - pi/part2_bridge.py and pi/part2_protocol.py: copy both into ~/18649/part2.

@@ -8,6 +8,13 @@ this merge; standalone branch descriptions below retain their historical scope.
 
 Board: **NUCLEO-F401RE** (confirmed by the team).
 
+**Part 4 additions (new allocation, not yet wired/tested):** CMD_RX is PC2,
+Morpho CN7-35; PWM_SET is PC3, Morpho CN7-37. These do not replace any actuator
+pin. Pi markers are BCM17/physical11 and BCM27/physical13. The complete 13-row
+probe-board mapping and source references are in [PART4_TIMING](PART4_TIMING.md).
+Tianyi subsequently reports 3.3 steering and 3.4 blinkers tested individually;
+historical pending-test descriptions below do not negate that newer report.
+
 Source: team-provided screenshot of **Lab 2 - Part 1 Wheel Input Results**, section **Tentative pin assignments for STM32** (rows 35–50).
 
 These are tentative assignments transcribed from the screenshot, with the team's subsequent clarification: **the four rows labeled “motor DIR A/B” actually mean motor encoder A/B inputs, not L298N direction outputs.** The encoder assignments below reflect that clarification; the rest is not a verified as-built wiring record. The root `stm32_zephyr/app.overlay` now reuses the verified bench motor/encoder assignments and enables the Pi UART. That integrated image is built/host-tested but not flashed; servo, blinkers and ADC remain unintegrated. Connector and alternate-function mappings must be checked against the board documentation before use.

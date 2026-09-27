@@ -1,5 +1,11 @@
 # Part 3.4 evidence record
 
+**Latest user confirmation:** after the integration-branch merge, Tianyi reported
+Part 3.4 tested. Treat the separate blinker subsystem as functionally tested;
+the earlier pending-test statements below are historical. No new scope captures
+were provided. Combined self-test motor braking and response timing still need
+the final motor Nucleo, rather than the separate LED board.
+
 Date: 2026-09-26. Board: Tianyi's separate NUCLEO-F401RE LED bench.
 
 ## Handout correction after the initial visual test

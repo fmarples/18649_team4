@@ -15,16 +15,22 @@
 #include "blinker_gpio.h"
 #include "self_test.h"
 #include "servo_bench.h"
+#include "schedule.h"
+#include "timing_trace.h"
+#include "current_sense.h"
 
 #define COMMAND_SIZE 28
 #define STATUS_SIZE 56
-#define LINK_TIMEOUT_MS 80U
 static const char *const state_names[] = {
 	"WAITING", "LINK_OK", "ERROR_TIMEOUT", "ERROR_BAD_INPUT", "ERROR_RX_OVERFLOW",
 	"ERROR_MOTOR", "SELF_TEST", "ERROR_ACTUATOR"
 };
-BUILD_ASSERT(CONFIG_MAIN_THREAD_PRIORITY < 2,
+BUILD_ASSERT(CONFIG_MAIN_THREAD_PRIORITY >= 0 &&
+             CONFIG_MAIN_THREAD_PRIORITY < LAB_STATUS_PRIORITY &&
+             LAB_STATUS_PRIORITY < LAB_CURRENT_PRIORITY &&
+             LAB_CURRENT_PRIORITY < LAB_CONSOLE_PRIORITY,
              "Link/motor owner must outrank status and console threads");
+BUILD_ASSERT(!IS_ENABLED(CONFIG_PRINTK_SYNC), "Console output must remain interruptible");
 static const struct device *const link_uart = DEVICE_DT_GET(DT_NODELABEL(usart1));
 /* PA5/D13 (including onboard LD2) belongs only to the front-right blinker. */
 static struct blinker blink;
@@ -33,6 +39,7 @@ struct packet { uint8_t bytes[COMMAND_SIZE]; uint32_t received_ms; };
 K_MSGQ_DEFINE(rx_queue, sizeof(struct packet), 8, 4);
 K_MUTEX_DEFINE(state_mutex);
 K_SEM_DEFINE(status_due, 0, 1);
+K_SEM_DEFINE(console_ready, 0, 1);
 static atomic_t overflow;
 static struct {
 	uint32_t state, command_seq, received_ms, rejected;
@@ -41,6 +48,7 @@ static struct {
 	struct motor_report motor;
 	bool ever_received;
 	bool actuator_fault;
+	int servo_error, lamp_error;
 	enum blink_mode blink_mode;
 	bool blink_left, blink_right;
 } state = { .state = WAITING, .throttle = 32767, .brake = -32768 };
@@ -75,6 +83,7 @@ static void rx_callback(const struct device *dev, void *unused)
 		}
 		if (used == COMMAND_SIZE) {
 			candidate.received_ms = k_uptime_get_32();
+			timing_trace_command(); /* Includes queue delay + validation in scope interval. */
 			if (k_msgq_put(&rx_queue, &candidate, K_NO_WAIT) != 0) {
 				/* Drop the backlog, never apply queued stale throttle later. */
 				k_msgq_purge(&rx_queue);
@@ -103,7 +112,7 @@ static void accept_candidate(const struct packet *p)
 	int32_t brake = (int32_t)sys_get_le32(b + 16);
 	uint32_t buttons = sys_get_le32(b + 20);
 	uint32_t seq = sys_get_le32(b + 4);
-	bool fresh = k_uptime_get_32() - p->received_ms < LINK_TIMEOUT_MS;
+	bool fresh = !lab_link_expired(k_uptime_get_32(), p->received_ms);
 	bool valid = crc32_ieee(b, 24) == sys_get_le32(b + 24) &&
 		steer >= -32768 && steer <= 32767 &&
 		throttle >= -32768 && throttle <= 32767 &&
@@ -160,30 +169,36 @@ static void status_thread(void *a, void *b, void *c)
 		sys_put_le32((uint32_t)state.brake, frame + 28);
 		sys_put_le32(state.rejected, frame + 48);
 		k_mutex_unlock(&state_mutex);
-		/* INT32_MIN means unavailable, never a fabricated zero-current reading. */
-		sys_put_le32(0x80000000U, frame + 32);
-		sys_put_le32(0x80000000U, frame + 36);
-		sys_put_le32(0x80000000U, frame + 40);
-		sys_put_le32(0, frame + 44); /* Current-valid mask: none wired. */
+		/* Snapshot only: acquisition waits run in a lower-priority thread. */
+		struct current_sample currents = current_sense_snapshot();
+		for (unsigned i = 0; i < CURRENT_CHANNELS; i++)
+			sys_put_le32((uint32_t)currents.ma[i], frame + 32 + 4 * i);
+		sys_put_le32(currents.valid_mask, frame + 44);
 		sys_put_le32(crc32_ieee(frame, 52), frame + 52);
 		for (size_t i = 0; i < sizeof(frame); ++i) {
 			uart_poll_out(link_uart, frame[i]);
 		}
 	}
 }
-K_THREAD_DEFINE(status_tid, 1536, status_thread, NULL, NULL, NULL, 2, 0, 0);
+K_THREAD_DEFINE(status_tid, 1536, status_thread, NULL, NULL, NULL, LAB_STATUS_PRIORITY, 0, 0);
 
 static void console_thread(void *a, void *b, void *c)
 {
 	ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+	k_sem_take(&console_ready, K_FOREVER);
+	printk("LAB2 INTEGRATION: Pi UART PA9/PA10 115200; motors + blinkers + opt-in servo.\n");
+	printk("Servo D14 boot OFF; load/arm/live and USB heartbeat required. A=self-test; B1=latch coast.\n");
+	printk("1320 counts/rev; 23..300 RPM; startup 60%%/200ms; PID 40..100%%. Current backend unavailable.\n");
+	printk("TRACE enabled=%u CMD_RX=PC2/CN7-35 PWM_SET=PC3/CN7-37; errors invalidate capture.\n",
+	       IS_ENABLED(CONFIG_LAB_TIMING_GPIO));
 	int64_t next_diagnostic_ms = 0;
 	while (true) {
 		servo_bench_print_replies();
 		if (k_uptime_get() < next_diagnostic_ms) {
-			k_msleep(10);
+			k_msleep(LAB_CONSOLE_POLL_MS);
 			continue;
 		}
-		next_diagnostic_ms = k_uptime_get() + 250;
+		next_diagnostic_ms = k_uptime_get() + LAB_DIAGNOSTIC_PERIOD_MS;
 		k_mutex_lock(&state_mutex, K_FOREVER);
 		uint32_t mode = current_policy().reported_state, seq = state.command_seq, bad = state.rejected;
 		uint32_t age = state.ever_received ? k_uptime_get_32() - state.received_ms : 0;
@@ -192,6 +207,7 @@ static void console_thread(void *a, void *b, void *c)
 		struct motor_report motor = state.motor;
 		enum blink_mode blink_mode = state.blink_mode;
 		bool left = state.blink_left, right = state.blink_right;
+		int servo_error = state.servo_error, lamp_error = state.lamp_error;
 		k_mutex_unlock(&state_mutex);
 		printk("STM %s seq=%u steer=%d thr=%d brk=%d target_mrpm=%u age=%ums rejected=%u blink=%s L=%u R=%u\n",
 		       state_names[mode], seq, steer, throttle, brake, target, age, bad,
@@ -201,10 +217,12 @@ static void console_thread(void *a, void *b, void *c)
 		       (unsigned)motor.mode, motor.target_mrpm, motor.left_mrpm, motor.right_mrpm,
 		       motor.average_mrpm, motor.duty_mpercent, motor.left_count, motor.right_count,
 		       (long long)motor.sample_ms, motor.fault);
-		k_msleep(10);
+		printk("DIAG trace_errors=%u servo_error=%d lamp_error=%d\n",
+		       timing_trace_errors(), servo_error, lamp_error);
+		k_msleep(LAB_CONSOLE_POLL_MS);
 	}
 }
-K_THREAD_DEFINE(console_tid, 1536, console_thread, NULL, NULL, NULL, 3, 0, 0);
+K_THREAD_DEFINE(console_tid, 1536, console_thread, NULL, NULL, NULL, LAB_CONSOLE_PRIORITY, 0, 0);
 
 /* Returning from main must never leave enabled bridges without a B1 owner. */
 static void stop_on_init_failure(void)
@@ -218,6 +236,8 @@ static void stop_on_init_failure(void)
 
 int main(void)
 {
+	/* Marker failure is diagnostic only; it must not change actuator policy. */
+	(void)timing_trace_init();
 	/* Initialize outputs first. Until the first valid command, request braking. */
 	int motor_error = motor_init();
 	struct motor_report initial = motor_update((struct drive_input){0});
@@ -239,18 +259,13 @@ int main(void)
 	}
 	blinker_reset(&blink);
 	self_test_reset(&self_test);
+	current_sense_start();
 	uart_irq_rx_enable(link_uart);
-	k_timer_start(&status_timer, K_MSEC(20), K_MSEC(20));
-	printk("PI MOTOR CONTROL: USART1 TX=PA9/D8 RX=PA10/D2, 115200 8N1\n");
-	printk("1320 counts/rev; cutoff=23 RPM; full pedal=300 RPM; start=60%%/200ms; PID=40..100%%.\n");
-	printk("Brake/link error=dynamic brake; released pedal=coast; B1=latch off until reset.\n");
-	printk("DRIVE modes: 0=coast 1=forward 2=brake; faults: 1=B1 2=sensor/GPIO 3=PID data negative=HAL.\n");
-	printk("BLINKERS: FL=D10 RL=A2 FR=D13 RR=D15; paddles left=5 right=4.\n");
-	printk("SERVO: D14/PB9 50Hz; boot OFF; USB load/arm/live and heartbeat required.\n");
-	printk("A single press: self-test hazards + dynamic brake + servo off; double within 400ms clears latch.\n");
+	k_timer_start(&status_timer, K_MSEC(LAB_STATUS_PERIOD_MS), K_MSEC(LAB_STATUS_PERIOD_MS));
+	k_sem_give(&console_ready);
 	while (true) {
 		struct packet p;
-		if (k_msgq_get(&rx_queue, &p, K_MSEC(1)) == 0) {
+		if (k_msgq_get(&rx_queue, &p, K_MSEC(LAB_OWNER_WAIT_MS)) == 0) {
 			accept_candidate(&p);
 		}
 		k_mutex_lock(&state_mutex, K_FOREVER);
@@ -259,7 +274,7 @@ int main(void)
 			set_error(RX_OVERFLOW);
 		}
 		if (state.state == LINK_OK &&
-		    k_uptime_get_32() - state.received_ms >= LINK_TIMEOUT_MS) {
+		    lab_link_expired(k_uptime_get_32(), state.received_ms)) {
 			set_error(TIMEOUT);
 		}
 		struct actuator_policy policy = current_policy();
@@ -287,13 +302,11 @@ int main(void)
 			servo_bench_off();
 			k_mutex_lock(&state_mutex, K_FOREVER);
 			state.actuator_fault = true;
+			state.servo_error = servo_error;
+			state.lamp_error = lamp_error;
 			policy = current_policy();
 			k_mutex_unlock(&state_mutex);
 			report = motor_update(policy.drive);
-			if (!actuator_fault) {
-				printk("ERROR: actuator fault servo=%d lamps=%d; reset required\n",
-				       servo_error, lamp_error);
-			}
 		}
 		k_mutex_lock(&state_mutex, K_FOREVER);
 		state.motor = report;

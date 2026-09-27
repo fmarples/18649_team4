@@ -1,5 +1,6 @@
 """Opt-in servo calibration console. Never enables PWM on opening/loading a file."""
 import argparse
+from contextlib import ExitStack
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -45,8 +46,10 @@ def parse_status(line):
     return data
 
 class Link:
-    def __init__(self, ser):
+    def __init__(self, ser, log=None):
         self.ser = ser
+        self.log = log
+        self.diagnostics = {}
         self.lock = threading.Lock()
         self.stop = threading.Event()
         self.responses = queue.Queue()
@@ -68,6 +71,11 @@ class Link:
                 while b"\n" in pending:
                     line, _, pending = pending.partition(b"\n")
                     text = line.decode("ascii", errors="replace").strip()
+                    if self.log:
+                        self.log.write(datetime.now(timezone.utc).isoformat() + ' ' + text + '\n')
+                        self.log.flush()
+                    for prefix in ('STM ', 'DRIVE ', 'DIAG '):
+                        if text.startswith(prefix): self.diagnostics[prefix] = text
                     # STM diagnostics may be interleaved with the response prefix.
                     position = text.find("SERVO ")
                     if position >= 0:
@@ -128,6 +136,7 @@ save    Save the three measured positions to JSON.
 load    Load previously measured positions from JSON (OFF only; no movement).
 live    Follow Logitech wheel (calibration complete, wheel centered, Pi linked).
 status  Show mode, pulse, and recorded positions.
+diag    Show latest STM/DRIVE/DIAG lines (no motion command).
 off     Stop PWM; arm again to return to manual calibration.
 quit    Stop PWM and close. Removing servo power is the physical stop.
 """
@@ -138,18 +147,26 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", help="Optional COM port override for an intentionally selected board")
     parser.add_argument("--file", type=Path, help="Calibration JSON override; default: local saved values, then tracked team preset")
+    parser.add_argument("--log", type=Path, help="New file for timestamped USB diagnostics; does not overwrite")
     args = parser.parse_args()
     explicit_file = args.file is not None
     if args.file is None:
         args.file = DEFAULT_FILE
-    ports = [p.device for p in list_ports.comports() if p.serial_number == BENCH_SERIAL]
+    all_ports = list(list_ports.comports())
+    ports = [p.device for p in all_ports if p.serial_number == BENCH_SERIAL]
     port = args.port or (ports[0] if len(ports) == 1 else None)
     if not port:
         parser.error("The separate LED/servo board was not found. Connect its ST-LINK USB; close miniterm.")
     print(f"Board port: {port}\nCalibration file: {args.file}\n{HELP}")
-    with serial.Serial(port, 115200, timeout=0.1, write_timeout=0.5) as ser:
+    board_serial = next((p.serial_number for p in all_ports if p.device == port), None)
+    with ExitStack() as resources:
+        log = None
+        if args.log:
+            args.log.parent.mkdir(parents=True, exist_ok=True)
+            log = resources.enter_context(args.log.open('x', encoding='utf-8'))
+        ser = resources.enter_context(serial.Serial(port, 115200, timeout=0.1, write_timeout=0.5))
         ser.reset_input_buffer()
-        link = Link(ser)
+        link = Link(ser, log)
         try:
             print(describe(link.request("OFF")))
             while True:
@@ -159,6 +176,9 @@ def main():
                 try:
                     if cmd == "help":
                         print(HELP)
+                    elif cmd == "diag":
+                        for prefix in ('STM ', 'DRIVE ', 'DIAG '):
+                            print(link.diagnostics.get(prefix, prefix + 'not received yet'))
                     elif cmd == "save":
                         s = link.request("STATUS")
                         if not s["valid"]:
@@ -166,7 +186,7 @@ def main():
                         data = {"period_us": 20000, "left_us": s["left"],
                                 "center_us": s["center"], "right_us": s["right"],
                                 "recorded_at": datetime.now(timezone.utc).isoformat(),
-                                "board_serial": BENCH_SERIAL,
+                                "board_serial": board_serial,
                                 "source": "Operator-saved calibration; may contain loaded or manually marked values. Verify physical limits separately."}
                         validate_calibration(data)
                         args.file.parent.mkdir(parents=True, exist_ok=True)

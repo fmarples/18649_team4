@@ -3,6 +3,6 @@
   "left_us": 1200,
   "center_us": 1600,
   "right_us": 2000,
-  "source": "Tianyi's explicitly selected pulse widths; endpoint safety and successful live tracking remain unverified.",
+  "source": "Tianyi's selected pulse widths; he reports Part 3.3 tested. Exact mechanical-angle and timing captures have not been supplied.",
   "hardware": "Tianyi's Hiwonder steering servo/linkage; recheck after mechanical changes."
 }

@@ -3,8 +3,9 @@
 **Integration calibration record:** Tianyi selected left 1200 us, center
 1600 us and right 2000 us for the steering linkage. These are tracked in
 `config/servo_calibration.json`; loading them does not enable PWM. The user
-reported smaller wheel-angle increments near the end of travel and has not
-confirmed exact mechanical limits or successful live tracking. Combined-board
+reported smaller wheel-angle increments near the end of travel and subsequently
+confirmed Parts 3.3 and 3.4 tested individually. No exact angle or waveform
+measurements were supplied with that confirmation. Combined-board
 power/wiring and simultaneous motor/servo operation remain unverified. This
 record does not confirm the previously discussed shared-converter hookup.
 

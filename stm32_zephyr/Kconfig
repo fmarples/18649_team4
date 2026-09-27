@@ -1,0 +1,21 @@
+mainmenu "Lab 2 integrated controller"
+source "Kconfig.zephyr"
+
+config LAB_TIMING_GPIO
+    bool "CMD_RX and PWM_SET timing markers on PC2/PC3"
+    default y
+    help
+      Reserve Morpho CN7 pins 35 and 37 for scope markers. No actuator wires
+      belong on these pins. Disable only if the team reallocates these pins.
+
+config LAB_CURRENT_SAMPLE_MS
+    int "Current backend sampling period (ms)"
+    default 20
+    range 1 1000
+
+config LAB_CURRENT_MAX_AGE_MS
+    int "Maximum age of a valid current sample (ms)"
+    default 100
+    range 1 10000
+    help
+      Telemetry freshness policy, not a motor cutoff. Refine after Part 3.5.

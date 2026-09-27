@@ -1,6 +1,10 @@
 # Team 4 Lab 2
 
-**Branch `lab2-integration`: start with [the integration guide](doc/INTEGRATION_START_HERE.md).**
+**Branch `lab2-integration`: start with [tomorrow's step-by-step Part 4 guide](PART4_START_HERE.md).**
+The [actual task table](PART4_TASK_TABLE.md), [probe-board instructions](doc/PART4_TIMING.md)
+and [current-sensor handoff](doc/CURRENT_SENSOR_HANDOFF.md) are ready. The current
+backend intentionally reports unavailable data; Part 3.5 and combined timing
+tests are still pending. Tianyi reports 3.3 and 3.4 individually tested.
 This branch combines main's motor/PID link with the blinkers, self-test and
 opt-in steering console. It preserves the motor controller and fixes shared
 pin/timer and status-code conflicts. The tracked steering preset is

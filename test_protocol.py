@@ -6,6 +6,7 @@ import zlib
 import sys
 from types import SimpleNamespace
 from unittest.mock import patch
+sys.path.insert(0, str(Path(__file__).resolve().parent / 'pi'))
 
 spec = importlib.util.spec_from_file_location('protocol', Path(__file__).parent/'pi'/'part2_protocol.py')
 p = importlib.util.module_from_spec(spec)

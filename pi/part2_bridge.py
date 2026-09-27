@@ -9,11 +9,21 @@ import socket
 import time
 from pathlib import Path
 from part2_protocol import command, wheel_packet, pop_status, is_newer, STATES
+from timing_gpio import create_trace
 
 TX_PERIOD = 0.020
 # 80 ms plus one brake frame targets the handout's stricter 100 ms response.
 # This is a timing budget, not a measured whole-chain guarantee.
 UDP_FRESH = 0.080
+
+
+def current_summary(status):
+    values = []
+    for i, name in enumerate(('left', 'right', 'servo')):
+        value = status['current_' + name + '_mA']
+        valid = status['current_valid_mask'] & (1 << i) and value != -2147483648
+        values.append('%s=%s' % (name, str(value) + 'mA' if valid else 'UNAVAILABLE'))
+    return ' '.join(values)
 
 
 def main():
@@ -22,6 +32,8 @@ def main():
     ap.add_argument('--mode', choices=('demo', 'live', 'bad-range', 'bad-crc'), default='live')
     ap.add_argument('--sender', help='Optional permitted laptop IPv4 address')
     ap.add_argument('--log', help='New CSV path for every received status frame')
+    ap.add_argument('--trace-gpio', action='store_true', help='Reserve Pi BCM17/27 for scope markers (libgpiod v2)')
+    ap.add_argument('--gpiochip', default='/dev/gpiochip0', help='Pi 4 BCM GPIO chip; verify using gpioinfo')
     args = ap.parse_args()
     import serial
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -35,7 +47,12 @@ def main():
         p.parent.mkdir(parents=True, exist_ok=True)
         log = p.open('x', newline='')  # Preserve previous measurements.
     try:
-        with serial.Serial(args.serial, 115200, timeout=0, write_timeout=0.050) as uart:
+        with create_trace(args.trace_gpio, args.gpiochip) as trace, \
+             serial.Serial(args.serial, 115200, timeout=0, write_timeout=0.050) as uart:
+            def transmit(frame):
+                trace.command_tx()
+                if uart.write(frame) != len(frame):
+                    raise OSError('Incomplete UART write; stopping bridge so STM32 times out.')
             uart.reset_input_buffer()
             started = time.monotonic()
             next_tx = started
@@ -52,7 +69,7 @@ def main():
             discard_udp = False
             print('MOTOR LINK mode=%s; UART=%s 115200 8N1; Ctrl+C stops TX.' %
                   (args.mode, args.serial), flush=True)
-            print('Live pedal commands can drive motors. Current sensors remain UNAVAILABLE.', flush=True)
+            print('Live pedal commands can drive motors. Current validity comes from the STM32.', flush=True)
             while True:
                 now = time.monotonic()
                 incoming = uart.read(4096)
@@ -74,16 +91,18 @@ def main():
                     if now >= next_display:
                         mode = status['state']
                         name = STATES[mode] if mode < len(STATES) else 'UNKNOWN'
-                        print('STM %s steer=%d thr=%d brk=%d status_seq=%d dt=%sms rejected=%d currents=UNAVAILABLE' %
+                        print('STM %s steer=%d thr=%d brk=%d status_seq=%d dt=%sms rejected=%d %s' %
                               (name, status['steer'], status['throttle'], status['brake'],
-                               status['status_seq'], status['stm_interval_ms'], status['rejected']), flush=True)
+                               status['status_seq'], status['stm_interval_ms'], status['rejected'],
+                               current_summary(status)), flush=True)
                         next_display = now + 0.25
                 if now >= no_status_notice:
                     print('No valid STM status for 2s: check STM TX D8 -> Pi pin 10 and shared ground.', flush=True)
                     no_status_notice = now + 2
                 # Flush expired input before accepting a restarted UDP sequence.
+                now = time.monotonic()  # Logging/status processing may have taken time.
                 if last_udp is not None and now - last_udp >= UDP_FRESH:
-                    uart.write(command(seq, 0, 32767, -32768, 0))
+                    transmit(command(seq, 0, 32767, -32768, 0))
                     seq = (seq + 1) & 0xffffffff
                     axes = None
                     previous_counter = None
@@ -100,6 +119,7 @@ def main():
                         except BlockingIOError:
                             discard_udp = False
                             break
+                        trace.udp_rx()
                         # A scheduling pause must not turn old queued pedals into
                         # fresh input. Drain to empty before accepting recovery.
                         if discard_udp:
@@ -109,7 +129,7 @@ def main():
                         try:
                             counter, *new_axes = wheel_packet(data)
                         except ValueError as err:
-                            uart.write(command(seq, 0, 32767, -32768, 0))
+                            transmit(command(seq, 0, 32767, -32768, 0))
                             seq = (seq + 1) & 0xffffffff
                             axes = None
                             # Keep the last valid counter/time while paused. Only
@@ -123,7 +143,7 @@ def main():
                         axes = new_axes
                         last_udp = time.monotonic()
                         # Forward every valid new UDP state immediately.
-                        uart.write(command(seq, *axes))
+                        transmit(command(seq, *axes))
                         seq = (seq + 1) & 0xffffffff
                         next_tx = last_udp + TX_PERIOD
                         was_streaming = True
@@ -136,7 +156,7 @@ def main():
                         frame = command(seq, *axes)
                         if args.mode == 'bad-crc':
                             frame = frame[:-1] + bytes([frame[-1] ^ 1])
-                        uart.write(frame)
+                        transmit(frame)
                         seq = (seq + 1) & 0xffffffff
                     next_tx = now + TX_PERIOD
                 time.sleep(0.001)

@@ -25,7 +25,8 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
   State 5 remains motor fault; self-test is 6 and actuator fault is 7. PA5 is
   exclusively the front-right blinker. TIM2/PB10 must remain enabled for the
   right motor; TIM4/PB9 drives steering. `config/servo_calibration.json` contains
-  user-selected 1200/1600/2000 us, not independently verified mechanical limits.
+  user-selected 1200/1600/2000 us. Tianyi now reports Parts 3.3 and 3.4 tested
+  individually; exact mechanical/timing captures have not been supplied.
   Preserve explicit servo arm/live and its USB heartbeat until a separate
   vehicle operating-policy change is requested. No combined hardware test has
   been completed; never use a successful build as evidence of one.
@@ -35,7 +36,7 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 - `stm32_zephyr/`: CRC Pi link, encoder/PID and L298N driver with pedal cutoff, kick, braking, B1 and link-loss handling, now combined with blinkers/self-test and opt-in steering. ADC and console-independent steering operation remain pending. This is not the old full-control starter.
 - `bringup/encoder_test/`: independent encoder diagnostic. Both hand-turn tests passed; left raw counts decrease forward and right raw counts increase. Use the user-validated **1320 counts/wheel revolution**. For the completed 100%-duty count/time measurement, read `doc/MOTOR_CHARACTERIZATION.md`; the user selected **300 RPM at full throttle** and a low-pedal cutoff based on measured 40%-duty speed. See `PROTOCOL.md` for the implemented target/output policy and pending hardware verification.
 - `test_protocol.py`: host protocol/bridge tests. `tests/test_windows_launcher.py`: relocated Windows launcher check. `tests/check_encoder_serial.py`: hardware telemetry check.
-- `PART4_START_HERE.md`: integration plan. `PART4_TASK_TABLE.md`: the single scheduling proposal, retaining Tianyi's more detailed plan plus the handout's data-exchange column. Timings remain unmeasured; current link-thread behavior is in `PROTOCOL.md`.
+- `PART4_START_HERE.md`: detailed meeting/deployment/test guide. `PART4_TASK_TABLE.md` now describes the actual implementation: owner 1, status 2, dedicated current-sampling workqueue 3, console 4. Current backend is deliberately unavailable until Part 3.5 is ready. PC2/CN7-35 and PC3/CN7-37 are newly allocated timing outputs; Pi trace uses BCM17/27 only with `--trace-gpio`. Follow `doc/PART4_TIMING.md`; hardware timing is unmeasured.
 
 For UART changes, read `PROTOCOL.md` and update `pi/part2_protocol.py`, the encoder/decoder in `stm32_zephyr/src/main.c`, and host tests together. The old additive-checksum protocol is incompatible; no shared `protocol.h` remains in the current app.
 
@@ -49,5 +50,5 @@ For UART changes, read `PROTOCOL.md` and update `pi/part2_protocol.py`, the enco
 - For encoder-only bring-up, disconnect the L298N's 12 V motor-power feed separately from the converter branch powering the Nucleo. Change wiring only with supplies off. Before powered actuator tests, verify common ground, voltage limits, driver jumper states, post-initialization inactive outputs, and mechanical safety.
 - **Motor-bench flashing:** the user explicitly accepts unexpected wheel motion during flashing/reset on the raised-wheel bench. Motor power may remain connected for an authorized flash; do not require disconnection solely to prevent reset/startup motion or ask for this acceptance again. This supersedes earlier isolation-before-flash instructions, not power-off wiring changes or motor isolation for hand-turn tests. Boot/reset inactivity remains unverified. Verify the flashed profile and idle outputs before the requested powered test; this is not permission to interrupt an unrelated continuous run.
 - Verify L298N braking against its truth table. Enable-low coasts; the integrated driver's enable-high/equal-input braking follows the truth table but is not physically tested yet.
-- Flag conflicting requirements: link loss is 150 ms in Part 2 but 100 ms at checkoff; self-test is 10 ms in the requirements table but 100 ms at checkoff. `PART4_TASK_TABLE.md` plans for the stricter targets pending TA clarification. Current MCU timeout is 80 ms; Pi sends an explicit brake frame after 80 ms of stale UDP rather than accumulating both delays. Neither is a measured end-to-end result.
+- Flag conflicting requirements: link loss is 150 ms in Part 2 but 100 ms at checkoff; self-test is 10 ms in the requirements table but 100 ms at checkoff. MCU timeout is now 60 ms (three missed 20 ms command updates, explicitly required by the handout); Pi still sends a brake frame after 80 ms of stale UDP. The brake frame is not an error/hazard command: upstream UDP-loss hazards wait for the additional MCU timeout. No <=100 ms upstream-UDP-to-hazards result is claimed. See `PART4_TASK_TABLE.md` and distinguish this from UART cable loss.
 - Update the relevant hardware or bring-up document when the team confirms a model, wiring change, or test result. Keep detailed pin tables in the pin document rather than duplicating them here.

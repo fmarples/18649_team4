@@ -1,5 +1,12 @@
 # Motor, blinker and steering integration
 
+**Part 4 update:** use [the current meeting guide](../PART4_START_HERE.md) and
+[actual task table](../PART4_TASK_TABLE.md). The merge/build details below are
+the earlier integration baseline. Part 4 now adds timing GPIOs, a dedicated
+current-sampling workqueue with unavailable backend, and a 60 ms UART timeout.
+Use `build/part4` for the new image, and deploy all `pi/*.py` files together.
+Tianyi reports 3.3 and 3.4 individually tested; combined tests remain pending.
+
 Branch: **lab2-integration**. Base: main commit `983cb1b`; merged steering branch
 commit `1d11ef2`, which already includes the blinkers. Main and the standalone
 bench branches remain unchanged. The combined image has not been flashed or
@@ -43,8 +50,8 @@ steering start policy was introduced by the merge.
 
 ## Before a combined hardware test
 
-1. First finish verifying the existing separate servo bench: same-direction
-   wheel following, the selected endpoints, and freedom from strain.
+1. Preserve the already-tested separate servo/blinker setup. Check its mapping
+   again after moving signals onto the final motor board or changing mechanics.
 2. Use the final motor/encoder Nucleo and the [pin table](STM32_PINOUT.md) to
    integrate the servo and four LEDs physically. Change wiring with power off.
    The two existing Nucleos are separate bench setups; merging software does

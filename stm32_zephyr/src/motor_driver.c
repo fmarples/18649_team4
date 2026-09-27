@@ -1,5 +1,6 @@
 #include "motor_driver.h"
 #include "bench_encoders.h"
+#include "timing_trace.h"
 #include <errno.h>
 #include <limits.h>
 #include <math.h>
@@ -70,6 +71,7 @@ static int apply_output(struct drive_output output)
             output.mode == DRIVE_FORWARD ? (uint32_t)(pwms[i].period * output.duty_percent / 100.0f) : 0;
         int ret = pwm_set_dt(&pwms[i], pwms[i].period, pulse);
         if (ret < 0) { return ret; }
+        if (i == 0) { timing_trace_pwm(); }
     }
     applied = output;
     return 0;

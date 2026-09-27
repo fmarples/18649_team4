@@ -3,6 +3,7 @@
 #include "self_test.h"
 #include "blinker_core.h"
 #include "servo_core.h"
+#include "schedule.h"
 
 static struct servo_control calibrated(void)
 {
@@ -119,3 +120,25 @@ ZTEST(actuators, test_paddle_steering_and_brake_remain_independent)
     zassert_false(out.left || out.right);
 }
 ZTEST_SUITE(actuators, NULL, NULL, NULL, NULL, NULL);
+
+ZTEST(actuators, test_three_missed_commands_stop_at_boundary)
+{
+    struct drive_control motor;
+    drive_init(&motor);
+    uint32_t last_received = 40; /* Commands at 0, 20 and 40 ms, then silence. */
+    zassert_false(lab_link_expired(99, last_received));
+    struct actuator_policy p = actuator_policy_evaluate(LINK_OK, false, false, false, 32767, 300000);
+    zassert_equal(drive_step(&motor, p.drive, 0, 0, 99).mode, DRIVE_FORWARD);
+    zassert_true(lab_link_expired(100, last_received));
+    p = actuator_policy_evaluate(TIMEOUT, false, false, false, 32767, 300000);
+    zassert_equal(drive_step(&motor, p.drive, 0, 0, 100).mode, DRIVE_BRAKE);
+    zassert_true(p.hazards);
+    zassert_false(lab_link_expired(100, 80)); /* A fresh command resets the deadline. */
+}
+ZTEST(actuators, test_command_age_wrap)
+{
+    uint32_t last_received = UINT32_MAX - 29;
+    zassert_false(lab_link_expired(29, last_received));
+    zassert_true(lab_link_expired(30, last_received));
+    zassert_true(lab_link_expired(31, last_received));
+}

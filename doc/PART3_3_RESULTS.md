@@ -1,5 +1,11 @@
 # Part 3.3 preparation and evidence
 
+**Latest user confirmation:** after the integration-branch merge, Tianyi reported
+Part 3.3 tested. Treat the separate steering subsystem as functionally tested;
+the earlier pending-test statements below are historical. The selected preset
+is 1200/1600/2000 us. No new raw angle, supply, scope or timing captures were
+provided with that report. Combined motor/servo/LED operation remains pending.
+
 Date: 2026-09-26. Branch `lab2-tianyi-steering`.
 Target: Tianyi's separate NUCLEO-F401RE, ST-LINK serial
 `066BFF485270535067124020`. This is not the motor teammate's board.

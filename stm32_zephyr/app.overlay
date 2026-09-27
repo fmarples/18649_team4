@@ -14,6 +14,8 @@
         max-pulse = <PWM_USEC(2500)>;
     };
     zephyr,user {
+        cmd-rx-gpios = <&gpioc 2 GPIO_ACTIVE_HIGH>;
+        pwm-set-gpios = <&gpioc 3 GPIO_ACTIVE_HIGH>;
         front-left-gpios = <&gpiob 6 GPIO_ACTIVE_HIGH>;
         rear-left-gpios = <&gpioa 4 GPIO_ACTIVE_HIGH>;
         front-right-gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
