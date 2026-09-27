@@ -20,9 +20,19 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 ## Code and current state
 
+- **`lab2-integration`:** combines main's motor/PID link with Tianyi's blinkers,
+  self-test and opt-in servo bench. Read `doc/INTEGRATION_START_HERE.md` first.
+  State 5 remains motor fault; self-test is 6 and actuator fault is 7. PA5 is
+  exclusively the front-right blinker. TIM2/PB10 must remain enabled for the
+  right motor; TIM4/PB9 drives steering. `config/servo_calibration.json` contains
+  user-selected 1200/1600/2000 us, not independently verified mechanical limits.
+  Preserve explicit servo arm/live and its USB heartbeat until a separate
+  vehicle operating-policy change is requested. No combined hardware test has
+  been completed; never use a successful build as evidence of one.
+
 - **Agreed layout:** `pi/`, `stm32_zephyr/`, and `windows/` live at the repository root, not in lab/member subfolders. Tianyi agreed to this layout. Preserve his newer link implementation rather than restoring the old starter from Git history.
 - `pi/`: Python UDP-to-UART bridge and CRC-based protocol. Read `README.md` for run/build commands and logs. The course wheel proxy is external; `windows/` launches it.
-- `stm32_zephyr/`: CRC Pi link now connected in code to the bench encoder/PID and L298N driver, with pedal cutoff, kick, braking, B1 and link-loss handling. Built/host-tested, not flashed or Pi end-to-end tested; the user deferred that test. Servo, blinkers, ADC and wheel-button self-test remain pending. This is not the old full-control starter.
+- `stm32_zephyr/`: CRC Pi link, encoder/PID and L298N driver with pedal cutoff, kick, braking, B1 and link-loss handling, now combined with blinkers/self-test and opt-in steering. ADC and console-independent steering operation remain pending. This is not the old full-control starter.
 - `bringup/encoder_test/`: independent encoder diagnostic. Both hand-turn tests passed; left raw counts decrease forward and right raw counts increase. Use the user-validated **1320 counts/wheel revolution**. For the completed 100%-duty count/time measurement, read `doc/MOTOR_CHARACTERIZATION.md`; the user selected **300 RPM at full throttle** and a low-pedal cutoff based on measured 40%-duty speed. See `PROTOCOL.md` for the implemented target/output policy and pending hardware verification.
 - `test_protocol.py`: host protocol/bridge tests. `tests/test_windows_launcher.py`: relocated Windows launcher check. `tests/check_encoder_serial.py`: hardware telemetry check.
 - `PART4_START_HERE.md`: integration plan. `PART4_TASK_TABLE.md`: the single scheduling proposal, retaining Tianyi's more detailed plan plus the handout's data-exchange column. Timings remain unmeasured; current link-thread behavior is in `PROTOCOL.md`.

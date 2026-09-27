@@ -1,0 +1,19 @@
+# Adapted from Zephyr samples/basic/servo_motor/dts/bindings/pwm-servo.yaml
+# Copyright (c) 2022 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+description: PWM-driven servo motor.
+compatible: "pwm-servo"
+include: base.yaml
+properties:
+  pwms:
+    required: true
+    type: phandle-array
+    description: PWM specifier driving the servo motor.
+  min-pulse:
+    required: true
+    type: int
+    description: Manufacturer minimum pulse width in nanoseconds, not calibrated travel.
+  max-pulse:
+    required: true
+    type: int
+    description: Manufacturer maximum pulse width in nanoseconds, not calibrated travel.

@@ -1,5 +1,27 @@
 # Team 4 Lab 2
 
+**Branch `lab2-integration`: start with [the integration guide](doc/INTEGRATION_START_HERE.md).**
+This branch combines main's motor/PID link with the blinkers, self-test and
+opt-in steering console. It preserves the motor controller and fixes shared
+pin/timer and status-code conflicts. The tracked steering preset is
+[1200 / 1600 / 2000 us](config/servo_calibration.json). No combined hardware
+verification has been completed. The branch-specific notes below describe
+the original standalone benches, not this integrated image.
+
+**Branch `lab2-tianyi-steering`: start with [Part 3.3 instructions](doc/PART3_3_START_HERE.md).**
+Adds disabled-at-boot, opt-in steering calibration on D14/PB9, a Windows console,
+saved measured calibration, and wheel tracking to the corrected Part 3.4 build.
+Safe linkage endpoints, actual power and waveform/timing validation remain
+physical bench tasks. The section below describes the earlier blinker-only branch.
+
+**Branch `lab2-tianyi-blinkers`:** the root STM32 app now adds Part 3.4 blinkers
+to the existing Part 2 UART link, for Tianyi's separate LED bench. Follow
+[the complete start/test guide](doc/PART3_4_START_HERE.md). Motor/servo control
+is still absent. The existing Pi bridge works unchanged; no UART format change
+is required. See [Part 3.4 evidence](doc/PART3_4_RESULTS.md) for validation limits.
+The historical Part 2 description below remains the baseline; its link-only
+LED description is superseded on this branch by the guide above.
+
 The repository-root `pi/` and `stm32_zephyr/` directories contain Tianyi's
 Part 2 communication bring-up for a Raspberry Pi 4, NUCLEO-F401RE, and
 Logitech G920 on Windows. The team agreed to use this root layout rather
@@ -157,8 +179,9 @@ the physical Pi UART/motor end-to-end test remains deferred.
 
 Confirm the actual chassis component models and wiring before assigning new
 Nucleo pins. Verify the integrated pedal/PID/brake/link-loss behavior on hardware.
-Then add steering servo limits, blinkers/hazards, wheel-button self-test and
-three calibrated current readings. Replace the partial link/motor-fault state
-with the full vehicle zone state.
+Steering, blinkers/hazards and wheel-button self-test are combined on
+`lab2-integration`; verify them together with motors on the final board. Add
+three calibrated current readings and a reviewed steering operating policy
+that no longer depends on the development console. Complete the vehicle state.
 Measure timing on hardware for the handout's checkoff and document the final
 schematic and task table.

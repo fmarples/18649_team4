@@ -1,5 +1,11 @@
 # STM32 pin assignments — Lab 2
 
+**Integration branch:** the root app now combines these motor, encoder, UART,
+four-lamp and PB9 servo assignments. PA5 is only the front-right blinker, and
+TIM2 stays enabled on PB10 for the right motor. TIM3 motor PWM and TIM4 servo
+PWM are independent. No combined-board wiring or runtime test is claimed by
+this merge; standalone branch descriptions below retain their historical scope.
+
 Board: **NUCLEO-F401RE** (confirmed by the team).
 
 Source: team-provided screenshot of **Lab 2 - Part 1 Wheel Input Results**, section **Tentative pin assignments for STM32** (rows 35–50).
@@ -32,6 +38,20 @@ The [team Google Sheet](https://docs.google.com/spreadsheets/d/1dooWs_u2aW8KV9RO
 `D…` and `A…` are Arduino-style header labels, not physical header-position numbers.
 
 ## Encoder connections — confirmed by the team
+
+### Separate Part 3.4 LED board — user-confirmed wiring
+
+Tianyi is using another NUCLEO-F401RE while the teammate uses the motor board.
+Rear-left yellow is A2/PA4; rear-right blue is D15/PB8; front-left red is
+D10/PB6; front-right white is D13/PA5. Each has a 470-ohm resistor to GND,
+with the LED anode toward the GPIO (active high). All four connections are
+user-reported; actual light output and polarity await visual testing.
+The wheel and Pi UART link are available. This does not establish that the
+motor board has been rewired or shares this board's power arrangement.
+
+On the blinker branch PA5 is no longer a link indicator; the onboard green LED
+follows front-right. I2C1, SPI1 and board-default PA5 PWM are disabled to avoid
+pin conflicts. See [Part 3.4 instructions](PART3_4_START_HERE.md).
 
 Encoder VCC is connected to Nucleo **3V3** and encoder GND to Nucleo **GND**.
 
@@ -69,6 +89,12 @@ multi-revolution count calibration and loaded rolling circumference remain
 unmeasured.
 
 ## Recommended revision — proposed, not yet confirmed wired
+
+On `lab2-tianyi-steering`, the separate bench firmware now configures
+**D14/PB9/TIM4_CH4** at 20 ms, initially zero pulse width. Physical servo wiring
+and endpoint calibration are still unconfirmed. PB8/D15 remains the blue LED.
+TIM4 uses prescaler 83 from the board's 84 MHz timer clock (1 us ticks).
+This does not reassign the motor teammate's pins or modify that board.
 
 **Move only the steering PWM assignment from PC7/D9 (`TIM3_CH2`) to PB9/D14 (`TIM4_CH4`, AF2).** Keep both motor PWM assignments and all encoder connections unchanged. PB9/D14 was unused in the original table.
 

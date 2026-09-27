@@ -3,6 +3,40 @@
 #include "../bringup/motor_test/app.overlay"
 
 /* USART1 is the Pi link. USART2 remains the ST-LINK USB console. */
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pwm/pwm.h>
+
+/ {
+    steering_servo: steering-servo {
+        compatible = "pwm-servo";
+        pwms = <&pwm4 4 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+        min-pulse = <PWM_USEC(500)>;
+        max-pulse = <PWM_USEC(2500)>;
+    };
+    zephyr,user {
+        front-left-gpios = <&gpiob 6 GPIO_ACTIVE_HIGH>;
+        rear-left-gpios = <&gpioa 4 GPIO_ACTIVE_HIGH>;
+        front-right-gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+        rear-right-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
+    };
+};
+
+/* Motor overlay routes TIM2 PWM to PB10, freeing PA5 for the right blinker.
+ * Keep pwm2 enabled: disabling it here would remove the right motor driver. */
+&i2c1 { status = "disabled"; };
+&spi1 { status = "disabled"; };
+
+/* APB1 timer clock 84 MHz / (83 + 1) = 1 MHz: 1 us ticks. */
+&timers4 {
+    status = "okay";
+    st,prescaler = <83>;
+    pwm4: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim4_ch4_pb9>;
+        pinctrl-names = "default";
+    };
+};
+
 &usart1 {
     pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;
     pinctrl-names = "default";

@@ -1,0 +1,4 @@
+tests:
+  lab2.blinker_core:
+    platform_allow: qemu_cortex_m3
+    tags: [blinkers]

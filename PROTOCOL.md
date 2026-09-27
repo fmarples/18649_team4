@@ -1,10 +1,9 @@
-# Pi-to-STM32 motor link
+# Pi-to-STM32 integrated actuator link
 
-The root application now connects validated CRC commands to the encoder/PID
-motor driver on the NUCLEO-F401RE. It is not a complete Lab 2 vehicle controller:
-servo, lamps, current sensing and wheel-button self-test remain pending.
-This integration is built and host-tested, **not flashed or hardware-validated**.
-The user deferred the Pi end-to-end test.
+The root application combines main's encoder/PID motor driver with Tianyi's
+blinkers, wheel-button self-test and opt-in servo bench on one NUCLEO-F401RE.
+Current sensing and console-independent steering operation remain pending.
+See `doc/INTEGRATION_START_HERE.md` for verification and deployment limits.
 
 ## Wiring and transport
 
@@ -42,8 +41,9 @@ All multibyte integers are little endian. No C struct layout is sent directly.
 | 24 | 4 | CRC-32/IEEE of bytes 0 through 23 |
 
 Python zlib.crc32 and Zephyr crc32_ieee use the same CRC convention.
-Button bit n represents Part 1's zero-based raw index n. No vehicle-function
-assignment is implied. Pedals are 32767 released and -32768 fully pressed.
+Button bit n represents Part 1's zero-based raw index n. Paddle 5 selects left,
+paddle 4 selects right, and A/button 0 controls self-test. Pedals are 32767
+released and -32768 fully pressed.
 
 ## Motor control
 
@@ -78,7 +78,8 @@ encoder feedback remains on the existing 20 ms actual-dt schedule. The kick
 ends at its deadline even between encoder samples.
 
 - Below-cutoff/released throttle: zero duty, coast.
-- Brake pedal, startup without a link, invalid command or link timeout:
+- Brake pedal, startup without a link, invalid command, link timeout, manual
+  self-test or a latched servo/blinker peripheral failure with a healthy driver:
   dynamic braking, IN1..4 low and both enables held high.
 - B1 or real encoder/GPIO/PID faults: latch propulsion off until reset.
   B1 disables both enables and coasts; releasing it cannot restart.
@@ -97,6 +98,42 @@ Faults are 1 B1, 2 sensor/GPIO, 3 PID data, or negative HAL codes. The binary
 status layout remains unchanged. Bench ASCII ARM/PID/STOP commands are not
 accepted by this application; use Pi brake/release commands or local B1.
 
+## Blinkers, self-test and steering
+
+PA5/D13 is exclusively the front-right blinker (onboard LD2 follows it), not
+a link indicator. Other lamps are FL PB6/D10, RL PA4/A2 and RR PB8/D15.
+Normal blink is 1 Hz at 50%; hazards are 2 Hz. Left/right paddle presses are
+edge-triggered and mutually exclusive. Crossing +/-8000 raw steering and
+returning inside +/-6000 cancels the selected side; steering does not select it.
+
+A/button 0 latches self-test on its first press; a double press within 400 ms
+clears the manual latch. Self-test requests dynamic motor braking, hazards and
+servo PWM off. Clearing it never clears motor/B1/peripheral faults. With a healthy
+link, clearing self-test resumes motor response to the current pedals (including
+nonzero throttle); steering stays OFF until explicitly armed again.
+
+Servo is PB9/D14 on TIM4, 20 ms period. Motor PWM remains PB4/TIM3 and PB10/TIM2
+at 10 kHz. USB USART2 accepts the existing ASCII calibration commands; binary
+Pi USART1 is unchanged. PWM starts OFF. Load, then ARM and LIVE explicitly with
+the Logitech wheel near center. Manual calibration can run without Pi traffic;
+LIVE requires healthy commands. A 500 ms USB-console heartbeat lease, self-test,
+motor fault or servo/blinker fault disables active servo PWM; link loss disables
+LIVE. No automatic re-arm is added. This remains a bench control dependency.
+
+`config/servo_calibration.json` holds user-selected left/center/right
+1200/1600/2000 us. The Windows helper prefers locally saved calibration, falling
+back to this tracked file only when the default local file is missing. An
+explicit --file path never silently falls back. Loading changes no output;
+these numbers are not proof of measured mechanical limits.
+
+Status 5 remains ERROR_MOTOR from main. SELF_TEST is now **6**, unlike the old
+steering-only bench's 5, and ERROR_ACTUATOR is **7**. Update the Pi decoder
+alongside this firmware. Motor faults have reporting priority over peripheral
+faults, then transport errors, then manual self-test. Motor/B1 faults retain
+main's latched enable-low/coast behavior; a healthy motor driver dynamically
+brakes for self-test or an actuator peripheral failure. A failed output driver
+cannot guarantee physical braking or lamp output.
+
 ## Status: 56 bytes, STM32 to Pi
 
 | Byte offset | Size | Meaning |
@@ -105,7 +142,7 @@ accepted by this application; use Pi brake/release commands or local B1.
 | 4 | 4 | Unsigned status sequence |
 | 8 | 4 | STM32 uptime in milliseconds, wraps modulo 2^32 |
 | 12 | 4 | Last accepted command sequence |
-| 16 | 4 | State: 0 WAITING, 1 LINK_OK, 2 timeout, 3 bad input, 4 overflow, 5 motor fault |
+| 16 | 4 | State: 0 WAITING, 1 LINK_OK, 2 timeout, 3 bad input, 4 overflow, 5 motor fault, 6 self-test, 7 actuator fault |
 | 20, 24, 28 | 4 each | Current accepted/safe steering, throttle, brake values |
 | 32, 36, 40 | 4 each | Signed left-motor, right-motor, servo current in mA |
 | 44 | 4 | Current validity mask: bits 0, 1, 2 correspond to these sensors |
@@ -115,7 +152,8 @@ accepted by this application; use Pi brake/release commands or local B1.
 Current values are INT32_MIN and validity is zero in this starter, because no
 sensors are wired. These are unavailable readings, NOT measured 0 mA. Replace
 them with calibrated readings after the sensors are connected. The state enum
-describes link state plus a latched motor fault; full vehicle zone state remains pending.
+describes transport, self-test and latched motor/actuator faults; sensor fault
+integration remains pending. Steering status is commanded input, not an angle measurement.
 
 ## Timing and failure behavior
 
@@ -149,7 +187,7 @@ describes link state plus a latched motor fault; full vehicle zone state remains
 - Duplicate/old UART sequence numbers while LINK_OK do not refresh the timer.
   After error/timeout, a valid frame establishes a new sequence baseline.
 - Safe internal values are steering 0, throttle 32767, brake -32768, target zero.
-  The motor owner applies the stop policy above. Hazards and servo remain absent.
+  The main owner applies motor policy, hazards and steering interlocks above.
   Fresh valid commands recover ordinary link errors, but never clear B1 or a
   latched motor fault.
 
@@ -158,13 +196,17 @@ describes link state plus a latched motor fault; full vehicle zone state remains
 | Context | Responsibility |
 | --- | --- |
 | UART ISR | Collect candidate frames; timestamp completion; enqueue |
-| Main, priority 1 | Validate commands; timeout; read encoders/B1; own PID and all motor writes; update LED |
+| Main, priority 1 | Validate commands; timeout; self-test; encoders/B1/PID; own motor, lamp and servo writes |
 | Status, priority 2 | Transmit one binary status after each 20 ms timer event |
-| Console, priority 3 | Human-readable USB prints approximately every 250 ms |
+| Console, priority 3 | Print queued servo replies; human-readable diagnostics approximately every 250 ms |
 
 Lower Zephyr priority numbers here have higher scheduling priority. Console
 prints are throttled so debugging does not define the link's heartbeat rate.
 The console's 250 ms print interval is not a link-loss timing measurement.
+Normal servo replies are queued nonblocking by the main owner and printed in
+the diagnostic thread, so command replies do not stall motor updates or
+interleave with periodic diagnostics. That thread checks for replies every
+10 ms between diagnostic bursts; host request timeouts still apply.
 
 ## Files and validation
 

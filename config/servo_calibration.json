@@ -1,0 +1,8 @@
+{
+  "period_us": 20000,
+  "left_us": 1200,
+  "center_us": 1600,
+  "right_us": 2000,
+  "source": "Tianyi's explicitly selected pulse widths; endpoint safety and successful live tracking remain unverified.",
+  "hardware": "Tianyi's Hiwonder steering servo/linkage; recheck after mechanical changes."
+}
