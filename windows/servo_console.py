@@ -1,4 +1,4 @@
-"""Opt-in servo calibration console. Never enables PWM on opening/loading a file."""
+"""Optional servo calibration console. Opening requests OFF; AUTO restores Pi control."""
 import argparse
 from contextlib import ExitStack
 from datetime import datetime, timezone
@@ -17,7 +17,7 @@ COMMANDS = {
     "arm": "ARM", "+": "STEP 25", "-": "STEP -25",
     "+5": "STEP 5", "-5": "STEP -5", "left": "MARK LEFT",
     "center": "MARK CENTER", "right": "MARK RIGHT", "home": "CENTER",
-    "live": "LIVE", "off": "OFF", "status": "STATUS",
+    "live": "LIVE", "auto": "AUTO", "off": "OFF", "status": "STATUS",
 }
 
 def validate_calibration(data):
@@ -117,13 +117,14 @@ class Link:
         self.keeper.join(timeout=1)
 
 def describe(s):
-    mode = {0: "OFF", 1: "MANUAL", 2: "LIVE"}.get(s["mode"], "UNKNOWN")
+    mode = {0: "OFF", 1: "MANUAL", 2: "LIVE", 3: "WAIT_CENTER"}.get(s["mode"], "UNKNOWN")
     return (f"{mode}: pulse={s['pulse']} us; "
             f"left={s['left']} center={s['center']} right={s['right']} us; "
             f"calibration={'READY' if s['valid'] else 'INCOMPLETE'}")
 
 HELP = """
-No PWM is enabled by opening this console.
+Opening this optional calibration console requests OFF, even during vehicle operation.
+Normal steering needs no USB: firmware waits for a healthy Pi link and centered wheel.
 Before ARM: verify separate servo supply, common ground, D14 signal, clear linkage.
 arm     Start MANUAL at saved center, or nominal 1500 us if center unmarked.
 + / -   Increase/decrease pulse by 25 us. Watch which way the CAR wheels turn.
@@ -134,7 +135,9 @@ right   Record current safe position as the CAR's right endpoint.
 home    Return to the recorded center (MANUAL only).
 save    Save the three measured positions to JSON.
 load    Load previously measured positions from JSON (OFF only; no movement).
-live    Follow Logitech wheel (calibration complete, wheel centered, Pi linked).
+live    From MANUAL, follow the centered Logitech wheel over a healthy Pi link.
+auto    Return to Pi control; wait for centered wheel/healthy link, then follow it.
+        LIVE/AUTO need no USB heartbeat. MANUAL still has a 500 ms USB lease.
 status  Show mode, pulse, and recorded positions.
 diag    Show latest STM/DRIVE/DIAG lines (no motion command).
 off     Stop PWM; arm again to return to manual calibration.
@@ -213,4 +216,4 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:
-        raise SystemExit(f"Servo console stopped: {exc}\nPWM lease expires within 500 ms; remove servo power if needed.")
+        raise SystemExit(f"Servo console stopped: {exc}\nMANUAL lease expires within 500 ms. LIVE follows the Pi link; remove servo power if needed.")

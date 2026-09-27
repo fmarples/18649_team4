@@ -6,6 +6,8 @@ HEADER = b'L2\x01'
 COMMAND = struct.Struct('<2sBBIiiiI')
 STATUS = struct.Struct('<2sBBIIIIiiiiiiII')
 STATUS_SIZE = STATUS.size + 4
+# User-selected direct-ADC current ceiling; numeric CSV/wire values stay signed mA.
+CURRENT_REPORT_MAX_MA = 4320
 STATES = ('WAITING', 'LINK_OK', 'ERROR_TIMEOUT', 'ERROR_BAD_INPUT', 'ERROR_RX_OVERFLOW',
           'ERROR_MOTOR', 'SELF_TEST', 'ERROR_ACTUATOR')
 

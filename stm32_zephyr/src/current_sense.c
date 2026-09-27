@@ -21,9 +21,11 @@ static void sample_currents(struct k_work *work)
         uint32_t mask = 0;
         /* Start timestamp conservatively includes acquisition/filter duration. */
         uint32_t started = k_uptime_get_32();
-        if (current_backend_read(ma, &mask) != 0) mask = 0;
+        int error = current_backend_read(ma, &mask);
+        if (error != 0) mask = 0;
         struct current_sample sample;
         current_cache_publish(&sample, ma, mask, started);
+        sample.error = error;
         k_mutex_lock(&current_mutex, K_FOREVER);
         latest = sample;
         k_mutex_unlock(&current_mutex);

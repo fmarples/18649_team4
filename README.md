@@ -3,7 +3,8 @@
 `main` contains the combined Part 3 actuator implementation and Part 4 Zephyr
 scheduling. Use the current firmware for combined motor, brake, steering and
 blinker testing; there is no separate Part 4 application or required rollback.
-Part 3.5 is unfinished: current readings deliberately remain unavailable.
+Part 3.5 ADC acquisition is implemented with nominal ACS712 5A calibration and
++4320 mA positive clipping. Physical calibration and combined timing remain pending.
 
 ## Code
 
@@ -16,7 +17,7 @@ Part 3.5 is unfinished: current readings deliberately remain unavailable.
 - `tools/`: generated-build checks, bounded QEMU runner and status-log summary.
 
 The Part 3 integration commit is `3b04a43`; the Part 4 implementation commit is
-`18da014`. The retired branches are preserved as [archive tags](doc/BRANCH_ARCHIVE.md).
+`18da014`. The retired branches are preserved as archive tags.
 
 ## Architecture and operating policy
 
@@ -28,11 +29,12 @@ Pi and STM32 versions and all `pi/*.py` dependencies together.
 
 One priority-1 owner applies motor outputs before steering and lamps. Status,
 current sampling and USB diagnostics run at priorities 2, 3 and 4 respectively.
-The three current channels remain unavailable until the actual ADC backend and
-calibration are supplied. Current telemetry does not control actuators.
+The three current channels use ADC1 with nominal calibration; failed or stale
+acquisition is unavailable. Current telemetry does not control actuators.
 
-Steering starts OFF, uses the tracked 1200/1600/2000 us calibration and retains
-explicit arming plus a USB heartbeat lease. Fault recovery does not re-arm it.
+Steering embeds the tracked 1200/1600/2000 us calibration. Boot and fault/link
+recovery wait for healthy Pi commands and a centered wheel before LIVE. Vehicle
+steering does not require a USB heartbeat; manual calibration retains its lease.
 The servo console's OFF command does not stop motors. See the
 [integration design](doc/INTEGRATION.md) and [protocol](PROTOCOL.md) for details.
 
@@ -42,6 +44,7 @@ The servo console's OFF command does not stop motors. See the
 - [Hardware BOM/power record](doc/HARDWARE.md) and [pin assignments](doc/STM32_PINOUT.md)
 - [Encoder calibration](doc/ENCODER_SPEC.md) and [motor characterization](doc/MOTOR_CHARACTERIZATION.md)
 - [Current-sensor backend contract](doc/CURRENT_SENSOR_HANDOFF.md)
+- [Centered-start steering policy and evidence](doc/STEERING_AUTONOMOUS.md)
 - [Timing points and measurement method](doc/PART4_TIMING.md)
 - [Blank measurement worksheet](doc/PART4_MEASUREMENTS.csv)
 - [Software verification record](doc/PART4_SOFTWARE_RESULTS.md)

@@ -1,4 +1,4 @@
-/* Single owner: main. USB console calibration is separate from binary Pi UART. */
+/* Main owns Pi-driven steering. USB is optional for diagnostics/manual calibration. */
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/pwm.h>
 #include <zephyr/drivers/uart.h>
@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "servo_core.h"
+#include "servo_calibration.h"
 #include "servo_bench.h"
 static const struct pwm_dt_spec pwm = PWM_DT_SPEC_GET(DT_NODELABEL(steering_servo));
 static const struct device *const console = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
@@ -39,6 +40,11 @@ void servo_bench_off(void)
 int servo_bench_init(void)
 {
  servo_reset(&servo);
+ servo.left = SERVO_DEFAULT_LEFT_US;
+ servo.center = SERVO_DEFAULT_CENTER_US;
+ servo.right = SERVO_DEFAULT_RIGHT_US;
+ servo.marks = 7;
+ if (!servo_auto(&servo)) return -EINVAL;
  if (!pwm_is_ready_dt(&pwm) || !device_is_ready(console)) return -ENODEV;
  int rc = pwm_set_dt(&pwm, PWM_USEC(SERVO_PERIOD_US), 0);
  if (rc) return rc;
@@ -69,6 +75,7 @@ static void command(uint64_t now, bool linked, bool self_test, int32_t steer)
  if (!strcmp(line, "SERVO KEEPALIVE")) { servo.heartbeat_ms = now; return; }
  if (!strcmp(line, "SERVO STATUS")) ok = true;
  else if (!strcmp(line, "SERVO OFF")) { servo.mode = SERVO_OFF; servo.pulse = 0; ok = true; }
+ else if (!strcmp(line, "SERVO AUTO")) ok = servo_auto(&servo);
  else if (!strcmp(line, "SERVO ARM")) ok = servo_arm(&servo, now, self_test);
  else if (sscanf(line, "SERVO STEP %d %c", &delta, &extra) == 1) ok = servo_step(&servo, delta);
  else if (!strcmp(line, "SERVO MARK LEFT")) ok = servo_mark(&servo, 1);

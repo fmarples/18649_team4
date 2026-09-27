@@ -4,7 +4,7 @@
 #include <stdint.h>
 #define SERVO_PERIOD_US 20000U
 #define SERVO_LEASE_MS 500U
-enum servo_mode { SERVO_OFF, SERVO_MANUAL, SERVO_LIVE };
+enum servo_mode { SERVO_OFF, SERVO_MANUAL, SERVO_LIVE, SERVO_WAIT_CENTER };
 struct servo_control {
  enum servo_mode mode;
  uint16_t pulse, left, center, right;
@@ -14,6 +14,8 @@ struct servo_control {
 void servo_reset(struct servo_control *s);
 bool servo_cal_valid(const struct servo_control *s);
 uint16_t servo_map(const struct servo_control *s, int32_t steer);
+/* Enable Pi-controlled steering, waiting for a healthy link and centered wheel. */
+bool servo_auto(struct servo_control *s);
 bool servo_arm(struct servo_control *s, uint64_t now, bool self_test);
 bool servo_step(struct servo_control *s, int delta);
 bool servo_mark(struct servo_control *s, unsigned mark);

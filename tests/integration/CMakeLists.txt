@@ -4,7 +4,7 @@ project(lab2_integration_tests)
 target_include_directories(app PRIVATE ../../stm32_zephyr/src ../../bringup/motor_test/src)
 target_sources(app PRIVATE
     src/actuators.c src/drive.c src/velocity.c src/bench.c src/throttle.c src/currents.c
-    ../../stm32_zephyr/src/current_cache.c ../../stm32_zephyr/src/current_backend.c
+    ../../stm32_zephyr/src/current_cache.c
     ../blinker_core/src/main.c ../blinker_core/src/self_test.c ../blinker_core/src/servo.c
     ../../stm32_zephyr/src/actuator_policy.c
     ../../stm32_zephyr/src/blinker_core.c ../../stm32_zephyr/src/self_test.c

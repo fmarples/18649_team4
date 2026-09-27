@@ -1,4 +1,4 @@
-/* CRC Pi link, encoder/PID motors, blinkers/self-test, opt-in steering bench. */
+/* CRC Pi link, encoder/PID motors, blinkers/self-test and centered-start steering. */
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/uart.h>
@@ -186,9 +186,10 @@ static void console_thread(void *a, void *b, void *c)
 {
 	ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
 	k_sem_take(&console_ready, K_FOREVER);
-	printk("LAB2 INTEGRATION: Pi UART PA9/PA10 115200; motors + blinkers + opt-in servo.\n");
-	printk("Servo D14 boot OFF; load/arm/live and USB heartbeat required. A=self-test; B1=latch coast.\n");
-	printk("1320 counts/rev; 23..300 RPM; startup 60%%/200ms; PID 40..100%%. Current backend unavailable.\n");
+	printk("LAB2 INTEGRATION: Pi UART PA9/PA10 115200; motors + blinkers + Pi-controlled servo.\n");
+	printk("Servo D14 waits for healthy link + centered wheel; no USB required. A=self-test; B1=latch coast.\n");
+	printk("1320 counts/rev; 23..300 RPM; startup 60%%/200ms; PID 40..100%%. ACS712 currents active.\n");
+	printk("CURRENT direct A0/A1/A3; 12-bit ADC; nominal calibration unless overridden; +4320mA ceiling.\n");
 	printk("TRACE enabled=%u CMD_RX=PC2/CN7-35 PWM_SET=PC3/CN7-37; errors invalidate capture.\n",
 	       IS_ENABLED(CONFIG_LAB_TIMING_GPIO));
 	int64_t next_diagnostic_ms = 0;
@@ -217,6 +218,10 @@ static void console_thread(void *a, void *b, void *c)
 		       (unsigned)motor.mode, motor.target_mrpm, motor.left_mrpm, motor.right_mrpm,
 		       motor.average_mrpm, motor.duty_mpercent, motor.left_count, motor.right_count,
 		       (long long)motor.sample_ms, motor.fault);
+		struct current_sample currents = current_sense_snapshot();
+		printk("CURRENT left_ma=%d right_ma=%d servo_ma=%d valid=%u age_ms=%u error=%d\n",
+		       currents.ma[0], currents.ma[1], currents.ma[2], currents.valid_mask,
+		       k_uptime_get_32() - currents.sampled_ms, currents.error);
 		printk("DIAG trace_errors=%u servo_error=%d lamp_error=%d\n",
 		       timing_trace_errors(), servo_error, lamp_error);
 		k_msleep(LAB_CONSOLE_POLL_MS);

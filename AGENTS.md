@@ -21,15 +21,21 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 ## Code and current state
 
 - **`main`:** combines the motor/PID link with Tianyi's blinkers,
-  self-test and opt-in servo bench. Read `doc/INTEGRATION.md` first.
+  self-test and Pi-controlled steering. Read `doc/INTEGRATION.md` first.
   State 5 remains motor fault; self-test is 6 and actuator fault is 7. PA5 is
   exclusively the front-right blinker. TIM2/PB10 must remain enabled for the
   right motor; TIM4/PB9 drives steering. `config/servo_calibration.json` contains
   user-selected 1200/1600/2000 us. Tianyi now reports Parts 3.3 and 3.4 tested
   individually; exact mechanical/timing captures have not been supplied.
-  Preserve explicit servo arm/live and its USB heartbeat until a separate
-  vehicle operating-policy change is requested. No combined hardware test has
-  been completed; never use a successful build as evidence of one.
+  The user replaced the explicit-arm/USB-heartbeat vehicle policy: boot and
+  link/fault recovery wait for healthy Pi commands and a centered wheel before
+  LIVE steering. Firmware embeds the tracked calibration; USB is optional.
+  Manual calibration retains its heartbeat; explicit OFF stays off until AUTO
+  or manual ARM/LIVE. See PROTOCOL.md. The new policy is host-tested, built and
+  user-authorized flashed to ST-LINK ending 171333. Read-only status confirmed
+  LIVE without USB keepalives; the user confirmed steering and blinkers work
+  together. Physical cable-removal/recovery and timing checks remain pending.
+  See doc/STEERING_AUTONOMOUS.md for deployment evidence and logs.
 
 - **Branch cleanup:** integration was promoted to main, then all five old branches
   were archived as tags and deleted at the user's request. See
@@ -40,10 +46,10 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 - **Agreed layout:** `pi/`, `stm32_zephyr/`, and `windows/` live at the repository root, not in lab/member subfolders. Tianyi agreed to this layout. Preserve his newer link implementation rather than restoring the old starter from Git history.
 - `pi/`: Python UDP-to-UART bridge and CRC-based protocol. Read `README.md` for run/build commands and logs. The course wheel proxy is external; `windows/` launches it.
-- `stm32_zephyr/`: CRC Pi link, encoder/PID and L298N driver with pedal cutoff, kick, braking, B1 and link-loss handling, now combined with blinkers/self-test and opt-in steering. ADC and console-independent steering operation remain pending. This is not the old full-control starter.
+- `stm32_zephyr/`: CRC Pi link, encoder/PID and L298N driver with pedal cutoff, kick, braking, B1 and link-loss handling, now combined with blinkers/self-test and centered-start Pi steering. Part 3.5 ADC acquisition is implemented with nominal calibration, direct ACS712 5A connections and the user's +4320 mA reporting ceiling. Read `doc/CURRENT_SENSOR_HANDOFF.md` before changing current conversion or testing sensors; hardware calibration/testing and physical verification of console-independent steering remain pending. This is not the old full-control starter.
 - `bringup/encoder_test/`: independent encoder diagnostic. Both hand-turn tests passed; left raw counts decrease forward and right raw counts increase. Use the user-validated **1320 counts/wheel revolution**. For the completed 100%-duty count/time measurement, read `doc/MOTOR_CHARACTERIZATION.md`; the user selected **300 RPM at full throttle** and a low-pedal cutoff based on measured 40%-duty speed. See `PROTOCOL.md` for the implemented target/output policy and pending hardware verification.
 - `test_protocol.py`: host protocol/bridge tests. `tests/test_windows_launcher.py`: relocated Windows launcher check. `tests/check_encoder_serial.py`: hardware telemetry check.
-- `PART4_TASK_TABLE.md` describes the actual implementation: owner 1, status 2, dedicated current-sampling workqueue 3, console 4. Current backend is deliberately unavailable until Part 3.5 is ready. PC2/CN7-35 and PC3/CN7-37 are newly allocated timing outputs; Pi trace uses BCM17/27 only with `--trace-gpio`. Follow `doc/PART4_TIMING.md`; hardware timing is unmeasured.
+- `PART4_TASK_TABLE.md` describes the actual implementation: owner 1, status 2, dedicated current-sampling workqueue 3, console 4. Current acquisition uses ADC1 with read-only status reporting; failed/stale samples are unavailable. PC2/CN7-35 and PC3/CN7-37 are newly allocated timing outputs; Pi trace uses BCM17/27 only with `--trace-gpio`. Follow `doc/PART4_TIMING.md`; hardware timing is unmeasured.
 
 - **Documentation preference:** personal step-by-step operating instructions,
   tutoring explanations and host-specific session plans must stay outside the

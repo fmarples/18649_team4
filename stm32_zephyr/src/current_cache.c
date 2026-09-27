@@ -2,6 +2,7 @@
 void current_cache_publish(struct current_sample *cache, const int32_t ma[3],
                            uint32_t valid_mask, uint32_t sampled_ms)
 {
+    cache->error = 0;
     cache->valid_mask = valid_mask & 7U;
     cache->sampled_ms = sampled_ms;
     for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {

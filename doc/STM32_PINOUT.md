@@ -8,6 +8,14 @@ this merge; standalone branch descriptions below retain their historical scope.
 
 Board: **NUCLEO-F401RE** (confirmed by the team).
 
+**Part 3.5 update:** the root app now enables ADC1 on PA0/A0, PA1/A1 and PB0/A3,
+channels 0/1/8, for left-motor/right-motor/servo currents. ADC clock is 21 MHz,
+resolution 12 bits and reference nominally 3.3 V. The user chose direct ACS712
+5A output connections with no divider and a +4320 mA reporting ceiling. Sensor
+power remains 5 V. This is implemented pin configuration, not confirmed wiring
+or a physical test. See [current-sensing details](CURRENT_SENSOR_HANDOFF.md).
+Older integration-status descriptions below predate this update.
+
 **Part 4 additions (new allocation, not yet wired/tested):** CMD_RX is PC2,
 Morpho CN7-35; PWM_SET is PC3, Morpho CN7-37. These do not replace any actuator
 pin. Pi markers are BCM17/physical11 and BCM27/physical13. The complete 13-row

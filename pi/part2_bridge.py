@@ -8,7 +8,7 @@ import csv
 import socket
 import time
 from pathlib import Path
-from part2_protocol import command, wheel_packet, pop_status, is_newer, STATES
+from part2_protocol import command, wheel_packet, pop_status, is_newer, STATES, CURRENT_REPORT_MAX_MA
 from timing_gpio import create_trace
 
 TX_PERIOD = 0.020
@@ -17,12 +17,16 @@ TX_PERIOD = 0.020
 UDP_FRESH = 0.080
 
 
+# Render unavailable readings distinctly from real zero and the reporting ceiling.
 def current_summary(status):
     values = []
     for i, name in enumerate(('left', 'right', 'servo')):
         value = status['current_' + name + '_mA']
         valid = status['current_valid_mask'] & (1 << i) and value != -2147483648
-        values.append('%s=%s' % (name, str(value) + 'mA' if valid else 'UNAVAILABLE'))
+        text = str(value) + 'mA' if valid else 'UNAVAILABLE'
+        if valid and value == CURRENT_REPORT_MAX_MA:
+            text += '[CEILING]'
+        values.append('%s=%s' % (name, text))
     return ' '.join(values)
 
 

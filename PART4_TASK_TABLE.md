@@ -2,7 +2,8 @@
 
 This table describes the integrated firmware now on `main`, not the earlier proposed thread split.
 Tianyi reports Parts 3.3 and 3.4 tested individually. Combined-board behavior
-and scope measurements remain pending; Part 3.5 is unfinished.
+and scope measurements remain pending. Part 3.5 ADC acquisition is implemented;
+physical calibration and sensor tests remain pending.
 Requirements come from the [handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf),
 Part 4, the requirements table and checkoff.
 
@@ -26,7 +27,7 @@ temporarily mask interrupts and must be included in measured latency.
 | Steering | Each owner iteration; hardware PWM period 20 ms | Same thread 1, after motor update | <=50 ms command-to-servo-signal change | Wheel angle, calibration, fault state, TIM4/PB9 | Pending combined load |
 | Blinkers | Each owner iteration using elapsed phase; 500 ms normal half-cycle / 250 ms hazard half-cycle | Same thread 1, after motor update | <=100 ms response; 1 Hz +/-10%, 50% duty; front/rear <=1 ms skew | Buttons, angle, fault state, four GPIOs | Pending scope |
 | Status TX | Semaphore from 20 ms timer | Thread 2 | Physical status period 20 ms +/-10% | Short state/current snapshots, USART1 TX | Pending scope |
-| Current acquisition work item | Delayed work on a **dedicated** queue, 20 ms nominal; skips missed slots | Workqueue thread 3 | Proposed sampling cadence; no assignment-specific ADC deadline supplied | Backend, private current cache, status TX | Backend unavailable |
+| Current acquisition work item | Delayed work on a **dedicated** queue, 20 ms nominal; skips missed slots | Workqueue thread 3 | Proposed sampling cadence; no assignment-specific ADC deadline supplied | ADC1 channels 0/1/8, eight-scan mean, private current cache, status TX | Acquisition duration/noise pending |
 | USB replies and diagnostics | Check queued replies every 10 ms between output bursts; diagnostics every 250 ms or slower | Thread 4 | Best effort; cannot block urgent threads for a whole print line | Reply queue, state snapshot, USART2 TX | Pending stress test |
 
 The 1 ms wait is **not** a proven maximum execution interval. Queue backlog,
@@ -39,7 +40,7 @@ with interrupts enabled. Measure the complete path; do not substitute the
 
 **Thread, work item, timer callback, ISR:** the control thread owns decisions
 and all actuator writes. The independent status thread serializes/transmits.
-The current work item may wait for future ADC conversions on its own queue;
+The current work item waits for ADC conversions on its own queue;
 it cannot occupy the system workqueue or the motor owner. The periodic timer
 only gives a semaphore. UART ISRs copy bytes and enqueue with `K_NO_WAIT`;
 encoder ISRs update counts; B1 sets an atomic latch. Neither ISR path prints,
@@ -85,11 +86,13 @@ can miss a deadline, which is why timing is measured under simultaneous load.
 - Current telemetry is read-only. Unavailable/error/stale samples are
   `INT32_MIN` with clear validity bits, never fake measured zero. The 100 ms
   sample-age limit is a configurable initial telemetry policy, not a motor
-  threshold. Current conversion and physical sensor tests remain Part 3.5.
-- Servo retains explicit `load`, `arm`, `live` and the 500 ms USB heartbeat.
-  Self-test/link failure disables LIVE; recovery needs explicit re-arming.
-  The TA should see this operating policy; automatic whole-car steering
-  recovery is not implemented or claimed.
+  threshold. Part 3.5 uses nominal calibration and the user-selected +4320 mA
+  ceiling; physical sensor tests remain pending. See [current sensing](doc/CURRENT_SENSOR_HANDOFF.md).
+- Servo boots with the tracked calibration and waits for healthy Pi commands
+  and raw steering within -2000..2000. LIVE needs no USB heartbeat. Link/self-test
+  recovery repeats the centered-wheel interlock; latched faults still block it.
+  Optional manual calibration retains its 500 ms USB lease. Explicit OFF stays
+  off until AUTO or manual ARM/LIVE. Physical recovery timing remains unmeasured.
 
 Record measurements in [the blank worksheet](doc/PART4_MEASUREMENTS.csv).
 Use [the test-point guide](doc/PART4_TIMING.md) for exact start/end markers.

@@ -136,16 +136,22 @@ do not treat coast-down counts as motion during the commanded pulse. The sweep
 record links the persistent captures under `logs/motor-bench/`. The
 [hardware BOM](HARDWARE.md) records both the encoder calibration and startup duty.
 
-## Advertised speeds
+## Confirmed motor model and advertised speeds
 
-The [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503)
-reports **85 RPM rated** and **110 RPM no-load** at **12 V**. These are vendor
-specifications, not the result of our requested full-duty measurement and not
-a selected full-throttle target. Encoder-to-RPM calculations use only the
-team's validated **1320 counts/revolution** and measured elapsed time.
+The user identified the motors as **JGB37-520R30-12**, the highlighted 1:30
+model in the [supplied specification image](assets/JGB37-520R30-12-spec.png).
+It lists **280 RPM rated** and **320 RPM no-load** at **12 V**, with A/B
+encoders, 11 magnetic-ring lines and a 3.3–5 V encoder supply. See the
+[hardware record](HARDWARE.md#confirmed-motor-specifications) for the full table.
+
+This supersedes the generic chassis listing's earlier 85 RPM rated / 110 RPM
+no-load figures for the team's motors. Published speeds do not replace the
+measured **316.59 RPM** full-duty average or the user-selected **300 RPM**
+full-throttle target. Encoder-to-RPM calculations continue to use the team's
+validated **1320 counts/revolution** and measured elapsed time.
 
 ## Team status and safety
 
 The encoder-only app counts x4 on all A/B edges. Hand-turn testing confirmed that forward motion makes the left raw count decrease and the right raw count increase. Negate the left raw delta and retain the right raw delta before averaging velocities. The diagnostic firmware prints raw counts and MCU timestamps; the host holding-test script applies the provisional 1320 counts/rev calibration. Continuous PID is implemented in the standalone motor bench. Geometric circumference is now calculated from the reported 75 mm diameter; loaded rolling circumference and powered-speed accuracy remain unmeasured.
 
-The [product listing](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) specifies **3.2 A stall current**. This exceeds the team's earlier **2 A per channel** L298N concern. Avoid a powered stall test until the driver and thermal limits have been evaluated.
+The [confirmed JGB37-520R30-12 specification](assets/JGB37-520R30-12-spec.png) lists **3.2 A stall current**. This exceeds the team's earlier **2 A per channel** L298N concern. Avoid a powered stall test until the driver and thermal limits have been evaluated.

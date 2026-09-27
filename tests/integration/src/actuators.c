@@ -15,6 +15,7 @@ ZTEST(actuators, test_startup_and_normal_controls)
     struct drive_control motor;
     struct blinker lamps;
     struct servo_control servo = calibrated();
+    zassert_true(servo_auto(&servo));
     drive_init(&motor);
     blinker_reset(&lamps);
     struct actuator_policy p = actuator_policy_evaluate(WAITING, false, false, false, 32767, 300000);
@@ -22,13 +23,13 @@ ZTEST(actuators, test_startup_and_normal_controls)
     zassert_equal(drive_step(&motor, p.drive, 0, 0, 0).mode, DRIVE_BRAKE);
     struct blink_output out = blinker_step(&lamps, 0, p.linked, p.hazards, 0, 0);
     zassert_true(out.left && out.right);
-    zassert_equal(servo.mode, SERVO_OFF);
+    zassert_equal(servo.mode, SERVO_WAIT_CENTER);
     p = actuator_policy_evaluate(LINK_OK, false, false, false, 32767, 300000);
     zassert_equal(drive_step(&motor, p.drive, 0, 0, 1).mode, DRIVE_FORWARD);
     out = blinker_step(&lamps, 1, p.linked, p.hazards, 0, 0);
     zassert_false(out.left || out.right);
     servo_tick(&servo, 1, p.linked, p.inhibit_servo, 0);
-    zassert_equal(servo.mode, SERVO_OFF); /* Motor readiness never auto-arms steering. */
+    zassert_equal(servo.mode, SERVO_LIVE); /* Healthy link and centered wheel enable steering. */
 }
 
 ZTEST(actuators, test_self_test_brakes_during_kick_and_disables_steering)
@@ -47,7 +48,8 @@ ZTEST(actuators, test_self_test_brakes_during_kick_and_disables_steering)
     zassert_equal(p.reported_state, SELF_TEST);
     zassert_equal(drive_step(&motor, p.drive, -2, 2, 10).mode, DRIVE_BRAKE);
     servo_tick(&servo, 10, p.linked, p.inhibit_servo, 0);
-    zassert_equal(servo.mode, SERVO_OFF);
+    zassert_equal(servo.mode, SERVO_WAIT_CENTER);
+    zassert_equal(servo.pulse, 0);
     struct blink_output out = blinker_step(&lamps, 10, p.linked, p.hazards, 0, 0);
     zassert_true(out.left && out.right);
     self_test_input(&test, 40, 0);
@@ -55,8 +57,10 @@ ZTEST(actuators, test_self_test_brakes_during_kick_and_disables_steering)
     p = actuator_policy_evaluate(LINK_OK, false, false, test.active, 32767, 300000);
     zassert_equal(p.reported_state, LINK_OK);
     zassert_equal(drive_step(&motor, p.drive, -5, 5, 100).mode, DRIVE_FORWARD);
-    servo_tick(&servo, 100, p.linked, p.inhibit_servo, 0);
-    zassert_equal(servo.mode, SERVO_OFF); /* Recovery still requires explicit arm/live. */
+    servo_tick(&servo, 100, p.linked, p.inhibit_servo, 32767);
+    zassert_equal(servo.mode, SERVO_WAIT_CENTER); /* Clearing a fault alone must not enable turned steering. */
+    servo_tick(&servo, 101, p.linked, p.inhibit_servo, 0);
+    zassert_equal(servo.mode, SERVO_LIVE);
 }
 
 ZTEST(actuators, test_real_faults_override_cleared_self_test)
@@ -76,7 +80,8 @@ ZTEST(actuators, test_real_faults_override_cleared_self_test)
     struct servo_control servo = calibrated();
     servo_arm(&servo, 0, false); servo_live(&servo, true, false, 0);
     servo_tick(&servo, 100, p.linked, p.inhibit_servo, 0);
-    zassert_equal(servo.mode, SERVO_OFF);
+    zassert_equal(servo.mode, SERVO_WAIT_CENTER);
+    zassert_equal(servo.pulse, 0);
     p = actuator_policy_evaluate(LINK_OK, true, false, false, 32767, 300000);
     zassert_equal(p.reported_state, MOTOR_FAULT);
     zassert_true(p.hazards && p.inhibit_servo);

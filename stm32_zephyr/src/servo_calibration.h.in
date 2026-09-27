@@ -1,0 +1,7 @@
+/* Generated from config/servo_calibration.json. Rebuild after calibration changes. */
+#ifndef SERVO_CALIBRATION_H
+#define SERVO_CALIBRATION_H
+#define SERVO_DEFAULT_LEFT_US @SERVO_LEFT_US@
+#define SERVO_DEFAULT_CENTER_US @SERVO_CENTER_US@
+#define SERVO_DEFAULT_RIGHT_US @SERVO_RIGHT_US@
+#endif

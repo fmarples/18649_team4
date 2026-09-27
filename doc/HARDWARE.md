@@ -17,10 +17,10 @@ This is a working BOM, not a completed purchasing list or an as-built schematic.
 |---|---:|---|---|
 | ST NUCLEO-F401RE | 1 | STM32F401RE target; Zephyr board `nucleo_f401re`; team confirms external E5V power, JP5 on E5V, JP1 open; ST-LINK USB for flashing/debugging/serial | Board revision; post-change USB/serial verification |
 | L298N dual H-bridge module | 1 | Driver for left and right DC motors; ENA/ENB jumpers removed; separate 5V-EN regulator jumper installed; user measured +5V terminal to GND at 5 V with a multimeter | Exact module/vendor, module schematic, motor rail/output voltage under load, thermal/current limits for these motors |
-| Hiwonder Ackermann steering chassis kit | 1 | [Exact kit link confirmed by the user](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503), including its motors and steering servo; team uses an L298N motor driver | Installed motor/servo markings and their electrical/mechanical ratings |
-| Left and right DC gearmotors | 2 | Included with confirmed Hiwonder chassis; L298N drive; with both motors together, 55% starts passed 3/3 and 40% four-second holds after a 60% kick passed 3/3, at 10 kHz with raised wheels; user reports 75 mm wheel diameter | Exact motor markings, gear ratio, rated voltage/stall current, loaded rolling circumference; 51–54% startup and 36–39% holding duties, ground load, long-term holding and current/thermal limits remain unverified; see [measurements](MOTOR_CHARACTERIZATION.md) |
-| ACS712 current sensor board | 3 target | Board family confirmed by the user; intended for left motor, right motor and servo current telemetry only; example reference below is not the purchase source or an exact board identification | Physical quantity, chip suffix/current range, board vendor/revision, supply voltage, zero-current offset, sensitivity, output range, ADC-safe conditioning and actual wiring |
-| Left and right motor encoders | 2 | A/B quadrature signals; encoder VCC wired to Nucleo 3V3 and GND to GND; both hand-turn tests passed; forward raw counts decrease on the left and increase on the right; one turn measured 1319 left / 1327 right absolute counts, supporting provisional 1320 counts/rev at x4; see [calibration record](ENCODER_SPEC.md) | Model, rated supply/output circuitry, refined multi-revolution calibration, powered-speed accuracy |
+| Hiwonder Ackermann steering chassis kit | 1 | [Exact kit link confirmed by the user](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503), including its motors and steering servo; team uses an L298N motor driver | Installed servo marking; motor model is confirmed below |
+| JGB37-520R30-12 DC gearmotors | 2 | User-confirmed highlighted model in the [specification image](assets/JGB37-520R30-12-spec.png); 12 V, 1:30, 280 RPM rated, 320 RPM no-load, 3.2 A stall; L298N drive; both-motor 55% starts and 40% four-second holds after a 60% kick passed 3/3 at 10 kHz with raised wheels; user reports 75 mm wheel diameter | Loaded rolling circumference; 51–54% startup and 36–39% holding duties, ground load, long-term holding and current/thermal margins remain unverified; see [measurements](MOTOR_CHARACTERIZATION.md) |
+| Makerfabs ACS712 Current Sensor- 5A | 3 target | [Exact product confirmed by the user](https://www.makerfabs.com/acs712-current-sensor-5a.html), SKU MSE71205A; nominal -5 to +5 A, 5 V supply, 185 mV/A, 2.5 V at zero current; intended for left motor, right motor and servo telemetry only | Physical quantity, board revision/chip markings, measured supply/offset/sensitivity and actual wiring; user selected direct ADC connection with +4320 mA reporting ceiling |
+| Left and right motor encoders | 2 | Built into JGB37-520R30-12; specification lists A/B, 11 magnetic-ring lines, 3.3–5 V and built-in pull-up shaping; encoder VCC wired to Nucleo 3V3 and GND to GND; both hand-turn tests passed; forward raw counts decrease on the left and increase on the right; one turn measured 1319 left / 1327 right absolute counts; use validated 1320 counts/rev at x4; see [calibration record](ENCODER_SPEC.md) | Detailed output circuitry, refined multi-revolution calibration, powered-speed accuracy |
 | HW-688 DC-to-DC step-down buck converter module | 2 reported | First supplies 5 V to Nucleo E5V. Second photo-identified: fixed nominal 5 V, VIN+/VIN- input beside barrel jack, 5V/GND output beside USB, no adjustment potentiometer. User reports TA said use 5 V for the servo; the second converter is now selected for that bench plan. | Actual output voltage under no-load/load, continuous/peak current rating, thermal performance and servo operation at 5 V remain unmeasured |
 | Laptop-to-Nucleo USB connection | 1 | ST-LINK programming and serial diagnostics; USB telemetry has been observed | Cable/board connection and current enumeration should be checked before each flash |
 
@@ -87,21 +87,86 @@ not be assumed to match the motor bench's E5V arrangement.
 
 The user confirmed that this [Hiwonder Ackermann steering chassis kit](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503) is the team's car kit, including the motors and steering servo. Use that exact variant link when checking component information, then verify the installed component markings before adopting ratings or calibration values. The included encoder motor controller mentioned in the handout is not a substitute for the team's confirmed L298N module.
 
+## Confirmed motor specifications
+
+The user identified both motors as **JGB37-520R30-12**, the red-highlighted
+column in the supplied [specification image](assets/JGB37-520R30-12-spec.png).
+The image is retained as the source; its original page URL was not supplied.
+These are published specifications, not team measurements.
+
+| Property | JGB37-520R30-12 specification |
+|---|---|
+| Motor type | Permanent-magnet brushed DC gearmotor |
+| Rated voltage | 12 V |
+| Gear ratio | 1:30 |
+| No-load / rated speed | 320 / 280 RPM |
+| Stall / rated torque | 5.8 / 1.2 kg·cm, as labeled in the source |
+| Stall / rated current | 3.2 / 0.36 A |
+| Rated power | About 7 W, as listed |
+| Encoder | A/B quadrature; 11 magnetic-ring lines; built-in pull-up shaping |
+| Encoder supply | 3.3–5 V |
+| Output shaft | 6 mm diameter, D-type eccentric shaft |
+| Connector | PH2.0-6PIN |
+| Motor weight | 152 ± 1 g |
+
+The image recommends 12 V and lists an 11–16 V motor-supply range. This does
+not change the team's 12 V supply or establish a range for the other components.
+Its approximate 7 W entry is transcribed unchanged; 12 V × 0.36 A is 4.32 W,
+so those entries should not be treated as a consistent measured operating point.
+
+This identification supersedes using the generic chassis listing's 85 RPM
+rated / 110 RPM no-load figures for these motors. Keep the user-selected
+**300 RPM full-throttle target** and bench-validated **1320 counts/revolution**.
+The measured full-duty average remains **316.59 RPM**. Neither a published
+speed nor a gear ratio replaces that measurement. See
+[encoder calibration](ENCODER_SPEC.md) and [motor measurements](MOTOR_CHARACTERIZATION.md).
+The 3.2 A per-motor stall specification does not establish that the shared
+12 V / 2 A adapter or L298N module can support a stall; their margins remain
+unverified. No control limits or firmware changed with this identification.
+
 ## ACS712 current sensor identification
 
-The user confirmed that the team uses an **ACS712 current sensor board** and
-provided this [Seeed Studio ACS712 guide](https://www.seeedstudio.com/blog/2020/02/15/acs712-current-sensor-features-how-it-works-arduino-guide/)
-as an example of a similar board. It is not the team's purchase source, and the
-exact module has not been matched to that example. Do not adopt a current range,
-sensitivity or pinout from the example without checking the installed board.
+The user confirmed the exact [Makerfabs ACS712 Current Sensor- 5A](https://www.makerfabs.com/acs712-current-sensor-5a.html),
+SKU **MSE71205A**. The product page was read for this update. This replaces
+the earlier family-only identification; the previously supplied Seeed guide
+was only an example, not the team's exact module reference.
 
-Record the chip suffix and board markings before choosing the ADC conversion
-constants. Verify the sensor supply, zero-current output, sensitivity and full
-output-voltage range, then check any required conditioning against the Nucleo's
-ADC input limits before connecting the signal. The planned ADC assignments are
-in [STM32_PINOUT.md](STM32_PINOUT.md); the model confirmation does not establish
-that those connections are wired or tested. Current sensing remains unintegrated
-in the link and motor-bench applications and does not provide overcurrent protection.
+| Property | Makerfabs published specification |
+|---|---|
+| Measurement range | -5 to +5 A, bidirectional |
+| Sensor supply | 5 V |
+| Nominal sensitivity | 185 mV/A |
+| Nominal zero-current output | 2.5 V |
+| Output rise time | 5 us for a current step |
+| Bandwidth | 80 kHz |
+| Total output error | 1.5% at 25 °C |
+
+The page also links an [ACS712 datasheet](https://www.makerfabs.com/desfile/files/ACS712-Datasheet.pdf).
+The values above are product-page specifications, not measurements of our boards.
+Physical quantity, board revision, chip markings and terminal orientation have
+not been independently inspected.
+
+Using the nominal values, `Vout = 2.5 V + I * 0.185 V/A`, so -5 to +5 A
+corresponds to **1.575–3.425 V** at the sensor output. The upper end exceeds
+the Nucleo's nominal 3.3 V ADC conversion range, but not the **4.0 V analog
+absolute maximum** in [ST DS10086 Rev 4, Table 11 note 2](https://download.mikroe.com/documents/datasheets/erp/STM32F401RE.pdf#page=58).
+Absolute maximum is a stress rating, not a guaranteed operating range.
+
+The user subsequently selected **direct ADC connection without a divider**,
+accepting clipping and reporting **+4320 mA** at the positive ceiling. This
+supersedes the earlier divider proposal, not the 5 V sensor supply or common
+ground requirement. Software clipping does not protect against voltage spikes
+or unsafe power sequencing. Actual supply, offset, sensitivity and wiring
+still require bench verification.
+
+The root link application now acquires all three channels with nominal
+calibration, batch averaging and read-only status/USB diagnostics. The standalone
+motor-bench application is unchanged. Failed/stale acquisition is unavailable,
+not zero; a ceiling reading is not an exact overrange measurement. See
+[Part 3.5 implementation and bench checklist](CURRENT_SENSOR_HANDOFF.md).
+The planned ADC assignments remain in [STM32_PINOUT.md](STM32_PINOUT.md).
+This software change does not establish that the connections are wired or tested,
+and adds no overcurrent protection.
 
 ## Current power setup
 

@@ -31,9 +31,12 @@ LIVE steering is disabled. B1 retains the motor implementation's latched
 enable-low/coast stop until reset. A peripheral output failure latches an
 actuator fault. Failed output hardware cannot guarantee physical braking.
 
-Servo starts OFF. It retains explicit calibration load, arm/LIVE commands and
-a 500 ms USB heartbeat lease. Fault recovery does not automatically re-arm it.
-The servo console's OFF command does not stop the motors.
+Servo embeds the 1200/1600/2000 us calibration and waits for healthy Pi commands
+and a centered wheel before LIVE, both at boot and after link/fault recovery.
+Vehicle steering requires no USB heartbeat. Manual calibration retains its
+500 ms USB lease. Explicit OFF stays off until AUTO or a manual command; the
+servo console's OFF command does not stop motors. See [steering policy and
+verification](STEERING_AUTONOMOUS.md).
 
 ## Part 4 additions
 
@@ -43,10 +46,11 @@ control 1, status 2, current workqueue 3 and console 4. The UART command timeout
 is 60 ms; Pi UDP freshness is 80 ms. See the [task table](../PART4_TASK_TABLE.md)
 for cadence, synchronization, latency targets and upstream fault distinctions.
 
-Part 3.5 is deliberately incomplete: ADC is disabled, the backend returns
-unavailable data, and no current-based control decision is implemented.
-The [sensor interface](CURRENT_SENSOR_HANDOFF.md) defines the contract for
-calibrated readings.
+Part 3.5 now acquires ADC1 channels 0/1/8 with nominal ACS712 5A calibration,
+signed readings and a +4320 mA positive reporting ceiling. Failed or stale
+acquisition is unavailable. No current-based control decision is implemented.
+Physical calibration remains pending; the [sensor interface](CURRENT_SENSOR_HANDOFF.md)
+defines conversion, validity and verification limits.
 
 ## Verification and references
 

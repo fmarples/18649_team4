@@ -13,7 +13,7 @@ def main():
     for item in ('CONFIG_MAIN_THREAD_PRIORITY=1', 'CONFIG_SYS_CLOCK_TICKS_PER_SEC=1000',
                  'CONFIG_LAB_TIMING_GPIO=y', 'CONFIG_LAB_CURRENT_SAMPLE_MS=20',
                  'CONFIG_LAB_CURRENT_MAX_AGE_MS=100', '# CONFIG_PRINTK_SYNC is not set',
-                 '# CONFIG_ADC is not set'):
+                 'CONFIG_ADC=y'):
         if item not in config: raise SystemExit('FAIL: missing ' + item)
     sys.path.insert(0, str(args.zephyr_base / 'scripts/dts/python-devicetree/src'))
     # Read only the locally generated build artifact.
@@ -35,6 +35,18 @@ def main():
         spec = user.props[prop].val[0]
         if port not in spec.controller.labels or spec.data['pin'] != pin: raise SystemExit('FAIL: ' + prop)
         print('PASS:', prop, port, pin)
+    adc = tree.label2node['adc1']
+    if adc.status != 'okay' or adc.props['st,adc-prescaler'].val != 4:
+        raise SystemExit('FAIL: ADC1 enable/clock')
+    pins = {label for node in adc.pinctrls[0].conf_nodes for label in node.labels}
+    if pins != {'adc1_in0_pa0', 'adc1_in1_pa1', 'adc1_in8_pb0'}:
+        raise SystemExit('FAIL: current ADC pins')
+    specs = user.props['io-channels'].val
+    if [spec.data['input'] for spec in specs] != [0, 1, 8] or any(
+            spec.controller is not adc for spec in specs):
+        raise SystemExit('FAIL: current channel order')
+    print('PASS: ADC1 PA0/PA1/PB0, channels 0/1/8, prescaler /4, reference mV:',
+          adc.props['vref-mv'].val)
     print('PASS: generated configuration; physical waveforms still need measurement.')
 
 if __name__ == '__main__': main()

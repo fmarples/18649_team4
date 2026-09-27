@@ -16,6 +16,14 @@ uint16_t servo_map(const struct servo_control *s, int32_t steer)
  int32_t span = steer < 0 ? 32768 : 32767;
  return s->center + (int64_t)(endpoint - s->center) * magnitude / span;
 }
+/* Boot and the optional AUTO command enter the same centered-wheel interlock. */
+bool servo_auto(struct servo_control *s)
+{
+ if (!servo_cal_valid(s)) return false;
+ s->mode = SERVO_WAIT_CENTER;
+ s->pulse = 0;
+ return true;
+}
 bool servo_arm(struct servo_control *s, uint64_t now, bool self_test)
 {
  if (self_test || s->mode != SERVO_OFF) return false;
@@ -53,12 +61,18 @@ bool servo_live(struct servo_control *s, bool linked, bool self_test, int32_t st
 void servo_tick(struct servo_control *s, uint64_t now, bool linked, bool self_test, int32_t steer)
 {
  if (s->mode == SERVO_OFF) return;
- if (now - s->heartbeat_ms >= SERVO_LEASE_MS || self_test ||
+ if (s->mode == SERVO_WAIT_CENTER) {
+  s->pulse = 0;
+  if (!linked || self_test || !servo_cal_valid(s) || steer < -2000 || steer > 2000) return;
+  s->mode = SERVO_LIVE;
+ }
+ if ((s->mode == SERVO_MANUAL && now - s->heartbeat_ms >= SERVO_LEASE_MS) || self_test ||
      (s->mode == SERVO_LIVE && !linked)) {
-  s->mode = SERVO_OFF; s->pulse = 0; return;
+  s->mode = s->mode == SERVO_LIVE ? SERVO_WAIT_CENTER : SERVO_OFF;
+  s->pulse = 0; return;
  }
  if (s->mode == SERVO_LIVE) {
   s->pulse = servo_map(s, steer);
-  if (!s->pulse) s->mode = SERVO_OFF;
+  if (!s->pulse) s->mode = SERVO_WAIT_CENTER;
  }
 }

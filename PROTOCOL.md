@@ -1,10 +1,11 @@
 # Pi-to-STM32 integrated actuator link
 
 The root application combines main's encoder/PID motor driver with Tianyi's
-blinkers, wheel-button self-test and opt-in servo bench on one NUCLEO-F401RE.
-The current-sampling interface is prepared, but the actual Part 3.5 backend and
-console-independent steering operation remain pending.
-See `doc/INTEGRATION.md` for integration behavior and verification limits.
+blinkers, wheel-button self-test and Pi-controlled steering on one NUCLEO-F401RE.
+Part 3.5 now samples three ACS712 5A sensors through ADC1 with nominal
+calibration and a user-selected +4320 mA reporting ceiling. Physical current
+verification and physical testing of console-independent steering remain pending.
+See `doc/INTEGRATION.md` for verification and deployment limits.
 
 ## Wiring and transport
 
@@ -111,18 +112,28 @@ A/button 0 latches self-test on its first press; a double press within 400 ms
 clears the manual latch. Self-test requests dynamic motor braking, hazards and
 servo PWM off. Clearing it never clears motor/B1/peripheral faults. With a healthy
 link, clearing self-test resumes motor response to the current pedals (including
-nonzero throttle); steering stays OFF until explicitly armed again.
+nonzero throttle); steering waits for the Logitech wheel to return near center before resuming.
 
 Servo is PB9/D14 on TIM4, 20 ms period. Motor PWM remains PB4/TIM3 and PB10/TIM2
 at 10 kHz. USB USART2 accepts the existing ASCII calibration commands; binary
-Pi USART1 is unchanged. PWM starts OFF. Load, then ARM and LIVE explicitly with
-the Logitech wheel near center. Manual calibration can run without Pi traffic;
-LIVE requires healthy commands. A 500 ms USB-console heartbeat lease, self-test,
-motor fault or servo/blinker fault disables active servo PWM; link loss disables
-LIVE. No automatic re-arm is added. This remains a bench control dependency.
+Pi USART1 is unchanged. At boot the firmware loads the tracked calibration and
+enters WAIT_CENTER with PWM disabled. A healthy Pi link, no inhibiting fault and
+raw steering within inclusive -2000..2000 enable LIVE. No USB cable, ARM command
+or USB heartbeat is required for vehicle steering. LIVE follows the Pi steering
+value, including while blinkers operate. Link loss, self-test or invalid steering
+disables PWM and returns to WAIT_CENTER; recovery must satisfy the same centered
+wheel interlock. Motor and peripheral faults continue to inhibit output; latched
+faults still require their existing reset procedure.
+
+USB remains optional for manual calibration/diagnostics. Manual mode retains its
+500 ms USB heartbeat and can run without Pi traffic. Explicit OFF stays OFF;
+SERVO AUTO returns to WAIT_CENTER. ARM/LIVE still support manual calibration.
+Opening the calibration console sends OFF; its normal quit also sends OFF.
+A physical USB disconnect alone does not stop LIVE, which is governed by the Pi link.
 
 `config/servo_calibration.json` holds user-selected left/center/right
-1200/1600/2000 us. The Windows helper prefers locally saved calibration, falling
+1200/1600/2000 us. CMake embeds this file in firmware; updating the vehicle's
+boot calibration requires rebuilding/flashing. The Windows helper prefers locally saved calibration, falling
 back to this tracked file only when the default local file is missing. An
 explicit --file path never silently falls back. Loading changes no output;
 these numbers are not proof of measured mechanical limits.
@@ -150,14 +161,26 @@ cannot guarantee physical braking or lamp output.
 | 48 | 4 | Rejected-frame/overflow counter |
 | 52 | 4 | CRC-32/IEEE of bytes 0 through 51 |
 
-Current values are INT32_MIN and validity is zero because the backend deliberately
-returns unavailable data until Part 3.5 is implemented. A dedicated priority-3
-workqueue calls it every 20 ms and publishes a short mutex-protected snapshot.
-Status never waits for ADC conversion. Validity expires at 100 ms sample age;
-both intervals are configurable telemetry choices. These are unavailable
-readings, NOT measured 0 mA. See `doc/CURRENT_SENSOR_HANDOFF.md`. The state enum
-describes transport, self-test and latched motor/actuator faults; sensor fault
-integration remains pending. Steering status is commanded input, not an angle measurement.
+A dedicated priority-3 workqueue samples ADC1 channels 0/1/8 every 20 ms,
+corresponding to left/right/servo on PA0/PA1/PB0. Each acquisition averages eight
+scans, converts with per-channel constants and publishes a short mutex-protected
+snapshot. Defaults are vendor nominal: 2.5 V zero, 185 mV/A and 3.3 V reference,
+not measured bench calibration. Status never waits for ADC conversion.
+
+The user chose direct ADC wiring with no divider. A channel reaching the ADC's
+maximum code, or a converted value above the reporting ceiling, reports
+**+4320 mA with its validity bit set**. Treat this value as ceiling/clipped data,
+not an exact current above the ADC range. Pi console marks it `[CEILING]`; CSV
+and wire values remain numeric. There is no added flag or frame-layout change.
+
+Setup/read errors clear all current validity immediately on publication. Validity
+also expires at 100 ms sample age, measured from before acquisition. Invalid
+fields are INT32_MIN, NOT measured 0 mA. A successful ADC conversion does not
+detect a floating/disconnected sensor or certify calibration. See
+`doc/CURRENT_SENSOR_HANDOFF.md` for conversion, filtering, logs and pending tests.
+The state enum describes transport, self-test and latched motor/actuator faults;
+current errors never change actuator policy in this read-only lab. Steering
+status is commanded input, not an angle measurement.
 
 ## Timing and failure behavior
 

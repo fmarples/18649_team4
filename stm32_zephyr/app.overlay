@@ -14,6 +14,8 @@
         max-pulse = <PWM_USEC(2500)>;
     };
     zephyr,user {
+        io-channels = <&adc1 0>, <&adc1 1>, <&adc1 8>;
+        io-channel-names = "current-left", "current-right", "current-servo";
         cmd-rx-gpios = <&gpioc 2 GPIO_ACTIVE_HIGH>;
         pwm-set-gpios = <&gpioc 3 GPIO_ACTIVE_HIGH>;
         front-left-gpios = <&gpiob 6 GPIO_ACTIVE_HIGH>;
@@ -37,6 +39,16 @@
         pinctrl-0 = <&tim4_ch4_pb9>;
         pinctrl-names = "default";
     };
+};
+
+/* Direct ACS712 outputs: A0/PA0, A1/PA1, A3/PB0. VDDA is nominally 3.3 V.
+ * APB2 is 84 MHz; /4 gives 21 MHz, within the F401 ADC's 36 MHz maximum. */
+&adc1 {
+    status = "okay";
+    pinctrl-0 = <&adc1_in0_pa0 &adc1_in1_pa1 &adc1_in8_pb0>;
+    pinctrl-names = "default";
+    st,adc-prescaler = <4>;
+    vref-mv = <3300>;
 };
 
 &usart1 {

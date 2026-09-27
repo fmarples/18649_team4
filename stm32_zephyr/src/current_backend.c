@@ -1,11 +1,69 @@
 #include "current_sense.h"
+#include <zephyr/drivers/adc.h>
 #include <errno.h>
-/* Part 3.5 has not been completed. Replace this backend only after identifying
- * the ACS712 variant, ADC-safe conditioning and measured conversion constants.
- * This implementation never configures ADC pins or fabricates measurements. */
+
+static const struct device *const adc = DEVICE_DT_GET(DT_NODELABEL(adc1));
+/* ADC scans selected channels in ascending order: PA0, PA1, PB0. */
+static const uint8_t channels[CURRENT_CHANNELS] = {0, 1, 8};
+static const int32_t zero_mv[CURRENT_CHANNELS] = {
+    CONFIG_LAB_CURRENT_LEFT_ZERO_MV, CONFIG_LAB_CURRENT_RIGHT_ZERO_MV,
+    CONFIG_LAB_CURRENT_SERVO_ZERO_MV,
+};
+static const int32_t sensitivity[CURRENT_CHANNELS] = {
+    CONFIG_LAB_CURRENT_LEFT_SENSITIVITY, CONFIG_LAB_CURRENT_RIGHT_SENSITIVITY,
+    CONFIG_LAB_CURRENT_SERVO_SENSITIVITY,
+};
+
+/* Called only by the current workqueue. Acquire actual ADC samples, then apply
+ * configured nominal/bench calibration. No actuator policy or shared lock here. */
 int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
 {
+    static bool configured;
     for (unsigned i = 0; i < CURRENT_CHANNELS; i++) ma[i] = CURRENT_UNAVAILABLE;
     *valid_mask = 0;
-    return -ENOSYS;
+    if (!device_is_ready(adc)) return -ENODEV;
+    if (!configured) {
+        for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
+            const struct adc_channel_cfg config = {
+                .gain = ADC_GAIN_1,
+                .reference = ADC_REF_INTERNAL, /* STM32 driver uses VDDA. */
+                .acquisition_time = ADC_ACQ_TIME(ADC_ACQ_TIME_TICKS, 480),
+                .channel_id = channels[i],
+            };
+            int error = adc_channel_setup(adc, &config);
+            if (error) return error;
+        }
+        configured = true;
+    }
+    /* Eight complete scans, no inter-scan delay or cross-period filter state. */
+    enum { SCANS = 8 };
+    int16_t raw[SCANS][CURRENT_CHANNELS];
+    const struct adc_sequence_options options = {.extra_samplings = SCANS - 1};
+    const struct adc_sequence sequence = {
+        .options = &options,
+        .channels = (1U << 0) | (1U << 1) | (1U << 8),
+        .buffer = raw,
+        .buffer_size = sizeof(raw),
+        .resolution = 12,
+    };
+    int error = adc_read(adc, &sequence);
+    if (error) return error;
+    for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
+        int32_t sum = 0;
+        bool clipped = false;
+        for (unsigned scan = 0; scan < SCANS; scan++) {
+            sum += raw[scan][i];
+            clipped |= raw[scan][i] == 4095;
+        }
+        int64_t uv = (int64_t)sum * DT_PROP(DT_NODELABEL(adc1), vref_mv) * 1000 /
+                     (4096 * SCANS);
+        int64_t delta_uv = uv - zero_mv[i] * 1000;
+        int32_t value = (delta_uv + (delta_uv >= 0 ? sensitivity[i] / 2 : -sensitivity[i] / 2)) /
+                        sensitivity[i];
+        /* User-selected reporting ceiling. A rail clip is a lower-bound
+         * indication, not an exact measurement and never a motor cutoff. */
+        ma[i] = clipped || value > CURRENT_REPORT_MAX_MA ? CURRENT_REPORT_MAX_MA : value;
+        *valid_mask |= 1U << i;
+    }
+    return 0;
 }

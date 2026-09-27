@@ -1,5 +1,13 @@
 # Part 4 preparation: software evidence and remaining hardware work
 
+**Part 3.5 update:** ADC acquisition has since replaced the unavailable backend.
+The new NUCLEO build and generated-pin checks pass; 45 host tests and 10 protocol
+tests pass. The build is byte-identical to the image already flashed for the
+steering task; physical sensor calibration and wiring verification were not
+performed. See
+[Part 3.5 evidence and logs](CURRENT_SENSOR_HANDOFF.md#build-tests-and-persistent-evidence).
+The figures, hash and QEMU results below describe the earlier preparation image.
+
 Prepared on `lab2-integration`, following integration merge `3b04a43`.
 Tianyi reports Parts 3.3/3.4 tested individually and confirms 3.5 unfinished.
 No board was flashed, serial port opened, Pi contacted or actuator commanded
@@ -39,9 +47,11 @@ during this Part 4 preparation. This record does not certify hardware deadlines.
 | Python syntax checks | PASS for pi, windows and tools |
 | Hardware/physical timing | Not performed |
 
-The current tests cover validity, genuine numeric zero vs unavailable, missing
-backend, expiry, wraparound and recovery. The actual ADC backend, electrical
-conditioning and workqueue acquisition execution time remain untested.
+The tests at that time covered validity, genuine numeric zero vs unavailable,
+the unavailable backend, expiry, wraparound and recovery. That image's backend
+was a stub; the current image acquires real ADC samples, and the native boundary
+tests above cover its conversion instead. Electrical conditioning and workqueue
+acquisition execution time remain untested.
 The new timeout tests cover the three-missed-update boundary, refresh and clock
 wrap; a logical timer test is not a physical latency measurement.
 
@@ -71,4 +81,6 @@ Use the [integration design](INTEGRATION.md) and [timing specification](PART4_TI
 final motor board, deploy matching firmware/Pi modules, test all outputs and
 fault/recovery behavior together, complete 3.5 and measure deadlines while
 all normal tasks are active. Record the actual timing in the task table and
-worksheet. Servo still needs explicit arm/live and a USB heartbeat after faults.
+worksheet. The new steering policy needs a healthy link and centered wheel after
+faults, not USB arm/live or keepalives. See [steering software results](STEERING_AUTONOMOUS.md)
+for what has and has not been verified.

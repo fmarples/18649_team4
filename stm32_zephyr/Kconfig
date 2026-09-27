@@ -18,4 +18,40 @@ config LAB_CURRENT_MAX_AGE_MS
     default 100
     range 1 10000
     help
-      Telemetry freshness policy, not a motor cutoff. Refine after Part 3.5.
+      Telemetry freshness policy, not a motor cutoff. Acquisition time counts
+      toward age; stale or failed readings are unavailable in status frames.
+
+menu "ACS712 5A calibration (direct ADC connection)"
+comment "Defaults are vendor nominal values, not measured board calibration"
+
+config LAB_CURRENT_LEFT_ZERO_MV
+    int "Left zero-current sensor output (mV)"
+    default 2500
+    range 1 3299
+
+config LAB_CURRENT_RIGHT_ZERO_MV
+    int "Right zero-current sensor output (mV)"
+    default 2500
+    range 1 3299
+
+config LAB_CURRENT_SERVO_ZERO_MV
+    int "Servo zero-current sensor output (mV)"
+    default 2500
+    range 1 3299
+
+config LAB_CURRENT_LEFT_SENSITIVITY
+    int "Left sensitivity (mV/A)"
+    default 185
+    range 1 1000
+
+config LAB_CURRENT_RIGHT_SENSITIVITY
+    int "Right sensitivity (mV/A)"
+    default 185
+    range 1 1000
+
+config LAB_CURRENT_SERVO_SENSITIVITY
+    int "Servo sensitivity (mV/A)"
+    default 185
+    range 1 1000
+
+endmenu

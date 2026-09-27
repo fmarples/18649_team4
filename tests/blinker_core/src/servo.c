@@ -72,10 +72,23 @@ ZTEST(servo, test_live_link_fault_and_self_test)
 {
  calibration(false); servo_arm(&s, 0, false); servo_live(&s, true, false, 0);
  servo_tick(&s, 10, true, false, -32768); zassert_equal(s.pulse, s.left);
- servo_tick(&s, 11, false, false, 0); zassert_equal(s.mode, SERVO_OFF);
- servo_arm(&s, 12, false);
+ servo_tick(&s, 11, false, false, 0); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+ servo_tick(&s, 12, true, false, 2001); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+ s.mode = SERVO_OFF; servo_arm(&s, 12, false);
  servo_tick(&s, 13, false, true, 0); zassert_equal(s.mode, SERVO_OFF);
  servo_arm(&s, 14, false); servo_live(&s, true, false, 0);
- servo_tick(&s, 15, true, false, INT32_MAX); zassert_equal(s.mode, SERVO_OFF);
+ servo_tick(&s, 15, true, false, INT32_MAX); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+}
+ZTEST(servo, test_vehicle_startup_and_usb_independence)
+{
+ calibration(false); zassert_true(servo_auto(&s));
+ servo_tick(&s, 10000, false, false, 0); zassert_equal(s.pulse, 0);
+ servo_tick(&s, 10001, true, false, -2001); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+ servo_tick(&s, 10002, true, true, 0); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+ servo_tick(&s, 10003, true, false, 0); zassert_equal(s.mode, SERVO_LIVE);
+ servo_tick(&s, 20000, true, false, 32767); zassert_equal(s.pulse, s.right);
+ servo_tick(&s, 20001, true, true, 0); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+ servo_tick(&s, 20002, true, false, 32767); zassert_equal(s.mode, SERVO_WAIT_CENTER);
+ servo_tick(&s, 20003, true, false, 0); zassert_equal(s.mode, SERVO_LIVE);
 }
 ZTEST_SUITE(servo, NULL, NULL, reset, NULL, NULL);

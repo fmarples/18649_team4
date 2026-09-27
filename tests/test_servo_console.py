@@ -31,6 +31,12 @@ class CalibrationFileTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 console.validate_calibration(dict(zip(("left_us", "center_us", "right_us"), points), period_us=20000))
 
+    def test_waiting_status_and_auto_command(self):
+        status = console.parse_status('SERVO OK mode=3 pulse=0 left=1200 center=1600 right=2000 marks=7 valid=1')
+        self.assertEqual(console.describe(status),
+                         'WAIT_CENTER: pulse=0 us; left=1200 center=1600 right=2000 us; calibration=READY')
+        self.assertEqual(console.COMMANDS['auto'], 'AUTO')
+
     def test_wrong_period_missing_fields_and_error_responses(self):
         with self.assertRaises(ValueError):
             console.validate_calibration(dict(left_us=1100, center_us=1500, right_us=1850, period_us=1000))

@@ -1,18 +1,12 @@
 #include <zephyr/ztest.h>
-#include <errno.h>
 #include "current_cache.h"
-#include "current_sense.h"
 
-ZTEST(currents, test_boot_and_stub_never_publish_fake_zero)
+ZTEST(currents, test_boot_never_publishes_fake_zero)
 {
     struct current_sample cache = {0};
     struct current_sample value = current_cache_snapshot(&cache, 0, 100);
     zassert_equal(value.valid_mask, 0);
     for (unsigned i = 0; i < 3; i++) zassert_equal(value.ma[i], CURRENT_UNAVAILABLE);
-    int32_t ma[3] = {123, 456, 789}; uint32_t mask = 7;
-    zassert_equal(current_backend_read(ma, &mask), -ENOSYS);
-    zassert_equal(mask, 0);
-    for (unsigned i = 0; i < 3; i++) zassert_equal(ma[i], CURRENT_UNAVAILABLE);
 }
 ZTEST(currents, test_channel_validity_and_signed_zero_measurements)
 {
