@@ -22,10 +22,10 @@ def wheel(seq, throttle):
 
 # Run the real bridge until an external KeyboardInterrupt, recording its UART frames.
 def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None,
-            received_status=b'', forwarded=None, fail_forward=False, extra_args=()):
+            received_status=b'', forwarded=None, fail_forward=False, extra_args=(), writes_out=None):
     queue = deque(events)
     clock = SimpleNamespace(now=0.0, slept=False)
-    writes = []
+    writes = [] if writes_out is None else writes_out
     class Trace:
         def __enter__(self): return self
         def __exit__(self, *args): pass

@@ -4,13 +4,11 @@
 Matching STM32 firmware drives motors. Stale/invalid UDP sends a brake command.
 """
 import argparse
-import csv
 import ipaddress
 import socket
 import time
-from pathlib import Path
-from part2_protocol import (command, wheel_packet, pop_status, is_newer, STATES,
-                            CURRENT_REPORT_MAX_MA, STATUS_UDP_PORT, status_frame)
+from part2_protocol import (command, wheel_packet, pop_status, is_newer,
+                            STATUS_UDP_PORT, status_frame)
 from timing_gpio import create_trace
 
 TX_PERIOD = 0.020
@@ -19,17 +17,7 @@ TX_PERIOD = 0.020
 UDP_FRESH = 0.080
 
 
-# Render unavailable readings distinctly from real zero and the reporting ceiling.
-def current_summary(status):
-    values = []
-    for i, name in enumerate(('left', 'right', 'servo')):
-        value = status['current_' + name + '_mA']
-        valid = status['current_valid_mask'] & (1 << i) and value != -2147483648
-        text = str(value) + 'mA' if valid else 'UNAVAILABLE'
-        if valid and value == CURRENT_REPORT_MAX_MA:
-            text += '[CEILING]'
-        values.append('%s=%s' % (name, text))
-    return ' '.join(values)
+from bridge_diagnostics import BridgeDiagnostics, current_summary
 
 
 def main():
@@ -54,12 +42,7 @@ def main():
     if args.mode == 'live':
         udp.bind(('0.0.0.0', 8000))
     udp.setblocking(False)
-    log = None
-    writer = None
-    if args.log:
-        p = Path(args.log)
-        p.parent.mkdir(parents=True, exist_ok=True)
-        log = p.open('x', newline='')  # Preserve previous measurements.
+    diagnostics = BridgeDiagnostics(args.log)
     try:
         with create_trace(args.trace_gpio, args.gpiochip) as trace, \
              serial.Serial(args.serial, 115200, timeout=0, write_timeout=0.050) as uart:
@@ -81,9 +64,9 @@ def main():
             no_status_notice = started + 2
             was_streaming = False
             discard_udp = False
-            print('MOTOR LINK mode=%s; UART=%s 115200 8N1; Ctrl+C stops TX.' %
-                  (args.mode, args.serial), flush=True)
-            print('Live pedal commands can drive motors. Current validity comes from the STM32.', flush=True)
+            diagnostics.message('MOTOR LINK mode=%s; UART=%s 115200 8N1; Ctrl+C stops TX.' %
+                                (args.mode, args.serial))
+            diagnostics.message('Live pedal commands can drive motors. Current validity comes from the STM32.')
             while True:
                 now = time.monotonic()
                 incoming = uart.read(4096)
@@ -96,7 +79,7 @@ def main():
                             telemetry_error = None
                         except OSError as error:
                             if telemetry_error != str(error):
-                                print('Telemetry forwarding failed; vehicle link continues: ' + str(error), flush=True)
+                                diagnostics.message('Telemetry forwarding failed; vehicle link continues: ' + str(error))
                             telemetry_error = str(error)
                     status['pi_receive_s'] = now - started
                     gap = None if previous_status_seq is None else ((status['status_seq'] - previous_status_seq) & 0xffffffff)
@@ -105,22 +88,11 @@ def main():
                     previous_status_seq = status['status_seq']
                     previous_stm_ms = status['stm_ms']
                     no_status_notice = now + 2
-                    if log:
-                        if writer is None:
-                            writer = csv.DictWriter(log, fieldnames=list(status))
-                            writer.writeheader()
-                        writer.writerow(status)
-                        log.flush()
+                    diagnostics.status(status, now >= next_display)
                     if now >= next_display:
-                        mode = status['state']
-                        name = STATES[mode] if mode < len(STATES) else 'UNKNOWN'
-                        print('STM %s steer=%d thr=%d brk=%d status_seq=%d dt=%sms rejected=%d %s' %
-                              (name, status['steer'], status['throttle'], status['brake'],
-                               status['status_seq'], status['stm_interval_ms'], status['rejected'],
-                               current_summary(status)), flush=True)
                         next_display = now + 0.25
                 if now >= no_status_notice:
-                    print('No valid STM status for 2s: check STM TX D8 -> Pi pin 10 and shared ground.', flush=True)
+                    diagnostics.message('No valid STM status for 2s: check STM TX D8 -> Pi pin 10 and shared ground.')
                     no_status_notice = now + 2
                 # Flush expired input before accepting a restarted UDP sequence.
                 now = time.monotonic()  # Logging/status processing may have taken time.
@@ -132,7 +104,7 @@ def main():
                     last_udp = None
                     discard_udp = True
                     if was_streaming:
-                        print('UDP stale: brake sent; command transmission paused.', flush=True)
+                        diagnostics.message('UDP stale: brake sent; command transmission paused.')
                         was_streaming = False
                 if args.mode == 'live':
                     # Bounded batch: still return to status handling under excess UDP load.
@@ -158,7 +130,7 @@ def main():
                             # Keep the last valid counter/time while paused. Only
                             # a real freshness timeout permits a new baseline.
                             was_streaming = False
-                            print('Rejected UDP input; brake sent; TX paused: '+str(err), flush=True)
+                            diagnostics.message('Rejected UDP input; brake sent; TX paused: '+str(err))
                             continue
                         if not is_newer(counter, previous_counter):
                             continue
@@ -186,11 +158,10 @@ def main():
                     next_tx = now + TX_PERIOD
                 time.sleep(0.001)
     except KeyboardInterrupt:
-        print('\nBridge stopped; STM should time out after the last valid command.')
+        diagnostics.message('Bridge stopped; STM should time out after the last valid command.')
     finally:
         udp.close()
-        if log:
-            log.close()
+        diagnostics.close()
 
 
 if __name__ == '__main__':

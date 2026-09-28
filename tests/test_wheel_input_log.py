@@ -83,8 +83,18 @@ class WheelInputTests(unittest.TestCase):
         log.reset_mock()
         with self.assertRaises(OSError):
             observed.sendto(packet(throttle=-32768), target)
-        self.assertTrue(any('Accelerator: pressed 100.000%' in call.args[0]
-                            for call in log.record.call_args_list))
+        log.record.assert_not_called()  # Do not claim delivery when send failed.
+
+    def test_observer_failure_does_not_drop_commands(self):
+        from windows.wheel_input_log import InputLoggingSocket
+        from unittest.mock import Mock
+        transport, log = Mock(), Mock()
+        log.record.side_effect = OSError('disk full')
+        observed = InputLoggingSocket(transport, log)
+        data, target = packet(), ('127.0.0.1', 8000)
+        observed.sendto(data, target)
+        transport.sendto.assert_called_once_with(data, target)
+        self.assertIn('disk full', observed.observer_error)
 
 
 if __name__ == '__main__':

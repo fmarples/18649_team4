@@ -51,6 +51,9 @@ static struct {
 	int servo_error, lamp_error;
 	enum blink_mode blink_mode;
 	bool blink_left, blink_right;
+	uint32_t timeouts, bad_inputs, rx_overflows, max_rx_gap_ms, max_owner_gap_ms;
+	uint16_t servo_pulse;
+	unsigned servo_mode;
 } state = { .state = WAITING, .throttle = 32767, .brake = -32768 };
 
 /* Caller holds state_mutex; all actuator decisions share this policy. */
@@ -96,6 +99,9 @@ static void rx_callback(const struct device *dev, void *unused)
 
 static void set_error(uint32_t reason)
 {
+	if (reason == TIMEOUT && state.state != TIMEOUT) state.timeouts++;
+	if (reason == BAD_INPUT) state.bad_inputs++;
+	if (reason == RX_OVERFLOW) state.rx_overflows++;
 	state.state = reason;
 	state.steer = 0;
 	state.throttle = 32767; /* Released pedal in this Windows mapping. */
@@ -134,6 +140,10 @@ static void accept_candidate(const struct packet *p)
 		/* Any brake input overrides throttle, including its startup request. */
 		state.target_mrpm = pedal_target_mrpm(throttle, brake);
 		state.command_seq = seq;
+		if (state.ever_received) {
+			uint32_t gap = p->received_ms - state.received_ms;
+			if (gap > state.max_rx_gap_ms) state.max_rx_gap_ms = gap;
+		}
 		state.received_ms = p->received_ms;
 		state.ever_received = true;
 		state.state = LINK_OK;
@@ -195,6 +205,10 @@ static void console_thread(void *a, void *b, void *c)
 	int64_t next_diagnostic_ms = 0;
 	while (true) {
 		servo_bench_print_replies();
+		if (!IS_ENABLED(CONFIG_LAB_PERIODIC_DIAGNOSTICS)) {
+			k_msleep(LAB_CONSOLE_POLL_MS);
+			continue;
+		}
 		if (k_uptime_get() < next_diagnostic_ms) {
 			k_msleep(LAB_CONSOLE_POLL_MS);
 			continue;
@@ -209,6 +223,10 @@ static void console_thread(void *a, void *b, void *c)
 		enum blink_mode blink_mode = state.blink_mode;
 		bool left = state.blink_left, right = state.blink_right;
 		int servo_error = state.servo_error, lamp_error = state.lamp_error;
+		uint32_t timeouts = state.timeouts, bad_inputs = state.bad_inputs;
+		uint32_t rx_overflows = state.rx_overflows, rx_gap = state.max_rx_gap_ms;
+		uint32_t owner_gap = state.max_owner_gap_ms;
+		unsigned servo_mode = state.servo_mode, servo_pulse = state.servo_pulse;
 		k_mutex_unlock(&state_mutex);
 		printk("STM %s seq=%u steer=%d thr=%d brk=%d target_mrpm=%u age=%ums rejected=%u blink=%s L=%u R=%u\n",
 		       state_names[mode], seq, steer, throttle, brake, target, age, bad,
@@ -222,8 +240,10 @@ static void console_thread(void *a, void *b, void *c)
 		printk("CURRENT left_ma=%d right_ma=%d servo_ma=%d valid=%u age_ms=%u error=%d\n",
 		       currents.ma[0], currents.ma[1], currents.ma[2], currents.valid_mask,
 		       k_uptime_get_32() - currents.sampled_ms, currents.error);
-		printk("DIAG trace_errors=%u servo_error=%d lamp_error=%d\n",
-		       timing_trace_errors(), servo_error, lamp_error);
+		printk("DIAG trace_errors=%u servo_error=%d lamp_error=%d servo_mode=%u pulse_us=%u "
+		       "timeouts=%u bad_inputs=%u rx_overflows=%u max_rx_gap_ms=%u max_owner_gap_ms=%u\n",
+		       timing_trace_errors(), servo_error, lamp_error, servo_mode, servo_pulse,
+		       timeouts, bad_inputs, rx_overflows, rx_gap, owner_gap);
 		k_msleep(LAB_CONSOLE_POLL_MS);
 	}
 }
@@ -268,12 +288,17 @@ int main(void)
 	uart_irq_rx_enable(link_uart);
 	k_timer_start(&status_timer, K_MSEC(LAB_STATUS_PERIOD_MS), K_MSEC(LAB_STATUS_PERIOD_MS));
 	k_sem_give(&console_ready);
+	uint32_t last_owner_ms = k_uptime_get_32();
 	while (true) {
 		struct packet p;
 		if (k_msgq_get(&rx_queue, &p, K_MSEC(LAB_OWNER_WAIT_MS)) == 0) {
 			accept_candidate(&p);
 		}
 		k_mutex_lock(&state_mutex, K_FOREVER);
+		uint32_t now_owner_ms = k_uptime_get_32();
+		uint32_t owner_gap = now_owner_ms - last_owner_ms;
+		last_owner_ms = now_owner_ms;
+		if (owner_gap > state.max_owner_gap_ms) state.max_owner_gap_ms = owner_gap;
 		if (atomic_set(&overflow, 0) != 0) {
 			state.rejected++;
 			set_error(RX_OVERFLOW);
@@ -316,6 +341,9 @@ int main(void)
 		k_mutex_lock(&state_mutex, K_FOREVER);
 		state.motor = report;
 		state.blink_mode = blink.mode;
+		struct servo_control servo_snapshot = servo_bench_snapshot();
+		state.servo_mode = servo_snapshot.mode;
+		state.servo_pulse = servo_snapshot.pulse;
 		state.blink_left = output.left;
 		state.blink_right = output.right;
 		k_mutex_unlock(&state_mutex);

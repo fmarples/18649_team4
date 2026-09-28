@@ -17,6 +17,7 @@ static size_t used;
 static bool discard;
 K_MSGQ_DEFINE(console_rx, sizeof(uint8_t), 256, 1);
 static atomic_t console_overflow;
+struct servo_control servo_bench_snapshot(void) { return servo; }
 struct servo_reply { bool ok; struct servo_control snapshot; };
 K_MSGQ_DEFINE(console_tx, sizeof(struct servo_reply), 8, 4);
 

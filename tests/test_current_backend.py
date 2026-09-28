@@ -17,6 +17,7 @@ class CurrentBackendTests(unittest.TestCase):
         logs.mkdir(parents=True, exist_ok=True)
         executable = build / 'current.exe'
         calibration = []
+        calibration += ['-DCONFIG_LAB_CURRENT_CHANNEL_MASK=7']
         for channel in ('LEFT', 'RIGHT', 'SERVO'):
             calibration += [f'-DCONFIG_LAB_CURRENT_{channel}_ZERO_MV=2500',
                             f'-DCONFIG_LAB_CURRENT_{channel}_SENSITIVITY=185']

@@ -13,6 +13,19 @@ config LAB_CURRENT_SAMPLE_MS
     default 20
     range 1 1000
 
+config LAB_CURRENT_CHANNEL_MASK
+    int "Connected current sensors: left=1, right=2, servo=4"
+    default 5
+    range 0 7
+    help
+      The current bench has left and servo sensors only (5). Use 7 when the
+      third sensor is actually wired. Zero skips acquisition for A/B diagnosis;
+      it does not change actuator policy. Missing inputs are unavailable.
+
+config LAB_PERIODIC_DIAGNOSTICS
+    bool "Periodic USB diagnostics (disable for a logging isolation test)"
+    default y
+
 config LAB_CURRENT_MAX_AGE_MS
     int "Maximum age of a valid current sample (ms)"
     default 100

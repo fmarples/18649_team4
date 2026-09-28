@@ -21,9 +21,11 @@ int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
     static bool configured;
     for (unsigned i = 0; i < CURRENT_CHANNELS; i++) ma[i] = CURRENT_UNAVAILABLE;
     *valid_mask = 0;
+    if (!CONFIG_LAB_CURRENT_CHANNEL_MASK) return 0;
     if (!device_is_ready(adc)) return -ENODEV;
     if (!configured) {
         for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
+            if (!(CONFIG_LAB_CURRENT_CHANNEL_MASK & (1U << i))) continue;
             const struct adc_channel_cfg config = {
                 .gain = ADC_GAIN_1,
                 .reference = ADC_REF_INTERNAL, /* STM32 driver uses VDDA. */
@@ -43,6 +45,7 @@ int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
     int16_t raw[CURRENT_CHANNELS][SCANS];
     const struct adc_sequence_options options = {.extra_samplings = SCANS - 1};
     for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
+        if (!(CONFIG_LAB_CURRENT_CHANNEL_MASK & (1U << i))) continue;
         const struct adc_sequence sequence = {
             .options = &options,
             .channels = 1U << channels[i],
@@ -54,6 +57,7 @@ int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
         if (error) return error;
     }
     for (unsigned i = 0; i < CURRENT_CHANNELS; i++) {
+        if (!(CONFIG_LAB_CURRENT_CHANNEL_MASK & (1U << i))) continue;
         int32_t sum = 0;
         bool clipped = false;
         for (unsigned scan = 0; scan < SCANS; scan++) {

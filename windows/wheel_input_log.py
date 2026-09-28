@@ -1,5 +1,6 @@
 """Observe physical controls in the course proxy's existing DIJOYSTATE2 packets."""
 import struct
+import time
 from windows.telemetry_events import LogEvent
 
 # Wrap only the existing outbound socket; never sample the SDK again or modify commands.
@@ -7,14 +8,27 @@ class InputLoggingSocket:
     def __init__(self, transport, log):
         self.transport, self.log = transport, log
         self.events = WheelInputEvents()
+        self.observer_error = None
+        self.last_sent = None
 
     def sendto(self, data, destination):
-        for event in self.events.receive(data):
-            self.log.record(event.text, event.category)
-        return self.transport.sendto(data, destination)
+        # Delivery errors still propagate, but observing/logging never suppresses a frame.
+        sent = self.transport.sendto(data, destination)
+        try:
+            now = time.monotonic()
+            if self.last_sent is not None and now - self.last_sent >= 0.060:
+                self.log.record(f'Wheel command gap: {(now - self.last_sent) * 1000:.1f} ms; '
+                                'Pi input expires at 80 ms', 'Diagnostics')
+            self.last_sent = now
+            for event in self.events.receive(data):
+                self.log.record(event.text, event.category)
+        except Exception as error:
+            self.observer_error = repr(error)
+        return sent
 
     def reset(self):
         self.events.reset()
+        self.last_sent = None
 
     def close(self):
         self.transport.close()

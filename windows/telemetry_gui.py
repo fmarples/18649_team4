@@ -16,6 +16,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from pi.part2_protocol import CURRENT_REPORT_MAX_MA, STATES
 from windows.current_telemetry import TelemetryHistory, WINDOW_SECONDS, CURRENT_CHANNELS
 from windows.telemetry_events import CATEGORIES, LogEvent, TelemetryEvents
+from pi.background_io import BackgroundIO
 
 COLORS = ('#005a9e', '#946200', '#8e327b')
 NAMES = ('Left motor', 'Right motor', 'Servo')
@@ -42,7 +43,7 @@ class LogStream:
         if self.category != 'Errors' and line.strip() == 'No data':
             return
         if self.original is not None:
-            self.original.write(line + '\n')
+            self.log.io.submit(('echo', (self.original, line + '\n')))
         category = self.category
         if line.startswith(('connected to a steering wheel', 'initialized successfully', 'disconnecting')):
             category = 'Connection'
@@ -54,7 +55,7 @@ class LogStream:
             self.emit_line(self.pending)
             self.pending = ''
         if self.original is not None:
-            self.original.flush()
+            self.log.io.submit(('flush', self.original))
 
     def isatty(self):
         return False
@@ -77,6 +78,7 @@ class SessionLog(QtCore.QObject):
         self.frames = self.frames_path.open('x', encoding='utf-8')
         self.lines = deque(maxlen=3000)
         self.lock = threading.RLock()
+        self.io = BackgroundIO(self._write, self._finish)
         self.original = sys.stdout, sys.stderr, sys.excepthook
         self.stdout = LogStream(sys.stdout, self)
         self.stderr = LogStream(sys.stderr, self, 'Errors')
@@ -89,17 +91,31 @@ class SessionLog(QtCore.QObject):
         line = datetime.now(timezone.utc).isoformat(timespec='milliseconds') + f'  {category}  ' + text
         event = LogEvent(category, line)
         with self.lock:
-            self.file.write(line + '\n')
-            self.file.flush()
             self.lines.append(event)
+        self.io.submit(('event', line))
         self.line.emit(event)
 
     def capture_frame(self, data, status):
         row = {'received': datetime.now(timezone.utc).isoformat(timespec='milliseconds'),
                'hex': data.hex(), 'status': status}
-        with self.lock:
-            self.frames.write(json.dumps(row) + '\n')
+        self.io.submit(('frame', row))
+
+    def _write(self, item):
+        kind, value = item
+        if kind == 'echo':
+            value[0].write(value[1])
+        elif kind == 'flush':
+            value.flush()
+        elif kind == 'event':
+            self.file.write(value + '\n')
+            self.file.flush()
+        elif kind == 'frame':
+            self.frames.write(json.dumps(value) + '\n')
             self.frames.flush()
+
+    def _finish(self):
+        self.file.close()
+        self.frames.close()
 
     def exception(self, kind, error, tb):
         traceback.print_exception(kind, error, tb, file=self.crash)
@@ -117,8 +133,7 @@ class SessionLog(QtCore.QObject):
                 stream.pending = ''
         sys.stdout, sys.stderr, sys.excepthook = self.original
         faulthandler.disable()
-        self.file.close()
-        self.frames.close()
+        self.io.close()
         self.crash.close()
 
 
@@ -384,7 +399,7 @@ class TelemetryWindows(QtCore.QObject):
         self.chart_window.activateWindow()
 
     def receive_ready(self):
-        for _ in range(64):
+        for _ in range(8):
             try:
                 data, address = self.socket.recvfrom(4096)
             except BlockingIOError:
@@ -423,6 +438,10 @@ class TelemetryWindows(QtCore.QObject):
             state = self.history.status['state']
             name = STATES[state] if state < len(STATES) else 'UNKNOWN'
             text = f'Pi telemetry: {name}\nReceived {(now - self.history.last_received) * 1000:.0f} ms ago'
+        if self.log.io.error:
+            text += '\nLogging failed: ' + self.log.io.error
+        elif self.log.io.dropped:
+            text += f'\nLog records dropped: {self.log.io.dropped} (slow storage)'
         self.status.setText(text)
 
     def eventFilter(self, watched, event):

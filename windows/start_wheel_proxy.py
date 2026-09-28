@@ -87,6 +87,11 @@ def main():
             proxy_gui.S_PORT = 8000
             proxy_gui.R_PORT = 8001
             window = proxy_gui.MyMainwindow()
+            # The course default is 50 ms, leaving only 30 ms before the Pi's
+            # 80 ms freshness limit. Match the intended 20 ms command cadence.
+            for timer in (window.update_timer, window.transmit_timer):
+                timer.setInterval(20)
+                timer.setTimerType(QtCore.Qt.PreciseTimer)
             from windows.wheel_input_log import InputLoggingSocket
             inputs = InputLoggingSocket(window.send_socket, log)
             window.send_socket = inputs
