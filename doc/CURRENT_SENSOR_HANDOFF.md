@@ -14,6 +14,23 @@ This is software implementation, not hardware completion of Part 3.5. Wiring,
 calibration, PWM noise, acquisition timing and the rest/running/stall readings
 remain unverified.
 
+### Three-sensor preparation, 2026-09-28
+
+The user now has the third sensor and confirmed it is also ACS712-05B / 5 A.
+The stability branch defaults to channel mask 7 (left/A0, right/A1, servo/A3)
+and shows all three channels in the Windows chart. Installation and readings
+on the newly added right sensor still await verification. Before this change,
+the supervised stability tests used mask 5 and acquired the two connected
+left/servo sensors; they did not use the pre-current-sensing firmware.
+
+The right sensor belongs in the OUT3-to-right-motor lead. Its signal OUT is
+PA1/A1, VCC uses the HW-688 5 V rail, and GND joins the common signal ground.
+Nominal right conversion remains 2500 mV zero / 185 mV per amp. These constants
+do not substitute for measuring that sensor's zero offset and polarity.
+No actuator policy, ADC filtering, status format or acquisition priority changed.
+`diagnostics/two_sensors.conf` retains the earlier mask-5 configuration; its
+matching Windows selection is `--current-channels left servo`.
+
 ## Electrical and conversion contract
 
 | Channel order | Sensor output | Nucleo header | ADC1 channel |

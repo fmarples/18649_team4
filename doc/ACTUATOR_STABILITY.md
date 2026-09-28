@@ -17,9 +17,10 @@ power measurements; this patch is not proof that the physical issue is solved.
 - The course GUI's two 50 ms timers are configured to 20 ms precise timers by
   the project wrapper. This matches the intended command cadence and provides
   more freshness margin. It is not a real-time guarantee on Windows or Wi-Fi.
-- Firmware now acquires only physically selected sensors. Default mask 5 is
-  left motor/A0 and servo/A3; right/A1 remains unavailable. Select mask 7 only
-  when the third sensor is actually connected. The earlier single-channel ADC
+- Firmware now acquires only selected sensors. The initial test image used
+  mask 5: left motor/A0 and servo/A3; right/A1 remained unavailable. The user
+  subsequently obtained the third ACS712-05B, so the new default is mask 7
+  for installation of all three sensors. The earlier single-channel ADC
   sequence fix is retained, including averaging and whole-batch error handling.
 - USB `DIAG` adds cumulative timeout/input/overflow counts, maximum accepted
   UART interarrival/owner-loop gaps and the commanded servo mode/pulse. These
@@ -78,6 +79,20 @@ readings remain telemetry only, including the existing reporting ceiling.
   under investigation; a physical twitch was not observed during this burst.
   The later timeout after clicking Stop is expected and is excluded. The
   intermittent-motion issue is **not yet considered fully resolved**.
+- The first Pi CSV confirms that status reception on the Pi continued during
+  the burst: maximum receive interval 21.4 ms over STM uptime 738000–744000 ms,
+  while laptop receipt of the same status stream had gaps up to 144 ms. The Pi
+  diagnostic queue reported zero drops. This separates healthy UART status
+  reception from delays later in the return path, but does not distinguish
+  network delay from laptop receive/event-loop delay by itself.
+- Pi checks reported Wi-Fi power saving enabled, `throttled=0x0`, and
+  `enable_uart=1`, with `/dev/serial0` resolving to `/dev/ttyS0`. The user then
+  confirmed power saving disabled for a comparison. That run accumulated more
+  timeouts and included Windows send gaps of 219–266 ms. However, the user
+  subsequently reported that a teammate may have operated the controls while
+  the user was away. Treat it as an **uncontrolled observation**, not a failed
+  steady-input test or proof that power saving is the cause. No UART clock,
+  watchdog, PID or sensor calibration settings were changed in response.
 - Both comparison profiles built and passed generated board-configuration
   checks; neither was flashed. Quiet image SHA-256:
   `2a84e2d9dc4310fd7ed3e05e0a3f0f2fe0866d7ea35a28d33cb0c6137e1a1402`.
@@ -103,3 +118,19 @@ Nominal current conversion still needs per-sensor zero/reference calibration.
 
 Detailed host-specific operating instructions and captured logs stay local,
 outside this repository, per the team's documentation preference.
+
+## Third current sensor follow-up
+
+The tests above used the teammate's current-sensing baseline plus the stability
+patch, not a rollback to the September 26 pre-sensor firmware. The new right
+sensor preparation only enables its existing PA1/A1 acquisition and Windows
+display. Nominal 5 A conversion constants and all actuator settings remain
+the same. The original mask-5 binary and recordings are retained separately.
+The mask-7 image built on the same isolated Zephyr 4.3.0 / SDK 0.17.4 stack:
+64,844 bytes flash and 16,000 bytes RAM. Generated configuration checks passed,
+including unchanged motor/servo timers, priorities and PA0/PA1/PB0 ADC mapping.
+SHA-256: `553d8fafce74f9bdda8b69b2eb9efe6a321dac7355b2611e09be3c6ae969c592`.
+Python regression: 74 tests, 70 passed and 4 host-GCC-dependent skips. An
+offscreen Qt smoke check confirmed all three chart labels and the monitor's
+three-channel default, without importing the wheel SDK or sending commands.
+This new image is prepared but **not yet flashed or physically verified**.

@@ -15,11 +15,11 @@ config LAB_CURRENT_SAMPLE_MS
 
 config LAB_CURRENT_CHANNEL_MASK
     int "Connected current sensors: left=1, right=2, servo=4"
-    default 5
+    default 7
     range 0 7
     help
-      The current bench has left and servo sensors only (5). Use 7 when the
-      third sensor is actually wired. Zero skips acquisition for A/B diagnosis;
+      The three-sensor setup uses left, right and servo (7). Use 5 for the
+      earlier left/servo-only setup. Zero skips acquisition for A/B diagnosis;
       it does not change actuator policy. Missing inputs are unavailable.
 
 config LAB_PERIODIC_DIAGNOSTICS

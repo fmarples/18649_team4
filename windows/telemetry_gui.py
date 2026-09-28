@@ -338,7 +338,7 @@ class CurrentChartWindow(QtWidgets.QDialog):
 # Add the two chosen buttons without replacing the course proxy or touching its force socket.
 class TelemetryWindows(QtCore.QObject):
     def __init__(self, window, pi_address, local_address, port, log,
-                 connected_channels=('left', 'servo')):
+                 connected_channels=CURRENT_CHANNELS):
         super().__init__(window)
         self.window, self.pi_address, self.log = window, pi_address, log
         self.history = TelemetryHistory(connected_channels)

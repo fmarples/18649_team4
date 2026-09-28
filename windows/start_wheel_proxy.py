@@ -47,7 +47,8 @@ def main():
     parser.add_argument('--telemetry-port', type=int, default=STATUS_UDP_PORT)
     parser.add_argument('--monitor-only', action='store_true', help='No wheel SDK or command transmission')
     parser.add_argument('--current-channels', nargs='+', choices=('left', 'right', 'servo'),
-                        default=['left', 'servo'], help='Physically connected sensors; currently left/A0 and servo/A3')
+                        default=['left', 'right', 'servo'],
+                        help='Connected sensors: left/A0, right/A1, servo/A3; omit any unwired channel')
     parser.add_argument('--connect', action='store_true', help='Connect wheel automatically; keep hands clear')
     parser.add_argument('--ready-file', type=Path, help='Launcher readiness report after wheel SDK connects')
     parser.add_argument('--log-dir', type=Path, default=REPO / 'logs/wheel-gui')

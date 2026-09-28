@@ -126,6 +126,11 @@ unverified. No control limits or firmware changed with this identification.
 
 ## ACS712 current sensor identification
 
+**2026-09-28 inventory update:** the user now has a third module and confirmed
+its ACS712-05B / 5 A marking. The right-motor installation on PA1/A1 is being
+prepared. This confirms availability and model range, not completed wiring,
+zero-current calibration or a physical acquisition test of the new sensor.
+
 The user confirmed the exact [Makerfabs ACS712 Current Sensor- 5A](https://www.makerfabs.com/acs712-current-sensor-5a.html),
 SKU **MSE71205A**. The product page was read for this update. This replaces
 the earlier family-only identification; the previously supplied Seeed guide
