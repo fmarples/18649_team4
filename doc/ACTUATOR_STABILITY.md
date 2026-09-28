@@ -65,7 +65,19 @@ readings remain telemetry only, including the existing reporting ceiling.
   no timeouts/rejections/overflows, maximum accepted UART gap 22 ms and maximum
   owner-loop gap 3 ms. These software gap counters do not establish the 2 ms
   physical brake deadline. The SDK initially reported pedal axes as 0, keeping
-  brake override active; released-pedal and moving-motor tests remain pending.
+  brake override active. After pedal initialization both released axes reported
+  32767. The user also reported steady steering holds and three steady motor
+  runs, with no observed unexpected motion in those checks.
+- **Unresolved live finding:** six transient command timeouts accumulated near
+  18:20:51 UTC (14:20:51 local), before the deliberate end-of-session stop.
+  Maximum UART interarrival increased to 81 ms; owner-loop maximum stayed 3 ms,
+  with no rejected frames, queue overflows or ADC errors. Captured status
+  includes valid LINK_OK full-brake requests before timeout/recovery, and
+  telemetry delivered in bursts. There were no Windows send-gap warnings in
+  this interval. Network delivery/Pi scheduling and stale-input handling are
+  under investigation; a physical twitch was not observed during this burst.
+  The later timeout after clicking Stop is expected and is excluded. The
+  intermittent-motion issue is **not yet considered fully resolved**.
 - Both comparison profiles built and passed generated board-configuration
   checks; neither was flashed. Quiet image SHA-256:
   `2a84e2d9dc4310fd7ed3e05e0a3f0f2fe0866d7ea35a28d33cb0c6137e1a1402`.
