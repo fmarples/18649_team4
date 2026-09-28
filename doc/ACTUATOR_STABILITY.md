@@ -133,4 +133,14 @@ SHA-256: `553d8fafce74f9bdda8b69b2eb9efe6a321dac7355b2611e09be3c6ae969c592`.
 Python regression: 74 tests, 70 passed and 4 host-GCC-dependent skips. An
 offscreen Qt smoke check confirmed all three chart labels and the monitor's
 three-channel default, without importing the wheel SDK or sending commands.
-This new image is prepared but **not yet flashed or physically verified**.
+The image was subsequently flashed via the verified Nucleo mass-storage drive,
+ST-LINK `066BFF505487525067171333`; no FAIL.TXT appeared. The user confirmed
+raised wheels, stopped command programs and correct sensor voltages, without
+providing exact meter readings. A 20-second read-only USB capture contained
+77 complete current snapshots: valid mask 7 throughout, acquisition error 0,
+sample age 2 ms. All captured states were WAITING, motor targets and encoder
+counts were zero, and the requested servo pulse was zero. Nominal reported
+currents were left 598–773 mA (mean 686.3), right 529–730 mA (mean 644.2), and
+servo 614–845 mA (mean 717.2). These are uncalibrated readings, not established
+load currents. The updated three-channel Windows GUI was opened disconnected.
+This verifies idle acquisition only; a controlled live test is still pending.

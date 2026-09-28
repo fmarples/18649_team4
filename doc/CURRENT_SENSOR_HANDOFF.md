@@ -18,8 +18,12 @@ remain unverified.
 
 The user now has the third sensor and confirmed it is also ACS712-05B / 5 A.
 The stability branch defaults to channel mask 7 (left/A0, right/A1, servo/A3)
-and shows all three channels in the Windows chart. Installation and readings
-on the newly added right sensor still await verification. Before this change,
+and shows all three channels in the Windows chart. The user subsequently
+reported the third sensor connected and the system powered again, with correct
+voltages (exact meter values not supplied). The mask-7 image was then flashed:
+77 complete idle USB snapshots showed all three valid, ADC error 0 and age
+2 ms. Right readings were 529–730 mA using nominal conversion; calibration is
+still pending. See [stability verification](ACTUATOR_STABILITY.md). Before this change,
 the supervised stability tests used mask 5 and acquired the two connected
 left/servo sensors; they did not use the pre-current-sensing firmware.
 
