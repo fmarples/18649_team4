@@ -46,6 +46,8 @@ The servo console's OFF command does not stop motors. See the
 
 ## Team documentation
 
+- [September 28 bench summary: changes, tests and remaining work](doc/SESSION_2026-09-28.md)
+- [Actuator stability investigation and verification](doc/ACTUATOR_STABILITY.md)
 - [Task table and scheduling rationale](PART4_TASK_TABLE.md)
 - [Hardware BOM/power record](doc/HARDWARE.md) and [pin assignments](doc/STM32_PINOUT.md)
 - [Encoder calibration](doc/ENCODER_SPEC.md) and [motor characterization](doc/MOTOR_CHARACTERIZATION.md)
@@ -59,10 +61,11 @@ The servo console's OFF command does not stop motors. See the
 - [Steering evidence](doc/PART3_3_RESULTS.md) and [blinker evidence](doc/PART3_4_RESULTS.md)
 - [Lab 2 handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf)
 
-The current integrated image builds and software tests pass. Individual steering
-and blinker operation has been reported. Combined-board operation, physical
-timing and real current measurements remain pending; software test results do
-not certify those measurements.
+The integrated image builds and software verification is recorded in the linked
+reports, including host-dependent test skips. Combined motor/steering operation
+and three-channel current acquisition have been observed on the stability branch.
+Transient link timeouts, current calibration and physical timing remain open;
+software test results do not certify those measurements.
 
 ## Build and software checks
 
