@@ -65,7 +65,9 @@ For another configured machine:
    `.venv` needs the course GUI dependencies. On Windows, install G HUB and keep
    the guide's 64-bit HWND wrapper fix.
 4. The Pi needs systemd user services, Python/pyserial and the deployed bridge at
-   `~/18649/part2/part2_bridge.py`. Start/stop intentionally do not overwrite it.
+   `~/18649/part2/part2_bridge.py`. Deploy the matching `pi/*.py` files together;
+   the bridge now imports `background_io.py` and `bridge_diagnostics.py` as well
+   as the protocol/timing helpers. Start/stop intentionally do not overwrite it.
 
 ## Logs and verification
 

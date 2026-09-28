@@ -59,6 +59,18 @@ readings remain telemetry only, including the existing reporting ceiling.
   servo pulse, target/duty/encoder counts zero, valid mask 5, and no ADC,
   servo, lamp or input errors. Owner-loop maximum gap was 2 ms during this
   idle observation. No wheel commands or USB actuator commands were sent.
+- Subsequent supervised Wi-Fi live-link check: the user connected the Logitech
+  wheel and reported no unexpected movement during the 60-second hands-off
+  test. USB telemetry showed LIVE steering at 1600 us, target/counts zero,
+  no timeouts/rejections/overflows, maximum accepted UART gap 22 ms and maximum
+  owner-loop gap 3 ms. These software gap counters do not establish the 2 ms
+  physical brake deadline. The SDK initially reported pedal axes as 0, keeping
+  brake override active; released-pedal and moving-motor tests remain pending.
+- Both comparison profiles built and passed generated board-configuration
+  checks; neither was flashed. Quiet image SHA-256:
+  `2a84e2d9dc4310fd7ed3e05e0a3f0f2fe0866d7ea35a28d33cb0c6137e1a1402`.
+  No-acquisition image SHA-256:
+  `d3eca6a16f2f10f88f74cdaa1ed0d8e8f0db3604d6909a93aecf6da054ffcb28`.
 
 ## Controlled comparisons if motion persists
 

@@ -10,6 +10,11 @@ $ErrorActionPreference = 'Stop'
 $repoPath = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if (!$ZephyrBase) { $ZephyrBase = Join-Path $ZephyrWorkspace 'zephyr' }
 if (!$BuildDirectory) { $BuildDirectory = Join-Path $repoPath 'build\part4' }
+# CMake evaluates these paths in strings/macros; backslashes become escapes.
+$ZephyrBase = $ZephyrBase.Replace('\', '/')
+$Sdk = $Sdk.Replace('\', '/')
+$Modules = @($Modules | ForEach-Object { $_.Replace('\', '/') })
+$ExtraConf = $ExtraConf.Replace('\', '/')
 $pythonPath = Join-Path $ZephyrWorkspace '.venv\Scripts\python.exe'
 if (!(Test-Path -LiteralPath $pythonPath)) { throw "Zephyr Python not found: $pythonPath" }
 if (!(Test-Path -LiteralPath $Sdk)) { throw "SDK not found: $Sdk" }
