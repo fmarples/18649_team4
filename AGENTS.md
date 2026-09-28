@@ -29,7 +29,11 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
   local key; private key material stays outside the repo.
 
 - **`main`:** combines the motor/PID link with Tianyi's blinkers,
-  self-test and Pi-controlled steering. Read `doc/INTEGRATION.md` first.
+  self-test and Pi-controlled steering. September 28 integration also includes
+  bounded background diagnostics, 20 ms Windows wheel timers, MCU link counters
+  and all three current channels. Read `doc/SESSION_2026-09-28.md` for the latest
+  bench summary; transient link timeouts and current calibration remain open.
+  Read `doc/INTEGRATION.md` for the integration design.
   State 5 remains motor fault; self-test is 6 and actuator fault is 7. PA5 is
   exclusively the front-right blinker. TIM2/PB10 must remain enabled for the
   right motor; TIM4/PB9 drives steering. `config/servo_calibration.json` contains
