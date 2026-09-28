@@ -10,9 +10,11 @@ the earlier divider proposal. Sensor power remains 5 V; the ADC reference
 remains nominally 3.3 V. Current sensing is read-only, with no motor cutoff,
 stall timer, servo trip or change to the existing actuator policies.
 
-This is software implementation, not hardware completion of Part 3.5. Wiring,
-calibration, PWM noise, acquisition timing and the rest/running/stall readings
-remain unverified.
+All three channels now have recorded live acquisition. The September 28 bench
+session supplies rest/motor-running readings and a right-wheel obstruction
+attempt; see the bench record below. Measured calibration, each sensor's complete
+rest/running/stall set, PWM noise characterization and acquisition timing still
+need verification. Part 3.5 is not yet recorded as complete.
 
 ### Three-sensor preparation, 2026-09-28
 
@@ -220,13 +222,55 @@ supply, zero offsets, reference rail and polarity first. Then record each sensor
 at rest, running and briefly stalled, including noise/min/max and any clipping.
 The handout limits a stall to one or two seconds; this software does not enforce
 that duration or limit current. The shared 2 A supply and L298N current/thermal
-margins are still unverified. No stall test was performed or authorized here.
+margins are still unverified. On September 28 the user reported multiple
+sub-second obstruction attempts near the end of a recorded session, tentatively
+identifying the right wheel. The recordings below support that identification;
+they do not establish an exact mechanical stall duration.
 
-| Sensor | Rest mA | Running mA | Brief stall mA | Capture / notes |
+| Sensor | Rest reported mA | Running reported mA | Brief obstruction reported mA | Capture / notes |
 |---|---|---|---|---|
-| Left motor | Pending | Pending | Pending | First run reported about -8 A at rest; see the note above |
-| Right motor | Pending | Pending | Pending | First run reported about -8 A at rest; see the note above |
-| Servo | Pending | Pending | Pending | First run reported about -8 A at rest; see the note above |
+| Left motor | +735.5 median | +617 median | Not identified | Motor encoder near 300 RPM in running window |
+| Right motor | +700 median | +588.5 median | -1166 captured minimum | Right encoder nearly stopped during the final obstruction attempt |
+| Servo | +686 median, holding | Not identified | Not identified | +678.5 median while motors ran is not a servo-motion measurement |
+
+These are **nominally converted readings**, not calibrated physical currents.
+Rest window: 2026-09-28 15:21:25–15:21:33 EDT (400 status frames); motor-running
+window: 15:21:39–15:21:44 (250 frames). The final attempt window is
+15:22:24–15:22:26.35 (117 frames); its right-channel minimum occurred at about
+15:22:25.80. Wall times are approximate, obtained by aligning the laptop receive
+timestamps and MCU uptime. The firmware and conversion constants were unchanged.
+
+At about 15:22:25.55 / 15:22:25.80, right speed was 9.957 / 3.827 RPM while left
+speed was 237.420 / 261.302 RPM. Requested speed was 179.295 RPM; common motor
+duty rose to 85.403% / 88.524%. The implemented controller regulates average
+wheel speed, so increased drive to the unrestrained wheel is consistent with
+that policy. The USB snapshots are about 250 ms apart; the 20 ms status frames
+carry current but not encoder speed. Neither proves a precise zero-speed stall
+duration or instantaneous electrical peak.
+
+The motor rest offsets and the negative-going load response require zero,
+reference and polarity calibration before adopting physical current thresholds.
+Do not silently subtract these rest values or use absolute values: a holding
+servo can draw real current, and the selected rest is not a verified zero-current
+calibration. The right minimum is a captured extreme, not a stall average.
+
+All 4650 complete USB diagnostic groups in the 20-minute capture reported
+valid mask 7, ADC error 0 and sample age 1–21 ms. All 40,952 GUI status frames
+had numeric currents below the +4320 mA ceiling. During the final attempt,
+all status states were LINK_OK, rejection count stayed 5387 and USB timeout
+count stayed 18. A separate timeout around 15:21:37.6 means this is not a clean
+communication-stability run. The rejection total came from the earlier
+bad-input exercise; do not attribute it to the obstruction attempt.
+
+Source captures (retained locally, not committed):
+
+- `usb-20260928-150433.log`, SHA-256
+  `3eaf7ea407acb0762f479565882afc45c2b7195fb561f5df99ee01568d28633b`.
+- `20260928-150258-512531-45420.frames.jsonl`, SHA-256
+  `a1772c5c7fae0d26de3a4909e392ae96e6e285ba32c6af9a10b1c0886ae56210`.
+
+The local analysis report and standalone chart preserve all signs and nominal
+offsets. No firmware, wiring or calibration changes were made for this analysis.
 
 Measure acquisition time, noise with motor PWM active and the 20 ms status
 cadence under combined load. Do not fill this table from nominal component

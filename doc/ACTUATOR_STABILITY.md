@@ -144,3 +144,21 @@ currents were left 598–773 mA (mean 686.3), right 529–730 mA (mean 644.2), a
 servo 614–845 mA (mean 717.2). These are uncalibrated readings, not established
 load currents. The updated three-channel Windows GUI was opened disconnected.
 This verifies idle acquisition only; a controlled live test is still pending.
+
+### Subsequent combined checkoff recording
+
+The same three-sensor image subsequently recorded motor operation and the user's
+reported sub-second right-wheel obstruction attempts. The final attempt around
+15:22:25 EDT has a nearly stopped right encoder (3.827 RPM), a moving left
+encoder (261.302 RPM) and a right-current captured extreme of -1166 mA under
+nominal calibration. No new timeout, rejection, ADC or actuator diagnostic error
+was observed in that final attempt window; the current/encoder evidence is in
+[the current-sensor bench record](CURRENT_SENSOR_HANDOFF.md#remaining-part-35-bench-record).
+
+A separate command timeout was recorded around 15:21:37.6 during startup in the
+same session (counter 17 to 18, GUI ERROR_TIMEOUT). The later end-of-command
+timeout raised it to 19. The earlier intentional bad-input exercise accounts for
+the cumulative 5387 rejected inputs. These events must not be mixed with the
+brief obstruction test. The session does not establish six uninterrupted minutes
+of stable control; the intermittent-link investigation remains open. Analysis
+did not change or flash firmware or operate the actuators.
