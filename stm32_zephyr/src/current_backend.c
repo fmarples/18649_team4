@@ -65,12 +65,18 @@ int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
         }
         int64_t uv = (int64_t)sum * DT_PROP(DT_NODELABEL(adc1), vref_mv) * 1000 /
                      (4096 * SCANS);
-        int64_t delta_uv = uv - zero_mv[i] * 1000;
+        /* The two motor sensors are wired opposite to the servo sensor.
+         * Reverse the voltage slope around zero, never the raw ADC code. */
+        bool motor = i < 2;
+        int64_t delta_uv = motor ? zero_mv[i] * 1000 - uv : uv - zero_mv[i] * 1000;
         int32_t value = (delta_uv + (delta_uv >= 0 ? sensitivity[i] / 2 : -sensitivity[i] / 2)) /
                         sensitivity[i];
-        /* User-selected reporting ceiling. A rail clip is a lower-bound
-         * indication, not an exact measurement and never a motor cutoff. */
-        ma[i] = clipped || value > CURRENT_REPORT_MAX_MA ? CURRENT_REPORT_MAX_MA : value;
+        /* Only rising sensor voltage reaches the 3.3 V upper rail. Preserve
+         * its signed endpoint; falling voltage has no 4.32 A reporting cap.
+         * A rail clip is not an exact measurement and never a motor cutoff. */
+        int32_t endpoint = motor ? -CURRENT_REPORT_MAX_MA : CURRENT_REPORT_MAX_MA;
+        bool above_voltage_range = motor ? value < endpoint : value > endpoint;
+        ma[i] = clipped || above_voltage_range ? endpoint : value;
         *valid_mask |= 1U << i;
     }
     return 0;

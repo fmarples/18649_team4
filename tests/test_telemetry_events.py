@@ -47,7 +47,17 @@ class TelemetryEventTests(unittest.TestCase):
         self.assertEqual(len(changed), 1)
         self.assertIn('left: unavailable', changed[0].text)
         self.assertEqual(events.receive(sample), [])
+        sample['current_left_mA'] = -4320
+        self.assertIn('left: ceiling', events.receive(sample)[0].text)
+        sample['current_left_mA'] = 5000
+        self.assertIn('left: available', events.receive(sample)[0].text)
         sample['current_left_mA'] = 4320
+        self.assertEqual(events.receive(sample), [])
+        sample['current_servo_mA'] = -4320
+        self.assertEqual(events.receive(sample), [])
+        sample['current_servo_mA'] = 4320
+        self.assertIn('servo: ceiling', events.receive(sample)[0].text)
+        sample['current_left_mA'] = -4320
         self.assertIn('left: ceiling', events.receive(sample)[0].text)
         sample['current_left_mA'] = -250
         self.assertIn('left: available', events.receive(sample)[0].text)

@@ -3,7 +3,7 @@
 The root application combines main's encoder/PID motor driver with Tianyi's
 blinkers, wheel-button self-test and Pi-controlled steering on one NUCLEO-F401RE.
 Part 3.5 now samples three ACS712 5A sensors through ADC1 with nominal
-calibration and a user-selected +4320 mA reporting ceiling. Physical current
+calibration and a user-selected 4.320 A upper-ADC-rail endpoint magnitude. Physical current
 verification and physical testing of console-independent steering remain pending.
 See `doc/INTEGRATION.md` for verification and deployment limits.
 
@@ -167,11 +167,15 @@ scans, converts with per-channel constants and publishes a short mutex-protected
 snapshot. Defaults are vendor nominal: 2.5 V zero, 185 mV/A and 3.3 V reference,
 not measured bench calibration. Status never waits for ADC conversion.
 
-The user chose direct ADC wiring with no divider. A channel reaching the ADC's
-maximum code, or a converted value above the reporting ceiling, reports
-**+4320 mA with its validity bit set**. Treat this value as ceiling/clipped data,
-not an exact current above the ADC range. Pi console marks it `[CEILING]`; CSV
-and wire values remain numeric. There is no added flag or frame-layout change.
+The user chose direct ADC wiring with no divider and confirmed reversed
+orientation for both motor sensors. Motors convert `(zero - output)` voltage;
+servo converts `(output - zero)`. A channel reaching the ADC's maximum code,
+or exceeding its upper-voltage reporting endpoint, reports **-4320 mA for motors
+or +4320 mA for servo, with its validity bit set**. `[CEILING]` denotes the ADC
+voltage ceiling, not exact current. Falling-voltage readings remain measurable
+beyond 4.320 A in magnitude; there is no symmetric current cap. Pi console and
+Windows views recognize the per-channel signed endpoint. CSV and wire values
+remain numeric. There is no added flag or frame-layout change.
 
 Setup/read errors clear all current validity immediately on publication. Validity
 also expires at 100 ms sample age, measured from before acquisition. Invalid

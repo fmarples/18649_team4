@@ -7,7 +7,7 @@
 #include "current_sense.h"
 
 const struct device test_adc = {0};
-static int16_t input[3] = {3103, 3332, 2873}; /* ~2.5 V, +1 A, -1 A. */
+static int16_t input[3] = {3103, 3332, 2873}; /* ~2.5 V, 2.685 V, 2.315 V. */
 static bool clip_first_scan, noisy, delayed_isr;
 static bool ready;
 static int setup_error, read_error;
@@ -92,21 +92,43 @@ int main(void)
     assert(mask == 7);
     /* Independent ADC-code fixtures, tolerance below one ADC LSB (~4.36 mA). */
     assert(ma[0] >= -4 && ma[0] <= 4);
-    assert(ma[1] >= 996 && ma[1] <= 1004);
+    assert(ma[1] >= -1004 && ma[1] <= -996);
     assert(ma[2] >= -1004 && ma[2] <= -996);
-    puts("PASS: motor and servo currents retain ADC-derived signs");
+    puts("PASS: reversed motor sensors use the opposite voltage slope from servo");
     noisy = true;
     assert(current_backend_read(ma, &mask) == 0);
     assert(mask == 7 && ma[0] >= -4 && ma[0] <= 4);
     noisy = false;
     puts("PASS: batch averaging rejects alternating ADC noise without historical lag");
+    /* Independently worked voltages at 3.3 V / 4096 codes and 185 mV/A.
+     * Both motor sensors decrease voltage for positive reported current.
+     * 1.575 V is still measurable at +5 A motor / -5 A servo, not clipped. */
+    const struct { int16_t raw; int32_t motor_ma, servo_ma; } fixtures[] = {
+        {3103, 0, 0},        /* 2.500 V: zero, allowing ADC quantization. */
+        {2873, 1000, -1000}, /* 2.315 V. */
+        {3332, -1000, 1000}, /* 2.685 V. */
+        {1955, 5000, -5000}, /* 1.575 V: no symmetric 4.32 A cap. */
+        {4094, -4316, 4316}, /* Last unclipped code below the upper rail. */
+        {4095, -4320, 4320}, /* Upper ADC rail on all three channels. */
+    };
+    for (unsigned fixture = 0; fixture < sizeof(fixtures) / sizeof(fixtures[0]); fixture++) {
+        for (unsigned i = 0; i < 3; i++) input[i] = fixtures[fixture].raw;
+        assert(current_backend_read(ma, &mask) == 0 && mask == 7);
+        for (unsigned i = 0; i < 3; i++) {
+            int32_t expected = i < 2 ? fixtures[fixture].motor_ma : fixtures[fixture].servo_ma;
+            if (fixtures[fixture].raw >= 4094) assert(ma[i] == expected);
+            else assert(ma[i] >= expected - 4 && ma[i] <= expected + 4);
+        }
+    }
+    input[0] = 3103; input[1] = 3332; input[2] = 2873;
+    puts("PASS: zero, both current directions and one-sided clipping on every channel");
     /* Preserve an observed rail clip instead of averaging it into a false
      * lower current. Other channels must continue reporting normally. */
     clip_first_scan = true;
     assert(current_backend_read(ma, &mask) == 0);
-    assert(mask == 7 && ma[0] == 4320);
-    assert(ma[1] >= 996 && ma[1] <= 1004);
-    puts("PASS: ADC saturation reports the positive ADC-derived ceiling, with no actuator effect");
+    assert(mask == 7 && ma[0] == -4320);
+    assert(ma[1] >= -1004 && ma[1] <= -996);
+    puts("PASS: motor high-rail clipping retains direction without an actuator effect");
     struct current_sample cache;
     current_cache_publish(&cache, ma, mask, 20);
     assert(current_cache_snapshot(&cache, 119, 100).valid_mask == 7);

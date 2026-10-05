@@ -1,6 +1,6 @@
 """Translate telemetry transitions into events, leaving continuous samples to the chart."""
 from dataclasses import dataclass
-from pi.part2_protocol import CURRENT_REPORT_MAX_MA, STATES
+from pi.part2_protocol import CURRENT_REPORT_ENDPOINTS_MA, STATES
 
 CATEGORIES = ('Connection', 'Buttons', 'Steering', 'Pedals', 'Sensor status', 'Errors', 'Diagnostics')
 CHANNELS = ('left', 'right', 'servo')
@@ -39,7 +39,7 @@ class TelemetryEvents:
             self.state = state
         sensors = tuple('unavailable' if not status['current_valid_mask'] & (1 << i)
                         or status[f'current_{name}_mA'] == -2147483648
-                        else 'ceiling' if status[f'current_{name}_mA'] >= CURRENT_REPORT_MAX_MA
+                        else 'ceiling' if status[f'current_{name}_mA'] == CURRENT_REPORT_ENDPOINTS_MA[i]
                         else 'available' for i, name in enumerate(CHANNELS)
                         if name in self.connected_channels)
         if sensors != self.sensors:

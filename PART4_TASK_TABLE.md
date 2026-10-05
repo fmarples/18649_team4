@@ -86,8 +86,9 @@ can miss a deadline, which is why timing is measured under simultaneous load.
 - Current telemetry is read-only. Unavailable/error/stale samples are
   `INT32_MIN` with clear validity bits, never fake measured zero. The 100 ms
   sample-age limit is a configurable initial telemetry policy, not a motor
-  threshold. Part 3.5 uses nominal calibration and the user-selected +4320 mA
-  ceiling; physical sensor tests remain pending. See [current sensing](doc/CURRENT_SENSOR_HANDOFF.md).
+  threshold. Part 3.5 uses nominal calibration and the user-selected 4.320 A
+  upper-ADC-rail endpoint magnitude: -4320 mA motors/+4320 mA servo, with no
+  symmetric current cap; physical sensor tests remain pending. See [current sensing](doc/CURRENT_SENSOR_HANDOFF.md).
 - Servo boots with the tracked calibration and waits for healthy Pi commands
   and raw steering within -2000..2000. LIVE needs no USB heartbeat. Link/self-test
   recovery repeats the centered-wheel interlock; latched faults still block it.

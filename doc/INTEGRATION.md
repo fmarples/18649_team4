@@ -47,7 +47,8 @@ is 60 ms; Pi UDP freshness is 80 ms. See the [task table](../PART4_TASK_TABLE.md
 for cadence, synchronization, latency targets and upstream fault distinctions.
 
 Part 3.5 now acquires ADC1 channels 0/1/8 with nominal ACS712 5A calibration,
-signed readings and a +4320 mA positive reporting ceiling. Failed or stale
+signed readings and upper-ADC-rail endpoints of -4320 mA for reversed motor
+sensors and +4320 mA for servo, without a symmetric current cap. Failed or stale
 acquisition is unavailable. No current-based control decision is implemented.
 Physical calibration remains pending; the [sensor interface](CURRENT_SENSOR_HANDOFF.md)
 defines conversion, validity and verification limits.

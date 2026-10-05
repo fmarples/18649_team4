@@ -13,7 +13,7 @@ import time
 import traceback
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pi.part2_protocol import CURRENT_REPORT_MAX_MA, STATES
+from pi.part2_protocol import CURRENT_REPORT_ENDPOINTS_MA, STATES
 from windows.current_telemetry import TelemetryHistory, WINDOW_SECONDS, CURRENT_CHANNELS
 from windows.telemetry_events import CATEGORIES, LogEvent, TelemetryEvents
 from pi.background_io import BackgroundIO
@@ -211,8 +211,10 @@ class RawLogWindow(QtWidgets.QDialog):
 
 # Paint signed currents with explicit breaks at missing/invalid samples, never invented zeros.
 class CurrentPlot(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self, connected_channels=CURRENT_CHANNELS):
         super().__init__()
+        self.endpoints = {CURRENT_REPORT_ENDPOINTS_MA[i] / 1000
+                          for i, name in enumerate(CURRENT_CHANNELS) if name in connected_channels}
         self.points, self.now = (), 0.0
         self.setMinimumSize(520, 260)
         self.setAccessibleName('Current in amps over the last thirty seconds')
@@ -248,10 +250,11 @@ class CurrentPlot(QtWidgets.QWidget):
             painter.drawText(QtCore.QRectF(pos - 24, bounds.bottom() + 8, 48, 20), QtCore.Qt.AlignCenter, label)
         painter.save()
         painter.setClipRect(bounds.adjusted(-2, -2, 2, 2))
-        ceiling = CURRENT_REPORT_MAX_MA / 1000
-        if low <= ceiling <= high:
-            painter.setPen(QtGui.QPen(QtGui.QColor('#666666'), 1, QtCore.Qt.DashLine))
-            painter.drawLine(QtCore.QPointF(bounds.left(), y(ceiling)), QtCore.QPointF(bounds.right(), y(ceiling)))
+        for endpoint in self.endpoints:
+            if low <= endpoint <= high:
+                painter.setPen(QtGui.QPen(QtGui.QColor('#666666'), 1, QtCore.Qt.DashLine))
+                painter.drawLine(QtCore.QPointF(bounds.left(), y(endpoint)),
+                                 QtCore.QPointF(bounds.right(), y(endpoint)))
         for channel, color in enumerate(COLORS):
             path = QtGui.QPainterPath()
             connected = False
@@ -302,12 +305,12 @@ class CurrentChartWindow(QtWidgets.QDialog):
             legends.addWidget(label)
             self.labels[i] = label
         layout.addLayout(legends)
-        self.plot = CurrentPlot()
+        self.plot = CurrentPlot(history.connected_channels)
         layout.addWidget(self.plot)
         self.state = QtWidgets.QLabel()
         layout.addWidget(self.state)
-        note = QtWidgets.QLabel('Gaps mean missing or invalid data. +4.320 A is the reporting ceiling.\n'
-                               'Nominal sensor calibration; unexpected negative readings are not hidden.')
+        note = QtWidgets.QLabel('Gaps mean missing or invalid data. Upper ADC rail: -4.320 A motors, +4.320 A servo.\n'
+                               'Nominal sensor calibration; negative readings are not hidden. No symmetric current cap.')
         note.setWordWrap(True)
         layout.addWidget(note)
         self.timer = QtCore.QTimer(self)
@@ -326,7 +329,7 @@ class CurrentChartWindow(QtWidgets.QDialog):
         for i, label in self.labels.items():
             value = points[-1].amps[i] if points and not stale else None
             text = 'unavailable' if value is None else f'{value:.3f} A'
-            if value == CURRENT_REPORT_MAX_MA / 1000:
+            if value == CURRENT_REPORT_ENDPOINTS_MA[i] / 1000:
                 text += ' [ceiling]'
             label.setText(NAMES[i] + ': ' + text)
         self.state.setText('View paused; recording continues' if self.frozen else

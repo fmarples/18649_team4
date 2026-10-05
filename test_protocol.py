@@ -52,17 +52,20 @@ class ProtocolTests(unittest.TestCase):
 
     def test_current_values_and_ceiling_keep_signed_status_layout(self):
         body = p.STATUS.pack(b'L2', 1, 2, 9, 180, 8, 1, 0, 32767, 32767,
-                             4320, -1000, 0, 7, 0)
+                             -4320, 5000, 4320, 7, 0)
         frame = body + struct.pack('<I', zlib.crc32(body))
         self.assertEqual(len(frame), 56)
         status = list(p.pop_status(bytearray(frame)))[0]
         self.assertEqual(status['current_valid_mask'], 7)
-        self.assertEqual(status['current_left_mA'], 4320)
-        self.assertEqual(status['current_right_mA'], -1000)
-        self.assertEqual(status['current_servo_mA'], 0)
+        self.assertEqual(status['current_left_mA'], -4320)
+        self.assertEqual(status['current_right_mA'], 5000)
+        self.assertEqual(status['current_servo_mA'], 4320)
         from part2_bridge import current_summary
         self.assertEqual(current_summary(status),
-                         'left=4320mA[CEILING] right=-1000mA servo=0mA')
+                         'left=-4320mA[CEILING] right=5000mA servo=4320mA[CEILING]')
+        status.update(current_left_mA=4320, current_right_mA=-4320, current_servo_mA=-4320)
+        self.assertEqual(current_summary(status),
+                         'left=4320mA right=-4320mA[CEILING] servo=-4320mA')
 
     def test_motor_fault_status_keeps_existing_frame_layout(self):
         self.assertEqual(p.STATES[5], 'ERROR_MOTOR')

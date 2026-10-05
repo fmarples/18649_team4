@@ -8,7 +8,8 @@ and pedals released. See [session ownership and logs](doc/ONE_CLICK_START.md).
 scheduling. Use the current firmware for combined motor, brake, steering and
 blinker testing; there is no separate Part 4 application or required rollback.
 Part 3.5 ADC acquisition is implemented with nominal ACS712 5A calibration and
-+4320 mA positive clipping. Physical calibration and combined timing remain pending.
+upper-ADC-rail clipping at -4320 mA for reversed motor sensors and +4320 mA for
+servo. There is no symmetric current cap. Physical calibration and combined timing remain pending.
 
 ## Code
 

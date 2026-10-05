@@ -5,8 +5,10 @@
 The integrated `stm32_zephyr/` application now reads all three Makerfabs ACS712
 5A modules through ADC1 and reports signed milliamps in the existing status
 frame. The user selected **direct sensor-to-ADC connections, no divider**, and
-**+4320 mA when the positive measurement range is exceeded**. This supersedes
-the earlier divider proposal. Sensor power remains 5 V; the ADC reference
+**4.320 A as the upper-ADC-rail reporting endpoint magnitude**. This supersedes
+the earlier divider proposal. Following the user's motor-sensor orientation
+correction, that endpoint is -4320 mA for both motors and +4320 mA for the servo.
+It is not a symmetric current limit. Sensor power remains 5 V; the ADC reference
 remains nominally 3.3 V. Current sensing is read-only, with no motor cutoff,
 stall timer, servo trip or change to the existing actuator policies.
 
@@ -32,9 +34,11 @@ left/servo sensors; they did not use the pre-current-sensing firmware.
 The right sensor belongs in the OUT3-to-right-motor lead. Its signal OUT is
 PA1/A1, VCC uses the HW-688 5 V rail, and GND joins the common signal ground.
 Nominal right conversion remains 2500 mV zero / 185 mV per amp. These constants
-do not substitute for measuring that sensor's zero offset. Firmware reports the
-signed ADC-derived value directly for all channels; it does not invert motor
-signs based on sensor wire orientation.
+do not substitute for measuring that sensor's zero offset. The user confirmed
+that both motor sensors have reversed high-current terminal orientation. Their
+conversion uses `(zero_mV - output_mV)`; the servo keeps
+`(output_mV - zero_mV)`. Raw ADC codes and voltages are never negated. This is a
+software interpretation of the existing wiring, not a physical rewiring.
 No actuator policy, ADC filtering, status format or acquisition priority changed.
 `diagnostics/two_sensors.conf` retains the earlier mask-5 configuration; its
 matching Windows selection is `--current-channels left servo`.
@@ -65,16 +69,21 @@ Sources:
 - [Lab 2 handout](18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf),
   Part 3.5: read all three into status, read-only, then record bench results.
 
-At nominal values, +5 A produces 3.425 V, above the measurable range but below
-the published absolute maximum. The positive conversion endpoint is
-`(3.3 - 2.5) / 0.185 = 4.3243 A`. The user selected a rounded reporting ceiling
-of **4.320 A**. The -5 A endpoint is 1.575 V and does not clip the ADC.
+In the sensor's native direction, +5 A produces 3.425 V, above the measurable
+range but below the published absolute maximum. The upper-voltage endpoint is
+`(3.3 - 2.5) / 0.185 = 4.3243 A`; the selected rounded endpoint is **4.320 A**.
+Native -5 A produces 1.575 V and does not clip the ADC. Reversing the motors'
+terminal orientation reverses reported current relative to this native
+convention: 1.575 V reports +5 A for motors and -5 A for servo. The upper ADC
+rail reports -4.320 A for motors and +4.320 A for servo. A positive motor value
+above 4.320 A is measurable and must not be capped or labeled clipped merely
+because of its magnitude. Only the rising-voltage side reaches the 3.3 V rail.
 
 ADC resolution is 12 bits. Firmware uses `raw * reference_mV / 4096` and
-`current_mA = (output_mV - zero_mV) * 1000 / sensitivity_mV_per_A`, retaining
+`current_mA = (zero_mV - output_mV) * 1000 / sensitivity_mV_per_A` for motors,
+and `(output_mV - zero_mV) * 1000 / sensitivity_mV_per_A` for servo, retaining
 microvolt precision until final signed rounding. Nominally one LSB is
-`3300 / 4096 = 0.805664 mV`, or **4.355 mA**. The signed converted value is
-reported as-is for each channel; negative current is preserved.
+`3300 / 4096 = 0.805664 mV`, or **4.355 mA**. Negative current is preserved.
 
 Per-channel Kconfig values in `stm32_zephyr/Kconfig` are initially vendor
 nominal, not measured calibration:
@@ -102,11 +111,15 @@ excluding driver/interrupt/scheduler overhead; this is not measured latency.
 Filtering cannot recover peaks clipped by the ADC or guarantee rejection of
 PWM-correlated noise.
 
-If any sample for a channel reaches code 4095, the whole batch reports +4320 mA
-for that channel rather than averaging away the clip. Converted values above
-4320 also cap there. Treat **4320 as a ceiling indication, not an exact current**.
-The Pi console labels it `4320mA[CEILING]`; CSV and wire values remain numeric.
-There is no new saturation bit or protocol version.
+If any sample reaches code 4095, the whole batch reports the channel's signed
+upper-voltage endpoint rather than averaging away the clip: -4320 mA for motors,
++4320 mA for servo. Converted values beyond that upper-voltage endpoint also
+stop there. Falling-voltage readings are not capped at 4.320 A in magnitude.
+The existing `[CEILING]` label refers to the ADC voltage ceiling, not a positive
+reported-current ceiling. Console, chart and event log recognize only the
+appropriate signed endpoint per channel. CSV and wire values remain numeric;
+there is no new saturation bit or protocol version. A clipped reading indicates
+current beyond the measurable voltage range, not an exact current.
 
 | Item | Contract |
 |---|---|
@@ -185,6 +198,25 @@ every received status frame. No native MCU crash dump is configured; the full
 USB capture is the persistent MCU fatal-report evidence. Retain the matching
 `zephyr.elf` for symbol lookup. Never assume the previous COM port or board drive.
 
+## Motor-orientation regression checks
+
+The production-C backend is host-tested through its existing ADC hardware double.
+Independent code fixtures cover zero, both directions on all channels, +5 A
+motor / -5 A servo at 1.575 V without clipping, code 4094 at approximately
+-4316/+4316 mA, all-channel upper-rail clipping, and a single clipped scan that
+must survive averaging. Existing validity, read/setup errors and expiry checks
+remain in place. Protocol and event tests verify signed clipping labels and
+that +5 A motor readings remain available. The 74-test host suite and all 10
+protocol tests passed using Python 3.14 with PyQt5 installed in an ignored local
+validation environment. These are synthetic ADC checks, not physical calibration.
+The Zephyr workspace/SDK are absent in this checkout's host environment, so no
+firmware build, flash or powered bench verification is claimed.
+
+Persistent evidence is in `logs/current-sense/polarity-*.log`, including the
+initial failing regression and final Python/protocol runs. The read-only Qt
+walkthrough stores a chart screenshot and GUI session logs under
+`logs/current-sense/polarity-gui/`; crash reports use `*.crash.txt` there.
+
 ## Hardware observations and grounding correction
 
 The first flashed run of this backend reported **about -8 A on all three channels,
@@ -237,8 +269,9 @@ they do not establish an exact mechanical stall duration.
 | Servo | +686 median, holding | Not identified | Not identified | +678.5 median while motors ran is not a servo-motion measurement |
 
 These are **nominally converted readings**, not calibrated physical currents.
-They are reported using the direct ADC conversion above; do not invert these
-historical signs when comparing them with current firmware reports.
+These historical captures predate the motor-orientation correction. Keep their
+original signs in this table; negate left/right values only when comparing with
+new firmware reports. Servo signs are unchanged.
 Rest window: 2026-09-28 15:21:25–15:21:33 EDT (400 status frames); motor-running
 window: 15:21:39–15:21:44 (250 frames). The final attempt window is
 15:22:24–15:22:26.35 (117 frames); its right-channel minimum occurred at about
@@ -255,8 +288,8 @@ duration or instantaneous electrical peak.
 
 The motor rest offsets and negative-going load response in the historical
 capture require zero and reference calibration before adopting physical current
-thresholds. Firmware reports the signed ADC conversion without a motor-channel
-polarity inversion; no physical current threshold is used.
+thresholds. The new motor conversion reverses the historical voltage slope;
+it does not calibrate the zero offsets. No physical current threshold is used.
 Do not silently subtract these rest values or use absolute values: a holding
 servo can draw real current, and the selected rest is not a verified zero-current
 calibration. The right minimum is a captured extreme, not a stall average.

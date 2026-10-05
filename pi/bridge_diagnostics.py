@@ -3,7 +3,7 @@ import csv
 import sys
 from pathlib import Path
 from background_io import BackgroundIO
-from part2_protocol import STATES, CURRENT_REPORT_MAX_MA
+from part2_protocol import STATES, CURRENT_REPORT_ENDPOINTS_MA
 
 
 def current_summary(status):
@@ -12,7 +12,7 @@ def current_summary(status):
         value = status['current_' + name + '_mA']
         valid = status['current_valid_mask'] & (1 << i) and value != -2147483648
         text = str(value) + 'mA' if valid else 'UNAVAILABLE'
-        if valid and value == CURRENT_REPORT_MAX_MA:
+        if valid and value == CURRENT_REPORT_ENDPOINTS_MA[i]:
             text += '[CEILING]'
         values.append('%s=%s' % (name, text))
     return ' '.join(values)

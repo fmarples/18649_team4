@@ -199,7 +199,7 @@ static void console_thread(void *a, void *b, void *c)
 	printk("LAB2 INTEGRATION: Pi UART PA9/PA10 115200; motors + blinkers + Pi-controlled servo.\n");
 	printk("Servo D14 waits for healthy link + centered wheel; no USB required. A=self-test; B1=latch coast.\n");
 	printk("1320 counts/rev; 23..300 RPM; startup 60%%/200ms; PID 40..100%%. ACS712 currents active.\n");
-	printk("CURRENT direct A0/A1/A3; 12-bit ADC; nominal calibration unless overridden; +4320mA ceiling.\n");
+	printk("CURRENT direct A0/A1/A3; 12-bit ADC; nominal calibration unless overridden; upper rail -4320mA motors/+4320mA servo.\n");
 	printk("TRACE enabled=%u CMD_RX=PC2/CN7-35 PWM_SET=PC3/CN7-37; errors invalidate capture.\n",
 	       IS_ENABLED(CONFIG_LAB_TIMING_GPIO));
 	int64_t next_diagnostic_ms = 0;

@@ -6,8 +6,11 @@ HEADER = b'L2\x01'
 COMMAND = struct.Struct('<2sBBIiiiI')
 STATUS = struct.Struct('<2sBBIIIIiiiiiiII')
 STATUS_SIZE = STATUS.size + 4
-# User-selected direct-ADC current ceiling; numeric CSV/wire values stay signed mA.
+# Upper-ADC-rail endpoint magnitude, not a symmetric current limit.
 CURRENT_REPORT_MAX_MA = 4320
+# Status order: reversed left/right motor sensors, unchanged servo sensor.
+CURRENT_REPORT_ENDPOINTS_MA = (-CURRENT_REPORT_MAX_MA, -CURRENT_REPORT_MAX_MA,
+                               CURRENT_REPORT_MAX_MA)
 STATUS_UDP_PORT = 8002  # Never use the course proxy's force-feedback input on 8001.
 STATUS_FIELDS = ('status_seq', 'stm_ms', 'command_seq', 'state', 'steer', 'throttle',
                  'brake', 'current_left_mA', 'current_right_mA', 'current_servo_mA',

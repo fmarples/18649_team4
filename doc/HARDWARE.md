@@ -19,7 +19,7 @@ This is a working BOM, not a completed purchasing list or an as-built schematic.
 | L298N dual H-bridge module | 1 | Driver for left and right DC motors; ENA/ENB jumpers removed; separate 5V-EN regulator jumper installed; user measured +5V terminal to GND at 5 V with a multimeter | Exact module/vendor, module schematic, motor rail/output voltage under load, thermal/current limits for these motors |
 | Hiwonder Ackermann steering chassis kit | 1 | [Exact kit link confirmed by the user](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503), including its motors and steering servo; team uses an L298N motor driver | Installed servo marking; motor model is confirmed below |
 | JGB37-520R30-12 DC gearmotors | 2 | User-confirmed highlighted model in the [specification image](assets/JGB37-520R30-12-spec.png); 12 V, 1:30, 280 RPM rated, 320 RPM no-load, 3.2 A stall; L298N drive; both-motor 55% starts and 40% four-second holds after a 60% kick passed 3/3 at 10 kHz with raised wheels; user reports 75 mm wheel diameter | Loaded rolling circumference; 51–54% startup and 36–39% holding duties, ground load, long-term holding and current/thermal margins remain unverified; see [measurements](MOTOR_CHARACTERIZATION.md) |
-| Makerfabs ACS712 Current Sensor- 5A | 3 target | [Exact product confirmed by the user](https://www.makerfabs.com/acs712-current-sensor-5a.html), SKU MSE71205A; nominal -5 to +5 A, 5 V supply, 185 mV/A, 2.5 V at zero current; intended for left motor, right motor and servo telemetry only | Physical quantity, board revision/chip markings, measured supply/offset/sensitivity and actual wiring; user selected direct ADC connection with +4320 mA reporting ceiling |
+| Makerfabs ACS712 Current Sensor- 5A | 3 target | [Exact product confirmed by the user](https://www.makerfabs.com/acs712-current-sensor-5a.html), SKU MSE71205A; nominal -5 to +5 A, 5 V supply, 185 mV/A, 2.5 V at zero current; intended for left motor, right motor and servo telemetry only | Physical quantity, board revision/chip markings, measured supply/offset/sensitivity and actual wiring; user selected direct ADC connection; signed upper-rail endpoints are documented below |
 | Left and right motor encoders | 2 | Built into JGB37-520R30-12; specification lists A/B, 11 magnetic-ring lines, 3.3–5 V and built-in pull-up shaping; encoder VCC wired to Nucleo 3V3 and GND to GND; both hand-turn tests passed; forward raw counts decrease on the left and increase on the right; one turn measured 1319 left / 1327 right absolute counts; use validated 1320 counts/rev at x4; see [calibration record](ENCODER_SPEC.md) | Detailed output circuitry, refined multi-revolution calibration, powered-speed accuracy |
 | HW-688 DC-to-DC step-down buck converter module | 2 reported | First supplies 5 V to Nucleo E5V. Second photo-identified: fixed nominal 5 V, VIN+/VIN- input beside barrel jack, 5V/GND output beside USB, no adjustment potentiometer. User reports TA said use 5 V for the servo; the second converter is now selected for that bench plan. | Actual output voltage under no-load/load, continuous/peak current rating, thermal performance and servo operation at 5 V remain unmeasured |
 | Laptop-to-Nucleo USB connection | 1 | ST-LINK programming and serial diagnostics; USB telemetry has been observed | Cable/board connection and current enumeration should be checked before each flash |
@@ -161,7 +161,11 @@ absolute maximum** in [ST DS10086 Rev 4, Table 11 note 2](https://download.mikro
 Absolute maximum is a stress rating, not a guaranteed operating range.
 
 The user subsequently selected **direct ADC connection without a divider**,
-accepting clipping and reporting **+4320 mA** at the positive ceiling. This
+accepting clipping and selecting **4.320 A** as the upper-ADC-rail endpoint
+magnitude. After the user's motor-orientation correction, upper-rail clipping
+reports -4320 mA for motors and +4320 mA for servo. Falling-voltage readings have
+no symmetric 4.320 A cap. See the conversion contract in
+[Part 3.5](CURRENT_SENSOR_HANDOFF.md). This
 supersedes the earlier divider proposal, not the 5 V sensor supply or common
 ground requirement. Software clipping does not protect against voltage spikes
 or unsafe power sequencing. Actual supply, offset, sensitivity and wiring
