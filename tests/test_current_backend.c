@@ -92,9 +92,9 @@ int main(void)
     assert(mask == 7);
     /* Independent ADC-code fixtures, tolerance below one ADC LSB (~4.36 mA). */
     assert(ma[0] >= -4 && ma[0] <= 4);
-    assert(ma[1] >= 996 && ma[1] <= 1004);
+    assert(ma[1] >= -1004 && ma[1] <= -996);
     assert(ma[2] >= -1004 && ma[2] <= -996);
-    puts("PASS: three acquired channels report signed mA in status order");
+    puts("PASS: motor polarity is corrected and servo polarity is preserved");
     noisy = true;
     assert(current_backend_read(ma, &mask) == 0);
     assert(mask == 7 && ma[0] >= -4 && ma[0] <= 4);
@@ -104,9 +104,9 @@ int main(void)
      * lower current. Other channels must continue reporting normally. */
     clip_first_scan = true;
     assert(current_backend_read(ma, &mask) == 0);
-    assert(mask == 7 && ma[0] == 4320);
-    assert(ma[1] >= 996 && ma[1] <= 1004);
-    puts("PASS: ADC saturation reports +4320 mA, with no actuator effect");
+    assert(mask == 7 && ma[0] == -4320);
+    assert(ma[1] >= -1004 && ma[1] <= -996);
+    puts("PASS: ADC saturation follows corrected motor polarity, with no actuator effect");
     struct current_sample cache;
     current_cache_publish(&cache, ma, mask, 20);
     assert(current_cache_snapshot(&cache, 119, 100).valid_mask == 7);

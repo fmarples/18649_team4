@@ -13,6 +13,7 @@ static const int32_t sensitivity[CURRENT_CHANNELS] = {
     CONFIG_LAB_CURRENT_LEFT_SENSITIVITY, CONFIG_LAB_CURRENT_RIGHT_SENSITIVITY,
     CONFIG_LAB_CURRENT_SERVO_SENSITIVITY,
 };
+static const int8_t polarity[CURRENT_CHANNELS] = {-1, -1, 1};
 
 /* Called only by the current workqueue. Acquire actual ADC samples, then apply
  * configured nominal/bench calibration. No actuator policy or shared lock here. */
@@ -69,9 +70,11 @@ int current_backend_read(int32_t ma[3], uint32_t *valid_mask)
         int64_t delta_uv = uv - zero_mv[i] * 1000;
         int32_t value = (delta_uv + (delta_uv >= 0 ? sensitivity[i] / 2 : -sensitivity[i] / 2)) /
                         sensitivity[i];
+        int32_t corrected_value = value * polarity[i];
         /* User-selected reporting ceiling. A rail clip is a lower-bound
          * indication, not an exact measurement and never a motor cutoff. */
-        ma[i] = clipped || value > CURRENT_REPORT_MAX_MA ? CURRENT_REPORT_MAX_MA : value;
+        int32_t ceiling = polarity[i] < 0 ? -CURRENT_REPORT_MAX_MA : CURRENT_REPORT_MAX_MA;
+        ma[i] = clipped || value > CURRENT_REPORT_MAX_MA ? ceiling : corrected_value;
         *valid_mask |= 1U << i;
     }
     return 0;

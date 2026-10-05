@@ -32,7 +32,10 @@ left/servo sensors; they did not use the pre-current-sensing firmware.
 The right sensor belongs in the OUT3-to-right-motor lead. Its signal OUT is
 PA1/A1, VCC uses the HW-688 5 V rail, and GND joins the common signal ground.
 Nominal right conversion remains 2500 mV zero / 185 mV per amp. These constants
-do not substitute for measuring that sensor's zero offset and polarity.
+do not substitute for measuring that sensor's zero offset. Firmware inverts
+the converted signs for both motor channels, as requested after their sensor
+polarities were found to be reversed; servo polarity is unchanged. This is a
+software sign correction, not a wiring-orientation change.
 No actuator policy, ADC filtering, status format or acquisition priority changed.
 `diagnostics/two_sensors.conf` retains the earlier mask-5 configuration; its
 matching Windows selection is `--current-channels left servo`.
@@ -71,7 +74,9 @@ of **4.320 A**. The -5 A endpoint is 1.575 V and does not clip the ADC.
 ADC resolution is 12 bits. Firmware uses `raw * reference_mV / 4096` and
 `current_mA = (output_mV - zero_mV) * 1000 / sensitivity_mV_per_A`, retaining
 microvolt precision until final signed rounding. Nominally one LSB is
-`3300 / 4096 = 0.805664 mV`, or **4.355 mA**. Negative current is preserved.
+`3300 / 4096 = 0.805664 mV`, or **4.355 mA**. Left and right motor values are
+then negated; servo values retain the sensor's measured sign. Negative current
+is preserved.
 
 Per-channel Kconfig values in `stm32_zephyr/Kconfig` are initially vendor
 nominal, not measured calibration:
@@ -234,6 +239,8 @@ they do not establish an exact mechanical stall duration.
 | Servo | +686 median, holding | Not identified | Not identified | +678.5 median while motors ran is not a servo-motion measurement |
 
 These are **nominally converted readings**, not calibrated physical currents.
+They were captured before the motor-channel polarity correction above; invert
+the left and right signs only to compare with corrected firmware reports.
 Rest window: 2026-09-28 15:21:25–15:21:33 EDT (400 status frames); motor-running
 window: 15:21:39–15:21:44 (250 frames). The final attempt window is
 15:22:24–15:22:26.35 (117 frames); its right-channel minimum occurred at about
@@ -248,8 +255,10 @@ that policy. The USB snapshots are about 250 ms apart; the 20 ms status frames
 carry current but not encoder speed. Neither proves a precise zero-speed stall
 duration or instantaneous electrical peak.
 
-The motor rest offsets and the negative-going load response require zero,
-reference and polarity calibration before adopting physical current thresholds.
+The motor rest offsets and negative-going load response in the historical
+capture require zero and reference calibration before adopting physical current
+thresholds. Motor-channel signs are now inverted in firmware per the user's
+polarity correction; no physical current threshold is used.
 Do not silently subtract these rest values or use absolute values: a holding
 servo can draw real current, and the selected rest is not a verified zero-current
 calibration. The right minimum is a captured extreme, not a stall average.
