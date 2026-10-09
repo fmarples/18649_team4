@@ -21,7 +21,7 @@ temporarily mask interrupts and must be included in measured latency.
 | B1 GPIO ISR | Button press edge | ISR | Latch local stop; owner applies it | Atomic B1 latch, motor owner | Pending |
 | USB console RX ISR | USART2 bytes | ISR | Queue bounded bytes; no command parsing here | 256-byte queue, overflow flag | Pending |
 | Status timer callback | Every 20 ms | Timer interrupt context | Signal status thread; no serialization/transmission here | Binary semaphore, maximum count 1 | Pending |
-| Command validation, errors and motor outputs | One owner: wakes on queue data; waits up to 1 tick (1 ms) when empty | Thread 1 | Throttle/brake output response <=2 ms after complete command; self-test <=10 ms target | RX queue, CRC/ranges, shared state, PID, L298N | Pending |
+| Command validation, errors and motor outputs | One owner: wakes on queue data; waits up to 1 tick (1 ms) when empty | Thread 1 | Throttle/brake output response <=2 ms after complete command; A self-test uses the command-loss watchdog below | RX queue, CRC/ranges, shared state, PID, L298N | Pending |
 | Encoder velocity / PID feedback | 20 ms actual elapsed-time sampling inside owner; command changes also update proportional output immediately | Same thread 1 | Feedback period is not the 2 ms pedal response deadline | Counts, velocity controller, motor output | Pending |
 | Command-loss watchdog | Checked each owner iteration; threshold 60 ms | Same thread 1 | Three missed 20 ms updates; checkoff fail-safe <=100 ms | Last accepted reception time, actuator policy | Pending |
 | Steering | Each owner iteration; hardware PWM period 20 ms | Same thread 1, after motor update | <=50 ms command-to-servo-signal change | Wheel angle, calibration, fault state, TIM4/PB9 | Pending combined load |
@@ -69,15 +69,21 @@ can miss a deadline, which is why timing is measured under simultaneous load.
 
 ## Fault policy and remaining evidence
 
-- Cold start, bad input, UART timeout and A self-test request dynamic braking
-  and hazards. A single press enters immediately; release debounce is 20 ms,
-  double-press window 400 ms. Actual motor/lamp timing is pending.
+- Cold start, bad input and UART timeout request dynamic braking and hazards.
+  A self-test is now Pi-local: a single accepted press immediately latches UART
+  command silence; the STM32 then detects timeout. Release debounce remains
+  20 ms and the double-press window 400 ms. While latched, even stale/invalid UDP
+  cannot trigger a Pi brake frame. Status RX/forwarding continues. See
+  [the protocol](PROTOCOL.md#blinkers-self-test-and-steering).
 - B1 retains the teammate's **latched enable-low/coast** stop until reset.
   B1 is not the checkoff's A-button dynamic-braking self-test.
 - The STM32 timeout was changed from 80 to **60 ms** to implement the handout's
   three-missed-update policy at our 20 ms command cadence. Hardware deadline includes the next
   owner iteration and actual output change. The older 150 ms Part 2 and 100 ms
-  checkoff bounds remain looser; self-test uses the stricter 10 ms figure.
+  checkoff bounds remain looser. For issue #2 the user confirmed timeout-based
+  A self-test with this unchanged 60 ms threshold and checkoff's 100 ms target.
+  This cannot meet the conflicting requirements-table 10 ms target; actual
+  motor/lamp timing remains unmeasured.
 - Pi UDP freshness remains 80 ms. It sends a brake frame then stops refreshing.
   Motor brake can occur before MCU link-error hazards: hazards follow up to
   another 60 ms later. Thus no <=100 ms *UDP-loss-to-hazards* claim is made;

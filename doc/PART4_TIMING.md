@@ -104,9 +104,19 @@ Initial setup/cleanup drives markers low; ignore those edges in captures.
 | Normal blinker | One lamp over >=10 cycles | Frequency, duty, drift | 0.9..1.1 Hz; nominal 50% duty; record measured duty |
 | Front/rear synchronization | FL vs RL, then FR vs RR | Paired edge skew | <=1 ms |
 | Hazards | All four lamp signals | Frequency and synchronous operation | Nominal 2 Hz, 50% duty |
-| A self-test | CMD_RX for first A press | Brake DIR_A edge and hazard output | Target <=10 ms per requirements; checkoff says <=100 ms |
+| A self-test | UDP_RX for the accepted first A press (correlate with decoded wheel packet); no corresponding CMD_TX/CMD_RX should follow | Brake DIR_A edge and hazard output | Pi stops commands; existing 60 ms MCU timeout targets checkoff's <=100 ms, not the conflicting <=10 ms requirement |
 | UART link loss | Last CMD_RX before unplugging signal | Brake edge and first hazard state | <=100 ms checkoff; 60 ms software timeout + processing |
 | Status heartbeat | STM TX D8/PA9 (additional probe) | Start-to-start of decoded 56-byte frames | 18..22 ms; each frame takes about 4.86 ms wire time |
+
+For A self-test, capture UDP_RX together with the Pi TX wire/CMD_TX and actuator
+outputs. A is consumed on the Pi, so measuring from an A-bearing CMD_RX is no
+longer valid. Verify command silence through button release, pedal changes and
+upstream UDP loss, then double press to recover. Bytes queued before the latch
+may still reach the MCU; its 60 ms timeout is measured from the last accepted
+command, not directly from the wheel press. Status traffic in the opposite
+UART direction should continue. The user confirmed this timing policy for
+[issue #2](https://github.com/fmarples/18649_team4/issues/2); no physical result
+is claimed by the software tests.
 
 For link-loss testing, remove only Pi TX -> STM RX; keep GND and power in place.
 Reconnect with throttle released. Fault hazard phase may already be high when

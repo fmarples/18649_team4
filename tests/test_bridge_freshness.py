@@ -13,10 +13,13 @@ import part2_protocol as protocol
 
 
 # Make a real course packet; only the external transports and clock are replaced.
-def wheel(seq, throttle):
+def wheel(seq, throttle, buttons=0):
     packet = bytearray(276)
     struct.pack_into('<Iii', packet, 0, seq, 0, throttle)
     struct.pack_into('<i', packet, 24, 32767)
+    for i in range(11):
+        if buttons & (1 << i):
+            packet[52 + i] = 0x80
     return bytes(packet)
 
 
@@ -62,7 +65,9 @@ def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None,
             return len(data)
 
     def sleep(dt):
-        clock.now += pause_after_first_sleep if not clock.slept and pause_after_first_sleep else dt
+        elapsed = pause_after_first_sleep if not clock.slept and pause_after_first_sleep else dt
+        # Avoid float drift at the exact debounce/double-press test boundaries.
+        clock.now = round(clock.now + elapsed, 9)
         clock.slept = True
         if clock.now > stop_at:
             raise KeyboardInterrupt
@@ -78,6 +83,77 @@ def capture(events, stop_at, pause_after_first_sleep=0, trace_events=None,
 
 
 class BridgeFreshnessTests(unittest.TestCase):
+    def test_a_latches_hazard_and_stops_all_uart_commands_until_double_press(self):
+        events = [(0, wheel(1, -32768)), (.01, wheel(2, -32768, buttons=1))]
+        # Keep valid wheel traffic alive; releasing A must not clear the latch.
+        events += [(i * .02, wheel(i + 2, -32768)) for i in range(1, 31)]
+        writes = capture(events, .62)
+        self.assertEqual([fields[1:] for _, fields in writes],
+                         [(0, -32768, 32767, 0)])
+        self.assertTrue(all(t < .01 for t, _ in writes))
+
+    def test_double_press_resumes_current_pedals_without_forwarding_a(self):
+        writes = capture([(0, wheel(1, 32767)), (.01, wheel(2, -32768, 1)),
+                          (.04, wheel(3, -32768)), (.08, wheel(4, -32768)),
+                          (.12, wheel(5, -32768, 1 | (1 << 5))),
+                          (.14, wheel(6, -32768, 1 | (1 << 4)))], .17)
+        self.assertFalse(any(.01 <= t < .12 for t, _ in writes))
+        resumed = [fields for t, fields in writes if t >= .12]
+        self.assertGreaterEqual(len(resumed), 3)  # Includes a periodic refresh while A is held.
+        self.assertEqual(resumed[0], (1, 0, -32768, 32767, 1 << 5))
+        self.assertEqual(resumed[1], (2, 0, -32768, 32767, 1 << 4))
+        self.assertTrue(all(fields[4] & 1 == 0 for _, fields in writes))
+
+    def test_hazard_debounce_hold_and_double_press_boundaries(self):
+        cases = [
+            ('held A', {0: 1, .02: 1, .04: 1}, None, .06),
+            ('short release bounce', {0: 1, .01: 0, .029: 1}, None, .05),
+            ('20 ms release', {0: 1, .01: 0, .03: 1}, .03, .05),
+            ('400 ms double press', {0: 1, .4: 1}, .4, .42),
+            ('401 ms is not double press', {0: 1, .401: 1}, None, .42),
+            ('fresh double clears old latch', {0: 1, .5: 1, .54: 0, .58: 1}, .58, .60),
+        ]
+        for name, presses, resume_at, stop_at in cases:
+            with self.subTest(name=name):
+                states = {round(i * .02, 3): 0 for i in range(int(stop_at / .02) + 1)}
+                states.update(presses)
+                events = [(t, wheel(seq, -32768, buttons))
+                          for seq, (t, buttons) in enumerate(sorted(states.items()))]
+                writes = capture(events, stop_at)
+                if resume_at is None:
+                    self.assertEqual(writes, [])
+                else:
+                    self.assertTrue(writes)
+                    self.assertEqual(writes[0][0], resume_at)
+                    self.assertTrue(all(t >= resume_at and fields[4] & 1 == 0
+                                        for t, fields in writes))
+
+    def test_hazard_silences_invalid_and_stale_brakes_and_survives_counter_restart(self):
+        writes = capture([(0, wheel(100, -32768)), (.01, wheel(101, -32768, 1)),
+                          (.02, b'bad'), (.03, wheel(100, -32768)),
+                          (.15, wheel(1, -32768)), (.18, wheel(2, -32768, 1))], .21)
+        self.assertEqual(writes[0][1], (0, 0, -32768, 32767, 0))
+        self.assertFalse(any(.01 <= t < .18 for t, _ in writes))
+        self.assertEqual(writes[1], (.18, (1, 0, -32768, 32767, 0)))
+
+    def test_duplicate_old_and_invalid_packets_cannot_clear_hazard(self):
+        writes = capture([(0, wheel(99, 32767)), (.01, wheel(100, -32768, 1)),
+                          (.03, wheel(101, -32768)), (.06, wheel(101, -32768, 1)),
+                          (.07, wheel(100, -32768, 1)), (.08, b'bad'),
+                          (.09, wheel(102, -32768))], .12)
+        self.assertEqual(writes, [(0, (0, 0, 32767, 32767, 0))])
+
+    def test_status_is_still_forwarded_during_hazard_with_no_uart_tx(self):
+        import zlib
+        body = protocol.STATUS.pack(b'L2', 1, 2, 1, 60, 0, 2, 0, 32767, -32768,
+                                    -1000, 0, 4320, 7, 0)
+        status = body + struct.pack('<I', zlib.crc32(body))
+        forwarded = []
+        writes = capture([(0, wheel(1, -32768, 1))], .03,
+                         received_status=status, forwarded=forwarded)
+        self.assertEqual(writes, [])
+        self.assertEqual(forwarded, [(status, ('127.0.0.1', 8002))])
+
     def test_forwards_only_valid_status_to_separate_laptop_port(self):
         import zlib
         body = protocol.STATUS.pack(b'L2', 1, 2, 1, 20, 0, 1, 0, 32767, 32767,

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Wheel UDP -> CRC UART motor commands; STM status -> console/CSV.
 
-Matching STM32 firmware drives motors. Stale/invalid UDP sends a brake command.
+Matching STM32 firmware drives motors. A latches a Pi-local hazard and silences
+command TX so the MCU times out. Stale/invalid UDP otherwise sends a brake command.
 """
 import argparse
 import ipaddress
@@ -18,6 +19,39 @@ UDP_FRESH = 0.080
 
 
 from bridge_diagnostics import BridgeDiagnostics, current_summary
+
+
+# Pi-local A self-test: feed fresh wheel input; TX paths stay silent while active.
+class HazardLatch:
+    BUTTON = 1 << 0
+    DOUBLE_MS = 400
+    RELEASE_MS = 20
+
+    def __init__(self):
+        self.active = False
+        self.was_down = False
+        self.release_ms = None
+        self.first_press_ms = None
+
+    # Observe raw A at monotonic milliseconds; a held sample is not a new press.
+    def update(self, now_ms, buttons):
+        down = bool(buttons & self.BUTTON)
+        if not down:
+            if self.was_down:
+                self.release_ms = now_ms
+            self.was_down = False
+            return
+        if self.was_down:
+            return
+        self.was_down = True
+        if self.release_ms is not None and now_ms - self.release_ms < self.RELEASE_MS:
+            return  # Reject a short release/bounce, not a held press.
+        if self.first_press_ms is not None and now_ms - self.first_press_ms <= self.DOUBLE_MS:
+            self.active = False
+            self.first_press_ms = None
+        else:
+            self.active = True  # Enter immediately, without waiting for a second press.
+            self.first_press_ms = now_ms
 
 
 def main():
@@ -64,6 +98,7 @@ def main():
             no_status_notice = started + 2
             was_streaming = False
             discard_udp = False
+            hazard = HazardLatch()
             diagnostics.message('MOTOR LINK mode=%s; UART=%s 115200 8N1; Ctrl+C stops TX.' %
                                 (args.mode, args.serial))
             diagnostics.message('Live pedal commands can drive motors. Current validity comes from the STM32.')
@@ -97,8 +132,9 @@ def main():
                 # Flush expired input before accepting a restarted UDP sequence.
                 now = time.monotonic()  # Logging/status processing may have taken time.
                 if last_udp is not None and now - last_udp >= UDP_FRESH:
-                    transmit(command(seq, 0, 32767, -32768, 0))
-                    seq = (seq + 1) & 0xffffffff
+                    if not hazard.active:
+                        transmit(command(seq, 0, 32767, -32768, 0))
+                        seq = (seq + 1) & 0xffffffff
                     axes = None
                     previous_counter = None
                     last_udp = None
@@ -124,13 +160,15 @@ def main():
                         try:
                             counter, *new_axes = wheel_packet(data)
                         except ValueError as err:
-                            transmit(command(seq, 0, 32767, -32768, 0))
-                            seq = (seq + 1) & 0xffffffff
+                            if not hazard.active:
+                                transmit(command(seq, 0, 32767, -32768, 0))
+                                seq = (seq + 1) & 0xffffffff
                             axes = None
                             # Keep the last valid counter/time while paused. Only
                             # a real freshness timeout permits a new baseline.
                             was_streaming = False
-                            diagnostics.message('Rejected UDP input; brake sent; TX paused: '+str(err))
+                            diagnostics.message('Rejected UDP input; TX paused%s: %s' %
+                                                ('; brake sent' if not hazard.active else '; hazard latched', err))
                             continue
                         if not is_newer(counter, previous_counter):
                             continue
@@ -139,7 +177,17 @@ def main():
                             telemetry_host = address[0]
                         axes = new_axes
                         last_udp = time.monotonic()
-                        # Forward every valid new UDP state immediately.
+                        was_hazard = hazard.active
+                        hazard.update(int(last_udp * 1000), axes[3])
+                        axes[3] &= ~HazardLatch.BUTTON  # A is Pi-local; other buttons still reach the MCU.
+                        if hazard.active != was_hazard:
+                            diagnostics.message(
+                                'A hazard latched; UART TX paused for MCU timeout.' if hazard.active else
+                                'A hazard cleared; UART TX resumed.')
+                        if hazard.active:
+                            was_streaming = False
+                            continue
+                        # Forward every valid new UDP state outside the Pi hazard.
                         transmit(command(seq, *axes))
                         seq = (seq + 1) & 0xffffffff
                         next_tx = last_udp + TX_PERIOD
@@ -148,7 +196,7 @@ def main():
                     steering = (-20000, 0, 20000)[int(now - started) % 3]
                     axes = [40000 if args.mode == 'bad-range' else steering, 32767, 32767, 0]
                 now = time.monotonic()
-                if now >= next_tx and axes is not None:
+                if now >= next_tx and axes is not None and not hazard.active:
                     if args.mode != 'live' or (last_udp is not None and now - last_udp < UDP_FRESH):
                         frame = command(seq, *axes)
                         if args.mode == 'bad-crc':

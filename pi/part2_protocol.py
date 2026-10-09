@@ -25,6 +25,7 @@ def command(seq, steer, throttle, brake, buttons=0):
 
 
 def wheel_packet(data):
+    """Decode raw course input, including A; the bridge consumes A before UART TX."""
     if len(data) != 276:
         raise ValueError('Expected a 276-byte Windows wheel packet')
     seq = struct.unpack_from('<I', data, 0)[0]

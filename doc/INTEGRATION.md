@@ -25,9 +25,14 @@ for normal combined testing.
 
 ## Fault and operating policy
 
-A/button 0 enters self-test immediately; its double-press window is 400 ms.
-Self-test and transport faults request dynamic motor braking and hazards;
-LIVE steering is disabled. B1 retains the motor implementation's latched
+A/button 0 now latches self-test on the Pi, which stops every UART command
+write instead of forwarding A. The existing 60 ms STM32 timeout then requests
+dynamic motor braking and hazards and disables LIVE steering. The Pi preserves
+the 400 ms double-press window and 20 ms release debounce; status reception and
+forwarding continue while latched. A self-test appears as ERROR_TIMEOUT (2),
+not the firmware's direct-command SELF_TEST (6). See
+[the protocol](../PROTOCOL.md#blinkers-self-test-and-steering) for recovery and
+the 10 ms requirements-table versus 100 ms checkoff timing conflict. B1 retains the motor implementation's latched
 enable-low/coast stop until reset. A peripheral output failure latches an
 actuator fault. Failed output hardware cannot guarantee physical braking.
 

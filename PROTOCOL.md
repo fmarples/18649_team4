@@ -43,9 +43,10 @@ All multibyte integers are little endian. No C struct layout is sent directly.
 | 24 | 4 | CRC-32/IEEE of bytes 0 through 23 |
 
 Python zlib.crc32 and Zephyr crc32_ieee use the same CRC convention.
-Button bit n represents Part 1's zero-based raw index n. Paddle 5 selects left,
-paddle 4 selects right, and A/button 0 controls self-test. Pedals are 32767
-released and -32768 fully pressed.
+Button bit n represents Part 1's zero-based raw index n. Paddle 5 selects left
+and paddle 4 selects right. A/button 0 controls the **Pi-local** self-test hazard;
+the bridge consumes it and clears bit 0 in every transmitted command. Pedals
+are 32767 released and -32768 fully pressed. Frame layout and CRC are unchanged.
 
 ## Motor control
 
@@ -108,11 +109,28 @@ Normal blink is 1 Hz at 50%; hazards are 2 Hz. Left/right paddle presses are
 edge-triggered and mutually exclusive. Crossing +/-8000 raw steering and
 returning inside +/-6000 cancels the selected side; steering does not select it.
 
-A/button 0 latches self-test on its first press; a double press within 400 ms
-clears the manual latch. Self-test requests dynamic motor braking, hazards and
-servo PWM off. Clearing it never clears motor/B1/peripheral faults. With a healthy
-link, clearing self-test resumes motor response to the current pedals (including
-nonzero throttle); steering waits for the Logitech wheel to return near center before resuming.
+A/button 0 latches the Pi's self-test hazard on its first accepted press;
+a second press within 400 ms clears it, with a minimum 20 ms release between
+presses. Holding A or releasing it alone does not clear the latch. If the first
+press is older than 400 ms, a fresh double press is needed. Only validated,
+advancing wheel UDP packets from the permitted sender affect the latch.
+Intervals use Pi acceptance time at millisecond precision, not a wheel-side
+timestamp. Queued packets can compress a release interval, leaving the hazard
+latched until the user retries a double press.
+
+While latched, the Pi sends **no UART commands**, including periodic refreshes
+and stale/invalid-input brake frames. It keeps consuming wheel input and reading,
+logging and forwarding STM32 status. The existing STM32 watchdog detects command
+silence at 60 ms, reports ERROR_TIMEOUT (2), dynamically brakes healthy motors,
+flashes hazards and disables LIVE steering. The Pi latch survives UDP loss,
+invalid packets and UDP counter restarts; none of those events clear it.
+
+Clearing the Pi latch resumes current valid pedals (including nonzero throttle)
+and non-A buttons immediately. It never clears motor/B1/peripheral faults;
+steering still waits for the Logitech wheel to return near center. Firmware's
+existing direct-command SELF_TEST (6) handler and the wire state codes remain
+unchanged, but normal A-button self-test now uses the timeout path, not state 6.
+See [issue #2](https://github.com/fmarples/18649_team4/issues/2).
 
 Servo is PB9/D14 on TIM4, 20 ms period. Motor PWM remains PB4/TIM3 and PB10/TIM2
 at 10 kHz. USB USART2 accepts the existing ASCII calibration commands; binary
@@ -205,9 +223,12 @@ See [GUI telemetry](doc/GUI_TELEMETRY.md) for deployment and log/crash paths.
 
 ## Timing and failure behavior
 
-- Pi forwards each newly received, valid, advancing wheel UDP packet.
-- Between UDP updates, Pi refreshes the latest state about every 20 ms.
-- After 80 ms without fresh valid UDP, Pi sends one released-throttle/full-brake
+- Outside the Pi-local A hazard, Pi forwards each newly received, valid,
+  advancing wheel UDP packet with A's bit removed.
+- Between UDP updates, Pi refreshes the latest state about every 20 ms unless
+  the A hazard is latched. Latching suppresses all command writes immediately;
+  bytes already buffered or on the UART wire cannot be recalled.
+- Outside the A hazard, after 80 ms without fresh valid UDP, Pi sends one released-throttle/full-brake
   frame, then pauses commands. It drains queued UDP before recovery so an expired
   backlog cannot immediately undo the stop. Duplicate/backward counters do not
   refresh input. A new sequence baseline is allowed only after input timeout.
@@ -220,7 +241,10 @@ See [GUI telemetry](doc/GUI_TELEMETRY.md) for deployment and log/crash paths.
   must be measured; successful compilation does not prove the +/-10% limit.
 - The handout says 150 ms in Part 2 and 100 ms in final checkoff; 60 ms also
   targets the explicit three-missed-update requirement. It is an implementation
-  threshold, not a measured physical stopping time.
+  threshold, not a measured physical stopping time. For issue #2, the user
+  confirmed retaining this timeout and the existing single/double-press controls.
+  Timeout-based A self-test targets checkoff's 100 ms limit, not the conflicting
+  requirements-table 10 ms limit. Physical timing still needs measurement.
 - The explicit upstream brake avoids waiting for both freshness and MCU timeout
   before braking. Upstream UDP freshness is 80 ms; cable timeout is 60 ms,
   but Python/OS scheduling, UART transmission and output latency still need
@@ -272,6 +296,16 @@ paths below describe the previous main-branch motor integration.
 - pi/part2_bridge.py and pi/part2_protocol.py: copy both into ~/18649/part2.
 - test_protocol.py: host tests for layout, CRC, raw axes/button extraction,
   stream resynchronization, sequence wrap, and stopping stale UDP refreshes.
+- Issue #2 software checks: `tests/test_bridge_freshness.py` exercises A latching,
+  double-press/debounce boundaries, silence through invalid/stale input, counter
+  restart, duplicate rejection, non-A buttons and continued status forwarding.
+  Persistent local logs (Git-ignored): `logs/issue-2/bridge-green.log`, `tests.log`, `protocol.log`
+  and `compile.log`; failing-before-fix evidence: `red.log` and `recovery-red.log`.
+  Verification: 80 host tests (including native GCC controller builds), 10
+  protocol tests and Python byte compilation passed, with no skipped host tests.
+  The STM32 source/image is unchanged; no Zephyr rebuild was performed because
+  the documented Zephyr workspace/SDK were not found on this machine. No Pi deployment, flash
+  or hardware test was requested for this fix.
 - `tests/test_drive_control.c` checks cutoff/kick/PID/stop behavior; the shared
   bench controller tests remain in place. Protocol/freshness tests cover frame
   compatibility, paused input, queued stale input and sequence protection.
