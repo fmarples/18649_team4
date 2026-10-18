@@ -1,0 +1,12 @@
+mainmenu "Lab 3 Dual CAN demo"
+source "Kconfig.zephyr"
+
+config LAB3_ZONE_N2
+    bool "Build front steering zone N2"
+    help
+      Build the front STM32 demo: steering request reporting and front LEDs.
+
+config LAB3_ZONE_N3
+    bool "Build rear drivetrain zone N3"
+    help
+      Build the rear STM32 demo: drivetrain request reporting, PID timing, rear LEDs.

@@ -1,0 +1,58 @@
+/* Lab 3 dual MCP2515 overlay for NUCLEO-F401RE.
+ * Check pinctrl labels and the exact module oscillator before flashing.
+ * Suggested wiring: SPI1 PA5/PA6/PA7 shared; CAN A CS PB6 / INT PA10;
+ * CAN B CS PC7 / INT PB5. MCP2515 modules use 16 MHz oscillator per handout.
+ */
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+    aliases { can-a = &can_a; can-b = &can_b; };
+    zephyr,user {
+        can-rx-a-gpios = <&gpioc 2 GPIO_ACTIVE_HIGH>;
+        can-rx-b-gpios = <&gpioc 3 GPIO_ACTIVE_HIGH>;
+        can-tx-a-gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
+        can-tx-b-gpios = <&gpioa 1 GPIO_ACTIVE_HIGH>;
+        degraded-a-gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>;
+        degraded-b-gpios = <&gpiob 1 GPIO_ACTIVE_HIGH>;
+        error-gpios = <&gpioc 0 GPIO_ACTIVE_HIGH>;
+        srv-gpios = <&gpioc 1 GPIO_ACTIVE_HIGH>;
+        pwm-set-gpios = <&gpiob 9 GPIO_ACTIVE_HIGH>;
+        dir-a-gpios = <&gpiob 10 GPIO_ACTIVE_HIGH>;
+        pid-gpios = <&gpiob 11 GPIO_ACTIVE_HIGH>;
+        relay-tx-gpios = <&gpioc 6 GPIO_ACTIVE_HIGH>;
+        front-left-gpios = <&gpioa 4 GPIO_ACTIVE_HIGH>;
+        front-right-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
+        rear-left-gpios = <&gpioc 4 GPIO_ACTIVE_HIGH>;
+        rear-right-gpios = <&gpioc 5 GPIO_ACTIVE_HIGH>;
+        test-button-gpios = <&gpioa 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    };
+};
+
+&spi1 {
+    status = "okay";
+    pinctrl-0 = <&spi1_sck_pa5 &spi1_miso_pa6 &spi1_mosi_pa7>;
+    pinctrl-names = "default";
+    cs-gpios = <&gpiob 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+               <&gpioc 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    can_a: mcp2515@0 {
+        compatible = "microchip,mcp2515";
+        reg = <0>;
+        spi-max-frequency = <1000000>;
+        int-gpios = <&gpioa 10 GPIO_ACTIVE_LOW>;
+        osc-freq = <16000000>;
+        status = "okay";
+        label = "can0";
+    };
+    can_b: mcp2515@1 {
+        compatible = "microchip,mcp2515";
+        reg = <1>;
+        spi-max-frequency = <1000000>;
+        int-gpios = <&gpiob 5 GPIO_ACTIVE_LOW>;
+        osc-freq = <16000000>;
+        status = "okay";
+        label = "can1";
+    };
+};
+
+/* Independent watchdog: confirm this node label is present in your Zephyr board DTS. */
+&iwdg { status = "okay"; };

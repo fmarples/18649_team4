@@ -1,0 +1,3 @@
+Lab 3 WCET Baseline
+
+Derived from lab3_dual_can_code.zip. The Lab 2 project is not included or modified.
