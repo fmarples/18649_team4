@@ -8,7 +8,7 @@ This variant builds on the original Lab 3 starter:
 
 ## Still not certified demo-ready
 
-- Both N2 and N3 built successfully with Zephyr 4.3.0 / SDK 0.17.4 on 2026-10-18. The production C history module passed 104 checks; all 18 Python tests passed. See [verification details](RELAY_POLICY.md).
+- Both N2 and N3 built successfully with Zephyr 4.3.0 / SDK 0.17.4 on 2026-10-18. The production C history module passed 104 checks; all 19 Python tests passed, including a real python-can virtual-bus callback check. See [verification details](RELAY_POLICY.md).
 - The updated firmware has not been flashed or checked on physical hardware. Build results alone do not verify pin wiring, bus-off recovery or deadlines. The optional `can_recover()` API is guarded; the Zephyr 4.3 MCP2515 driver does not advertise manual recovery.
 - The `BLINK` payload contains an N1 monotonic timestamp, but the STM32s do not share N1's clock. This candidate does not implement clock synchronization or future-edge scheduling. Measure FL/RL skew over at least ten edges; if it exceeds 1 ms, implement and test an explicit synchronization strategy.
 - Relay behavior, bus-off recovery, all R4.8 scenarios, double-press clearing, startup error-state transition, and 100 ms fault propagation still require hardware testing. The relay policy is a candidate, not a proven fault-tolerant routing protocol.

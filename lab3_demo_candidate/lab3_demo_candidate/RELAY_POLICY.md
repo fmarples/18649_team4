@@ -66,9 +66,11 @@ duplicate suppression on either bus, interleaved sequences, independent FAULT
 sources, 4-bit wrap, reboot/expiry, 32-bit uptime wrap, stale queue entries, full
 history and bounded attempts after a failed submission. It passed 104 checks.
 
-The Python suite passed 18 tests, including shared Receiver behavior, late FAULT
+The Python suite passed 19 tests, including shared Receiver behavior, late FAULT
 duplicates after a clear, heartbeat timestamps on both interfaces, and malformed
-frame rejection. Run from this candidate directory:
+frame rejection. A real python-can 4.6.1 virtual-bus test exposed the original
+non-callable Receiver; the callback and listener-list registration are corrected.
+Run from this candidate directory:
 
 ```sh
 python -m unittest discover -s pi -p 'test_*.py' -v

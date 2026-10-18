@@ -1,18 +1,20 @@
 import sys
 import types
 import unittest
+import threading
 from unittest.mock import patch
 try:
     import can
 except ImportError:
     # Transport is not called by these real Receiver tests.
     sys.modules['can'] = types.ModuleType('can')
+    can = sys.modules['can']
 import can_protocol as p
 from cockpit_bridge import Receiver
 
 class Log:
-    def __init__(self): self.rows = []
-    def write(self, **row): self.rows.append(row)
+    def __init__(self): self.rows = []; self.received = threading.Event()
+    def write(self, **row): self.rows.append(row); self.received.set()
 
 def message(frame_id, data, bus='can0'):
     return types.SimpleNamespace(arbitration_id=frame_id, data=data, dlc=len(data),
@@ -24,6 +26,19 @@ class ReceiverTests(unittest.TestCase):
         self.hb, self.states = {}, {}
         self.force, self.fault = {'counter':0}, {'latched':False}
         self.rx = Receiver(self.log, self.hb, self.states, self.force, self.fault)
+
+    @unittest.skipUnless(hasattr(can, 'Bus'), 'python-can required for virtual transport test')
+    def test_real_notifier_dispatches_into_receiver(self):
+        with can.Bus(interface='virtual', channel='lab3-relay-regression', receive_own_messages=True) as bus:
+            notifier = can.Notifier(bus, [self.rx], timeout=0.05)
+            try:
+                bus.send(can.Message(arbitration_id=p.FORCE, is_extended_id=False,
+                                     data=p.pack_force(1, 42)))
+                self.assertTrue(self.log.received.wait(1), 'Notifier did not deliver to Receiver')
+                self.assertEqual(self.force['counter'], 42)
+                self.assertIsNone(notifier.exception)
+            finally:
+                notifier.stop(timeout=1)
 
     @patch('cockpit_bridge.time.monotonic_ns', return_value=100)
     def test_late_fault_duplicate_cannot_undo_clear(self, _clock):

@@ -46,6 +46,10 @@ class Receiver:
         self.log, self.hb_last, self.hb_state, self.force_box, self.fault_box = log, hb_last, hb_state, force_box, fault_box
         self.history = FrameHistory()
         self.receive_lock = threading.Lock()
+    def __call__(self, msg):
+        # python-can invokes each registered listener as callback(message).
+        self.on_message_received(msg)
+
     def on_message_received(self, msg):
         # Both CAN notifiers share this receiver and its duplicate history.
         with self.receive_lock:
@@ -94,7 +98,7 @@ def main():
     hb_last, hb_state, force_box, fault_box = {}, {}, {"counter":0}, {"latched":False}
     buses = [can.Bus(interface="socketcan", channel="can0"), can.Bus(interface="socketcan", channel="can1")]
     receiver = Receiver(log, hb_last, hb_state, force_box, fault_box)
-    notifiers = [can.Notifier(bus, receiver) for bus in buses]
+    notifiers = [can.Notifier(bus, [receiver]) for bus in buses]
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp.setblocking(False)
     if args.mode == "live" and not args.force_demo:
