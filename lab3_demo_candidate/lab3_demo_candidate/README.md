@@ -45,6 +45,8 @@ Confirm these assumptions with your team/TA and freeze the byte layout before co
 
 ## Wiring assumed by the overlay
 
+**Handout erratum:** on the XIAO CAN expansion board, **D9 is MISO and D10 is MOSI**, opposite the Lab 3 v1.0 handout's table. Use the [corrected Pi/Nucleo mapping and manufacturer sources](../../doc/STM32_PINOUT.md#lab-3-handout-erratum-can-module-mosimiso-are-reversed). This applies to both modules on every node; host SPI pinctrl assignments below remain unchanged.
+
 Per Lab 3 handout, each Nucleo uses SPI1 shared by both MCP2515 modules: SCK PA5, MOSI PA7, MISO PA6. Suggested chip-select/interrupt assignments:
 
 | Signal | N2/N3 MCU pin | Header suggestion |

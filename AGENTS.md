@@ -12,6 +12,8 @@ The Nucleo controls two DC motors using encoder feedback, one steering servo, an
 
 ## Read these before making assumptions
 
+- **LAB 3 CAN PINOUT ERRATUM:** the handout reverses the XIAO CAN expansion board's SPI data pins. **D9 is MISO; D10 is MOSI.** Use the manufacturer-verified correction in [STM32_PINOUT.md](doc/STM32_PINOUT.md#lab-3-handout-erratum-can-module-mosimiso-are-reversed) for both Pi and Nucleo wiring. Preserve the working Pi connections. Part 0 and Part 1 are verified; read [Lab 3 bring-up results](doc/LAB3_CAN_BRINGUP.md) before further testing. Both Nucleos run a non-actuating diagnostic with TX off at boot; `lab3 tx 2/3` starts nominal 100 ms frames and `lab3 stop` stops them. Bus labels differ: Pi can0/CE1 connects N2 CAN A to N3 CAN B; Pi can1/CE0 connects N2 CAN B to N3 CAN A. Reconcile labels before relay or fault tests. All senders are stopped; both Pi CAN interfaces remain enabled at 500 kbit/s.
+
 - **Requirements, timing, checkoff, or deliverables:** read the [Lab 2 handout](doc/18-449_649%20Lab2%20-%20Sensors%20and%20Actuators%20v1_0.pdf). This is the assignment source, not proof of the team's actual wiring or exact component models.
 - **Wiring, GPIO, timers, UART, ADC, power, or hardware bring-up:** read [STM32 pin assignments](doc/STM32_PINOUT.md), including its proposed revisions and unresolved integration issues. Consult this before asking the user which board or pins the project uses.
 - **Parts, electrical ratings, or component-specific behavior:** read the [team BOM and power setup](doc/HARDWARE.md). It supplements the handout's generic kit list. Keep confirmed parts separate from required parts and unknown models.

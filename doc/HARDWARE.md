@@ -1,5 +1,7 @@
 # Team hardware BOM and power setup
 
+**Lab 3 CAN module warning:** the XIAO CAN Bus Expansion Board uses **D9 = MISO, D10 = MOSI**. The Lab 3 v1.0 handout reverses them. Use the [manufacturer-verified pin correction](STM32_PINOUT.md#lab-3-handout-erratum-can-module-mosimiso-are-reversed), not the handout's SPI data-pin rows. This applies to all six modules, including those on the Nucleos. See [current CAN bring-up evidence](LAB3_CAN_BRINGUP.md).
+
 **Integration calibration record:** Tianyi selected left 1200 us, center
 1600 us and right 2000 us for the steering linkage. These are tracked in
 `config/servo_calibration.json`; loading them does not enable PWM. The user

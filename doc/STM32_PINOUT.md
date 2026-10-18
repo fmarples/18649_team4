@@ -1,5 +1,25 @@
 # STM32 pin assignments — Lab 2
 
+## Lab 3 handout erratum: CAN module MOSI/MISO are reversed
+
+**The Lab 3 v1.0 handout's XIAO CAN expansion-board D9/D10 mapping is WRONG. The actual expansion board uses D9 = MISO and D10 = MOSI. Use the table below for all six modules, on both the Pi and Nucleos.** Earlier assistant instructions copied the handout's incorrect mapping; those instructions are superseded.
+
+| XIAO CAN expansion-board pin | SPI signal | Raspberry Pi physical pin / BCM | NUCLEO-F401RE SPI1 pin / header |
+|---|---|---|---|
+| D8 | SCK | 23 / GPIO11 | PA5 / D13 |
+| **D9** | **MISO** | **21 / GPIO9** | **PA6 / D12** |
+| **D10** | **MOSI** | **19 / GPIO10** | **PA7 / D11** |
+
+The module's D labels and the Nucleo's Arduino D labels are different pin-numbering systems. Connect MOSI to MOSI and MISO to MISO; SPI is not crossed like UART TX/RX. Keep the current working Pi wiring. The correction does not change the host SPI pinctrl assignments, 16 MHz oscillator configuration, 500 kbit/s target, CS/INT allocations, or 3.3 V supply requirement. Nucleo physical wiring still needs verification against this corrected table.
+
+Sources checked after the user's correction:
+
+- [Seeed XIAO CAN Bus Expansion Board documentation](https://wiki.seeedstudio.com/xiao-can-bus-expansion/) and its [manufacturer SCH/PCB archive](https://files.seeedstudio.com/wiki/xiao_can_bus_board/CAN_DEV_XIAO.zip). In `CAN_DEV_XIAO.sch`, MOSI connects J3 pin 4 to MCP2515 U3 SI; MISO connects J3 pin 5 to U3 SO. These are the XIAO D10 and D9 header positions respectively.
+- [Seeed XIAO pin-multiplexing documentation](https://wiki.seeedstudio.com/xiao_pin_multiplexing_esp32c6/) identifies D10 as MOSI and D9 as MISO.
+- Team bench evidence: the user restored this arrangement and both Pi CAN controllers started in normal mode at 500 kbit/s. This proves controller startup, not end-to-end CAN traffic. See [Lab 3 bring-up results](LAB3_CAN_BRINGUP.md).
+
+The sections below retain the Lab 2 assignments; they are not the Lab 3 wiring plan.
+
 **Integration branch:** the root app now combines these motor, encoder, UART,
 four-lamp and PB9 servo assignments. PA5 is only the front-right blinker, and
 TIM2 stays enabled on PB10 for the right motor. TIM3 motor PWM and TIM4 servo
