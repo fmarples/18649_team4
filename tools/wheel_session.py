@@ -166,7 +166,7 @@ def stop(root):
 
 
 # Start existing Pi code without deploying files or touching the STM32 firmware.
-def start(root, host, course):
+def start(root, host, course, trace_gpio=False):
     if not (course / 'proxy_gui.py').is_file():
         raise RuntimeError(f'Course proxy missing: {course}')
     path = root / 'logs/session/state.json'
@@ -174,6 +174,8 @@ def start(root, host, course):
         state = json.loads(path.read_text(encoding='utf-8'))
         if state.get('status') == 'running' and state.get('proxy') and proxy_alive(state['proxy']):
             if ssh(state['host'], 'systemctl --user show -p ActiveState --value ' + shlex.quote(state['unit'])) == 'active':
+                if trace_gpio and not state.get('trace_gpio', False):
+                    raise RuntimeError('Running session has no GPIO tracing; use --restart --trace-gpio')
                 return state
         stop(root)
     ensure_ghub()
@@ -188,7 +190,8 @@ def start(root, host, course):
     remote_log = remote_directory + '/logs/session-' + token
     unit = 'lab2-wheel-' + token + '.service'
     state = {'host': host, 'unit': unit, 'pi': pi_address, 'local': local_address,
-             'remote_log': remote_log, 'log_directory': str(directory), 'status': 'starting'}
+             'remote_log': remote_log, 'log_directory': str(directory), 'status': 'starting',
+             'trace_gpio': trace_gpio}
     save_state(root, state)
     try:
         # Unique unit ownership makes rollback safe even if SSH drops during startup.
@@ -199,6 +202,8 @@ def start(root, host, course):
                 '--property=KillSignal=SIGINT', '--property=TimeoutStopSec=5',
                 'python3', '-u', '-X', 'faulthandler', remote_directory + '/part2_bridge.py',
                 '--mode', 'live', '--sender', local_address, '--log', remote_log + '.csv']
+        if trace_gpio:
+            args.append('--trace-gpio')
         ssh(host, 'mkdir -p ' + shlex.quote(remote_directory + '/logs') + '; ' + shlex.join(args))
         time.sleep(0.6)
         active = ssh(host, 'systemctl --user show -p ActiveState --value ' + shlex.quote(unit))
@@ -228,6 +233,7 @@ def main(action):
         parser.add_argument('--host', default='wheelpi', help='SSH config alias, default wheelpi')
         parser.add_argument('--course-repo', type=Path, default=Path(os.environ.get('LOGITECH_WHEEL_REPO', root.parent / 'logitech-wheel-dev-updated-f26')))
         parser.add_argument('--restart', action='store_true')
+        parser.add_argument('--trace-gpio', action='store_true', help='Enable Pi BCM17/27 timing markers')
     args = parser.parse_args()
     directory = root / 'logs/session'
     directory.mkdir(parents=True, exist_ok=True)
@@ -238,7 +244,7 @@ def main(action):
             if action == 'stop' or args.restart:
                 stop(root)
             if action == 'start':
-                state = start(root, args.host, args.course_repo.resolve())
+                state = start(root, args.host, args.course_repo.resolve(), trace_gpio=args.trace_gpio)
                 if sys.stdout:
                     print('Running. Logs: ' + state['log_directory'])
     except Exception as exc:

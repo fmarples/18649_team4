@@ -59,6 +59,37 @@ class SessionLauncherTests(unittest.TestCase):
                 self.assertTrue(any(' stop ' in command and state['unit'] in command for _, command in calls))
                 self.assertFalse((root / 'logs/session/state.json').exists())
 
+    def test_trace_option_reaches_pi_and_requires_restart_for_existing_session(self):
+        session = load_session()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'proxy_gui.py').write_text('')
+            calls = []
+
+            def ssh(host, command):
+                calls.append(command)
+                if 'SSH_CONNECTION' in command:
+                    return json.dumps({'pi': '172.26.166.33', 'local': '172.26.88.86', 'home': '/home/labuser'})
+                if 'ActiveState' in command:
+                    return 'active'
+                if 'tail ' in command:
+                    return 'mode=live UART=/dev/serial0'
+                return ''
+
+            with patch.object(session, 'ssh', side_effect=ssh), \
+                 patch.object(session, 'ensure_ghub'), \
+                 patch.object(session, 'launch_proxy', return_value={'pid': 321, 'created': 123.0}), \
+                 patch.object(session, 'proxy_alive', return_value=True):
+                state = session.start(root, 'wheelpi', root, trace_gpio=True)
+                self.assertTrue(state['trace_gpio'])
+                self.assertTrue(any('systemd-run' in cmd and '--trace-gpio' in cmd for cmd in calls))
+                self.assertEqual(session.start(root, 'wheelpi', root, trace_gpio=True)['unit'], state['unit'])
+                state['trace_gpio'] = False
+                session.save_state(root, state)
+                with self.assertRaisesRegex(RuntimeError, '--restart'):
+                    session.start(root, 'wheelpi', root, trace_gpio=True)
+                self.assertEqual(sum('systemd-run' in cmd for cmd in calls), 1)
+
     def test_ready_signal_from_venv_python_child_is_accepted(self):
         session = load_session()
         with tempfile.TemporaryDirectory() as directory:

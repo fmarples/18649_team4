@@ -34,8 +34,19 @@ Commands:
 ```text
 python start.py
 python start.py --restart
+python start.py --restart --trace-gpio
 python stop.py
 ```
+
+For scope measurements, `--trace-gpio` enables UDP_RX on Pi BCM17/physical
+pin 11 and CMD_TX on BCM27/physical pin 13. It requires libgpiod v2 and free
+GPIO lines; see [PART4_TIMING.md](PART4_TIMING.md). Pin 11 toggles for each
+received UDP datagram, including rejected packets. Pin 13 toggles before each
+UART write; the Pi's A-button hazard latch pauses command transmission.
+These are software timing markers, not MCU hazard feedback. Add `--restart`
+when the existing session was started without tracing. Plain `start.py` reuses a
+healthy session without changing its tracing setting; a fresh start defaults
+to tracing off. The selected setting is recorded in `logs/session/state.json`.
 
 Overrides: `start.py --host <ssh-alias> --course-repo <course-folder>`.
 `LOGITECH_WHEEL_REPO` also selects the course checkout. The session manager uses
