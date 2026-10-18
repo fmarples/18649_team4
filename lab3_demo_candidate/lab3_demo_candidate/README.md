@@ -112,7 +112,7 @@ west flash -d build/n3
 
 Run the commands from the repository root inside an initialized Zephyr workspace. They pass absolute paths to the zone config fragments. Build logs should show both MCP2515 nodes and the IWDG. The overlay uses the `iwdg` node label; if your Zephyr board DTS names or disables that node differently, resolve that against the installed Nucleo-F401RE DTS before flashing. This starter intentionally fails initialization if the watchdog is unavailable instead of silently pretending the independent watchdog requirement is met.
 
-The `prj.conf` enables the CAN, GPIO, console, and watchdog subsystems. The STM32 firmware assigns priority 1 to CAN dispatch, priority 2 to the N2 relay, priority 3 to button/PID work, priority 4 to heartbeat TX/monitoring, and priority 5 to FORCE_TX (lower numeric Zephyr priority is higher). The STM32 firmware has a 1-second watchdog timeout and feeds it from the 5 ms heartbeat supervisor. A priority-3 recovery thread polls both CAN controllers and calls `can_recover()` after `CAN_STATE_BUS_OFF`; confirm that your installed Zephyr MCP2515 driver supports these APIs and measure restoration after reconnecting the jumper. It reports observed max task-body times in the USB serial console every 250 ms (`OBS_MAX_US ...`) without printing in the CAN callback.
+The `prj.conf` enables the CAN, GPIO, console, and watchdog subsystems. The STM32 firmware assigns priority 1 to CAN dispatch, priority 2 to the N2 relay, priority 3 to button/PID work, priority 4 to heartbeat TX/monitoring, and priority 5 to FORCE_TX (lower numeric Zephyr priority is higher). The STM32 firmware has a 1-second watchdog timeout and feeds it from the 5 ms heartbeat supervisor. A priority-3 recovery thread polls both CAN controllers. Manual recovery is attempted only when configured and advertised by the driver; the Zephyr 4.3 MCP2515 driver does not advertise that capability. Measure restoration after reconnecting the jumper. It reports observed max task-body times in the USB serial console every 250 ms (`OBS_MAX_US ...`) without printing in the CAN callback.
 
 ## First bring-up order
 
@@ -135,3 +135,7 @@ A maximum observed by GPIO or cycle counter is an **observed execution maximum**
 ## Advanced demo candidate
 
 See [`DEMO_CANDIDATE_STATUS.md`](DEMO_CANDIDATE_STATUS.md) for the targeted fixes in this version and the explicit hardware-validation gates that remain. This is a stronger basis for integration testing, but it is not yet a verified checkoff build.
+
+## Immediate relay revision
+
+N2 now forwards without waiting for heartbeat failure detection. The changed Pi and both Nucleo images use duplicate filtering that also covers same-bus relay copies. See [RELAY_POLICY.md](RELAY_POLICY.md) for behavior, software checks, timing implications and remaining hardware verification. The baseline measurement directory is unchanged.

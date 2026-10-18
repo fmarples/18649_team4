@@ -11,6 +11,7 @@ import can
 import can_protocol as p
 from wheel_input import decode_wheel_packet
 from timing_gpio import create_trace
+from frame_history import FrameHistory
 
 UDP_PORT = 8000
 UDP_FRESH_S = 0.100
@@ -43,18 +44,29 @@ class Receiver:
     """python-can notifier listener: logs RX, tracks heartbeat and FORCE frames."""
     def __init__(self, log, hb_last, hb_state, force_box, fault_box):
         self.log, self.hb_last, self.hb_state, self.force_box, self.fault_box = log, hb_last, hb_state, force_box, fault_box
-        self.last_seq = {}
+        self.history = FrameHistory()
+        self.receive_lock = threading.Lock()
     def on_message_received(self, msg):
+        # Both CAN notifiers share this receiver and its duplicate history.
+        with self.receive_lock:
+            self._receive(msg)
+
+    def _receive(self, msg):
         now = time.monotonic_ns()
         frame_data = bytes(msg.data)
-        is_valid = p.valid(frame_data)
+        is_valid = (msg.arbitration_id in p.CATALOG_IDS and not msg.is_extended_id
+                    and not msg.is_remote_frame and not msg.is_error_frame
+                    and msg.dlc == 8 and p.valid(frame_data))
         duplicate = False
         if is_valid and msg.dlc == 8:
             source = frame_data[1] if msg.arbitration_id == p.FAULT else 0
-            key = (msg.arbitration_id, source)
             seq = frame_data[0] & 0x0F
-            duplicate = self.last_seq.get(key) == seq
-            if not duplicate: self.last_seq[key] = seq
+            try:
+                duplicate = not self.history.first_copy(msg.arbitration_id, source, seq, now)
+            except OverflowError:
+                self.log.write(mono_ns=now, event="RX_HISTORY_FULL", id_hex=f"0x{msg.arbitration_id:03X}")
+                self.fault_box["latched"] = True
+                return
         if msg.arbitration_id in HB_IDS and is_valid:
             zone = HB_IDS[msg.arbitration_id]
             self.hb_last[(zone, msg.channel)] = now
@@ -81,7 +93,8 @@ def main():
     log = CsvLog(args.log)
     hb_last, hb_state, force_box, fault_box = {}, {}, {"counter":0}, {"latched":False}
     buses = [can.Bus(interface="socketcan", channel="can0"), can.Bus(interface="socketcan", channel="can1")]
-    notifiers = [can.Notifier(bus, Receiver(log, hb_last, hb_state, force_box, fault_box)) for bus in buses]
+    receiver = Receiver(log, hb_last, hb_state, force_box, fault_box)
+    notifiers = [can.Notifier(bus, receiver) for bus in buses]
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp.setblocking(False)
     if args.mode == "live" and not args.force_demo:

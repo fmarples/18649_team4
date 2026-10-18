@@ -1,13 +1,15 @@
 # Demo candidate: changes and remaining verification
 
-This variant builds on the original Lab 3 starter and adds two targeted behavioral changes:
+This variant builds on the original Lab 3 starter:
 
-1. **Per-bus-aware duplicate filtering.** A frame is suppressed as a redundant copy only when the same ID, sequence, and (for FAULT) source was seen on the opposite bus within `DUP_WINDOW_MS` (default 5 ms). A same-bus frame with the same sequence is not automatically dropped. Measure cross-bus arrival skew and adjust the window only with evidence.
+1. **Relay-aware duplicate filtering.** The Pi and STM32s suppress matching source/ID/sequence copies on either bus using a bounded 5 ms history. This includes native and relayed copies arriving on the same bus. Measure maximum copy skew and sequence reuse before relying on that window.
 2. **Fresh CTRL supervision.** After the node has reached operational state, a command stream older than 60 ms forces the node back into ERROR; recovery requires fresh CTRL and peer heartbeats.
+3. **Immediate N2 forwarding.** The relay no longer waits for a 60 ms heartbeat timeout. It submits a valid foreign frame to the opposite bus unless a copy there is already known. See [relay policy and verification](RELAY_POLICY.md) for duplicate handling, timing changes and scope limitations.
 
 ## Still not certified demo-ready
 
-- The firmware has **not** been compiled against your installed Zephyr SDK or flashed to either Nucleo. Device-tree bindings, MCP2515 driver support, watchdog node, pinctrl, and `can_recover()` must be verified in your environment.
+- Both N2 and N3 built successfully with Zephyr 4.3.0 / SDK 0.17.4 on 2026-10-18. The production C history module passed 104 checks; all 18 Python tests passed. See [verification details](RELAY_POLICY.md).
+- The updated firmware has not been flashed or checked on physical hardware. Build results alone do not verify pin wiring, bus-off recovery or deadlines. The optional `can_recover()` API is guarded; the Zephyr 4.3 MCP2515 driver does not advertise manual recovery.
 - The `BLINK` payload contains an N1 monotonic timestamp, but the STM32s do not share N1's clock. This candidate does not implement clock synchronization or future-edge scheduling. Measure FL/RL skew over at least ten edges; if it exceeds 1 ms, implement and test an explicit synchronization strategy.
 - Relay behavior, bus-off recovery, all R4.8 scenarios, double-press clearing, startup error-state transition, and 100 ms fault propagation still require hardware testing. The relay policy is a candidate, not a proven fault-tolerant routing protocol.
 - Task bodies are still largely measured within the dispatch thread rather than all being independent periodic tasks. Match the final task graph and priorities to your Part 2 analysis before using the results as evidence.

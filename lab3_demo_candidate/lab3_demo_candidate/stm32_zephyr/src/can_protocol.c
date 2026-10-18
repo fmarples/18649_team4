@@ -13,7 +13,8 @@ uint8_t lab3_crc8(const uint8_t *data, unsigned length)
 }
 bool lab3_frame_valid(const struct can_frame *frame)
 {
-    return frame && frame->dlc == 8 && lab3_crc8(frame->data, 7) == frame->data[7];
+    return frame && !(frame->flags & (CAN_FRAME_IDE | CAN_FRAME_RTR | CAN_FRAME_FDF)) &&
+        frame->dlc == 8 && lab3_crc8(frame->data, 7) == frame->data[7];
 }
 void lab3_seal(struct can_frame *frame) { frame->dlc = 8; frame->data[7] = lab3_crc8(frame->data, 7); }
 void lab3_pack_heartbeat(struct can_frame *f, uint32_t id, uint8_t seq, uint8_t state, bool a, bool b)
