@@ -1,4 +1,4 @@
-mainmenu "Lab 3 Dual CAN demo"
+mainmenu "Lab 3 Dual CAN measurement baseline"
 source "Kconfig.zephyr"
 
 config LAB3_ZONE_N2
@@ -10,3 +10,10 @@ config LAB3_ZONE_N3
     bool "Build rear drivetrain zone N3"
     help
       Build the rear STM32 demo: drivetrain request reporting, PID timing, rear LEDs.
+
+config LAB3_RELAY
+    bool "Include the Part 4 relay task"
+    depends on LAB3_ZONE_N2
+    default n
+    help
+      Leave disabled for the Part 2/3 single-hop task measurements.

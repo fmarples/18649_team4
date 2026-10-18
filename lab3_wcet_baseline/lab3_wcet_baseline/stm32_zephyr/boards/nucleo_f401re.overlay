@@ -24,7 +24,9 @@
         front-right-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
         rear-left-gpios = <&gpioc 4 GPIO_ACTIVE_HIGH>;
         rear-right-gpios = <&gpioc 5 GPIO_ACTIVE_HIGH>;
-        test-button-gpios = <&gpioa 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* Built-in blue B1 button, replacing the external PA8 test input. */
+        test-button-gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
+        task-probe-gpios = <&gpioc 8 GPIO_ACTIVE_HIGH>;
     };
 };
 

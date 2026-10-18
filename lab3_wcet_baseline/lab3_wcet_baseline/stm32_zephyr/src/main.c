@@ -11,12 +11,24 @@
 #include <zephyr/sys/atomic.h>
 #include <zephyr/sys/byteorder.h>
 #include <zephyr/sys/util.h>
-#include <zephyr/sys/byteorder.h>
 #include <string.h>
 #include <stdio.h>
 #include "can_protocol.h"
 #include "timing_trace.h"
 #include "timing_stats.h"
+#include "timing_probe.h"
+#if defined(CONFIG_LAB3_ZONE_N3)
+#include "pid_measurement.h"
+static struct lab3_pid_result pid_report;
+#else
+#include "steering_measurement.h"
+struct steering_result {
+    uint32_t samples;
+    int16_t steer;
+    uint16_t pulse, minimum, maximum;
+};
+static struct steering_result steering_report;
+#endif
 
 #if defined(CONFIG_LAB3_ZONE_N2) && defined(CONFIG_LAB3_ZONE_N3)
 #error "Choose exactly one zone: N2 front or N3 rear"
@@ -44,9 +56,13 @@ static const struct device *const can_a = DEVICE_DT_GET(DT_NODELABEL(can_a));
 static const struct device *const can_b = DEVICE_DT_GET(DT_NODELABEL(can_b));
 static const struct gpio_dt_spec test_button = GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), test_button_gpios);
 
-struct rx_item { struct can_frame frame; uint8_t bus; uint32_t received_ms; };
+struct rx_item { struct can_frame frame; uint8_t bus; uint32_t received_ms, queued_cycles, callback_cycles; };
+struct control_item { int16_t steer; uint8_t brake; uint32_t queued_cycles; };
 K_MSGQ_DEFINE(rx_queue, sizeof(struct rx_item), QUEUE_DEPTH, 4);
-#if defined(CONFIG_LAB3_ZONE_N2)
+K_MSGQ_DEFINE(control_queue, sizeof(struct control_item), 8, 4);
+K_SEM_DEFINE(blink_event, 0, 1);
+K_EVENT_DEFINE(app_ready);
+#if defined(CONFIG_LAB3_RELAY)
 K_MSGQ_DEFINE(relay_queue, sizeof(struct rx_item), 16, 4);
 static atomic_t relay_overflow;
 #endif
@@ -76,6 +92,20 @@ static uint8_t seen_bus_mask[7];
 static bool seen_seq_valid[7];
 static uint8_t seen_fault_source[7];
 static atomic_t rx_overflow;
+static atomic_t tx_rejected[2], tx_completed[2], tx_failed[2];
+static uint64_t hb_thread_max_cycles;
+static uint32_t hb_thread_samples;
+
+/* Runtime accounting excludes switched-out time, but can include intervening ISR work. */
+static uint64_t current_thread_cycles(void) {
+    k_thread_runtime_stats_t stats;
+    int rc = k_thread_runtime_stats_get(k_current_get(), &stats);
+    if (rc != 0) {
+        printk("Thread runtime accounting failed: %d\n", rc);
+        k_panic();
+    }
+    return stats.execution_cycles;
+}
 static const struct device *const watchdog_dev = DEVICE_DT_GET(DT_NODELABEL(iwdg));
 static int watchdog_channel = -1;
 static uint32_t last_press_ms = 0;
@@ -103,12 +133,21 @@ static void periodic_wait(int64_t *next_release_ms, uint32_t period_ms) {
     if (delay > 0) k_msleep((int32_t)delay);
 }
 
-/* Queues one frame to a specific controller. Called from worker/task context only. */
+/* The driver invokes this completion callback; never block or print here. */
+static void can_tx_done(const struct device *dev, int status, void *user_data) {
+    ARG_UNUSED(dev);
+    unsigned bus = (unsigned)(uintptr_t)user_data;
+    atomic_inc(status == 0 ? &tx_completed[bus] : &tx_failed[bus]);
+}
+
+/* Queues one frame without waiting for ACK. A NULL callback would wait for completion. */
 static int send_one(unsigned bus, const struct can_frame *frame) {
+    if (!lab3_measurement_tx_enabled()) return -EACCES;
     uint32_t start = lab3_timing_start();
     lab3_trace_toggle(bus == 0 ? 2 : 3);
     const struct device *dev = bus == 0 ? can_a : can_b;
-    int rc = can_send(dev, frame, K_MSEC(2), NULL, NULL);
+    int rc = can_send(dev, frame, K_MSEC(2), can_tx_done, (void *)(uintptr_t)bus);
+    if (rc != 0) atomic_inc(&tx_rejected[bus]);
     lab3_timing_end(T_CAN_TX, start);
     return rc;
 }
@@ -126,12 +165,15 @@ static void send_fault(uint8_t reason) {
 /* CAN driver callback: no printk, allocation, locks, or CAN transmission here. */
 static void can_rx_callback(const struct device *dev, struct can_frame *frame, void *user_data) {
     ARG_UNUSED(dev);
+    uint32_t start = lab3_timing_start();
     unsigned bus = (unsigned)(uintptr_t)user_data;
-    struct rx_item item = {.frame=*frame, .bus=(uint8_t)bus, .received_ms=k_uptime_get_32()};
+    struct rx_item item = {.frame=*frame, .bus=(uint8_t)bus,
+        .received_ms=k_uptime_get_32(), .queued_cycles=lab3_timing_start(), .callback_cycles=start};
     if (k_msgq_put(&rx_queue, &item, K_NO_WAIT) != 0) {
         /* Callback stays nonblocking; the dispatch thread purges stale backlog. */
         atomic_set(&rx_overflow, 1);
     }
+    lab3_timing_end(bus == 0 ? T_RX_CALLBACK_A : T_RX_CALLBACK_B, start);
 }
 
 /* Return true only for the first copy of an ID/sequence/source on either bus. */
@@ -158,6 +200,7 @@ static void mark_heartbeat(const struct can_frame *frame, uint8_t bus, uint32_t 
     s.last_hb_ms[zone][bus] = now; s.hb_seen[zone][bus] = true;
     s.peer_error[zone] = frame->data[1] == STATE_ERROR;
 }
+#if defined(CONFIG_LAB3_RELAY)
 static int source_zone_for_frame(const struct can_frame *f) {
     if (f->id == ID_HB_N1) return ZONE_N1;
     if (f->id == ID_HB_N2 || f->id == ID_FORCE) return ZONE_N2;
@@ -182,6 +225,7 @@ static bool should_relay(const struct rx_item *item) {
     k_mutex_unlock(&state_lock);
     return incoming_alive && !opposite_alive;
 }
+#endif
 
 /* Apply only validated frames. All state shared with monitor/diagnostics is mutex-protected. */
 static void dispatch_frame_impl(struct rx_item *item) {
@@ -190,6 +234,7 @@ static void dispatch_frame_impl(struct rx_item *item) {
     if (catalog_index(f->id) < 0) return;
     if (!lab3_frame_valid(f)) {
         k_mutex_lock(&state_lock, K_FOREVER); s.bad_crc_count++; s.error = true; if (f->id == ID_CTRL) s.manual_error = true; k_mutex_unlock(&state_lock);
+        k_sem_give(&blink_event);
         if (f->id == ID_CTRL) send_fault(2); /* reason 2: bad CRC */
         return;
     }
@@ -201,12 +246,13 @@ static void dispatch_frame_impl(struct rx_item *item) {
     bool first = first_copy(item);
     if (!first) return;
 
-    /* N2 relay is a separate priority-2 thread. The RX dispatcher only enqueues candidates. */
-#if defined(CONFIG_LAB3_ZONE_N2)
+    /* Optional Part 4 relay is separate from the Part 2/3 task set. */
+#if defined(CONFIG_LAB3_RELAY)
     if (k_msgq_put(&relay_queue, item, K_NO_WAIT) != 0) atomic_set(&relay_overflow, 1);
 #endif
 
     bool bad_range = false;
+    bool valid_control = false;
     k_mutex_lock(&state_lock, K_FOREVER);
     s.rx_count++;
     if (f->id == ID_HB_N1 || f->id == ID_HB_N2 || f->id == ID_HB_N3) {
@@ -220,6 +266,7 @@ static void dispatch_frame_impl(struct rx_item *item) {
         } else {
             s.steer = steer; s.throttle = throttle; s.brake = brake; s.buttons = buttons;
             s.ctrl_seq = f->data[0] & 0x0F; s.last_ctrl_ms = now; s.have_ctrl = true;
+            valid_control = true;
         }
     } else if (f->id == ID_BLINK) {
         s.blink_mode = f->data[1]; s.blink_phase = f->data[2] & 1;
@@ -234,44 +281,79 @@ static void dispatch_frame_impl(struct rx_item *item) {
     k_mutex_unlock(&state_lock);
     if (bad_range) send_fault(3); /* reason 3: out-of-range CTRL */
 
-#if defined(CONFIG_LAB3_ZONE_N2)
-    if (f->id == ID_CTRL) {
-        /* SRV probe wraps steering task body; demo prints the numeric request, no servo output. */
-        uint32_t task_start = lab3_timing_start();
-        lab3_trace_set(7, 1);
-        k_mutex_lock(&state_lock, K_FOREVER); int16_t steer = s.steer; k_mutex_unlock(&state_lock);
-        ARG_UNUSED(steer);
-        lab3_trace_set(7, 0);
-        lab3_timing_end(T_STEER_DRIVE, task_start);
+    if (valid_control) {
+        struct control_item command = {
+            .steer = (int16_t)sys_get_le16(&f->data[1]), .brake = f->data[4],
+            .queued_cycles = lab3_timing_start(),
+        };
+        if (k_msgq_put(&control_queue, &command, K_NO_WAIT) != 0) {
+            atomic_set(&rx_overflow, 1);
+        }
     }
+    if (f->id == ID_BLINK || f->id == ID_FAULT || bad_range) k_sem_give(&blink_event);
+}
+
+/* STEER/DRIVE are independent workers, not nested portions of RX dispatch. */
+static void control_thread(void *a, void *b, void *c) {
+    ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
+    struct control_item command;
+    while (true) {
+        /* Purging a queue wakes blocked readers with -ENOMSG, not a command. */
+        if (k_msgq_get(&control_queue, &command, K_FOREVER) != 0) continue;
+        lab3_timing_end(T_CONTROL_QUEUE, command.queued_cycles);
+        uint32_t start = lab3_task_start(T_STEER_DRIVE);
+#if defined(CONFIG_LAB3_ZONE_N2)
+        /* Compute Lab 2's calibrated pulse width, without applying servo PWM. */
+        lab3_trace_set(7, 1);
+        uint16_t pulse = lab3_steering_pulse(command.steer);
+        lab3_trace_set(7, 0);
 #else
-    if (f->id == ID_CTRL) {
-        uint32_t task_start = lab3_timing_start();
-        /* DRIVE/PWM_SET and DIR_A are test points only: no H-bridge is initialized. */
+        /* GPIO stand-ins only; no H-bridge/PWM peripheral is initialized. */
         lab3_trace_set(8, 1);
         k_mutex_lock(&state_lock, K_FOREVER);
-        uint8_t brake = s.brake;
+        bool error = s.error || s.manual_error;
         k_mutex_unlock(&state_lock);
-        lab3_trace_set(9, brake > 0); /* DIR_A probe indicates requested brake in demo mode. */
+        lab3_trace_set(9, error || command.brake > 0);
         lab3_trace_set(8, 0);
-        lab3_timing_end(T_STEER_DRIVE, task_start);
-    }
 #endif
+        lab3_task_end(T_STEER_DRIVE, start);
+#if defined(CONFIG_LAB3_ZONE_N2)
+        /* Observable output prevents removal of the calculation; publish outside the pulse. */
+        __ASSERT(pulse != 0, "Steering calibration rejected");
+        k_mutex_lock(&state_lock, K_FOREVER);
+        steering_report.samples++;
+        steering_report.steer = command.steer;
+        steering_report.pulse = pulse;
+        if (!steering_report.minimum || pulse < steering_report.minimum) steering_report.minimum = pulse;
+        if (pulse > steering_report.maximum) steering_report.maximum = pulse;
+        k_mutex_unlock(&state_lock);
+#endif
+    }
 }
+K_THREAD_DEFINE(control_tid, 1024, control_thread, NULL, NULL, NULL, 3, 0, 0);
 static void dispatch_frame(struct rx_item *item) {
     lab3_trace_toggle(item->bus == 0 ? 0 : 1); /* CAN_RX_A/B after driver read, before app dispatch. */
-    uint32_t start = lab3_timing_start();
+    enum lab3_timing_id bus_task = item->bus == 0 ? T_RX_DISPATCH_A : T_RX_DISPATCH_B;
+    uint32_t start = lab3_task_start(bus_task);
     dispatch_frame_impl(item);
     lab3_timing_end(T_RX_DISPATCH, start);
+    lab3_task_end(bus_task, start);
+    lab3_timing_end(item->bus == 0 ? T_RX_CALLBACK_TO_END_A : T_RX_CALLBACK_TO_END_B,
+                    item->callback_cycles);
 }
 
 static void rx_dispatch_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     struct rx_item item;
     while (true) {
         if (k_msgq_get(&rx_queue, &item, K_FOREVER) != 0) continue;
+        lab3_timing_end(item.bus == 0 ? T_RX_QUEUE_A : T_RX_QUEUE_B, item.queued_cycles);
         if (atomic_cas(&rx_overflow, 1, 0)) {
             k_msgq_purge(&rx_queue);
+            k_msgq_purge(&control_queue);
+            k_sem_give(&blink_event);
             k_mutex_lock(&state_lock, K_FOREVER); s.error = true; s.manual_error = true; k_mutex_unlock(&state_lock);
             continue; /* Never apply a queued command after receive backlog overflow. */
         }
@@ -280,21 +362,25 @@ static void rx_dispatch_thread(void *a, void *b, void *c) {
 }
 K_THREAD_DEFINE(rx_dispatch_tid, 2048, rx_dispatch_thread, NULL, NULL, NULL, 1, 0, 0);
 
-#if defined(CONFIG_LAB3_ZONE_N2)
+#if defined(CONFIG_LAB3_RELAY)
 /* RELAY: own high-priority thread. Only forward when that source's heartbeat is absent on the other bus. */
 static void relay_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     struct rx_item item;
     while (true) {
         if (k_msgq_get(&relay_queue, &item, K_FOREVER) != 0) continue;
-        if (!should_relay(&item)) continue;
-        uint32_t start = lab3_timing_start();
+        uint32_t start = lab3_task_start(T_RELAY);
+        if (!should_relay(&item)) {
+            lab3_task_end(T_RELAY, start);
+            continue;
+        }
         lab3_trace_toggle(15); /* Dedicated N2 RELAY_TX test pin. */
         struct can_frame forwarded = item.frame;
         if (send_one(item.bus == 0 ? 1 : 0, &forwarded) == 0) {
             k_mutex_lock(&state_lock, K_FOREVER); s.relay_count++; k_mutex_unlock(&state_lock);
         }
-        lab3_timing_end(T_RELAY, start);
+        lab3_task_end(T_RELAY, start);
     }
 }
 K_THREAD_DEFINE(relay_tid, 1536, relay_thread, NULL, NULL, NULL, 2, 0, 0);
@@ -303,9 +389,11 @@ K_THREAD_DEFINE(relay_tid, 1536, relay_thread, NULL, NULL, NULL, 2, 0, 0);
 /* HB_TX: periodic 20 ms task, frame sequence is incremented once per logical message. */
 static void heartbeat_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     int64_t next_release_ms = k_uptime_get();
     while (true) {
-        uint32_t task_start = lab3_timing_start();
+        uint64_t thread_start = current_thread_cycles();
+        uint32_t task_start = lab3_task_start(T_HB_TX);
         uint32_t now = k_uptime_get_32();
         k_mutex_lock(&state_lock, K_FOREVER);
         bool err = s.error || s.manual_error;
@@ -319,36 +407,49 @@ static void heartbeat_thread(void *a, void *b, void *c) {
         struct can_frame f;
         lab3_pack_heartbeat(&f, MY_HB_ID, next_seq(MY_HB_ID), err ? STATE_ERROR : STATE_OK, bus_a, bus_b);
         send_both(&f);
-        lab3_timing_end(T_HB_TX, task_start);
+        lab3_task_end(T_HB_TX, task_start);
+        uint64_t thread_elapsed = current_thread_cycles() - thread_start;
+        unsigned key = irq_lock();
+        if (thread_elapsed > hb_thread_max_cycles) hb_thread_max_cycles = thread_elapsed;
+        hb_thread_samples++;
+        irq_unlock(key);
         periodic_wait(&next_release_ms, HB_PERIOD_MS);
     }
 }
-K_THREAD_DEFINE(hb_tx_tid, 1024, heartbeat_thread, NULL, NULL, NULL, 4, 0, 0);
+K_THREAD_DEFINE(hb_tx_tid, 1024, heartbeat_thread, NULL, NULL, NULL, 7, 0, 0);
 
 #if defined(CONFIG_LAB3_ZONE_N2)
 /* FORCE_TX: dummy signed counter every 50 ms; not actual force feedback. */
 static void force_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     int64_t next_release_ms = k_uptime_get();
     while (true) {
+        uint32_t start = lab3_task_start(T_FORCE_TX);
         struct can_frame f; k_mutex_lock(&state_lock, K_FOREVER); int8_t count = (int8_t)++s.force_counter; k_mutex_unlock(&state_lock);
-        lab3_pack_force(&f, next_seq(ID_FORCE), count); send_both(&f); periodic_wait(&next_release_ms, 50);
+        lab3_pack_force(&f, next_seq(ID_FORCE), count);
+        send_both(&f);
+        lab3_task_end(T_FORCE_TX, start);
+        periodic_wait(&next_release_ms, 50);
     }
 }
-K_THREAD_DEFINE(force_tx_tid, 1024, force_thread, NULL, NULL, NULL, 5, 0, 0);
+K_THREAD_DEFINE(force_tx_tid, 1024, force_thread, NULL, NULL, NULL, 8, 0, 0);
 #endif
 
 /* HB_MON: degraded per-bus LEDs and error-state supervision (3 missed heartbeats). */
 static void monitor_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
+    int64_t next_release_ms = k_uptime_get();
     while (true) {
-        uint32_t task_start = lab3_timing_start();
+        uint32_t task_start = lab3_task_start(T_HB_MON);
         uint32_t now = k_uptime_get_32();
         bool bus_healthy[2] = {false,false};
         bool bus_seen[2] = {false,false};
         bool all_peers_alive = true;
         bool any_peer_error = false;
         k_mutex_lock(&state_lock, K_FOREVER);
+        bool previous_error = s.error || s.manual_error;
         for (int zone=ZONE_N1; zone<=ZONE_N3; ++zone) {
             if (zone == MY_ZONE) continue;
             bool alive_a = s.hb_seen[zone][0] && (uint32_t)(now-s.last_hb_ms[zone][0]) < HB_FAIL_MS;
@@ -359,7 +460,7 @@ static void monitor_thread(void *a, void *b, void *c) {
             any_peer_error |= s.peer_error[zone];
         }
         if (atomic_get(&rx_overflow)) { s.error = true; s.manual_error = true; }
-#if defined(CONFIG_LAB3_ZONE_N2)
+#if defined(CONFIG_LAB3_RELAY)
         if (atomic_cas(&relay_overflow, 1, 0)) { s.error = true; s.manual_error = true; }
 #endif
         if (!all_peers_alive || any_peer_error) s.error = true;
@@ -373,16 +474,22 @@ static void monitor_thread(void *a, void *b, void *c) {
         lab3_trace_set(4, bus_seen[0] && !bus_healthy[0]); lab3_trace_set(5, bus_seen[1] && !bus_healthy[1]); lab3_trace_set(6, err);
         /* Feed IWDG only from the periodic supervisor; a wedged supervisor resets the MCU. */
         if (watchdog_channel >= 0) (void)wdt_feed(watchdog_dev, watchdog_channel);
-        lab3_timing_end(T_HB_MON, task_start);
-        k_msleep(5);
+        if (err != previous_error) k_sem_give(&blink_event);
+#if defined(CONFIG_LAB3_ZONE_N3)
+        if (err) lab3_trace_set(9, 1);
+#endif
+        lab3_task_end(T_HB_MON, task_start);
+        periodic_wait(&next_release_ms, HB_PERIOD_MS);
     }
 }
-K_THREAD_DEFINE(hb_mon_tid, 1024, monitor_thread, NULL, NULL, NULL, 4, 0, 0);
+K_THREAD_DEFINE(hb_mon_tid, 1024, monitor_thread, NULL, NULL, NULL, 6, 0, 0);
 
-/* CAN bus-off recovery: poll each controller outside callbacks and ask Zephyr to recover.
- * The MCP2515 driver/version must support can_get_state/can_recover for this to work. */
+#if defined(CONFIG_CAN_MANUAL_RECOVERY)
+/* Optional manual recovery, only for driver builds that implement this API.
+ * Zephyr 4.3 MCP2515 does not; its hardware recovery needs separate verification. */
 static void can_recovery_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     while (true) {
         const struct device *devs[2] = {can_a, can_b};
         for (unsigned bus=0; bus<2; ++bus) {
@@ -397,6 +504,7 @@ static void can_recovery_thread(void *a, void *b, void *c) {
     }
 }
 K_THREAD_DEFINE(can_recovery_tid, 1024, can_recovery_thread, NULL, NULL, NULL, 3, 0, 0);
+#endif
 
 /* GPIO ISR only wakes this thread. Debounce/state changes/transmission occur in thread context. */
 static void test_button_isr(const struct device *port, struct gpio_callback *cb, gpio_port_pins_t pins) {
@@ -406,6 +514,7 @@ static void test_button_isr(const struct device *port, struct gpio_callback *cb,
 /* TEST_BTN: 2 ms debounce; single press enters error, double press clears manual latch. */
 static void button_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     while (true) {
         k_sem_take(&test_button_event, K_FOREVER);
         k_msleep(DEBOUNCE_MS);
@@ -414,7 +523,7 @@ static void button_thread(void *a, void *b, void *c) {
         if (raw == button_stable) continue; /* bounce or coalesced edge */
         button_stable = raw;
         if (!raw) continue; /* only process press edge, not release */
-        uint32_t task_start = lab3_timing_start();
+        uint32_t task_start = lab3_task_start(T_TEST_BTN);
         uint32_t now = k_uptime_get_32();
         if (last_press_ms && (uint32_t)(now-last_press_ms) <= DOUBLE_PRESS_MS) {
             k_mutex_lock(&state_lock, K_FOREVER); s.manual_error = false; k_mutex_unlock(&state_lock);
@@ -425,62 +534,104 @@ static void button_thread(void *a, void *b, void *c) {
             send_fault(1); /* reason 1: local test button */
             last_press_ms = now;
         }
-        lab3_timing_end(T_TEST_BTN, task_start);
+        k_mutex_lock(&state_lock, K_FOREVER);
+        bool error = s.error || s.manual_error;
+        k_mutex_unlock(&state_lock);
+        lab3_trace_set(6, error);
+#if defined(CONFIG_LAB3_ZONE_N3)
+        if (error) lab3_trace_set(9, 1);
+#endif
+        k_sem_give(&blink_event);
+        lab3_task_end(T_TEST_BTN, task_start);
     }
 }
-K_THREAD_DEFINE(test_btn_tid, 1024, button_thread, NULL, NULL, NULL, 3, 0, 0);
+K_THREAD_DEFINE(test_btn_tid, 1024, button_thread, NULL, NULL, NULL, 4, 0, 0);
 
-/* PID: 10 ms demo periodic task on N3. It exercises timing without commanding motors. */
+/* PID: unchanged Lab 2 calculation on synthetic samples every 10 ms, without motor output. */
 #if defined(CONFIG_LAB3_ZONE_N3)
 static void pid_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
-    int32_t demo_integrator = 0;
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
+    struct lab3_pid_measurement measurement;
+    lab3_pid_measurement_init(&measurement);
     int64_t next_release_ms = k_uptime_get();
     while (true) {
-        uint32_t task_start = lab3_timing_start();
+        uint32_t task_start = lab3_task_start(T_PID);
         lab3_trace_set(10, 1);
-        k_mutex_lock(&state_lock, K_FOREVER); int32_t target = s.error ? 0 : s.throttle; k_mutex_unlock(&state_lock);
-        demo_integrator += target - demo_integrator; /* placeholder computation, no actuator output */
-        ARG_UNUSED(demo_integrator);
+        struct lab3_pid_result result = lab3_pid_measurement_step(&measurement);
         lab3_trace_set(10, 0);
-        lab3_timing_end(T_PID, task_start);
+        lab3_task_end(T_PID, task_start);
+        /* Publish observable output after the timed body; never apply it to hardware. */
+        k_mutex_lock(&state_lock, K_FOREVER);
+        pid_report = result;
+        k_mutex_unlock(&state_lock);
+        __ASSERT(result.status == 0, "Synthetic Lab 2 PID calculation failed");
         periodic_wait(&next_release_ms, 10);
     }
 }
-K_THREAD_DEFINE(pid_tid, 1024, pid_thread, NULL, NULL, NULL, 3, 0, 0);
+K_THREAD_DEFINE(pid_tid, 1024, pid_thread, NULL, NULL, NULL, 5, 0, 0);
 #endif
 
 /* Periodic low-priority console: prints state without logging in the CAN callback/critical path. */
 static void diagnostics_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
     while (true) {
         k_mutex_lock(&state_lock, K_FOREVER);
         uint32_t rx=s.rx_count, dup=s.duplicate_count, bad=s.bad_crc_count, rel=s.relay_count;
         int16_t steer=s.steer; uint8_t thr=s.throttle, brk=s.brake, mode=s.blink_mode, phase=s.blink_phase;
         bool err=s.error || s.manual_error; uint32_t age=s.have_ctrl ? k_uptime_get_32()-s.last_ctrl_ms : UINT32_MAX;
+#if defined(CONFIG_LAB3_ZONE_N3)
+        struct lab3_pid_result pid = pid_report;
+#else
+        struct steering_result steering = steering_report;
+#endif
         k_mutex_unlock(&state_lock);
+#if defined(CONFIG_LAB3_ZONE_N3)
+        printk("PID_WORKLOAD source=lab2_velocity synthetic=1 period_ms=10 sample_ms=%d samples=%u rpm_milli=%d duty_milli=%d status=%d\n",
+               VELOCITY_PERIOD_MS, pid.samples, pid.rpm_milli, pid.duty_milli, pid.status);
+#else
+        printk("STEER_WORKLOAD source=lab2_servo_map samples=%u steer=%d pulse_us=%u min_us=%u max_us=%u hardware_output=0\n",
+               steering.samples, steering.steer, steering.pulse, steering.minimum, steering.maximum);
+#endif
         printk("%s state=%s steer=%d throttle=%u%% brake=%u%% blink=%u phase=%u ctrl_age_ms=%u rx=%u dup=%u bad_crc=%u relay=%u q_overflow=%d\n",
                APP_NAME, err?"ERROR":"OK", steer, thr, brk, mode, phase, age, rx, dup, bad, rel, (int)atomic_get(&rx_overflow));
-        printk("OBS_MAX_US uptime_ms=%u rx_dispatch=%u can_tx=%u steer_drive=%u hb_mon=%u hb_tx=%u pid=%u test_btn=%u relay=%u counts=%u,%u,%u,%u,%u,%u,%u,%u\n",
-               k_uptime_get_32(), lab3_timing_max_us(T_RX_DISPATCH), lab3_timing_max_us(T_CAN_TX), lab3_timing_max_us(T_STEER_DRIVE),
-               lab3_timing_max_us(T_HB_MON), lab3_timing_max_us(T_HB_TX), lab3_timing_max_us(T_PID),
-               lab3_timing_max_us(T_TEST_BTN), lab3_timing_max_us(T_RELAY), lab3_timing_count(T_RX_DISPATCH), lab3_timing_count(T_CAN_TX),
-               lab3_timing_count(T_STEER_DRIVE), lab3_timing_count(T_HB_MON), lab3_timing_count(T_HB_TX),
-               lab3_timing_count(T_PID), lab3_timing_count(T_TEST_BTN), lab3_timing_count(T_RELAY));
-        k_msleep(250);
+        for (int id=0; id<T_COUNT; ++id) {
+            unsigned key = irq_lock();
+            uint32_t cycles = lab3_timing_max_cycles(id);
+            uint32_t count = lab3_timing_count(id);
+            irq_unlock(key);
+            printk("OBS_TASK zone=%s uptime_ms=%u name=%s max_cycles=%u max_us=%u count=%u\n",
+                   MY_ZONE == ZONE_N2 ? "N2" : "N3", k_uptime_get_32(),
+                   lab3_timing_name(id), cycles, k_cyc_to_us_ceil32(cycles), count);
+        }
+        unsigned runtime_key = irq_lock();
+        uint64_t thread_max = hb_thread_max_cycles;
+        uint32_t thread_count = hb_thread_samples;
+        irq_unlock(runtime_key);
+        printk("OBS_THREAD zone=%s name=hb_tx max_cycles=%llu max_us=%llu count=%u includes_isr=1 tx_enabled=%u\n",
+               MY_ZONE == ZONE_N2 ? "N2" : "N3", (unsigned long long)thread_max,
+               (unsigned long long)k_cyc_to_us_ceil64(thread_max), thread_count,
+               lab3_measurement_tx_enabled());
+        printk("TX_COUNTS rejected_a=%d rejected_b=%d completed_a=%d completed_b=%d failed_a=%d failed_b=%d\n",
+               (int)atomic_get(&tx_rejected[0]), (int)atomic_get(&tx_rejected[1]),
+               (int)atomic_get(&tx_completed[0]), (int)atomic_get(&tx_completed[1]),
+               (int)atomic_get(&tx_failed[0]), (int)atomic_get(&tx_failed[1]));
+        k_msleep(5000);
     }
 }
-K_THREAD_DEFINE(diag_tid, 1536, diagnostics_thread, NULL, NULL, NULL, 7, 0, 0);
+K_THREAD_DEFINE(diag_tid, 1536, diagnostics_thread, NULL, NULL, NULL, 10, 0, 0);
 
-static void apply_blink_outputs(void) {
-    static uint32_t next_error_phase;
+/* Return the next absolute hazard edge, or -1 when only message events are needed. */
+static int64_t apply_blink_outputs(void) {
+    static int64_t next_error_phase;
     static uint8_t error_phase;
-    uint32_t now=k_uptime_get_32();
+    int64_t now=k_uptime_get();
     k_mutex_lock(&state_lock, K_FOREVER);
     bool err=s.error || s.manual_error; uint8_t mode=s.blink_mode, phase=s.blink_phase;
     k_mutex_unlock(&state_lock);
     if (err) {
-        if (now >= next_error_phase) { error_phase ^= 1; next_error_phase=now+250; }
+        if (now >= next_error_phase) { error_phase ^= 1; next_error_phase=now+500; }
         mode=BLINK_HAZARD; phase=error_phase;
     }
 #if defined(CONFIG_LAB3_ZONE_N2)
@@ -490,7 +641,24 @@ static void apply_blink_outputs(void) {
     lab3_trace_set(13, phase && (mode==BLINK_LEFT || mode==BLINK_HAZARD));
     lab3_trace_set(14, phase && (mode==BLINK_RIGHT || mode==BLINK_HAZARD));
 #endif
+    return err ? next_error_phase : -1;
 }
+
+/* BLINK_F/BLINK_R wake on reception, with a 500 ms error-hazard fallback tick. */
+static void blink_thread(void *a, void *b, void *c) {
+    ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
+    k_event_wait(&app_ready, BIT(0), false, K_FOREVER);
+    k_timeout_t timeout = K_NO_WAIT;
+    while (true) {
+        k_sem_take(&blink_event, timeout);
+        uint32_t start = lab3_task_start(T_BLINK);
+        int64_t next_edge = apply_blink_outputs();
+        lab3_task_end(T_BLINK, start);
+        /* An early event must not restart the 500 ms hazard half-cycle. */
+        timeout = next_edge < 0 ? K_FOREVER : K_TIMEOUT_ABS_MS(next_edge);
+    }
+}
+K_THREAD_DEFINE(blink_tid, 1024, blink_thread, NULL, NULL, NULL, 2, 0, 0);
 
 static int setup_can(const struct device *dev, unsigned bus) {
     if (!device_is_ready(dev)) { printk("CAN bus %u device not ready\n", bus); return -ENODEV; }
@@ -525,5 +693,14 @@ int main(void) {
     if (rc != 0) { printk("IWDG setup failed: %d\n", rc); return rc; }
     printk("%s Lab 3 demo online. CAN A/B at 500 kbit/s; outputs are GPIO/LED only.\n", APP_NAME);
     printk("Trace: RX_A=PC2 RX_B=PC3 TX_A=PA0 TX_B=PA1 DEG_A=PB0 DEG_B=PB1 ERR=PC0.\n");
-    while (true) { apply_blink_outputs(); k_msleep(2); }
+    for (unsigned i=0; i<1000; ++i) {
+        uint32_t start = lab3_timing_start();
+        lab3_timing_end(T_OVERHEAD, start);
+    }
+    printk("TIMING_CONFIG zone=%s clock_hz=%u spi_requested_hz=1000000 relay=%u elapsed_not_cpu=1\n",
+           MY_ZONE == ZONE_N2 ? "N2" : "N3", sys_clock_hw_cycles_per_sec(),
+           IS_ENABLED(CONFIG_LAB3_RELAY));
+    lab3_probe_ready();
+    k_event_post(&app_ready, BIT(0));
+    return 0;
 }

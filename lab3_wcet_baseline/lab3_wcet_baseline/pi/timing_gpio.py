@@ -1,7 +1,8 @@
 """Optional Raspberry Pi 4 timing probes using libgpiod v2.
 
-BCM17 UDP_RX: toggled when recvfrom returns a datagram (userspace timestamp).
-BCM27 CMD_TX: toggled immediately before the dual-CAN CTRL transmit group.
+BCM17 UDP_RX: starts an edge pair at the first datagram in a drained batch.
+BCM27 CMD_TX: matches that level immediately before the dual-CAN CTRL group.
+Coalesced datagrams and stale command repeats do not introduce unmatched edges.
 BCM22 CAN_TX_A and BCM23 CAN_TX_B: toggled before queueing each interface frame.
 These are software-driven markers, not hardware NIC-arrival timestamps.
 """
@@ -23,11 +24,14 @@ class GpioTrace(NoTrace):
         self.pins = {17:False, 27:False, 22:False, 23:False}
         self.request = gpiod.request_lines(chip, consumer="lab3-dual-can", config={
             tuple(self.pins): gpiod.LineSettings(direction=Direction.OUTPUT, output_value=Value.INACTIVE)})
+    def _set(self, pin, active):
+        if self.pins[pin] != active:
+            self.request.set_value(pin, self.Value.ACTIVE if active else self.Value.INACTIVE)
+            self.pins[pin] = active
     def _toggle(self, pin):
-        self.pins[pin] = not self.pins[pin]
-        self.request.set_value(pin, self.Value.ACTIVE if self.pins[pin] else self.Value.INACTIVE)
-    def udp_rx(self): self._toggle(17)
-    def cmd_tx(self): self._toggle(27)
+        self._set(pin, not self.pins[pin])
+    def udp_rx(self): self._set(17, not self.pins[27])
+    def cmd_tx(self): self._set(27, self.pins[17])
     def can_tx(self, bus): self._toggle(22 if bus == "can0" else 23)
     def __exit__(self, *args):
         try:

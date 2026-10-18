@@ -39,7 +39,7 @@ class CsvLog:
         with self.lock: self.file.close()
 
 
-class Receiver:
+class Receiver(can.Listener):
     """python-can notifier listener: logs RX, tracks heartbeat and FORCE frames."""
     def __init__(self, log, hb_last, hb_state, force_box, fault_box):
         self.log, self.hb_last, self.hb_state, self.force_box, self.fault_box = log, hb_last, hb_state, force_box, fault_box
@@ -81,7 +81,7 @@ def main():
     log = CsvLog(args.log)
     hb_last, hb_state, force_box, fault_box = {}, {}, {"counter":0}, {"latched":False}
     buses = [can.Bus(interface="socketcan", channel="can0"), can.Bus(interface="socketcan", channel="can1")]
-    notifiers = [can.Notifier(bus, Receiver(log, hb_last, hb_state, force_box, fault_box)) for bus in buses]
+    notifiers = [can.Notifier(bus, [Receiver(log, hb_last, hb_state, force_box, fault_box)]) for bus in buses]
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp.setblocking(False)
     if args.mode == "live" and not args.force_demo:
@@ -128,12 +128,15 @@ def main():
             while True:
                 now = time.monotonic()
                 pending_ctrl = False
+                batch_rx_ns = None
                 if args.mode == "live" and not args.force_demo:
                     for _ in range(32):
                         try: data, address = udp.recvfrom(4096)
                         except BlockingIOError: break
                         trace.udp_rx()
                         rx_ns = time.monotonic_ns()
+                        if batch_rx_ns is None:
+                            batch_rx_ns = rx_ns
                         log.write(mono_ns=rx_ns, event="UDP_RX", detail=f"peer={address[0]} bytes={len(data)}")
                         if args.sender and address[0] != args.sender: continue
                         try: counter, steer, throttle, brake, buttons = decode_wheel_packet(data)
@@ -174,8 +177,12 @@ def main():
                         log.write(mono_ns=cmd_mark_ns, event="UDP_TO_CMD_TX", id_hex="0x010", seq=ctrl_seq,
                                   udp_seq=counter, latency_us=f"{(cmd_mark_ns-last_udp_rx_ns)/1000.0:.3f}",
                                   detail="UDP userspace receive to pre-send marker; not physical NIC arrival")
+                    if args.trace_gpio and pending_ctrl and batch_rx_ns is not None:
+                        log.write(mono_ns=cmd_mark_ns, event="UDP_BATCH_TO_CMD_TX", id_hex="0x010", seq=ctrl_seq,
+                                  udp_seq=counter, latency_us=f"{(cmd_mark_ns-batch_rx_ns)/1000.0:.3f}",
+                                  detail="first received datagram in batch to pre-send marker; paired GPIO edges")
                     log.write(mono_ns=send_start_ns, event="CTRL_SEND_GROUP", id_hex="0x010", seq=ctrl_seq, udp_seq=counter,
-                              latency_us=f"{(send_end_ns-send_start_ns)/1000.0:.3f}", detail="dual SocketCAN send-call duration; not wire latency")
+                              latency_us=f"{(send_end_ns-send_start_ns)/1000.0:.3f}", detail="dual SocketCAN submission group including synchronous logs; not wire latency")
                     next_ctrl = time.monotonic() + PERIOD_S
                 # Wheel button bit 0 is the cockpit-zone test button in this starter.
                 if (buttons & 1) and not (previous_buttons & 1):

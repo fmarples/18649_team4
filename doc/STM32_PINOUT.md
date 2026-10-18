@@ -18,6 +18,10 @@ Sources checked after the user's correction:
 - [Seeed XIAO pin-multiplexing documentation](https://wiki.seeedstudio.com/xiao_pin_multiplexing_esp32c6/) identifies D10 as MOSI and D9 as MISO.
 - Team bench evidence: the user restored this arrangement and both Pi CAN controllers started in normal mode at 500 kbit/s. This proves controller startup, not end-to-end CAN traffic. See [Lab 3 bring-up results](LAB3_CAN_BRINGUP.md).
 
+### Lab 3 measurement-only GPIO allocation
+
+The updated `lab3_wcet_baseline` overlay allocates **PC8** as `TASK_BODY`, a selectable elapsed-task pulse controlled by the serial command `timing probe NAME`. This pin is separate from the existing CAN SPI/CS/INT signals and other baseline test points. Both measurement images are flashed. PC8/CN10-2 was scope-verified on the board ending 124020, first as N3 and then as N2 after the firmware-role swap. The scope has since moved to Pi GPIO17/physical11 and GPIO27/physical13; see the bring-up record for current setup. Keep PC8 isolated from actuator inputs. At the user's request, the measurement overlay now uses the built-in blue B1 button on PC13, active-low, instead of the external PA8 test input. Both updated images passed boot checks, and B1 press processing was scope-verified. See [measurement definitions](../lab3_wcet_baseline/lab3_wcet_baseline/README_WCET_BASELINE.md).
+
 The sections below retain the Lab 2 assignments; they are not the Lab 3 wiring plan.
 
 **Integration branch:** the root app now combines these motor, encoder, UART,

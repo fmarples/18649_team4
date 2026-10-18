@@ -17,10 +17,11 @@ The STM32 builds are deliberately **demo-only**: LEDs, GPIO test points, and pri
 
 ### STM32 (`stm32_zephyr/`)
 
-- `src/main.c` — Zephyr tasks and message dispatch, including a separate priority-2 relay thread on N2. Build N2 or N3 separately. All physical output is LED/GPIO-only.
+- `src/main.c` — Zephyr measurement workers and message dispatch, with an optional Part 4 relay thread on N2. Build N2 or N3 separately. All physical output is LED/GPIO-only.
 - `src/can_protocol.c/.h` — matching CRC and heartbeat/fault/force frame encoders.
 - `src/timing_trace.c/.h` — named physical GPIO probes.
-- `src/timing_stats.c/.h` — low-overhead cycle-counter measurement; console reports observed maxima and counts for task bodies.
+- `src/timing_stats.c/.h` — cycle-counter elapsed measurements, raw-cycle maxima and sample counts.
+- `src/timing_probe.c/.h` — serial-shell selection of one task's PC8 scope pulse.
 - `boards/nucleo_f401re.overlay` — dual MCP2515 devices and suggested test-point/button GPIO mapping.
 - `prj_n2.conf`, `prj_n3.conf` — zone selection.
 
@@ -55,11 +56,11 @@ Per Lab 3 handout, each Nucleo uses SPI1 shared by both MCP2515 modules: SCK PA5
 | CAN A INT active-low | PA10 | D2 |
 | CAN B CS | PC7 | D9 (or free GPIO) |
 | CAN B INT active-low | PB5 | D4 |
-| Test button, active-low | PA8 | D7 to GND when pressed |
+| Test button, active-low | PC13 | Built-in blue B1 button |
 
-The overlay assigns demo probes to free pins: RX_A PC2, RX_B PC3, TX_A PA0, TX_B PA1, DEG_A PB0, DEG_B PB1, ERR PC0, SRV PC1, PWM_SET PB9, DIR_A PB10, PID PB11, front LEDs PA4/PB8, rear LEDs PC4/PC5, and a dedicated `RELAY_TX` probe on PC6. Check the actual Nucleo header and existing wiring before connecting anything; do not connect these outputs to the actuator driver in demo mode.
+The overlay assigns demo probes to free pins: RX_A PC2, RX_B PC3, TX_A PA0, TX_B PA1, DEG_A PB0, DEG_B PB1, ERR PC0, SRV PC1, PWM_SET PB9, DIR_A PB10, PID PB11, front LEDs PA4/PB8, rear LEDs PC4/PC5, a dedicated `RELAY_TX` probe on PC6, and a selectable task-body probe on PC8. Check the actual Nucleo header and existing wiring before connecting anything; do not connect these outputs to the actuator driver in demo mode.
 
-The overlay assumes MCP2515 modules have **16 MHz** crystals and uses 1 MHz SPI. Verify the crystal marking. Check the generated devicetree and `dts/bindings/can/microchip,mcp2515.yaml` for your installed Zephyr version; the lab handout explicitly asks you to validate `reg`, `spi-max-frequency`, `int-gpios`, and pinctrl names.
+The overlay assumes MCP2515 modules have **16 MHz** crystals and requests a maximum 1 MHz SPI clock. With the default 84 MHz SPI1 source, Zephyr selects 656.25 kHz; the earlier Part 0 diagnostic scope capture measured approximately 658 kHz. Verify the crystal marking. Check the generated devicetree and `dts/bindings/can/microchip,mcp2515.yaml` for your installed Zephyr version; the lab handout explicitly asks you to validate `reg`, `spi-max-frequency`, `int-gpios`, and pinctrl names.
 
 ## Raspberry Pi setup
 
@@ -102,17 +103,13 @@ The overlay assumes MCP2515 modules have **16 MHz** crystals and uses 1 MHz SPI.
 Use your installed Zephyr workspace/SDK and the exact board target `nucleo_f401re`. Build each image separately:
 
 ```sh
-APP_DIR="$(pwd)/stm32_zephyr"
-west build -b nucleo_f401re -s "$APP_DIR" -d build/n2 -- -DOVERLAY_CONFIG="$APP_DIR/prj_n2.conf"
-west build -b nucleo_f401re -s "$APP_DIR" -d build/n3 -- -DOVERLAY_CONFIG="$APP_DIR/prj_n3.conf"
-west flash -d build/n2
-# Move the USB connection to the other Nucleo, then:
-west flash -d build/n3
+west build -b nucleo_f401re -s stm32_zephyr -d build/n2 -- -DEXTRA_CONF_FILE=prj_n2.conf
+west build -b nucleo_f401re -s stm32_zephyr -d build/n3 -- -DEXTRA_CONF_FILE=prj_n3.conf
 ```
 
-Run the commands from the repository root inside an initialized Zephyr workspace. They pass absolute paths to the zone config fragments. Build logs should show both MCP2515 nodes and the IWDG. The overlay uses the `iwdg` node label; if your Zephyr board DTS names or disables that node differently, resolve that against the installed Nucleo-F401RE DTS before flashing. This starter intentionally fails initialization if the watchdog is unavailable instead of silently pretending the independent watchdog requirement is met.
+These source paths are relative to this variant directory, `lab3_wcet_baseline/lab3_wcet_baseline`, in an initialized Zephyr environment. Do not flash by an ambiguous default probe when both boards are connected. The user waived diagnostic backup; rejected readbacks are not valid recovery images. Build logs should show both MCP2515 nodes and the IWDG. The overlay uses the `iwdg` node label; if your Zephyr board DTS names or disables that node differently, resolve that against the installed Nucleo-F401RE DTS before flashing. This starter intentionally fails initialization if the watchdog is unavailable instead of silently pretending the independent watchdog requirement is met.
 
-The `prj.conf` enables the CAN, GPIO, console, and watchdog subsystems. The STM32 firmware assigns priority 1 to CAN dispatch, priority 2 to the N2 relay, priority 3 to button/PID work, priority 4 to heartbeat TX/monitoring, and priority 5 to FORCE_TX (lower numeric Zephyr priority is higher). The STM32 firmware has a 1-second watchdog timeout and feeds it from the 5 ms heartbeat supervisor. A priority-3 recovery thread polls both CAN controllers and calls `can_recover()` after `CAN_STATE_BUS_OFF`; confirm that your installed Zephyr MCP2515 driver supports these APIs and measure restoration after reconnecting the jumper. It reports observed max task-body times in the USB serial console every 250 ms (`OBS_MAX_US ...`) without printing in the CAN callback.
+Both variants compile with Zephyr 4.3.0. The workers wait for successful hardware setup. The heartbeat supervisor runs every 20 ms and feeds the 1-second watchdog. The installed MCP2515 driver does not implement manual recovery; that task is excluded, and hardware bus-off recovery remains unverified. Named `OBS_TASK` records print every five seconds. See [measurement definitions and scheduling caveats](README_WCET_BASELINE.md) before using the values. The Part 4 relay is disabled unless `CONFIG_LAB3_RELAY=y` is explicitly selected on N2.
 
 ## First bring-up order
 
@@ -125,9 +122,9 @@ The `prj.conf` enables the CAN, GPIO, console, and watchdog subsystems. The STM3
 
 ## Important implementation status / limits
 
-This is an integration starter based on the uploaded Lab 2 source and the Lab 3 handout. The Python protocol tests can run locally; **the Zephyr builds must be validated in your exact installed Zephyr SDK before flashing**. The app assumes the `microchip,mcp2515` driver accepts the overlay properties shown. It needs physical bring-up and likely minor version-specific devicetree/API fixes.
+This is a measurement starter based on the uploaded Lab 2 source and the Lab 3 handout. N2 and N3 compile with Zephyr 4.3.0 and have been flashed, boot-checked and measured on target. GPIO probes, shell selection and catalog traffic were exercised. Selected results and remaining coverage are in [the timing ledger](../../doc/LAB3_TIMING_RESULTS.md); this is not full checkoff validation.
 
-This first demo focuses on the task graph and test points. It does not claim that every checkoff case is already verified: physical jumper recovery, bus-off behavior, end-to-end deadlines, front/rear 1 ms blink skew, and measured timing remain experiments. It also does not include the full Lab 1 multi-zone safety policy beyond the lab's demo error/heartbeat behavior. The STM32 bus-off recovery call is implemented, but its actual behavior depends on the MCP2515 driver version and must be verified on hardware. It never enables the physical steering or motor outputs.
+This variant provides measurement workers and test points. It does not claim that every checkoff case is already verified: physical jumper recovery, bus-off behavior, end-to-end deadlines, front/rear 1 ms blink skew, and measured timing remain experiments. It also does not include the full Lab 1 multi-zone safety policy beyond the lab's demo error/heartbeat behavior. The installed MCP2515 driver has no manual-recovery API; restoration behavior must be verified on hardware. It never enables the physical steering or motor outputs.
 
 A maximum observed by GPIO or cycle counter is an **observed execution maximum**, not a proven mathematical WCET. For report tables, record the board, firmware revision, load, number of samples, max, p99, and whether the value is measured or assumed.
 

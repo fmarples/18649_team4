@@ -21,6 +21,7 @@ static const struct gpio_dt_spec pins[] = {
  GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), rear_left_gpios),
  GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), rear_right_gpios),
  GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), relay_tx_gpios),
+ GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), task_probe_gpios),
 };
 static int levels[ARRAY_SIZE(pins)];
 int lab3_trace_init(void) {
