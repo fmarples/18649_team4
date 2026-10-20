@@ -19,6 +19,16 @@ is included.
 The shared Google Doc is the report. This repository holds the editable design
 sources, technical calculations and verification records.
 
+Use this `lab4/` directory on the `lab4` branch as the source of truth for
+KiCad files, local libraries, the editable diagram, BOMs and engineering tables.
+Drive holds the shared report, original course references and raw measurement
+evidence. There is no automatic synchronization between GitHub and Drive;
+link to these design files from Drive instead of uploading editable copies.
+
+When the design changes, regenerate the affected schematic PDF, BOM and checks
+from the same source revision and commit them together. Record the commit used
+for a TA submission so the reviewed version can be recovered later.
+
 ## Design files
 
 | File | Contents |
