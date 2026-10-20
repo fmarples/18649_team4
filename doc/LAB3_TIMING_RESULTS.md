@@ -14,10 +14,50 @@ Times are microseconds. Node names are the logical roles **at measurement time**
 | N3 | Blinker body | **15** | 15 | Not supplied | 043636 | User report |
 | N3 | Real Lab 2 PID calculation on synthetic samples | **18.8** | 14.5 | Not supplied | 053026 | User report |
 | N3 | Built-in B1 accepted-press processing | **1240** | 911.00 | 10 | 051047 | IMG_0844 |
-| N3 | DRIVE GPIO demo, braking/error branch | **12** | Not supplied | Not supplied | 051047 | User report |
+| N3 | DRIVE GPIO demo, braking/error branch | **12** | 12, set equal to max by user decision; no mean captured | Not supplied | 051047 | User report |
 | N3 | Isolated CAN A INT assertion to dispatch completion | **404** | 402.08 | 158 | 053026 | IMG_0848 |
 | N2 | FORCE_TX, dual-bus counter submission | **1050** | 924.46 | 202 | 053026 | IMG_0850 |
 | N2 | Real Lab 2 calibrated steering mapping | **9.8** | 9.6768 | 518 | 060412 | IMG_0851 |
+
+### October 21 additions
+
+The same 060412 images were used. Scope CH1 was connected to the selected PC8 pulse and measured with +Width statistics. The FIFO-1 bridge sent synthetic UDP-driven CTRL, N1 heartbeat and left-blink frames. Both nodes ran in the same latched ERROR state as the October 19 captures. N3 CAN B was reset after a boot-time latch; see the bring-up record.
+
+| Logical node | Measured operation | Maximum | Mean | Min | Count | Evidence |
+|---|---|---:|---:|---:|---:|---|
+| N2 | HB_TX, dual-bus heartbeat submission | **826** | 821.05 | 814 | 778 | IMG_0858 |
+| N2 | HB_MON | **19** | 18.307 | 18 | 605 | IMG_0859 |
+| N2 | BLINK_F, blink frame processing | **57** | 16.086 | 14 | 35 | IMG_0860 |
+| N2 | TEST_BTN, accepted B1 processing after debounce | **896** | 891.50 | 888 | 20 | IMG_0861 |
+| N2 | CAN_RX_A, isolated INT falling to dispatch completion (CH2 PA10 → CH1 PC8 falling) | **407** | 404.38 | 404 | 21 | IMG_0862 |
+| N2 | CAN_RX_B, isolated INT falling to dispatch completion (CH2 PB5 → CH1 PC8 falling) | **406** | 404.86 | 404 | 22 | IMG_0863 |
+| N1 (Pi) | UDP_RX rising → CMD_TX rising, post-write boundary, idle, FIFO 1 (scope); companion CSV last 180 s: max 1543.603, p99 **1060.389**, 8990 updates | **1460** | 558.81 | 480 | 4220 | IMG_0864 |
+| N1 (Pi) | UDP_RX rising → CMD_TX rising, post-write boundary, four CPU workers, FIFO 1 (scope); companion CSV 212.7 s under load: max 1539.307, p99 **510.450**, 10508 updates | **910** | 279.95 | 250 | 2186 | IMG_0865 |
+<!-- oct21-rows -->
+
+**Pi stage for the report (handout boundary: UDP_RX → CMD_TX after both CAN writes):** idle scope max **1.46 ms**, CSV p99 **1.060 ms**; stressed scope max **0.91 ms**, CSV p99 **0.510 ms**. The largest CSV value is about 1.54 ms in both conditions. The CPU governor is `ondemand` (600 MHz–1.8 GHz). Under the four-worker load, CPU0 stayed at 1.8 GHz. A few seconds after the load stopped, it read 800 MHz. That frequency difference is the likely reason the stressed latency is lower; it was not isolated by a fixed-frequency test. Conservative chain input: about 1.54 ms, the largest value across both conditions, or 1.46 ms if only the scope values are used. Evidence: `logs/lab3-can/20261021-remaining/pi-*-postwrite*`.
+
+N3 CAN_RX_B was not captured separately. The user approved reusing same-task STM32 values across boards, so the table uses the N2 CAN_RX_B result. Reuse is not allowed for N1/Pi rows. After these captures, the two boards' firmware roles were swapped via pyOCD: 124020 became N3 and 171333 became N2.
+
+#### N1 software task bodies, October 21
+
+These values come from instrumented `cockpit_bridge.py` CSV timestamps (`time.monotonic_ns`), not a scope. The run used FIFO 1, GPIO markers and synthetic UDP at 20 ms with the left-turn button held. It lasted about 836 s, and both MCUs were transmitting. Each body includes its synchronous CSV log writes. This run used the bridge revision before the CMD_TX fix; its `CTRL_SEND_GROUP` included the per-frame logs. The corrected bridge times only the two write calls. Evidence: `logs/lab3-can/20261021-remaining/n1-bridge-timing.csv` and `n1-task-summary.json`.
+
+| N1 task | Measured body | Maximum | Mean | p99 | Count |
+|---|---|---:|---:|---:|---:|
+| UDP_RX | accepted datagram: recvfrom, marker, log, decode and freshness | **1726.377** | 168.564 | 404.364 | 41800 |
+| CTRL_TX | dual SocketCAN CTRL group (`CTRL_SEND_GROUP`) | **2227.904** | 380.483 | 1021.392 | 41552 |
+| BLINK_TX | blink decision and dual-bus group | **183979.228** (next 1558.119) | 554.150 | 987.001 | 1674 |
+| HB_TX | dual-bus N1 heartbeat group | **2465.326** | 436.318 | 966.152 | 40860 |
+| HB_MON | peer-health evaluation | **99.961** | 40.370 | 57.573 | 40860 |
+| FORCE_RX | notifier callback for 0x300 before its log write | **148.349** | 64.928 | 91.184 | 33516 |
+| HB receive | notifier callback for 0x101/0x102 | **178.793** | 64.5 | 91.5 | 167582 |
+
+The 184 ms BLINK_TX sample was a whole-process stall. Its CAN frames were submitted on time, but no thread logged anything for 184 ms. That pattern indicates a buffered CSV write blocked on SD storage. The stall is retained because it is a real elapsed time for this logging design, but it is not CAN submission work.
+
+### SPI-bound tasks exceed the handout budgets
+
+CAN_RX (404–407 µs vs 80 µs, deadline 0.3 ms), HB_TX (815–826 vs 120 µs), FORCE_TX (1050 vs 120 µs) and TEST_BTN (896–1240 vs 20 µs) all wait on MCP2515 SPI transfers. The overlay requests `spi-max-frequency = <1000000>`. SPI1 runs from the 84 MHz APB2 clock with power-of-two dividers. Because 84/64 = 1.3125 MHz exceeds the request, the driver uses 84/128 = **656.25 kHz**. The scope confirmed a 1.520 µs SCK period (about 658 kHz) and a 202.5 µs transaction. Even at a true 1 MHz, these tasks would still exceed the budgets (only about 1.5× faster SPI). The budgets imply multi-MHz SPI; the MCP2515 is rated to 10 MHz. The team chose to report these measured values with this explanation rather than reflash at a higher SPI rate. Non-SPI tasks are within budget.
 
 ### Workload and boundary notes
 
@@ -42,9 +82,11 @@ All archives are under the Git-ignored `logs/lab3-can/` directory and contain ma
 | 053026 | `20261019-053026-pid-rx-measurement-build/` | Real PID workload, heartbeat runtime accounting, per-bus RX markers |
 | 060412 | `20261019-060412-steering-measurement-build/` | Real Lab 2 steering mapping; current MCU images |
 
-Current logical identities are N2 on ST-LINK ending **124020**, last COM6, and N3 on **171333**, last COM4. Rediscover ports before use. Physical wiring was not swapped. See the bring-up record for current bus-label mapping.
+Logical identities through the October 21 Nucleo captures were N2 on ST-LINK ending **124020** (COM6) and N3 on **171333** (COM4). After those captures, pyOCD swapped the images: N3 is now **124020** and N2 is **171333**. Rediscover ports before use. Physical wiring was not swapped. See the bring-up record for current bus-label mapping.
 
 ## Pi GPIO scope measurements
+
+> **Superseded boundary.** These October 19 captures toggled CMD_TX before the CAN writes. The handout places CMD_TX after both writes, so these values exclude the write calls. Use the October 21 post-write captures for the report.
 
 The bridge ran with all three threads at **SCHED_FIFO priority 1**. Laptop input was valid synthetic 276-byte UDP at nominal 20 ms intervals. GPIO17 starts a pair at the first receive in a drained batch; GPIO27 matches it immediately before command submission. Coalesced updates and stale repeats do not create unmatched edges.
 

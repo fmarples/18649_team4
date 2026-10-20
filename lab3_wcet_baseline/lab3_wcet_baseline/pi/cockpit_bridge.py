@@ -63,8 +63,10 @@ class Receiver(can.Listener):
             self.force_box["counter"] = bytes(msg.data)[1] if bytes(msg.data)[1] < 128 else bytes(msg.data)[1] - 256
         if msg.arbitration_id == p.FAULT and is_valid and not duplicate:
             self.fault_box["latched"] = (frame_data[2] != 0)
+        # latency_us: callback body (HB/FORCE_RX processing) before this synchronous log write.
         self.log.write(mono_ns=now, event="CAN_RX", id_hex=f"0x{msg.arbitration_id:03X}",
                        seq=(msg.data[0] & 0x0F) if msg.dlc else "", interface=str(msg.channel),
+                       latency_us=f"{(time.monotonic_ns()-now)/1000.0:.3f}",
                        detail=("valid_crc_duplicate" if duplicate else "valid_crc") if is_valid else "bad_crc_or_noncatalog")
 
 
@@ -91,7 +93,10 @@ def main():
         value = seq[frame_id]
         seq[frame_id] = (value + 1) & 0x0F
         return value
-    def send_both(frame_id, payload, event="CAN_TX"):
+    # Writes the frame to can0 then can1. on_sent runs right after both writes,
+    # before any CSV logging, so CTRL's CMD_TX marker excludes log I/O.
+    def send_both(frame_id, payload, event="CAN_TX", on_sent=None):
+        rows = []
         for idx, bus in enumerate(buses):
             channel = f"can{idx}"
             t0 = time.monotonic_ns()
@@ -101,8 +106,10 @@ def main():
                 detail = "send_return; bus enqueue timestamp approximation"
             except (can.CanError, OSError) as exc:
                 detail = f"SEND_ERROR:{type(exc).__name__}:{exc}"
-            log.write(mono_ns=t0, event=event, id_hex=f"0x{frame_id:03X}", seq=payload[0]&0x0F,
-                      interface=channel, detail=detail)
+            rows.append(dict(mono_ns=t0, event=event, id_hex=f"0x{frame_id:03X}", seq=payload[0]&0x0F,
+                             interface=channel, detail=detail))
+        if on_sent: on_sent()
+        for row in rows: log.write(**row)
     started = time.monotonic()
     next_hb = started
     next_ctrl = started
@@ -131,6 +138,7 @@ def main():
                 batch_rx_ns = None
                 if args.mode == "live" and not args.force_demo:
                     for _ in range(32):
+                        rx_start_ns = time.monotonic_ns()
                         try: data, address = udp.recvfrom(4096)
                         except BlockingIOError: break
                         trace.udp_rx()
@@ -149,6 +157,9 @@ def main():
                         last_udp_rx_ns = rx_ns
                         last_values = (steer, throttle, brake, buttons, counter)
                         pending_ctrl = True
+                        log.write(mono_ns=rx_start_ns, event="TASK_UDP_RX", udp_seq=counter,
+                                  latency_us=f"{(time.monotonic_ns()-rx_start_ns)/1000.0:.3f}",
+                                  detail="accepted datagram: recvfrom, marker, log, decode, freshness")
                 elif (args.mode != "live" or args.force_demo) and now >= next_demo:
                     last_values = ((-20000,0,20000)[int(now-started)%3], 80, 0, 0, int(now*1000)&0xffffffff)
                     last_udp_time = now  # Synthetic demo input is fresh, but has no real UDP_RX latency sample.
@@ -168,21 +179,23 @@ def main():
                     else:
                         ctrl = p.pack_ctrl(ctrl_seq, steer, throttle, brake, buttons)
                     if args.mode == "bad-crc": ctrl = ctrl[:-1] + bytes([ctrl[-1] ^ 0xFF])
-                    cmd_mark_ns = time.monotonic_ns()
-                    trace.cmd_tx()
+                    sent = {}
+                    def mark_sent():
+                        sent["ns"] = time.monotonic_ns()
+                        trace.cmd_tx()  # Handout: CMD_TX toggles after the writes to can0 and can1.
                     send_start_ns = time.monotonic_ns()
-                    send_both(p.CTRL, ctrl)
-                    send_end_ns = time.monotonic_ns()
+                    send_both(p.CTRL, ctrl, on_sent=mark_sent)
+                    cmd_mark_ns = send_end_ns = sent["ns"]
                     if last_udp_rx_ns is not None and not stale:
                         log.write(mono_ns=cmd_mark_ns, event="UDP_TO_CMD_TX", id_hex="0x010", seq=ctrl_seq,
                                   udp_seq=counter, latency_us=f"{(cmd_mark_ns-last_udp_rx_ns)/1000.0:.3f}",
-                                  detail="UDP userspace receive to pre-send marker; not physical NIC arrival")
+                                  detail="UDP userspace receive to post-write CMD_TX marker; not physical NIC arrival")
                     if args.trace_gpio and pending_ctrl and batch_rx_ns is not None:
                         log.write(mono_ns=cmd_mark_ns, event="UDP_BATCH_TO_CMD_TX", id_hex="0x010", seq=ctrl_seq,
                                   udp_seq=counter, latency_us=f"{(cmd_mark_ns-batch_rx_ns)/1000.0:.3f}",
-                                  detail="first received datagram in batch to pre-send marker; paired GPIO edges")
+                                  detail="first received datagram in batch to post-write CMD_TX marker; paired GPIO edges")
                     log.write(mono_ns=send_start_ns, event="CTRL_SEND_GROUP", id_hex="0x010", seq=ctrl_seq, udp_seq=counter,
-                              latency_us=f"{(send_end_ns-send_start_ns)/1000.0:.3f}", detail="dual SocketCAN submission group including synchronous logs; not wire latency")
+                              latency_us=f"{(send_end_ns-send_start_ns)/1000.0:.3f}", detail="dual SocketCAN write calls, excluding logs; not wire latency")
                     next_ctrl = time.monotonic() + PERIOD_S
                 # Wheel button bit 0 is the cockpit-zone test button in this starter.
                 if (buttons & 1) and not (previous_buttons & 1):
@@ -217,9 +230,17 @@ def main():
                         log.write(event="PEER_RECOVERY_CLEAR", id_hex="0x020", detail="heartbeats recovered")
                     zone_state = p.STATE_OK if peers_ready and ctrl_fresh and not fault_box["latched"] and not peer_failure_announced else p.STATE_ERROR
                     n1_state = zone_state
+                    hb_tx_ns = time.monotonic_ns()
                     send_both(p.HB_N1, p.pack_heartbeat(next_seq(p.HB_N1), zone_state, bus_health[0], bus_health[1]))
+                    hb_end_ns = time.monotonic_ns()
+                    log.write(mono_ns=hb_now_ns, event="TASK_HB_MON", id_hex=f"0x{p.HB_N1:03X}",
+                              latency_us=f"{(hb_tx_ns-hb_now_ns)/1000.0:.3f}", detail="peer health evaluation, including any fault send")
+                    log.write(mono_ns=hb_tx_ns, event="TASK_HB_TX", id_hex=f"0x{p.HB_N1:03X}",
+                              latency_us=f"{(hb_end_ns-hb_tx_ns)/1000.0:.3f}", detail="dual SocketCAN heartbeat group including synchronous logs")
                     next_hb = now + PERIOD_S
                 # Button convention for this starter: bit1=left, bit2=right, bit3=hazard; adjust to your wheel map.
+                blink_start_ns = time.monotonic_ns()
+                blink_sent = True
                 requested = p.BLINK_HAZARD if n1_state == p.STATE_ERROR or fault_box["latched"] or buttons & (1<<3) else p.BLINK_LEFT if buttons & (1<<1) else p.BLINK_RIGHT if buttons & (1<<2) else p.BLINK_OFF
                 if requested != blink_mode:
                     blink_mode, blink_phase = requested, 1 if requested else 0
@@ -233,6 +254,11 @@ def main():
                     next_blink = now + 0.5
                 elif requested == p.BLINK_OFF and (last_blink_button_state is None or last_blink_button_state != requested):
                     send_both(p.BLINK, p.pack_blink(next_seq(p.BLINK), p.BLINK_OFF, 0, int(time.monotonic()*1000)))
+                else:
+                    blink_sent = False
+                if blink_sent:
+                    log.write(mono_ns=blink_start_ns, event="TASK_BLINK_TX", id_hex=f"0x{p.BLINK:03X}",
+                              latency_us=f"{(time.monotonic_ns()-blink_start_ns)/1000.0:.3f}", detail="blink decision and dual SocketCAN group including synchronous logs")
                 last_blink_button_state = requested
                 if now >= next_status:
                     print(f"CTRL steer={steer:6d} throttle={throttle:3d}% brake={brake:3d}% stale={stale} force={force_box['counter']} heartbeat_frames={len(hb_last)}")

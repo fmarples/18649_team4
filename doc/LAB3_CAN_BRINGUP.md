@@ -917,3 +917,36 @@ verified exited. Load cleanup evidence: `logs/lab3-can/pi-scope/load-stop.log`,
 load-stopped-state.json and stress-cpu-utilization.json. The FIFO1 bridge
 PID1587 and laptop sender PID30956 remain running per the
 user's keep-running instruction; no stress load remains.
+
+
+## October 21 session: restart and N3 CAN B latch
+
+The Pi had rebooted since October 19. Bridge PID1587 and sender PID30956 no longer
+exist; `logs/lab3-can/pi-scope/state.json` is stale. Both Pi CAN interfaces were
+down and were re-enabled at 500 kbit/s (can0=spi0.1, can1=spi0.0 unchanged).
+
+On power-up, N3 (171333/COM4) CAN B had received 0 frames and rejected every
+transmission, 44,187 rejected over 884 s. N2 CAN A and the Pi on the same bus
+(Pi can1) exchanged frames normally. Because N3 had booted successfully, SPI had
+started and configured that controller. A plain N3 reset restored CAN B without any
+wiring change: RX increased and TX was accepted with zero rejects, and Pi can1
+received N3 heartbeat 0x102. This is consistent with a missed MCP2515 INT edge
+latching the Zephyr driver. It was not further root-caused. Check CAN B
+`rejected_b`/`rx_callback_b` counts after every boot before measuring.
+
+Remote reset without pressing B2: pyOCD 0.45.1 in the Zephyr venv performs an
+NRST hardware reset. A software reset fails with `AP wait` because the
+core sleeps in idle.
+
+`PYTHONUTF8=1 python -m pyocd reset -m hw -O connect_mode=under-reset -u <ST-LINK serial> -t stm32f401retx`
+
+The command can exit nonzero after the reset has already happened. Verify with the
+serial uptime. Evidence: `logs/lab3-can/20261021-remaining/`.
+
+A second instance occurred later in the same session, on **N2 CAN B** (124020/COM6). It was found when isolated Pi can0 stimulus reached N3 CAN A at 10 Hz, while N2's `rx_callback_b` count stayed frozen at 163,070. The exact latch time is unknown; that interface had been receiving normally earlier in the session. A remote pyOCD hardware reset restored receive at 10 Hz. Both latches affected the controller on CS PC7 / INT PB5 (CAN B), on different boards. This recurring latch is a measurement-session risk. Before each receive capture, confirm the per-bus receive counter is increasing.
+
+### Pi CMD_TX boundary correction
+
+Comparing the October 19 Pi scope method with the Lab 3 handout found an error. The handout's cockpit sequence is: decode, toggle UDP_RX, build CTRL/BLINK, **write each to can0 and can1, then toggle CMD_TX**. The October 19 bridge toggled CMD_TX immediately **before** the writes. Those results (808 us idle and 246 us stressed) therefore exclude the CAN write calls and do not satisfy the handout boundary. They remain historical evidence but are superseded for the report.
+
+The bridge now toggles CMD_TX after both CTRL writes, before any CSV logging; a host test verifies the order. `UDP_BATCH_TO_CMD_TX` uses the same post-write boundary for p99. `CTRL_SEND_GROUP` now covers only the two write calls, without logs. The left-turn button remains held in the synthetic sender, so BLINK traffic is also present. The bridge restarted at FIFO 1 (all three threads verified). Its first seconds showed batch-to-CMD_TX max 1294.754 us, mean 467.0 us, and write group mean 257.0 us. Both scope captures are now recorded. Idle IMG_0864: max 1.46 ms, mean 558.81 us, p99 1.060 ms. Four-worker stress IMG_0865: max 910 us, mean 279.95 us, p99 0.510 ms. All load workers were stopped afterward. See `LAB3_TIMING_RESULTS.md`.

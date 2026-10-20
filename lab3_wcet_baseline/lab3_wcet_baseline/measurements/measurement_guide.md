@@ -9,7 +9,7 @@ Use this guide with the task/message tables in the Lab 3 handout. Record the fir
 | Probe | BCM | Meaning |
 |---|---:|---|
 | UDP_RX | 17 | Start one paired edge at the first `recvfrom` return in a drained UDP batch |
-| CMD_TX | 27 | Match UDP_RX's level immediately before the CTRL group; coalesced input/stale repeats add no unmatched edges |
+| CMD_TX | 27 | Match UDP_RX's level immediately after CTRL is written to can0 and can1, before logging; coalesced input/stale repeats add no unmatched edges |
 | CAN_TX_A | 22 | Toggle immediately before queue/send call on `can0` |
 | CAN_TX_B | 23 | Toggle immediately before queue/send call on `can1` |
 

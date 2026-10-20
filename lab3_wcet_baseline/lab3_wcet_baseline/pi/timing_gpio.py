@@ -1,7 +1,7 @@
 """Optional Raspberry Pi 4 timing probes using libgpiod v2.
 
 BCM17 UDP_RX: starts an edge pair at the first datagram in a drained batch.
-BCM27 CMD_TX: matches that level immediately before the dual-CAN CTRL group.
+BCM27 CMD_TX: matches that level immediately after CTRL is written to both buses.
 Coalesced datagrams and stale command repeats do not introduce unmatched edges.
 BCM22 CAN_TX_A and BCM23 CAN_TX_B: toggled before queueing each interface frame.
 These are software-driven markers, not hardware NIC-arrival timestamps.
