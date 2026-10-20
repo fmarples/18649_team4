@@ -954,3 +954,7 @@ The bridge now toggles CMD_TX after both CTRL writes, before any CSV logging; a 
 ## SPI clock raised to the MCP2515 maximum
 
 The user delegated the SPI choice. The overlay now requests 10 MHz, the MCP2515 maximum from the Lab 3 handout's page 3 guiding question. SPI1 runs at 84/16 = 5.25 MHz. The scope measured SCK period 190.79 ns mean, 188 to 192 ns ([IMG_0869](lab3-scope/spi10m-sck-period-IMG_0869.jpg)). The waveform is clean with mild overshoot. The boot log now prints the devicetree request instead of a hard-coded 1 MHz. Build archive: `logs/lab3-can/20261021-spi10m-build/` (ELF/BIN/DTS/.config, sources, SHA-256 manifest, flash and serial logs). Six host tests passed. After each flash, all four node-bus links received with zero rejects. The SPI-bound tasks were re-measured; see the results document. The final roles are N2 on 124020/COM6 and N3 on 171333/COM4.
+
+## SPI polling mode
+
+At the user's request, `CONFIG_SPI_STM32_INTERRUPT=n` was added to `prj.conf`. The nucleo_f401re board default is interrupt mode. Archive: `logs/lab3-can/20261021-spi-polling/`, including images, sources, manifest, and before/after board-counter snapshots after a reset and 120 s under bridge traffic. Six host tests passed, and all four links had zero rejects after flashing. Heartbeat thread CPU maximum fell from 356–366 us to 246–250 us. Scope results and the comparison are in the results document. Afterward, both boards were returned to TX on with the probe off, and the FIFO-1 bridge and sender were restarted.

@@ -84,6 +84,32 @@ Effect of the faster SPI clock:
 
 CAN_RX now meets its 0.3 ms deadline. Means fell by a factor of 2.4–3.1. Transmit-task minima are 260 µs, still above the 120 µs budget. That remaining time is Zephyr MCP2515/SPI driver overhead per frame, not SPI clocking; two frames need about 46 µs of clocks. Transmit maxima did not fall and now vary widely (std dev about 145–166 µs, compared with about 1 µs before). The serial counters show the heartbeat thread's own CPU time peaks at 348 µs. The rest of the elapsed tail is preemption or blocking: driver-mutex contention with the higher-priority MCP2515 interrupt thread handling received frames, or waiting for a free TX buffer. The handout's GPIO-toggle method includes this preemption. Report the scope maxima as WCET-with-preemption and the thread CPU time as the execution estimate.
 
+### SPI polling mode re-measurement (October 21, build `20261021-spi-polling`)
+
+The user requested a trial of SPI polling. The build adds `CONFIG_SPI_STM32_INTERRUPT=n` to `prj.conf`, overriding the nucleo_f401re board default. That removes the per-byte SPI interrupt and the sleep/wake per transaction. SPI remains at 5.25 MHz, with N2 on 124020 (probed) and N3 on 171333. Before/after board-counter snapshots, each taken 120 s after reset under the same bridge traffic, are in `logs/lab3-can/20261021-spi-polling/`. The heartbeat thread's CPU-time maximum fell from 356–366 µs to 246–250 µs.
+
+| Node | Measured operation | Maximum | Mean | Min | Count | Evidence |
+|---|---|---:|---:|---:|---:|---|
+| N2 | HB_TX, dual-bus heartbeat submission | **790** | 186.78 | 180 | 1591 | [IMG_0875](lab3-scope/polling-n2-hb-tx-IMG_0875.jpg) |
+| N2 | FORCE_TX, dual-bus counter submission | **890** | 321.44 | 170 | 597 | [IMG_0876](lab3-scope/polling-n2-force-tx-IMG_0876.jpg) |
+| N2 | TEST_BTN, accepted B1 processing after debounce, including FAULT submission on both buses | **450** | 261.00 | 250 | 20 | [IMG_0877](lab3-scope/polling-n2-test-btn-IMG_0877.jpg) |
+| N2 | STEER, non-SPI spot-check (Lab 2 mapping) | **9.5** | 9.4439 | 9.4 | 342 | [IMG_0878](lab3-scope/polling-n2-steer-IMG_0878.jpg) |
+| N2 | CAN_RX_A, isolated INT falling to dispatch completion (CH2 PA10 → CH1 PC8 falling). Displayed min 0.0 s is one spurious pairing; std dev implies one outlier | **183** | 180.93 | 0.0 (spurious) | 162 | [IMG_0879](lab3-scope/polling-n2-rx-a-IMG_0879.jpg) |
+| N2 | CAN_RX_B, isolated INT falling to dispatch completion (CH2 PB5 → CH1 PC8 falling) | **182** | 181.04 | 181 | 326 | [IMG_0881](lab3-scope/polling-n2-rx-b-IMG_0881.jpg) |
+<!-- polling-rows -->
+
+Under the user's reuse rule, N3 HB_TX, TEST_BTN and CAN_RX A/B use these N2 values. One non-SPI check (STEER) is unchanged by polling. The PID, HB_MON, BLINK and DRIVE rows were not re-captured.
+
+| Task | Interrupt mode, 5.25 MHz: max / mean | Polling, 5.25 MHz: max / mean | Handout budget |
+|---|---:|---:|---:|
+| CAN_RX A/B | 256–287 / 234 | **182–183 / 181** | 80 µs; 0.3 ms deadline |
+| HB_TX | 1270 / 306 | **790 / 187** (min 180) | 120 µs |
+| FORCE_TX | 1030 / 298 | **890 / 321** (min 170) | 120 µs |
+| TEST_BTN | 850 / 385 | **450 / 261** | 20 µs |
+| STEER (control) | 9.8 / 9.68 | 9.5 / 9.44 | 50 µs |
+
+Polling improved every maximum and every SPI-task mean except FORCE_TX's mean. FORCE_TX fires every 50 ms and coincides with the 20 ms heartbeat every 100 ms. During those overlaps it now waits behind a heartbeat that busy-waits instead of sleeping. Minimum transmit times (170–180 µs for two frames) remain above the 120 µs placeholder; about 46 µs of that is SPI clocking. The rest is Zephyr MCP2515 driver work per frame: mutex, TX-buffer selection, and two SPI transactions with chip-select handling. The polling build remains deployed on both boards.
+
 ### SPI-bound tasks exceed the handout budgets (656.25 kHz build)
 
 CAN_RX (404–407 µs vs 80 µs, deadline 0.3 ms), HB_TX (815–826 vs 120 µs), FORCE_TX (1050 vs 120 µs) and TEST_BTN (896–1240 vs 20 µs) all wait on MCP2515 SPI transfers. The overlay requests `spi-max-frequency = <1000000>`. SPI1 runs from the 84 MHz APB2 clock with power-of-two dividers. Because 84/64 = 1.3125 MHz exceeds the request, the driver uses 84/128 = **656.25 kHz**. The scope confirmed a 1.520 µs SCK period (about 658 kHz) and a 202.5 µs transaction. Even at a true 1 MHz, these tasks would still exceed the budgets (only about 1.5× faster SPI). The budgets imply multi-MHz SPI; the MCP2515 is rated to 10 MHz. The team chose to report these measured values with this explanation rather than reflash at a higher SPI rate. Non-SPI tasks are within budget.
