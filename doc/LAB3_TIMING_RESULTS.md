@@ -8,16 +8,16 @@ Times are microseconds. Node names are the logical roles **at measurement time**
 
 | Logical node | Measured operation | Maximum | Mean | Count | Build | Evidence |
 |---|---|---:|---:|---:|---|---|
-| N3 | Heartbeat TX, dual-bus submission | **815** | 814.69 | 585 | 053026 | IMG_0845 |
+| N3 | Heartbeat TX, dual-bus submission | **815** | 814.69 | 585 | 053026 | [IMG_0845](lab3-scope/revised-hb-tx-stats-IMG_0845.jpg) |
 | N3 | Heartbeat monitor | **19** | 19 | Not supplied | 043636 | User report |
-| N3 | Application receive dispatch only | **24** | 23.503 | 965 | 043636 | IMG_0843 |
+| N3 | Application receive dispatch only | **24** | 23.503 | 965 | 043636 | [IMG_0843](lab3-scope/rx-dispatch-stats-IMG_0843.jpg) |
 | N3 | Blinker body | **15** | 15 | Not supplied | 043636 | User report |
 | N3 | Real Lab 2 PID calculation on synthetic samples | **18.8** | 14.5 | Not supplied | 053026 | User report |
-| N3 | Built-in B1 accepted-press processing | **1240** | 911.00 | 10 | 051047 | IMG_0844 |
+| N3 | Built-in B1 accepted-press processing | **1240** | 911.00 | 10 | 051047 | [IMG_0844](lab3-scope/test-btn-stats-IMG_0844.jpg) |
 | N3 | DRIVE GPIO demo, braking/error branch | **12** | 12, set equal to max by user decision; no mean captured | Not supplied | 051047 | User report |
-| N3 | Isolated CAN A INT assertion to dispatch completion | **404** | 402.08 | 158 | 053026 | IMG_0848 |
-| N2 | FORCE_TX, dual-bus counter submission | **1050** | 924.46 | 202 | 053026 | IMG_0850 |
-| N2 | Real Lab 2 calibrated steering mapping | **9.8** | 9.6768 | 518 | 060412 | IMG_0851 |
+| N3 | Isolated CAN A INT assertion to dispatch completion | **404** | 402.08 | 158 | 053026 | [IMG_0848](lab3-scope/rx-int-to-dispatch-stats-IMG_0848.jpg) |
+| N2 | FORCE_TX, dual-bus counter submission | **1050** | 924.46 | 202 | 053026 | [IMG_0850](lab3-scope/force-tx-stats-IMG_0850.jpg) |
+| N2 | Real Lab 2 calibrated steering mapping | **9.8** | 9.6768 | 518 | 060412 | [IMG_0851](lab3-scope/steering-stats-IMG_0851.jpg) |
 
 ### October 21 additions
 
@@ -25,14 +25,14 @@ The same 060412 images were used. Scope CH1 was connected to the selected PC8 pu
 
 | Logical node | Measured operation | Maximum | Mean | Min | Count | Evidence |
 |---|---|---:|---:|---:|---:|---|
-| N2 | HB_TX, dual-bus heartbeat submission | **826** | 821.05 | 814 | 778 | IMG_0858 |
-| N2 | HB_MON | **19** | 18.307 | 18 | 605 | IMG_0859 |
-| N2 | BLINK_F, blink frame processing | **57** | 16.086 | 14 | 35 | IMG_0860 |
-| N2 | TEST_BTN, accepted B1 processing after debounce | **896** | 891.50 | 888 | 20 | IMG_0861 |
-| N2 | CAN_RX_A, isolated INT falling to dispatch completion (CH2 PA10 → CH1 PC8 falling) | **407** | 404.38 | 404 | 21 | IMG_0862 |
-| N2 | CAN_RX_B, isolated INT falling to dispatch completion (CH2 PB5 → CH1 PC8 falling) | **406** | 404.86 | 404 | 22 | IMG_0863 |
-| N1 (Pi) | UDP_RX rising → CMD_TX rising, post-write boundary, idle, FIFO 1 (scope); companion CSV last 180 s: max 1543.603, p99 **1060.389**, 8990 updates | **1460** | 558.81 | 480 | 4220 | IMG_0864 |
-| N1 (Pi) | UDP_RX rising → CMD_TX rising, post-write boundary, four CPU workers, FIFO 1 (scope); companion CSV 212.7 s under load: max 1539.307, p99 **510.450**, 10508 updates | **910** | 279.95 | 250 | 2186 | IMG_0865 |
+| N2 | HB_TX, dual-bus heartbeat submission | **826** | 821.05 | 814 | 778 | [IMG_0858](lab3-scope/n2-hb-tx-IMG_0858.jpg) |
+| N2 | HB_MON | **19** | 18.307 | 18 | 605 | [IMG_0859](lab3-scope/n2-hb-mon-IMG_0859.jpg) |
+| N2 | BLINK_F, blink frame processing | **57** | 16.086 | 14 | 35 | [IMG_0860](lab3-scope/n2-blink-IMG_0860.jpg) |
+| N2 | TEST_BTN, accepted B1 processing after debounce | **896** | 891.50 | 888 | 20 | [IMG_0861](lab3-scope/n2-test-btn-IMG_0861.jpg) |
+| N2 | CAN_RX_A, isolated INT falling to dispatch completion (CH2 PA10 → CH1 PC8 falling) | **407** | 404.38 | 404 | 21 | [IMG_0862](lab3-scope/n2-rx-a-int-to-dispatch-IMG_0862.jpg) |
+| N2 | CAN_RX_B, isolated INT falling to dispatch completion (CH2 PB5 → CH1 PC8 falling) | **406** | 404.86 | 404 | 22 | [IMG_0863](lab3-scope/n2-rx-b-int-to-dispatch-IMG_0863.jpg) |
+| N1 (Pi) | UDP_RX rising → CMD_TX rising, post-write boundary, idle, FIFO 1 (scope); companion CSV last 180 s: max 1543.603, p99 **1060.389**, 8990 updates | **1460** | 558.81 | 480 | 4220 | [IMG_0864](lab3-scope/pi-idle-postwrite-IMG_0864.jpg) |
+| N1 (Pi) | UDP_RX rising → CMD_TX rising, post-write boundary, four CPU workers, FIFO 1 (scope); companion CSV 212.7 s under load: max 1539.307, p99 **510.450**, 10508 updates | **910** | 279.95 | 250 | 2186 | [IMG_0865](lab3-scope/pi-stress-postwrite-IMG_0865.jpg) |
 <!-- oct21-rows -->
 
 **Pi stage for the report (handout boundary: UDP_RX → CMD_TX after both CAN writes):** idle scope max **1.46 ms**, CSV p99 **1.060 ms**; stressed scope max **0.91 ms**, CSV p99 **0.510 ms**. The largest CSV value is about 1.54 ms in both conditions. The CPU governor is `ondemand` (600 MHz–1.8 GHz). Under the four-worker load, CPU0 stayed at 1.8 GHz. A few seconds after the load stopped, it read 800 MHz. That frequency difference is the likely reason the stressed latency is lower; it was not isolated by a fixed-frequency test. Conservative chain input: about 1.54 ms, the largest value across both conditions, or 1.46 ms if only the scope values are used. Evidence: `logs/lab3-can/20261021-remaining/pi-*-postwrite*`.
@@ -53,9 +53,38 @@ These values come from instrumented `cockpit_bridge.py` CSV timestamps (`time.mo
 | FORCE_RX | notifier callback for 0x300 before its log write | **148.349** | 64.928 | 91.184 | 33516 |
 | HB receive | notifier callback for 0x101/0x102 | **178.793** | 64.5 | 91.5 | 167582 |
 
+The corrected bridge (post-write CMD_TX, logs excluded) also measured CTRL_TX as the two write calls only, over 43,552 idle FIFO-1 updates: max **2628.730**, mean 282.3, p99 804.097 (`pi-idle-postwrite.csv`). Use this CTRL_TX value with the corrected boundary.
+
 The 184 ms BLINK_TX sample was a whole-process stall. Its CAN frames were submitted on time, but no thread logged anything for 184 ms. That pattern indicates a buffered CSV write blocked on SD storage. The stall is retained because it is a real elapsed time for this logging design, but it is not CAN submission work.
 
-### SPI-bound tasks exceed the handout budgets
+### SPI 5.25 MHz re-measurement (October 21, build `20261021-spi10m-build`)
+
+The user delegated the SPI choice. Both overlays now request `spi-max-frequency = <10000000>`, the MCP2515 maximum; SPI1 runs at 84/16 = 5.25 MHz. No other source changed except the boot log, which now prints the devicetree value. Images were flashed with pyOCD, with N3 on 124020 (probed) and N2 on 171333. All four links received with 0 rejects after boot. The FIFO-1 bridge and sender were running. These rows supersede the 656.25 kHz rows for the same tasks.
+
+| Node | Measured operation | Maximum | Mean | Min | Count | Evidence |
+|---|---|---:|---:|---:|---:|---|
+| N3 | HB_TX, dual-bus heartbeat submission, 1 ms/div. Serial thread CPU-time maximum is 348 us; the remaining tail is blocking or preemption | **1270** | 306.31 | 260 | 545 | [IMG_0867](lab3-scope/spi10m-n3-hb-tx-IMG_0867.jpg) |
+| N3 | TEST_BTN, accepted B1 processing after debounce, including FAULT submission on both buses | **850** | 384.78 | 340 | 23 | [IMG_0868](lab3-scope/spi10m-n3-test-btn-IMG_0868.jpg) |
+| N3 | SPI1 SCK period on D13/PA5, verifying 84 MHz/16 | **192 ns** | 190.79 ns (5.24 MHz) | 188 ns | 1892 | [IMG_0869](lab3-scope/spi10m-sck-period-IMG_0869.jpg) |
+| N3 | CAN_RX_A, isolated INT falling to dispatch completion (CH2 PA10 → CH1 PC8 falling) | **256** | 234.61 | 233 | 161 | [IMG_0871](lab3-scope/spi10m-n3-rx-a-IMG_0871.jpg) |
+| N3 | CAN_RX_B, isolated INT falling to dispatch completion (CH2 PB5 → CH1 PC8 falling) | **287** | 233.73 | 233 | 1126 | [IMG_0872](lab3-scope/spi10m-n3-rx-b-IMG_0872.jpg) |
+| N2 | FORCE_TX, dual-bus counter submission | **1030** | 298.22 | 260 | 208 | [IMG_0873](lab3-scope/spi10m-n2-force-tx-IMG_0873.jpg) |
+<!-- spi10m-rows -->
+
+N3 rows were captured with N3 on 124020. For FORCE_TX, the images were then swapped with pyOCD so 124020 ran N2. With the user's same-task reuse rule, N2 HB_TX, TEST_BTN and CAN_RX A/B use the N3 values above.
+
+Effect of the faster SPI clock:
+
+| Task | 656.25 kHz max / mean | 5.25 MHz max / mean | Handout budget |
+|---|---:|---:|---:|
+| CAN_RX A/B | 404–407 / 402–405 | **256–287** / 234 | 80 µs; 0.3 ms deadline |
+| HB_TX | 815–826 / 815–821 | **1270** / 306 | 120 µs |
+| FORCE_TX | 1050 / 924 | **1030** / 298 | 120 µs |
+| TEST_BTN | 896–1240 / 892–911 | **850** / 385 | 20 µs |
+
+CAN_RX now meets its 0.3 ms deadline. Means fell by a factor of 2.4–3.1. Transmit-task minima are 260 µs, still above the 120 µs budget. That remaining time is Zephyr MCP2515/SPI driver overhead per frame, not SPI clocking; two frames need about 46 µs of clocks. Transmit maxima did not fall and now vary widely (std dev about 145–166 µs, compared with about 1 µs before). The serial counters show the heartbeat thread's own CPU time peaks at 348 µs. The rest of the elapsed tail is preemption or blocking: driver-mutex contention with the higher-priority MCP2515 interrupt thread handling received frames, or waiting for a free TX buffer. The handout's GPIO-toggle method includes this preemption. Report the scope maxima as WCET-with-preemption and the thread CPU time as the execution estimate.
+
+### SPI-bound tasks exceed the handout budgets (656.25 kHz build)
 
 CAN_RX (404–407 µs vs 80 µs, deadline 0.3 ms), HB_TX (815–826 vs 120 µs), FORCE_TX (1050 vs 120 µs) and TEST_BTN (896–1240 vs 20 µs) all wait on MCP2515 SPI transfers. The overlay requests `spi-max-frequency = <1000000>`. SPI1 runs from the 84 MHz APB2 clock with power-of-two dividers. Because 84/64 = 1.3125 MHz exceeds the request, the driver uses 84/128 = **656.25 kHz**. The scope confirmed a 1.520 µs SCK period (about 658 kHz) and a 202.5 µs transaction. Even at a true 1 MHz, these tasks would still exceed the budgets (only about 1.5× faster SPI). The budgets imply multi-MHz SPI; the MCP2515 is rated to 10 MHz. The team chose to report these measured values with this explanation rather than reflash at a higher SPI rate. Non-SPI tasks are within budget.
 
@@ -94,10 +123,10 @@ The scope measured **CH1 rising → CH2 rising**:
 
 | Load condition | Maximum | Mean | Minimum | Count | Evidence |
 |---|---:|---:|---:|---:|---|
-| Idle | **808 µs** | 230.20 µs | 196 µs | 1.159k | IMG_0853 |
-| Four normal-priority CPU workers | **246 µs** | 118.91 µs | 106 µs | 399 | IMG_0855 |
+| Idle | **808 µs** | 230.20 µs | 196 µs | 1.159k | [IMG_0853](lab3-scope/pi-idle-scope-IMG_0853.jpg) |
+| Four normal-priority CPU workers | **246 µs** | 118.91 µs | 106 µs | 399 | [IMG_0855](lab3-scope/pi-stress-scope-IMG_0855.jpg) |
 
-Both selected captures use 200 µs/div and 2 V/div. A 60-second collection was requested for each; the photos do not independently establish duration. The coarse 10 ms/div IMG_0854 result is not used in this table.
+Both selected captures use 200 µs/div and 2 V/div. A 60-second collection was requested for each; the photos do not independently establish duration. The coarse 10 ms/div [IMG_0854](lab3-scope/pi-stress-coarse-IMG_0854.jpg) result is not used in this table.
 
 Separate software companion windows, taken before each load transition, provide percentiles for the **first UDP receive in a batch → pre-send timestamp** boundary:
 
@@ -138,7 +167,7 @@ Persistent evidence is rooted at:
 - `pi-scope/`: traced bridge/sender ownership, raw CSV snapshots, companion-window summaries and load lifecycle logs. `state.json` points to the live remote CSV and stdout/crash log.
 - Matching MCU ELFs and logs are in the build archives above; preserve full logged coredumps with the matching ELF if a fault occurs.
 
-After IMG_0855, the four scope-load workers were stopped. The traced FIFO bridge and laptop UDP sender remain running at the user's request. No stress worker remains active. Use the scoped `pi-scope/stop.py` to stop only this session when required.
+After [IMG_0855](lab3-scope/pi-stress-scope-IMG_0855.jpg), the four scope-load workers were stopped. The traced FIFO bridge and laptop UDP sender remain running at the user's request. No stress worker remains active. Use the scoped `pi-scope/stop.py` to stop only this session when required.
 
 ## Not measured or not implemented by this pass
 

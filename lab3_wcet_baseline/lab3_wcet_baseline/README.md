@@ -60,7 +60,7 @@ Per Lab 3 handout, each Nucleo uses SPI1 shared by both MCP2515 modules: SCK PA5
 
 The overlay assigns demo probes to free pins: RX_A PC2, RX_B PC3, TX_A PA0, TX_B PA1, DEG_A PB0, DEG_B PB1, ERR PC0, SRV PC1, PWM_SET PB9, DIR_A PB10, PID PB11, front LEDs PA4/PB8, rear LEDs PC4/PC5, a dedicated `RELAY_TX` probe on PC6, and a selectable task-body probe on PC8. Check the actual Nucleo header and existing wiring before connecting anything; do not connect these outputs to the actuator driver in demo mode.
 
-The overlay assumes MCP2515 modules have **16 MHz** crystals and requests a maximum 1 MHz SPI clock. With the default 84 MHz SPI1 source, Zephyr selects 656.25 kHz; the earlier Part 0 diagnostic scope capture measured approximately 658 kHz. Verify the crystal marking. Check the generated devicetree and `dts/bindings/can/microchip,mcp2515.yaml` for your installed Zephyr version; the lab handout explicitly asks you to validate `reg`, `spi-max-frequency`, `int-gpios`, and pinctrl names.
+The overlay assumes MCP2515 modules have **16 MHz** crystals and requests the MCP2515 maximum SPI clock of 10 MHz. With the 84 MHz SPI1 source, Zephyr selects 84/16 = 5.25 MHz; an October 21 scope capture measured a 190.79 ns mean SCK period. Through October 21, earlier builds requested 1 MHz and ran at 656.25 kHz. Verify the crystal marking. Check the generated devicetree and `dts/bindings/can/microchip,mcp2515.yaml` for your installed Zephyr version; the lab handout explicitly asks you to validate `reg`, `spi-max-frequency`, `int-gpios`, and pinctrl names.
 
 ## Raspberry Pi setup
 

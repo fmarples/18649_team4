@@ -39,7 +39,7 @@
     can_a: mcp2515@0 {
         compatible = "microchip,mcp2515";
         reg = <0>;
-        spi-max-frequency = <1000000>;
+        spi-max-frequency = <10000000>; /* MCP2515 max; STM32 SPI1 runs 84 MHz/16 = 5.25 MHz */
         int-gpios = <&gpioa 10 GPIO_ACTIVE_LOW>;
         osc-freq = <16000000>;
         status = "okay";
@@ -48,7 +48,7 @@
     can_b: mcp2515@1 {
         compatible = "microchip,mcp2515";
         reg = <1>;
-        spi-max-frequency = <1000000>;
+        spi-max-frequency = <10000000>; /* MCP2515 max; STM32 SPI1 runs 84 MHz/16 = 5.25 MHz */
         int-gpios = <&gpiob 5 GPIO_ACTIVE_LOW>;
         osc-freq = <16000000>;
         status = "okay";

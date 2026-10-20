@@ -697,9 +697,9 @@ int main(void) {
         uint32_t start = lab3_timing_start();
         lab3_timing_end(T_OVERHEAD, start);
     }
-    printk("TIMING_CONFIG zone=%s clock_hz=%u spi_requested_hz=1000000 relay=%u elapsed_not_cpu=1\n",
+    printk("TIMING_CONFIG zone=%s clock_hz=%u spi_requested_hz=%u relay=%u elapsed_not_cpu=1\n",
            MY_ZONE == ZONE_N2 ? "N2" : "N3", sys_clock_hw_cycles_per_sec(),
-           IS_ENABLED(CONFIG_LAB3_RELAY));
+           (unsigned)DT_PROP(DT_ALIAS(can_a), spi_max_frequency), IS_ENABLED(CONFIG_LAB3_RELAY));
     lab3_probe_ready();
     k_event_post(&app_ready, BIT(0));
     return 0;
