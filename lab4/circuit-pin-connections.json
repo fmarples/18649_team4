@@ -2,7 +2,7 @@
   "Front": [
     {
       "ref": "U10",
-      "lib": "Interface_CAN_LIN:MCP2515-xST",
+      "lib": "Lab4_Logic:MCP2515_TSSOP20",
       "nets": {
         "1": "F_A_TXD",
         "2": "F_A_RXD",
@@ -398,7 +398,7 @@
     },
     {
       "ref": "U14",
-      "lib": "Interface_CAN_LIN:MCP2515-xST",
+      "lib": "Lab4_Logic:MCP2515_TSSOP20",
       "nets": {
         "1": "F_B_TXD",
         "2": "F_B_RXD",
@@ -919,12 +919,1016 @@
           "Pin_3"
         ]
       ]
+    },
+    {
+      "ref": "U50",
+      "lib": "MCU_ST_STM32F4:STM32F401RETx",
+      "nets": {
+        "21": "F_SCK",
+        "22": "F_MISO",
+        "23": "F_MOSI",
+        "58": "F_CS_A",
+        "43": "F_INT_A",
+        "38": "F_CS_B",
+        "57": "F_INT_B",
+        "10": "F_RX_A_MARKER",
+        "11": "F_RX_B_MARKER",
+        "14": "F_TX_A_MARKER",
+        "15": "F_TX_B_MARKER",
+        "26": "F_DEG_A_LED",
+        "27": "F_DEG_B_LED",
+        "8": "F_ERROR_LED",
+        "9": "F_STEER_TASK_MARKER",
+        "62": "F_PWM_SET_MARKER",
+        "29": "F_DIR_A_MARKER",
+        "37": "F_RELAY_TX_MARKER",
+        "39": "F_TASK_PROBE",
+        "2": "F_SELFTEST_BUTTON",
+        "40": "F_PID_MARKER",
+        "46": "F_SWDIO",
+        "49": "F_SWCLK",
+        "7": "F_RESET_N",
+        "44": "F_UART_CONSOLE_TX",
+        "45": "F_UART_CONSOLE_RX",
+        "50": "F_STATUS_LED",
+        "20": "F_FRONT_LEFT_LED",
+        "61": "F_FRONT_RIGHT_LED",
+        "60": "F_BOOT0",
+        "42": "F_SERVO_PWM",
+        "16": "SERVO_ADC",
+        "1": "+3V3",
+        "12": "GND",
+        "13": "F_VDDA",
+        "18": "GND",
+        "19": "+3V3",
+        "30": "F_VCAP1",
+        "31": "GND",
+        "32": "+3V3",
+        "47": "GND",
+        "48": "+3V3",
+        "63": "GND",
+        "64": "+3V3"
+      },
+      "pins": [
+        [
+          "1",
+          "VBAT"
+        ],
+        [
+          "2",
+          "PC13"
+        ],
+        [
+          "3",
+          "PC14"
+        ],
+        [
+          "4",
+          "PC15"
+        ],
+        [
+          "5",
+          "PH0"
+        ],
+        [
+          "6",
+          "PH1"
+        ],
+        [
+          "7",
+          "NRST"
+        ],
+        [
+          "8",
+          "PC0"
+        ],
+        [
+          "9",
+          "PC1"
+        ],
+        [
+          "10",
+          "PC2"
+        ],
+        [
+          "11",
+          "PC3"
+        ],
+        [
+          "12",
+          "VSSA"
+        ],
+        [
+          "13",
+          "VREF+"
+        ],
+        [
+          "14",
+          "PA0"
+        ],
+        [
+          "15",
+          "PA1"
+        ],
+        [
+          "16",
+          "PA2"
+        ],
+        [
+          "17",
+          "PA3"
+        ],
+        [
+          "18",
+          "VSS"
+        ],
+        [
+          "19",
+          "VDD"
+        ],
+        [
+          "20",
+          "PA4"
+        ],
+        [
+          "21",
+          "PA5"
+        ],
+        [
+          "22",
+          "PA6"
+        ],
+        [
+          "23",
+          "PA7"
+        ],
+        [
+          "24",
+          "PC4"
+        ],
+        [
+          "25",
+          "PC5"
+        ],
+        [
+          "26",
+          "PB0"
+        ],
+        [
+          "27",
+          "PB1"
+        ],
+        [
+          "28",
+          "PB2"
+        ],
+        [
+          "29",
+          "PB10"
+        ],
+        [
+          "30",
+          "VCAP1"
+        ],
+        [
+          "31",
+          "VSS"
+        ],
+        [
+          "32",
+          "VDD"
+        ],
+        [
+          "33",
+          "PB12"
+        ],
+        [
+          "34",
+          "PB13"
+        ],
+        [
+          "35",
+          "PB14"
+        ],
+        [
+          "36",
+          "PB15"
+        ],
+        [
+          "37",
+          "PC6"
+        ],
+        [
+          "38",
+          "PC7"
+        ],
+        [
+          "39",
+          "PC8"
+        ],
+        [
+          "40",
+          "PC9"
+        ],
+        [
+          "41",
+          "PA8"
+        ],
+        [
+          "42",
+          "PA9"
+        ],
+        [
+          "43",
+          "PA10"
+        ],
+        [
+          "44",
+          "PA11"
+        ],
+        [
+          "45",
+          "PA12"
+        ],
+        [
+          "46",
+          "PA13"
+        ],
+        [
+          "47",
+          "VSS"
+        ],
+        [
+          "48",
+          "VDD"
+        ],
+        [
+          "49",
+          "PA14"
+        ],
+        [
+          "50",
+          "PA15"
+        ],
+        [
+          "51",
+          "PC10"
+        ],
+        [
+          "52",
+          "PC11"
+        ],
+        [
+          "53",
+          "PC12"
+        ],
+        [
+          "54",
+          "PD2"
+        ],
+        [
+          "55",
+          "PB3"
+        ],
+        [
+          "56",
+          "PB4"
+        ],
+        [
+          "57",
+          "PB5"
+        ],
+        [
+          "58",
+          "PB6"
+        ],
+        [
+          "59",
+          "PB7"
+        ],
+        [
+          "60",
+          "BOOT0"
+        ],
+        [
+          "61",
+          "PB8"
+        ],
+        [
+          "62",
+          "PB9"
+        ],
+        [
+          "63",
+          "VSS"
+        ],
+        [
+          "64",
+          "VDD"
+        ]
+      ]
+    },
+    {
+      "ref": "C500",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C501",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C502",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C503",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C504",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C505",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C506",
+      "lib": "Device:C",
+      "nets": {
+        "1": "F_VCAP1",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "FB50",
+      "lib": "Device:FerriteBead",
+      "nets": {
+        "1": "+3V3",
+        "2": "F_VDDA"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C507",
+      "lib": "Device:C",
+      "nets": {
+        "1": "F_VDDA",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C508",
+      "lib": "Device:C",
+      "nets": {
+        "1": "F_VDDA",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R500",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_BOOT0",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J500",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "+3V3",
+        "2": "F_BOOT0"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "R501",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "F_RESET_N"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C509",
+      "lib": "Device:C",
+      "nets": {
+        "1": "F_RESET_N",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "SW50",
+      "lib": "Switch:SW_Push",
+      "nets": {
+        "1": "F_RESET_N",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "2"
+        ]
+      ]
+    },
+    {
+      "ref": "J501",
+      "lib": "Connector_Generic:Conn_01x06",
+      "nets": {
+        "1": "+3V3",
+        "2": "F_SWCLK",
+        "3": "GND",
+        "4": "F_SWDIO",
+        "5": "F_RESET_N",
+        "6": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ]
+      ]
+    },
+    {
+      "ref": "J502",
+      "lib": "Connector_Generic:Conn_01x03",
+      "nets": {
+        "1": "F_UART_CONSOLE_TX",
+        "2": "F_UART_CONSOLE_RX",
+        "3": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ]
+      ]
+    },
+    {
+      "ref": "R502",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "F_SELFTEST_BUTTON"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "SW51",
+      "lib": "Switch:SW_Push",
+      "nets": {
+        "1": "F_SELFTEST_BUTTON",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "2"
+        ]
+      ]
+    },
+    {
+      "ref": "C510",
+      "lib": "Device:C",
+      "nets": {
+        "1": "F_SELFTEST_BUTTON",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R510",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_STATUS_LED",
+        "2": "F_STATUS_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D510",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "F_STATUS_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R511",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_ERROR_LED",
+        "2": "F_ERROR_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D511",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "F_ERROR_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R512",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_DEG_A_LED",
+        "2": "F_DEG_A_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D512",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "F_DEG_A_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R513",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_DEG_B_LED",
+        "2": "F_DEG_B_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D513",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "F_DEG_B_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "J503",
+      "lib": "Connector_Generic:Conn_01x13",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "F_RX_A_MARKER",
+        "4": "F_RX_B_MARKER",
+        "5": "F_TX_A_MARKER",
+        "6": "F_TX_B_MARKER",
+        "7": "F_DEG_A_LED",
+        "8": "F_DEG_B_LED",
+        "9": "F_SERVO_PWM",
+        "10": "F_FRONT_LEFT_LED",
+        "11": "F_FRONT_RIGHT_LED",
+        "12": "F_RELAY_TX_MARKER",
+        "13": "F_ERROR_LED"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ],
+        [
+          "7",
+          "Pin_7"
+        ],
+        [
+          "8",
+          "Pin_8"
+        ],
+        [
+          "9",
+          "Pin_9"
+        ],
+        [
+          "10",
+          "Pin_10"
+        ],
+        [
+          "11",
+          "Pin_11"
+        ],
+        [
+          "12",
+          "Pin_12"
+        ],
+        [
+          "13",
+          "Pin_13"
+        ]
+      ]
+    },
+    {
+      "ref": "J504",
+      "lib": "Connector_Generic:Conn_01x08",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "F_SELFTEST_BUTTON",
+        "4": "F_ERROR_LED",
+        "5": "F_TASK_PROBE",
+        "6": "F_STEER_TASK_MARKER",
+        "7": "F_PID_MARKER",
+        "8": "SERVO_ADC"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ],
+        [
+          "7",
+          "Pin_7"
+        ],
+        [
+          "8",
+          "Pin_8"
+        ]
+      ]
+    },
+    {
+      "ref": "R530",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_SERVO_PWM",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J505",
+      "lib": "Connector_Generic:Conn_01x04",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "F_PWM_SET_MARKER",
+        "4": "F_DIR_A_MARKER"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ]
+      ]
     }
   ],
   "Rear": [
     {
       "ref": "U20",
-      "lib": "Interface_CAN_LIN:MCP2515-xST",
+      "lib": "Lab4_Logic:MCP2515_TSSOP20",
       "nets": {
         "1": "R_A_TXD",
         "2": "R_A_RXD",
@@ -1320,7 +2324,7 @@
     },
     {
       "ref": "U24",
-      "lib": "Interface_CAN_LIN:MCP2515-xST",
+      "lib": "Lab4_Logic:MCP2515_TSSOP20",
       "nets": {
         "1": "R_B_TXD",
         "2": "R_B_RXD",
@@ -2081,12 +3085,1147 @@
           "Pin_4"
         ]
       ]
+    },
+    {
+      "ref": "U60",
+      "lib": "MCU_ST_STM32F4:STM32F401RETx",
+      "nets": {
+        "21": "R_SCK",
+        "22": "R_MISO",
+        "23": "R_MOSI",
+        "58": "R_CS_A",
+        "43": "R_INT_A",
+        "38": "R_CS_B",
+        "57": "R_INT_B",
+        "10": "R_RX_A_MARKER",
+        "11": "R_RX_B_MARKER",
+        "14": "R_TX_A_MARKER",
+        "15": "R_TX_B_MARKER",
+        "26": "R_DEG_A_LED",
+        "27": "R_DEG_B_LED",
+        "8": "R_ERROR_LED",
+        "9": "R_STEER_TASK_MARKER",
+        "62": "R_PWM_SET_MARKER",
+        "29": "R_DIR_A_MARKER",
+        "37": "R_RELAY_TX_MARKER",
+        "39": "R_TASK_PROBE",
+        "2": "R_SELFTEST_BUTTON",
+        "40": "R_PID_MARKER",
+        "46": "R_SWDIO",
+        "49": "R_SWCLK",
+        "7": "R_RESET_N",
+        "44": "R_UART_CONSOLE_TX",
+        "45": "R_UART_CONSOLE_RX",
+        "50": "R_STATUS_LED",
+        "24": "R_REAR_LEFT_LED",
+        "25": "R_REAR_RIGHT_LED",
+        "60": "R_BOOT0",
+        "16": "LEFT_ADC",
+        "17": "RIGHT_ADC",
+        "42": "R_LEFT_ENABLE_PWM",
+        "59": "R_RIGHT_ENABLE_PWM",
+        "34": "R_LEFT_IN1",
+        "35": "R_LEFT_IN2",
+        "36": "R_RIGHT_IN3",
+        "51": "R_RIGHT_IN4",
+        "28": "R_LEFT_ENC_A",
+        "55": "R_LEFT_ENC_B",
+        "56": "R_RIGHT_ENC_A",
+        "33": "R_RIGHT_ENC_B",
+        "52": "R_OVERLOAD_MARKER",
+        "1": "+3V3",
+        "12": "GND",
+        "13": "R_VDDA",
+        "18": "GND",
+        "19": "+3V3",
+        "30": "R_VCAP1",
+        "31": "GND",
+        "32": "+3V3",
+        "47": "GND",
+        "48": "+3V3",
+        "63": "GND",
+        "64": "+3V3"
+      },
+      "pins": [
+        [
+          "1",
+          "VBAT"
+        ],
+        [
+          "2",
+          "PC13"
+        ],
+        [
+          "3",
+          "PC14"
+        ],
+        [
+          "4",
+          "PC15"
+        ],
+        [
+          "5",
+          "PH0"
+        ],
+        [
+          "6",
+          "PH1"
+        ],
+        [
+          "7",
+          "NRST"
+        ],
+        [
+          "8",
+          "PC0"
+        ],
+        [
+          "9",
+          "PC1"
+        ],
+        [
+          "10",
+          "PC2"
+        ],
+        [
+          "11",
+          "PC3"
+        ],
+        [
+          "12",
+          "VSSA"
+        ],
+        [
+          "13",
+          "VREF+"
+        ],
+        [
+          "14",
+          "PA0"
+        ],
+        [
+          "15",
+          "PA1"
+        ],
+        [
+          "16",
+          "PA2"
+        ],
+        [
+          "17",
+          "PA3"
+        ],
+        [
+          "18",
+          "VSS"
+        ],
+        [
+          "19",
+          "VDD"
+        ],
+        [
+          "20",
+          "PA4"
+        ],
+        [
+          "21",
+          "PA5"
+        ],
+        [
+          "22",
+          "PA6"
+        ],
+        [
+          "23",
+          "PA7"
+        ],
+        [
+          "24",
+          "PC4"
+        ],
+        [
+          "25",
+          "PC5"
+        ],
+        [
+          "26",
+          "PB0"
+        ],
+        [
+          "27",
+          "PB1"
+        ],
+        [
+          "28",
+          "PB2"
+        ],
+        [
+          "29",
+          "PB10"
+        ],
+        [
+          "30",
+          "VCAP1"
+        ],
+        [
+          "31",
+          "VSS"
+        ],
+        [
+          "32",
+          "VDD"
+        ],
+        [
+          "33",
+          "PB12"
+        ],
+        [
+          "34",
+          "PB13"
+        ],
+        [
+          "35",
+          "PB14"
+        ],
+        [
+          "36",
+          "PB15"
+        ],
+        [
+          "37",
+          "PC6"
+        ],
+        [
+          "38",
+          "PC7"
+        ],
+        [
+          "39",
+          "PC8"
+        ],
+        [
+          "40",
+          "PC9"
+        ],
+        [
+          "41",
+          "PA8"
+        ],
+        [
+          "42",
+          "PA9"
+        ],
+        [
+          "43",
+          "PA10"
+        ],
+        [
+          "44",
+          "PA11"
+        ],
+        [
+          "45",
+          "PA12"
+        ],
+        [
+          "46",
+          "PA13"
+        ],
+        [
+          "47",
+          "VSS"
+        ],
+        [
+          "48",
+          "VDD"
+        ],
+        [
+          "49",
+          "PA14"
+        ],
+        [
+          "50",
+          "PA15"
+        ],
+        [
+          "51",
+          "PC10"
+        ],
+        [
+          "52",
+          "PC11"
+        ],
+        [
+          "53",
+          "PC12"
+        ],
+        [
+          "54",
+          "PD2"
+        ],
+        [
+          "55",
+          "PB3"
+        ],
+        [
+          "56",
+          "PB4"
+        ],
+        [
+          "57",
+          "PB5"
+        ],
+        [
+          "58",
+          "PB6"
+        ],
+        [
+          "59",
+          "PB7"
+        ],
+        [
+          "60",
+          "BOOT0"
+        ],
+        [
+          "61",
+          "PB8"
+        ],
+        [
+          "62",
+          "PB9"
+        ],
+        [
+          "63",
+          "VSS"
+        ],
+        [
+          "64",
+          "VDD"
+        ]
+      ]
+    },
+    {
+      "ref": "C600",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C601",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C602",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C603",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C604",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C605",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C606",
+      "lib": "Device:C",
+      "nets": {
+        "1": "R_VCAP1",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "FB60",
+      "lib": "Device:FerriteBead",
+      "nets": {
+        "1": "+3V3",
+        "2": "R_VDDA"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C607",
+      "lib": "Device:C",
+      "nets": {
+        "1": "R_VDDA",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C608",
+      "lib": "Device:C",
+      "nets": {
+        "1": "R_VDDA",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R600",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_BOOT0",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J600",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "+3V3",
+        "2": "R_BOOT0"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "R601",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "R_RESET_N"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C609",
+      "lib": "Device:C",
+      "nets": {
+        "1": "R_RESET_N",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "SW60",
+      "lib": "Switch:SW_Push",
+      "nets": {
+        "1": "R_RESET_N",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "2"
+        ]
+      ]
+    },
+    {
+      "ref": "J601",
+      "lib": "Connector_Generic:Conn_01x06",
+      "nets": {
+        "1": "+3V3",
+        "2": "R_SWCLK",
+        "3": "GND",
+        "4": "R_SWDIO",
+        "5": "R_RESET_N",
+        "6": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ]
+      ]
+    },
+    {
+      "ref": "J602",
+      "lib": "Connector_Generic:Conn_01x03",
+      "nets": {
+        "1": "R_UART_CONSOLE_TX",
+        "2": "R_UART_CONSOLE_RX",
+        "3": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ]
+      ]
+    },
+    {
+      "ref": "R602",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "R_SELFTEST_BUTTON"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "SW61",
+      "lib": "Switch:SW_Push",
+      "nets": {
+        "1": "R_SELFTEST_BUTTON",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "2"
+        ]
+      ]
+    },
+    {
+      "ref": "C610",
+      "lib": "Device:C",
+      "nets": {
+        "1": "R_SELFTEST_BUTTON",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R610",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_STATUS_LED",
+        "2": "R_STATUS_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D610",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "R_STATUS_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R611",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_ERROR_LED",
+        "2": "R_ERROR_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D611",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "R_ERROR_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R612",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_DEG_A_LED",
+        "2": "R_DEG_A_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D612",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "R_DEG_A_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R613",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_DEG_B_LED",
+        "2": "R_DEG_B_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D613",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "R_DEG_B_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "J603",
+      "lib": "Connector_Generic:Conn_01x13",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "R_RX_A_MARKER",
+        "4": "R_RX_B_MARKER",
+        "5": "R_TX_A_MARKER",
+        "6": "R_TX_B_MARKER",
+        "7": "R_DEG_A_LED",
+        "8": "R_DEG_B_LED",
+        "9": "R_PWM_SET_MARKER",
+        "10": "R_LEFT_ENABLE_PWM",
+        "11": "R_DIR_A_MARKER",
+        "12": "R_REAR_LEFT_LED",
+        "13": "R_REAR_RIGHT_LED"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ],
+        [
+          "7",
+          "Pin_7"
+        ],
+        [
+          "8",
+          "Pin_8"
+        ],
+        [
+          "9",
+          "Pin_9"
+        ],
+        [
+          "10",
+          "Pin_10"
+        ],
+        [
+          "11",
+          "Pin_11"
+        ],
+        [
+          "12",
+          "Pin_12"
+        ],
+        [
+          "13",
+          "Pin_13"
+        ]
+      ]
+    },
+    {
+      "ref": "J604",
+      "lib": "Connector_Generic:Conn_01x11",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "R_SELFTEST_BUTTON",
+        "4": "R_ERROR_LED",
+        "5": "R_TASK_PROBE",
+        "6": "R_STEER_TASK_MARKER",
+        "7": "R_PID_MARKER",
+        "8": "R_RIGHT_ENABLE_PWM",
+        "9": "R_OVERLOAD_MARKER",
+        "10": "LEFT_ADC",
+        "11": "RIGHT_ADC"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ],
+        [
+          "7",
+          "Pin_7"
+        ],
+        [
+          "8",
+          "Pin_8"
+        ],
+        [
+          "9",
+          "Pin_9"
+        ],
+        [
+          "10",
+          "Pin_10"
+        ],
+        [
+          "11",
+          "Pin_11"
+        ]
+      ]
+    },
+    {
+      "ref": "R630",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_LEFT_ENABLE_PWM",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R631",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_RIGHT_ENABLE_PWM",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R632",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_LEFT_IN1",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R633",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_LEFT_IN2",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R634",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_RIGHT_IN3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R635",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_RIGHT_IN4",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J605",
+      "lib": "Connector_Generic:Conn_01x07",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "R_LEFT_ENC_A",
+        "4": "R_LEFT_ENC_B",
+        "5": "R_RIGHT_ENC_A",
+        "6": "R_RIGHT_ENC_B",
+        "7": "R_RELAY_TX_MARKER"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ],
+        [
+          "7",
+          "Pin_7"
+        ]
+      ]
     }
   ],
   "Cockpit": [
     {
       "ref": "U30",
-      "lib": "Interface_CAN_LIN:MCP2515-xST",
+      "lib": "Lab4_Logic:MCP2515_TSSOP20",
       "nets": {
         "1": "PI_A_TXD",
         "2": "PI_A_RXD",
@@ -2446,7 +4585,7 @@
     },
     {
       "ref": "U34",
-      "lib": "Interface_CAN_LIN:MCP2515-xST",
+      "lib": "Lab4_Logic:MCP2515_TSSOP20",
       "nets": {
         "1": "PI_B_TXD",
         "2": "PI_B_RXD",
@@ -2801,6 +4940,535 @@
         [
           "4",
           "Pin_4"
+        ]
+      ]
+    },
+    {
+      "ref": "J70",
+      "lib": "Lab4_Logic:Pi4_Powered_Header",
+      "nets": {
+        "2": "+5V",
+        "4": "+5V",
+        "6": "GND",
+        "9": "GND",
+        "14": "GND",
+        "20": "GND",
+        "25": "GND",
+        "30": "GND",
+        "34": "GND",
+        "39": "GND",
+        "23": "PI_SCK",
+        "21": "PI_MISO",
+        "19": "PI_MOSI",
+        "24": "PI_CS_A",
+        "26": "PI_CS_B",
+        "22": "PI_INT_A",
+        "18": "PI_INT_B",
+        "11": "PI_UDP_RX_MARKER",
+        "13": "PI_CMD_TX_MARKER",
+        "15": "PI_TX_A_MARKER",
+        "16": "PI_TX_B_MARKER",
+        "29": "PI_DEG_A_LED",
+        "31": "PI_DEG_B_LED",
+        "32": "PI_ERROR_LED",
+        "33": "PI_STATUS_LED",
+        "36": "PI_SELFTEST_BUTTON"
+      },
+      "pins": [
+        [
+          "1",
+          "3V3"
+        ],
+        [
+          "2",
+          "5V"
+        ],
+        [
+          "3",
+          "SDA_I2C1/GPIO02"
+        ],
+        [
+          "4",
+          "5V"
+        ],
+        [
+          "5",
+          "SCL_I2C1/GPIO03"
+        ],
+        [
+          "6",
+          "GND"
+        ],
+        [
+          "7",
+          "GPCLK0/GPIO04"
+        ],
+        [
+          "8",
+          "GPIO14/UART_TXD"
+        ],
+        [
+          "9",
+          "GND"
+        ],
+        [
+          "10",
+          "GPIO15/UART_RXD"
+        ],
+        [
+          "11",
+          "GPIO17/SPI1_~{CE1}"
+        ],
+        [
+          "12",
+          "GPIO18/SPI1_~{CE0}/PCM_CLK/PWM0"
+        ],
+        [
+          "13",
+          "GPIO27/SDIO_DAT3"
+        ],
+        [
+          "14",
+          "GND"
+        ],
+        [
+          "15",
+          "GPIO22/SDIO_CLK"
+        ],
+        [
+          "16",
+          "GPIO23/SDIO_CMD"
+        ],
+        [
+          "17",
+          "3V3"
+        ],
+        [
+          "18",
+          "GPIO24/SDIO_DAT0"
+        ],
+        [
+          "19",
+          "MOSI_SPI0/GPIO10"
+        ],
+        [
+          "20",
+          "GND"
+        ],
+        [
+          "21",
+          "MISO_SPI0/GPIO09"
+        ],
+        [
+          "22",
+          "GPIO25/SDIO_DAT1"
+        ],
+        [
+          "23",
+          "SCLK_SPI0/GPIO11"
+        ],
+        [
+          "24",
+          "~{CE0}_SPI0/GPIO08"
+        ],
+        [
+          "25",
+          "GND"
+        ],
+        [
+          "26",
+          "~{CE1}_SPI0/GPIO07"
+        ],
+        [
+          "27",
+          "ID_SD_I2C0/GPIO00"
+        ],
+        [
+          "28",
+          "ID_SC_I2C0/GPIO01"
+        ],
+        [
+          "29",
+          "GPCLK1/GPIO05"
+        ],
+        [
+          "30",
+          "GND"
+        ],
+        [
+          "31",
+          "GPCLK2/GPIO06"
+        ],
+        [
+          "32",
+          "GPIO12/PWM0"
+        ],
+        [
+          "33",
+          "GPIO13/PWM1"
+        ],
+        [
+          "34",
+          "GND"
+        ],
+        [
+          "35",
+          "GPIO19/SPI1_MISO/PCM_FS"
+        ],
+        [
+          "36",
+          "GPIO16/SPI1_~{CE2}"
+        ],
+        [
+          "37",
+          "GPIO26/SDIO_DAT2"
+        ],
+        [
+          "38",
+          "GPIO20/SPI1_MOSI/PCM_DIN/PWM1"
+        ],
+        [
+          "39",
+          "GND"
+        ],
+        [
+          "40",
+          "GPIO21/SPI1_SCLK/PCM_DOUT"
+        ]
+      ]
+    },
+    {
+      "ref": "C700",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+5V",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C701",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+5V",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R700",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "PI_SELFTEST_BUTTON"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "SW70",
+      "lib": "Switch:SW_Push",
+      "nets": {
+        "1": "PI_SELFTEST_BUTTON",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "2",
+          "2"
+        ]
+      ]
+    },
+    {
+      "ref": "C702",
+      "lib": "Device:C",
+      "nets": {
+        "1": "PI_SELFTEST_BUTTON",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R710",
+      "lib": "Device:R",
+      "nets": {
+        "1": "PI_STATUS_LED",
+        "2": "PI_STATUS_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D710",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "PI_STATUS_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R711",
+      "lib": "Device:R",
+      "nets": {
+        "1": "PI_ERROR_LED",
+        "2": "PI_ERROR_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D711",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "PI_ERROR_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R712",
+      "lib": "Device:R",
+      "nets": {
+        "1": "PI_DEG_A_LED",
+        "2": "PI_DEG_A_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D712",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "PI_DEG_A_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "R713",
+      "lib": "Device:R",
+      "nets": {
+        "1": "PI_DEG_B_LED",
+        "2": "PI_DEG_B_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D713",
+      "lib": "Device:LED",
+      "nets": {
+        "1": "GND",
+        "2": "PI_DEG_B_LED_ANODE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "J703",
+      "lib": "Connector_Generic:Conn_01x13",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "PI_UDP_RX_MARKER",
+        "4": "PI_CMD_TX_MARKER",
+        "5": "PI_TX_A_MARKER",
+        "6": "PI_TX_B_MARKER",
+        "7": "PI_DEG_A_LED",
+        "8": "PI_DEG_B_LED"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
+        ],
+        [
+          "6",
+          "Pin_6"
+        ],
+        [
+          "7",
+          "Pin_7"
+        ],
+        [
+          "8",
+          "Pin_8"
+        ],
+        [
+          "9",
+          "Pin_9"
+        ],
+        [
+          "10",
+          "Pin_10"
+        ],
+        [
+          "11",
+          "Pin_11"
+        ],
+        [
+          "12",
+          "Pin_12"
+        ],
+        [
+          "13",
+          "Pin_13"
+        ]
+      ]
+    },
+    {
+      "ref": "J704",
+      "lib": "Connector_Generic:Conn_01x05",
+      "nets": {
+        "1": "GND",
+        "2": "GND",
+        "3": "PI_SELFTEST_BUTTON",
+        "4": "PI_ERROR_LED",
+        "5": "PI_STATUS_LED"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ],
+        [
+          "5",
+          "Pin_5"
         ]
       ]
     }

@@ -1,12 +1,24 @@
 Verification — 20 October 2026
 - KiCad 10.0.4 parsed/exported all five schematic pages.
-- 149 unique references; every assigned footprint file exists.
-- Every placed symbol pin has a same-numbered footprint pad.
+- 236 unique references; the placed BOM and procurement quantities agree.
+- All 231 assigned footprint files exist and contain the symbol-numbered pads.
+  This checks pad numbering, not manufacturer land dimensions or connector fit.
+- Five switch footprints remain unassigned: SW50/SW51/SW60/SW61/SW70.
 - Proposed signal assignments have no duplicate MCU/GPIO allocation per zone;
   power/reserved header groups are excluded from this uniqueness check.
 - PB11 is excluded; PC9 replacement and PC8 task-probe reservation are explicit.
 - Power equations and reference/component tolerances calculated, not measured.
-- ERC has 24 findings (18 errors, 6 warnings); full board remains incomplete.
+- ERC: zero errors and zero warnings for the current partial schematic.
+- Exported XML: 272 nets. check_netlist.py verifies MCU supply/VCAP/reset/BOOT0,
+  SWD, host-pin allocation, Lab 3 probe order, Pi supply separation and CAN
+  isolation headers. Only power/GND and CAN backbones cross sheets.
+- VCAP1 on each LQFP64 MCU connects only to its own 4.7uF capacitor to GND;
+  PB11 is not used. VDD and VBAT connect to board 3.3V; VDDA is filtered.
+- MCP2515 SO is modeled as tri-state per DS20001801K Fig.12-11. The Pi header
+  models externally supplied 5V and preserves the independent 3.3V outputs.
+  No general ERC check was disabled to resolve these findings.
+- Actuator/protection completion, final connector pinouts, switch footprints,
+  load/thermal testing, PCB layout and DRC remain unfinished.
 
 Limits: these checks do not prove a manufacturer pinout, land dimensions,
 converter stability, thermal design, power rating, signal voltage, battery

@@ -148,3 +148,90 @@ Power,R432,22k,RC0603FR-0722KL,Resistor_SMD:R_0603_1608Metric,Calculated design;
 Power,R433,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R434,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,J44,Rail / PG / GND,,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Calculated design; not bench validated
+Front,U50,STM32F401RET6TR,STM32F401RET6TR,Package_QFP:LQFP-64_10x10mm_P0.5mm,DS10086 LQFP64; pin 30 VCAP1 needs 4.7uF; no PB11; GPIO modes require PCB firmware port
+Front,C500,100n VDD19,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,C501,100n VDD32,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,C502,100n VDD48,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,C503,100n VDD64,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,C504,100n VBAT,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,C505,4.7u VDD bulk,GRM21BR71C475KE51L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
+Front,C506,4.7u VCAP1,GRM21BR71C475KE51L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
+Front,FB50,600R @100MHz,742863160,Inductor_SMD:L_0603_1608Metric,VDDA analog filter; VSSA joins quiet common ground
+Front,C507,100n VDDA,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,C508,1u VDDA,CC0603JRX7R7BB105,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,R500,10k BOOT0,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,J500,BOOT recovery,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Front,R501,10k NRST,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,C509,100n NRST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,SW50,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Front,J501,SWD (2.54mm),2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Front,J502,3.3V TTL UART,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Front,R502,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,SW51,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Front,C510,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Front,R510,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,D510,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Front,R511,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,D511,ERR red,LTST-C190KRKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Front,R512,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,D512,DEG_A yellow,LTST-C190KSKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Front,R513,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Front,D513,DEG_B yellow,LTST-C190KSKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Front,J503,LAB3 rows 1-13,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Front,J504,Additional probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Front,R530,10k PWM pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,U60,STM32F401RET6TR,STM32F401RET6TR,Package_QFP:LQFP-64_10x10mm_P0.5mm,DS10086 LQFP64; pin 30 VCAP1 needs 4.7uF; no PB11; GPIO modes require PCB firmware port
+Rear,C600,100n VDD19,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C601,100n VDD32,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C602,100n VDD48,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C603,100n VDD64,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C604,100n VBAT,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C605,4.7u VDD bulk,GRM21BR71C475KE51L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C606,4.7u VCAP1,GRM21BR71C475KE51L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
+Rear,FB60,600R @100MHz,742863160,Inductor_SMD:L_0603_1608Metric,VDDA analog filter; VSSA joins quiet common ground
+Rear,C607,100n VDDA,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,C608,1u VDDA,CC0603JRX7R7BB105,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,R600,10k BOOT0,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,J600,BOOT recovery,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Rear,R601,10k NRST,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,C609,100n NRST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,SW60,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Rear,J601,SWD (2.54mm),2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Rear,J602,3.3V TTL UART,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Rear,R602,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,SW61,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Rear,C610,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Rear,R610,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,D610,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Rear,R611,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,D611,ERR red,LTST-C190KRKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Rear,R612,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,D612,DEG_A yellow,LTST-C190KSKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Rear,R613,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,D613,DEG_B yellow,LTST-C190KSKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Rear,J603,LAB3 rows 1-13,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Rear,J604,Additional probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Rear,R630,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,R631,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,R632,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,R633,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,R634,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Rear,R635,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Cockpit,J70,Raspberry Pi4 GPIO,TBD 2x20 female socket,Connector_PinSocket_2.54mm:PinSocket_2x20_P2.54mm_Vertical,Physical header numbering; select mating height/orientation after chassis/Pi fit check; 3.3V and ID pins intentionally unconnected
+Cockpit,C700,22u /16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
+Cockpit,C701,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Cockpit,R700,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Cockpit,SW70,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Cockpit,C702,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
+Cockpit,R710,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Cockpit,D710,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Cockpit,R711,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Cockpit,D711,ERR red,LTST-C190KRKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Cockpit,R712,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Cockpit,D712,DEG_A yellow,LTST-C190KSKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Cockpit,R713,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
+Cockpit,D713,DEG_B yellow,LTST-C190KSKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+Cockpit,J703,LAB3 rows 1-13,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Cockpit,J704,Pi extra probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
+Front,J505,Reserved / encoder probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Test access; not a substitute for final rated actuator connectors
+Rear,J605,Reserved / encoder probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical,Test access; not a substitute for final rated actuator connectors

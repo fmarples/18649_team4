@@ -9,13 +9,13 @@ Part 1.3,Servo shunt,10mOhm/1W + INA180A2 gain50; 1.61 mA/count ideal; load not 
 Part 1.4,Exact MPNs and packages,Course uses SN65HVD231MDREP; exact order code not independently confirmed; check supplied IC
 Part 1.4,Crystal loading,Six independent 16 MHz crystals; Cload not finalized
 Part 1.5,Rule setup,"0.2 mm clearance, 0.3/0.7 mm vias, 0.5 mm edge; preliminary rules, not final DRC"
-Part 2,Three-zone host pin mapping,Pin-map.csv allocated from Lab 3; PB11 corrected to PC9; firmware/schematic integration pending
+Part 2,Three-zone host pin mapping,Signal allocation connected to U50/U60/J70; PCB firmware port and physical CAN mapping still pending
 Part 2,CAN bus labels,Normalize CAN_A and CAN_B across Pi and both MCUs; earlier hardware labels differed
-Part 2,MCU support,"Need bare STM32 schematic including supply decoupling, VCAP, reset, BOOT0, clocks and SWD"
+Part 2,MCU support,"Placed both STM32F401RET6 circuits: supplies, 4.7uF VCAP1, reset, BOOT0, HSI/PLL assumption and SWD; not powered/tested"
 Part 2,Actuation and connectors,"Need L298 + diodes/heatsink, motor/encoder headers, PWM, blinkers; physical connector check"
-Part 2,Diagnostics,"Add required buttons, status/degraded LEDs, timing/test-point rows and grounds"
-Part 2,Inter-sheet connections,Local labels in current partial sheets are NOT full hierarchy connections
-Deliverables,ERC / DRC,"ERC is diagnostic and not clean; layout absent, no DRC pass claimed"
-Deliverables,BOM / CPL / Gerbers,Preliminary BOM only; no ordering-ready BOM or fabrication outputs
+Part 2,Diagnostics,"Placed 3 self-test and 2 reset buttons, 12 status LEDs, Lab3-compatible probe rows and grounds; five switch footprints unassigned; layout access and firmware pending"
+Part 2,Inter-sheet connections,Explicit hierarchical power/GND/CAN ports connected; exported netlist checked for unwanted cross-zone signals
+Deliverables,ERC / DRC,Current partial schematic: zero ERC errors/warnings; actuator/connector work incomplete; no PCB layout or DRC result
+Deliverables,BOM / CPL / Gerbers,236 placed parts plus separately listed planned parts; 5 switch footprints and procurement details unresolved; no CPL/Gerbers
 Lab 1,Revision entry,Record future pin/LED/connector changes; no CAN-ID change proposed here
 Power design,Three TPS564252 rails,"Circuits and calculations included; effective capacitance, load/thermal/transient and input qualification remain"

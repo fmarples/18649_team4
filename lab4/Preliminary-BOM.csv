@@ -2,31 +2,31 @@
 MCP2515T-I/ST,MCP2515T-I/ST,6,0,2,U10 U14 U20 U24 U30 U34,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
 SN65HVD231MDREP,SN65HVD231MDREP,6,0,2,U11 U15 U21 U25 U31 U35,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course HVD231 substitution; exact ordering code needs confirmation,,Unverified,Course Oct 16 substitution; verify exact supplied ordering code
 CX3225SB16000H0FLJCC,16 MHz,6,0,2,Y10 Y14 Y20 Y24 Y30 Y34,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Course list where exact MPN matches; confirm stock,,Unverified,Load capacitor values require crystal CL and PCB stray capacitance
-TBD,Cload TBD,12,0,2,C100 C101 C140 C141 C200 C201 C240 C241 C300 C301 C340 C341,Capacitor_SMD:C_0603_1608Metric,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
-CRCW060310K0FKEA,10k,20,0,2,R100 R101 R140 R141 R200 R201 R240 R241 R300 R301 R340 R341 R3 R4 R6 R7 R400 R413 R423 R433,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Calculated design; not bench validated; Preliminary; verify before fabrication
-KGM15AR71C104KT,100n,24,0,2,C102 C103 C104 C142 C143 C144 C202 C203 C204 C242 C243 C244 C302 C303 C304 C342 C343 C344 C1 C2 C3 C5 C6 C8,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
-TBD,CAN A isolation,3,0,1,J10 J20 J30,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Exact part selection pending,,Unverified,Shunts 1-2 and 3-4; remove both to isolate this node
-TBD,CAN A test,3,0,1,J11 J21 J31,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
-TBD,TERM A,2,0,1,JP10 JP20,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
+,Cload TBD,12,0,1,C100 C101 C140 C141 C200 C201 C240 C241 C300 C301 C340 C341,Capacitor_SMD:C_0603_1608Metric,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
+CRCW060310K0FKEA,10k,20,0,2,R100 R101 R140 R141 R200 R201 R240 R241 R300 R301 R340 R341 R3 R4 R6 R7 R400 R413 R423 R433,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication; Calculated design; not bench validated
+KGM15AR71C104KT,100n,25,0,2,C102 C103 C104 C142 C143 C144 C202 C203 C204 C242 C243 C244 C302 C303 C304 C342 C343 C344 C1 C2 C3 C5 C6 C8 C701,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication; Locate at associated supply pin; verify effective capacitance
+,CAN A isolation,3,0,1,J10 J20 J30,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Shunts 1-2 and 3-4; remove both to isolate this node
+,CAN A test,3,0,1,J11 J21 J31,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
+,TERM A,2,0,1,JP10 JP20,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
 RC0603FR-07120RL,120R,4,0,2,R102 R142 R202 R242,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
-TBD,CAN B isolation,3,0,1,J14 J24 J34,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Exact part selection pending,,Unverified,Shunts 1-2 and 3-4; remove both to isolate this node
-TBD,CAN B test,3,0,1,J15 J25 J35,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
-TBD,TERM B,2,0,1,JP14 JP24,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
-TBD,10mR / 1W / 1%,1,0,1,R1,Resistor_SMD:R_2512_6332Metric,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
+,CAN B isolation,3,0,1,J14 J24 J34,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Shunts 1-2 and 3-4; remove both to isolate this node
+,CAN B test,3,0,1,J15 J25 J35,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
+,TERM B,2,0,1,JP14 JP24,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
+,10mR / 1W / 1%,1,0,1,R1,Resistor_SMD:R_2512_6332Metric,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
 INA180A2IDBVR,INA180A2IDBVR,1,0,1,U1,Package_TO_SOT_SMD:SOT-23-5,Outside common list; verify purchase/assembly,,Unverified,Preliminary; verify before fabrication
 RC0603FR-074K7L,4.7k,1,0,1,R2,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
-TBD,Sense test points,1,0,1,J1,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
+,Sense test points,1,0,1,J1,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
 ACS712ELCTR-05B-T,ACS712ELCTR-05B-T,2,0,1,U2 U3,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
 GCM1885C2A102FA16D,1n,2,0,1,C4 C7,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
-ERJ-3EKF1001V,1k,2,0,1,R5 R8,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication
-TBD,Current test,2,0,1,J2 J3,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact part selection pending,,Unverified,Preliminary; verify before fabrication
+ERJ-3EKF1001V,1k,14,0,1,R5 R8 R510 R511 R512 R513 R610 R611 R612 R613 R710 R711 R712 R713,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Preliminary; verify before fabrication; Schematic connected; placement and hardware validation pending
+,Current test,2,0,1,J2 J3,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Preliminary; verify before fabrication
 FIT0587,BATTERY IN,1,0,1,J40,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course list where exact MPN matches; confirm stock,,Unverified,Electrical placeholder only: replace generic header footprint with verified XT60/pigtail landing
 3568 holder; fuse TBD,Fuse: rating TBD,1,0,1,F1,Fuse:Fuseholder_Blade_Mini_Keystone_3568,Course list where exact MPN matches; confirm stock,,Unverified,Fuse must coordinate with holder/wire rating and measured inrush; not selected from peak estimate alone
 DMPH3010LK3-13,DMPH3010LK3-13,1,0,1,Q1,Package_TO_SOT_SMD:TO-252-2,Outside common list; verify purchase/assembly,,Unverified,"Reverse-polarity: drain toward battery, source toward load. Manufacturer G1 D2 S3. Not a reverse-current blocker."
 RC0603FR-0747KL,47k,2,0,1,R401 R412,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Calculated design; not bench validated
 BZT52C12 (Diotec),12V gate clamp,1,0,1,D40,Diode_SMD:D_SOD-123F,Outside common list; verify purchase/assembly,,Unverified,"Cathode at source, anode at gate; clamp protects VGS, not the battery rail"
 UPW1E102MHD,1000u / 25V,1,0,1,C400,Capacitor_THT:CP_Radial_D12.5mm_P5.00mm,Outside common list; verify purchase/assembly,,Unverified,"Nichicon: diameter 12.5 mm, height 20 mm, pitch 5 mm; 1.66 A high-frequency ripple rating. Application ripple/thermal check pending."
-TBD,VBAT test,1,0,1,J41,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact part selection pending,,Unverified,Calculated design; not bench validated
+,VBAT test,1,0,1,J41,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Calculated design; not bench validated
 TPS564252DRLR,TPS564252DRLR,3,0,1,U40 U41 U42,Package_TO_SOT_SMD:SOT-563,Course list where exact MPN matches; confirm stock,,Unverified,Calculated design; not bench validated
 SDCHA1V8040-4R7-R,4.7uH / 5.8A,3,0,1,L1 L2 L3,Lab4_Power:Eaton_SDCHA1V8040,Course list where exact MPN matches; confirm stock,,Unverified,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
 GRM32ER61E226KE15L,22u / 25V,3,0,1,C410 C420 C430,Capacitor_SMD:C_1210_3225Metric,Outside common list; verify purchase/assembly,,Unverified,Input MLCC candidate; verify bias capacitance and supply ripple
@@ -36,27 +36,52 @@ RC0603FR-07100KL,100k 1%,1,0,1,R410,Resistor_SMD:R_0603_1608Metric,Outside commo
 CRCW060310K0FKEA,10k 1%,2,0,1,R411 R431,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Calculated design; not bench validated
 C0603C220J1GACTU,22p C0G,3,0,1,C414 C424 C434,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
 CRCW060310K0FKEA,10k PG pullup,3,0,1,R414 R424 R434,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Calculated design; not bench validated
-TBD,Rail / PG / GND,3,0,1,J42 J43 J44,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Exact part selection pending,,Unverified,Calculated design; not bench validated
+,Rail / PG / GND,3,0,1,J42 J43 J44,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Calculated design; not bench validated
 RT0603BRD0775KL,75k 0.1%,1,0,1,R420,Resistor_SMD:R_0603_1608Metric,Outside common list; verify purchase/assembly,,Unverified,Calculated design; not bench validated
 RT0603BRD0710KL,10k 0.1%,1,0,1,R421,Resistor_SMD:R_0603_1608Metric,Outside common list; verify purchase/assembly,,Unverified,Calculated design; not bench validated
 RC0603FR-0733KL,33k,1,0,1,R422,Resistor_SMD:R_0603_1608Metric,Outside common list; verify purchase/assembly,,Unverified,Calculated design; not bench validated
 RC0603FR-0745K3L,45.3k 1%,1,0,1,R430,Resistor_SMD:R_0603_1608Metric,Outside common list; verify purchase/assembly,,Unverified,Calculated design; not bench validated
 RC0603FR-0722KL,22k,1,0,1,R432,Resistor_SMD:R_0603_1608Metric,Outside common list; verify purchase/assembly,,Unverified,Calculated design; not bench validated
-STM32F401RET6TR,Front/rear MCU,0,2,1,Not placed yet,LQFP-64 10x10 mm 0.5 mm,Course list,,Unverified,Full support circuit not placed; Pin-map.csv allocates signals
+STM32F401RET6TR,STM32F401RET6TR,2,0,1,U50 U60,Package_QFP:LQFP-64_10x10mm_P0.5mm,Course list,,Unverified,DS10086 LQFP64; pin 30 VCAP1 needs 4.7uF; no PB11; GPIO modes require PCB firmware port
+KGM15AR71C104KT,100n VDD19,2,0,1,C500 C600,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+KGM15AR71C104KT,100n VDD32,2,0,1,C501 C601,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+KGM15AR71C104KT,100n VDD48,2,0,1,C502 C602,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+KGM15AR71C104KT,100n VDD64,2,0,1,C503 C603,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+KGM15AR71C104KT,100n VBAT,2,0,1,C504 C604,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+GRM21BR71C475KE51L,4.7u VDD bulk,2,0,1,C505 C605,Capacitor_SMD:C_0805_2012Metric,Course list; confirm availability,,Unverified,Locate at associated supply pin; verify effective capacitance
+GRM21BR71C475KE51L,4.7u VCAP1,2,0,1,C506 C606,Capacitor_SMD:C_0805_2012Metric,Course list; confirm availability,,Unverified,Locate at associated supply pin; verify effective capacitance
+742863160,600R @100MHz,2,0,1,FB50 FB60,Inductor_SMD:L_0603_1608Metric,Course list; confirm availability,,Unverified,VDDA analog filter; VSSA joins quiet common ground
+KGM15AR71C104KT,100n VDDA,2,0,1,C507 C607,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+CC0603JRX7R7BB105,1u VDDA,2,0,1,C508 C608,Capacitor_SMD:C_0603_1608Metric,Course list; confirm availability,,Unverified,Locate at associated supply pin; verify effective capacitance
+CRCW060310K0FKEA,10k BOOT0,2,0,1,R500 R600,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Schematic connected; placement and hardware validation pending
+2.54 mm breakaway header,BOOT recovery,2,0,1,J500 J600,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+CRCW060310K0FKEA,10k NRST,2,0,1,R501 R601,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Schematic connected; placement and hardware validation pending
+KGM15AR71C104KT,100n NRST,2,0,1,C509 C609,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+SWT0210-045026GSA,SWT0210-045026GSA,5,0,1,SW50 SW51 SW60 SW61 SW70,,Course list,,Unverified,Electrical circuit placed; exact GCT footprint drawing still required; NO FOOTPRINT ASSIGNED: verify manufacturer drawing before layout
+2.54 mm breakaway header,SWD (2.54mm),2,0,1,J501 J601,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+2.54 mm breakaway header,3.3V TTL UART,2,0,1,J502 J602,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+CRCW060310K0FKEA,10k TEST pullup,3,0,1,R502 R602 R700,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Schematic connected; placement and hardware validation pending
+KGM15AR71C104KT,100n TEST,3,0,1,C510 C610 C702,Capacitor_SMD:C_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+LTST-C190GKT,STATUS green,3,0,1,D510 D610 D710,LED_SMD:LED_0603_1608Metric,Course list,,Unverified,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+LTST-C190KRKT,ERR red,3,0,1,D511 D611 D711,LED_SMD:LED_0603_1608Metric,Course list,,Unverified,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+LTST-C190KSKT,DEG_A yellow,3,0,1,D512 D612 D712,LED_SMD:LED_0603_1608Metric,Course list,,Unverified,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+LTST-C190KSKT,DEG_B yellow,3,0,1,D513 D613 D713,LED_SMD:LED_0603_1608Metric,Course list,,Unverified,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
+2.54 mm breakaway header,LAB3 rows 1-13,3,0,1,J503 J603 J703,Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+2.54 mm breakaway header,Additional probes,1,0,1,J504,Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+CRCW060310K0FKEA,10k PWM pulldown,1,0,1,R530,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Schematic connected; placement and hardware validation pending
+2.54 mm breakaway header,Additional probes,1,0,1,J604,Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+CRCW060310K0FKEA,10k boot pulldown,6,0,1,R630 R631 R632 R633 R634 R635,Resistor_SMD:R_0603_1608Metric,Course list where exact MPN matches; confirm stock,,Unverified,Schematic connected; placement and hardware validation pending
+TBD 2x20 female socket,Raspberry Pi4 GPIO,1,0,1,J70,Connector_PinSocket_2.54mm:PinSocket_2x20_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Physical header numbering; select mating height/orientation after chassis/Pi fit check; 3.3V and ID pins intentionally unconnected
+GRM219R61C226ME15L,22u /16V,1,0,1,C700,Capacitor_SMD:C_0805_2012Metric,Course list where exact MPN matches; confirm stock,,Unverified,Locate at associated supply pin; verify effective capacitance
+2.54 mm breakaway header,Pi extra probes,1,0,1,J704,Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Course stock; label pin 1 and every signal; preserve physical access
+2.54 mm breakaway header,Reserved / encoder probes,1,0,1,J505,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Test access; not a substitute for final rated actuator connectors
+2.54 mm breakaway header,Reserved / encoder probes,1,0,1,J605,Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical,Exact procurement selection pending,,Unverified,Test access; not a substitute for final rated actuator connectors
 L298N,Dual H bridge,0,1,1,Not placed yet,Multiwatt-15,Course substitution,,Unverified,Current limiting/thermal review required; schematic not placed
 SK520B,Flyback Schottky diode,0,8,1,Not placed yet,SMB / DO-214AA,SMC Diode Solutions; course list,,Unverified,Corrected old supplier/MPN; verify clamp paths and transient ratings
 B6B-PH-SM4-TB,6-pin motor/encoder connector,0,2,1,Not placed yet,JST PH 2 mm,Course list,,Unverified,Verify actual cable mating order before routing
-SWT0210-045026GSA,Self-test button,0,3,1,Not placed yet,Verify exact switch land pattern,Course list,,Unverified,"One per zone; PC13 on each MCU, BCM16 on Pi"
-SWT0210-045026GSA,MCU reset button,0,2,1,Not placed yet,Verify exact switch land pattern,Course list,,Unverified,One per STM32
-LTST-C190GKT,Status LED,0,3,1,Not placed yet,0603,Course list,,Unverified,One per zone; series resistor to choose from required brightness
-LTST-C190KSKT,Bus-degraded LED,0,6,1,Not placed yet,0603,Course list,,Unverified,Two per zone; individual series resistors required
-LTST-C190KRKT,Error LED,0,3,1,Not placed yet,0603,Course list,,Unverified,One per zone; individual series resistor required
 TBD,Vehicle blinkers: red/white/yellow/blue,0,4,1,Not placed yet,Verify lamp/current/connector,Match vehicle specification,,Unverified,Lamp drivers/resistors not placed; one LED per corner
-TBD,Pi 40-pin connector,0,1,1,Not placed yet,2x20 2.54 mm; verify stacking orientation,Connector selection,,Unverified,Keep access to Pi ports; do not connect independent 3.3 V outputs
-TBD,Removable 2.54 mm jumper shunts,0,16,1,Not placed yet,Fits selected isolation/termination header pitch,Connector hardware,,Unverified,"12 shunts for H/L at six isolation groups, plus 4 termination shunts; use caps that can be gripped in assembled car"
-TBD,SWD headers,0,2,1,Not placed yet,Choose compatible keyed debug header,Connector selection,,Unverified,"VTref, GND, SWDIO, SWCLK, NRST"
+TBD,Removable 2.54 mm jumper shunts,0,18,1,Not placed yet,Fits selected isolation/termination header pitch,Connector hardware,,Unverified,16 normal-use shunts: 12 isolation plus 4 termination. Two additional optional BOOT0 recovery shunts; leave those off for normal operation.
 TBD,Servo header,0,1,1,Not placed yet,3-pin; verify current/contact rating,Connector selection,,Unverified,"6.6 V sensed supply, GND, PWM; preserve cable order"
-TBD,MCU decoupling / VCAP / reset / BOOT0 / ferrite / LED resistors,0,Determine from completed support circuits,1,Not placed yet,0603/0805 as applicable,Common passives where ratings match,,Unverified,Do not order from an incomplete quantity; add all VDD pins and VCAP1
 TBD,AA NiMH cells,0,10,1,Not placed yet,AA,Not listed in course parts list v2; ask staff supply policy,,Unverified,Recommended chemistry/count; model/capacity/current rating unselected
 TBD,10-cell series holder or two 5-cell holders + wiring,0,1,1,Not placed yet,Mechanical/current rating unselected,Ask staff supply policy,,Unverified,Holder contact/current rating must support measured load; do not assume cheap holder can deliver 10 A
 TBD,NiMH-compatible external charger,0,1,1,Not placed yet,Matches cells; removable-cell charger possible,Ask staff supply policy,,Unverified,Do not charge through this PCB; no charger circuit included
