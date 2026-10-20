@@ -1,0 +1,14 @@
+﻿Measurement,Value,Unit,Method / operating condition
+Usable PCB length,,mm,Power off; ruler/calipers; define chassis front
+Usable PCB width,,mm,Allow space for wheels and moving linkage
+Mounting-hole centers,,mm,"Record x,y from one fixed origin; add a row per hole"
+Mounting-hole diameter,,mm,Check actual screw/standoff size
+Clearance above / below board,,mm,Include connector and heatsink heights
+Left motor unloaded current,,A,Record voltage and PWM; do not stall
+Right motor unloaded current,,A,Record voltage and PWM; do not stall
+Motor normal loaded current,,A,"Record load, voltage, duty and which motor"
+Servo idle / hold current,,A,Record supply voltage and steering position
+Servo moving current,,A,Use agreed safe motion; do not force linkage
+Pi plus electronics current,,A,Record connected peripherals and workload
+Rail voltage during load change,,V,Record min/max using appropriate instrument
+Safe peak/stall test result,,A,Only after staff-approved driver/current-limit procedure

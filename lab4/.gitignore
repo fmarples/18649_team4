@@ -1,0 +1,6 @@
+# Local KiCad editor state and backups
+*.kicad_prl
+*.lck
+~*
+*-backups/
+*.bak

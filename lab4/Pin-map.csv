@@ -1,0 +1,111 @@
+﻿Zone,Signal,Pin,Package_or_header_pin,Mode,Voltage,Status,Notes
+Front,SPI1_SCK,PA5,21,AF5 SPI1_SCK,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,SPI1_MISO,PA6,22,AF5 SPI1_MISO,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,SPI1_MOSI,PA7,23,AF5 SPI1_MOSI,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,CAN_A_CS,PB6,58,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,CAN_A_INT,PA10,43,EXTI10 input,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,CAN_B_CS,PC7,38,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,CAN_B_INT,PB5,57,EXTI5 input,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,RX_A_MARKER,PC2,10,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,RX_B_MARKER,PC3,11,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,TX_A_MARKER,PA0,14,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,TX_B_MARKER,PA1,15,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,DEG_A_LED,PB0,26,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,DEG_B_LED,PB1,27,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,ERROR_LED,PC0,8,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,STEER_TASK_MARKER,PC1,9,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,PWM_SET_MARKER,PB9,62,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,DIR_A_MARKER,PB10,29,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,RELAY_TX_MARKER,PC6,37,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,TASK_PROBE,PC8,39,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Front,SELFTEST_BUTTON,PC13,2,EXTI13 input,3.3 V,Lab 3 retained/reserved,Use WCET/B1 button assignment; candidate uses PA8 instead. Select one alias in firmware; do not short the pins.
+Front,CANDIDATE_TEST_RESERVED,PA8,41,Reserved input,3.3 V,Lab 3 retained/reserved,Reserve candidate test-button input; optional test pad. PC13 is the proposed physical button.
+Front,PID_MARKER,PC9,40,GPIO output,3.3 V,Required hardware correction,Lab 3 PB11 is unavailable in LQFP64; pin 30 is VCAP1. Replace PB11 with PC9 in the future PCB overlay.
+Front,SWDIO,PA13,46,SWD,3.3 V,Proposed PCB addition,Keep programming/debug access
+Front,SWCLK,PA14,49,SWD,3.3 V,Proposed PCB addition,Keep programming/debug access
+Front,RESET_N,NRST,7,Reset input,3.3 V,Proposed PCB addition,Independent reset button and SWD header per MCU
+Front,UART_CONSOLE_TX,PA11,44,AF8 USART6_TX,3.3 V,Proposed PCB addition,3.3 V TTL UART header; do not connect directly to USB data or RS-232
+Front,UART_CONSOLE_RX,PA12,45,AF8 USART6_RX,3.3 V,Proposed PCB addition,Move console from USART2 so PA2/PA3 can be analog inputs
+Front,STATUS_LED,PA15,50,GPIO output,3.3 V,Proposed PCB addition,Release JTAG function; retain SWD on PA13/PA14
+Front,FRONT_LEFT_LED,PA4,20,GPIO output,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Front,FRONT_RIGHT_LED,PB8,61,GPIO output,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Front,REAR_LEFT_LED_RESERVED,PC4,24,Reserved,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Front,REAR_RIGHT_LED_RESERVED,PC5,25,Reserved,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Front,BOOT0,BOOT0,60,Boot strap,3.3 V,Proposed PCB addition,Pull down for boot from flash; optional jumper for recovery
+Front,PH0,PH0,5,Clock reserved,3.3 V,Proposed PCB addition,Bare MCU initially uses internal HSI/PLL; Nucleo ST-LINK HSE bypass is absent
+Front,PH1,PH1,6,Clock reserved,3.3 V,Proposed PCB addition,Reserve for optional future crystal
+Front,PC14,PC14,3,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
+Front,PC15,PC15,4,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
+Rear,SPI1_SCK,PA5,21,AF5 SPI1_SCK,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,SPI1_MISO,PA6,22,AF5 SPI1_MISO,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,SPI1_MOSI,PA7,23,AF5 SPI1_MOSI,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,CAN_A_CS,PB6,58,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,CAN_A_INT,PA10,43,EXTI10 input,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,CAN_B_CS,PC7,38,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,CAN_B_INT,PB5,57,EXTI5 input,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,RX_A_MARKER,PC2,10,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,RX_B_MARKER,PC3,11,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,TX_A_MARKER,PA0,14,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,TX_B_MARKER,PA1,15,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,DEG_A_LED,PB0,26,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,DEG_B_LED,PB1,27,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,ERROR_LED,PC0,8,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,STEER_TASK_MARKER,PC1,9,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,PWM_SET_MARKER,PB9,62,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,DIR_A_MARKER,PB10,29,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,RELAY_TX_MARKER,PC6,37,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,TASK_PROBE,PC8,39,GPIO output,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
+Rear,SELFTEST_BUTTON,PC13,2,EXTI13 input,3.3 V,Lab 3 retained/reserved,Use WCET/B1 button assignment; candidate uses PA8 instead. Select one alias in firmware; do not short the pins.
+Rear,CANDIDATE_TEST_RESERVED,PA8,41,Reserved input,3.3 V,Lab 3 retained/reserved,Reserve candidate test-button input; optional test pad. PC13 is the proposed physical button.
+Rear,PID_MARKER,PC9,40,GPIO output,3.3 V,Required hardware correction,Lab 3 PB11 is unavailable in LQFP64; pin 30 is VCAP1. Replace PB11 with PC9 in the future PCB overlay.
+Rear,SWDIO,PA13,46,SWD,3.3 V,Proposed PCB addition,Keep programming/debug access
+Rear,SWCLK,PA14,49,SWD,3.3 V,Proposed PCB addition,Keep programming/debug access
+Rear,RESET_N,NRST,7,Reset input,3.3 V,Proposed PCB addition,Independent reset button and SWD header per MCU
+Rear,UART_CONSOLE_TX,PA11,44,AF8 USART6_TX,3.3 V,Proposed PCB addition,3.3 V TTL UART header; do not connect directly to USB data or RS-232
+Rear,UART_CONSOLE_RX,PA12,45,AF8 USART6_RX,3.3 V,Proposed PCB addition,Move console from USART2 so PA2/PA3 can be analog inputs
+Rear,STATUS_LED,PA15,50,GPIO output,3.3 V,Proposed PCB addition,Release JTAG function; retain SWD on PA13/PA14
+Rear,FRONT_LEFT_LED_RESERVED,PA4,20,Reserved,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Rear,FRONT_RIGHT_LED_RESERVED,PB8,61,Reserved,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Rear,REAR_LEFT_LED,PC4,24,GPIO output,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Rear,REAR_RIGHT_LED,PC5,25,GPIO output,3.3 V,Lab 3 retained/reserved,Retain Lab 3 LED pins; fit the lamps only in their owning zone.
+Rear,BOOT0,BOOT0,60,Boot strap,3.3 V,Proposed PCB addition,Pull down for boot from flash; optional jumper for recovery
+Rear,PH0,PH0,5,Clock reserved,3.3 V,Proposed PCB addition,Bare MCU initially uses internal HSI/PLL; Nucleo ST-LINK HSE bypass is absent
+Rear,PH1,PH1,6,Clock reserved,3.3 V,Proposed PCB addition,Reserve for optional future crystal
+Rear,PC14,PC14,3,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
+Rear,PC15,PC15,4,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
+Front,SERVO_PWM,PA9,42,AF1 TIM1_CH2 / 50 Hz,3.3 V,Proposed PCB addition,"New actuator output, separate from PB9 timing marker"
+Front,SERVO_CURRENT_ADC,PA2,16,ADC1_IN2,3.3 V,Proposed PCB addition,INA180 filtered output; ADC input must remain within VDDA
+Front,BATTERY_MONITOR_RESERVED,PA3,17,ADC1_IN3,0 to VDDA after divider,Proposed PCB addition,Reserve for future divided battery monitor; divider/cutoff firmware not implemented
+Rear,LEFT_CURRENT_ADC,PA2,16,ADC1_IN2,3.3 V,Proposed PCB addition,ACS712 divider and RC filter; not the former PA0 timing pin
+Rear,RIGHT_CURRENT_ADC,PA3,17,ADC1_IN3,3.3 V,Proposed PCB addition,ACS712 divider and RC filter; not the former PA1 timing pin
+Rear,LEFT_ENABLE_PWM,PA9,42,AF1 TIM1_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENA; full-on enable supports braking when both direction inputs match
+Rear,RIGHT_ENABLE_PWM,PB7,59,AF2 TIM4_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENB; separate timer from the front-zone servo MCU
+Rear,LEFT_IN1,PB13,34,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
+Rear,LEFT_IN2,PB14,35,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
+Rear,RIGHT_IN3,PB15,36,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
+Rear,RIGHT_IN4,PC10,51,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
+Rear,LEFT_ENC_A,PB2,28,EXTI2 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
+Rear,LEFT_ENC_B,PB3,55,EXTI3 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
+Rear,RIGHT_ENC_A,PB4,56,EXTI4 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
+Rear,RIGHT_ENC_B,PB12,33,EXTI12 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
+Rear,OVERLOAD_MARKER,PC11,52,GPIO output,3.3 V,Proposed PCB addition,Reserve required overload test-point output; implement with the overload policy
+Cockpit,SPI0_SCLK,BCM11,23,SPI0,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,SPI0_MISO,BCM9,21,SPI0,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,SPI0_MOSI,BCM10,19,SPI0,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,CAN_A_CS_CE0,BCM8,24,SPI0,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,CAN_B_CS_CE1,BCM7,26,SPI0,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,CAN_A_INT,BCM25,22,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,CAN_B_INT,BCM24,18,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,UDP_RX_MARKER,BCM17,11,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,CMD_TX_MARKER,BCM27,13,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,TX_A_MARKER,BCM22,15,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,TX_B_MARKER,BCM23,16,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,DEG_A_LED,BCM5,29,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,DEG_B_LED,BCM6,31,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,ERROR_LED,BCM12,32,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,STATUS_LED,BCM13,33,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,SELFTEST_BUTTON,BCM16,36,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,5V_INPUT,Power/reserved,"2,4",Power/reserved,5.1 V,Proposed PCB,Board feeds Pi; avoid simultaneous USB-C power without power-path isolation.
+Cockpit,GND,Power/reserved,"6,9,14,20,25,30,34,39",Power/reserved,0 V,Proposed PCB,Common ground; keep motor/servo high-current returns away from logic supply path.
+Cockpit,PI_3V3_DO_NOT_JOIN,Power/reserved,"1,17",Power/reserved,Pi output,Proposed PCB,Do not tie Pi 3.3 V output to the independent PCB regulator.
+Cockpit,ID_EEPROM_RESERVED,Power/reserved,"27,28",Power/reserved,3.3 V,Proposed PCB,Leave ID_SD/ID_SC reserved unless adding a compliant HAT EEPROM.

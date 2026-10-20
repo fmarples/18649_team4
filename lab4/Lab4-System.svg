@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="59" font-family="Arial" font-size="34" fill="#172b3a" font-weight="bold">Lab 4 — planned three-zone PCB</text>
+<text x="45" y="93" font-family="Arial" font-size="23" fill="#172b3a" font-weight="normal">Two independent CAN buses • 500 kbit/s • common ground • local SPI and clocks</text>
+<polyline points="85,140 1515,140" fill="none" stroke="#2468bd" stroke-width="5"/>
+<text x="220" y="132" font-family="Arial" font-size="22" fill="#2468bd" font-weight="bold">CAN A (H/L pair)</text>
+<rect x="65" y="125" width="85" height="32" rx="12" fill="#ffffff" stroke="#2468bd" stroke-width="3"/>
+<text x="84.5" y="156" font-family="Arial" font-size="17" fill="#172b3a" font-weight="bold">120 Ω</text>
+<rect x="1455" y="125" width="85" height="32" rx="12" fill="#ffffff" stroke="#2468bd" stroke-width="3"/>
+<text x="1474.5" y="156" font-family="Arial" font-size="17" fill="#172b3a" font-weight="bold">120 Ω</text>
+<polyline points="85,185 1515,185" fill="none" stroke="#c54141" stroke-width="5"/>
+<text x="220" y="177" font-family="Arial" font-size="22" fill="#c54141" font-weight="bold">CAN B (H/L pair)</text>
+<rect x="65" y="170" width="85" height="32" rx="12" fill="#ffffff" stroke="#c54141" stroke-width="3"/>
+<text x="84.5" y="201" font-family="Arial" font-size="17" fill="#172b3a" font-weight="bold">120 Ω</text>
+<rect x="1455" y="170" width="85" height="32" rx="12" fill="#ffffff" stroke="#c54141" stroke-width="3"/>
+<text x="1474.5" y="201" font-family="Arial" font-size="17" fill="#172b3a" font-weight="bold">120 Ω</text>
+<text x="45" y="1099" font-family="Arial" font-size="19" fill="#172b3a" font-weight="normal">120 Ω across H/L at each end; terminators remain connected when a node is isolated.</text>
+<text x="199.5" y="283" font-family="Arial" font-size="25" fill="#172b3a" font-weight="bold">FRONT ZONE</text>
+<polyline points="170,140 170,300" fill="none" stroke="#2468bd" stroke-width="3"/>
+<rect x="75" y="300" width="190" height="48" rx="12" fill="#ffffff" stroke="#2468bd" stroke-width="3"/>
+<text x="100.5" y="334" font-family="Arial" font-size="20" fill="#172b3a" font-weight="bold">H + L isolation</text>
+<polyline points="170,348 170,375" fill="none" stroke="#2468bd" stroke-width="3"/>
+<rect x="75" y="375" width="190" height="80" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="113.5" y="410" font-family="Arial" font-size="21" fill="#172b3a" font-weight="bold">MCP2515 +</text>
+<text x="107.5078125" y="437" font-family="Arial" font-size="21" fill="#172b3a" font-weight="normal">HVD231  •  A</text>
+<polyline points="170,455 170,490" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="170,490 164.345448056554,478.2941876694152 175.654551943446,478.2941876694152" fill="#244f6b"/>
+<polyline points="380,185 380,300" fill="none" stroke="#c54141" stroke-width="3"/>
+<rect x="285" y="300" width="190" height="48" rx="12" fill="#ffffff" stroke="#c54141" stroke-width="3"/>
+<text x="310.5" y="334" font-family="Arial" font-size="20" fill="#172b3a" font-weight="bold">H + L isolation</text>
+<polyline points="380,348 380,375" fill="none" stroke="#c54141" stroke-width="3"/>
+<rect x="285" y="375" width="190" height="80" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="323.5" y="410" font-family="Arial" font-size="21" fill="#172b3a" font-weight="bold">MCP2515 +</text>
+<text x="317.5" y="437" font-family="Arial" font-size="21" fill="#172b3a" font-weight="normal">HVD231  •  B</text>
+<polyline points="380,455 380,490" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="380,490 374.345448056554,478.2941876694152 385.654551943446,478.2941876694152" fill="#244f6b"/>
+<rect x="60" y="490" width="440" height="90" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="184.0" y="528" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">STM32F401RET6</text>
+<text x="159.5" y="559" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">SPI / two CS / two INT</text>
+<text x="125.5" y="608" font-family="Arial" font-size="18" fill="#172b3a" font-weight="normal">16 MHz per CAN controller; 3.3 V logic</text>
+<text x="696.0" y="283" font-family="Arial" font-size="25" fill="#172b3a" font-weight="bold">COCKPIT ZONE</text>
+<polyline points="680,140 680,300" fill="none" stroke="#2468bd" stroke-width="3"/>
+<rect x="585" y="300" width="190" height="48" rx="12" fill="#ffffff" stroke="#2468bd" stroke-width="3"/>
+<text x="610.5" y="334" font-family="Arial" font-size="20" fill="#172b3a" font-weight="bold">H + L isolation</text>
+<polyline points="680,348 680,375" fill="none" stroke="#2468bd" stroke-width="3"/>
+<rect x="585" y="375" width="190" height="80" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="623.5" y="410" font-family="Arial" font-size="21" fill="#172b3a" font-weight="bold">MCP2515 +</text>
+<text x="617.5078125" y="437" font-family="Arial" font-size="21" fill="#172b3a" font-weight="normal">HVD231  •  A</text>
+<polyline points="680,455 680,490" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="680,490 674.345448056554,478.2941876694152 685.654551943446,478.2941876694152" fill="#244f6b"/>
+<polyline points="890,185 890,300" fill="none" stroke="#c54141" stroke-width="3"/>
+<rect x="795" y="300" width="190" height="48" rx="12" fill="#ffffff" stroke="#c54141" stroke-width="3"/>
+<text x="820.5" y="334" font-family="Arial" font-size="20" fill="#172b3a" font-weight="bold">H + L isolation</text>
+<polyline points="890,348 890,375" fill="none" stroke="#c54141" stroke-width="3"/>
+<rect x="795" y="375" width="190" height="80" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="833.5" y="410" font-family="Arial" font-size="21" fill="#172b3a" font-weight="bold">MCP2515 +</text>
+<text x="827.5" y="437" font-family="Arial" font-size="21" fill="#172b3a" font-weight="normal">HVD231  •  B</text>
+<polyline points="890,455 890,490" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="890,490 884.345448056554,478.2941876694152 895.654551943446,478.2941876694152" fill="#244f6b"/>
+<rect x="570" y="490" width="440" height="90" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="706.5" y="528" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">Raspberry Pi 4</text>
+<text x="669.5" y="559" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">SPI / two CS / two INT</text>
+<text x="635.5" y="608" font-family="Arial" font-size="18" fill="#172b3a" font-weight="normal">16 MHz per CAN controller; 3.3 V logic</text>
+<text x="1226.5" y="283" font-family="Arial" font-size="25" fill="#172b3a" font-weight="bold">REAR ZONE</text>
+<polyline points="1190,140 1190,300" fill="none" stroke="#2468bd" stroke-width="3"/>
+<rect x="1095" y="300" width="190" height="48" rx="12" fill="#ffffff" stroke="#2468bd" stroke-width="3"/>
+<text x="1120.5" y="334" font-family="Arial" font-size="20" fill="#172b3a" font-weight="bold">H + L isolation</text>
+<polyline points="1190,348 1190,375" fill="none" stroke="#2468bd" stroke-width="3"/>
+<rect x="1095" y="375" width="190" height="80" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="1133.5" y="410" font-family="Arial" font-size="21" fill="#172b3a" font-weight="bold">MCP2515 +</text>
+<text x="1127.5078125" y="437" font-family="Arial" font-size="21" fill="#172b3a" font-weight="normal">HVD231  •  A</text>
+<polyline points="1190,455 1190,490" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="1190,490 1184.345448056554,478.2941876694152 1195.654551943446,478.2941876694152" fill="#244f6b"/>
+<polyline points="1400,185 1400,300" fill="none" stroke="#c54141" stroke-width="3"/>
+<rect x="1305" y="300" width="190" height="48" rx="12" fill="#ffffff" stroke="#c54141" stroke-width="3"/>
+<text x="1330.5" y="334" font-family="Arial" font-size="20" fill="#172b3a" font-weight="bold">H + L isolation</text>
+<polyline points="1400,348 1400,375" fill="none" stroke="#c54141" stroke-width="3"/>
+<rect x="1305" y="375" width="190" height="80" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="1343.5" y="410" font-family="Arial" font-size="21" fill="#172b3a" font-weight="bold">MCP2515 +</text>
+<text x="1337.5" y="437" font-family="Arial" font-size="21" fill="#172b3a" font-weight="normal">HVD231  •  B</text>
+<polyline points="1400,455 1400,490" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="1400,490 1394.345448056554,478.2941876694152 1405.654551943446,478.2941876694152" fill="#244f6b"/>
+<rect x="1080" y="490" width="440" height="90" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="1204.0" y="528" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">STM32F401RET6</text>
+<text x="1179.5" y="559" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">SPI / two CS / two INT</text>
+<text x="1145.5" y="608" font-family="Arial" font-size="18" fill="#172b3a" font-weight="normal">16 MHz per CAN controller; 3.3 V logic</text>
+<rect x="85" y="690" width="210" height="85" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="110.0" y="727" font-family="Arial" font-size="23" fill="#172b3a" font-weight="bold">Steering servo</text>
+<text x="126.5" y="756" font-family="Arial" font-size="23" fill="#172b3a" font-weight="normal">LD-1501MG</text>
+<rect x="325" y="690" width="210" height="85" rx="12" fill="#fff3db" stroke="#244f6b" stroke-width="3"/>
+<text x="345.5" y="727" font-family="Arial" font-size="23" fill="#172b3a" font-weight="bold">Shunt + INA180</text>
+<text x="381.0" y="756" font-family="Arial" font-size="23" fill="#172b3a" font-weight="normal">ADC filter</text>
+<polyline points="420,690 420,635 350,635 350,580" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="350,580 355.654551943446,591.7058123305848 344.345448056554,591.7058123305848" fill="#244f6b"/>
+<text x="435" y="654" font-family="Arial" font-size="19" fill="#172b3a" font-weight="normal">analog</text>
+<polyline points="180,580 180,690" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="180,690 174.345448056554,678.2941876694152 185.654551943446,678.2941876694152" fill="#244f6b"/>
+<text x="110" y="647" font-family="Arial" font-size="19" fill="#172b3a" font-weight="normal">PWM</text>
+<polyline points="430,775 430,800 190,800 190,775" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="190,775 195.654551943446,786.7058123305848 184.345448056554,786.7058123305848" fill="#24834b"/>
+<text x="180" y="833" font-family="Arial" font-size="19" fill="#24834b" font-weight="normal">servo supply through shunt</text>
+<rect x="595" y="690" width="390" height="85" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="706.0" y="728" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">Wheel / pedals</text>
+<text x="665.5" y="759" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">Windows proxy → UDP</text>
+<polyline points="790,690 790,580" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="790,580 795.654551943446,591.7058123305848 784.345448056554,591.7058123305848" fill="#244f6b"/>
+<rect x="1100" y="660" width="410" height="70" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="1223.0" y="696" font-family="Arial" font-size="22" fill="#172b3a" font-weight="bold">L298N + flyback</text>
+<text x="1228.0" y="724" font-family="Arial" font-size="22" fill="#172b3a" font-weight="normal">PWM / direction</text>
+<polyline points="1300,580 1300,660" fill="none" stroke="#244f6b" stroke-width="3"/>
+<polygon points="1300,660 1294.345448056554,648.2941876694152 1305.654551943446,648.2941876694152" fill="#244f6b"/>
+<rect x="1100" y="760" width="185" height="55" rx="12" fill="#fff3db" stroke="#244f6b" stroke-width="3"/>
+<text x="1141.5" y="796" font-family="Arial" font-size="22" fill="#172b3a" font-weight="bold">ACS712 L</text>
+<rect x="1325" y="760" width="185" height="55" rx="12" fill="#fff3db" stroke="#244f6b" stroke-width="3"/>
+<text x="1365.0" y="796" font-family="Arial" font-size="22" fill="#172b3a" font-weight="bold">ACS712 R</text>
+<polyline points="1190,730 1190,760" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="1190,760 1184.345448056554,748.2941876694152 1195.654551943446,748.2941876694152" fill="#24834b"/>
+<polyline points="1415,730 1415,760" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="1415,760 1409.345448056554,748.2941876694152 1420.654551943446,748.2941876694152" fill="#24834b"/>
+<rect x="1100" y="850" width="185" height="55" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="1139.0" y="886" font-family="Arial" font-size="22" fill="#172b3a" font-weight="bold">Left motor</text>
+<rect x="1325" y="850" width="185" height="55" rx="12" fill="#edf3f7" stroke="#244f6b" stroke-width="3"/>
+<text x="1356.0" y="886" font-family="Arial" font-size="22" fill="#172b3a" font-weight="bold">Right motor</text>
+<polyline points="1190,815 1190,850" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="1190,850 1184.345448056554,838.2941876694152 1195.654551943446,838.2941876694152" fill="#24834b"/>
+<polyline points="1415,815 1415,850" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="1415,850 1409.345448056554,838.2941876694152 1420.654551943446,838.2941876694152" fill="#24834b"/>
+<polyline points="1100,785 1040,785 1040,545 1080,545" fill="none" stroke="#b1781f" stroke-width="3"/>
+<polygon points="1080,545 1068.2941876694151,550.654551943446 1068.2941876694151,539.345448056554" fill="#b1781f"/>
+<polyline points="1510,785 1550,785 1550,545 1520,545" fill="none" stroke="#b1781f" stroke-width="3"/>
+<polygon points="1520,545 1531.7058123305849,539.345448056554 1531.7058123305849,550.654551943446" fill="#b1781f"/>
+<text x="1030" y="938" font-family="Arial" font-size="18" fill="#172b3a" font-weight="normal">Analog current → ADC; encoder feedback → STM32</text>
+<rect x="60" y="960" width="340" height="90" rx="12" fill="#e6f3e9" stroke="#24834b" stroke-width="3"/>
+<text x="110.0078125" y="998" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">AA cells + protection</text>
+<text x="131.5" y="1029" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">10 NiMH proposed</text>
+<rect x="450" y="960" width="1060" height="90" rx="12" fill="#e6f3e9" stroke="#24834b" stroke-width="3"/>
+<text x="760.5" y="998" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">Three buck converters + motor branch</text>
+<text x="739.5" y="1029" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">Motor rail • 6.6 V servo • 5.1 V Pi • 3.3 V logic</text>
+<polyline points="400,1005 450,1005" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="450,1005 438.2941876694152,1010.654551943446 438.2941876694152,999.345448056554" fill="#24834b"/>
+<polyline points="545,960 550,960 550,730 535,730" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="535,730 546.7058123305848,724.345448056554 546.7058123305848,735.654551943446" fill="#24834b"/>
+<polyline points="1510,1000 1580,1000 1580,700 1510,700" fill="none" stroke="#24834b" stroke-width="3"/>
+<polygon points="1510,700 1521.7058123305849,694.345448056554 1521.7058123305849,705.654551943446" fill="#24834b"/>
+<text x="60" y="890" font-family="Arial" font-size="20" fill="#172b3a" font-weight="normal">Also planned: buttons, LEDs, SWD</text>
+<text x="60" y="916" font-family="Arial" font-size="20" fill="#172b3a" font-weight="normal">and timing / power test points.</text>
+</svg>

@@ -1,0 +1,21 @@
+﻿Area,Decision / check,Status / evidence needed
+Part 1.1,"Battery chemistry, capacity, loaded voltage, discharge rating",AA series selected; 10 NiMH recommended; exact cells/holder/capacity/runtime not chosen
+Part 1.1,"Fuse, reverse polarity and undervoltage protection","PMOS and gate clamp proposed; fuse element, pack cutoff, connector landing and transient verification pending"
+Part 1.1,Motor current and L298 loss/temperature,Motor 3.2 A spec exceeds L298 2 A DC/brake limit; resolve with staff before sustained stall
+Part 1.1,Servo rail,Use handout LD-1501MG; propose separate 6.6 V rail; current not measured
+Part 1.2,Mechanical fit,"Need outline, hole centers/diameters, standoff heights, lead exits"
+Part 1.3,Motor ADC conditioning,"10k/10k divider, 1k/100n LPF; 8.54 mA/count at nominal 5.1 V sensor supply and 3.3 V ADC reference; calibration untested"
+Part 1.3,Servo shunt,10mOhm/1W + INA180A2 gain50; 1.61 mA/count ideal; load not measured
+Part 1.4,Exact MPNs and packages,Course uses SN65HVD231MDREP; exact order code not independently confirmed; check supplied IC
+Part 1.4,Crystal loading,Six independent 16 MHz crystals; Cload not finalized
+Part 1.5,Rule setup,"0.2 mm clearance, 0.3/0.7 mm vias, 0.5 mm edge; preliminary rules, not final DRC"
+Part 2,Three-zone host pin mapping,Pin-map.csv allocated from Lab 3; PB11 corrected to PC9; firmware/schematic integration pending
+Part 2,CAN bus labels,Normalize CAN_A and CAN_B across Pi and both MCUs; earlier hardware labels differed
+Part 2,MCU support,"Need bare STM32 schematic including supply decoupling, VCAP, reset, BOOT0, clocks and SWD"
+Part 2,Actuation and connectors,"Need L298 + diodes/heatsink, motor/encoder headers, PWM, blinkers; physical connector check"
+Part 2,Diagnostics,"Add required buttons, status/degraded LEDs, timing/test-point rows and grounds"
+Part 2,Inter-sheet connections,Local labels in current partial sheets are NOT full hierarchy connections
+Deliverables,ERC / DRC,"ERC is diagnostic and not clean; layout absent, no DRC pass claimed"
+Deliverables,BOM / CPL / Gerbers,Preliminary BOM only; no ordering-ready BOM or fabrication outputs
+Lab 1,Revision entry,Record future pin/LED/connector changes; no CAN-ID change proposed here
+Power design,Three TPS564252 rails,"Circuits and calculations included; effective capacitance, load/thermal/transient and input qualification remain"

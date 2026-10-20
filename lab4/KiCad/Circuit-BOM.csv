@@ -1,0 +1,150 @@
+﻿Sheet,Reference,Value,MPN,Footprint,Status
+Front,U10,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
+Front,U11,SN65HVD231MDREP,SN65HVD231MDREP,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course Oct 16 substitution; verify exact supplied ordering code
+Front,Y10,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
+Front,C100,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,C101,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,R100,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Front,C102,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,R101,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Front,C103,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,C104,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,J10,CAN A isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
+Front,J11,CAN A test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Front,JP10,TERM A,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
+Front,R102,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Front,U14,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
+Front,U15,SN65HVD231MDREP,SN65HVD231MDREP,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course Oct 16 substitution; verify exact supplied ordering code
+Front,Y14,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
+Front,C140,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,C141,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,R140,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Front,C142,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,R141,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Front,C143,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,C144,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,J14,CAN B isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
+Front,J15,CAN B test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Front,JP14,TERM B,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
+Front,R142,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,U20,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
+Rear,U21,SN65HVD231MDREP,SN65HVD231MDREP,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course Oct 16 substitution; verify exact supplied ordering code
+Rear,Y20,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
+Rear,C200,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C201,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R200,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C202,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R201,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C203,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C204,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,J20,CAN A isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
+Rear,J21,CAN A test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Rear,JP20,TERM A,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
+Rear,R202,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,U24,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
+Rear,U25,SN65HVD231MDREP,SN65HVD231MDREP,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course Oct 16 substitution; verify exact supplied ordering code
+Rear,Y24,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
+Rear,C240,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C241,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R240,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C242,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R241,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C243,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C244,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,J24,CAN B isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
+Rear,J25,CAN B test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Rear,JP24,TERM B,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
+Rear,R242,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,U30,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
+Cockpit,U31,SN65HVD231MDREP,SN65HVD231MDREP,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course Oct 16 substitution; verify exact supplied ordering code
+Cockpit,Y30,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
+Cockpit,C300,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C301,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,R300,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C302,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,R301,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C303,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C304,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,J30,CAN A isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
+Cockpit,J31,CAN A test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Cockpit,U34,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
+Cockpit,U35,SN65HVD231MDREP,SN65HVD231MDREP,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Course Oct 16 substitution; verify exact supplied ordering code
+Cockpit,Y34,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
+Cockpit,C340,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C341,Cload TBD,,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,R340,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C342,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,R341,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C343,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,C344,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Cockpit,J34,CAN B isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
+Cockpit,J35,CAN B test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Front,R1,10mR / 1W / 1%,,Resistor_SMD:R_2512_6332Metric,Preliminary; verify before fabrication
+Front,U1,INA180A2IDBVR,INA180A2IDBVR,Package_TO_SOT_SMD:SOT-23-5,Preliminary; verify before fabrication
+Front,C1,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,R2,4.7k,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Front,C2,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Front,J1,Sense test points,,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Preliminary; verify before fabrication
+Rear,U2,ACS712ELCTR-05B-T,ACS712ELCTR-05B-T,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Preliminary; verify before fabrication
+Rear,C3,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C4,1n,GCM1885C2A102FA16D,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R3,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R4,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R5,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C5,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,J2,Current test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Rear,U3,ACS712ELCTR-05B-T,ACS712ELCTR-05B-T,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Preliminary; verify before fabrication
+Rear,C6,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C7,1n,GCM1885C2A102FA16D,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R6,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R7,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,R8,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
+Rear,C8,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
+Rear,J3,Current test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
+Power,J40,BATTERY IN,FIT0587,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Electrical placeholder only: replace generic header footprint with verified XT60/pigtail landing
+Power,F1,Fuse: rating TBD,3568 holder; fuse TBD,Fuse:Fuseholder_Blade_Mini_Keystone_3568,Fuse must coordinate with holder/wire rating and measured inrush; not selected from peak estimate alone
+Power,Q1,DMPH3010LK3-13,DMPH3010LK3-13,Package_TO_SOT_SMD:TO-252-2,"Reverse-polarity: drain toward battery, source toward load. Manufacturer G1 D2 S3. Not a reverse-current blocker."
+Power,R400,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R401,47k,RC0603FR-0747KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,D40,12V gate clamp,BZT52C12 (Diotec),Diode_SMD:D_SOD-123F,"Cathode at source, anode at gate; clamp protects VGS, not the battery rail"
+Power,C400,1000u / 25V,UPW1E102MHD,Capacitor_THT:CP_Radial_D12.5mm_P5.00mm,"Nichicon: diameter 12.5 mm, height 20 mm, pitch 5 mm; 1.66 A high-frequency ripple rating. Application ripple/thermal check pending."
+Power,J41,VBAT test,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Calculated design; not bench validated
+Power,U40,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated design; not bench validated
+Power,L1,4.7uH / 5.8A,SDCHA1V8040-4R7-R,Lab4_Power:Eaton_SDCHA1V8040,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
+Power,C410,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input MLCC candidate; verify bias capacitance and supply ripple
+Power,C411,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
+Power,C412,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,C413,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,R410,100k 1%,RC0603FR-07100KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R411,10k 1%,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,C414,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
+Power,R412,47k,RC0603FR-0747KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R413,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R414,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,J42,Rail / PG / GND,,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Calculated design; not bench validated
+Power,U41,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated design; not bench validated
+Power,L2,4.7uH / 5.8A,SDCHA1V8040-4R7-R,Lab4_Power:Eaton_SDCHA1V8040,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
+Power,C420,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input MLCC candidate; verify bias capacitance and supply ripple
+Power,C421,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
+Power,C422,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,C423,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,R420,75k 0.1%,RT0603BRD0775KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R421,10k 0.1%,RT0603BRD0710KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,C424,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
+Power,R422,33k,RC0603FR-0733KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R423,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R424,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,J43,Rail / PG / GND,,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Calculated design; not bench validated
+Power,U42,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated design; not bench validated
+Power,L3,4.7uH / 5.8A,SDCHA1V8040-4R7-R,Lab4_Power:Eaton_SDCHA1V8040,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
+Power,C430,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input MLCC candidate; verify bias capacitance and supply ripple
+Power,C431,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
+Power,C432,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,C433,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,R430,45.3k 1%,RC0603FR-0745K3L,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R431,10k 1%,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,C434,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
+Power,R432,22k,RC0603FR-0722KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R433,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R434,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,J44,Rail / PG / GND,,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Calculated design; not bench validated

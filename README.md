@@ -47,6 +47,8 @@ The servo console's OFF command does not stop motors. See the
 
 ## Team documentation
 
+- [Lab 4 PCB design files, power calculations, pin map and BOM](lab4/README.md)
+
 - [September 28 bench summary: changes, tests and remaining work](doc/SESSION_2026-09-28.md)
 - [Actuator stability investigation and verification](doc/ACTUATOR_STABILITY.md)
 - [Task table and scheduling rationale](PART4_TASK_TABLE.md)

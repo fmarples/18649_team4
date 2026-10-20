@@ -1,0 +1,5 @@
+﻿Rail,Voltage_V,Peak_allocation_A,Average_A,Minimum_input,Open_check
+Motor / protected AA input,8-15 electrical design envelope; nominal 12,6.4 raw motor-spec sum; NOT a permitted L298 operating current,Not measured,No regulated 12 V guarantee; L298 drop reduces motor voltage,"Set safe motor current limit with staff; exact cells/holder, sag, fuse and thermal limits"
+Servo buck,6.6,4.0 provisional,Not measured,8 V qualification target for this branch; not battery discharge cutoff,Measure LD-1501MG current; 4 A chip rating does not prove board thermal capability
+Pi + 5 V devices buck,5.1,3.3 provisional (3.0 Pi + 0.3 other),Not measured,6 V branch qualification target,"Peripherals/startup/overshoot, connector drop; 0.1% feedback resistors"
+MCUs + CAN + analog buck,3.318 nominal,0.8 provisional,Not measured,4.5 V branch qualification target,Add exact MCU/CAN/LED currents and validate effective output capacitance

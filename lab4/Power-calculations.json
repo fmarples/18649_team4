@@ -1,0 +1,46 @@
+{
+  "status": "Calculated design, not measured",
+  "battery": "AA series; 10-cell NiMH recommended, exact cells and holder unselected",
+  "protected_input_design_range_V": [
+    8,
+    15
+  ],
+  "regulators": [
+    {
+      "rail": "SERVO",
+      "voltage": 6.6,
+      "allocation_A": 4.0,
+      "inductance_uH": 4.7,
+      "ripple_A_pp": 1.3106382978723405,
+      "peak_A_nominal_L": 4.6553191489361705,
+      "peak_A_at_minus20percent_L": 4.819148936170213,
+      "feedback_top_ohm": 100000,
+      "feedback_bottom_ohm": 10000,
+      "EN_rising_typ_V": 6.810965
+    },
+    {
+      "rail": "5V",
+      "voltage": 5.1,
+      "allocation_A": 3.3,
+      "inductance_uH": 4.7,
+      "ripple_A_pp": 1.1936170212765957,
+      "peak_A_nominal_L": 3.896808510638298,
+      "peak_A_at_minus20percent_L": 4.046010638297872,
+      "feedback_top_ohm": 75000,
+      "feedback_bottom_ohm": 10000,
+      "EN_rising_typ_V": 5.136634999999999
+    },
+    {
+      "rail": "3V3",
+      "voltage": 3.318,
+      "allocation_A": 0.8,
+      "inductance_uH": 4.7,
+      "ripple_A_pp": 0.916332765957447,
+      "peak_A_nominal_L": 1.2581663829787235,
+      "peak_A_at_minus20percent_L": 1.3727079787234042,
+      "feedback_top_ohm": 45300,
+      "feedback_bottom_ohm": 10000,
+      "EN_rising_typ_V": 3.82109
+    }
+  ]
+}

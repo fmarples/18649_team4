@@ -1,0 +1,1 @@
+(sym_lib_table (version 7) (lib (name "Lab4_Power") (type "KiCad") (uri "${KIPRJMOD}/Lab4_Power.kicad_sym") (options "") (descr "TI TPS564252 pin-verified local symbol")))

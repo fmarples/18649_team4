@@ -1,0 +1,14 @@
+Verification — 20 October 2026
+- KiCad 10.0.4 parsed/exported all five schematic pages.
+- 149 unique references; every assigned footprint file exists.
+- Every placed symbol pin has a same-numbered footprint pad.
+- Proposed signal assignments have no duplicate MCU/GPIO allocation per zone;
+  power/reserved header groups are excluded from this uniqueness check.
+- PB11 is excluded; PC9 replacement and PC8 task-probe reservation are explicit.
+- Power equations and reference/component tolerances calculated, not measured.
+- ERC has 24 findings (18 errors, 6 warnings); full board remains incomplete.
+
+Limits: these checks do not prove a manufacturer pinout, land dimensions,
+converter stability, thermal design, power rating, signal voltage, battery
+capability, complete procurement quantities, or fabrication readiness.
+Schematic and writeup PDF appearance were reviewed separately before delivery.

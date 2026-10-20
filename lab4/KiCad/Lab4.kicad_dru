@@ -1,0 +1,6 @@
+(version 1)
+(rule "Signal clearance" (constraint clearance (min 0.2mm)))
+(rule "Signal width" (constraint track_width (min 0.2mm)))
+(rule "Copper edge" (constraint edge_clearance (min 0.5mm)))
+(rule "Via drill" (condition "A.Type == 'Via'") (constraint hole_size (min 0.3mm)))
+(rule "Annular ring" (constraint annular_width (min 0.2mm)))
