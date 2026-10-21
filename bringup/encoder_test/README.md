@@ -15,7 +15,7 @@ serial (USART2, 115200 baud, 8-N-1) every 250 ms.
 - L298N IN1–IN4 can remain disconnected for this test.
 - Do not connect MCU PWM outputs to ENA/ENB while their jumpers are fitted.
 
-See [the wiring plan](../../doc/STM32_PINOUT.md).
+See [the wiring plan](../../doc/LAB3_PINOUT.md).
 
 ## What the firmware does
 

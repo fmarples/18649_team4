@@ -1,4 +1,44 @@
-# STM32 pin assignments — Lab 2
+# Lab 3 pinout
+
+## Lab 3 Raspberry Pi LED additions
+
+This is the user-selected **Lab 3 wiring plan**, not confirmation of completed
+wiring or software support. These allocations match the cockpit LED rows already
+committed in `lab4/Pin-map.csv` on branch `lab4` (commit `c92dc07`); they were
+previously missing from this shared pinout document. They do not change the
+existing CAN module connections or timing-marker pins.
+
+| External LED / signal | Pi GPIO (BCM numbering) | Physical 40-pin header position |
+|---|---|---|
+| Bus A degraded / `DEG_A` | GPIO5 | **29** |
+| Bus B degraded / `DEG_B` | GPIO6 | **31** |
+| Red error-status LED / `ERR` | GPIO12 | **32** |
+| LED ground return | GND | **39** |
+
+**Board-facing orientation:** look at the Pi 4's component side with the USB and
+Ethernet ports at the bottom. The GPIO header is on your right; pin 1 is its
+top-left hole. Odd-numbered pins are the inner/left column and even-numbered pins
+are the outer/right column. Physical pin 32 is beside pin 31; GPIO12 does **not**
+mean physical pin 12.
+
+Use one series resistor per LED, following the team's 470-ohm LED circuit:
+`GPIO -> resistor -> LED anode (+)`, then `LED cathode (-) -> GND`.
+These are active-high connections. `ERR` is an external red error LED, not the
+Pi's onboard red power LED. Power off all supplies before changing wiring.
+
+**Assignment evidence:** [Lab 3 handout](18-449_649%20Lab%203%20-%20Dual-CAN%20v1_0.pdf),
+Part 5, pages 16–17, explicitly requires two per-bus degraded LEDs on every node,
+including the Pi. Page 17's Pi test-point column omits `ERR`, but page 19's
+checkoff requires “ERR high on all three.” The user chose to include the red
+Pi `ERR` LED to cover that checkoff requirement; the handout does not explicitly
+specify its color or GPIO number. The GPIO/header mapping and component-side
+orientation were checked against the [official Raspberry Pi GPIO diagram](https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png).
+
+## Lab 2 reference (historical)
+
+The sections below describe Lab 2, not the Lab 3 LED allocation above. In
+particular, the Lab 2 front-left/front-right pins must not be restored on the
+Lab 3 Nucleos: PB6/D10 and PA5/D13 are used by CAN CS and SPI SCK there.
 
 **Integration branch:** the root app now combines these motor, encoder, UART,
 four-lamp and PB9 servo assignments. PA5 is only the front-right blinker, and
