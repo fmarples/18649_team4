@@ -2,7 +2,7 @@
 
 Branch: `lab3_can`. Capture date on laptop: 2026-10-19. The Pi's clock differs; correlate remote logs by test, not wall-clock time.
 
-> **HANDOUT ERROR: XIAO CAN module D9 is MISO; D10 is MOSI.** The Lab 3 v1.0 handout reverses these pins. Earlier assistant wiring instructions repeated that error. Use the [manufacturer-verified correction and host pin table](STM32_PINOUT.md#lab-3-handout-erratum-can-module-mosimiso-are-reversed) for all six modules. Preserve the working wiring.
+> **HANDOUT ERROR: XIAO CAN module D9 is MISO; D10 is MOSI.** The Lab 3 v1.0 handout reverses these pins. Earlier assistant wiring instructions repeated that error. Use the [manufacturer-verified correction and host pin table](LAB3_PINOUT.md#lab-3-handout-erratum-can-module-mosimiso-are-reversed) for all six modules. Preserve the working wiring.
 
 For the current selected results and remaining coverage, see [LAB3_TIMING_RESULTS.md](LAB3_TIMING_RESULTS.md). The entries below are chronological; earlier pending/running states are historical, not current operating instructions.
 

@@ -50,7 +50,7 @@ The servo console's OFF command does not stop motors. See the
 - [September 28 bench summary: changes, tests and remaining work](doc/SESSION_2026-09-28.md)
 - [Actuator stability investigation and verification](doc/ACTUATOR_STABILITY.md)
 - [Task table and scheduling rationale](PART4_TASK_TABLE.md)
-- [Hardware BOM/power record](doc/HARDWARE.md) and [pin assignments](doc/STM32_PINOUT.md)
+- [Hardware BOM/power record](doc/HARDWARE.md) and [pin assignments](doc/LAB3_PINOUT.md)
 - [Encoder calibration](doc/ENCODER_SPEC.md) and [motor characterization](doc/MOTOR_CHARACTERIZATION.md)
 - [Current-sensor backend contract](doc/CURRENT_SENSOR_HANDOFF.md)
 - [GUI telemetry and physical input logging](doc/GUI_TELEMETRY.md)

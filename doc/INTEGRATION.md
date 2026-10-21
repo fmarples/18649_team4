@@ -63,7 +63,7 @@ defines conversion, validity and verification limits.
 The integrated image builds and software tests pass. Individual steering and
 blinker operation has been reported; combined-board operation and physical
 timing have not been demonstrated by these commits. See the
-[software evidence](PART4_SOFTWARE_RESULTS.md), [pin map](STM32_PINOUT.md),
+[software evidence](PART4_SOFTWARE_RESULTS.md), [pin map](LAB3_PINOUT.md),
 [hardware record](HARDWARE.md), [timing points](PART4_TIMING.md) and
 [measurement worksheet](PART4_MEASUREMENTS.csv).
 

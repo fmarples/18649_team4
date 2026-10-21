@@ -50,7 +50,7 @@ There is no implemented current limiting or thermal protection. The thresholds c
 - `AGENTS.md`: project scope, operating-limit decision, and hardware evidence rules.
 - `bringup/motor_test/README.md`: current PID behavior, launch/stop commands, build/test commands, profiles, and persistent log/crash-report locations.
 - `doc/MOTOR_CHARACTERIZATION.md`: simultaneous startup/holding measurements, first bounded PID result, subsequent continuous revisions, and evidence paths. Earlier feedforward/balancing results do not validate the current plain PID revision.
-- `doc/HARDWARE.md`, `doc/STM32_PINOUT.md`, `doc/ENCODER_SPEC.md`: power, wiring, B1 mapping, calibration, and remaining electrical uncertainties.
+- `doc/HARDWARE.md`, `doc/LAB3_PINOUT.md`, `doc/ENCODER_SPEC.md`: power, wiring, B1 mapping, calibration, and remaining electrical uncertainties.
 - `bringup/encoder_test/README.md`: installed Windows/Zephyr tools and flashing workflow.
 - `doc/18-449_649 Lab2 - Sensors and Actuators v1_0.pdf`: Lab 2 requirements, including average encoder velocity for control. `doc/18-449_649 Lab 1 - Requirements.pdf` is also tracked; do not import its later-system scope into this bench task.
 - `doc/INTEGRATION.md`, `PART4_TASK_TABLE.md`, `PROTOCOL.md`: integration design and current CRC link protocol.

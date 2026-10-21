@@ -15,7 +15,7 @@ weaker guard was introduced.
 
 These measurements use the same shared **12 V / 2 A supply**, L298N, wiring and
 forward polarities documented in [HARDWARE.md](HARDWARE.md) and
-[STM32_PINOUT.md](STM32_PINOUT.md). Wheels were unloaded and raised. No current,
+[LAB3_PINOUT.md](LAB3_PINOUT.md). Wheels were unloaded and raised. No current,
 temperature, rail transients or PWM waveform measurements were made.
 
 ## Full-duty measurement, 2026-09-27

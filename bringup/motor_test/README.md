@@ -16,7 +16,7 @@ protocol remain absent. Motion cutoffs and PID duty bounds are not current limit
 
 ## Hardware and startup
 
-Use the [confirmed motor-control pin assignments](../../doc/STM32_PINOUT.md)
+Use the [confirmed motor-control pin assignments](../../doc/LAB3_PINOUT.md)
 and [external E5V power configuration](../../doc/HARDWARE.md#current-power-setup).
 The user reported the six motor-control wires connected, confirmed the ENA/ENB
 jumper caps removed, and reported the chassis supported with wheels clear.
