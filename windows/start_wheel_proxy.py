@@ -1,5 +1,8 @@
 """Launch the course wheel GUI with read-only Raw log and Current chart windows.
 
+--lab3 replaces those Lab 2 telemetry windows with the Lab 3 test panel
+(lab3_demo/test_panel.py) and takes the Pi address from the `wheelpi` SSH alias.
+
 The course proxy stays external and unchanged. Pi status telemetry arrives on
 its own port, never on the course proxy's force-feedback input.
 """
@@ -52,6 +55,7 @@ def main():
     parser.add_argument('--connect', action='store_true', help='Connect wheel automatically; keep hands clear')
     parser.add_argument('--ready-file', type=Path, help='Launcher readiness report after wheel SDK connects')
     parser.add_argument('--log-dir', type=Path, default=REPO / 'logs/wheel-gui')
+    parser.add_argument('--lab3', action='store_true', help='Lab 3 test panel instead of Lab 2 telemetry')
     args = parser.parse_args()
     if not 1 <= args.telemetry_port <= 65535 or args.telemetry_port in (8000, 8001):
         parser.error('Telemetry needs a separate port, not 8000 or 8001')
@@ -66,6 +70,9 @@ def main():
         print('Course Windows wheel proxy launcher')
         print('Find the Pi address with: nmcli -g IP4.ADDRESS device show wlan0')
         pi_address = str(args.pi) if args.pi else None
+        if args.lab3 and pi_address is None:
+            from lab3_demo.synthetic_sender import pi_address as wheelpi_address
+            pi_address = wheelpi_address()
         while pi_address is None:
             try:
                 pi_address = str(ipaddress.IPv4Address(input('Pi IPv4 address: ').strip()))
@@ -79,7 +86,8 @@ def main():
             layout = QtWidgets.QVBoxLayout(widget)
             layout.addWidget(QtWidgets.QLabel('Read-only monitor. No wheel or actuator commands.'))
             window.setCentralWidget(widget)
-            print(f'Start Pi bridge with --telemetry-host {local_address} for monitor-only use.')
+            if not args.lab3:
+                print(f'Start Pi bridge with --telemetry-host {local_address} for monitor-only use.')
         else:
             sys.path.insert(0, str(course_repository()))
             import proxy_gui
@@ -102,9 +110,14 @@ def main():
             print(f'Laptop {local_address} -> Pi {pi_address}, command UDP 8000')
             print('Clamp the wheel and keep hands clear; connect gives a short bump.')
             print('Leave Toggle feedback alone. The existing force input is separate from telemetry.')
-        monitor = TelemetryWindows(window, pi_address, local_address, args.telemetry_port, log,
-                                   connected_channels=args.current_channels)
-        print('Raw log and Current chart are read-only. Logs: ' + str(log.path))
+        if args.lab3:
+            from lab3_demo.test_panel import Lab3Panel
+            monitor = Lab3Panel(window, log)
+            print('Lab 3 test panel attached. Logs: ' + str(log.path))
+        else:
+            monitor = TelemetryWindows(window, pi_address, local_address, args.telemetry_port, log,
+                                       connected_channels=args.current_channels)
+            print('Raw log and Current chart are read-only. Logs: ' + str(log.path))
         window.show()
         if args.connect:
             # Run after the window exists. Report success only after SDK wheel detection.

@@ -1,0 +1,2 @@
+python-can>=4.3,<5
+# Pi LEDs and scope markers use libgpiod v2: install python3-libgpiod from the OS package manager.

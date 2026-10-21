@@ -1,0 +1,26 @@
+mainmenu "Lab 3 Part 5 dual-CAN demo"
+source "Kconfig.zephyr"
+
+config LAB3_ZONE_N2
+    bool "Build front steering zone N2"
+    help
+      SRV servo PWM, front blinkers, FORCE_TX and the RELAY task.
+
+config LAB3_ZONE_N3
+    bool "Build rear drivetrain zone N3"
+    help
+      PWM_OUT motor PWM, DIR_A, PWM_SET, PID workload and rear blinkers.
+
+config LAB3_RELAY
+    bool
+    default y if LAB3_ZONE_N2
+    help
+      N2 is the only relay. The reused baseline timing_probe.c offers the
+      `relay` probe only when this is set.
+
+config LAB3_SWAP_CAN_AB
+    bool "Logical bus A uses the module on CS PC7 / INT PB5"
+    help
+      Set for a board whose module A (CS PB6 / INT PA10) is wired to the
+      physical bus the other nodes call B. Test points, DEG LEDs and
+      heartbeat health bits then follow the physical bus labels.

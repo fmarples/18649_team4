@@ -56,6 +56,46 @@ Sources checked after the user's correction:
 
 The updated `lab3_wcet_baseline` overlay allocates **PC8** as `TASK_BODY`, a selectable elapsed-task pulse controlled by the serial command `timing probe NAME`. This pin is separate from the existing CAN SPI/CS/INT signals and other baseline test points. Both measurement images are flashed. PC8/CN10-2 was scope-verified on the board ending 124020, first as N3 and then as N2 after the firmware-role swap. The scope has since moved to Pi GPIO17/physical11 and GPIO27/physical13; see the bring-up record for current setup. Keep PC8 isolated from actuator inputs. At the user's request, the measurement overlay now uses the built-in blue B1 button on PC13, active-low, instead of the external PA8 test input. Both updated images passed boot checks, and B1 press processing was scope-verified. See [measurement definitions](../lab3_wcet_baseline/lab3_wcet_baseline/README_WCET_BASELINE.md).
 
+## Lab 3 Part 5 demo allocation
+
+Firmware allocation for [`lab3_demo/`](../lab3_demo/README.md), in the handout's
+Part 5 probe-board row order (rows 1–2 are GND on every node). This is the
+planned wiring. Only the CAN SPI/CS/INT connections and PC8 have been used on
+hardware; the demo has not been flashed. Both Nucleos share one overlay. Arduino
+labels are given where the pin has one; check Morpho positions against ST UM1724
+before wiring.
+
+| Row | N1 (Pi), BCM / physical | N2 front | N3 rear |
+|---|---|---|---|
+| 3 | UDP_RX GPIO17 / 11 | CAN_RX_A PC2 (CN7-35) | CAN_RX_A PC2 (CN7-35) |
+| 4 | CMD_TX GPIO27 / 13 | CAN_RX_B PC3 (CN7-37) | CAN_RX_B PC3 (CN7-37) |
+| 5 | CAN_TX_A GPIO22 / 15 | CAN_TX_A PA0 / A0 | CAN_TX_A PA0 / A0 |
+| 6 | CAN_TX_B GPIO23 / 16 | CAN_TX_B PA1 / A1 | CAN_TX_B PA1 / A1 |
+| 7 | DEG_A GPIO5 / 29 | DEG_A PB0 / A3 | DEG_A PB0 / A3 |
+| 8 | DEG_B GPIO6 / 31 | DEG_B PB1 | DEG_B PB1 |
+| 9 | ERR GPIO12 / 32 (extra row) | **SRV PB4 / D5**, TIM3_CH1 50 Hz | PWM_SET PB9 / D14 |
+| 10 | – | FL PA4 / A2 | **PWM_OUT PB4 / D5**, TIM3_CH1 10 kHz |
+| 11 | – | FR PB8 / D15 | DIR_A PB10 / D6 |
+| 12 | – | RELAY_TX PC6 | RL PC4 |
+| 13 | – | ERR PC0 / A5 | RR PC5 |
+| extra | – | – | ERR PC0 / A5 (checkoff: ERR on all three) |
+
+New in the demo compared with the measurement overlay:
+
+- **PB4/D5 TIM3_CH1** carries the real PWM waveform: the servo pulse on N2 (SRV)
+  and the motor PWM on N3 (PWM_OUT). The handout defines both as in Lab 2, where
+  PB4 was PWM_OUT/left ENA. Make sure no L298N or servo is still attached.
+  At reset, PB4 is JTAG NJTRST with an internal pull-up.
+- **PC1** remains a STEER task-body marker; it is not the SRV row.
+- **PID marker PC9** replaces PB11, which does not exist on the LQFP64 package
+  (pin 30 is VCAP1), following the `lab4` pin map's correction.
+- Board defaults that claimed Lab 3 pins are disabled: USART1 (PB6 = CAN A CS),
+  I2C1 (PB8/PB9), I2C3 (PA8/PC9) and TIM2 PWM (PA5 = SPI SCK).
+- **Bus labels:** the demo calls Pi can0 bus A. The board whose module A
+  (CS PB6 / INT PA10) is wired to can1 is built with `swap_ab.conf`, which makes
+  its logical A the CS PC7 / INT PB5 module. That is ST-LINK 124020 per the
+  October 21 records; see the bring-up record before relying on it.
+
 ## Lab 2 reference (historical)
 
 The sections below retain the Lab 2 assignments; they are not the Lab 3 wiring
