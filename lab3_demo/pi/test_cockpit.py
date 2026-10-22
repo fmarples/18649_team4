@@ -3,6 +3,7 @@ import json
 import struct
 import unittest
 import uuid
+from unittest import mock
 
 import can
 
@@ -69,6 +70,17 @@ class CockpitTests(unittest.TestCase):
         self.assertTrue(p.valid(first) and p.ctrl_in_range(first))
         self.assertEqual(struct.unpack_from("<hBB", first, 1), (-1200, 100, 0))
         self.assertTrue(self.gpio.levels[CMD_TX] == self.gpio.levels[UDP_RX])
+
+    def test_cmd_tx_marks_the_return_of_the_first_ctrl_write(self):
+        order = mock.Mock()
+        targets = [("A", self.buses[0], "send"), ("B", self.buses[1], "send"), ("CMD_TX", self.gpio, "cmd_tx")]
+        for name, owner, method in targets:
+            patcher = mock.patch.object(owner, method, wraps=getattr(owner, method))
+            order.attach_mock(patcher.start(), name)
+            self.addCleanup(patcher.stop)
+        self.cockpit.on_udp(wheel(1), 0.0)
+        self.cockpit.send_ctrl(0.0)
+        self.assertEqual([call[0] for call in order.mock_calls], ["A", "CMD_TX", "B"])
 
     def test_power_up_in_error_until_both_peers_and_ctrl(self):
         self.cockpit.tick(0.0)
@@ -145,10 +157,33 @@ class CockpitTests(unittest.TestCase):
         self.frames(p.FAULT)
         self.cockpit.test_fault(False, 0.01)
         self.assertTrue(self.cockpit.error)
-        self.cockpit.test_fault(True, 5.0)  # clear needs no second press inside 400 ms
+        self.cockpit.test_fault(True, 5.0)  # clear needs no second press inside 500 ms
         self.healthy(5.01)
         self.assertFalse(self.cockpit.error)
         self.assertEqual([m.data[2] for m in self.frames(p.FAULT)[0]], [p.FAULT_TEST_BUTTON, p.FAULT_CLEAR])
+
+    def test_test_press_stops_heartbeats_until_a_double_press_within_500_ms(self):
+        self.healthy(0.0)
+        self.frames(p.HB_N1)
+        self.cockpit.on_udp(wheel(11, buttons=(0,)), 0.01)
+        self.healthy(0.02)
+        self.healthy(0.04)
+        self.assertEqual(self.frames(p.HB_N1), ([], []))
+        self.cockpit.on_udp(wheel(300), 0.3)
+        self.cockpit.on_udp(wheel(460, buttons=(0,)), 0.46)  # 450 ms after the first press
+        self.healthy(0.47)
+        self.assertFalse(self.cockpit.error)
+        a, b = self.frames(p.HB_N1)
+        self.assertEqual((len(a), len(b)), (1, 1))
+
+    def test_any_zones_fault_clear_resumes_silenced_heartbeats(self):
+        self.healthy(0.0)
+        self.cockpit.test_fault(False, 0.01)
+        self.healthy(0.02)
+        self.frames(p.HB_N1)
+        self.frame(p.FAULT, p.fault_body(2, p.FAULT_CLEAR, 2), 0, 0.03, seq=0)
+        self.healthy(0.04)
+        self.assertEqual(len(self.frames(p.HB_N1)[0]), 1)
 
     def test_status_line_is_parseable_json(self):
         self.healthy(0.0)

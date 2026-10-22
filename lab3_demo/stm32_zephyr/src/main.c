@@ -48,7 +48,7 @@
 #endif
 
 #define DEBOUNCE_MS 2
-#define DOUBLE_PRESS_MS 400
+#define DOUBLE_PRESS_MS 500 /* student clarification: double press within 500 ms */
 #define FAULT_MIN_INTERVAL_MS 20 /* catalog: FAULT minimum interarrival */
 #define BLINK_HALF_PERIOD_MS 500
 #define RX_QUEUE_DEPTH 32
@@ -91,6 +91,8 @@ static uint32_t blink_ms;
 static uint8_t tx_seq[ID_FORCE + 1];
 static uint32_t last_fault_ms;
 static bool fault_sent;
+/* Own test-button latch: HB_TX stays silent until any FAULT clear (clarification). */
+static bool hb_silenced;
 
 /* Dedup and relay claims, guarded by history_lock (dispatch and RELAY). */
 K_MUTEX_DEFINE(history_lock);
@@ -187,10 +189,12 @@ static void send_fault(uint8_t failing_zone, enum fault_reason reason)
     send_both(&f);
 }
 
+/* Releasing the latch also resumes heartbeats silenced by this node's test button. */
 static void set_latch(bool latched)
 {
     k_mutex_lock(&state_lock, K_FOREVER);
     monitor.latched = latched;
+    if (!latched) hb_silenced = false;
     k_mutex_unlock(&state_lock);
 }
 
@@ -330,8 +334,9 @@ static void relay_thread(void *a, void *b, void *c)
                                                    k_uptime_get_32());
         k_mutex_unlock(&history_lock);
         if (claim == RELAY_SEND) {
-            lab3_trace_toggle(TP_RELAY_TX);
-            atomic_inc(submit(item.bus ^ 1U, &item.frame, K_MSEC(1)) == 0 ? &relay_sent : &relay_failed);
+            int rc = submit(item.bus ^ 1U, &item.frame, K_MSEC(1));
+            lab3_trace_toggle(TP_RELAY_TX); /* clarification #6: after the send returns */
+            atomic_inc(rc == 0 ? &relay_sent : &relay_failed);
         } else if (claim == RELAY_STALE) {
             atomic_inc(&relay_stale);
         }
@@ -425,8 +430,9 @@ static void button_isr(const struct device *port, struct gpio_callback *cb, gpio
     k_sem_give(&button_wake);
 }
 
-/* TEST_BTN: single press latches error and sends FAULT; a second press within
- * 400 ms clears every zone's latch with a FAULT clear. */
+/* TEST_BTN: single press latches error, sends one FAULT and stops this node's
+ * heartbeats; a second press within 500 ms clears every zone's latch with a
+ * FAULT clear and resumes them. */
 static void button_thread(void *a, void *b, void *c)
 {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
@@ -445,6 +451,11 @@ static void button_thread(void *a, void *b, void *c)
         uint32_t now = k_uptime_get_32();
         bool clear = armed && (uint32_t)(now - last_press_ms) <= DOUBLE_PRESS_MS;
         set_latch(!clear);
+        if (!clear) {
+            k_mutex_lock(&state_lock, K_FOREVER);
+            hb_silenced = true;
+            k_mutex_unlock(&state_lock);
+        }
         refresh_state();
         send_fault(MY_ZONE, clear ? FAULT_CLEAR : FAULT_TEST_BUTTON);
         armed = !clear;
@@ -519,7 +530,8 @@ static void monitor_thread(void *a, void *b, void *c)
 }
 K_THREAD_DEFINE(hb_mon_tid, 1024, monitor_thread, NULL, NULL, NULL, 6, 0, 0);
 
-/* HB_TX: zone state and per-bus health every 20 ms. */
+/* HB_TX: zone state and per-bus health every 20 ms, except while silenced by
+ * this node's test button. */
 static void heartbeat_thread(void *a, void *b, void *c)
 {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
@@ -529,11 +541,13 @@ static void heartbeat_thread(void *a, void *b, void *c)
         uint32_t start = lab3_task_start(T_HB_TX);
         k_mutex_lock(&state_lock, K_FOREVER);
         struct zone_health h = zone_monitor_evaluate(&monitor, k_uptime_get_32());
-        bool error = zone_error;
+        bool error = zone_error, silenced = hb_silenced;
         k_mutex_unlock(&state_lock);
-        struct can_frame f;
-        lab3_pack_heartbeat(&f, MY_HB_ID, error ? STATE_ERROR : STATE_OK, h.bus_alive[0], h.bus_alive[1]);
-        send_both(&f);
+        if (!silenced) {
+            struct can_frame f;
+            lab3_pack_heartbeat(&f, MY_HB_ID, error ? STATE_ERROR : STATE_OK, h.bus_alive[0], h.bus_alive[1]);
+            send_both(&f);
+        }
         lab3_task_end(T_HB_TX, start);
         periodic_wait(&next, HB_PERIOD_MS);
     }
@@ -570,10 +584,11 @@ static void diagnostics_thread(void *a, void *b, void *c)
         k_mutex_lock(&state_lock, K_FOREVER);
         struct zone_health h = zone_monitor_evaluate(&monitor, k_uptime_get_32());
         struct lab3_ctrl ctrl = command;
-        bool latched = monitor.latched;
+        bool latched = monitor.latched, silenced = hb_silenced;
         k_mutex_unlock(&state_lock);
-        printk("%s state=%s latched=%d alive=N1:%d,N2:%d,N3:%d deg_a=%d deg_b=%d ctrl_fresh=%d "
-               "steer=%d throttle=%u brake=%u\n", APP_NAME, h.error ? "ERROR" : "OK", latched,
+        printk("%s state=%s latched=%d hb_silenced=%d alive=N1:%d,N2:%d,N3:%d deg_a=%d deg_b=%d "
+               "ctrl_fresh=%d steer=%d throttle=%u brake=%u\n", APP_NAME, h.error ? "ERROR" : "OK",
+               latched, silenced,
                h.alive[1], h.alive[2], h.alive[3], h.degraded[0], h.degraded[1], h.ctrl_fresh,
                ctrl.steer, ctrl.throttle, ctrl.brake);
         printk("CAN state_a=%d state_b=%d changes_a=%d changes_b=%d int_kicks_a=%d int_kicks_b=%d "

@@ -6,6 +6,9 @@ __pycache__/
 build/
 logs/
 
+# Local Pi sudo password for lab3_demo/start.py; the repository is public.
+lab3_demo/pi_sudo_password.txt
+
 # Personal operator/tutoring material stays local, outside team documentation.
 .local-notes/
 personal-notes/

@@ -2,8 +2,9 @@
 
 Markers, probe-board rows 3-6: UDP_RX BCM17, CMD_TX BCM27, CAN_TX_A BCM22,
 CAN_TX_B BCM23. UDP_RX starts an edge pair at the first datagram of a drained
-batch; CMD_TX matches it after both CTRL writes (same method as the measured
-lab3_wcet_baseline bridge). CAN_TX_A/B toggle on each write to that bus.
+batch; CMD_TX matches it right after the first CTRL write returns (student
+clarification #1; the lab3_wcet_baseline bridge marks after both writes).
+CAN_TX_A/B toggle on each write to that bus.
 
 LEDs from doc/LAB3_PINOUT.md, active high through 470 ohm: DEG_A BCM5
 (physical 29), DEG_B BCM6 (31), ERR BCM12 (32), ground on 39.

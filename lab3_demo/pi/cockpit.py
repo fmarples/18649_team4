@@ -10,8 +10,8 @@ Pi's DEG_A / DEG_B / ERR LEDs and UDP_RX / CMD_TX / CAN_TX_A / CAN_TX_B markers.
 
 Bad-input injection: `kill -USR1 <pid>` makes the next CTRL carry throttle 101
 (CRC valid); `kill -USR2 <pid>` corrupts the next CTRL's CRC. N1 test button
-without the wheel: SIGRTMIN latches (single press), SIGRTMIN+1 clears (double
-press). lab3_demo/test_panel.py sends these from the laptop GUI.
+without the wheel: SIGRTMIN latches and silences HB_N1 (single press), SIGRTMIN+1
+clears (double press). lab3_demo/test_panel.py sends these from the laptop GUI.
 Logs: --log-dir (default ~/.local/state/team4-lab3/demo/<start time>/) holds
 events.csv and crash.log (Python tracebacks and faulthandler dumps).
 """
@@ -42,7 +42,7 @@ from wheel_input import decode_wheel_packet
 from zone_state import HB_PERIOD_S, ZoneMonitor
 
 BLINK_HALF_PERIOD_S = 0.5
-DOUBLE_PRESS_S = 0.4
+DOUBLE_PRESS_S = 0.5  # student clarification: double press within 500 ms
 TEST_BUTTON = 1 << 0  # wheel A, as in Lab 2
 UDP_RESYNC_S = 1.0    # accept a restarted proxy's lower counter after this gap
 SEND_TIMEOUT_S = 0.001
@@ -107,6 +107,7 @@ class Cockpit:
         self.was_alive = {p.ZONE_N2: False, p.ZONE_N3: False}
         self.test_armed = False
         self.last_test_press = 0.0
+        self.hb_silenced = False    # own test press stops HB_N1 until any FAULT clear
         self.previous_buttons = 0
         self.blink_mode, self.blink_phase = p.BLINK_OFF, 0
         self.next_blink = now
@@ -119,15 +120,19 @@ class Cockpit:
 
     # ---- transmit -------------------------------------------------------
     def _write(self, frame_id, payload):
-        """Queue one frame on A then B, toggling that bus's CAN_TX marker per write."""
-        for index, bus in enumerate(self.buses):
-            self.gpio.can_tx(index)
-            try:
-                bus.send(can.Message(arbitration_id=frame_id, is_extended_id=False, data=payload),
-                         timeout=SEND_TIMEOUT_S)
-            except (can.CanError, OSError) as exc:
-                self.counters[f"tx_error_{'AB'[index]}"] += 1
-                self.log.write("TX_ERROR", f"{p.NAMES[frame_id]} bus={'AB'[index]} {exc}")
+        """Queue one frame on A then B."""
+        for index in range(len(self.buses)):
+            self._write_one(index, frame_id, payload)
+
+    def _write_one(self, index, frame_id, payload):
+        """Queue one frame on one bus, toggling that bus's CAN_TX marker."""
+        self.gpio.can_tx(index)
+        try:
+            self.buses[index].send(can.Message(arbitration_id=frame_id, is_extended_id=False, data=payload),
+                                   timeout=SEND_TIMEOUT_S)
+        except (can.CanError, OSError) as exc:
+            self.counters[f"tx_error_{'AB'[index]}"] += 1
+            self.log.write("TX_ERROR", f"{p.NAMES[frame_id]} bus={'AB'[index]} {exc}")
 
     def send(self, frame_id, body):
         """The send helper: one sequence number per logical message, then both buses."""
@@ -150,9 +155,11 @@ class Cockpit:
         payload = p.seal(seq, body)
         if inject == "crc":
             payload = payload[:7] + bytes([payload[7] ^ 0xFF])
-        self._write(p.CTRL, payload)
-        self.gpio.cmd_tx()  # handout: CMD_TX follows the writes to both buses
-        self.log.write("UDP_TO_CMD_TX", f"seq={seq}", f"{(clock() - udp_time) * 1e6:.1f}")
+        self._write_one(0, p.CTRL, payload)
+        self.gpio.cmd_tx()  # clarification #1: CMD_TX right after the first CAN write returns
+        latency_us = (clock() - udp_time) * 1e6
+        self._write_one(1, p.CTRL, payload)
+        self.log.write("UDP_TO_CMD_TX", f"seq={seq}", f"{latency_us:.1f}")
         if inject:
             self.log.write("INJECT", f"{inject} seq={seq}")
 
@@ -188,9 +195,11 @@ class Cockpit:
         self.test_fault(clear, now)
 
     def test_fault(self, clear, now):
-        """N1 test button: latch and send FAULT, or release every zone with FAULT clear."""
+        """N1 test button: latch, send FAULT and stop HB_N1, or release every zone with
+        FAULT clear and resume HB_N1."""
         with self.lock:
             self.monitor.latched = not clear
+            self.hb_silenced = not clear
         self.send_fault(p.ZONE_N1, p.FAULT_CLEAR if clear else p.FAULT_TEST_BUTTON)
         self.test_armed = not clear
         self.last_test_press = now
@@ -223,6 +232,7 @@ class Cockpit:
                 reason = data[2]
                 if reason == p.FAULT_CLEAR:
                     self.monitor.latched = False
+                    self.hb_silenced = False
                 elif reason in p.LATCHING_FAULTS:
                     self.monitor.latched = True
             elif frame_id == p.FORCE:
@@ -254,8 +264,11 @@ class Cockpit:
                 if self.was_alive[zone] and not health.alive[zone]:
                     self.send_fault(zone, p.FAULT_ZONE_LOST)
                 self.was_alive[zone] = health.alive[zone]
-            self.send(p.HB_N1, p.heartbeat_body(p.STATE_ERROR if health.error else p.STATE_OK,
-                                                *health.bus_alive))
+            with self.lock:
+                silenced = self.hb_silenced
+            if not silenced:
+                self.send(p.HB_N1, p.heartbeat_body(p.STATE_ERROR if health.error else p.STATE_OK,
+                                                    *health.bus_alive))
             steer, _, _, buttons = self.latest
             self.blinker.update(self.error, buttons, steer)
         self._blink(now)

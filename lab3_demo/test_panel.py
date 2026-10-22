@@ -5,7 +5,8 @@ lab3_demo/test_panel.pyw. Everything a test needs from the Pi side runs from
 here over the passwordless `wheelpi` SSH alias, in worker threads:
 
 - start/stop the cockpit session through lab3_demo/start.py and stop.py; the
-  sudo password is asked on every start and passed on stdin only
+  sudo password comes from the gitignored lab3_demo/pi_sudo_password.txt, or
+  is asked on every start and passed on stdin only when that file is absent
 - live N1 state, degraded buses and FAULT/state events streamed from the
   session's stdout.log and events.csv
 - bad CTRL (throttle 101 / corrupted CRC), N1 test press and clear-all, sent as
@@ -203,16 +204,19 @@ class Lab3Panel(QtCore.QObject):
     def start_session(self):
         """Start, or Restart a running session (deploying the current pi/ code)."""
         restart = self.state is not None
-        password, ok = QtWidgets.QInputDialog.getText(self.dialog, "Restart cockpit" if restart else "Start cockpit",
-                                                      "Pi sudo password:", QtWidgets.QLineEdit.Password)
-        if not ok or not password:
-            return
+        stdin_text = None  # start.py reads the local password file itself
+        if not (HERE / "pi_sudo_password.txt").exists():
+            password, ok = QtWidgets.QInputDialog.getText(self.dialog, "Restart cockpit" if restart else "Start cockpit",
+                                                          "Pi sudo password:", QtWidgets.QLineEdit.Password)
+            if not ok or not password:
+                return
+            stdin_text = password + "\n"
         bench = self.state.get("synthetic", False) if restart else self.bench.isChecked()
         args = ([sys.executable, str(HERE / "start.py")] + (["--restart"] if restart else [])
                 + (["--synthetic"] if bench else []))
         self.note(("Restarting" if restart else "Starting") + " cockpit"
                   + (" with bench input" if bench else " for the wheel proxy"))
-        self._work("start", lambda: self._script(args, password + "\n"))
+        self._work("start", lambda: self._script(args, stdin_text))
 
     def _script(self, args, stdin_text=None):
         result = run(args, 180, stdin_text)

@@ -7,7 +7,10 @@ instead of copying them. Pins: [LAB3_PINOUT.md](../doc/LAB3_PINOUT.md#lab-3-part
 
 **Status:** flashed and deployed on October 21; healthy-bus startup verified (see
 [Deployment](#deployment-october-21)). Fault-injection and timing checkoff steps
-have not been run.
+have not been run. The sources now follow the
+[October 22 student clarification](../doc/18-449_649%20Lab%203%20-%20Student%20clarification%202026-10-22.pdf)
+(see [Clarification alignment](#clarification-alignment-october-23)); that build is
+flashed and the matching cockpit deployed.
 
 | Path | Role |
 |---|---|
@@ -48,8 +51,10 @@ when a peer zone has had no heartbeat on either bus for 60 ms, or when CTRL (on 
 UDP) is more than 60 ms old. Power-up therefore starts in error and leaves it once
 both peers are heard on some bus and CTRL is fresh. A test-button press, an
 out-of-range CTRL or a bad-CRC CTRL latches and sends FAULT. Every receiver latches
-on that FAULT. A double press on any zone's button sends FAULT clear, which releases
-every latch. FAULT `ZONE_LOST` (reason 4) is informational: each node detects
+on that FAULT. A test-button press also stops that node's heartbeats, as the
+clarification requires, so peers enter error even if the FAULT is lost. A second
+press within 500 ms on any zone's button sends FAULT clear, which releases every
+latch and resumes any silenced heartbeats. FAULT `ZONE_LOST` (reason 4) is informational: each node detects
 heartbeat loss itself and recovers without a clear, so restoring an isolated node
 returns to normal without a reset.
 
@@ -110,7 +115,7 @@ is `windows/start_wheel_proxy.py --lab3`. The dialog covers:
 
 | Control | Does | Checkoff step |
 |---|---|---|
-| Start (Restart while running) / Stop, *Bench input* | `start.py [--restart]` / `stop.py`; asks for the Pi sudo password on each start and passes it on stdin only. Restart redeploys the current `pi/` code and keeps the session's bench setting. *Bench input* adds the laptop sender for use without the wheel | session |
+| Start (Restart while running) / Stop, *Bench input* | `start.py [--restart]` / `stop.py`; uses the [local password file](#run-the-cockpit-pi), or asks for the Pi sudo password on each start and passes it on stdin only. Restart redeploys the current `pi/` code and keeps the session's bench setting. *Bench input* adds the laptop sender for use without the wheel | session |
 | ERR, DEG_A, DEG_B, N2, N3, LATCH lamps | N1's live state from the cockpit's per-second `STATUS` line | 1, 5–8 |
 | Pause bench input | Sender stops, as if the proxy stopped; every zone enters error | 1 |
 | Bus traffic (3 s candump) | Per-ID rate on can0/can1 and recent sequence nibbles | 2 |
@@ -125,8 +130,9 @@ would then get two UDP streams.
 
 ## Run the cockpit (Pi)
 
-From the laptop, in a terminal (it asks once for the Pi sudo password, which is
-never stored):
+From the laptop. Sudo uses the password in `lab3_demo/pi_sudo_password.txt`,
+one line, gitignored because the repository is public. Without that file,
+`start.py` asks once in the terminal:
 
 ```powershell
 python lab3_demo\start.py              # course proxy supplies UDP; add --synthetic for a bench sender
@@ -149,8 +155,8 @@ kill -USR2 <pid>   # next CTRL has a corrupted CRC
 kill -s RTMIN <pid>     # N1 test press (latch); RTMIN+1 clears every zone
 ```
 
-The wheel A button is N1's test button; single press latches, a double press
-clears. Logs go to the session folder (standalone runs default to
+The wheel A button is N1's test button; a single press latches and stops HB_N1,
+and a second press within 500 ms clears. Logs go to the session folder (standalone runs default to
 `~/.local/state/team4-lab3/demo/<start time>/`): `events.csv`
 holds state, degraded, FAULT, TX-error and per-CTRL `UDP_TO_CMD_TX` latency, and
 `crash.log` holds tracebacks and faulthandler dumps. `--no-gpio` runs without
@@ -187,6 +193,36 @@ Console maxima are elapsed times, not scope results: STEER 186 µs (includes the
 PWM write), DRIVE 187 µs, RELAY 413 µs, can_tx 350 µs. Evidence:
 `logs/lab3-can/20261021-093718-demo-flash-n{2,3}-*.log`, `20261021-093849-demo-live-COM{4,6}.log`
 and `20261021-093849-demo-pi-check.log`.
+
+## Clarification alignment, October 23
+
+Changes for the October 22 student clarification, host-tested (31 Pi tests on the
+Pi's python-can, 3 host C tests) and built. The images and matching sources are
+in `logs/lab3-can/20261023-041626-demo-build-clarification/` (`n2swap_ab`, `n3`).
+On October 23 they were flashed under reset with pyOCD: N2 to ST-LINK 124020 (COM6),
+N3 to 171333 (COM4). The cockpit was redeployed with `start.py --synthetic`.
+Healthy-bus startup was re-verified: all three zones OK, no degraded bus, all
+four controllers error-active, zero TX rejects/failures, receive drops, bad CRCs
+or INT re-kicks; N2 relayed 527 frames with no failures. The cockpit counted 4
+`bad_frame` receptions, not yet explained. Evidence:
+`logs/lab3-can/20261023-041954-demo-flash-n{2,3}-*.log` and
+`20261023-042341-demo-live-COM{4,6}.log`. The test-press heartbeat silence and
+500 ms double press have not been exercised on hardware.
+
+- **Test button:** the pressed node sends one FAULT and stops its heartbeats until
+  any FAULT clear. The double-press window is 500 ms (was 400 ms). The STM32
+  console state line adds `hb_silenced`.
+- **RELAY_TX (#6):** toggles after the bus-B `can_send` returns, not before it.
+- **CMD_TX (#1):** the Pi toggles it right after the first CTRL write (bus A)
+  returns, and `UDP_TO_CMD_TX` uses the same boundary. The `lab3_wcet_baseline`
+  bridge still marks after both writes, so its Part 3 results use a different
+  boundary.
+- **Already matching:** CAN_RX_A toggles when dispatch first gets a frame (#2, #5).
+  DIR_A drops on a brake frame (#3). The STM32s send with a TX callback.
+- **Blocking term B:** `send_both()` holds no lock across the two buses. The
+  MCP2515 driver releases its per-device mutex before its SPI writes, and each
+  SPI transaction locks the shared bus only while it runs. B is one frame load
+  (#4), not 2 × #4.
 
 ## Not yet verified
 
