@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """N1 cockpit zone for the Lab 3 Part 5 demo.
 
-Wheel UDP (Lab 2 276-byte packet, port 8000) -> CTRL on every update, BLINK and
-HB_N1 every 20 ms, each written to bus A then bus B. Reads heartbeats, FAULT and
+Wheel UDP (Lab 2 276-byte packet, port 8000) -> CTRL on every update and at least
+every 50 ms (R4.4), BLINK on a change and every 500 ms toggle, HB_N1 every 20 ms
+while the UDP stream is alive (Lab 1: no update for 100 ms fails N1), each
+written to bus A then bus B. Reads heartbeats, FAULT and
 FORCE from both buses, drops duplicate copies by (ID, source, seq), and drives the
 Pi's DEG_A / DEG_B / ERR LEDs and UDP_RX / CMD_TX / CAN_TX_A / CAN_TX_B markers.
 
@@ -42,8 +44,13 @@ from wheel_input import decode_wheel_packet
 from zone_state import HB_PERIOD_S, ZoneMonitor
 
 BLINK_HALF_PERIOD_S = 0.5
-DOUBLE_PRESS_S = 0.5  # student clarification: double press within 500 ms
-TEST_BUTTON = 1 << 0  # wheel A, as in Lab 2
+MIN_INTERVAL_S = 0.020   # catalog: BLINK and FAULT minimum interval
+# R4.4: CTRL at least every 50 ms. Refreshing after two missed 20 ms updates
+# leaves 10 ms for Linux wake-up latency before the bound.
+CTRL_REFRESH_S = 0.040
+SINGLE_PRESS_S = 0.050   # R2.5: presses less than 50 ms apart are one press
+DOUBLE_PRESS_S = 0.5     # student clarification: double press within 500 ms
+TEST_BUTTON = 1 << 0     # wheel A, as in Lab 2
 UDP_RESYNC_S = 1.0    # accept a restarted proxy's lower counter after this gap
 SEND_TIMEOUT_S = 0.001
 
@@ -96,22 +103,27 @@ class Cockpit:
         self.gpio = gpio
         self.log = log
         self.lock = threading.Lock()
-        self.monitor = ZoneMonitor(p.ZONE_N1)
+        self.monitor = ZoneMonitor(p.ZONE_N1, now)
         self.history = FrameHistory()
         self.blinker = Blinker()
         self.seq = dict.fromkeys(p.CATALOG_IDS, 0)
-        self.latest = (0, 0, 0, 0)  # steer, throttle %, brake %, buttons
+        self.latest = None          # steer, throttle %, brake %, buttons from the last update
         self.last_udp = None        # (counter, time)
+        self.last_ctrl = None       # time of the last CTRL, update or refresh
         self.error = True
         self.health = None
         self.was_alive = {p.ZONE_N2: False, p.ZONE_N3: False}
         self.test_armed = False
-        self.last_test_press = 0.0
+        self.last_test_press = None
+        self.last_test_edge = None  # every raw press, for the R2.5 50 ms rule
         self.hb_silenced = False    # own test press stops HB_N1 until any FAULT clear
         self.previous_buttons = 0
         self.blink_mode, self.blink_phase = p.BLINK_OFF, 0
         self.next_blink = now
+        self.last_blink = float("-inf")
         self.next_hb = now
+        self.faults = collections.deque()  # (zone, reason) waiting for the 20 ms slot
+        self.next_fault = float("-inf")
         self.inject = None          # "range" or "crc" for the next CTRL
         self.pending_test = None    # "latch" or "clear" from a signal, run by the main loop
         self.force = 0
@@ -140,12 +152,28 @@ class Cockpit:
         self.seq[frame_id] = (seq + 1) & 0x0F
         self._write(frame_id, p.seal(seq, body))
 
-    def send_fault(self, failing_zone, reason):
-        self.send(p.FAULT, p.fault_body(failing_zone, reason, p.ZONE_N1))
-        self.log.write("FAULT_TX", f"zone={failing_zone} reason={reason}")
+    def send_fault(self, failing_zone, reason, now):
+        """FAULT at most every 20 ms from N1 (catalog minimum interval). Test press
+        and clear wait for their slot; repeatable reports are dropped inside it."""
+        if reason in (p.FAULT_TEST_BUTTON, p.FAULT_CLEAR) or (not self.faults and now >= self.next_fault):
+            self.faults.append((failing_zone, reason))
+        else:
+            self.counters["fault_interval_drop"] += 1
+        self._flush_faults(now)
 
-    def send_ctrl(self, udp_time, clock=time.monotonic):
+    def _flush_faults(self, now):
+        if self.faults and now >= self.next_fault:
+            failing_zone, reason = self.faults.popleft()
+            self.send(p.FAULT, p.fault_body(failing_zone, reason, p.ZONE_N1))
+            self.log.write("FAULT_TX", f"zone={failing_zone} reason={reason}")
+            self.next_fault = now + MIN_INTERVAL_S
+
+    def send_ctrl(self, now, update=True, clock=time.monotonic):
+        """CTRL from the latest wheel values. `update` marks a UDP update at `now`:
+        only those toggle CMD_TX and log the UDP_RX-to-CMD_TX latency; R4.4
+        refreshes repeat the values without a marker."""
         steer, throttle, brake, buttons = self.latest
+        self.last_ctrl = now
         body = p.ctrl_body(steer, throttle, brake, buttons)
         inject, self.inject = self.inject, None
         if inject == "range":
@@ -156,10 +184,14 @@ class Cockpit:
         if inject == "crc":
             payload = payload[:7] + bytes([payload[7] ^ 0xFF])
         self._write_one(0, p.CTRL, payload)
-        self.gpio.cmd_tx()  # clarification #1: CMD_TX right after the first CAN write returns
-        latency_us = (clock() - udp_time) * 1e6
+        if update:
+            self.gpio.cmd_tx()  # clarification #1: CMD_TX right after the first CAN write returns
+            latency_us = (clock() - now) * 1e6
         self._write_one(1, p.CTRL, payload)
-        self.log.write("UDP_TO_CMD_TX", f"seq={seq}", f"{latency_us:.1f}")
+        if update:
+            self.log.write("UDP_TO_CMD_TX", f"seq={seq}", f"{latency_us:.1f}")
+        else:
+            self.log.write("CTRL_REFRESH", f"seq={seq}")
         if inject:
             self.log.write("INJECT", f"{inject} seq={seq}")
 
@@ -169,8 +201,12 @@ class Cockpit:
         try:
             counter, steer, throttle, brake, buttons = decode_wheel_packet(data)
         except ValueError as exc:
+            # R3: a malformed or out-of-range control value puts this zone in error.
             self.counters["udp_reject"] += 1
             self.log.write("UDP_REJECT", str(exc))
+            with self.lock:
+                self.monitor.latched = True
+            self.send_fault(p.ZONE_N1, p.FAULT_BAD_CTRL, now)
             return False
         if self.last_udp is not None:
             last_counter, last_time = self.last_udp
@@ -181,7 +217,7 @@ class Cockpit:
         self.last_udp = (counter, now)
         self.latest = (steer, throttle, brake, buttons)
         with self.lock:
-            self.monitor.ctrl(now)
+            self.monitor.udp(now)
         self._test_button(buttons, now)
         self.blinker.update(self.error, buttons, steer)
         return True
@@ -190,6 +226,11 @@ class Cockpit:
         pressed = buttons & TEST_BUTTON and not self.previous_buttons & TEST_BUTTON
         self.previous_buttons = buttons
         if not pressed:
+            return
+        # Measured from the previous raw press, so chatter never adds up to a second press.
+        same_press = self.last_test_edge is not None and now - self.last_test_edge < SINGLE_PRESS_S
+        self.last_test_edge = now
+        if same_press:
             return
         clear = self.test_armed and now - self.last_test_press <= DOUBLE_PRESS_S
         self.test_fault(clear, now)
@@ -200,7 +241,7 @@ class Cockpit:
         with self.lock:
             self.monitor.latched = not clear
             self.hb_silenced = not clear
-        self.send_fault(p.ZONE_N1, p.FAULT_CLEAR if clear else p.FAULT_TEST_BUTTON)
+        self.send_fault(p.ZONE_N1, p.FAULT_CLEAR if clear else p.FAULT_TEST_BUTTON, now)
         self.test_armed = not clear
         self.last_test_press = now
         self._supervise(now)
@@ -209,6 +250,8 @@ class Cockpit:
         """Dispatch path: validate, drop our own frames relayed back by N2,
         per-bus heartbeat, dedup, then FAULT/FORCE."""
         data = bytes(msg.data)
+        with self.lock:
+            self.monitor.frame(bus, now)  # R4.7: any frame from another node is traffic
         if msg.is_extended_id or msg.is_remote_frame or msg.dlc != 8 or not p.valid(data):
             self.counters["bad_frame"] += 1
             return
@@ -247,7 +290,8 @@ class Cockpit:
             health = self.monitor.evaluate(now)
         if health.error != self.error:
             self.log.write("STATE", "ERROR" if health.error else "OK",
-                           f"latched={self.monitor.latched} alive={health.alive} ctrl_fresh={health.ctrl_fresh}")
+                           f"latched={self.monitor.latched} alive={health.alive} "
+                           f"isolated={health.isolated} udp_ok={health.udp_ok}")
         if self.health is None or health.degraded != self.health.degraded:
             self.log.write("DEGRADED", f"A={health.degraded[0]} B={health.degraded[1]}")
         self.error, self.health = health.error, health
@@ -255,46 +299,71 @@ class Cockpit:
         return health
 
     def tick(self, now):
+        """Main-loop work at `now`: state and LEDs on every call, so DEG_x lights
+        when a bus reaches 60 ms of silence; HB_MON/HB_TX every 20 ms; CTRL refresh,
+        queued FAULTs and BLINK when due."""
+        health = self._supervise(now)
         if now >= self.next_hb:
             self.next_hb += HB_PERIOD_S
             if self.next_hb <= now:
                 self.next_hb = now + HB_PERIOD_S
-            health = self._supervise(now)
             for zone in self.was_alive:
                 if self.was_alive[zone] and not health.alive[zone]:
-                    self.send_fault(zone, p.FAULT_ZONE_LOST)
+                    self.send_fault(zone, p.FAULT_ZONE_LOST, now)
                 self.was_alive[zone] = health.alive[zone]
             with self.lock:
                 silenced = self.hb_silenced
-            if not silenced:
+            if not silenced and health.udp_ok:
                 self.send(p.HB_N1, p.heartbeat_body(p.STATE_ERROR if health.error else p.STATE_OK,
-                                                    *health.bus_alive))
-            steer, _, _, buttons = self.latest
-            self.blinker.update(self.error, buttons, steer)
+                                                    *health.bus_ok))
+        if self.last_ctrl is not None and now - self.last_ctrl >= CTRL_REFRESH_S:
+            self.send_ctrl(now, update=False)
+        self._flush_faults(now)
+        steer, _, _, buttons = self.latest or (0, 0, 0, 0)
+        self.blinker.update(self.error, buttons, steer)
         self._blink(now)
 
+    def next_wake(self, now):
+        """Absolute time of the next periodic, deferred or LED deadline."""
+        times = [self.next_hb, self.next_blink]
+        if self.blinker.mode != self.blink_mode:
+            times.append(self.last_blink + MIN_INTERVAL_S)
+        if self.last_ctrl is not None:
+            times.append(self.last_ctrl + CTRL_REFRESH_S)
+        if self.faults:
+            times.append(self.next_fault)
+        with self.lock:
+            silence = self.monitor.next_change(now)
+        if silence is not None:
+            times.append(now + silence)
+        return min(times)
+
     def _blink(self, now):
-        """BLINK_TX: immediately on a mode change, then every 500 ms toggle."""
+        """BLINK_TX: on a mode change and every 500 ms toggle, never closer than the
+        catalog's 20 ms minimum interval."""
         mode = self.blinker.mode
-        if mode != self.blink_mode:
+        changed = mode != self.blink_mode
+        if (not changed and now < self.next_blink) or now < self.last_blink + MIN_INTERVAL_S:
+            return
+        if changed:
             self.blink_mode, self.blink_phase = mode, int(mode != p.BLINK_OFF)
             self.next_blink = now + BLINK_HALF_PERIOD_S
-        elif now >= self.next_blink:
+        else:
             if mode != p.BLINK_OFF:
                 self.blink_phase ^= 1
             self.next_blink += BLINK_HALF_PERIOD_S
             if self.next_blink <= now:
                 self.next_blink = now + BLINK_HALF_PERIOD_S
-        else:
-            return
+        self.last_blink = now
         self.send(p.BLINK, p.blink_body(self.blink_mode, self.blink_phase))
 
     def status(self):
         """One `STATUS {json}` line per second; test_panel.py parses it."""
         h = self.health
-        steer, throttle, brake, _ = self.latest
+        steer, throttle, brake, _ = self.latest or (0, 0, 0, 0)
         return "STATUS " + json.dumps({
             "error": self.error, "latched": self.monitor.latched,
+            "udp_ok": h is not None and h.udp_ok,
             "alive": {} if h is None else {f"N{z}": v for z, v in h.alive.items()},
             "degraded": [False, False] if h is None else list(h.degraded),
             "blink": self.blink_mode, "steer": steer, "throttle": throttle, "brake": brake,
@@ -313,13 +382,13 @@ def run(cockpit, udp, stop, sender=None, clock=time.monotonic, status_period=1.0
     """Main loop: block on UDP until the next periodic deadline, never busy-poll."""
     next_status = clock()
     while not stop.is_set():
-        timeout = max(0.0, min(cockpit.next_hb, cockpit.next_blink) - clock())
+        now = clock()
+        timeout = max(0.0, min(cockpit.next_wake(now), now + 0.1) - now)
         readable, _, _ = select.select([udp], [], [], timeout)
         if cockpit.pending_test is not None:
             request, cockpit.pending_test = cockpit.pending_test, None
             cockpit.test_fault(request == "clear", clock())
         if readable:
-            first_rx, accepted = None, False
             for _ in range(32):
                 try:
                     data, address = udp.recvfrom(4096)
@@ -329,10 +398,8 @@ def run(cockpit, udp, stop, sender=None, clock=time.monotonic, status_period=1.0
                     continue
                 cockpit.gpio.udp_rx()
                 now = clock()
-                first_rx = first_rx or now
-                accepted |= cockpit.on_udp(data, now)
-            if accepted:
-                cockpit.send_ctrl(first_rx, clock)
+                if cockpit.on_udp(data, now):  # R4.4: a CTRL for every update
+                    cockpit.send_ctrl(now, clock=clock)
         now = clock()
         cockpit.tick(now)
         if status_period and now >= next_status:

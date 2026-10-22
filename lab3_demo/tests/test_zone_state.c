@@ -6,9 +6,17 @@
 static unsigned checks;
 #define CHECK(x) do { assert(x); ++checks; } while (0)
 
+/* A peer heartbeat is also traffic on that bus, as in dispatch. */
 static void beat(struct zone_monitor *m, uint8_t zone, unsigned bus, uint32_t t)
 {
+    zone_monitor_traffic(m, bus, t);
     zone_monitor_heartbeat(m, zone, bus, t);
+}
+
+static void beat_all(struct zone_monitor *m, uint32_t t)
+{
+    for (uint8_t zone = 1; zone <= 3; ++zone)
+        for (unsigned bus = 0; bus < 2; ++bus) beat(m, zone, bus, t);
 }
 
 int main(void)
@@ -16,69 +24,79 @@ int main(void)
     struct zone_monitor m;
     struct zone_health h;
 
-    /* Power-up: in error, no degraded LEDs before any heartbeat is heard. */
-    zone_monitor_init(&m, 3);
+    /* Power-up: in error and isolated, no degraded LEDs (R3, R4.7). */
+    zone_monitor_init(&m, 3, 0);
     h = zone_monitor_evaluate(&m, 0);
-    CHECK(h.error && !h.degraded[0] && !h.degraded[1]);
+    CHECK(h.error && h.isolated && !h.degraded[0] && !h.degraded[1]);
 
-    /* Heartbeats alone are not enough; a valid CTRL is also required. */
-    beat(&m, 1, 0, 10); beat(&m, 2, 0, 10); beat(&m, 1, 1, 10); beat(&m, 2, 1, 10);
+    /* R3: heartbeats alone are not enough; one valid CTRL is also required. */
+    beat_all(&m, 10);
     CHECK(zone_monitor_evaluate(&m, 11).error);
-    zone_monitor_ctrl(&m, 11);
+    zone_monitor_ctrl(&m);
     h = zone_monitor_evaluate(&m, 12);
-    CHECK(!h.error && h.alive[1] && h.alive[2] && !h.degraded[0] && !h.degraded[1]);
+    CHECK(!h.error && !h.isolated && h.alive[1] && h.alive[2] && !h.degraded[0] && !h.degraded[1]);
+
+    /* R3 lists no stale-CTRL trigger: no CTRL for a long time is not an error
+     * while every peer heartbeat continues (N1 sends CTRL at least every 50 ms). */
+    for (uint32_t t = 20; t <= 1000; t += 20) beat_all(&m, t);
+    CHECK(!zone_monitor_evaluate(&m, 1001).error);
 
     /* Own heartbeat id is ignored: N3 cannot keep itself alive. */
-    beat(&m, 3, 0, 12);
+    zone_monitor_heartbeat(&m, 3, 0, 1001);
     CHECK(!m.hb_seen[3][0]);
 
-    /* Pull this node's A jumper: A goes degraded at 60 ms, state stays OK on B. */
-    for (uint32_t t = 30; t <= 50; t += 20) { beat(&m, 1, 1, t); beat(&m, 2, 1, t); zone_monitor_ctrl(&m, t); }
-    h = zone_monitor_evaluate(&m, 69);
-    CHECK(!h.degraded[0]);
-    h = zone_monitor_evaluate(&m, 70);
-    CHECK(h.degraded[0] && !h.degraded[1] && !h.error);
+    /* R4.7: pull this node's A jumper at t=1001. A is degraded exactly 60 ms
+     * after the last A traffic, the state stays OK on B. */
+    CHECK(zone_monitor_next_change_ms(&m, 1001) == 59);
+    for (uint32_t t = 1020; t <= 1040; t += 20) { beat(&m, 1, 1, t); beat(&m, 2, 1, t); }
+    CHECK(zone_monitor_next_change_ms(&m, 1040) == 20);
+    CHECK(!zone_monitor_evaluate(&m, 1059).degraded[0]);
+    beat(&m, 1, 1, 1060); beat(&m, 2, 1, 1060);
+    h = zone_monitor_evaluate(&m, 1060);
+    CHECK(h.degraded[0] && !h.degraded[1] && !h.error && !h.bus_ok[0] && h.bus_ok[1]);
 
-    /* Restore A: the LED clears on the first heartbeat. */
-    beat(&m, 2, 0, 95);
-    h = zone_monitor_evaluate(&m, 95);
-    CHECK(!h.degraded[0] && h.bus_alive[0]);
+    /* Restore A: the first frame from any node clears it. */
+    zone_monitor_traffic(&m, 0, 1065);
+    h = zone_monitor_evaluate(&m, 1065);
+    CHECK(!h.degraded[0] && h.bus_ok[0]);
 
-    /* One peer still on A keeps A healthy even when the other peer left A. */
-    CHECK(h.alive[1] && h.alive[2]);
+    /* R4.7 counts any traffic, not only heartbeats: CTRL alone keeps A healthy. */
+    zone_monitor_init(&m, 2, 0);
+    beat_all(&m, 0); zone_monitor_ctrl(&m);
+    for (uint32_t t = 20; t <= 200; t += 20) { beat(&m, 1, 1, t); beat(&m, 3, 1, t); zone_monitor_traffic(&m, 0, t); }
+    CHECK(!zone_monitor_evaluate(&m, 200).degraded[0]);
 
-    /* A peer silent on BOTH buses for 60 ms fails the zone and enters error. */
-    zone_monitor_init(&m, 2);
-    beat(&m, 1, 0, 0); beat(&m, 3, 0, 0); beat(&m, 3, 1, 0); zone_monitor_ctrl(&m, 0);
-    beat(&m, 1, 0, 40); zone_monitor_ctrl(&m, 40);
-    CHECK(!zone_monitor_evaluate(&m, 59).error);
-    h = zone_monitor_evaluate(&m, 60);
-    CHECK(h.error && !h.alive[3] && h.alive[1]);
+    /* R4.5: a peer fails only after three missed heartbeats on both buses,
+     * 3 x 22 ms = 66 ms at the +10 % period limit (clarification chain). */
+    zone_monitor_init(&m, 2, 0);
+    beat_all(&m, 0); zone_monitor_ctrl(&m);
+    for (uint32_t t = 20; t <= 60; t += 20) beat(&m, 1, 0, t); /* N3 silent after t=0 */
+    CHECK(!zone_monitor_evaluate(&m, 65).error);
+    h = zone_monitor_evaluate(&m, 66);
+    CHECK(h.error && !h.alive[3] && h.alive[1] && !h.isolated);
     /* ...and leaves it without a reset once the heartbeat returns. */
-    beat(&m, 3, 1, 61); zone_monitor_ctrl(&m, 61);
-    CHECK(!zone_monitor_evaluate(&m, 62).error);
-
-    /* Stale CTRL (proxy stopped) enters error while heartbeats continue. */
-    beat(&m, 1, 0, 100); beat(&m, 3, 0, 100);
-    CHECK(!zone_monitor_evaluate(&m, 120).error);
-    CHECK(zone_monitor_evaluate(&m, 125).error);
+    beat(&m, 3, 1, 81);
+    CHECK(!zone_monitor_evaluate(&m, 82).error);
 
     /* A latch holds error with every input healthy, until released. */
-    zone_monitor_ctrl(&m, 125);
     m.latched = true;
-    CHECK(zone_monitor_evaluate(&m, 126).error);
+    CHECK(zone_monitor_evaluate(&m, 82).error);
     m.latched = false;
-    CHECK(!zone_monitor_evaluate(&m, 126).error);
+    CHECK(!zone_monitor_evaluate(&m, 82).error);
 
-    /* Isolation: both buses silent lights both degraded LEDs. */
-    h = zone_monitor_evaluate(&m, 200);
-    CHECK(h.error && h.degraded[0] && h.degraded[1]);
+    /* R4.7 isolation: no heartbeat from any zone on either bus for 60 ms. Both
+     * buses silent is not "degraded", which needs traffic on the other bus. */
+    beat_all(&m, 100);
+    CHECK(!zone_monitor_evaluate(&m, 159).isolated);
+    h = zone_monitor_evaluate(&m, 160);
+    CHECK(h.isolated && h.error && !h.degraded[0] && !h.degraded[1]);
+    CHECK(zone_monitor_next_change_ms(&m, 160) == UINT32_MAX);
 
     /* Unsigned age survives the 32-bit uptime wrap. */
-    zone_monitor_init(&m, 3);
-    beat(&m, 1, 0, UINT32_MAX - 5); beat(&m, 2, 0, UINT32_MAX - 5); zone_monitor_ctrl(&m, UINT32_MAX - 5);
+    zone_monitor_init(&m, 3, UINT32_MAX - 5);
+    beat_all(&m, UINT32_MAX - 5); zone_monitor_ctrl(&m);
     CHECK(!zone_monitor_evaluate(&m, 10).error);
-    CHECK(zone_monitor_evaluate(&m, 60).error);
+    CHECK(zone_monitor_evaluate(&m, 61).error);
 
     printf("PASS: %u zone-state checks\n", checks);
     return 0;

@@ -3,7 +3,8 @@
     python lab3_demo/start.py [--synthetic] [--no-fifo] [--restart]
 
 Copies lab3_demo/pi to a fresh remote folder, runs its unit tests there, brings
-can0/can1 up at 500 kbit/s with restart-ms 100 when they are down, starts
+can0/can1 up at 500 kbit/s with restart-ms 50 (reconfiguring a link that is up
+with another restart time), starts
 cockpit.py detached and applies SCHED_FIFO 1 to all its threads with chrt.
 Sudo is needed only for the CAN links and FIFO. The password comes from the
 gitignored lab3_demo/pi_sudo_password.txt when it exists, otherwise once from
@@ -31,6 +32,10 @@ STATE_DIR = ROOT / "logs/lab3-can/demo"
 FLAGS = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 SSH = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", "wheelpi"]
 PI_PINS = (5, 6, 12, 17, 22, 23, 27)
+# R4.8: bus-off recovery within 100 ms of the bus being restored. The kernel
+# restarts a bus-off controller after restart-ms; 50 ms leaves margin for the
+# MCP2515 to resynchronize after the restart.
+RESTART_MS = 50
 # Local only (gitignored): the repository is public on GitHub.
 PASSWORD_FILE = HERE / "pi_sudo_password.txt"
 
@@ -88,12 +93,15 @@ def main():
     setup = []
     for name in ("can0", "can1"):
         link = next(item for item in links if item["ifname"] == name)
+        info = link.get("linkinfo", {}).get("info_data", {})
         if "UP" in link.get("flags", []):
-            bitrate = link.get("linkinfo", {}).get("info_data", {}).get("bittiming", {}).get("bitrate")
+            bitrate = info.get("bittiming", {}).get("bitrate")
             if bitrate != 500000:
                 raise SystemExit(f"{name} is up at an unexpected bitrate: {bitrate}")
-        else:
-            setup += [f"ip link set {name} type can bitrate 500000 restart-ms 100", f"ip link set {name} up"]
+            if info.get("restart_ms") == RESTART_MS:
+                continue
+            setup.append(f"ip link set {name} down")
+        setup += [f"ip link set {name} type can bitrate 500000 restart-ms {RESTART_MS}", f"ip link set {name} up"]
 
     password = None
     if setup or not args.no_fifo:

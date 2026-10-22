@@ -5,12 +5,12 @@ relay. `lab3_wcet_baseline/` remains the measured Part 3 firmware; this app
 reuses its timing instrumentation, PID workload and steering mapping by path
 instead of copying them. Pins: [LAB3_PINOUT.md](../doc/LAB3_PINOUT.md#lab-3-part-5-demo-allocation).
 
-**Status:** flashed and deployed on October 21; healthy-bus startup verified (see
-[Deployment](#deployment-october-21)). Fault-injection and timing checkoff steps
-have not been run. The sources now follow the
+**Status:** the sources follow the hard numbers of Lab 1, the Lab 3 handout and the
 [October 22 student clarification](../doc/18-449_649%20Lab%203%20-%20Student%20clarification%202026-10-22.pdf)
-(see [Clarification alignment](#clarification-alignment-october-23)); that build is
-flashed and the matching cockpit deployed.
+(see [Spec alignment](#spec-alignment-october-23)). That build is flashed and the
+matching cockpit deployed. At 06:15, after the Pi's bus-A transmit fault cleared,
+all three zones were OK on both buses with flat error counters. The user traced
+the fault to loose wiring and fixed it (see the known behaviors). Fault-injection and timing checkoff steps have not been run.
 
 | Path | Role |
 |---|---|
@@ -46,29 +46,49 @@ utilization against the 50 % limit. This is Tianyi's design from the unmerged
   RELAY uses its own queue; dispatch enqueues before processing the frame locally.
 
 **Error state (R3/R4.5).** One pure module, `zone_state.c`, mirrored by
-`pi/zone_state.py`, holds every threshold. A zone is in error when it is latched,
-when a peer zone has had no heartbeat on either bus for 60 ms, or when CTRL (on N1,
-UDP) is more than 60 ms old. Power-up therefore starts in error and leaves it once
-both peers are heard on some bus and CTRL is fresh. A test-button press, an
-out-of-range CTRL or a bad-CRC CTRL latches and sends FAULT. Every receiver latches
-on that FAULT. A test-button press also stops that node's heartbeats, as the
-clarification requires, so peers enter error even if the FAULT is lost. A second
-press within 500 ms on any zone's button sends FAULT clear, which releases every
-latch and resumes any silenced heartbeats. FAULT `ZONE_LOST` (reason 4) is informational: each node detects
-heartbeat loss itself and recovers without a clear, so restoring an isolated node
-returns to normal without a reset.
+`pi/zone_state.py`, holds every threshold. Every value below is a lab number:
 
-**Degraded LEDs (R4.7).** DEG_A on a node means it hears no peer heartbeat on A
-for 60 ms, after having heard some heartbeat on either bus. Pulling one node's
-A jumper lights only that node's DEG_A, because the others still hear each other
-on A.
+| Rule | Value | Source |
+|---|---|---|
+| Peer zone failed: no heartbeat on either bus | 66 ms | R4.5 three missed heartbeats at 20 ms +10 %; clarification chain "3 missed heartbeats (66 ms)" |
+| Bus degraded: no frame from any other node while the other bus has traffic | 60 ms | R4.7 |
+| Isolated: no heartbeat from any zone on either bus | 60 ms | R4.7; own fail-safe within 100 ms |
+| N1 failed: no UDP update, stops HB_N1 until the stream resumes | 100 ms | Lab 1 cockpit zone |
+| CTRL refresh without an update | 40 ms | R4.4 "no less than every 50 ms", 10 ms Linux margin |
+| One press | < 50 ms apart | R2.5 debounce |
+| Double press | 500 ms | R3, clarification |
+| FAULT / BLINK spacing per sender | 20 ms | Catalog minimum interval |
+
+A zone is in error when it is latched, a peer zone has failed, or it is isolated;
+an STM32 zone also stays in error until its first valid CTRL, and N1 while its UDP
+stream is down. Stale CTRL is not an error (R3 lists no such trigger): N1 sends
+CTRL at least every 50 ms while it is alive, and its failure stops HB_N1. A
+test-button press, an out-of-range CTRL, a bad-CRC CTRL or (on N1) a malformed
+wheel datagram latches and sends FAULT. Every receiver latches on that FAULT. A
+test-button press also stops that node's heartbeats, as the clarification
+requires, so peers enter error even if the FAULT is lost. A second press 50–500 ms
+later on any zone's button sends FAULT clear, which releases every latch and
+resumes any silenced heartbeats. The press FAULT and the clear wait for the 20 ms
+FAULT slot; repeatable reports (bad input, zone loss) inside it are dropped. FAULT
+`ZONE_LOST` (reason 4) is informational: each node detects heartbeat loss itself
+and recovers without a clear, so restoring an isolated node returns to normal
+without a reset.
+
+**Degraded LEDs (R4.7).** DEG_A on a node means it has received no frame from any
+other node on A for 60 ms while B still has traffic. Pulling one node's A jumper
+lights only that node's DEG_A, because the others still hear each other on A. An
+isolated node lights neither LED: neither bus has traffic. Checkoff step 5 wants
+the LED within 60 ms of the pull, so the LED switches when the 60 ms elapse, not
+on the next 20 ms HB_MON: STM32 dispatch waits on its queue with that deadline as
+the timeout, and the cockpit's main loop wakes for it.
 
 **Outputs.**
-- N2 SRV is a 50 Hz servo pulse from the Lab 2 calibrated mapping (1200/1600/2000 µs). In error the pulse stops, which is Lab 2's fault policy.
+- N2 SRV is a 50 Hz servo pulse from the Lab 2 calibrated mapping (1200/1600/2000 µs). It keeps tracking CTRL in the system error state (R3). When N2 itself has failed (its own test press or isolation) it holds the last pulse (R4.7 "steering held"). No pulse is output before the first valid CTRL.
 - N3 PWM_OUT is 10 kHz with duty equal to throttle %, and DIR_A high selects forward.
 - Brake or error on N3 drops DIR_A and holds PWM_OUT high: the L298 enable-high/equal-input brake. PWM_SET toggles after each timer write, as in Lab 2.
-- Blinkers switch on BLINK reception so both zones change on the same frame. In error the mode is forced to hazard. With no BLINK for 750 ms, an STM32 flashes hazards on its own 500 ms timer.
-- The Pi is the blinker master and uses the Lab 2 paddle map (bit 5 left, bit 4 right, steering auto-cancel). It sends BLINK on a change and every 500 ms, all modes at 1 Hz.
+- Blinkers switch on BLINK reception so both zones change on the same frame. In error an STM32 starts hazards at once on a local 500 ms timer, so an isolated zone flashes within 100 ms (R4.7). Every hazard BLINK from N1 re-phases that timer, keeping the zones in unison and the flashing going if BLINKs stop.
+- The Pi is the blinker master and uses the Lab 2 paddle map (bit 5 left, bit 4 right, steering auto-cancel). It sends BLINK on a change and every 500 ms toggle, never within 20 ms of the previous BLINK. Every mode, hazards included, runs at 1 Hz. The team chose the Lab 3 BLINK row over Lab 1 S4's 2 Hz hazard where the two documents conflict.
+- FORCE carries the Lab 3 dummy counter. N1 does not send UDP force to the proxy: the team follows Lab 3 ("S3 force feedback: No. Dummy payload only.") over Lab 1 R2.3's 50 ms UDP force message.
 
 **Other Part 5 items.**
 - Two MCP2515 devices come from devicetree, with `can_add_rx_filter` for the 7 catalog IDs on each.
@@ -141,7 +161,8 @@ python lab3_demo\stop.py
 
 `start.py` checks the can0=spi0.1 / can1=spi0.0 mapping and that GPIO
 5/6/12/17/22/23/27 are free. It brings both links up at 500 kbit/s with
-`restart-ms 100` if they are down, copies `pi/` to a fresh
+`restart-ms 50` (R4.8: bus-off recovery within 100 ms of restoration), taking down
+a link that is up with another restart time, copies `pi/` to a fresh
 `~/.local/state/team4-lab3/demo-<id>/` folder and runs its tests there. It then
 starts `cockpit.py` detached and applies `chrt -a -f 1`, FIFO 1 as measured in
 Part 3, re-verified on every start. Ownership is recorded in
@@ -224,6 +245,29 @@ or INT re-kicks; N2 relayed 527 frames with no failures. The cockpit counted 4
   SPI transaction locks the shared bus only while it runs. B is one frame load
   (#4), not 2 × #4.
 
+## Spec alignment, October 23
+
+The sources were audited against every hard number in Lab 1 R1–R4, the Lab 3
+handout and the clarification, and changed where they differed: the threshold
+table under [Design decisions](#design-decisions); one CTRL per UDP datagram
+instead of one per drained batch, plus a refresh after 40 ms; N1 failure (HB_N1
+stops) after 100 ms without UDP; no stale-CTRL error; R4.7 degraded/isolated
+definitions with the LED switching at exactly 60 ms; N2 steering kept in the
+system error state; immediate local hazards in error; the 50 ms single-press rule
+from the previous raw press; 20 ms FAULT/BLINK spacing; a malformed wheel datagram
+as bad input; `restart-ms 50`. Where Lab 1 and Lab 3 conflict, the team chose Lab 3:
+hazards at 1 Hz (BLINK row, not S4's 2 Hz) and no UDP force message ("S3: No"). The
+MCP2515 leaves bus-off by itself after 128 × 11 recessive bits, so the STM32 side
+needs no recovery code for R4.8; the Pi uses the kernel's `restart-ms`.
+
+Tests: 43 Pi tests on the Pi's python-can and 3 host C tests pass; both images
+build. Flashed under reset on October 23 at 05:15: N2 `n2swap_ab` to 124020 (COM6), N3
+to 171333 (COM4), from `logs/lab3-can/20261023-051503-demo-build-spec/` (the 05:06
+archive was flashed first and superseded by the press-chatter fix). The cockpit
+was redeployed with `start.py --restart --synthetic`. Live checks were blocked by
+the hardware faults under [Known behaviors](#not-yet-verified); healthy-bus startup
+has not been re-verified on this build.
+
 ## Not yet verified
 
 All of the following needs hardware: every checkoff step, both relay directions,
@@ -231,6 +275,10 @@ bus-off/reconnect recovery times, the INT re-kick, front/rear blink skew, the
 relayed brake chain, and PWM waveforms on PB4.
 
 Known behaviors to watch on hardware:
+- Wi-Fi delays wheel UDP. On October 23 the laptop (CMU-SECURE) and Pi (CMU-DEVICE) shared one AP on channel 149. A passive Pi capture got all 3001 synthetic packets with none lost, yet 27 arrival gaps exceeded 60 ms (up to 146 ms), each followed by a burst of 4–7 held packets. The laptop's 20 ms loop never woke more than 20.7 ms apart. Under the old 60 ms CTRL rule this flashed whole-system hazards 70 times in 272 s. Under the Lab 1 rule now implemented, only gaps of 100 ms or more fail N1. With Pi `wlan0` power save off (not persistent across reboot), that happened 7 times in about 246 s, every one `udp_ok=False`; that error is the required behavior. Removing it needs a link without these gaps, such as wired Ethernet between the laptop and the Pi.
+- Bus-A and Pi SPI hardware faults, October 23 (evidence in `logs/lab3-can/20261023-051300-pi-can-stall/`). At Pi uptime 1922 s, with no software change, both Pi controllers stopped transmitting (ENOBUFS, kernel `hard_xmit called while tx busy`). Bringing the links back up failed several times with `MCP251x didn't enter in config mode`, the symptom of the earlier SPI wiring fault, and the Pi then received 4419 CRC-bad frames in 26 s. After the 05:15 reflash, N3 printed nothing: its CPU was servicing EXTI10 (PA10, CAN A INT) continuously, while N2's bus-A controller was error-passive and every Pi bus-A transmit failed. Check the Pi's MCP2515 SPI/3V3/GND jumpers and the bus-A rail and jumpers before further hardware tests.
+- Recheck at 05:30 (`logs/lab3-can/20261023-053047-demo-live-COM{4,6}.log`): N3 had recovered. Over 30 s both STM32s were OK with all zones alive, no degraded bus, both controllers error-active and no new rejects, INT re-kicks, state changes or relay failures. The Pi's can0 still received, but its TX packet counter stayed at 193430 while its error-warning/passive counters rose. The cockpit logged 87275 bus-A TX errors from its start at 3438.9 s onward, with no bus-A errors seen by N2 or N3. N2 relayed about 107 frames/s, N1's traffic copied from B onto A. The Pi can0 link was left running at the user's request; a link down/up or the Pi module's bus-A connection is the next thing to check. In the same window, 47 UDP gaps exceeded 100 ms (maximum 149.7 ms), each briefly failing N1 as Lab 1 requires.
+- Recheck at 06:15 (`logs/lab3-can/20261023-061526-demo-live-COM{4,6}.log`), with the cockpit still running: the Pi's bus-A TX errors (about 6150/min) stopped at 6956.5 s and can0 TX packets rose about 117/s. A 3 s candump on can0 showed 010/100/101/102 at 50/s, 200 at 2/s and 300 at 20/s. N2 relayed 7 frames in 5 s, down from about 107/s, so N1 again reaches A directly. N2 and N3 were OK, all zones alive, no degraded bus, both controllers error-active and every error counter unchanged since 05:30. The user reports the cause was loose wiring, which they fixed (which wire was not recorded).
 - Frames queued on a disconnected bus, up to 3 in the MCP2515 or the Pi's txqueue, are sent when the jumper returns. A stale CTRL can be applied for one 20 ms period.
 - The latch is carried only by FAULT frames, so a node that reboots while the system is latched comes up unlatched.
 - The PID task keeps the Lab 2 calculation on synthetic samples as its workload. With no encoders in this lab, DRIVE applies throttle duty directly.

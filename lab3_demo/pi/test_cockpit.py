@@ -1,6 +1,9 @@
 """Cockpit behavior through python-can's virtual bus; no hardware or sockets."""
 import json
+import socket
 import struct
+import threading
+import time
 import unittest
 import uuid
 from unittest import mock
@@ -8,7 +11,7 @@ from unittest import mock
 import can
 
 import can_protocol as p
-from cockpit import Cockpit, EventLog
+from cockpit import Cockpit, EventLog, run
 from pi_gpio import CMD_TX, DEG_A, DEG_B, ERR, UDP_RX, NoGpio
 from wheel_input import UDP_PACKET_BYTES
 
@@ -217,10 +220,10 @@ class CockpitTests(unittest.TestCase):
     def test_blink_starts_on_paddle_and_toggles_every_500_ms(self):
         self.healthy(0.0)
         self.frames(p.BLINK)
-        self.cockpit.on_udp(wheel(500, buttons=(5,)), 0.01)  # left paddle
-        self.cockpit.tick(0.01)
-        self.healthy(0.511)
-        self.healthy(1.012)
+        self.cockpit.on_udp(wheel(500, buttons=(5,)), 0.03)  # left paddle
+        self.cockpit.tick(0.03)
+        self.healthy(0.531)
+        self.healthy(1.032)
         a, b = self.frames(p.BLINK)
         self.assertEqual([(m.data[1], m.data[2]) for m in a],
                          [(p.BLINK_LEFT, 1), (p.BLINK_LEFT, 0), (p.BLINK_LEFT, 1)])
@@ -230,6 +233,97 @@ class CockpitTests(unittest.TestCase):
         self.cockpit.tick(0.0)
         a, _ = self.frames(p.BLINK)
         self.assertEqual(a[-1].data[1], p.BLINK_HAZARD)
+
+    def test_blink_change_within_20_ms_of_the_last_blink_waits(self):
+        self.healthy(0.0)  # sends BLINK off at 0.0
+        self.frames(p.BLINK)
+        self.cockpit.on_udp(wheel(10, buttons=(5,)), 0.01)
+        self.cockpit.tick(0.01)
+        self.assertEqual(self.frames(p.BLINK), ([], []))
+        self.assertAlmostEqual(self.cockpit.next_wake(0.01), 0.02)
+        self.cockpit.tick(0.02)
+        self.assertEqual([m.data[1] for m in self.frames(p.BLINK)[0]], [p.BLINK_LEFT])
+
+    def test_udp_silence_of_100_ms_fails_n1_and_stops_heartbeats(self):
+        self.healthy(0.0)
+        t = 0.02
+        while t <= 0.081:  # peers keep beating; UDP stops after 0.0
+            for zone in (p.HB_N2, p.HB_N3):
+                self.heartbeat(zone, 0, t, seq=int(t * 50) & 15)
+            self.cockpit.tick(t)
+            t = round(t + 0.02, 3)
+        self.assertFalse(self.cockpit.error)  # 80 ms: no 60 ms CTRL rule any more
+        self.frames(p.HB_N1)
+        for zone in (p.HB_N2, p.HB_N3):
+            self.heartbeat(zone, 0, 0.1, seq=5)
+        self.cockpit.tick(0.1)
+        self.assertTrue(self.cockpit.error and self.gpio.levels[ERR])
+        self.assertEqual(self.frames(p.HB_N1), ([], []))
+        self.healthy(0.121)  # stream resumes
+        self.assertFalse(self.cockpit.error)
+        self.assertEqual(len(self.frames(p.HB_N1)[0]), 1)
+
+    def test_ctrl_refreshes_at_least_every_50_ms_without_cmd_tx(self):
+        self.cockpit.tick(0.0)
+        self.assertEqual(self.frames(p.CTRL), ([], []))  # nothing to send before the first update
+        self.cockpit.on_udp(wheel(1, steer=300), 0.0)
+        self.cockpit.send_ctrl(0.0)
+        marker = self.gpio.levels[CMD_TX]
+        for t in (0.02, 0.039, 0.04, 0.06, 0.08):
+            self.cockpit.tick(t)
+        a, b = self.frames(p.CTRL)
+        self.assertEqual(len(a), 3)  # 0.0, then refreshes at 0.04 and 0.08
+        self.assertEqual([m.data[0] & 15 for m in a], [0, 1, 2])
+        self.assertEqual({struct.unpack_from("<h", m.data, 1)[0] for m in a}, {300})
+        self.assertEqual(len(b), 3)
+        self.assertEqual(self.gpio.levels[CMD_TX], marker)
+
+    def test_every_udp_update_gets_its_own_ctrl(self):
+        udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.addCleanup(udp.close)
+        udp.bind(("127.0.0.1", 0))
+        udp.setblocking(False)
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sender:
+            for counter in (1, 2, 3):
+                sender.sendto(wheel(counter), udp.getsockname())
+        time.sleep(0.05)
+        stop = threading.Event()
+        threading.Timer(0.05, stop.set).start()
+        with mock.patch.object(self.cockpit, "send_ctrl", wraps=self.cockpit.send_ctrl) as send_ctrl:
+            run(self.cockpit, udp, stop, status_period=0)
+        updates = [c for c in send_ctrl.call_args_list if c.kwargs.get("update", True)]
+        self.assertEqual(len(updates), 3)  # refreshes, if the loop reaches 40 ms, are not updates
+
+    def test_malformed_udp_enters_error_and_sends_fault(self):
+        self.healthy(0.0)
+        self.frames(p.FAULT)
+        self.assertFalse(self.cockpit.on_udp(b"\x00" * 10, 0.01))
+        self.cockpit.tick(0.01)
+        self.assertTrue(self.cockpit.error)
+        self.assertEqual([(m.data[1], m.data[2]) for m in self.frames(p.FAULT)[0]], [(1, p.FAULT_BAD_CTRL)])
+
+    def test_test_presses_less_than_50_ms_apart_are_one_press(self):
+        self.healthy(0.0)
+        self.frames(p.FAULT)
+        self.cockpit.on_udp(wheel(20, buttons=(0,)), 0.01)
+        self.cockpit.on_udp(wheel(30), 0.02)
+        self.cockpit.on_udp(wheel(40, buttons=(0,)), 0.04)  # 30 ms later: same press
+        self.cockpit.on_udp(wheel(45), 0.05)
+        self.cockpit.on_udp(wheel(50, buttons=(0,)), 0.07)  # chatter: 30 ms after the last raw press
+        self.healthy(0.09)
+        self.assertTrue(self.cockpit.error)
+        self.assertEqual([m.data[2] for m in self.frames(p.FAULT)[0]], [p.FAULT_TEST_BUTTON])
+
+    def test_fault_keeps_20_ms_minimum_interval(self):
+        self.healthy(0.0)
+        self.frames(p.FAULT)
+        self.cockpit.test_fault(False, 0.01)
+        self.cockpit.test_fault(True, 0.015)  # clear waits for its slot
+        self.assertEqual(len(self.frames(p.FAULT)[0]), 1)
+        self.cockpit.tick(0.029)
+        self.assertEqual(self.frames(p.FAULT), ([], []))
+        self.cockpit.tick(0.03)
+        self.assertEqual([m.data[2] for m in self.frames(p.FAULT)[0]], [p.FAULT_CLEAR])
 
     def test_restarted_proxy_counter_resyncs_after_a_gap(self):
         self.assertTrue(self.cockpit.on_udp(wheel(5000), 0.0))

@@ -31,21 +31,63 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(p.dedup_source(p.CTRL, data), 0)
 
 
+def beat(m, zones, buses, t):
+    for bus in buses:
+        m.frame(bus, t)
+        for zone in zones:
+            m.heartbeat(zone, bus, t)
+
+
 class ZoneStateTests(unittest.TestCase):
-    def test_mirrors_c_rules(self):
-        m = ZoneMonitor(1)
-        h = m.evaluate(0)
-        self.assertTrue(h.error)
+    """Same rules as tests/test_zone_state.c, plus N1's 100 ms UDP rule."""
+
+    def healthy_monitor(self):
+        m = ZoneMonitor(1, 0.0)
+        beat(m, (2, 3), (0, 1), 0.0)
+        m.udp(0.0)
+        return m
+
+    def test_power_up_in_error_isolated_without_degraded_leds(self):
+        h = ZoneMonitor(1, 0.0).evaluate(0.0)
+        self.assertTrue(h.error and h.isolated)
         self.assertEqual(h.degraded, (False, False))
-        m.heartbeat(2, 0, 0.0)
-        m.heartbeat(3, 1, 0.0)
-        m.ctrl(0.0)
-        h = m.evaluate(0.059)
-        self.assertFalse(h.error)
-        self.assertEqual(h.bus_alive, (True, True))
+        self.assertFalse(self.healthy_monitor().evaluate(0.01).error)
+
+    def test_zone_fails_after_three_missed_heartbeats_66_ms(self):
+        m = self.healthy_monitor()
+        for t in (0.02, 0.04, 0.06):
+            beat(m, (2,), (0,), t)
+        self.assertFalse(m.evaluate(0.0655).error)
+        h = m.evaluate(0.066)
+        self.assertTrue(h.error and not h.alive[3] and h.alive[2])
+
+    def test_bus_degraded_at_60_ms_only_while_other_bus_has_traffic(self):
+        m = self.healthy_monitor()
+        self.assertAlmostEqual(m.next_change(0.0), 0.06)
+        for t in (0.02, 0.04, 0.06):
+            beat(m, (2, 3), (1,), t)
+        self.assertEqual(m.evaluate(0.0599).degraded, (False, False))
         h = m.evaluate(0.06)
-        self.assertTrue(h.error and h.degraded == (True, True))
-        m.heartbeat(1, 0, 0.06)  # own id ignored
+        self.assertEqual((h.degraded, h.bus_ok, h.error), ((True, False), (False, True), False))
+        m.frame(0, 0.07)  # any frame clears it
+        self.assertEqual(m.evaluate(0.07).degraded, (False, False))
+
+    def test_isolation_is_not_degraded(self):
+        h = self.healthy_monitor().evaluate(0.06)
+        self.assertTrue(h.isolated and h.error)
+        self.assertEqual(h.degraded, (False, False))
+
+    def test_udp_silence_fails_n1_at_100_ms(self):
+        m = self.healthy_monitor()
+        for t in (0.02, 0.04, 0.06, 0.08, 0.1):
+            beat(m, (2, 3), (0, 1), t)
+        self.assertTrue(m.evaluate(0.0999).udp_ok)
+        h = m.evaluate(0.1)
+        self.assertTrue(not h.udp_ok and h.error)
+
+    def test_own_heartbeat_id_ignored(self):
+        m = ZoneMonitor(1, 0.0)
+        m.heartbeat(1, 0, 0.0)
         self.assertNotIn((1, 0), m.hb)
 
 

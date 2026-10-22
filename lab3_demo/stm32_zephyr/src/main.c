@@ -48,6 +48,7 @@
 #endif
 
 #define DEBOUNCE_MS 2
+#define SINGLE_PRESS_MS 50  /* R2.5: presses less than 50 ms apart are one press */
 #define DOUBLE_PRESS_MS 500 /* student clarification: double press within 500 ms */
 #define FAULT_MIN_INTERVAL_MS 20 /* catalog: FAULT minimum interarrival */
 #define BLINK_HALF_PERIOD_MS 500
@@ -84,12 +85,15 @@ K_EVENT_DEFINE(app_ready);
 K_MUTEX_DEFINE(state_lock);
 static struct zone_monitor monitor;
 static bool zone_error = true;
+/* This zone itself failed (own test press or R4.7 isolation), as opposed to
+ * the system error state: N2 then holds steering instead of tracking it. */
+static bool zone_failed = true;
 static struct lab3_ctrl command;
 static uint8_t blink_mode, blink_phase;
 static bool blink_seen;
-static uint32_t blink_ms;
+static uint32_t blink_ms, blink_count;
 static uint8_t tx_seq[ID_FORCE + 1];
-static uint32_t last_fault_ms;
+static int64_t last_fault_ms;
 static bool fault_sent;
 /* Own test-button latch: HB_TX stays silent until any FAULT clear (clarification). */
 static bool hb_silenced;
@@ -123,8 +127,10 @@ static struct zone_health refresh_state(void)
 {
     k_mutex_lock(&state_lock, K_FOREVER);
     struct zone_health h = zone_monitor_evaluate(&monitor, k_uptime_get_32());
-    bool changed = h.error != zone_error;
+    bool failed = hb_silenced || h.isolated;
+    bool changed = h.error != zone_error || failed != zone_failed;
     zone_error = h.error;
+    zone_failed = failed;
     lab3_trace_set(TP_ERR, h.error);
     lab3_trace_set(TP_DEG_A, h.degraded[0]);
     lab3_trace_set(TP_DEG_B, h.degraded[1]);
@@ -172,18 +178,21 @@ static void send_both(struct can_frame *f)
     }
 }
 
-/* FAULT on both buses. Bad input can repeat on every CTRL, so those reasons keep
- * the 20 ms catalog interarrival; button and zone-loss faults are event-paced. */
+/* FAULT on both buses, at most one per 20 ms (catalog minimum interval) from
+ * this node. Test-button press and clear wait for their slot, so only the
+ * TEST_BTN thread may block here; repeatable reports (bad input, zone loss)
+ * are dropped inside the interval. */
 static void send_fault(uint8_t failing_zone, enum fault_reason reason)
 {
-    if (reason == FAULT_BAD_CRC || reason == FAULT_BAD_CTRL) {
-        uint32_t now = k_uptime_get_32();
-        k_mutex_lock(&state_lock, K_FOREVER);
-        bool allowed = !fault_sent || (uint32_t)(now - last_fault_ms) >= FAULT_MIN_INTERVAL_MS;
-        if (allowed) { last_fault_ms = now; fault_sent = true; }
-        k_mutex_unlock(&state_lock);
-        if (!allowed) return;
-    }
+    bool must_send = reason == FAULT_TEST_BUTTON || reason == FAULT_CLEAR;
+    int64_t now = k_uptime_get();
+    k_mutex_lock(&state_lock, K_FOREVER);
+    int64_t slot = fault_sent ? MAX(now, last_fault_ms + FAULT_MIN_INTERVAL_MS) : now;
+    bool send = must_send || slot == now;
+    if (send) { last_fault_ms = slot; fault_sent = true; }
+    k_mutex_unlock(&state_lock);
+    if (!send) return;
+    if (slot > now) k_sleep(K_TIMEOUT_ABS_MS(slot));
     struct can_frame f;
     lab3_pack_fault(&f, failing_zone, reason, MY_ZONE);
     send_both(&f);
@@ -224,7 +233,7 @@ static void can_state_callback(const struct device *dev, enum can_state state,
     atomic_inc(&can_state_changes[bus]);
 }
 
-static void handle_ctrl(const struct can_frame *f, uint32_t now)
+static void handle_ctrl(const struct can_frame *f)
 {
     struct lab3_ctrl c;
     if (!lab3_ctrl_decode(f, &c)) {
@@ -233,7 +242,7 @@ static void handle_ctrl(const struct can_frame *f, uint32_t now)
     }
     k_mutex_lock(&state_lock, K_FOREVER);
     command = c;
-    zone_monitor_ctrl(&monitor, now);
+    zone_monitor_ctrl(&monitor);
     k_mutex_unlock(&state_lock);
     k_sem_give(&actuator_wake);
     refresh_state(); /* the first fresh CTRL may end the error state */
@@ -247,25 +256,27 @@ static void handle_fault(const struct can_frame *f)
     refresh_state();
 }
 
-/* The one dispatch path: validate, drop our own frames (N2 relays them back),
- * record per-bus heartbeat, drop the duplicate copy by (ID, source, seq), hand
- * first copies to RELAY, then to the tasks. */
+/* The one dispatch path: record per-bus traffic (R4.7 counts any frame from
+ * another node, including our own frames that N2 relays back) and heartbeats,
+ * validate, drop our own frames, drop the duplicate copy by (ID, source, seq),
+ * hand first copies to RELAY, then to the tasks. */
 static void dispatch(const struct rx_item *item)
 {
     const struct can_frame *f = &item->frame;
     lab3_trace_toggle(item->bus == 0 ? TP_CAN_RX_A : TP_CAN_RX_B);
     uint8_t hb_zone = lab3_heartbeat_zone(f->id);
-    if (!lab3_frame_valid(f)) {
+    bool valid = lab3_frame_valid(f);
+    bool own = valid && lab3_frame_origin(f) == MY_ZONE;
+    k_mutex_lock(&state_lock, K_FOREVER);
+    zone_monitor_traffic(&monitor, item->bus, item->received_ms);
+    if (valid && !own && hb_zone) zone_monitor_heartbeat(&monitor, hb_zone, item->bus, item->received_ms);
+    k_mutex_unlock(&state_lock);
+    if (!valid) {
         atomic_inc(&bad_crc);
         if (f->id == ID_CTRL) bad_input(FAULT_BAD_CRC);
         return;
     }
-    if (lab3_frame_origin(f) == MY_ZONE) return;
-    if (hb_zone) {
-        k_mutex_lock(&state_lock, K_FOREVER);
-        zone_monitor_heartbeat(&monitor, hb_zone, item->bus, item->received_ms);
-        k_mutex_unlock(&state_lock);
-    }
+    if (own) return;
     struct frame_key key = {.id = (uint16_t)f->id, .source = lab3_dedup_source(f), .seq = f->data[0] & 0x0F};
     k_mutex_lock(&history_lock, K_FOREVER);
     enum frame_observation seen = frame_observe(&history, key, item->bus, item->received_ms);
@@ -280,7 +291,7 @@ static void dispatch(const struct rx_item *item)
 #endif
     switch (f->id) {
     case ID_CTRL:
-        handle_ctrl(f, item->received_ms);
+        handle_ctrl(f);
         break;
     case ID_BLINK:
         k_mutex_lock(&state_lock, K_FOREVER);
@@ -288,6 +299,7 @@ static void dispatch(const struct rx_item *item)
         blink_phase = f->data[2] & 1;
         blink_seen = true;
         blink_ms = item->received_ms;
+        blink_count++;
         k_mutex_unlock(&state_lock);
         k_sem_give(&blink_wake);
         break;
@@ -305,7 +317,13 @@ static void rx_dispatch_thread(void *a, void *b, void *c)
     wait_ready();
     struct rx_item item;
     while (true) {
-        if (k_msgq_get(&rx_queue, &item, K_FOREVER) != 0) continue;
+        k_mutex_lock(&state_lock, K_FOREVER);
+        uint32_t wait_ms = zone_monitor_next_change_ms(&monitor, k_uptime_get_32());
+        k_mutex_unlock(&state_lock);
+        if (k_msgq_get(&rx_queue, &item, wait_ms == UINT32_MAX ? K_FOREVER : K_MSEC(wait_ms)) != 0) {
+            refresh_state(); /* a bus just reached 60 ms of silence: DEG_x now, not at HB_MON */
+            continue;
+        }
         enum lab3_timing_id task = item.bus == 0 ? T_RX_DISPATCH_A : T_RX_DISPATCH_B;
         uint32_t start = lab3_task_start(task);
         dispatch(&item);
@@ -347,7 +365,9 @@ K_THREAD_DEFINE(relay_tid, 1536, relay_thread, NULL, NULL, NULL, 2, 0, 0);
 #endif
 
 /* STEER (N2) / DRIVE (N3): apply the latest command or the error fail-safe.
- * N2: SRV follows CTRL; error stops the servo pulse (Lab 2 fault policy).
+ * N2: SRV follows CTRL, also in the system error state (R3); only when this
+ * zone itself failed (own test press or isolation) does it hold the last pulse
+ * (R4.7 "steering held"). No pulse until the first valid CTRL.
  * N3: DIR_A high selects forward and PWM_OUT carries throttle duty; brake or
  * error drops DIR_A and holds PWM_OUT high (L298 enable-high, equal-input brake). */
 static void actuator_thread(void *a, void *b, void *c)
@@ -358,15 +378,17 @@ static void actuator_thread(void *a, void *b, void *c)
         k_sem_take(&actuator_wake, K_FOREVER);
         k_mutex_lock(&state_lock, K_FOREVER);
         struct lab3_ctrl now = command;
-        bool error = zone_error;
+        bool error = zone_error, failed = zone_failed, commanded = monitor.ctrl_seen;
         k_mutex_unlock(&state_lock);
         uint32_t start = lab3_task_start(T_STEER_DRIVE);
 #if defined(CONFIG_LAB3_ZONE_N2)
+        ARG_UNUSED(error);
         lab3_trace_set(TP_STEER, 1);
-        uint32_t pulse_us = error ? 0 : lab3_steering_pulse(now.steer);
-        (void)pwm_set_dt(&actuator_pwm, ACTUATOR_PERIOD, PWM_USEC(pulse_us));
+        if (commanded && !failed)
+            (void)pwm_set_dt(&actuator_pwm, ACTUATOR_PERIOD, PWM_USEC(lab3_steering_pulse(now.steer)));
         lab3_trace_set(TP_STEER, 0);
 #else
+        ARG_UNUSED(failed); ARG_UNUSED(commanded);
         if (error || now.brake > 0) {
             lab3_trace_set(TP_DIR_A, 0);
             (void)pwm_set_dt(&actuator_pwm, ACTUATOR_PERIOD, ACTUATOR_PERIOD);
@@ -382,14 +404,17 @@ static void actuator_thread(void *a, void *b, void *c)
 K_THREAD_DEFINE(actuator_tid, 1024, actuator_thread, NULL, NULL, NULL, 3, 0, 0);
 
 /* BLINK_F / BLINK_R: drive lamps on BLINK reception so both zones switch on the
- * same message (front/rear sync). In error the mode is forced to hazard; with
- * no fresh BLINK (N1 unreachable) the node flashes hazards on its own timer. */
+ * same message (front/rear sync). In the error state hazards start at once on
+ * a local 500 ms timer (an isolated zone must flash within 100 ms, R4.7); each
+ * hazard BLINK from N1 re-phases that timer, so both zones flash in unison and
+ * keep flashing if N1's BLINKs stop. */
 static void blink_thread(void *a, void *b, void *c)
 {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
     wait_ready();
     int64_t next_local_edge = 0;
-    bool local_phase = false;
+    bool local_on = false, local_running = false;
+    uint32_t synced_count = 0;
     k_timeout_t timeout = K_NO_WAIT;
     while (true) {
         k_sem_take(&blink_wake, timeout);
@@ -397,26 +422,39 @@ static void blink_thread(void *a, void *b, void *c)
         int64_t now = k_uptime_get();
         k_mutex_lock(&state_lock, K_FOREVER);
         uint8_t mode = blink_mode, phase = blink_phase;
-        uint32_t age = (uint32_t)now - blink_ms;
+        uint32_t age = (uint32_t)now - blink_ms, count = blink_count;
         bool fresh = blink_seen && age < BLINK_TIMEOUT_MS;
         bool error = zone_error;
         k_mutex_unlock(&state_lock);
-        timeout = fresh ? K_TIMEOUT_ABS_MS(now + (BLINK_TIMEOUT_MS - age)) : K_FOREVER;
+        bool left, right;
         if (error) {
-            mode = BLINK_HAZARD;
-            if (!fresh) {
-                if (now >= next_local_edge) {
-                    local_phase = !local_phase;
-                    next_local_edge = now + BLINK_HALF_PERIOD_MS;
+            if (fresh && mode == BLINK_HAZARD) {
+                if (!local_running || count != synced_count) {
+                    local_on = phase;
+                    next_local_edge = now + (BLINK_HALF_PERIOD_MS - MIN(age, BLINK_HALF_PERIOD_MS));
+                    synced_count = count;
                 }
-                phase = local_phase;
-                timeout = K_TIMEOUT_ABS_MS(next_local_edge);
+            } else if (!local_running) {
+                local_on = true;
+                next_local_edge = now + BLINK_HALF_PERIOD_MS;
             }
-        } else if (!fresh) {
-            mode = BLINK_OFF;
+            local_running = true;
+            if (now >= next_local_edge) {
+                local_on = !local_on;
+                next_local_edge += BLINK_HALF_PERIOD_MS;
+                if (next_local_edge <= now) next_local_edge = now + BLINK_HALF_PERIOD_MS;
+            }
+            left = right = local_on;
+            timeout = K_TIMEOUT_ABS_MS(next_local_edge);
+        } else {
+            local_running = false;
+            if (!fresh) mode = BLINK_OFF;
+            left = phase && (mode == BLINK_LEFT || mode == BLINK_HAZARD);
+            right = phase && (mode == BLINK_RIGHT || mode == BLINK_HAZARD);
+            timeout = fresh ? K_TIMEOUT_ABS_MS(now + (BLINK_TIMEOUT_MS - age)) : K_FOREVER;
         }
-        lab3_trace_set(TP_LEFT, phase && (mode == BLINK_LEFT || mode == BLINK_HAZARD));
-        lab3_trace_set(TP_RIGHT, phase && (mode == BLINK_RIGHT || mode == BLINK_HAZARD));
+        lab3_trace_set(TP_LEFT, left);
+        lab3_trace_set(TP_RIGHT, right);
         lab3_task_end(T_BLINK, start);
     }
 }
@@ -438,8 +476,8 @@ static void button_thread(void *a, void *b, void *c)
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
     wait_ready();
     bool stable = gpio_pin_get_dt(&test_button) > 0;
-    uint32_t last_press_ms = 0;
-    bool armed = false;
+    uint32_t last_press_ms = 0, last_edge_ms = 0;
+    bool armed = false, pressed_before = false;
     while (true) {
         k_sem_take(&button_wake, K_FOREVER);
         k_msleep(DEBOUNCE_MS);
@@ -447,8 +485,13 @@ static void button_thread(void *a, void *b, void *c)
         if (pressed == stable) continue; /* bounce or coalesced edge */
         stable = pressed;
         if (!pressed) continue;
-        uint32_t start = lab3_task_start(T_TEST_BTN);
         uint32_t now = k_uptime_get_32();
+        /* Measured from the previous raw press, so chatter never adds up to a second press. */
+        bool same_press = pressed_before && (uint32_t)(now - last_edge_ms) < SINGLE_PRESS_MS;
+        last_edge_ms = now;
+        pressed_before = true;
+        if (same_press) continue;
+        uint32_t start = lab3_task_start(T_TEST_BTN);
         bool clear = armed && (uint32_t)(now - last_press_ms) <= DOUBLE_PRESS_MS;
         set_latch(!clear);
         if (!clear) {
@@ -545,7 +588,7 @@ static void heartbeat_thread(void *a, void *b, void *c)
         k_mutex_unlock(&state_lock);
         if (!silenced) {
             struct can_frame f;
-            lab3_pack_heartbeat(&f, MY_HB_ID, error ? STATE_ERROR : STATE_OK, h.bus_alive[0], h.bus_alive[1]);
+            lab3_pack_heartbeat(&f, MY_HB_ID, error ? STATE_ERROR : STATE_OK, h.bus_ok[0], h.bus_ok[1]);
             send_both(&f);
         }
         lab3_task_end(T_HB_TX, start);
@@ -584,12 +627,12 @@ static void diagnostics_thread(void *a, void *b, void *c)
         k_mutex_lock(&state_lock, K_FOREVER);
         struct zone_health h = zone_monitor_evaluate(&monitor, k_uptime_get_32());
         struct lab3_ctrl ctrl = command;
-        bool latched = monitor.latched, silenced = hb_silenced;
+        bool latched = monitor.latched, silenced = hb_silenced, commanded = monitor.ctrl_seen;
         k_mutex_unlock(&state_lock);
-        printk("%s state=%s latched=%d hb_silenced=%d alive=N1:%d,N2:%d,N3:%d deg_a=%d deg_b=%d "
-               "ctrl_fresh=%d steer=%d throttle=%u brake=%u\n", APP_NAME, h.error ? "ERROR" : "OK",
-               latched, silenced,
-               h.alive[1], h.alive[2], h.alive[3], h.degraded[0], h.degraded[1], h.ctrl_fresh,
+        printk("%s state=%s latched=%d hb_silenced=%d isolated=%d alive=N1:%d,N2:%d,N3:%d deg_a=%d deg_b=%d "
+               "ctrl_seen=%d steer=%d throttle=%u brake=%u\n", APP_NAME, h.error ? "ERROR" : "OK",
+               latched, silenced, h.isolated,
+               h.alive[1], h.alive[2], h.alive[3], h.degraded[0], h.degraded[1], commanded,
                ctrl.steer, ctrl.throttle, ctrl.brake);
         printk("CAN state_a=%d state_b=%d changes_a=%d changes_b=%d int_kicks_a=%d int_kicks_b=%d "
                "rx_dropped=%d dup=%d bad_crc=%d\n",
@@ -653,7 +696,7 @@ static int setup_watchdog(void)
 
 int main(void)
 {
-    zone_monitor_init(&monitor, MY_ZONE);
+    zone_monitor_init(&monitor, MY_ZONE, k_uptime_get_32());
     int rc = lab3_trace_init();
     if (rc) { printk("Test-point GPIO setup failed: %d\n", rc); return rc; }
     lab3_trace_set(TP_ERR, 1); /* power-up in error */
