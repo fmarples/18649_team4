@@ -19,3 +19,6 @@ doc/PART3_3_START_HERE.md
 doc/PART3_4_START_HERE.md
 doc/INTEGRATION_START_HERE.md
 doc/HW688_OUTPUT_CHECK.md
+
+# Local Pi agent state and preview artifacts
+.pi/

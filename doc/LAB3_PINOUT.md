@@ -58,6 +58,10 @@ The updated `lab3_wcet_baseline` overlay allocates **PC8** as `TASK_BODY`, a sel
 
 ## Lab 3 Part 5 demo allocation
 
+Wiring diagram, physical header pin to probe-board row for all three nodes:
+[lab3-testpoint-wiring.html](lab3-testpoint-wiring.html) (open locally in a browser).
+Nucleo row 1 GND uses CN10-20; Morpho positions follow ST UM1724 Table 27.
+
 Firmware allocation for [`lab3_demo/`](../lab3_demo/README.md), in the handout's
 Part 5 probe-board row order (rows 1–2 are GND on every node). This is the
 planned wiring. Only the CAN SPI/CS/INT connections and PC8 have been used on

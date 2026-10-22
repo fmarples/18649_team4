@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lab 3 test-point wiring: physical pin to breadboard row</title>
+<!-- Lab 3 Part 5 probe boards. Pins: lab3_demo/stm32_zephyr/boards/nucleo_f401re.overlay and
+     lab3_demo/pi/pi_gpio.py; Morpho positions: ST UM1724 Table 27; row order: Lab 3 handout, Part 5. -->
+<style>
+  :root { --ink: #102a43; --muted: #486581; --gnd: #000; --marker: #1a56db; --led: #0e7a3e; --pwm: #c2410c; --can: #9aa5b1; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font: 15px/1.45 Bahnschrift, "DIN Alternate", "Segoe UI", sans-serif; }
+  main { max-width: 1220px; margin: 0 auto; padding: 24px 20px 60px; }
+  h1 { font-size: 28px; font-weight: 600; margin: 0 0 4px; }
+  h2 { font-size: 22px; font-weight: 600; margin: 40px 0 4px; padding-top: 14px; border-top: 2px solid var(--ink); }
+  p { margin: 6px 0; max-width: 84ch; }
+  nav { display: flex; gap: 18px; margin: 10px 0; font-size: 16px; }
+  nav a { color: var(--marker); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 18px; margin: 12px 0; font-size: 14px; align-items: center; }
+  .legend span { display: inline-flex; gap: 6px; align-items: center; }
+  .dot { width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-style: normal; font-weight: 700; }
+  svg.fig { display: block; width: 100%; height: auto; margin-top: 8px; }
+  svg text { font-family: inherit; }
+  .halo { stroke: #fff; stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; }
+  table { border-collapse: collapse; font-size: 15px; margin-top: 10px; }
+  th, td { text-align: left; padding: 5px 12px; border-bottom: 1px solid #d9e2ec; }
+  th { font-weight: 600; border-bottom: 2px solid var(--ink); }
+  td.row { font-weight: 700; font-size: 17px; text-align: center; }
+  td.pin { font-weight: 700; white-space: nowrap; }
+  td.where, .note { color: var(--muted); }
+  ul, ol { max-width: 84ch; padding-left: 22px; }
+  li { margin: 3px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lab 3 test points: physical pin → breadboard row</h1>
+  <p>Each node has a header drawn as you see it from above (orientation under each heading) and its test-point breadboard.
+  A wire runs from every physical pin to its breadboard row. The number in a coloured pin is the row it goes to.
+  Grey pins are already used by the CAN modules or power, so leave them alone.</p>
+  <nav><a href="#n1">N1 Raspberry Pi</a><a href="#n2">N2 front Nucleo</a><a href="#n3">N3 rear Nucleo</a><a href="#checks">Before power-up</a></nav>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--gnd)">1</i>Ground</span>
+    <span><i class="dot" style="background:var(--marker)">3</i>Timing marker</span>
+    <span><i class="dot" style="background:var(--led)">7</i>LED output (470 Ω + LED to ground rail)</span>
+    <span><i class="dot" style="background:var(--pwm)">9</i>PWM / direction</span>
+    <span><i class="dot" style="background:var(--can)"></i>Already used</span>
+    <span><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="#fff" stroke="#102a43" stroke-width="2"/></svg>Scope clip (column c)</span>
+  </div>
+  <p>On every breadboard: the wire goes into column a, the scope clips onto column c. Rows 1 and 2 are ground: node GND into row 1, jumper row 1 → row 2 → the − rail.
+  LED rows: 470 Ω from e across the centre gap to f, LED long leg (anode) in j, short leg (cathode) in the − rail.</p>
+  <div id="pages"></div>
+
+  <h2 id="checks">Before power-up</h2>
+  <ol>
+    <li>Wire with every supply off. Leave the CAN module wiring (SPI, CS, INT, 3V3) as it is; none of these pins overlap it.</li>
+    <li>Nothing else may stay on PB4 (CN10-27 / D5): no servo, no L298N ENA. It carries SRV on N2 and PWM_OUT on N3.</li>
+    <li>Check continuity from breadboard row 1 to the node's GND, and that row 1, row 2 and the − rail are one net.</li>
+    <li>The handout's shared GND wire between the Pi, both Nucleos and the bus breadboard must already exist.</li>
+    <li>The bus breadboard needs its own A_H, A_L, B_H, B_L probe rows; they are separate from these three boards.</li>
+  </ol>
+</main>
+
+<script>
+const PI_NAMES = [
+  ["3V3", "5V"], ["GPIO2", "5V"], ["GPIO3", "GND"], ["GPIO4", "GPIO14"], ["GND", "GPIO15"],
+  ["GPIO17", "GPIO18"], ["GPIO27", "GND"], ["GPIO22", "GPIO23"], ["3V3", "GPIO24"], ["GPIO10", "GND"],
+  ["GPIO9", "GPIO25"], ["GPIO11", "GPIO8"], ["GND", "GPIO7"], ["GPIO0", "GPIO1"], ["GPIO5", "GND"],
+  ["GPIO6", "GPIO12"], ["GPIO13", "GND"], ["GPIO19", "GPIO16"], ["GPIO26", "GPIO20"], ["GND", "GPIO21"],
+];
+// UM1724 Table 27 (NUCLEO-F401RE): [odd, even] per row, pin 1/2 at the ST-LINK end.
+const CN7 = [
+  ["PC10", "PC11"], ["PC12", "PD2"], ["VDD", "E5V"], ["BOOT0", "GND"], ["NC", "NC"], ["NC", "IOREF"],
+  ["PA13", "RESET"], ["PA14", "+3V3"], ["PA15", "+5V"], ["GND", "GND"], ["PB7", "GND"], ["PC13", "VIN"],
+  ["PC14", "NC"], ["PC15", "PA0"], ["PH0", "PA1"], ["PH1", "PA4"], ["VBAT", "PB0"], ["PC2", "PC1"], ["PC3", "PC0"],
+];
+const CN10 = [
+  ["PC9", "PC8"], ["PB8", "PC6"], ["PB9", "PC5"], ["AVDD", "U5V"], ["GND", "NC"], ["PA5", "PA12"],
+  ["PA6", "PA11"], ["PA7", "PB12"], ["PB6", "NC"], ["PC7", "GND"], ["PA9", "PB2"], ["PA8", "PB1"],
+  ["PB10", "PB15"], ["PB4", "PB14"], ["PB5", "PB13"], ["PB3", "AGND"], ["PA10", "PC4"], ["PA2", "NC"], ["PA3", "NC"],
+];
+const ARDUINO = {
+  PA0: "A0", PA1: "A1", PA4: "A2", PB0: "A3", PC1: "A4", PC0: "A5", PA3: "D0", PA2: "D1", PA10: "D2",
+  PB3: "D3", PB5: "D4", PB4: "D5", PB10: "D6", PA8: "D7", PA9: "D8", PC7: "D9", PB6: "D10", PA7: "D11",
+  PA6: "D12", PA5: "D13", PB9: "D14", PB8: "D15",
+};
+const COLOR = { gnd: "#000", marker: "#1a56db", led: "#0e7a3e", pwm: "#c2410c" };
+const NUCLEO_USED = { PA5: "SPI SCK", PA6: "SPI MISO", PA7: "SPI MOSI", PB6: "CAN A CS", PC7: "CAN B CS", PA10: "CAN A INT", PB5: "CAN B INT", E5V: "power in" };
+
+// pins: physical pin -> [breadboard row, signal, kind]. Pi keys are physical pin numbers, Nucleo keys are Morpho pins.
+const SHARED = {
+  "CN10-20": [1, "GND", "gnd"], "CN7-35": [3, "CAN_RX_A", "marker"], "CN7-37": [4, "CAN_RX_B", "marker"],
+  "CN7-28": [5, "CAN_TX_A", "marker"], "CN7-30": [6, "CAN_TX_B", "marker"], "CN7-34": [7, "DEG_A", "led"],
+  "CN10-24": [8, "DEG_B", "led"],
+};
+const NUCLEO_ORIENT = "Component side up, ST-LINK USB socket at the top. CN7 is the double row of male pins along the left edge, CN10 along the right edge; pin 1 of each is at the top. CN7's odd pins are its outer (leftmost) column; CN10's even pins are its outer (rightmost) column. Count rows from the top. Use female-ended jumpers. The Arduino socket after the slash (A0, D5…) is the same signal if you prefer it. Bus A/B pins follow the logical bus (A = Pi can0) on both boards; N2's swap_ab build handles its crossed modules in firmware.";
+const PAGES = [
+  {
+    id: "n1", kind: "pi", title: "N1: Raspberry Pi 4 (cockpit)", rows: 13,
+    pins: { 39: [1, "GND", "gnd"], 11: [3, "UDP_RX", "marker"], 13: [4, "CMD_TX", "marker"], 15: [5, "CAN_TX_A", "marker"],
+            16: [6, "CAN_TX_B", "marker"], 29: [7, "DEG_A", "led"], 31: [8, "DEG_B", "led"], 32: [9, "ERR", "led"] },
+    used: { 18: "CAN B INT", 19: "SPI MOSI", 21: "SPI MISO", 22: "CAN A INT", 23: "SPI SCLK", 24: "CE0", 26: "CE1" },
+    orient: "Look down at the Pi with the USB and Ethernet ports toward you. The 40-pin header runs down the right-hand edge. Pin 1 is the top pin of the inner (left) column and has a square pad underneath; pin 2 is beside it on the board edge. GPIO12 is physical pin 32, not pin 12. Any GND pin works for row 1 (6, 9, 14, 20, 25, 30, 34, 39). Row 9 ERR is the team's extra red LED; the handout leaves N1 row 9 empty. If the Pi LEDs are already wired to the header with their own resistors, run one wire from the GPIO side to the row instead of adding a second LED.",
+  },
+  {
+    id: "n2", kind: "nucleo", title: "N2: front Nucleo (ST-LINK ending 124020)", rows: 13,
+    pins: { ...SHARED, "CN10-27": [9, "SRV", "pwm"], "CN7-32": [10, "FL", "led"], "CN10-3": [11, "FR", "led"],
+            "CN10-4": [12, "RELAY_TX", "marker"], "CN7-38": [13, "ERR", "led"] },
+  },
+  {
+    id: "n3", kind: "nucleo", title: "N3: rear Nucleo (ST-LINK ending 171333)", rows: 14,
+    pins: { ...SHARED, "CN10-5": [9, "PWM_SET", "marker"], "CN10-27": [10, "PWM_OUT", "pwm"], "CN10-25": [11, "DIR_A", "pwm"],
+            "CN10-34": [12, "RL", "led"], "CN10-6": [13, "RR", "led"], "CN7-38": [14, "ERR", "led"] },
+    extra: "Row 14 ERR is not in the handout table; checkoff wants ERR on all three, so tape it clearly.",
+  },
+];
+
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent, text) {
+  const n = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+  if (text !== undefined) n.textContent = text;
+  parent.appendChild(n);
+  return n;
+}
+const ordinal = n => n + ([11, 12, 13].includes(n) ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
+
+const P = 26, TOP = 110, ROW = 34;
+// Breadboard geometry, right side of every figure.
+const B = { left: 690, colA: 726, pitch: 18, colF: 836, rail: 950, right: 972, tape: 990, tapeR: 1170 };
+const colX = i => i < 5 ? B.colA + i * B.pitch : B.colF + (i - 5) * B.pitch;
+const rowY = r => TOP + (r - 1) * ROW;
+
+function pinShape(g, x, y, info, used) {
+  if (info) {
+    el("circle", { cx: x, cy: y, r: 10.5, fill: COLOR[info[2]], stroke: "#fff", "stroke-width": 1.5 }, g);
+    el("text", { x, y: y + 4.5, "text-anchor": "middle", "font-size": 12.5, "font-weight": 700, fill: "#fff" }, g, info[0]);
+  } else if (used) {
+    el("circle", { cx: x, cy: y, r: 7.5, fill: "#9aa5b1", stroke: "#52606d" }, g);
+  } else {
+    el("rect", { x: x - 6, y: y - 6, width: 12, height: 12, fill: "#d4af37", stroke: "#8a6d1f", rx: 1.5 }, g);
+  }
+}
+function pinLabel(g, x, y, anchor, name, info, used) {
+  const text = info ? (name.endsWith(info[1]) ? name : `${name}  ${info[1]}`) : used ? `${name} (${used})` : name;
+  el("text", { x, y: y + 4.5, "text-anchor": anchor, class: "halo", "font-size": info ? 13.5 : 12, "font-weight": info ? 700 : 400,
+               fill: info ? COLOR[info[2]] : used ? "#7b8794" : "#486581" }, g, text);
+}
+
+// Returns [{x, y, info}] for every used test-point pin so wires can be drawn to the breadboard.
+function drawPi(page, svg, layers) {
+  const xo = 300, xe = 326, h = TOP + 20 * P;
+  el("rect", { x: 70, y: 20, width: 290, height: h + 20, rx: 14, fill: "#0b6b3a", opacity: 0.1, stroke: "#0b6b3a" }, svg);
+  el("text", { x: 90, y: 46, "font-size": 15, "font-weight": 600 }, svg, "Raspberry Pi 4, top view");
+  el("rect", { x: 110, y: h + 10, width: 200, height: 26, fill: "#cbd2d9", stroke: "#52606d" }, svg);
+  el("text", { x: 210, y: h + 28, "text-anchor": "middle", "font-size": 12 }, svg, "USB + Ethernet (toward you)");
+  el("text", { x: xo - 20, y: TOP - 24, "text-anchor": "end", "font-size": 12, "font-weight": 600 }, svg, "inner column (odd)");
+  el("text", { x: xe + 20, y: TOP - 24, "font-size": 12, "font-weight": 600 }, svg, "board edge (even)");
+  el("rect", { x: xo - 14, y: TOP - 16, width: xe - xo + 28, height: 20 * P + 6, fill: "#1f2933", rx: 3 }, svg);
+  const ends = [];
+  for (let r = 0; r < 20; r++) {
+    const y = TOP + r * P;
+    for (const [n, x, anchor, lx] of [[2 * r + 1, xo, "end", xo - 20], [2 * r + 2, xe, "start", xe + 20]]) {
+      const info = page.pins[n], used = page.used[n];
+      pinShape(layers.pins, x, y, info, used);
+      pinLabel(layers.labels, lx, y, anchor, `${n} ${PI_NAMES[r][n % 2 ? 0 : 1]}`, info, used);
+      if (info) ends.push({ x, y, info });
+    }
+  }
+  return h;
+}
+
+function drawNucleo(page, svg, layers) {
+  const h = TOP + 19 * P;
+  el("rect", { x: 10, y: 14, width: 600, height: h + 10, rx: 10, fill: "#e8f1fb", stroke: "#3e4c59" }, svg);
+  el("rect", { x: 230, y: 4, width: 160, height: 32, fill: "#cbd2d9", stroke: "#52606d" }, svg);
+  el("text", { x: 310, y: 25, "text-anchor": "middle", "font-size": 13, "font-weight": 600 }, svg, "ST-LINK USB (top)");
+  el("text", { x: 310, y: 60, "text-anchor": "middle", "font-size": 14, "font-weight": 600 }, svg, "NUCLEO-F401RE, component side");
+  el("circle", { cx: 310, cy: TOP + 11 * P, r: 12, fill: "#1a56db" }, svg);
+  el("text", { x: 310, y: TOP + 11 * P + 28, "text-anchor": "middle", "font-size": 12, fill: "#486581" }, svg, "blue B1");
+  const conns = [
+    { name: "CN7", rows: CN7, xOdd: 136, xEven: 162 },
+    { name: "CN10", rows: CN10, xOdd: 458, xEven: 484 },
+  ];
+  for (const c of conns) {
+    el("rect", { x: c.xOdd - 14, y: TOP - 16, width: c.xEven - c.xOdd + 28, height: 19 * P + 6, fill: "#1f2933", rx: 3 }, svg);
+    el("text", { x: (c.xOdd + c.xEven) / 2, y: TOP - 24, "text-anchor": "middle", "font-size": 14, "font-weight": 700 }, svg, c.name);
+    c.rows.forEach(([oddName, evenName], r) => {
+      const y = TOP + r * P;
+      for (const [num, name, x, anchor, lx] of [[2 * r + 1, oddName, c.xOdd, "end", c.xOdd - 16], [2 * r + 2, evenName, c.xEven, "start", c.xEven + 16]]) {
+        const info = page.pins[`${c.name}-${num}`], used = NUCLEO_USED[name];
+        pinShape(layers.pins, x, y, info, used);
+        pinLabel(layers.labels, lx, y, anchor, `${num} ${name}${ARDUINO[name] ? "/" + ARDUINO[name] : ""}`, info, used);
+      }
+    });
+  }
+  return h;
+}
+
+// Pin centre for a key, matching the drawing coordinates above.
+function pinXY(page, key) {
+  if (page.kind === "pi") { const n = Number(key); return [n % 2 ? 300 : 326, TOP + (Math.ceil(n / 2) - 1) * P]; }
+  const [conn, s] = key.split("-"), n = Number(s), odd = n % 2 === 1;
+  const x = conn === "CN7" ? (odd ? 136 : 162) : (odd ? 458 : 484);
+  return [x, TOP + (Math.ceil(n / 2) - 1) * P];
+}
+
+function drawBreadboard(page, svg, layers) {
+  const n = page.rows, byRow = {};
+  for (const [key, info] of Object.entries(page.pins)) byRow[info[0]] = info;
+  el("text", { x: B.left, y: TOP - 50, "font-size": 15, "font-weight": 600 }, svg, "Test-point breadboard");
+  el("text", { x: B.tape, y: TOP - 50, "font-size": 15, "font-weight": 600 }, svg, "Tape label");
+  "abcdefghij".split("").forEach((c, i) => el("text", { x: colX(i), y: TOP - 24, "font-size": 11, "text-anchor": "middle", fill: "#486581" }, svg, c));
+  el("text", { x: B.rail, y: TOP - 24, "font-size": 12, "text-anchor": "middle" }, svg, "−");
+  el("rect", { x: B.left, y: TOP - 18, width: B.right - B.left, height: n * ROW + 2, rx: 6, fill: "#eef2f6", stroke: "#9fb3c8" }, svg);
+  el("rect", { x: B.rail - 9, y: TOP - 12, width: 18, height: n * ROW - 10, rx: 3, fill: "#fde2e2", stroke: "#94a3b8" }, svg);
+  for (let r = 1; r <= n; r++) {
+    const y = rowY(r), info = byRow[r] || (r === 2 ? [2, "GND", "gnd"] : null);
+    el("rect", { x: B.colA - 9, y: y - 9, width: 4 * B.pitch + 18, height: 18, rx: 3, fill: info ? "#fff" : "none", stroke: info ? "#9fb3c8" : "none" }, svg);
+    for (let i = 0; i < 10; i++) el("circle", { cx: colX(i), cy: y, r: 2.8, fill: "#829ab1" }, svg);
+    el("circle", { cx: B.rail, cy: y, r: 2.8, fill: "#829ab1" }, svg);
+    el("text", { x: B.left + 14, y: y + 5, "font-size": 13, "font-weight": 700, "text-anchor": "middle" }, svg, r);
+    el("rect", { x: B.tape, y: y - 12, width: B.tapeR - B.tape, height: 24, fill: info ? "#fff3b0" : "#f4f4f4", stroke: "#d9c56a" }, svg);
+    el("text", { x: B.tape + 10, y: y + 5, "font-size": 15, "font-weight": 600 }, svg, info ? `${r}  ${info[1]}` : `${r}  (not used)`);
+    if (!info) continue;
+    if (r === 2) {
+      el("path", { d: `M ${colX(4)} ${rowY(1)} C ${colX(4) + 14} ${rowY(1) + 6}, ${colX(4) + 14} ${y - 6}, ${colX(4)} ${y}`, fill: "none", stroke: "#000", "stroke-width": 3 }, layers.top);
+      el("path", { d: `M ${colX(3)} ${y} C ${colX(3) + 60} ${y + 20}, ${B.rail - 60} ${y + 20}, ${B.rail} ${y}`, fill: "none", stroke: "#000", "stroke-width": 3 }, layers.top);
+    }
+    el("circle", { cx: colX(2), cy: y, r: 6, fill: "#fff", stroke: "#102a43", "stroke-width": 2 }, layers.top);
+    if (info[2] === "led") {
+      const x1 = colX(4), x2 = colX(5), zig = [];
+      for (let k = 0; k <= 6; k++) zig.push(`${x1 + 3 + k * ((x2 - x1 - 6) / 6)} ${y + (k === 0 || k === 6 ? 0 : (k % 2 ? -5 : 5))}`);
+      el("path", { d: `M ${x1} ${y} L ${zig.join(" L ")} L ${x2} ${y}`, fill: "none", stroke: "#102a43", "stroke-width": 1.8 }, layers.top);
+      const mid = (colX(9) + B.rail) / 2;
+      el("line", { x1: colX(9), y1: y, x2: mid - 6, y2: y, stroke: "#102a43", "stroke-width": 1.8 }, layers.top);
+      el("path", { d: `M ${mid - 6} ${y - 7} L ${mid - 6} ${y + 7} L ${mid + 5} ${y} Z`, fill: info[1] === "ERR" ? "#dc2626" : "#0e7a3e", stroke: "#102a43" }, layers.top);
+      el("line", { x1: mid + 6, y1: y - 7, x2: mid + 6, y2: y + 7, stroke: "#102a43", "stroke-width": 2 }, layers.top);
+      el("line", { x1: mid + 6, y1: y, x2: B.rail, y2: y, stroke: "#102a43", "stroke-width": 1.8 }, layers.top);
+    }
+  }
+  el("text", { x: (colX(4) + colX(5)) / 2, y: TOP + n * ROW - 2, "font-size": 11, "text-anchor": "middle", fill: "#486581" }, svg, "470 Ω");
+  return TOP + n * ROW;
+}
+
+function whereText(page, key) {
+  if (page.kind === "pi") {
+    const n = Number(key);
+    return `${n % 2 ? "inner (left)" : "edge (right)"} column, ${ordinal(Math.ceil(n / 2))} from top`;
+  }
+  const [conn, s] = key.split("-"), n = Number(s);
+  const outer = conn === "CN7" ? n % 2 === 1 : n % 2 === 0;
+  return `${conn === "CN7" ? "left" : "right"} header, ${outer ? "outer" : "inner"} column, ${ordinal(Math.ceil(n / 2))} from top`;
+}
+function pinName(page, key) {
+  if (page.kind === "pi") { const n = Number(key); return `Pin ${n} (${PI_NAMES[Math.ceil(n / 2) - 1][n % 2 ? 0 : 1]})`; }
+  const [conn, s] = key.split("-"), n = Number(s);
+  const name = (conn === "CN7" ? CN7 : CN10)[Math.ceil(n / 2) - 1][n % 2 ? 0 : 1];
+  return `${key} (${name}${ARDUINO[name] ? ", socket " + ARDUINO[name] : ""})`;
+}
+
+for (const page of PAGES) {
+  const sec = document.createElement("section");
+  sec.id = page.id;
+  sec.innerHTML = `<h2>${page.title}</h2><p class="note">${page.orient || NUCLEO_ORIENT}</p>`;
+  const svg = el("svg", { class: "fig", role: "img", "aria-label": `${page.title}: pins wired to test-point breadboard rows` }, sec);
+  const wires = el("g", {}, svg);
+  // Header drawing first, then wires, then pins/labels/breadboard parts on top so text stays readable.
+  const layers = { pins: null, labels: null, top: null };
+  const base = el("g", {}, svg);
+  svg.insertBefore(base, wires);
+  layers.pins = el("g", {}, svg);
+  layers.labels = el("g", {}, svg);
+  layers.top = el("g", {}, svg);
+  const hHeader = (page.kind === "pi" ? drawPi : drawNucleo)(page, base, layers);
+  const hBoard = drawBreadboard(page, base, layers);
+  for (const [key, info] of Object.entries(page.pins)) {
+    const [x, y] = pinXY(page, key), ty = rowY(info[0]);
+    el("path", { d: `M ${x} ${y} C ${x + 220} ${y}, ${B.colA - 200} ${ty}, ${B.colA} ${ty}`, fill: "none", stroke: COLOR[info[2]], "stroke-width": 2.6, opacity: 0.8 }, wires);
+    el("circle", { cx: B.colA, cy: ty, r: 4.5, fill: COLOR[info[2]] }, layers.top);
+  }
+  svg.setAttribute("viewBox", `0 0 1180 ${Math.max(hHeader, hBoard) + 50}`);
+
+  const rows = Object.entries(page.pins).sort((a, b) => a[1][0] - b[1][0]);
+  let html = `<table><thead><tr><th>Row</th><th>Signal</th><th>Physical pin</th><th>Where</th></tr></thead><tbody>`;
+  for (const [key, [row, sig, kind]] of rows) {
+    html += `<tr><td class="row" style="color:${COLOR[kind]}">${row}</td><td>${sig}</td><td class="pin">${pinName(page, key)}</td><td class="where">${whereText(page, key)}</td></tr>`;
+    if (row === 1) html += `<tr><td class="row">2</td><td>GND</td><td class="where" colspan="2">no pin: jumper from row 1 on the breadboard</td></tr>`;
+  }
+  html += `</tbody></table>${page.extra ? `<p class="note">${page.extra}</p>` : ""}`;
+  sec.insertAdjacentHTML("beforeend", html);
+  document.getElementById("pages").appendChild(sec);
+}
+</script>
+</body>
+</html>
