@@ -30,6 +30,12 @@ static bool fresh(bool seen, uint32_t stamp, uint32_t now, uint32_t limit)
     return seen && (uint32_t)(now - stamp) < limit;
 }
 
+bool zone_monitor_present(const struct zone_monitor *m, uint8_t zone, unsigned bus, uint32_t now_ms)
+{
+    if (zone == 0 || zone >= ZONE_SLOTS || zone == m->self || bus > 1) return false;
+    return fresh(m->hb_seen[zone][bus], m->hb_ms[zone][bus], now_ms, BUS_SILENT_MS);
+}
+
 struct zone_health zone_monitor_evaluate(const struct zone_monitor *m, uint32_t now)
 {
     struct zone_health h = {0};

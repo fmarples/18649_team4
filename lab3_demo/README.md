@@ -22,13 +22,24 @@ the fault to loose wiring and fixed it (see the known behaviors). Fault-injectio
 ## Design decisions
 
 **Relay (Part 4.2).** Only N2 relays, because only N2 is meant to stay on both
-buses. It forwards every CRC-valid first copy whose origin is N1 or N3 to its other
-bus **immediately**, unless that bus has already delivered the copy. No fault
-detection gates it, so scenario (c) has no 60 ms gap: the first CTRL after the
-pulls is relayed like every later one. The cost is that healthy buses also carry
-relayed copies. Worst case is about 10 frames per bus per 20 ms, roughly 14 %
-utilization against the 50 % limit. This is Tianyi's design from the unmerged
-`lab3-relay-immediate` branch; `frame_history.c` is ported from it.
+buses. It forwards a CRC-valid first copy whose origin is N1 or N3 to its other
+bus only while **that origin has sent no heartbeat on the destination bus for
+60 ms** (`zone_monitor_present`, the R4.7 degraded threshold), and unless that bus
+has already delivered the copy. Healthy buses therefore carry no relayed
+copies. In scenario (c) relaying starts within 60 ms of the pull (the first CTRL
+after it can be up to about 80 ms late); no zone errors on a stale CTRL, so the
+system stays up through that gap. The frame history (`frame_history.c`) is
+ported from Tianyi's `lab3-relay-immediate` branch.
+
+Why the gate (October 23): the earlier immediate relay also forwarded frames
+whose origin was present on the destination bus. With N3 off bus B, bus B held
+only the Pi and N2; N2's unchanged copy of a Pi frame sometimes started at the
+same bit as the Pi's own copy. Two bit-identical transmitters with no third node
+get no ACK, so both retried in lockstep forever: Pi can1 and N2 bus B went
+error-passive and silent 19 s and about 2 min after restarts, with no kernel
+message, and stayed so until can1 was re-initialised. With the gate flashed
+(`logs/lab3-can/20261023-083008-demo-build-relay-gate/`), N3 off bus B ran
+4 min with zero dead intervals while N2 relayed N3's frames onto B.
 
 - **Loop freedom:** N1 and N3 never forward. N2 claims at most one forwarding
   attempt per (ID, source, seq) per destination bus. A controller never receives
@@ -275,6 +286,7 @@ bus-off/reconnect recovery times, the INT re-kick, front/rear blink skew, the
 relayed brake chain, and PWM waveforms on PB4.
 
 Known behaviors to watch on hardware:
+- Taking a Pi CAN link down (`ip link set canX down`) kills the cockpit's python-can receive thread for that bus (`CanOperationError: Network is down` in `crash.log`); run `start.py --restart` afterwards. The October 23 bus-B lockups that prompted link restarts were the immediate-relay lockstep described under [Design decisions](#design-decisions), not a Pi or wiring fault.
 - Wi-Fi delays wheel UDP. On October 23 the laptop (CMU-SECURE) and Pi (CMU-DEVICE) shared one AP on channel 149. A passive Pi capture got all 3001 synthetic packets with none lost, yet 27 arrival gaps exceeded 60 ms (up to 146 ms), each followed by a burst of 4–7 held packets. The laptop's 20 ms loop never woke more than 20.7 ms apart. Under the old 60 ms CTRL rule this flashed whole-system hazards 70 times in 272 s. Under the Lab 1 rule now implemented, only gaps of 100 ms or more fail N1. With Pi `wlan0` power save off (not persistent across reboot), that happened 7 times in about 246 s, every one `udp_ok=False`; that error is the required behavior. Removing it needs a link without these gaps, such as wired Ethernet between the laptop and the Pi.
 - Bus-A and Pi SPI hardware faults, October 23 (evidence in `logs/lab3-can/20261023-051300-pi-can-stall/`). At Pi uptime 1922 s, with no software change, both Pi controllers stopped transmitting (ENOBUFS, kernel `hard_xmit called while tx busy`). Bringing the links back up failed several times with `MCP251x didn't enter in config mode`, the symptom of the earlier SPI wiring fault, and the Pi then received 4419 CRC-bad frames in 26 s. After the 05:15 reflash, N3 printed nothing: its CPU was servicing EXTI10 (PA10, CAN A INT) continuously, while N2's bus-A controller was error-passive and every Pi bus-A transmit failed. Check the Pi's MCP2515 SPI/3V3/GND jumpers and the bus-A rail and jumpers before further hardware tests.
 - Recheck at 05:30 (`logs/lab3-can/20261023-053047-demo-live-COM{4,6}.log`): N3 had recovered. Over 30 s both STM32s were OK with all zones alive, no degraded bus, both controllers error-active and no new rejects, INT re-kicks, state changes or relay failures. The Pi's can0 still received, but its TX packet counter stayed at 193430 while its error-warning/passive counters rose. The cockpit logged 87275 bus-A TX errors from its start at 3438.9 s onward, with no bus-A errors seen by N2 or N3. N2 relayed about 107 frames/s, N1's traffic copied from B onto A. The Pi can0 link was left running at the user's request; a link down/up or the Pi module's bus-A connection is the next thing to check. In the same window, 47 UDP gaps exceeded 100 ms (maximum 149.7 ms), each briefly failing N1 as Lab 1 requires.

@@ -43,6 +43,9 @@ void zone_monitor_heartbeat(struct zone_monitor *m, uint8_t zone, unsigned bus, 
 void zone_monitor_traffic(struct zone_monitor *m, unsigned bus, uint32_t now_ms);
 /* A valid in-range CTRL arrived. */
 void zone_monitor_ctrl(struct zone_monitor *m);
+/* Relay gate: true while `zone`'s heartbeat on `bus` is under BUS_SILENT_MS old.
+ * N2 forwards only frames whose origin is absent from the destination bus. */
+bool zone_monitor_present(const struct zone_monitor *m, uint8_t zone, unsigned bus, uint32_t now_ms);
 /* Lab 1 R3 error state: power-up in error; out once both peers are alive on
  * some bus and a valid CTRL has arrived; in on a latch, a failed peer or isolation. */
 struct zone_health zone_monitor_evaluate(const struct zone_monitor *m, uint32_t now_ms);

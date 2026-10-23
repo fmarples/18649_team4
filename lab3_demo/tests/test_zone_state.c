@@ -92,6 +92,19 @@ int main(void)
     CHECK(h.isolated && h.error && !h.degraded[0] && !h.degraded[1]);
     CHECK(zone_monitor_next_change_ms(&m, 160) == UINT32_MAX);
 
+    /* Relay gate: a sender counts as present on a bus while its heartbeat there
+     * is under 60 ms old. Relaying a present sender's frame onto a two-node bus
+     * can start bit-identical with the original; neither copy is then ACKed and
+     * both retry in lockstep forever. */
+    zone_monitor_init(&m, 2, 0);
+    CHECK(!zone_monitor_present(&m, 1, 1, 0));          /* never heard: relay */
+    beat(&m, 1, 1, 100);
+    CHECK(zone_monitor_present(&m, 1, 1, 159));
+    CHECK(!zone_monitor_present(&m, 1, 1, 160));        /* 60 ms silent: relay */
+    CHECK(!zone_monitor_present(&m, 1, 0, 120));        /* per bus */
+    CHECK(!zone_monitor_present(&m, 0, 1, 120));        /* unknown origin */
+    CHECK(!zone_monitor_present(&m, 2, 1, 120));        /* self */
+
     /* Unsigned age survives the 32-bit uptime wrap. */
     zone_monitor_init(&m, 3, UINT32_MAX - 5);
     beat_all(&m, UINT32_MAX - 5); zone_monitor_ctrl(&m);

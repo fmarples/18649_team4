@@ -71,7 +71,8 @@ static const struct pwm_dt_spec actuator_pwm = PWM_DT_SPEC_GET(DT_PATH(zephyr_us
 static const struct device *const watchdog_dev = DEVICE_DT_GET(DT_NODELABEL(iwdg));
 static const uint32_t catalog_ids[] = {ID_CTRL, ID_FAULT, ID_HB_N1, ID_HB_N2, ID_HB_N3, ID_BLINK, ID_FORCE};
 
-struct rx_item { struct can_frame frame; uint8_t bus; uint32_t received_ms; };
+/* dispatch_cycles: cycle count when dispatch took the item (the CAN_RX_x toggle). */
+struct rx_item { struct can_frame frame; uint8_t bus; uint32_t received_ms; uint32_t dispatch_cycles; };
 K_MSGQ_DEFINE(rx_queue, sizeof(struct rx_item), RX_QUEUE_DEPTH, 4);
 #if defined(CONFIG_LAB3_RELAY)
 K_MSGQ_DEFINE(relay_queue, sizeof(struct rx_item), 16, 4);
@@ -105,7 +106,11 @@ static struct frame_history history;
 static atomic_t rx_dropped, duplicates, bad_crc, tx_rejected[2], tx_completed[2], tx_failed[2];
 static atomic_t can_state[2], can_state_changes[2], int_kicks[2];
 #if defined(CONFIG_LAB3_RELAY)
-static atomic_t relay_sent, relay_failed, relay_stale, relay_dropped;
+static atomic_t relay_sent, relay_failed, relay_stale, relay_dropped, relay_gated;
+/* RELAY C (clarification #6) per forwarded frame: CAN_RX_x toggle to RELAY_TX
+ * toggle, in cycles. Written by RELAY only; the console prints and clears the
+ * window maximum every 5 s. */
+static atomic_t relay_c_max, relay_c_window_max;
 #endif
 static int watchdog_channel = -1;
 
@@ -326,6 +331,7 @@ static void rx_dispatch_thread(void *a, void *b, void *c)
         }
         enum lab3_timing_id task = item.bus == 0 ? T_RX_DISPATCH_A : T_RX_DISPATCH_B;
         uint32_t start = lab3_task_start(task);
+        item.dispatch_cycles = start;
         dispatch(&item);
         lab3_timing_end(T_RX_DISPATCH, start);
         lab3_task_end(task, start);
@@ -334,9 +340,12 @@ static void rx_dispatch_thread(void *a, void *b, void *c)
 K_THREAD_DEFINE(rx_dispatch_tid, 2048, rx_dispatch_thread, NULL, NULL, NULL, 1, 0, 0);
 
 #if defined(CONFIG_LAB3_RELAY)
-/* RELAY (N2 only, priority 2): forward each foreign first copy to the other bus
- * immediately unless that bus already delivered it. No fault detection gates
- * it, so scenario (c) has no 60 ms gap. History claims make it loop-free. */
+/* RELAY (N2 only, priority 2): forward a foreign first copy to the other bus
+ * only while its origin has sent no heartbeat there for 60 ms, and unless that
+ * bus already delivered it. Relaying a present origin's frame can start
+ * bit-identical with the original on a two-node bus (N3 off B: Pi and N2 only);
+ * neither copy is ACKed and both retry in lockstep forever. History claims make
+ * it loop-free. */
 static void relay_thread(void *a, void *b, void *c)
 {
     ARG_UNUSED(a); ARG_UNUSED(b); ARG_UNUSED(c);
@@ -345,6 +354,16 @@ static void relay_thread(void *a, void *b, void *c)
     while (true) {
         if (k_msgq_get(&relay_queue, &item, K_FOREVER) != 0) continue;
         uint32_t start = lab3_task_start(T_RELAY);
+        unsigned destination = item.bus ^ 1U;
+        k_mutex_lock(&state_lock, K_FOREVER);
+        bool origin_present = zone_monitor_present(&monitor, lab3_frame_origin(&item.frame),
+                                                   destination, k_uptime_get_32());
+        k_mutex_unlock(&state_lock);
+        if (origin_present) {
+            atomic_inc(&relay_gated);
+            lab3_task_end(T_RELAY, start);
+            continue;
+        }
         struct frame_key key = {.id = (uint16_t)item.frame.id,
             .source = lab3_dedup_source(&item.frame), .seq = item.frame.data[0] & 0x0F};
         k_mutex_lock(&history_lock, K_FOREVER);
@@ -352,8 +371,11 @@ static void relay_thread(void *a, void *b, void *c)
                                                    k_uptime_get_32());
         k_mutex_unlock(&history_lock);
         if (claim == RELAY_SEND) {
-            int rc = submit(item.bus ^ 1U, &item.frame, K_MSEC(1));
+            int rc = submit(destination, &item.frame, K_MSEC(1));
             lab3_trace_toggle(TP_RELAY_TX); /* clarification #6: after the send returns */
+            atomic_val_t relay_c = (atomic_val_t)(k_cycle_get_32() - item.dispatch_cycles);
+            if (relay_c > atomic_get(&relay_c_max)) atomic_set(&relay_c_max, relay_c);
+            if (relay_c > atomic_get(&relay_c_window_max)) atomic_set(&relay_c_window_max, relay_c);
             atomic_inc(rc == 0 ? &relay_sent : &relay_failed);
         } else if (claim == RELAY_STALE) {
             atomic_inc(&relay_stale);
@@ -645,8 +667,13 @@ static void diagnostics_thread(void *a, void *b, void *c)
                (int)atomic_get(&tx_completed[0]), (int)atomic_get(&tx_completed[1]),
                (int)atomic_get(&tx_failed[0]), (int)atomic_get(&tx_failed[1]));
 #if defined(CONFIG_LAB3_RELAY)
-        printk("RELAY sent=%d failed=%d stale=%d queue_dropped=%d\n", (int)atomic_get(&relay_sent),
-               (int)atomic_get(&relay_failed), (int)atomic_get(&relay_stale), (int)atomic_get(&relay_dropped));
+        /* k_cyc_to_us_floor32 may evaluate its argument more than once. */
+        uint32_t relay_c_all = (uint32_t)atomic_get(&relay_c_max);
+        uint32_t relay_c_window = (uint32_t)atomic_set(&relay_c_window_max, 0);
+        printk("RELAY sent=%d failed=%d stale=%d queue_dropped=%d gated=%d relay_c_us max=%u window_max=%u\n",
+               (int)atomic_get(&relay_sent), (int)atomic_get(&relay_failed), (int)atomic_get(&relay_stale),
+               (int)atomic_get(&relay_dropped), (int)atomic_get(&relay_gated),
+               k_cyc_to_us_floor32(relay_c_all), k_cyc_to_us_floor32(relay_c_window));
 #endif
         for (int id = 0; id < T_COUNT; ++id) {
             uint32_t count = lab3_timing_count(id);
