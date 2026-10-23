@@ -1923,6 +1923,237 @@
           "Pin_4"
         ]
       ]
+    },
+    {
+      "ref": "R540",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_SERVO_PWM",
+        "2": "SERVO_PWM_OUT"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J90",
+      "lib": "Connector_Generic:Conn_01x03",
+      "nets": {
+        "1": "GND",
+        "2": "SERVO_VPLUS",
+        "3": "SERVO_PWM_OUT"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ]
+      ]
+    },
+    {
+      "ref": "R550",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_FRONT_LEFT_LED",
+        "2": "F_FRONT_LEFT_LED_BASE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R560",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_FRONT_LEFT_LED_BASE",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "Q550",
+      "lib": "Transistor_BJT:MMBT3904",
+      "nets": {
+        "1": "F_FRONT_LEFT_LED_BASE",
+        "2": "GND",
+        "3": "F_FRONT_LEFT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "B"
+        ],
+        [
+          "2",
+          "E"
+        ],
+        [
+          "3",
+          "C"
+        ]
+      ]
+    },
+    {
+      "ref": "R570",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+5V",
+        "2": "F_FRONT_LEFT_LED_PLUS"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J550",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "F_FRONT_LEFT_LED_PLUS",
+        "2": "F_FRONT_LEFT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "R551",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_FRONT_RIGHT_LED",
+        "2": "F_FRONT_RIGHT_LED_BASE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R561",
+      "lib": "Device:R",
+      "nets": {
+        "1": "F_FRONT_RIGHT_LED_BASE",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "Q551",
+      "lib": "Transistor_BJT:MMBT3904",
+      "nets": {
+        "1": "F_FRONT_RIGHT_LED_BASE",
+        "2": "GND",
+        "3": "F_FRONT_RIGHT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "B"
+        ],
+        [
+          "2",
+          "E"
+        ],
+        [
+          "3",
+          "C"
+        ]
+      ]
+    },
+    {
+      "ref": "R571",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+5V",
+        "2": "F_FRONT_RIGHT_LED_PLUS"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J551",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "F_FRONT_RIGHT_LED_PLUS",
+        "2": "F_FRONT_RIGHT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
     }
   ],
   "Rear": [
@@ -4218,6 +4449,807 @@
         [
           "7",
           "Pin_7"
+        ]
+      ]
+    },
+    {
+      "ref": "U80",
+      "lib": "Driver_Motor:L298N",
+      "nets": {
+        "1": "GND",
+        "2": "LEFT_BRIDGE",
+        "3": "LEFT_RETURN",
+        "4": "VBAT_PROTECTED",
+        "5": "R_LEFT_IN1",
+        "6": "R_LEFT_ENABLE_PWM",
+        "7": "R_LEFT_IN2",
+        "8": "GND",
+        "9": "+5V",
+        "10": "R_RIGHT_IN3",
+        "11": "R_RIGHT_ENABLE_PWM",
+        "12": "R_RIGHT_IN4",
+        "13": "RIGHT_BRIDGE",
+        "14": "RIGHT_RETURN",
+        "15": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "SENSE_A"
+        ],
+        [
+          "2",
+          "OUT1"
+        ],
+        [
+          "3",
+          "OUT2"
+        ],
+        [
+          "4",
+          "Vs"
+        ],
+        [
+          "5",
+          "IN1"
+        ],
+        [
+          "6",
+          "EnA"
+        ],
+        [
+          "7",
+          "IN2"
+        ],
+        [
+          "8",
+          "GND"
+        ],
+        [
+          "9",
+          "Vss"
+        ],
+        [
+          "10",
+          "IN3"
+        ],
+        [
+          "11",
+          "EnB"
+        ],
+        [
+          "12",
+          "IN4"
+        ],
+        [
+          "13",
+          "OUT3"
+        ],
+        [
+          "14",
+          "OUT4"
+        ],
+        [
+          "15",
+          "SENSE_B"
+        ]
+      ]
+    },
+    {
+      "ref": "C800",
+      "lib": "Device:C",
+      "nets": {
+        "1": "VBAT_PROTECTED",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C801",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+5V",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C802",
+      "lib": "Device:C",
+      "nets": {
+        "1": "VBAT_PROTECTED",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "D800",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "VBAT_PROTECTED",
+        "2": "LEFT_BRIDGE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D801",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "LEFT_BRIDGE",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D802",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "VBAT_PROTECTED",
+        "2": "LEFT_RETURN"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D803",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "LEFT_RETURN",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D804",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "VBAT_PROTECTED",
+        "2": "RIGHT_BRIDGE"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D805",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "RIGHT_BRIDGE",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D806",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "VBAT_PROTECTED",
+        "2": "RIGHT_RETURN"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "D807",
+      "lib": "Device:D_Schottky",
+      "nets": {
+        "1": "RIGHT_RETURN",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          "K"
+        ],
+        [
+          "2",
+          "A"
+        ]
+      ]
+    },
+    {
+      "ref": "J80",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "LEFT_MOTOR",
+        "2": "LEFT_RETURN"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "J81",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "RIGHT_MOTOR",
+        "2": "RIGHT_RETURN"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "J82",
+      "lib": "Connector_Generic:Conn_01x04",
+      "nets": {
+        "1": "+5V",
+        "2": "GND",
+        "3": "LEFT_ENC_A_RAW",
+        "4": "LEFT_ENC_B_RAW"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ]
+      ]
+    },
+    {
+      "ref": "R800",
+      "lib": "Device:R",
+      "nets": {
+        "1": "LEFT_ENC_A_RAW",
+        "2": "LEFT_ENC_A_IN"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R804",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "LEFT_ENC_A_RAW"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R801",
+      "lib": "Device:R",
+      "nets": {
+        "1": "LEFT_ENC_B_RAW",
+        "2": "LEFT_ENC_B_IN"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R805",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "LEFT_ENC_B_RAW"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J83",
+      "lib": "Connector_Generic:Conn_01x04",
+      "nets": {
+        "1": "+5V",
+        "2": "GND",
+        "3": "RIGHT_ENC_A_RAW",
+        "4": "RIGHT_ENC_B_RAW"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ],
+        [
+          "3",
+          "Pin_3"
+        ],
+        [
+          "4",
+          "Pin_4"
+        ]
+      ]
+    },
+    {
+      "ref": "R802",
+      "lib": "Device:R",
+      "nets": {
+        "1": "RIGHT_ENC_A_RAW",
+        "2": "RIGHT_ENC_A_IN"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R806",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "RIGHT_ENC_A_RAW"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R803",
+      "lib": "Device:R",
+      "nets": {
+        "1": "RIGHT_ENC_B_RAW",
+        "2": "RIGHT_ENC_B_IN"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R807",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+3V3",
+        "2": "RIGHT_ENC_B_RAW"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "U81",
+      "lib": "Lab4_Logic:SN74LVC14A_Encoder",
+      "nets": {
+        "7": "GND",
+        "14": "+3V3",
+        "11": "GND",
+        "13": "GND",
+        "1": "LEFT_ENC_A_IN",
+        "2": "R_LEFT_ENC_A",
+        "3": "LEFT_ENC_B_IN",
+        "4": "R_LEFT_ENC_B",
+        "5": "RIGHT_ENC_A_IN",
+        "6": "R_RIGHT_ENC_A",
+        "9": "RIGHT_ENC_B_IN",
+        "8": "R_RIGHT_ENC_B"
+      },
+      "pins": [
+        [
+          "1",
+          "1A"
+        ],
+        [
+          "2",
+          "1Y"
+        ],
+        [
+          "3",
+          "2A"
+        ],
+        [
+          "4",
+          "2Y"
+        ],
+        [
+          "5",
+          "3A"
+        ],
+        [
+          "6",
+          "3Y"
+        ],
+        [
+          "7",
+          "GND"
+        ],
+        [
+          "8",
+          "4Y"
+        ],
+        [
+          "9",
+          "4A"
+        ],
+        [
+          "10",
+          "5Y"
+        ],
+        [
+          "11",
+          "5A"
+        ],
+        [
+          "12",
+          "6Y"
+        ],
+        [
+          "13",
+          "6A"
+        ],
+        [
+          "14",
+          "VCC"
+        ]
+      ]
+    },
+    {
+      "ref": "C803",
+      "lib": "Device:C",
+      "nets": {
+        "1": "+3V3",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R650",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_REAR_LEFT_LED",
+        "2": "R_REAR_LEFT_LED_BASE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R660",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_REAR_LEFT_LED_BASE",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "Q650",
+      "lib": "Transistor_BJT:MMBT3904",
+      "nets": {
+        "1": "R_REAR_LEFT_LED_BASE",
+        "2": "GND",
+        "3": "R_REAR_LEFT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "B"
+        ],
+        [
+          "2",
+          "E"
+        ],
+        [
+          "3",
+          "C"
+        ]
+      ]
+    },
+    {
+      "ref": "R670",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+5V",
+        "2": "R_REAR_LEFT_LED_PLUS"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J650",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "R_REAR_LEFT_LED_PLUS",
+        "2": "R_REAR_LEFT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "R651",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_REAR_RIGHT_LED",
+        "2": "R_REAR_RIGHT_LED_BASE"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "R661",
+      "lib": "Device:R",
+      "nets": {
+        "1": "R_REAR_RIGHT_LED_BASE",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "Q651",
+      "lib": "Transistor_BJT:MMBT3904",
+      "nets": {
+        "1": "R_REAR_RIGHT_LED_BASE",
+        "2": "GND",
+        "3": "R_REAR_RIGHT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "B"
+        ],
+        [
+          "2",
+          "E"
+        ],
+        [
+          "3",
+          "C"
+        ]
+      ]
+    },
+    {
+      "ref": "R671",
+      "lib": "Device:R",
+      "nets": {
+        "1": "+5V",
+        "2": "R_REAR_RIGHT_LED_PLUS"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "J651",
+      "lib": "Connector_Generic:Conn_01x02",
+      "nets": {
+        "1": "R_REAR_RIGHT_LED_PLUS",
+        "2": "R_REAR_RIGHT_LED_SINK"
+      },
+      "pins": [
+        [
+          "1",
+          "Pin_1"
+        ],
+        [
+          "2",
+          "Pin_2"
         ]
       ]
     }

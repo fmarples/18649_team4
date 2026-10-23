@@ -1,1 +1,1 @@
-(fp_lib_table (version 7) (lib (name "Lab4_Power") (type "KiCad") (uri "${KIPRJMOD}/Lab4_Power.pretty") (options "") (descr "Eaton inductor footprint from manufacturer drawing")))
+(fp_lib_table (version 7) (lib (name "Lab4_Power") (type "KiCad") (uri "${KIPRJMOD}/Lab4_Power.pretty") (options "") (descr "Eaton inductor footprint from manufacturer drawing")) (lib (name "Lab4_Mechanical") (type "KiCad") (uri "${KIPRJMOD}/Lab4_Mechanical.pretty") (options "") (descr "Direct Pi connector and support geometry")))

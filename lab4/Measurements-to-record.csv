@@ -1,8 +1,12 @@
 ﻿Measurement,Value,Unit,Method / operating condition
 Usable PCB length,,mm,Power off; ruler/calipers; define chassis front
 Usable PCB width,,mm,Allow space for wheels and moving linkage
-Mounting-hole centers,,mm,"Record x,y from one fixed origin; add a row per hole"
-Mounting-hole diameter,,mm,Check actual screw/standoff size
+Mounting-hole centers,"H1=(7.5,7); H2=(112.5,7); H3=(35,227); H4=(85,227)",mm,"Derived from measured 50/105/220mm pattern and user-confirmed common centerline; origin is proposed PCB rear-left corner, x right, y toward front; outline 120x234mm."
+Selected front mounting pair A-B,50,mm,Team caliper measurement; center-to-center confirmed 2026-10-23; front is left in source photograph.
+Selected rear mounting pair C-D,105,mm,Team caliper measurement; center-to-center confirmed 2026-10-23; rear is right in source photograph.
+Reported longitudinal separation of selected front/rear rows,220,mm,"Center-to-center longitudinal row separation; team confirmed aligned centerline, 2026-10-23."
+Selected chassis mounting-hole diameter,4.5,mm,Team caliper measurement confirmed 2026-10-23; supersedes photograph text approximate 4-5 mm. Thread type and fastening hardware not confirmed; not the required PCB drill diameter.
+Transverse offset between front/rear pair midpoints,0,mm,"Team confirmed pair midpoints aligned on the same chassis centerline, 2026-10-23."
 Clearance above / below board,,mm,Include connector and heatsink heights
 Left motor unloaded current,,A,Record voltage and PWM; do not stall
 Right motor unloaded current,,A,Record voltage and PWM; do not stall

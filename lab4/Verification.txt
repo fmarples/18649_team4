@@ -1,26 +1,35 @@
-Verification — 20 October 2026
-- KiCad 10.0.4 parsed/exported all five schematic pages.
-- 236 unique references; the placed BOM and procurement quantities agree.
-- All 231 assigned footprint files exist and contain the symbol-numbered pads.
-  This checks pad numbering, not manufacturer land dimensions or connector fit.
-- Five switch footprints remain unassigned: SW50/SW51/SW60/SW61/SW70.
-- Proposed signal assignments have no duplicate MCU/GPIO allocation per zone;
-  power/reserved header groups are excluded from this uniqueness check.
-- PB11 is excluded; PC9 replacement and PC8 task-probe reservation are explicit.
-- Power equations and reference/component tolerances calculated, not measured.
-- ERC: zero errors and zero warnings for the current partial schematic.
-- Exported XML: 272 nets. check_netlist.py verifies MCU supply/VCAP/reset/BOOT0,
-  SWD, host-pin allocation, Lab 3 probe order, Pi supply separation and CAN
-  isolation headers. Only power/GND and CAN backbones cross sheets.
-- VCAP1 on each LQFP64 MCU connects only to its own 4.7uF capacitor to GND;
-  PB11 is not used. VDD and VBAT connect to board 3.3V; VDDA is filtered.
-- MCP2515 SO is modeled as tri-state per DS20001801K Fig.12-11. The Pi header
-  models externally supplied 5V and preserves the independent 3.3V outputs.
-  No general ERC check was disabled to resolve these findings.
-- Actuator/protection completion, final connector pinouts, switch footprints,
-  load/thermal testing, PCB layout and DRC remain unfinished.
+Verification — 23 October 2026
 
-Limits: these checks do not prove a manufacturer pinout, land dimensions,
-converter stability, thermal design, power rating, signal voltage, battery
-capability, complete procurement quantities, or fabrication readiness.
-Schematic and writeup PDF appearance were reviewed separately before delivery.
+Schematic and parts
+- KiCad 10.0.4 parses and exports all five schematic pages.
+- 284 unique component references and 297 exported nets.
+- ERC: zero errors and zero warnings, without disabling general checks.
+- Netlist checks cover MCU supply/VCAP/reset/BOOT0/SWD, host pins, Lab 3 probes,
+  Pi supply separation, CAN isolation, L298 enables/outputs, flyback polarity,
+  motor sensors in series, servo connector after shunt and encoder logic domain.
+- Circuit-BOM, hand-assembly BOM and hybrid BOM describe the same references.
+- 279 assigned footprints exist; five GCT switch footprints remain unassigned.
+- ACS712 library update preserved its electrical pin numbers/names/positions.
+
+Placement
+- Unrouted 120 x 234 mm board; 279 electrical footprints and eight supports.
+- Measured chassis centers applied: front 50 mm, rear 105 mm, rows 220 mm apart,
+  common centerline. Chassis holes 4.5 mm; 3.2 mm PCB drills/M3 remain proposed.
+- Placement DRC: zero violations; 499 reported unconnected items; five missing
+  footprints. No claim of final fabrication DRC is made for an unrouted board.
+- 0.15 mm pad-clearance exception only inside U40/U41/U42 for proposed 1 oz
+  copper; general clearance and track width remain 0.20 mm.
+- All 40 underside Pi socket pad positions and nets checked. Pi support pattern
+  58 x 49 mm; nominal 22 mm gap yields 5.17 mm insertion and 6 mm USB clearance.
+- 35 mm chassis gap and assumed 1.6 mm Pi PCB leave 11.4 mm below Pi board,
+  before accounting for underside parts, card, screws and wires.
+- Chassis supports keep 3 mm from hole edge. Pi supports use 3 mm radius from
+  center around <=5 mm hardware; strict course interpretation remains open.
+- Updated placement preview and true-size PDF rendered and visually checked.
+
+Limits
+No PCB hardware was powered, flashed or tested. Motor current limiting and
+heatsink qualification are unresolved. Battery discharge/charger ratings,
+fuse, cable adapters, actual package dimensions, converter stability, thermal
+behavior, Wi-Fi, physical fit, routing and final manufacturing checks remain.
+Neither assembly BOM is a ready-to-order factory upload. No submission occurred.

@@ -5,10 +5,18 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and an
 AA-powered supply. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
-**Status, 20 October 2026:** partial schematic and calculated design for review.
-The schematic contains 236 components across the overview and four zone/power
-sheets. It is not ready for fabrication. No PCB layout or hardware validation
-is included.
+**Status, 23 October 2026:** schematic and unrouted placement for design review.
+The five schematic pages contain 284 components and 297 nets. The proposed
+120 x 234 mm PCB contains 279 assigned electrical footprints and eight
+mechanical supports. The four chassis centers use the team's caliper measurements:
+50 mm front, 105 mm rear, 220 mm longitudinal separation and aligned pair
+midpoints. Chassis holes measure 4.5 mm; M3/3.2 mm PCB drills remain a proposal.
+
+Motor current limiting, heatsink qualification, battery/charger ratings and
+procurement decisions remain unresolved. Five switch footprints, routing,
+physical fit and hardware validation are unfinished. This is not a fabrication
+or purchasing release. The October 24 review covers schematic, BOM and high-level
+design; the board layout deadline is October 29.
 
 ## Shared report and files
 
@@ -35,29 +43,43 @@ for a TA submission so the reviewed version can be recovered later.
 | --- | --- |
 | [KiCad/Lab4.kicad_pro](KiCad/Lab4.kicad_pro) | Open this project in KiCad 10. |
 | [KiCad/Lab4.kicad_sch](KiCad/Lab4.kicad_sch) | Overview linking the Front, Rear, Cockpit and Power sheets. |
+| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable, unrouted 120 x 234 mm placement study using the measured chassis centers. |
+| [Placement-overview.png](Placement-overview.png) | Direct Pi stack: bottom socket and top circuitry above the Pi. |
+| [Pi-stack-side-view.png](Pi-stack-side-view.png) | Proposed 22 mm Pi gap and 35 mm chassis spacers; physical fit pending. |
+| [Placement-detail.svg](Placement-detail.svg) | Native KiCad plot with pads and references. |
+| [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
+| [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
+| [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |
+| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No placement violations; reported unrouted connections and five missing footprints remain. |
 | [Lab4-Circuits.pdf](Lab4-Circuits.pdf) | Five-page schematic preview. |
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |
 | [Power-budget.csv](Power-budget.csv) | Four rail allocations; average loads remain unmeasured. |
 | [Power-calculations.json](Power-calculations.json) | Calculated regulator ripple, peak current and enable thresholds. |
 | [Preliminary-BOM.csv](Preliminary-BOM.csv) | Placed quantities and additional planned parts, with procurement status. |
-| [KiCad/Circuit-BOM.csv](KiCad/Circuit-BOM.csv) | The 236 components currently placed in the schematic. |
+| [KiCad/Circuit-BOM.csv](KiCad/Circuit-BOM.csv) | The 284 components currently placed in the schematic. |
+| [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv) | Team-assembly procurement view of the same circuit. |
+| [BOM-JLC-hybrid.csv](BOM-JLC-hybrid.csv) | JLCPCB/team split with verified library matches and explicit unknowns. |
+| [Assembly-options.md](Assembly-options.md) | Process differences, equipment and sourcing checks. |
+| [Actuator-design.md](Actuator-design.md) | Motor, encoder, servo and lamp circuits; ratings and connector pin definitions. |
 | [Design-review.csv](Design-review.csv) | Remaining engineering decisions and checks. |
 | [Interface-review.csv](Interface-review.csv) | Interface allocation notes and actual host-pin/net connections. |
-| [Measurements-to-record.csv](Measurements-to-record.csv) | Blank mechanical and electrical measurement record. |
+| [Measurements-to-record.csv](Measurements-to-record.csv) | Confirmed mounting geometry and remaining physical/electrical measurements. |
 | [Verification.txt](Verification.txt) | Checks performed and their limits. |
-| [KiCad/ERC.txt](KiCad/ERC.txt) | Current partial schematic: zero errors/warnings. |
+| [KiCad/ERC.txt](KiCad/ERC.txt) | Current schematic: zero errors/warnings; engineering limitations remain. |
 | [check_netlist.py](check_netlist.py) | Repeatable connectivity/BOM checks on a KiCad XML export. |
 | [circuit-pin-connections.json](circuit-pin-connections.json) | Placed component pin/net metadata for comparison with the schematic. |
 
-Keep the local `Lab4_Power.kicad_sym`, `Lab4_Logic.kicad_sym`, `Lab4_Power.pretty`, `sym-lib-table` and
+Keep the local `Lab4_Power.kicad_sym`, `Lab4_Logic.kicad_sym`, `Lab4_Power.pretty`,
+`Lab4_Mechanical.pretty`, `Lab4_Mechanical.3dshapes`, `sym-lib-table` and
 `fp-lib-table` beside the KiCad project. Their paths use `${KIPRJMOD}` and travel
 with the repository. The other footprints come from the standard KiCad library.
 
 ## Power and pin decisions
 
 We selected AA cells in series and propose ten rechargeable NiMH cells for
-nominal 12 V. Exact cells, holder, capacity, charger and runtime remain undecided.
+nominal 12 V. The team proposes the Dantona CMP-AA-21-37 2.1 Ah pack. Its
+discharge rating, matched charger and runtime remain unverified.
 The proposed branches are the unregulated motor supply, 6.6 V servo buck,
 5.1 V Pi/devices buck and 3.318 V logic buck. The protected-input electrical
 target is 8–15 V; this does not define the cells' allowed discharge voltage.
@@ -83,6 +105,13 @@ headers. The Pi's 3.3 V output remains disconnected from the PCB's independent
 3.3 V regulator. Do not connect separate USB-C power while the board supplies
 the Pi through pins 2/4; power-path isolation is not implemented.
 
+J70 is now a bottom-mounted Samtec ESQ-120-44-L-D socket candidate, aligned
+directly to a component-side-up Pi below the main PCB. No GPIO cable is planned.
+Top-side cockpit CAN circuitry occupies part of that same area. We propose
+22 mm Pi spacers and 35 mm chassis spacers, pending physical fit. See the
+placement review for contact insertion, underside-tail limits, cooling/Wi-Fi
+checks and the Pi mounting-hole clearance interpretation that remains open.
+
 The root sheet explicitly joins the power, ground and two CAN backbones.
 SPI, clocks, reset and actuator signals remain within their owning zones.
 The local MCP2515 symbol marks SO as tri-state, matching
@@ -99,23 +128,27 @@ device-tree configuration and physical bus labels before relying on Linux
 
 ## Remaining work
 
-- Complete L298/flyback/current limiting, final motor/encoder and servo
-  connectors, encoder voltage conditioning and vehicle-lamp drivers.
-- Verify the GCT switch drawing and assign the five missing switch footprints;
-  select exact header/socket parts and check their mechanical orientation.
-- Select the actual AA cells/holder, fuse element, high-current input landing,
-  final protection and mechanically compatible heatsink. J40's generic signal
-  header footprint remains a placeholder, not the battery connector choice.
-- Verify exact transceiver ordering code, crystal loading, capacitor bias,
-  custom footprint dimensions, supply transients and thermal behavior.
-- Measure the chassis, set the board outline/mounting holes, preserve service
-  access, route the board and complete DRC, fit checks and fabrication outputs.
+- Resolve the 3.2 A motor stall specification against the L298N's 2 A DC/braking
+  limits. The schematic has no autonomous motor current limiter; the filtered
+  ADC and pack fuse do not establish one. Select the heatsink for the agreed load.
+- Confirm pack discharge capability, matched NiMH charger, fuse value, wiring
+  and exact connector/contact compatibility. J40/J80/J81 now use Hirose power
+  connectors; new adapters require the actual vehicle cable pinouts.
+- Choose the assembly plan and finalize exact component sourcing. Both assembly
+  BOMs describe the same circuit; neither is an order-ready upload.
+- Verify the five GCT switch footprints and the remaining package/connector
+  dimensions. Check the course-stock transceiver against the selected DR code.
+- Check the paper fit, standoffs, Pi/cable access and wheel/linkage clearance.
+  Complete routing, power/thermal design and final DRC before fabrication.
 
-ERC currently reports **zero errors and zero warnings** for the placed circuits.
-The exported netlist passes support-circuit, host-pin, probe-order and cross-zone
-connectivity checks. Five switch footprints remain unassigned and several
-actuator/protection circuits are absent: a clean ERC does not establish board
-completeness. No layout DRC or hardware validation is claimed.
+ERC reports zero errors and zero warnings. Netlist checks cover all 284
+references and 297 nets, including motor current paths, flyback polarity,
+servo supply after its shunt, MCU support and Lab 3 pin reservations.
+Placement DRC reports zero violations, 499 unconnected items and five missing
+switch footprints. The unconnected count is the tool's report, not a completed
+route. A package-specific 0.15 mm pad-clearance rule applies only inside U40-U42
+for the proposed 1 oz copper process; general trace clearance stays 0.20 mm.
+See Placement-review.md for the source and remaining limits.
 
 ## Rechecking with KiCad
 

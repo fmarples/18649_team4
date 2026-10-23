@@ -1,21 +1,26 @@
-﻿Area,Decision / check,Status / evidence needed
-Part 1.1,"Battery chemistry, capacity, loaded voltage, discharge rating",AA series selected; 10 NiMH recommended; exact cells/holder/capacity/runtime not chosen
+Area,Decision / check,Status / evidence needed
+Part 1.1,"Battery chemistry, capacity, loaded voltage, discharge rating","Team proposes Dantona CMP-AA-21-37: 10 NiMH AA, 12V, 2.1Ah; current rating and matched pack charger not verified. Capacity is not discharge-current capability."
 Part 1.1,"Fuse, reverse polarity and undervoltage protection","PMOS and gate clamp proposed; fuse element, pack cutoff, connector landing and transient verification pending"
 Part 1.1,Motor current and L298 loss/temperature,Motor 3.2 A spec exceeds L298 2 A DC/brake limit; resolve with staff before sustained stall
 Part 1.1,Servo rail,Use handout LD-1501MG; propose separate 6.6 V rail; current not measured
-Part 1.2,Mechanical fit,"Need outline, hole centers/diameters, standoff heights, lead exits"
+Part 1.2,Mechanical fit,120x234mm unrouted direct-Pi placement; measured chassis centers applied. 22mm Pi / 35mm chassis gaps remain dimensional proposals; physical fit and cooler/port access pending.
+Part 1.2,Measured chassis mounting pattern,"Confirmed 50mm front, 105mm rear, 220mm row separation, aligned centerline, 4.5mm chassis holes. H1/H2=(7.5/112.5,7); H3/H4=(35/85,227). M3/3.2mm PCB drills proposed; thread/washer/nut choice pending."
+Part 1.2,Pi mounting-hole clearance,H5-H8 use 3mm radius from center with <=5mm hardware; strict 3mm from drilled edge intersects adjacent GPIO socket body; confirm course interpretation before fabrication
+Part 1.2,Direct Pi socket,J70 ESQ-120-44-L-D on B.Cu; all 40 pin positions and nominal 5.17mm insertion checked; actual connector engagement and assembly still untested
+Part 1.2,Pi wireless and cooling,Both-layer antenna review keepout added; Wi-Fi and temperature with metal chassis and final stack remain unmeasured
 Part 1.3,Motor ADC conditioning,"10k/10k divider, 1k/100n LPF; 8.54 mA/count at nominal 5.1 V sensor supply and 3.3 V ADC reference; calibration untested"
 Part 1.3,Servo shunt,10mOhm/1W + INA180A2 gain50; 1.61 mA/count ideal; load not measured
-Part 1.4,Exact MPNs and packages,Course uses SN65HVD231MDREP; exact order code not independently confirmed; check supplied IC
-Part 1.4,Crystal loading,Six independent 16 MHz crystals; Cload not finalized
-Part 1.5,Rule setup,"0.2 mm clearance, 0.3/0.7 mm vias, 0.5 mm edge; preliminary rules, not final DRC"
+Part 1.4,Exact MPNs and packages,SN65HVD231DR selected from TI documented order code; prior SN65HVD231MDREP not verified. Confirm actual course stock; no package substitution inferred.
+Part 1.4,Crystal loading,12pF crystal load; 18pF equal C0G capacitors assume 3pF effective parasitic capacitance. Recheck after routing and clock verification.
+Part 1.5,Rule setup,"Proposed 1oz, 0.2mm general clearance/width, 0.3/0.7mm vias, 0.5mm edge. Exception: 0.15mm pad-to-pad only within U40-U42, per JLC SMD minimum; review if process changes."
 Part 2,Three-zone host pin mapping,Signal allocation connected to U50/U60/J70; PCB firmware port and physical CAN mapping still pending
 Part 2,CAN bus labels,Normalize CAN_A and CAN_B across Pi and both MCUs; earlier hardware labels differed
 Part 2,MCU support,"Placed both STM32F401RET6 circuits: supplies, 4.7uF VCAP1, reset, BOOT0, HSI/PLL assumption and SWD; not powered/tested"
-Part 2,Actuation and connectors,"Need L298 + diodes/heatsink, motor/encoder headers, PWM, blinkers; physical connector check"
-Part 2,Diagnostics,"Placed 3 self-test and 2 reset buttons, 12 status LEDs, Lab3-compatible probe rows and grounds; five switch footprints unassigned; layout access and firmware pending"
+Part 2,Actuation and connectors,"L298N, eight SK520B clamps, bypass/bulk, two rated motor connectors, sensed servo connector, four LED drivers, encoder level conditioning now placed. Current limiting/heatsink unresolved. New connector adapters require cable verification."
+Part 2,Diagnostics,"3 self-test / 2 reset buttons, 12 status LEDs and Lab3 probes placed electrically. Five GCT switch footprints still need verified contact map; physical access and firmware untested."
 Part 2,Inter-sheet connections,Explicit hierarchical power/GND/CAN ports connected; exported netlist checked for unwanted cross-zone signals
-Deliverables,ERC / DRC,Current partial schematic: zero ERC errors/warnings; actuator/connector work incomplete; no PCB layout or DRC result
-Deliverables,BOM / CPL / Gerbers,236 placed parts plus separately listed planned parts; 5 switch footprints and procurement details unresolved; no CPL/Gerbers
+Deliverables,ERC / DRC,"Schematic ERC zero errors/warnings; placement DRC zero violations, 499 reported unconnected items and 5 missing switch footprints. Unrouted; no fabrication approval."
+Deliverables,BOM / CPL / Gerbers,284 placed parts; two assembly views plus combined procurement list. Five switch footprints and exact procurement unresolved; no final CPL/Gerbers.
 Lab 1,Revision entry,Record future pin/LED/connector changes; no CAN-ID change proposed here
 Power design,Three TPS564252 rails,"Circuits and calculations included; effective capacitance, load/thermal/transient and input qualification remain"
+Part 1.4,Two assembly options,"BOM-Hand-assembly.csv and BOM-JLC-hybrid.csv generated from same 284-component schematic. Four exact JLC library identities verified; remaining matches and assembly funding/process not finalized. These are procurement review views, not manufacturing uploads."

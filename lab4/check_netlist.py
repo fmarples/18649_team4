@@ -67,7 +67,7 @@ for row in csv_rows('Interface-review.csv'):
     expect(ref, pin, expected)
 
 # The two CAN backbones and power are the only allowed connections between sheets.
-allowed = {'/+3V3', '/+5V', '/+6V6_SERVO', '/GND', '/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L'}
+allowed = {'/+3V3', '/+5V', '/+6V6_SERVO', '/VBAT_PROTECTED', '/GND', '/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L'}
 for name, members in nets.items():
     sheets = {components[r].find('sheetpath').attrib['names'] for r, _ in members}
     assert len(sheets) < 2 or name in allowed, f'Unexpected cross-zone net: {name}'
@@ -105,3 +105,17 @@ missing = sorted(r for r, c in components.items() if not c.findtext('footprint')
 print(f'PASS: {len(components)} components; {len(nets)} nets; BOM, support circuits, interfaces, probe order and zone boundaries.')
 print('Unassigned footprints (still unresolved): ' + ', '.join(missing))
 print('These checks do not establish PCB completeness, ratings, physical fit, firmware operation or fabrication readiness.')
+
+# Actuator integration checks (independent of generator metadata).
+rear='/Rear zone/'; front='/Front zone/'
+for pin,name in {1:'/GND',2:rear+'LEFT_BRIDGE',3:rear+'LEFT_RETURN',4:'/VBAT_PROTECTED',5:rear+'R_LEFT_IN1',6:rear+'R_LEFT_ENABLE_PWM',7:rear+'R_LEFT_IN2',8:'/GND',9:'/+5V',10:rear+'R_RIGHT_IN3',11:rear+'R_RIGHT_ENABLE_PWM',12:rear+'R_RIGHT_IN4',13:rear+'RIGHT_BRIDGE',14:rear+'RIGHT_RETURN',15:'/GND'}.items():expect('U80',pin,name)
+for i,net in enumerate(['LEFT_BRIDGE','LEFT_RETURN','RIGHT_BRIDGE','RIGHT_RETURN']):
+    expect(f'D{800+i*2}',1,'/VBAT_PROTECTED');expect(f'D{800+i*2}',2,rear+net)
+    expect(f'D{801+i*2}',1,rear+net);expect(f'D{801+i*2}',2,'/GND')
+for j,side in [(80,'LEFT'),(81,'RIGHT')]:
+    expect(f'J{j}',1,rear+side+'_MOTOR');expect(f'J{j}',2,rear+side+'_RETURN')
+for pin,net in [(1,'/GND'),(2,front+'SERVO_VPLUS'),(3,front+'SERVO_PWM_OUT')]:expect('J90',pin,net)
+expect('U81',14,'/+3V3');expect('U81',7,'/GND')
+for pin,name in zip([2,4,6,8],['R_LEFT_ENC_A','R_LEFT_ENC_B','R_RIGHT_ENC_A','R_RIGHT_ENC_B']):expect('U81',pin,rear+name)
+for pin in [11,13]:expect('U81',pin,'/GND')
+print('Actuator output, diode polarity, sensed current paths and encoder level-domain checks passed.')

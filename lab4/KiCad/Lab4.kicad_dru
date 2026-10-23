@@ -4,3 +4,9 @@
 (rule "Copper edge" (constraint edge_clearance (min 0.5mm)))
 (rule "Via drill" (condition "A.Type == 'Via'") (constraint hole_size (min 0.3mm)))
 (rule "Annular ring" (constraint annular_width (min 0.2mm)))
+
+# 1 oz copper proposal only; JLCPCB published SMD pad-to-pad minimum is 0.15mm.
+# Keep the general 0.20mm rule for traces and all other component clearances.
+(rule "SOT563 internal pad clearance 1oz"
+  (condition "A.Type == 'Pad' && B.Type == 'Pad' && ((A.memberOfFootprint('U40') && B.memberOfFootprint('U40')) || (A.memberOfFootprint('U41') && B.memberOfFootprint('U41')) || (A.memberOfFootprint('U42') && B.memberOfFootprint('U42')))")
+  (constraint clearance (min 0.15mm)))
