@@ -194,6 +194,44 @@ Open risk, not observed: if the Pi and N2 rejoin bus A while N3 is still off it,
 - Hazards at 1 Hz and no UDP force message: where Lab 1 and Lab 3 conflict, the
   team follows Lab 3. See the demo README's spec-alignment section.
 
+## Checkoff preparation (next session)
+
+The write-up measurements are complete. Checkoff rehearsal has not started.
+The jumper-fault steps were exercised while measuring the matrix; the rest
+still need a run-through. Thresholds come from the handout's checkoff list.
+
+| Checkoff step | Status | What to check |
+|---|---|---|
+| 1 Cold start | Not rehearsed | Proxy stopped: all three in error, hazards at 1 Hz, ERR high, no DEG. Start the proxy: error clears |
+| 2 Bus traffic | Not rehearsed | `candump -c any`: every catalog ID on can0 and can1 at its rate; sequence counters advance |
+| 3 Steering and blinkers | Not rehearsed | SRV (N2 row 9) +Width about 1200/1600/2000 µs at 50 Hz across full left/center/right; FL (N2 row 10) vs RL (N3 row 12) edges within 1 ms over 10 edges |
+| 4 Brake timing | Not rehearsed | UDP_RX (N1 row 3) to DIR_A (N3 row 11) with stages identifiable; expected near the 1.83 ms direct-chain sum |
+| 5 Single-bus faults | Exercised | DEG on at 60.4–60.6 ms, off within 18 ms (matrix a, b) |
+| 6 Whole-bus loss | Exercised | All DEG_A on, operational on B (matrix e) |
+| 7 The hop | Exercised (LEDs, relay); scope chain not captured | DEG_B on N1, DEG_A on N3, RELAY_TX toggling; relayed brake chain UDP_RX → RELAY_TX → DIR_A needs two captures on a 2-channel scope; expected about 3.5 ms (marked as a miss in the report) |
+| 8 Isolation | Exercised | Error within 74.4 ms; normal within about 18 ms, no reset (matrix d) |
+| 9 Test button | Not rehearsed | One press on N2 B1: N3 hazards and braked motor (DIR_A low, PWM_OUT high) within 100 ms, ERR on all three; double press within 500 ms clears; then the wheel's A button for N1 |
+| 10 Bad input | Not rehearsed | Test panel "Bad CTRL: throttle 101" or CRC: the receiving zones enter error and send FAULT |
+
+Open checks before checkoff:
+
+- The N2/N3 consoles kept reporting both CAN controllers as error-passive after
+  every jumper was restored, although traffic flowed normally on both buses.
+  Probably the MCP2515 driver doesn't report the return to error-active;
+  unconfirmed.
+- The relay rejoin risk described under the fault matrix.
+- The CAN modules' INT and CS lines are not on the probe boards; #2, #4 and #5
+  were probed at the Nucleo Morpho pins (N3 CN10-33/CN10-17, N2 CN10-29). Adding
+  INT_A/CS_A rows would make re-measurement easier.
+- Confirm every module's P1 pad is open (termination statement for the report).
+
+Where things were left on October 23: both Nucleos unplugged and the Pi
+powered off, so the cockpit session in `logs/lab3-can/demo/state.json` is stale.
+Start the next session with `python lab3_demo/start.py --restart` (or the test
+panel), connect the wheel, press both pedals once so they read 0 %, and check
+that all three zones report OK on both buses. `timing tx off` is not persistent:
+both STM32s boot with application TX on.
+
 ## Firmware and evidence
 
 - **N2** (ST-LINK ending 124020): `logs/lab3-can/20261023-095456-demo-build-relay-c-timer2/`.
