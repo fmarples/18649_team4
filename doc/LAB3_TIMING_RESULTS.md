@@ -214,7 +214,7 @@ What would fix it: (1) bound the Pi stage near its typical value: PREEMPT_RT ker
 
 ### Fault-injection matrix timing (R4.8, October 23)
 
-Single-shot captures (trigger mode Normal, Single) on the relay-gate N2 build, wheel traffic, all nodes transmitting. Start reference is the node's CAN_RX_x test point: the last toggle before DEG/ERR rises is the last frame received on that bus; the first toggle after a gap is the first frame after the jumper is restored. Times are cursor ΔX read on the scope. Required by the Lab 3 handout's report deliverables ("Fault-injection matrix (R4.8 a-f): expected state of each zone and LED, measured recovery time"; the clarification leaves this unchanged); pull timings support checkoff step 5. Requirements: R4.7 DEG on after 60 ms without traffic, DEG off within 100 ms of traffic resuming; R4.8(d) system error within 100 ms; R4.8(f) normal within 500 ms without reset.
+Single-shot captures (trigger mode Normal, Single) on the relay-gate N2 build, wheel traffic, all nodes transmitting. Start reference is the node's CAN_RX_x test point: the last toggle before DEG/ERR rises is the last frame received on that bus; the first toggle after a gap is the first frame after the jumper is restored. Times are cursor ΔX read on the scope. DEG LEDs are re-evaluated on a received CTRL or the 20 ms HB_MON tick, not on every frame, so restore times range from tens of µs to about 20 ms. Required by the Lab 3 handout's report deliverables ("Fault-injection matrix (R4.8 a-f): expected state of each zone and LED, measured recovery time"; the clarification leaves this unchanged); pull timings support checkoff step 5. Requirements: R4.7 DEG on after 60 ms without traffic, DEG off within 100 ms of traffic resuming; R4.8(d) system error within 100 ms; R4.8(f) normal within 500 ms without reset.
 
 | Scenario | Node | Event | Start → stop | Measured | Requirement | Evidence |
 |---|---|---|---|---:|---|---|
@@ -222,7 +222,13 @@ Single-shot captures (trigger mode Normal, Single) on the relay-gate N2 build, w
 | (a) restore (also f) | N3 | Bus-A wires replugged | first CAN_RX_A toggle (CH1, row 3) → DEG_A falling (CH2, row 7) | **14 ms** | ≤ 100 ms | [IMG_0910](lab3-scope/matrix-a-n3-restore-deg-a-IMG_0910.jpg) |
 | (b) pull | N3 | Bus-B wires pulled | last CAN_RX_B toggle (CH1, row 4) → DEG_B rising (CH2, row 8) | **60.4 ms** | DEG on after 60 ms without traffic | [IMG_0913](lab3-scope/matrix-b-n3-pull-deg-b-IMG_0913.jpg) |
 | (b) restore (also f) | N3 | Bus-B wires replugged | first CAN_RX_B toggle (CH1, row 4) → DEG_B falling (CH2, row 8) | **1.8 ms** | ≤ 100 ms | [IMG_0914](lab3-scope/matrix-b-n3-restore-deg-b-IMG_0914.jpg) |
+| (a) restore, second sample | N3 | Bus-A wires replugged after the Pi and N2 had already rejoined A (meant as (e), but the last step is identical to (a)) | first CAN_RX_A toggle → DEG_A falling, zoomed to 100 µs/div on the stopped capture | **43 µs** | ≤ 100 ms | [IMG_0916](lab3-scope/matrix-a-n3-restore-zoom-IMG_0916.jpg) |
 | (e) pull | all | Bus-A wires of N1, N2, N3 pulled | state read from N2/N3 consoles and the cockpit STATUS line | operational on B | DEG_A on all three, no zone in error, no hazards | console/STATUS (no capture) |
+| (e) restore (also f) | N3 | All three off A; N3 replugged first (alone on A), then N2 replugged: bus A comes back; Pi replugged last | first CAN_RX_A toggle on N3 (CH1, row 3) → DEG_A falling (CH2, row 7) | **3.2 ms** | ≤ 100 ms | [IMG_0918](lab3-scope/matrix-e-n3-bus-a-back-IMG_0918.jpg) |
+| (c) restore (also f) | N3, N1 | Scenario (c) (N1 off B, N3 off A, N2 relaying); N3's bus-A wires replugged, then the Pi's bus-B wires | first CAN_RX_A toggle on N3 (CH1, row 3) → DEG_A falling (CH2, row 7) | **2.2 ms** | ≤ 100 ms | [IMG_0919](lab3-scope/matrix-c-n3-restore-deg-a-IMG_0919.jpg) |
+| (d) isolate | N3 → N2 | N3 already off A; N3's bus-B wires pulled | last CAN_RX_B toggle on N3 (CH1, N3 row 4; the cut happens after this frame) → N2 ERR rising (CH2, N2 row 13) | **74.4 ms** (upper bound for pull → system error) | system error ≤ 100 ms | [IMG_0920](lab3-scope/matrix-d-n3-isolated-n2-err-IMG_0920.jpg) |
+| (d) restore, others | N2 | N3's bus-B wires replugged (A still out) | N2 ERR falling (CH2, N2 row 13) vs N3's first CAN_RX_B toggle (CH1, N3 row 4) | **N2 clears 320 µs before N3 receives its first frame** | normal ≤ 500 ms | [IMG_0921](lab3-scope/matrix-d-restore-n2-err-first-IMG_0921.jpg) |
+| (d) restore, isolated node | N3 | N3 re-isolated, then bus-B wires replugged (A still out) | first CAN_RX_B toggle on N3 (CH1, N3 row 4) → N3 ERR falling (CH2, N3 row 14) | **17.6 ms** (plus the sub-ms gap from contact to N3's first received frame) | normal ≤ 500 ms, no reset | [IMG_0922](lab3-scope/matrix-d-restore-n3-err-IMG_0922.jpg) |
 
 ### Demo photo log
 
@@ -249,6 +255,13 @@ Every photo taken in this pass, archived in `logs/lab3-can/20261023-demo-scope/`
 | IMG_0912 | Matrix (a): N3 bus-A pull, Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 60.6 ms from last CAN_RX_A toggle to DEG_A rise |
 | IMG_0913 | Matrix (b): N3 bus-B pull, Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 60.4 ms from last CAN_RX_B toggle to DEG_B rise |
 | IMG_0914 | Matrix (b): N3 bus-B restore, Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 1.8 ms from first CAN_RX_B toggle to DEG_B fall |
+| IMG_0915 | Same capture as IMG_0916 at 20 ms/div; cursors still at the IMG_0914 values | Rejected (stale cursors) | — |
+| IMG_0916 | N3 bus-A restore after Pi and N2 rejoined, zoomed 100 µs/div, cursors | Supplementary ((a)-type, not (e)) | ΔX 43 µs from first CAN_RX_A toggle to DEG_A fall |
+| IMG_0918 | Matrix (e): bus A back (N3 first, then N2), Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 3.2 ms from N3's first CAN_RX_A toggle to DEG_A fall; regular toggling follows |
+| IMG_0919 | Matrix (c): N3 bus-A restore while N1 off B, Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 2.2 ms. During (c) N2 relayed about 9,750 frames with one failure. While the Pi's bus-B wires were being replugged, the cockpit logged DEG_B flapping about 30 times over 10.5 s (Pi uptime 25066.4–25077.0), only on B, with ENOBUFS TX errors and error-passive transitions but no bus-off; consistent with intermittent contact during insertion. Stable since |
+| IMG_0920 | Matrix (d): N3 isolated (B pulled after A), CH1 N3 row 4, CH2 N2 row 13, Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 74.4 ms from N3's last received bus-B frame to N2 ERR rise (66 ms heartbeat timeout plus the next HB_MON tick) |
+| IMG_0921 | Matrix (d) restore: CH2 N2 ERR, CH1 N3 CAN_RX_B, 2 ms/div, cursors | **Report** | ΔX −320 µs: N2 leaves error before N3 receives anything. N3's MCP2515 sends its queued HB_N3/FAULT frames by itself the instant the wire connects; N2 records the heartbeat and the FAULT triggers an immediate re-evaluation. N3's first CAN_RX_B toggle is therefore not the reconnect instant; N3's own ERR is the slowest recovery |
+| IMG_0922 | Matrix (d) restore: CH1 N3 CAN_RX_B, CH2 N3 ERR, Single, 20 ms/div, delay −80 ms, cursors | **Report** | ΔX 17.6 ms. N3 leaves error once both peers are alive and the next CTRL or HB_MON tick re-evaluates; this is the slowest node, so system recovery from (d) is about 18 ms |
 
 ## Evidence and current running state
 

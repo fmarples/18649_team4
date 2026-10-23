@@ -14,7 +14,7 @@ photos and per-photo notes: [LAB3_TIMING_RESULTS.md](LAB3_TIMING_RESULTS.md#demo
 | Task communication graph with the four chains highlighted | 8 | **Open.** Inputs in [Task set](#task-set-and-priorities) |
 | Single-bus analysis: N2/N3 RTA tables, CTRL message RTA, chain table, measured Pi latency | 10 | **Measurements done** (#1–#4). Tables open |
 | Dual-bus and relay analysis: RELAY in the graph, relay design, re-analysis for scenario (c), verdict per chain | 10 | **Measurements done** (#5, #6). Tables open; design notes below |
-| Fault-injection matrix (R4.8 a–f): expected state of each zone and LED, measured recovery time | 4 | **Partly measured.** (a), (b) done; (c), (d), (e) restore times open |
+| Fault-injection matrix (R4.8 a–f): expected state of each zone and LED, measured recovery time | 4 | **Measured.** All six scenarios; table below |
 | Updated team-defined values table and Lab 1 revision history | 2 | **Open** |
 
 The report is at most six pages, excluding the schematic and scope captures. Every
@@ -155,16 +155,20 @@ the MCP2515 driver's interrupt/RX threads are cooperative and run above all of t
 
 **Recovery time** is measured from the first frame received after the jumper
 is restored (the node's CAN_RX toggle) to its DEG/ERR LED clearing. Captures
-use single-shot mode with cursors.
+use single-shot mode with cursors. The LEDs are re-evaluated when a CTRL frame
+arrives or at the 20 ms HB_MON tick, not on every frame, so restore times range
+from tens of µs to about 20 ms.
 
 | Scenario | Expected state | Observed | Recovery time |
 |---|---|---|---:|
 | (a) one node off A (N3 tested) | That node DEG_A on; nothing else changes; no ERR, no hazards | Matches. DEG_A on 60.6 ms after the last frame ([IMG_0912](lab3-scope/matrix-a-n3-pull-deg-a-IMG_0912.jpg)) | **14 ms** ([IMG_0910](lab3-scope/matrix-a-n3-restore-deg-a-IMG_0910.jpg)) |
 | (b) one node off B (N3 tested) | That node DEG_B on; nothing else changes | Matches. DEG_B on 60.4 ms after the last frame ([IMG_0913](lab3-scope/matrix-b-n3-pull-deg-b-IMG_0913.jpg)) | **1.8 ms** ([IMG_0914](lab3-scope/matrix-b-n3-restore-deg-b-IMG_0914.jpg)) |
-| (c) N1 off B, N3 off A | N1 DEG_B, N3 DEG_A, N2 no DEG; no ERR; RELAY_TX toggling on N2; N3 follows the wheel through the relay | Matches (console and cockpit state) | **Open** |
-| (d) one STM32 off both buses | Isolated node in fail-safe within 100 ms (N3: DIR_A low, PWM_OUT held high, hazards, ERR on; N2: steering held, hazards, ERR on). The other two in system error (ERR on, hazards). No DEG LEDs (both buses silent at the isolated node; the others still hear each other) | Not yet observed | **Open** (error entry ≤ 100 ms; normal ≤ 500 ms after restore, no reset) |
-| (e) every node off A | DEG_A on all three; system fully operational on B; no ERR | Matches (console and cockpit state) | **Open** |
-| (f) restore any jumper | Normal operation within 500 ms, no reset; DEG off within 100 ms | (a) and (b) restores above | see (a), (b) |
+| (c) N1 off B, N3 off A | N1 DEG_B, N3 DEG_A, N2 no DEG; no ERR; RELAY_TX toggling on N2; N3 follows the wheel through the relay | Matches. N2 relayed about 9,750 frames with one failure and stopped after the restore | **2.2 ms** for N3's DEG_A ([IMG_0919](lab3-scope/matrix-c-n3-restore-deg-a-IMG_0919.jpg)) |
+| (d) one STM32 off both buses (N3 tested) | Isolated node in fail-safe within 100 ms (N3: DIR_A low, PWM_OUT held high, hazards, ERR on). The other two in system error (ERR on, hazards). No DEG LEDs on the other two (they still hear each other) | Matches. N2 ERR rose at most **74.4 ms** after N3 was cut off ([IMG_0920](lab3-scope/matrix-d-n3-isolated-n2-err-IMG_0920.jpg)) | **≈ 18 ms**, no reset. N2 cleared before N3 received anything (N3's queued frames go out on contact; [IMG_0921](lab3-scope/matrix-d-restore-n2-err-first-IMG_0921.jpg)). N3's own ERR cleared 17.6 ms after its first received frame ([IMG_0922](lab3-scope/matrix-d-restore-n3-err-IMG_0922.jpg)) |
+| (e) every node off A | DEG_A on all three; system fully operational on B; no ERR | Matches (console and cockpit state) | **3.2 ms** when bus A came back: N3 plugged in first, then N2 ([IMG_0918](lab3-scope/matrix-e-n3-bus-a-back-IMG_0918.jpg)) |
+| (f) restore any jumper | Normal operation within 500 ms, no reset; DEG off within 100 ms | Every restore above; a second (a) sample cleared in 43 µs ([IMG_0916](lab3-scope/matrix-a-n3-restore-zoom-IMG_0916.jpg)) | worst measured ≈ 18 ms |
+
+Open risk, not observed: if the Pi and N2 rejoin bus A while N3 is still off it, N2 may relay a Pi frame onto A during the first heartbeat period, before it hears the Pi there. Two nodes sending identical frames get no acknowledgment and can jam the bus, as the immediate relay did. Restoring jumpers in a different order avoids it; a firmware guard is not implemented.
 
 ## Schematic inputs
 
