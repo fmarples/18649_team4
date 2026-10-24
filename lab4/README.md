@@ -2,17 +2,22 @@
 
 We are designing a two-layer KiCad PCB with two STM32F401RET6 chips, six
 MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
-NiMH-powered supply based on the Tenergy 11609 Sub-C pack. The Raspberry Pi remains a separate board connected through
+NiMH-powered supply with a battery/charger purchase still to finalize. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
-**Status, 23 October 2026:** schematic and unrouted placement for design review.
+**Status, 24 October 2026:** schematic and unrouted placement for design review.
 The five schematic pages contain 284 components and 297 nets. The proposed
 120 x 234 mm PCB contains 279 assigned electrical footprints and eight
 mechanical supports. The four chassis centers use the team's caliper measurements:
 50 mm front, 105 mm rear, 220 mm longitudinal separation and aligned pair
-midpoints. Chassis holes measure 4.5 mm; M3/3.2 mm PCB drills remain a proposal.
+midpoints. Chassis holes are confirmed smooth, 4.5 mm through-holes;
+M3/3.2 mm PCB drills remain a proposal.
 
-We selected Tenergy 11609 with charger 01025 as the design/BOM baseline.
+Tenergy 11609 with charger 01025 was the earlier design/BOM baseline.
+The October 24 [TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
+requires DigiKey or Mouser for parts outside the course list. Battery/charger
+and other external-hardware BOM rows remain provisional until that sourcing
+check is resolved; no replacement has been finalized.
 Motor cooling/protection behavior, heatsink fit, battery mounting and
 procurement decisions remain unresolved. The TAs confirmed on October 23 that
 teams will assemble all SMD parts themselves, with TechSpark oven access tentative.
@@ -145,7 +150,9 @@ device-tree configuration and physical bus labels before relying on Linux
   ADC and pack fuse do not establish one. Select the heatsink for the agreed load.
 - Finalize battery retention/lead routing and purchasing, the selected fuse candidate's qualification, operating stop voltage, wiring
   and exact connector/contact compatibility. J40/J80/J81 now use Hirose power
-  connectors; new adapters require the actual vehicle cable pinouts.
+  connectors. October 24 servo and pictured motor/encoder wire mappings are
+  documented in Actuator-design.md; second-harness agreement, physical mating
+  and completed-adapter continuity remain unverified.
 - Reconcile the documented 3.3-5V encoder supply with the schematic's 5.1V
   connection before power is applied. See Parts-review.md for this finding and
   the selected spacer, fastener, shunt, LED and harness part numbers.
@@ -153,7 +160,9 @@ device-tree configuration and physical bus labels before relying on Linux
   The course assembly plan is now team assembly; the JLC comparison is historical.
 - Verify the five GCT switch footprints and the remaining package/connector
   dimensions. Check the course-stock transceiver against the selected DR code.
-- Check the paper fit, standoffs, Pi/cable access and wheel/linkage clearance.
+- The four chassis positions and Pi footprint passed the October 24 paper-fit
+  check. Verify the proposed final standoff stack, actual Pi/header engagement,
+  cable access and wheel/linkage clearance.
   Complete routing, power/thermal design and final DRC before fabrication.
 
 ERC reports zero errors and zero warnings. Netlist checks cover all 284

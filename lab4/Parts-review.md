@@ -28,6 +28,16 @@ parts and generic headers. Local stock does not establish quantities or JLCPCB s
 
 ## Selected battery and charger
 
+**October 24 sourcing update:** the
+[TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
+requires DigiKey or Mouser for parts outside the course list. The Tenergy
+combination below is our earlier design reference, not a finalized purchase.
+Its existing BOM rows remain provisional until we resolve a permitted source
+or select a documented replacement and compatible charger. The same sourcing
+check applies to the Pololu adapter donor and other external hardware.
+The Dantona CMP-SC-28-37 is a separate Sub-C candidate; its discharge limits
+and charger compatibility are not established. No replacement is selected.
+
 We selected Tenergy 11609 and charger 01025 as our design/BOM baseline.
 Dantona CMP-AA-21-37 is retained only as a historical comparison, with zero
 requested quantity; its maximum discharge current was not established. The selected pack,
@@ -71,11 +81,26 @@ The exact GCT drawing has been located, but contact pairing and recommended
 pads have not been visually verified. Five switch footprints remain unassigned;
 we have not substituted an arbitrary 4.5 mm switch.
 
-Physical checks still needed: original motor/encoder/servo plug shapes, pin
-order and wire gauges; actual encoder supply/output type; heatsink fit;
+The October 24 servo photos and team report establish the visible wire order
+and reported functions: black=GND, red=existing 5V supply, white=PWM. See
+[Actuator-design.md](Actuator-design.md#october-24-servo-cable-identification)
+for the planned J90 adapter mapping. Servo photo collection is complete;
+exact pitch/keying, wire gauge and finished-adapter continuity are unverified.
+
+The October 24 motor/encoder photo and accompanying report also establish
+the pictured harness's top-to-bottom order: red=motor lead 1, orange=encoder
+supply, yellow=A, blue=B, gray=encoder ground, black=motor lead 2. These are
+the attached jumper colors, not colors assigned to the motor's black ribbon
+cable. The adapter mapping is recorded in Actuator-design.md.
+
+Physical checks still needed: second motor harness agreement, exact plug
+mating geometry and wire gauges; actual encoder output type; heatsink fit;
 the battery retaining strap/lead route; and the proposed Pi/chassis vertical
 spacer stack. The battery envelope has passed the team's cardboard check.
 The four chassis center positions and 4.5 mm diameters are already established.
+The team also confirmed the chassis holes are smooth through-holes. Their
+diameter does not set the spacer thread: the proposed M3 fasteners use washers
+to bridge the larger chassis holes. Actual thread engagement remains a fit check.
 
 ## External hardware selected for review
 
@@ -112,9 +137,10 @@ thicknesses still need a dry fit. Equal spacer heights matter for the 40-pin soc
 
 We retain the board pin definitions in [Actuator-design.md](Actuator-design.md).
 The [identified motor specification](../doc/HARDWARE.md)
-already gives PH2.0-6PIN and encoder supply 3.3-5V; its cable cavity order is
-not documented there. Thus connector family research is done, but cable
-continuity still needs checking. The schematic's nominal 5.1V encoder supply
+already gives PH2.0-6PIN and encoder supply 3.3-5V. The October 24 team photo
+and report now identify the pictured cable's order; manufacturer cavity
+numbers and completed-adapter continuity have not been verified. The
+schematic's nominal 5.1V encoder supply
 also exceeds that published 5V upper value: the encoder supply voltage must
 be corrected or supported by better manufacturer evidence before connection.
 

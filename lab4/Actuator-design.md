@@ -67,6 +67,62 @@ for incandescent bulbs or high-power LED modules.
 These are board pin numbers, not inferred cable colors. Verify the cable pinout
 before making adapters or applying power.
 
+### October 24 servo cable identification
+
+The October 24 team photos show a three-position servo cable with white,
+red and black wires. In the close-up showing the contact-retention windows
+and the servo cable exiting downward, their left-to-right order is white,
+red, black. The accompanying team report identifies white as signal, red
+as the existing setup's 5V supply, and black as ground. Photo collection and
+the reported wire-function identification are complete; no continuity test
+or wire-gauge measurement was supplied.
+
+Our planned adapter maps black to J90 pin 1 (GND), red to pin 2 (sensed servo
+supply), and white to pin 3 (PWM). J90's planned supply is 6.6V; the reported
+5V bench connection describes the old setup. Hiwonder's
+[LD-1501MG specification](https://www.hiwonder.com/products/ackermann-steering-chassis)
+gives a 6-8.4V working range, so 6.6V is a supported nominal design choice.
+We have not measured the new rail's tolerance, ripple or overshoot.
+The pictured plug does not directly mate with
+the selected 3.96mm Hirose J90 connector. Exact servo-side pitch/keying, wire
+size and the finished adapter's end-to-end continuity remain to be checked.
+Do not assign connector pin numbers from photographic left/right alone;
+the view reverses when looking into the mating face.
+
+For the October 24 schematic/BOM review, we record the adapter design and
+unresolved sourcing/fit. Physical mating checks precede connector purchasing;
+finished-harness continuity checks precede first power after assembly. A
+completed harness is not claimed as part of this preliminary submission.
+
+### October 24 motor/encoder cable identification
+
+The October 24 team photo and accompanying report give the following order
+for the pictured six-position harness. Positions run top to bottom in that
+photo; they are not manufacturer cavity numbers. Colors refer to the attached
+jumper wires on the right, not the black motor-side ribbon cable.
+
+| Photo position | Jumper color | Reported function | Planned PCB adapter destination |
+|---|---|---|---|
+| Top / 1 | Red | Motor lead 1 (+ reference) | J80 or J81 pin 1 |
+| 2 | Orange | Encoder positive supply (VCC) | J82 or J83 pin 1; supply correction pending |
+| 3 | Yellow | Encoder phase A | J82 or J83 pin 3 |
+| 4 | Blue | Encoder phase B | J82 or J83 pin 4 |
+| 5 | Gray | Encoder ground | J82 or J83 pin 2 |
+| Bottom / 6 | Black | Motor lead 2 | J80 or J81 pin 2 |
+
+Use J80/J82 together for the left motor and J81/J83 for the right motor.
+Black motor lead 2 is not encoder ground: both motor leads connect to the
+H-bridge output path, which reverses their relative polarity for direction.
+The (+) reference does not establish vehicle-forward rotation; confirm the
+left/right direction and encoder sign during bring-up.
+
+Photo collection and the reported order for this harness are complete.
+We have not inferred the second harness's order, exact mating geometry,
+wire gauge or tested adapter continuity from this photo. Check those when
+preparing the adapters. The encoder supply specification is 3.3-5V; the
+current nominal 5.1V PCB supply issue noted in Parts-review.md still needs
+correction; the cable photo does not resolve that electrical issue.
+
 ## Clock and ordering-code corrections
 
 Six CX3225SB16000H0FLJCC crystals have a 12pF specified load. Equal 18pF C0G
