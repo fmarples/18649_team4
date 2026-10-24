@@ -1,100 +1,63 @@
-Verification — updated 24 October 2026
+Verification — 24 October 2026 design-review revision
 
-Schematic and parts
-- KiCad 10.0.4 parses and exports all five schematic pages.
-- 284 unique component references and 297 exported nets.
-- ERC: zero errors and zero warnings, without disabling general checks.
-- Netlist checks cover MCU supply/VCAP/reset/BOOT0/SWD, host pins, Lab 3 probes,
-  Pi supply separation, CAN isolation, L298 enables/outputs, flyback polarity,
-  motor sensors in series, servo connector after shunt and encoder logic domain.
-- Circuit-BOM, purchasing BOM, hand-assembly BOM and hybrid BOM describe the
-  same 284 references, base MPNs and footprints, without duplicate references.
-- 279 assigned footprints exist; five GCT switch footprints remain unassigned.
-- ACS712 library update preserved its electrical pin numbers/names/positions.
-- R1 uses WSL2512R0100FEA and the Vishay document 30100 land pattern.
-- Diotec BZT52C12 uses SOD-123F; full MMBT3904-7-F and Keystone 3568 holder
-  identities are recorded separately from the candidate fuse element (see October 24 update).
-- Course v3 exact-stock list reconciled: 52 named parts plus generic headers.
-- Nine exact JLC catalog identities and one documented STM32 carrier alternative
-  recorded; this does not establish live stock or assembly-order acceptance.
-- The course requires team assembly; the JLC comparison is historical.
+Schematic and BOM
+- KiCad 10.0.4 exports five schematic pages. Fresh ERC: zero errors/warnings.
+- Netlist/connectivity/BOM checks pass: 284 components, 297 nets. Circuit-BOM,
+  active hand-assembly, historical hybrid and combined purchasing views agree
+  on base references, MPNs and electrical footprints.
+- Only J82.1 and J83.1 changed electrical nets, from /+5V to /+3V3. Independent
+  assertions check both supplies and the four existing 3.3V pullups. Nominal
+  logic setpoint 3.318V is calculated; actual tolerance/signals are untested.
+- Checks cover MCU support, host/probe pins, Pi power separation, CAN isolation,
+  L298 paths, flyback polarity, motor sensors and sensed servo output.
+- All 127 purchasing-row totals equal circuit + additional + spare quantities;
+  their schematic quantities sum to 284. No duplicate circuit references.
+- Four explicit request exceptions: battery, charger, servo-side adapter lead,
+  and L298 heatsink attachment. Tenergy11609/01025, Pololu2184 and dependent
+  charger adapter reference rows have zero requested purchase quantities.
+- DigiKey-listed mechanical substitutes are specified. R420/R432 have named
+  alternatives because original listings are out of stock. Buy either primary
+  or alternate, not both; record fitted MPNs. Stock is not reserved.
+- Course v3 identities reconciled; actual stock quantities need team confirmation.
+  Team SMD assembly is required. BOM-Hand-assembly.csv is active; JLC comparison
+  is historical and does not establish factory assembly availability.
 
-Placement
-- Unrouted 120 x 234 mm board; 279 electrical footprints and eight supports.
-- Measured chassis centers applied: front 50 mm, rear 105 mm, rows 220 mm apart,
-  common centerline. Chassis holes 4.5 mm; 3.2 mm PCB drills/M3 remain proposed.
-- Placement DRC: zero violations; 499 reported unconnected items; five missing
-  footprints. No claim of final fabrication DRC is made for an unrouted board.
-- 0.15 mm pad-clearance exception only inside U40/U41/U42 for proposed 1 oz
-  copper; general clearance and track width remain 0.20 mm.
-- All 40 underside Pi socket pad positions and nets checked. Pi support pattern
-  58 x 49 mm; nominal 22 mm gap yields 5.17 mm insertion and 6 mm USB clearance.
-- 35 mm chassis gap and assumed 1.6 mm Pi PCB leave 11.4 mm below Pi board,
-  before accounting for underside parts, card, screws and wires.
-- Chassis supports keep 3 mm from hole edge. Pi supports use 3 mm radius from
-  center around <=5 mm hardware; strict course interpretation remains open.
-- Updated placement preview and true-size PDF rendered and visually checked.
-- The corrected 41.91 x 25.4 mm tentative 6396BG envelope intersects 15 nearby
-  courtyards, excluding the intended U80 attachment. Heatsink-envelope-check.json
-  explicitly reports UNRESOLVED. Its mounting orientation and 3D fit are not
-  verified; the non-excluding drawing rectangle is not checked by electrical DRC.
+Placement and evidence
+- 120x234mm unrouted PCB, 279 electrical footprints, eight mechanical supports.
+- Five unassigned switch footprints: SW50/SW51/SW60/SW61/SW70.
+- Placement/net/zone/outline checks pass, including all40 underside Pi contacts.
+- Fresh KiCad placement DRC: 0 violations;499 unconnected items. Not final DRC.
+- Pi H5-H8:2.7mm NPTH,3mm-radius reservation. RAF4.5mm hex is about5.20mm
+  across corners; library/board fabrication drawings now show5.5mm envelope.
+  Nominal socket-edge clearance0.595mm. Course hole-edge interpretation pending.
+- Proposed22mm Pi gap:5.17mm nominal insertion,6mm USB-body clearance.
+  Proposed35mm chassis gap leaves11.4mm below assumed1.6mm Pi board, before
+  underside parts/card/fasteners/wires. Actual final stack remains untested.
+- October24 measurements: front50mm,rear105mm,rows220mm,aligned centerline,
+  4.5mm smooth chassis holes. Four-hole cardboard alignment passed with~50mm
+  borrowed spacers. Pi paper footprint fits; actual Pi stack not tested.
+- Battery115x50x50mm cardboard fits between plates; reported height51.75mm.
+  Actual pack retention/lead routing remain unverified.
+- Heatsink-envelope-check.json still UNRESOLVED: tentative6396BG envelope
+  intersects15 nearby courtyards. Electrical DRC does not validate its separate
+  attachment, orientation, thermal performance or Multiwatt compatibility.
+
+Calculations and documents
+- Four-rail case explicitly assumed:0.72A motor,0.39A servo,3.3A electronics,
+  0.8A logic;12V/85% gives2.882588A battery. Not measured or guaranteed bound.
+- Exact LD-1501MG source:100mA no-load,2.4-3A stall. Static holding at6.6V
+  unmeasured. Different-model LD-3015MG excluded.10mOhm/gain50 yields50mV
+  and~62ideal ADC counts at100mA;3A yields1.5V and0.09W shunt loss.
+- Lab2 telemetry lacks resolved calibration; no measured amperes invented.
+  Required stall/drop/temperature measurements and TA deferral remain pending.
+- Shared Lab4 report edited in place. Export has four text pages and two figure
+  pages; questions/calculations/references retained and rendering inspected.
+- Existing Lab1 Requirement Document Section11 records the PCB revision,
+  retained CAN catalog and required Lab3 PB4-to-Lab4 PA9/PB7 actuator port.
+  Firmware port and real current/speed feedback are not implemented or tested.
 
 Limits
-No PCB hardware was powered, flashed or tested. Motor protection expectations
-and heatsink qualification are unresolved. Tenergy11609/01025 is the selected design/BOM baseline; discharge rating and
-charger compatibility are documented. Battery envelope fit is supported by the
-October 24 cardboard check below; final mounting/wiring and purchasing remain open.
-Dantona is excluded from purchase quantities. Fuse, cable adapters, converter stability, thermal
-behavior, Wi-Fi, physical fit, routing and final manufacturing checks remain.
-Neither assembly BOM is a ready-to-order factory upload. No submission occurred.
-Lab 2 logs have unresolved current calibration; no average rail current was
-invented. Current-evidence.md explains the limit and Current-measurements.csv
-contains 12 unmeasured operating-condition rows.
-Shared Google Doc updated in place and read back; no competing Drive design
-copies were created. The October 23 CAD/BOM/PDF package was published as bd56ad7.
-
-October 23 deadline review update: TA confirmed all SMD will be assembled by
-the team; TechSpark oven access is tentative. Active BOM: BOM-Hand-assembly.csv.
-Course source: https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792811196129409?thread_ts=1792803278.879979&cid=C0BRYGTD4HH
-
-The fresh ERC run exposed two ACS712 library-mismatch warnings. Comparison
-showed only a doubled UTF-8 encoding of the plus/minus sign in the cached
-Description property. Corrected that property to match the installed symbol;
-all pin types, pin positions and graphics are unchanged. Re-exported schematic
-PDF and XML; all 297 net memberships are identical before/after the correction.
-
-October 24 purchasing review
-- Purchasing BOM expanded to 124 grouped rows with itemized off-board spacers,
-  fasteners, adapters, shunts, wire, LED replacements and a specific fuse candidate.
-- Every row's requested total equals circuit + additional + spare quantities.
-  All 284 placed-component records are unchanged from bd56ad7; Dantona remains zero.
-- Connectivity/BOM checker rerun against the unchanged schematic export: PASS,
-  284 components / 297 nets. No new ERC claim is needed for off-board-only edits.
-- Heatsink attachment is an explicit unresolved purchasing exception, not a
-  guessed TO-220 kit. Fuse coordination and physical fit remain unqualified.
-- Identified encoder-supply discrepancy: recorded motor specification says
-  3.3-5V; present connector supply is the 5.1V rail. Digital resolution is open.
-- Must-Dos Google Doc updated in place; three-page export inspected. Wording
-  assigns sourcing to AI and specific physical checks to the team. Shared
-  report identifies the same candidate fuse. The user authorized publishing
-  these Lab 4 updates on October 24. Submission destination is confirmed:
-  the team's small-group TA via Slack. No order or TA submission was made.
-
-October 24 battery envelope evidence
-- Team report/photos supplied in chat: a 115x50x50mm cardboard stand-in fits
-  between the original chassis plates; reported usable height is about 51.75mm.
-- Selected pack listing: 115x44.4x46.76mm. Calculated gross vertical allowance
-  is 4.99mm if the 46.76mm dimension is vertical; the 50mm stand-in leaves1.75mm.
-- This supports preliminary pack-envelope fit, not installed-pack retention,
-  connector/cable routing or a completed dynamic vehicle-clearance test.
-- Existing metal-plate spacing is distinct from the proposed35mm PCB/chassis
-  and22mm PCB/Pi spacers. No PCB mounting geometry changed.
-
-October24 servo current and preliminary power review
-- Verified exact-model Hiwonder LD-1501MG source:100mA no-load,2.4-3A stall.
-- Excluded different-model LD-3015MG page; static holding at6.6V remains unmeasured.
-- Recalculated10mOhm/gain50 ADC points and0.09W shunt loss at3A.
-- Added explicitly assumed average profile to Power-budget.csv and unrounded
-  arithmetic to Power-calculations.json:0.39A servo,22.0584W converted output,
-  2.882588A battery at12V/85%. Profile is not measured or a guaranteed bound.
-- No circuit, component count, net membership or PCB geometry changed.
+No PCB was built, powered or flashed. Battery/charger selection, L298 protection,
+heatsink attachment, fuse coordination, course stock and adapter qualification
+remain open. Five switch footprints, routing, thermal layout, physical stack
+and final fabrication checks remain. No purchase or TA submission occurred.

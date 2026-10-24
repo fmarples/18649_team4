@@ -23,49 +23,41 @@ parts and generic headers. Local stock does not establish quantities or JLCPCB s
   F1 identifies the Keystone 3568 holder. Littelfuse 0297010.L is now the
   separately listed **review candidate** fuse; qualification is described below.
 - Manufacturer/source fields are filled for placed named circuit parts.
-  Exact stock must be checked when ordering. The 75 kΩ 0.1% and 22 kΩ resistor
-  listings need an availability/substitute check; preserve feedback tolerances.
+  Exact stock must be checked when ordering. The original 75 kΩ and 22 kΩ resistor listings are out of stock.
+  Documented alternatives are listed below; preserve feedback tolerances.
 
-## Selected battery and charger
+## Battery and charger: purchasing unresolved
 
-**October 24 sourcing update:** the
-[TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
-requires DigiKey or Mouser for parts outside the course list. The Tenergy
-combination below is our earlier design reference, not a finalized purchase.
-Its existing BOM rows remain provisional until we resolve a permitted source
-or select a documented replacement and compatible charger. The same sourcing
-check applies to the Pololu adapter donor and other external hardware.
-The Dantona CMP-SC-28-37 is a separate Sub-C candidate; its discharge limits
-and charger compatibility are not established. No replacement is selected.
+The [October 24 TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
+requires DigiKey or Mouser for parts outside the course list. We have moved
+Tenergy 11609/01025 to zero-quantity reference rows. We still need one pack
+and one compatible charger; separate unresolved request rows preserve that need.
 
-We selected Tenergy 11609 and charger 01025 as our design/BOM baseline.
-Dantona CMP-AA-21-37 is retained only as a historical comparison, with zero
-requested quantity; its maximum discharge current was not established. The selected pack,
-[Tenergy 11609](https://power.tenergy.com/at-tenergy-12v-4200mah-nimh-rechargeable-battery-pack-10s1p-50-4wh-30a-rate/),
-uses ten **Sub-C**, not AA, NiMH cells: 12 V / 4.2 Ah, manufacturer-stated 30 A
-continuous discharge, 115 × 44.4 × 46.76 mm, approximately 1.3 lb. Listed
-build-to-order lead time is 3–7 business days; verify at purchase.
+The earlier [Tenergy 11609](https://power.tenergy.com/at-tenergy-12v-4200mah-nimh-rechargeable-battery-pack-10s1p-50-4wh-30a-rate/)
+reference is ten Sub-C NiMH cells, 12V/4.2Ah, stated 30A continuous discharge,
+115x44.4x46.76mm. Its manufacturer lists
+[01025](https://power.tenergy.com/tenergy-smart-universal-charger-for-nimh-nicd-battery-packs-6v-12v-ul/)
+as compatible. We have not verified a permitted source for this pair.
 
-Tenergy lists [01025](https://power.tenergy.com/tenergy-smart-universal-charger-for-nimh-nicd-battery-packs-6v-12v-ul/)
-as compatible: NiMH/NiCd, 5–10 cells, selectable 1/2 A, negative-delta-V
-termination. Supplied Tamiya/clip leads do not mate directly with our Hirose
-connector. A keyed, correctly polarized adapter is needed. This recommendation
-now accompanies the selected 11609 pack. Neither item has been ordered.
-On October 23 the manufacturer lists $118.99 for the pack and $26.69 for the
-charger, or $145.68 before tax/shipping and adapters. Purchasing and delivery
-remain to be confirmed; the design selection is not an order.
+[Dantona CMP-SC-28-37 on DigiKey](https://www.digikey.com/en/products/detail/dantona-industries/CMP-SC-28-37/19186145)
+is a 12V/2.8Ah candidate, listed 115x46x43mm. Its permitted continuous/peak
+discharge and compatible charger are not documented in the evidence reviewed.
+It is not a qualified replacement. [FDK HR-SCU](https://www.fdk.com/product_e/nimh_e/tech_info/HR-SCU.pdf)
+has high-current cell discharge curves and a
+[DigiKey listing](https://www.digikey.com/en/products/detail/fdk-america-inc/HR-SCU/1202992),
+but a loose cell is not a completed ten-cell pack, and a curve is not a
+guaranteed pack rating. We have not selected a cell-assembly project.
 
-The team reported a cardboard-envelope check on October 24: a
-115 × 50 × 50 mm stand-in fits between the existing chassis plates, with
-approximately 51.75 mm usable vertical space. This supports the selected
-115 × 44.4 × 46.76 mm pack fitting in that location. With 46.76 mm vertical,
-the calculated gross height allowance is 51.75 - 46.76 = 4.99 mm; the 50 mm
-stand-in leaves about 1.75 mm. These are allowances before fastening material,
-protruding hardware and local cable interference, not measured final clearances.
-The pack itself has not been installed. Finalize its retaining strap and lead/
-connector route; the cardboard size check does not need repeating.
-A larger-current pack does not raise the L298's limits. Only 11609 and 01025
-are requested in the purchasing list.
+The October 24 cardboard check established a 115x50x50mm envelope between
+the chassis plates, with approximately 51.75mm usable height. The Tenergy
+reference leaves 4.99mm gross height allowance; the Dantona listing would
+leave 8.75mm with 43mm vertical. These are calculated allowances, before
+straps, leads and local obstacles. Actual retention and installed fit are untested.
+
+For review, request a documented DigiKey/Mouser pack-and-charger pair or a
+specific vendor exception. Normal current, peak duration, sag and protection
+must be assessed together. No published Ah value alone establishes allowable
+current; a high-current pack does not increase the L298's limits.
 
 ## Open package and mechanical checks
 
@@ -108,28 +100,29 @@ The purchasing BOM now itemizes these parts instead of assigning anonymous
 hardware selection to the team. Quantities below include spares and mean
 individual pieces, except where wire length is stated. Supplier pack sizes,
 stock, cost and lead time must be checked before an order; none is reserved.
-The 22mm Pi spacer is catalog-listed, but its price/MOQ/lead time is not published.
+DigiKey-listed substitutes below replace the earlier direct-vendor hardware.
+Stock was visible on October 24 but is not reserved. Prices may change.
 
 | Use | Selected part/specification | Installed + spare | Reason and remaining fit check |
 |---|---|---|---|
 | Isolation/termination/recovery caps | [Samtec SNT-100-BK-T-H](https://www.samtec.com/products/snt-100-bk-t-h) | 18 + 2 | 2.54mm pitch, handle for removal. Twelve isolation + four termination caps installed normally; two BOOT0 recovery caps stored off-board. Check adjacent-cap access. |
-| Chassis spacers | [Wurth 970350365](https://www.we-online.com/components/products/datasheet/970350365.pdf) | 4 + 1 | M3 female/female, 35mm body, nylon, 6mm across flats. Preserves proposed board height; verify smooth chassis holes and access underneath. |
-| Chassis screws | [RS PRO 190434](https://us.rs-online.com/product/rs-pro/190434/70790858/) | 8 + 2 | M3x8, one screw into each end of each spacer. Confirm plate thickness and thread engagement. |
-| Chassis washers | [RS PRO 4832592](https://us.rs-online.com/product/rs-pro/4832592/70823582/) | 8 + 2 | 3.2mm ID, 7mm OD, 0.5mm thick. Under screw heads; lower washer bridges the measured 4.5mm chassis hole. |
-| Pi spacers | [OneMonroe/Lyntron AA5069-2545-22.0-00](https://catalog.onemonroehardware.com/item/lyntron-standoffs/metric-female-standoffs/aa5069-2545-22-0-00) | 4 + 1 | M2.5 female/female, 22mm body, 4.5mm round OD. Fits the proposed <=5mm hardware envelope; actual socket engagement remains untested. |
-| Pi screws | [Aspen ME031-25045X6](https://www.aspenfasteners.com/content/2D_PDF/product61/ME031-25045X6.PDF) | 8 + 2 | M2.5x6, pan head up to 5mm. No spacing washers; verify adjacent components and thread depth. |
+| Chassis spacers | [Wurth 970350365](https://www.we-online.com/components/products/datasheet/970350365.pdf) | 4 + 1 | M3 female/female, 35mm body, nylon, 6mm across flats. Preserves proposed board height; smooth chassis holes confirmed; check access underneath. |
+| Chassis screws | [Wurth 97790803111](https://www.digikey.com/en/products/detail/w%C3%BCrth-elektronik/97790803111/10056388) | 8 + 2 | M3x8 nylon, one screw into each end of each spacer. Confirm plate thickness and thread engagement. |
+| Chassis washers | [Essentra MFW030A](https://www.digikey.com/en/products/detail/essentra-components/MFW030A/4105389) | 8 + 2 | Nylon, 3.2mm ID, 7mm OD, 0.5mm thick. Under screw heads; lower washer bridges the measured 4.5mm chassis hole. |
+| Pi spacers | [RAF M1269-2545-AL](https://www.digikey.com/en/products/detail/raf-electronic-hardware/M1269-2545-AL/7680971) | 4 + 1 | M2.5 female/female, 22mm body, 4.5mm hex across flats, about 5.20mm across corners. Reserve a 5.5mm hardware envelope; actual socket engagement remains untested. |
+| Pi screws | [Essentra 50M025045P005](https://www.digikey.com/en/products/detail/essentra-components/50M025045P005/11639454) | 8 + 2 | M2.5x5 nylon, 5mm pan head. No spacing washers; verify adjacent components and thread depth. |
 | Encoder housings | [Harwin M20-1060400](https://www.harwin.com/products/M20-1060400) | 2 + 1 | Four-position 2.54mm female housing for 0.64mm square pins; not keyed, so mark pin 1. |
 | Encoder contacts | [Harwin M20-1180046](https://cdn.harwin.com/pdfs/IS-15.pdf) | 8 + 4 | Loose tin contacts, 22-30AWG. Requires matching crimp tooling and wire dimensions. |
-| Servo adapter donor | [Pololu 2184](https://www.pololu.com/product/2184) | 1 + 1 | 300mm JR/Futaba male-female extension, documented 22AWG wire. Retain the servo-mating male end. |
-| Charger housing | [Hirose DF63A-2EP-3.96C](https://www.hirose.com/en/product/p/CL0680-0535-5-00) | 1 + 1 | Inline mating plug for the battery socket; distinguish it from the board header. |
-| Charger contacts | [Hirose DF63-2022PC](https://www.hirose.com/en/product/p/CL0680-0539-6-00) | 2 + 2 | 20-22AWG male contacts for the 1/2A charging adapter, not the vehicle supply cable. |
+| Servo adapter donor | Pololu 2184 is a reference only | 0 requested | A permitted source and the complete adapter current rating remain unresolved. Reuse/transition of the existing lead requires its wire size and contact fit. |
+| Charger housing | [Hirose DF63A-2EP-3.96C](https://www.hirose.com/en/product/p/CL0680-0535-5-00) | 0 requested; reference only | Charger selection and its actual lead are unresolved. |
+| Charger contacts | [Hirose DF63-2022PC](https://www.hirose.com/en/product/p/CL0680-0539-6-00) | 0 requested; reference only | Contact choice depends on the selected charger lead; not the vehicle supply cable. |
 
 The chassis stack is screw head / washer / PCB / 35mm spacer / chassis /
 washer / lower screw head. Washers do not add to the 35mm board-to-chassis gap.
 With a 1.6mm PCB and 0.5mm washer, an 8mm top screw engages about 5.9mm of
 the spacer's 10mm thread depth. Actual lower engagement depends on plate
 thickness. This assumes a clearance hole, not a screw forced into unmatched
-chassis threads. The Pi stack uses 22mm spacers and approximately 4.4mm screw
+chassis threads. The Pi stack uses 22mm spacers and approximately 3.4mm screw
 engagement through a 1.6mm board; the selected connector and actual board
 thicknesses still need a dry fit. Equal spacer heights matter for the 40-pin socket.
 
@@ -139,10 +132,9 @@ We retain the board pin definitions in [Actuator-design.md](Actuator-design.md).
 The [identified motor specification](../doc/HARDWARE.md)
 already gives PH2.0-6PIN and encoder supply 3.3-5V. The October 24 team photo
 and report now identify the pictured cable's order; manufacturer cavity
-numbers and completed-adapter continuity have not been verified. The
-schematic's nominal 5.1V encoder supply
-also exceeds that published 5V upper value: the encoder supply voltage must
-be corrected or supported by better manufacturer evidence before connection.
+numbers and completed-adapter continuity have not been verified. The October 24 correction connects J82.1/J83.1 to the existing nominal
+3.3V logic rail, matching the supply used in the earlier lab setup. Actual
+voltage tolerance and signal quality still require hardware validation.
 
 - **Motor/encoder:** reuse the two existing six-wire motor cables. Course v3
   also lists DFRobot FIT0587 donor cables; request two plus one spare only if
@@ -154,15 +146,19 @@ be corrected or supported by better manufacturer evidence before connection.
   undersized original motor wire into a 16-18AWG crimp; use an appropriately
   insulated transition if needed. The connector on a live battery must not
   leave bare conductors exposed.
-- **Charger:** preserve the supplied adapter's Tamiya mating end and replace
+- **Charger reference only:** if the Tenergy pair is later accepted, preserve its Tamiya mating end and replace
   its clip end with DF63A-2EP-3.96C, using DF63-2022PC contacts on 22AWG wire.
   If the supplied lead is another size, use a correctly made transition,
   rather than an incompatible crimp. Verify positive-to-positive continuity
   with charger and pack disconnected. Charge the disconnected pack, not the PCB.
-- **Servo:** retain the Pololu2184 male end that mates with the servo. Replace
-  the other end with DF63-3S-3.96C and DF63A-2022SC contacts, wired to J90:
-  1=GND, 2=sensed6.6V, 3=PWM. The 22AWG donor does not prove the original
-  servo plug can carry the provisional 4A allocation continuously.
+- **Servo:** board-side housing DF63-3S-3.96C and 20-22AWG contacts
+  DF63A-2022SC are specified: J90 1=GND, 2=sensed6.6V, 3=PWM. A rated
+  transition to the actual servo plug remains a purchasing exception.
+  [DFRobot FIT0033](https://www.dfrobot.com.cn/goods-380.html) is listed at
+  800mA, so we rejected it for the 3A servo endpoint despite its plug shape.
+  Adafruit 973 lacks a verified wire/current rating in the reviewed listing.
+  The Pololu2184 reference is on hold under the vendor rule. Neither a plug
+  photograph nor 22AWG wire proves the complete original plug supports 4A.
 - **Wire:** request cut lengths of [Alpha3057](https://www.alphawire.com/products/wire/hook-up-wire/premium/3057)
   stranded16AWG (3m red +3m black, including spare/routing allowance) and
   [Alpha3051](https://www.alphawire.com/disteAPI/SpecPDF/DownloadProductSpecPdf?productPartNumber=3051)
@@ -220,8 +216,8 @@ With5.1V,220ohms and an assumed0.2V transistor drop, typical published forward
 voltages give roughly7-14mA. Existing compatible lamps can be reused; do not
 order duplicates simply because the BOM includes a fallback.
 
-**One purchasing selection remains genuinely unresolved: the heatsink
-attachment/interface.** Boyd6396BG is course-listed, but its published package
+**Heatsink attachment remains one of four explicit purchasing exceptions,
+alongside the battery, charger and servo-side adapter lead.** Boyd6396BG is course-listed, but its published package
 list is TO-218/TO-220; our L298N is Multiwatt15. We have not treated a generic
 TO-220 mounting kit as a verified fit. The team needs to show the course
 heatsink/tab mounting arrangement or obtain the staff's intended attachment;
@@ -229,5 +225,40 @@ then the screw length, nut and thermal interface can be selected. This is a
 specific geometry question, not a request for the team to research the whole BOM.
 
 No purchases or fabrication release have been made. The active board BOM
-remains [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv); all changes above are
-off-board purchasing specifications and do not change the circuit netlist.
+remains [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv); off-board substitutions do not alter the circuit. The separate encoder-supply
+correction changes only J82.1 and J83.1 from /+5V to /+3V3.
+
+## October 24 mechanical substitution check
+
+The RAF spacer has a 4.5mm hex across flats, approximately 5.20mm across
+corners; it is not a 4.5mm round spacer. A 5.5mm envelope fits within the
+existing 3mm-radius Pi reservation. The nearest nominal socket-body edge is
+3.345mm from the hole center, leaving 0.595mm to that envelope. This is a
+2D clearance calculation, not an assembled-Pi check. The course's possible
+3mm-from-hole-edge interpretation remains open.
+
+The RAF drawing specifies at least 4.70mm threaded depth. A 5mm screw through
+an assumed 1.6mm board engages about 3.4mm, avoiding the tighter bottoming
+margin of the former 6mm screw. Confirm actual board thickness and engagement
+on assembly. Nylon screws avoid a large conductive head but still require
+sensible tightening and a vibration/retention check. No mechanical load test
+has been performed.
+
+## Resistor sourcing alternatives (October 24)
+
+The original R420 RT0603BRD0775KL and R432 RC0603FR-0722KL listings are
+out of stock. Their design identities remain in the schematic; the active BOM
+explicitly permits the following procurement alternatives, two of each
+(one installed plus one spare), instead of buying both versions:
+
+- R420: [Susumu RG1608P-753-B-T5](https://www.digikey.com/en/products/detail/susumu/RG1608P-753-B-T5/1240628),
+  75kΩ, 0.1%, 0.1W, 0603, 25ppm/°C.
+  [Manufacturer RG specification](https://www.susumu.co.jp/dl/?filename=n_catalog_partition01_en.pdf&type=application/pdf).
+- R432: [Panasonic ERJ-3EKF2202V](https://www.digikey.com/en/products/detail/panasonic-industry/ERJ-3EKF2202V/1746336),
+  22kΩ, 1%, 0.1W, 0603, ±100ppm/°C.
+  [Manufacturer ERJ specification](https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000C304.pdf).
+
+Both preserve the nominal resistor values, specified tolerances and 0603
+footprints, so the nominal feedback calculations do not change. Listings
+showed stock on October 24; stock is not reserved. Record the actual installed
+MPN at assembly and use the required board land pattern.

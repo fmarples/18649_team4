@@ -54,7 +54,7 @@ these results; this is a dimensional calculation, not a measured fit.
 We propose 35 mm chassis spacers and four equal 22 mm Pi spacer stacks. With a
 1.6 mm assumed Pi PCB thickness, its board underside sits 11.4 mm above the
 metal plate, before accounting for underside components, card, screws and wires.
-The four Pi supports use hardware no larger than 5 mm outside diameter.
+The four Pi supports use hardware no larger than 5.5 mm outside diameter.
 The socket carries signals and power; the supports carry mechanical loads.
 Ports, microSD, cooler and cable access need the physical mock-up. A provisional
 antenna review zone excludes components/copper on both layers, but Wi-Fi and
@@ -93,7 +93,7 @@ their full travel.
 
 For chassis holes H1-H4 we kept a 3 mm margin outside each hole edge.
 For the fixed Pi mounting pattern H5-H8, the proposed clearance radius is 3 mm
-from the center, surrounding hardware of at most 5 mm diameter. These are
+from the center, surrounding hardware of at most 5.5 mm diameter. These are
 different dimensions: a strict 3 mm margin from the Pi hole edge would require
 a 4.35 mm radius and would intersect the standard adjacent GPIO socket body.
 The nearest nominal socket-body edge is 3.345 mm from a Pi hole center (1.995 mm
@@ -126,7 +126,7 @@ parts and routing. See Parts-review.md and Heatsink-envelope-check.json.
 
 ## Checks and remaining work
 
-KiCad 10.0.4 loads and plots the PCB. The 23 October placement DRC reports:
+KiCad 10.0.4 loads and plots the PCB. The 24 October placement DRC reports:
 
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.

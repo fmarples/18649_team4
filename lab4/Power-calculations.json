@@ -1,6 +1,6 @@
 {
   "status": "Calculated design, not measured",
-  "battery": "Selected Tenergy11609: ten Sub-C NiMH cells, nominal12V/4.2Ah, stated30A continuous. Compatible charger01025. October24 cardboard envelope and paper mounting checks support preliminary fit; actual retention, harness, final stack, cutoff and purchasing remain open.",
+  "battery": "Unresolved purchase: DigiKey/Mouser required. Tenergy11609/01025 is a documented zero-quantity reference, pending vendor exception. Dantona candidates lack verified discharge/charger data. See Parts-review.md.",
   "protected_input_design_range_V": [
     8,
     15
@@ -95,5 +95,15 @@
     "target_change_A": 0.02,
     "target_change_ideal_counts": 12.412121212121214,
     "status": "Ideal arithmetic only; ADC/reference, amplifier offset, noise, shunt tolerance and calibration remain unvalidated."
+  },
+  "encoder_supply_revision": {
+    "pins": [
+      "J82.1",
+      "J83.1"
+    ],
+    "rail": "+3V3",
+    "setpoint_V": 3.318,
+    "budget": "Included within provisional 0.8A logic allocation; not a measured or guaranteed maximum",
+    "validation": "Nominal 3.3V matches earlier lab supply; actual tolerance and signals untested"
   }
 }

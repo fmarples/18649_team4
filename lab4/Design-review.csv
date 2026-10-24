@@ -1,11 +1,11 @@
-﻿Area,Decision / check,Status / evidence needed
-Part 1.1,"Battery chemistry, capacity, loaded voltage, discharge rating","Selected Tenergy11609 Sub-C pack and01025 compatible charger. 12V4.2Ah/30A manufacturer rating. Fit, harness adapter, purchasing/lead time and operating cutoff remain unverified; no order placed."
-Part 1.1,"Fuse, reverse polarity and undervoltage protection","PMOS and gate clamp proposed; fuse element, pack cutoff, connector landing and transient verification pending"
+Area,Decision / check,Status / evidence needed
+Part 1.1,"Battery chemistry, capacity, loaded voltage, discharge rating",No permitted-source pack/charger finalized. Tenergy11609/01025 held at zero quantity; Dantona discharge/charger evidence incomplete. Battery/charger are explicit TA-review exceptions.
+Part 1.1,"Fuse, reverse polarity and undervoltage protection","PMOS/gate clamp specified; 0297010.L 10A fuse is a review candidate only. Normal/startup profile, path ratings and pack-specific cutoff remain unqualified."
 Part 1.1,Motor current and L298 loss/temperature,"Retain course L298N;3.2A is motor stall spec,not normal load.2A is bridge absolute DC limit. Verify thermal design and course brief-stall/protection expectations.6396BG Multiwatt mounting unconfirmed."
 Part 1.1,Servo rail,Use handout LD-1501MG; propose separate 6.6 V rail; current not measured
-Part 1.2,Mechanical fit,120x234mm unrouted direct-Pi placement; measured chassis centers applied. 22mm Pi / 35mm chassis gaps remain dimensional proposals; physical fit and cooler/port access pending.
-Part 1.2,Measured chassis mounting pattern,"Confirmed 50mm front, 105mm rear, 220mm row separation, aligned centerline, 4.5mm chassis holes. H1/H2=(7.5/112.5,7); H3/H4=(35/85,227). M3/3.2mm PCB drills proposed; thread/washer/nut choice pending."
-Part 1.2,Pi mounting-hole clearance,H5-H8 use 3mm radius from center with <=5mm hardware; strict 3mm from drilled edge intersects adjacent GPIO socket body; confirm course interpretation before fabrication
+Part 1.2,Mechanical fit,120x234mm unrouted placement. Four-hole cardboard alignment and Pi paper footprint passed October24. Borrowed spacers about50mm; proposed35mm chassis/22mm Pi stack and actual port/cooler/header access remain untested.
+Part 1.2,Measured chassis mounting pattern,"Confirmed50mm front,105mm rear,220mm row separation,aligned centerline,4.5mm smooth chassis holes. H1/H2=(7.5/112.5,7);H3/H4=(35/85,227). M3/3.2mm PCB drills; selected screws/washers in BOM, final fit untested."
+Part 1.2,Pi mounting-hole clearance,"H5-H8 2.7mm drills with3mm radius reservation; RAF4.5mm hex about5.20mm across corners,5.5mm hardware envelope. Strict3mm from hole edge intersects GPIO socket; course interpretation remains open."
 Part 1.2,Direct Pi socket,J70 ESQ-120-44-L-D on B.Cu; all 40 pin positions and nominal 5.17mm insertion checked; actual connector engagement and assembly still untested
 Part 1.2,Pi wireless and cooling,Both-layer antenna review keepout added; Wi-Fi and temperature with metal chassis and final stack remain unmeasured
 Part 1.3,Motor ADC conditioning,"10k/10k divider, 1k/100n LPF; 8.54 mA/count at nominal 5.1 V sensor supply and 3.3 V ADC reference; calibration untested"
@@ -16,11 +16,11 @@ Part 1.5,Rule setup,"Proposed 1oz, 0.2mm general clearance/width, 0.3/0.7mm vias
 Part 2,Three-zone host pin mapping,Signal allocation connected to U50/U60/J70; PCB firmware port and physical CAN mapping still pending
 Part 2,CAN bus labels,Normalize CAN_A and CAN_B across Pi and both MCUs; earlier hardware labels differed
 Part 2,MCU support,"Placed both STM32F401RET6 circuits: supplies, 4.7uF VCAP1, reset, BOOT0, HSI/PLL assumption and SWD; not powered/tested"
-Part 2,Actuation and connectors,"L298N, eight SK520B clamps, bypass/bulk, two rated motor connectors, sensed servo connector, four LED drivers, encoder level conditioning now placed. Current limiting/heatsink unresolved. New connector adapters require cable verification."
+Part 2,Actuation and connectors,"Encoder J82.1/J83.1 corrected from5.1V to nominal3.3V logic rail. L298N/clamps/sensing/LED drivers connected. Adapter physical fit/continuity, L298 protection and heatsink qualification remain untested."
 Part 2,Diagnostics,"3 self-test / 2 reset buttons, 12 status LEDs and Lab3 probes placed electrically. Five GCT switch footprints still need verified contact map; physical access and firmware untested."
 Part 2,Inter-sheet connections,Explicit hierarchical power/GND/CAN ports connected; exported netlist checked for unwanted cross-zone signals
 Deliverables,ERC / DRC,"Schematic ERC zero errors/warnings; placement DRC zero violations, 499 reported unconnected items and 5 missing switch footprints. Unrouted; no fabrication approval."
-Deliverables,BOM / CPL / Gerbers,284 placed parts; two assembly views plus combined procurement list. Five switch footprints and exact procurement unresolved; no final CPL/Gerbers.
-Lab 1,Revision entry,Record future pin/LED/connector changes; no CAN-ID change proposed here
+Deliverables,BOM / CPL / Gerbers,284 placed parts; active hand-assembly BOM and127-row combined procurement list. Four purchasing exceptions explicit. Five switch footprints/routing remain before final Gerbers; no factory assembly requirement.
+Lab 1,Revision entry,"COMPLETE: Section11 added to existing Requirement Document onOctober24. Records Lab3 PB4 PWM to Lab4 PA9/PB7 firmware port, added sensing/LEDs/connectors, retained CAN catalog. Firmware port and real feedback not implemented."
 Power design,Three TPS564252 rails,"Circuits and calculations included; effective capacitance, load/thermal/transient and input qualification remain"
 Part 1.4,Course assembly decision,TA reply 23 Oct: team assembles all SMD; TechSpark ovens tentative. BOM-Hand-assembly.csv active; course v3 stock first. JLC list historical; no factory assembly quote required. https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792811196129409?thread_ts=1792803278.879979&cid=C0BRYGTD4HH

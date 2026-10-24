@@ -90,16 +90,16 @@ with the repository. The other footprints come from the standard KiCad library.
 
 ## Power and pin decisions
 
-We selected Tenergy 11609: ten Sub-C NiMH cells, nominal 12 V / 4.2 Ah, with
-a manufacturer-stated 30 A continuous discharge rating. Tenergy lists charger
-01025 as compatible. This replaces the earlier AA proposal; Dantona
-CMP-AA-21-37 is excluded from requested purchase quantities. The team checked
+Battery and charger purchasing remain unresolved under the DigiKey/Mouser
+rule. Tenergy 11609/01025 and the unqualified Dantona alternatives are
+zero-quantity reference rows. One pack and one compatible charger are
+explicit unresolved requests; see Parts-review.md. The team checked
 a 115x50x50mm cardboard battery envelope between the chassis plates and
 reported approximately 51.75mm usable height. Strap/lead routing, wiring,
 cost and lead time remain; see Parts-review.md.
 The proposed branches are the unregulated motor supply, 6.6 V servo buck,
 5.1 V Pi/devices buck and 3.318 V logic buck. The protected-input electrical
-target is 8–15 V; this does not define the cells' allowed discharge voltage.
+target is 8â€“15 V; this does not define the cells' allowed discharge voltage.
 
 The pin proposal uses the Lab 3 candidate/WCET overlays at commit `c4fba58` as
 its baseline. Lab 3 CAN, timing and LED assignments are retained or reserved.
@@ -111,12 +111,12 @@ power/decoupling pinout.
 
 Both bare-MCU support circuits are now placed: VDD bypass capacitors, filtered
 VDDA, reset and BOOT0 circuits, separate reset/self-test buttons, SWD and UART
-headers. Each MCU's VCAP1 pin has its own **4.7 µF** capacitor to ground, as
+headers. Each MCU's VCAP1 pin has its own **4.7 ÂµF** capacitor to ground, as
 specified for LQFP64 in the [STM32F401RE datasheet](https://www.st.com/resource/en/datasheet/stm32f401re.pdf).
 VCAP1 is an internal-regulator output, not a GPIO or a 3.3 V supply input.
 The initial clock plan uses internal HSI/PLL; the Nucleo ST-LINK clock is absent.
 
-We added the Pi 40-pin socket, twelve diagnostic LEDs with individual 1 kΩ
+We added the Pi 40-pin socket, twelve diagnostic LEDs with individual 1 kÎ©
 resistors, and probe rows matching the Lab 3 handout. Extra probes have separate
 headers. The Pi's 3.3 V output remains disconnected from the PCB's independent
 3.3 V regulator. Do not connect separate USB-C power while the board supplies
@@ -153,8 +153,8 @@ device-tree configuration and physical bus labels before relying on Linux
   connectors. October 24 servo and pictured motor/encoder wire mappings are
   documented in Actuator-design.md; second-harness agreement, physical mating
   and completed-adapter continuity remain unverified.
-- Reconcile the documented 3.3-5V encoder supply with the schematic's 5.1V
-  connection before power is applied. See Parts-review.md for this finding and
+- The encoder supply correction is implemented: J82/J83 use nominal 3.3V.
+  Validate its tolerance and the actual encoder signals before operation. See Parts-review.md for this finding and
   the selected spacer, fastener, shunt, LED and harness part numbers.
 - Finalize component quantities from course stock and the additional-parts request.
   The course assembly plan is now team assembly; the JLC comparison is historical.

@@ -214,9 +214,9 @@ for name,x,y in [('SW60 RESET',12,81),('SW61 SELF TEST',27,85),('SW50 RESET',12,
     reserve(name,x-3.5,y-3.5,7,7,'switch')
 
 def mount(ref,x,y,diam,kind):
-    fp=load_fp('Lab4_Mechanical:Pi_support_M2.5_D5.0' if diam==2.7 else 'MountingHole:MountingHole_3.2mm_M3')
+    fp=load_fp('Lab4_Mechanical:Pi_support_M2.5_D5.5' if diam==2.7 else 'MountingHole:MountingHole_3.2mm_M3')
     fp.SetReference(ref);fp.SetValue(kind);fp.SetPosition(vec(x,y));fp.SetBoardOnly(True);fp.Value().SetVisible(False);b.Add(fp);fps[ref]=fp;positions[ref]=(x,y,0)
-    # Chassis: 3 mm from hole edge. Pi: 3 mm from center, accommodating <=5 mm
+    # Chassis: 3 mm from hole edge. Pi: 3 mm from center, accommodating <=5.5 mm
     # hardware plus margin, because the standard Pi GPIO connector is close.
     # This distinction is recorded as a course-clearance review item.
     r=3 if diam==2.7 else diam/2+3
@@ -235,7 +235,7 @@ def mount(ref,x,y,diam,kind):
         b.Add(z)
     label(ref+(' TARGET' if kind=='UNMEASURED chassis target' else ''),x,y-r-1,.8)
 for i,(x,y) in enumerate([(7.5,7),(112.5,7),(35,227),(85,227)],1):mount('H'+str(i),x,y,3.2,'Measured chassis center; M3 PCB drill proposed')
-for i,(x,y) in enumerate([(33.5,92.5),(91.5,92.5),(33.5,141.5),(91.5,141.5)],5):mount('H'+str(i),x,y,2.7,'Pi support <=5mm hardware OD')
+for i,(x,y) in enumerate([(33.5,92.5),(91.5,92.5),(33.5,141.5),(91.5,141.5)],5):mount('H'+str(i),x,y,2.7,'Pi support <=5.5mm hardware OD')
 
 # Mechanical quantities must not be confused with the schematic BOM.
 b.SetFileName(str(args.output));b.BuildConnectivity();p.SaveBoard(str(args.output),b)

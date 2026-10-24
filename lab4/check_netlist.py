@@ -140,6 +140,10 @@ for j,side in [(80,'LEFT'),(81,'RIGHT')]:
     expect(f'J{j}',1,rear+side+'_MOTOR');expect(f'J{j}',2,rear+side+'_RETURN')
 for pin,net in [(1,'/GND'),(2,front+'SERVO_VPLUS'),(3,front+'SERVO_PWM_OUT')]:expect('J90',pin,net)
 expect('U81',14,'/+3V3');expect('U81',7,'/GND')
+for ref in ['J82','J83']:
+    expect(ref,1,'/+3V3');expect(ref,2,'/GND')
+for ref in ['R804','R805','R806','R807']:
+    expect(ref,1,'/+3V3')
 for pin,name in zip([2,4,6,8],['R_LEFT_ENC_A','R_LEFT_ENC_B','R_RIGHT_ENC_A','R_RIGHT_ENC_B']):expect('U81',pin,rear+name)
 for pin in [11,13]:expect('U81',pin,'/GND')
 print('Actuator output, diode polarity, sensed current paths and encoder level-domain checks passed.')

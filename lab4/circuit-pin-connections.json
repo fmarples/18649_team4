@@ -4773,7 +4773,7 @@
       "ref": "J82",
       "lib": "Connector_Generic:Conn_01x04",
       "nets": {
-        "1": "+5V",
+        "1": "+3V3",
         "2": "GND",
         "3": "LEFT_ENC_A_RAW",
         "4": "LEFT_ENC_B_RAW"
@@ -4873,7 +4873,7 @@
       "ref": "J83",
       "lib": "Connector_Generic:Conn_01x04",
       "nets": {
-        "1": "+5V",
+        "1": "+3V3",
         "2": "GND",
         "3": "RIGHT_ENC_A_RAW",
         "4": "RIGHT_ENC_B_RAW"

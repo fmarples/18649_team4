@@ -1,4 +1,4 @@
-﻿Zone,Signal,Pin,Package_or_header_pin,Mode,Voltage,Status,Notes
+Zone,Signal,Pin,Package_or_header_pin,Mode,Voltage,Status,Notes
 Front,SPI1_SCK,PA5,21,AF5 SPI1_SCK,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
 Front,SPI1_MISO,PA6,22,AF5 SPI1_MISO,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
 Front,SPI1_MOSI,PA7,23,AF5 SPI1_MOSI,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
@@ -73,20 +73,20 @@ Rear,PH0,PH0,5,Clock reserved,3.3 V,Proposed PCB addition,Bare MCU initially use
 Rear,PH1,PH1,6,Clock reserved,3.3 V,Proposed PCB addition,Reserve for optional future crystal
 Rear,PC14,PC14,3,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
 Rear,PC15,PC15,4,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
-Front,SERVO_PWM,PA9,42,AF1 TIM1_CH2 / 50 Hz,3.3 V,Proposed PCB addition,"New actuator output, separate from PB9 timing marker"
+Front,SERVO_PWM,PA9,42,AF1 TIM1_CH2 / 50 Hz,3.3 V,Proposed PCB addition,"New actuator output, separate from PB9 timing marker Lab3 measured build used PB4/D5 for actuator PWM; firmware port to this PCB assignment is not yet implemented."
 Front,SERVO_CURRENT_ADC,PA2,16,ADC1_IN2,3.3 V,Proposed PCB addition,INA180 filtered output; ADC input must remain within VDDA
 Front,BATTERY_MONITOR_RESERVED,PA3,17,ADC1_IN3,0 to VDDA after divider,Proposed PCB addition,Reserve for future divided battery monitor; divider/cutoff firmware not implemented
 Rear,LEFT_CURRENT_ADC,PA2,16,ADC1_IN2,3.3 V,Proposed PCB addition,ACS712 divider and RC filter; not the former PA0 timing pin
 Rear,RIGHT_CURRENT_ADC,PA3,17,ADC1_IN3,3.3 V,Proposed PCB addition,ACS712 divider and RC filter; not the former PA1 timing pin
-Rear,LEFT_ENABLE_PWM,PA9,42,AF1 TIM1_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENA; full-on enable supports braking when both direction inputs match
-Rear,RIGHT_ENABLE_PWM,PB7,59,AF2 TIM4_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENB; separate timer from the front-zone servo MCU
+Rear,LEFT_ENABLE_PWM,PA9,42,AF1 TIM1_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENA; full-on enable supports braking when both direction inputs match Lab3 measured build used PB4/D5 for actuator PWM; firmware port to this PCB assignment is not yet implemented.
+Rear,RIGHT_ENABLE_PWM,PB7,59,AF2 TIM4_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENB; separate timer from the front-zone servo MCU Lab3 measured build used PB4/D5 for actuator PWM; firmware port to this PCB assignment is not yet implemented.
 Rear,LEFT_IN1,PB13,34,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
 Rear,LEFT_IN2,PB14,35,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
 Rear,RIGHT_IN3,PB15,36,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
 Rear,RIGHT_IN4,PC10,51,GPIO output,3.3 V,Proposed PCB addition,L298 direction input; hold safe state at boot
 Rear,LEFT_ENC_A,PB2,28,EXTI2 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
 Rear,LEFT_ENC_B,PB3,55,EXTI3 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
-Rear,RIGHT_ENC_A,PB4,56,EXTI4 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
+Rear,RIGHT_ENC_A,PB4,56,EXTI4 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V. PB4 was Lab3 PWM_OUT; reassign only in the PCB firmware port.
 Rear,RIGHT_ENC_B,PB12,33,EXTI12 input,3.3 V input required,Proposed PCB addition,Four distinct EXTI lines; PB3/PB4 must release JTAG/SWO while retaining SWD. Verify encoder output voltage; condition to 3.3 V.
 Rear,OVERLOAD_MARKER,PC11,52,GPIO output,3.3 V,Proposed PCB addition,Reserve required overload test-point output; implement with the overload policy
 Cockpit,SPI0_SCLK,BCM11,23,SPI0,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
@@ -100,9 +100,9 @@ Cockpit,UDP_RX_MARKER,BCM17,11,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/I
 Cockpit,CMD_TX_MARKER,BCM27,13,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
 Cockpit,TX_A_MARKER,BCM22,15,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
 Cockpit,TX_B_MARKER,BCM23,16,GPIO,3.3 V,Lab 3 baseline,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
-Cockpit,DEG_A_LED,BCM5,29,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
-Cockpit,DEG_B_LED,BCM6,31,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
-Cockpit,ERROR_LED,BCM12,32,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
+Cockpit,DEG_A_LED,BCM5,29,GPIO,3.3 V,Matches measured Lab3 build,BCM5/6/12 mapping recorded in the Lab3 October23 revision; implement and verify on new PCB.
+Cockpit,DEG_B_LED,BCM6,31,GPIO,3.3 V,Matches measured Lab3 build,BCM5/6/12 mapping recorded in the Lab3 October23 revision; implement and verify on new PCB.
+Cockpit,ERROR_LED,BCM12,32,GPIO,3.3 V,Matches measured Lab3 build,BCM5/6/12 mapping recorded in the Lab3 October23 revision; implement and verify on new PCB.
 Cockpit,STATUS_LED,BCM13,33,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
 Cockpit,SELFTEST_BUTTON,BCM16,36,GPIO,3.3 V,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.
 Cockpit,5V_INPUT,Power/reserved,"2,4",Power/reserved,5.1 V,Proposed PCB,Board feeds Pi; avoid simultaneous USB-C power without power-path isolation.

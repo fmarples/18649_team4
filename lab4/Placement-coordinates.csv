@@ -282,7 +282,7 @@ H1,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2m
 H2,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2mm_M3,112.5,7.0,0.0,F.Cu,False
 H3,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2mm_M3,35.0,227.0,0.0,F.Cu,False
 H4,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2mm_M3,85.0,227.0,0.0,F.Cu,False
-H5,Pi support <=5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.0,33.5,92.5,0.0,F.Cu,False
-H6,Pi support <=5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.0,91.5,92.5,0.0,F.Cu,False
-H7,Pi support <=5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.0,33.5,141.5,0.0,F.Cu,False
-H8,Pi support <=5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.0,91.5,141.5,0.0,F.Cu,False
+H5,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,92.5,0.0,F.Cu,False
+H6,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,91.5,92.5,0.0,F.Cu,False
+H7,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,141.5,0.0,F.Cu,False
+H8,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,91.5,141.5,0.0,F.Cu,False

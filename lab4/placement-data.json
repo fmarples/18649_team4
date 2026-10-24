@@ -4550,8 +4550,8 @@
     },
     {
       "reference": "H5",
-      "value": "Pi support <=5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.0",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
       "x_mm": 33.5,
       "y_mm": 92.5,
       "rotation_deg": 0.0,
@@ -4566,8 +4566,8 @@
     },
     {
       "reference": "H6",
-      "value": "Pi support <=5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.0",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
       "x_mm": 91.5,
       "y_mm": 92.5,
       "rotation_deg": 0.0,
@@ -4582,8 +4582,8 @@
     },
     {
       "reference": "H7",
-      "value": "Pi support <=5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.0",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
       "x_mm": 33.5,
       "y_mm": 141.5,
       "rotation_deg": 0.0,
@@ -4598,8 +4598,8 @@
     },
     {
       "reference": "H8",
-      "value": "Pi support <=5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.0",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
       "x_mm": 91.5,
       "y_mm": 141.5,
       "rotation_deg": 0.0,

@@ -179,6 +179,6 @@ for i,line in enumerate(['Main-PCB underside above chassis: ______ mm (proposal 
     'Compare H1-H4 with measured chassis holes; do not drill from this print.',
     'Can USB, Ethernet, microSD and cables be reached? __________________']):
     pdf.drawString(15*mm,(65-i*7)*mm,line)
-pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi mounting hardware OD <=5 mm proposed. Review the course 3 mm hole-clearance interpretation before fabrication.')
+pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi mounting hardware OD <=5.5 mm proposed. Review the course 3 mm hole-clearance interpretation before fabrication.')
 pdf.save()
 print('Created direct-Pi placement overview, side view and two-page true-size fit template.')
