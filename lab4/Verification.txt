@@ -1,4 +1,4 @@
-Verification — 23 October 2026
+Verification — updated 24 October 2026
 
 Schematic and parts
 - KiCad 10.0.4 parses and exports all five schematic pages.
@@ -13,7 +13,7 @@ Schematic and parts
 - ACS712 library update preserved its electrical pin numbers/names/positions.
 - R1 uses WSL2512R0100FEA and the Vishay document 30100 land pattern.
 - Diotec BZT52C12 uses SOD-123F; full MMBT3904-7-F and Keystone 3568 holder
-  identities are recorded separately from the still-unselected fuse element.
+  identities are recorded separately from the candidate fuse element (see October 24 update).
 - Course v3 exact-stock list reconciled: 52 named parts plus generic headers.
 - Nine exact JLC catalog identities and one documented STM32 carrier alternative
   recorded; this does not establish live stock or assembly-order acceptance.
@@ -50,7 +50,7 @@ Lab 2 logs have unresolved current calibration; no average rail current was
 invented. Current-evidence.md explains the limit and Current-measurements.csv
 contains 12 unmeasured operating-condition rows.
 Shared Google Doc updated in place and read back; no competing Drive design
-copies were created. Local revised CAD/BOM/PDF files have not yet been pushed.
+copies were created. The October 23 CAD/BOM/PDF package was published as bd56ad7.
 
 October 23 deadline review update: TA confirmed all SMD will be assembled by
 the team; TechSpark oven access is tentative. Active BOM: BOM-Hand-assembly.csv.
@@ -61,3 +61,19 @@ showed only a doubled UTF-8 encoding of the plus/minus sign in the cached
 Description property. Corrected that property to match the installed symbol;
 all pin types, pin positions and graphics are unchanged. Re-exported schematic
 PDF and XML; all 297 net memberships are identical before/after the correction.
+
+October 24 purchasing review
+- Purchasing BOM expanded to 124 grouped rows with itemized off-board spacers,
+  fasteners, adapters, shunts, wire, LED replacements and a specific fuse candidate.
+- Every row's requested total equals circuit + additional + spare quantities.
+  All 284 placed-component records are unchanged from bd56ad7; Dantona remains zero.
+- Connectivity/BOM checker rerun against the unchanged schematic export: PASS,
+  284 components / 297 nets. No new ERC claim is needed for off-board-only edits.
+- Heatsink attachment is an explicit unresolved purchasing exception, not a
+  guessed TO-220 kit. Fuse coordination and physical fit remain unqualified.
+- Identified encoder-supply discrepancy: recorded motor specification says
+  3.3-5V; present connector supply is the 5.1V rail. Digital resolution is open.
+- Must-Dos Google Doc updated in place; three-page export inspected. Wording
+  assigns sourcing to AI and specific physical checks to the team. Shared
+  report identifies the same candidate fuse. These source edits await separate
+  publishing authorization; no order or TA submission was made.

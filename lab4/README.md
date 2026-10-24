@@ -141,9 +141,12 @@ device-tree configuration and physical bus labels before relying on Linux
 - Resolve the 3.2 A motor stall specification against the L298N's 2 A DC/braking
   limits. The schematic has no autonomous motor current limiter; the filtered
   ADC and pack fuse do not establish one. Select the heatsink for the agreed load.
-- Confirm battery fit/purchasing, fuse value, operating stop voltage, wiring
+- Confirm battery fit/purchasing, the selected fuse candidate's qualification, operating stop voltage, wiring
   and exact connector/contact compatibility. J40/J80/J81 now use Hirose power
   connectors; new adapters require the actual vehicle cable pinouts.
+- Reconcile the documented 3.3-5V encoder supply with the schematic's 5.1V
+  connection before power is applied. See Parts-review.md for this finding and
+  the selected spacer, fastener, shunt, LED and harness part numbers.
 - Finalize component quantities from course stock and the additional-parts request.
   The course assembly plan is now team assembly; the JLC comparison is historical.
 - Verify the five GCT switch footprints and the remaining package/connector

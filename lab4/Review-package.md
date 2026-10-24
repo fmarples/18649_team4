@@ -6,7 +6,7 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 | Deliverable | Current source | Review status |
 |---|---|---|
 | Schematic | KiCad/Lab4.kicad_sch and its four child sheets; Lab4-Circuits.pdf | 284 components / 297 nets; electrical checks pass. Thermal/protection and external interfaces still have explicit open decisions. |
-| Parts list | Preliminary-BOM.csv | Circuit plus external/mechanical parts; quantities, manufacturers and source links. Tenergy 11609/01025 selected; Dantona requested quantity is zero. Fuse/hardware selections remain open. |
+| Parts list | Preliminary-BOM.csv | Circuit plus itemized external/mechanical parts, sources and spares. Tenergy 11609/01025 selected; Dantona requested quantity is zero. Exact fuse candidate, spacers, fasteners, shunts, LEDs and adapter parts selected; physical/electrical qualification and heatsink attachment remain open. |
 | Course assembly plan | BOM-Hand-assembly.csv; Assembly-options.md | TA confirmed team assembly of all SMD on October 23. Use course v3 stock first; TechSpark oven access is tentative. JLC comparison is historical. |
 | High-level design | Shared Lab 4 Writeup; Lab4-System.drawio | Power, three zones, dual CAN, sensing and proposed physical arrangement. Calculations are distinguished from measurements. |
 | Verification | Verification.txt, KiCad/ERC.txt, Placement-check.json, KiCad/Placement-DRC.json | Software checks only; no assembled-PCB test. |
@@ -22,9 +22,11 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 3. Confirm course expectations for L298 brief-stall protection and the actual
    heatsink mounting arrangement. Keep the course driver; do not call a 3.2 A
    motor stall specification normal current or qualified driver operation.
-4. Verify existing cable pin order, mating plugs, wire gauge and encoder voltage
-   before finalizing adapters. The board-defined connector pinout is documented;
-   compatibility with the existing cables is not yet established.
+4. Verify existing cable pin order, mating plugs and wire gauge against the
+   selected adapter components in Parts-review.md. Reconcile the motor
+   specification's 3.3-5V encoder supply with the schematic's 5.1V connection
+   before power is applied; this digital correction remains open. Connector
+   family/part selection is documented, but physical compatibility is not tested.
 5. Complete the four-rail power budget with traceable measured/datasheet values
    and calculations. Label provisional estimates and assumptions explicitly.
    Existing Lab 2 telemetry is not calibrated evidence. The handout explicitly
@@ -36,7 +38,8 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 We do not represent these open decisions as completed. If an answer is not
 available before the review, the report should identify it and request specific
 feedback; this document does not establish that the TAs will accept an incomplete
-item. Fuse rating depends on the selected wiring and inrush and is still open.
+item. Littelfuse0297010.L is a review candidate, not a qualified protection
+design: normal/startup current and the complete power path still need checking.
 
 ## Work before fabrication
 
