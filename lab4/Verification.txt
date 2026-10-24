@@ -75,5 +75,6 @@ October 24 purchasing review
   3.3-5V; present connector supply is the 5.1V rail. Digital resolution is open.
 - Must-Dos Google Doc updated in place; three-page export inspected. Wording
   assigns sourcing to AI and specific physical checks to the team. Shared
-  report identifies the same candidate fuse. These source edits await separate
-  publishing authorization; no order or TA submission was made.
+  report identifies the same candidate fuse. The user authorized publishing
+  these Lab 4 updates on October 24. Submission destination is confirmed:
+  the team's small-group TA via Slack. No order or TA submission was made.

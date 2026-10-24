@@ -18,7 +18,8 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
    compatibility support the design choice; physical fit is not yet verified.
 2. Reconcile requested quantities with course v3 stock and identify extra
    purchases. The assembly question is answered: the team will assemble the
-   board. Confirm the purchasing process and submission destination if unknown.
+   board. Confirm the purchasing process. The team will send the three review
+   deliverables to its small-group TA via Slack.
 3. Confirm course expectations for L298 brief-stall protection and the actual
    heatsink mounting arrangement. Keep the course driver; do not call a 3.2 A
    motor stall specification normal current or qualified driver operation.
