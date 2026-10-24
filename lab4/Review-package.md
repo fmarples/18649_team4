@@ -6,7 +6,7 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 | Deliverable | Current source | Review status |
 |---|---|---|
 | Schematic | KiCad/Lab4.kicad_sch and its four child sheets; Lab4-Circuits.pdf | 284 components / 297 nets; electrical checks pass. Thermal/protection and external interfaces still have explicit open decisions. |
-| Parts list | Preliminary-BOM.csv | Circuit plus itemized external/mechanical parts, sources and spares. Battery, charger and servo-side adapter lead remain purchasing exceptions. Tenergy 11609/01025 are zero-quantity references under the DigiKey/Mouser rule. Anson accepted the 6396BG heatsink for review; its attachment is a deferred staff follow-up. Physical/electrical qualification remains open. |
+| Parts list | Preliminary-BOM.csv | Circuit plus itemized external/mechanical parts, sources and spares. Battery, charger and servo-side adapter lead remain purchasing exceptions. Amazon is now allowed for the battery only; exact sourcing is unresolved. Tenergy 11609/01025 remain zero-quantity references. Anson accepted the 6396BG heatsink for review; its attachment is a deferred staff follow-up. Physical/electrical qualification remains open. |
 | Course assembly plan | BOM-Hand-assembly.csv; Assembly-options.md | TA confirmed team assembly of all SMD on October 23. Use course v3 stock first; TechSpark oven access is tentative. JLC comparison is historical. |
 | High-level design | Shared Lab 4 Writeup; Lab4-System.drawio | Power, three zones, dual CAN, sensing and proposed physical arrangement. Calculations are distinguished from measurements. |
 | Verification | Verification.txt, KiCad/ERC.txt, Placement-check.json, KiCad/Placement-DRC.json | Software checks only; no assembled-PCB test. |
@@ -14,7 +14,10 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 ## Decisions to close or present explicitly at the review
 
 1. Resolve a battery/charger combination under the October 24
-   [DigiKey/Mouser purchasing rule](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289).
+   [purchasing rule](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
+   and its [battery-only Amazon exception](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869).
+   Check the exact battery listing and Pittsburgh delivery; charger sourcing
+   is not covered by that exception.
    Tenergy 11609/01025 remains an earlier design reference, not a finalized
    purchase. The team reports that a
    115x50x50mm cardboard stand-in fits between the chassis plates, with
@@ -22,7 +25,8 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
    pack installation remain; the preliminary envelope check is complete.
 2. Reconcile requested quantities with course v3 stock and identify extra
    purchases. The assembly question is answered: the team will assemble the
-   board. The purchasing vendors are DigiKey/Mouser outside course stock. The team will send the three review
+   board. Use DigiKey/Mouser outside course stock, with the battery-only Amazon
+   exception described above. The team will send the three review
    deliverables to its small-group TA via Slack.
 3. Record any clarification of expected L298 brief-stall/protection behavior,
    or flag it as an open engineering question. The October 24 team reply relays

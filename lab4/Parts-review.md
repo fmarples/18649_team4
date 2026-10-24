@@ -28,16 +28,50 @@ parts and generic headers. Local stock does not establish quantities or JLCPCB s
 
 ## Battery and charger: purchasing unresolved
 
-The [October 24 TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
-requires DigiKey or Mouser for parts outside the course list. We have moved
-Tenergy 11609/01025 to zero-quantity reference rows. We still need one pack
-and one compatible charger; separate unresolved request rows preserve that need.
+The [October 24 purchasing rule](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
+requires DigiKey or Mouser for parts outside the course list. A
+[later TA reply at 17:44 EDT](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869)
+allows Amazon for the battery only, with delivery set to Pittsburgh and
+preferably Prime one- or two-day delivery. It does not establish an exception
+for chargers or other vendors. Tenergy 11609/01025 remain zero-quantity
+references; one pack and one compatible charger remain unresolved requests.
 
 The earlier [Tenergy 11609](https://power.tenergy.com/at-tenergy-12v-4200mah-nimh-rechargeable-battery-pack-10s1p-50-4wh-30a-rate/)
 reference is ten Sub-C NiMH cells, 12V/4.2Ah, stated 30A continuous discharge,
 115x44.4x46.76mm. Its manufacturer lists
 [01025](https://power.tenergy.com/tenergy-smart-universal-charger-for-nimh-nicd-battery-packs-6v-12v-ul/)
-as compatible. We have not verified a permitted source for this pair.
+as compatible. The pack is listed at $118.99 with a 3-7-business-day build
+time before shipping; the charger is listed at $26.69. Prices were checked
+October 24 and are not reserved. We have not verified an Amazon listing for
+this exact pack or a permitted source for the charger. Its build time does
+not establish delivery by the layout deadline.
+
+The [01025 manual](https://power.tenergy.com/content/manuals/01025_manual.pdf)
+supports 5-10 NiMH cells, 1000-9000mAh and selectable 1A/2A charging with
+negative-delta-V termination and a temperature sensor. The pack's documented
+2A rapid-charge limit matches the charger's 2A setting. A correctly polarized
+adapter and disconnected-pack charging are still required. We prefer this
+documented pair if a permitted purchasing route and acceptable delivery can
+be established; compatibility alone does not close procurement.
+
+Additional candidates screened on October 24:
+
+| Candidate | Published specification | Disposition |
+|---|---|---|
+| [Tenergy 11660](https://power.tenergy.com/at-tenergy-12v-3800mah-nimh-rechargeable-battery-pack-10s1p-45-6wh-10a-rate/) | 12V NiMH, 3.8Ah, 10A continuous; 95x67x40mm; $85.99, built to order | Does not fit the measured 115x50x50mm envelope in an axis-aligned orientation. A different mounting envelope and permitted source would be needed. |
+| [Tenergy 11606](https://power.tenergy.com/tenergy-nimh-12v-2000mah-battery-pack-w-bare-leads/) | 12V NiMH, 2Ah; manufacturer lists 2A discharge | Does not meet the approximately 10A screening target. No documented 10A pulse allowance was found; capacity does not supply that evidence. |
+| [CNHL S220403BK shorty](https://chinahobbyline.com/products/cnhl-black-series-shorty-2200mah-3s-11-1v-40c-lipo-battery-with-xt60-plug) | 3S LiPo, 11.1V nominal/12.6V full, 2.2Ah, advertised 40C continuous; 77x33x26mm; XT60 and JST-XH balance lead | Fits the envelope by published dimensions, including the manufacturer's stated 1-5mm dimensional variation. Alternative only: changes the selected chemistry and requires lithium charging/cutoff provisions. |
+
+For the CNHL alternative, 40C x 2.2Ah = 88A is the manufacturer's advertised
+continuous rating, not our measured capability or our circuit's rating. The
+[Amazon listing candidate B0DQP7SKGV](https://www.amazon.com/dp/B0DQP7SKGV)
+could not be read directly, so exact variant, seller, current price and
+Pittsburgh delivery remain unverified. We have not added it to the purchase
+quantities. The handout's lithium option requires balance charging and a
+low-voltage cutoff; these are not implemented by changing a BOM line.
+A [SkyRC e3](https://www.skyrc.com/Charger/Multi-Channel/e3_Charger?order=ASC&sort=p.price)
+is a documented 2-3S LiPo balance-charger candidate, but its permitted
+procurement route is also unverified. Never use the NiMH-only 01025 on LiPo.
 
 [Dantona CMP-SC-28-37 on DigiKey](https://www.digikey.com/en/products/detail/dantona-industries/CMP-SC-28-37/19186145)
 is a 12V/2.8Ah candidate, listed 115x46x43mm. Its permitted continuous/peak
@@ -54,8 +88,9 @@ reference leaves 4.99mm gross height allowance; the Dantona listing would
 leave 8.75mm with 43mm vertical. These are calculated allowances, before
 straps, leads and local obstacles. Actual retention and installed fit are untested.
 
-For review, request a documented DigiKey/Mouser pack-and-charger pair or a
-specific vendor exception. Normal current, peak duration, sag and protection
+For review, resolve the exact pack from course stock, DigiKey/Mouser or the
+battery-only Amazon exception, and identify a compatible permitted charger
+or request a specific exception for it. Normal current, peak duration, sag and protection
 must be assessed together. No published Ah value alone establishes allowable
 current; a high-current pack does not increase the L298's limits.
 

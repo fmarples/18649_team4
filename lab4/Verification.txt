@@ -1,5 +1,11 @@
 Verification — 24 October 2026 design-review revision
 
+Battery sourcing update: the TA's 17:44 EDT public reply permits Amazon for
+the battery only. Exact pack/charger procurement remains unresolved. Candidate
+specifications are sourced in Parts-review.md; no chemistry, circuit values,
+purchase quantities or power assumptions changed. An unreadable Amazon
+listing is explicitly unverified, not a qualified purchase selection.
+
 TA clarification update: documentation and purchasing-status fields only.
 No schematic/PCB values, BOM quantities or power assumptions changed. CSV
 comparison checks preserve all 127 rows, 284 circuit parts and quantity totals.

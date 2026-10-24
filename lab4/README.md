@@ -15,9 +15,11 @@ M3/3.2 mm PCB drills remain a proposal.
 
 Tenergy 11609 with charger 01025 was the earlier design/BOM baseline.
 The October 24 [TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
-requires DigiKey or Mouser for parts outside the course list. Battery/charger
-and other external-hardware BOM rows remain provisional until that sourcing
-check is resolved; no replacement has been finalized.
+requires DigiKey or Mouser for parts outside the course list. Its
+[17:44 EDT follow-up](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869)
+allows Amazon for the battery only, preferably Prime one- or two-day delivery
+to Pittsburgh. Charger sourcing remains unresolved. See Parts-review.md for
+documented candidates; no replacement has been finalized.
 The October 24 team reply relays Anson's acceptance of the proposed 6396BG
 heatsink and confirms that motor stall/L298 loss/temperature measurements
 are not needed for today's review. Mounting hardware is a staff follow-up;
@@ -93,8 +95,9 @@ with the repository. The other footprints come from the standard KiCad library.
 
 ## Power and pin decisions
 
-Battery and charger purchasing remain unresolved under the DigiKey/Mouser
-rule. Tenergy 11609/01025 and the unqualified Dantona alternatives are
+Battery and charger purchasing remain unresolved. Amazon is now permitted
+for the battery only; the charger still needs a permitted source or a specific
+exception. Tenergy 11609/01025 and the unqualified Dantona alternatives are
 zero-quantity reference rows. One pack and one compatible charger are
 explicit unresolved requests; see Parts-review.md. The team checked
 a 115x50x50mm cardboard battery envelope between the chassis plates and
