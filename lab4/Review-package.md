@@ -15,7 +15,10 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 
 1. Verify mounting, wiring, cost and delivery for the selected Tenergy
    11609/01025 combination. Its documented current rating and charger
-   compatibility support the design choice; physical fit is not yet verified.
+   compatibility support the design choice. The team reports that a
+   115x50x50mm cardboard stand-in fits between the chassis plates, with
+   approximately 51.75mm usable height. Final strap/lead routing and an actual
+   pack installation remain; the preliminary envelope check is complete.
 2. Reconcile requested quantities with course v3 stock and identify extra
    purchases. The assembly question is answered: the team will assemble the
    board. Confirm the purchasing process. The team will send the three review

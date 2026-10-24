@@ -45,10 +45,17 @@ On October 23 the manufacturer lists $118.99 for the pack and $26.69 for the
 charger, or $145.68 before tax/shipping and adapters. Purchasing and delivery
 remain to be confirmed; the design selection is not an order.
 
-Check the pack's full dimensions, retaining strap and cable exit against its
-intended location. A larger-current pack does not raise the L298's limits.
-Only 11609 and 01025 are requested in the purchasing list. Allow clearance
-for the strap, leads and connector beyond the stated pack dimensions.
+The team reported a cardboard-envelope check on October 24: a
+115 × 50 × 50 mm stand-in fits between the existing chassis plates, with
+approximately 51.75 mm usable vertical space. This supports the selected
+115 × 44.4 × 46.76 mm pack fitting in that location. With 46.76 mm vertical,
+the calculated gross height allowance is 51.75 - 46.76 = 4.99 mm; the 50 mm
+stand-in leaves about 1.75 mm. These are allowances before fastening material,
+protruding hardware and local cable interference, not measured final clearances.
+The pack itself has not been installed. Finalize its retaining strap and lead/
+connector route; the cardboard size check does not need repeating.
+A larger-current pack does not raise the L298's limits. Only 11609 and 01025
+are requested in the purchasing list.
 
 ## Open package and mechanical checks
 
@@ -66,7 +73,8 @@ we have not substituted an arbitrary 4.5 mm switch.
 
 Physical checks still needed: original motor/encoder/servo plug shapes, pin
 order and wire gauges; actual encoder supply/output type; heatsink fit;
-selected battery fit; and the proposed Pi/chassis vertical spacer stack.
+the battery retaining strap/lead route; and the proposed Pi/chassis vertical
+spacer stack. The battery envelope has passed the team's cardboard check.
 The four chassis center positions and 4.5 mm diameters are already established.
 
 ## External hardware selected for review

@@ -88,8 +88,10 @@ with the repository. The other footprints come from the standard KiCad library.
 We selected Tenergy 11609: ten Sub-C NiMH cells, nominal 12 V / 4.2 Ah, with
 a manufacturer-stated 30 A continuous discharge rating. Tenergy lists charger
 01025 as compatible. This replaces the earlier AA proposal; Dantona
-CMP-AA-21-37 is excluded from requested purchase quantities. Physical fit,
-wiring, cost and lead time still need checking before purchase. See Parts-review.md.
+CMP-AA-21-37 is excluded from requested purchase quantities. The team checked
+a 115x50x50mm cardboard battery envelope between the chassis plates and
+reported approximately 51.75mm usable height. Strap/lead routing, wiring,
+cost and lead time remain; see Parts-review.md.
 The proposed branches are the unregulated motor supply, 6.6 V servo buck,
 5.1 V Pi/devices buck and 3.318 V logic buck. The protected-input electrical
 target is 8–15 V; this does not define the cells' allowed discharge voltage.
@@ -141,7 +143,7 @@ device-tree configuration and physical bus labels before relying on Linux
 - Resolve the 3.2 A motor stall specification against the L298N's 2 A DC/braking
   limits. The schematic has no autonomous motor current limiter; the filtered
   ADC and pack fuse do not establish one. Select the heatsink for the agreed load.
-- Confirm battery fit/purchasing, the selected fuse candidate's qualification, operating stop voltage, wiring
+- Finalize battery retention/lead routing and purchasing, the selected fuse candidate's qualification, operating stop voltage, wiring
   and exact connector/contact compatibility. J40/J80/J81 now use Hirose power
   connectors; new adapters require the actual vehicle cable pinouts.
 - Reconcile the documented 3.3-5V encoder supply with the schematic's 5.1V

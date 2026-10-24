@@ -42,7 +42,8 @@ Placement
 Limits
 No PCB hardware was powered, flashed or tested. Motor protection expectations
 and heatsink qualification are unresolved. Tenergy11609/01025 is the selected design/BOM baseline; discharge rating and
-charger compatibility are documented. Physical fit and purchasing remain open.
+charger compatibility are documented. Battery envelope fit is supported by the
+October 24 cardboard check below; final mounting/wiring and purchasing remain open.
 Dantona is excluded from purchase quantities. Fuse, cable adapters, converter stability, thermal
 behavior, Wi-Fi, physical fit, routing and final manufacturing checks remain.
 Neither assembly BOM is a ready-to-order factory upload. No submission occurred.
@@ -78,3 +79,13 @@ October 24 purchasing review
   report identifies the same candidate fuse. The user authorized publishing
   these Lab 4 updates on October 24. Submission destination is confirmed:
   the team's small-group TA via Slack. No order or TA submission was made.
+
+October 24 battery envelope evidence
+- Team report/photos supplied in chat: a 115x50x50mm cardboard stand-in fits
+  between the original chassis plates; reported usable height is about 51.75mm.
+- Selected pack listing: 115x44.4x46.76mm. Calculated gross vertical allowance
+  is 4.99mm if the 46.76mm dimension is vertical; the 50mm stand-in leaves1.75mm.
+- This supports preliminary pack-envelope fit, not installed-pack retention,
+  connector/cable routing or a completed dynamic vehicle-clearance test.
+- Existing metal-plate spacing is distinct from the proposed35mm PCB/chassis
+  and22mm PCB/Pi spacers. No PCB mounting geometry changed.
