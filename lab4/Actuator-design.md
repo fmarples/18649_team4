@@ -29,6 +29,13 @@ choice must be based on the agreed continuous current, ambient, case interface
 and thermal resistance; we have not qualified sustained stalls.
 [ST L298 datasheet](https://www.st.com/resource/en/datasheet/l298.pdf).
 
+For the October 24 preliminary review, the team relays that Anson accepted
+the proposed 6396BG heatsink and confirmed that motor stall current and
+L298 loss/temperature measurements are not needed today. He will investigate
+the mounting hardware. We keep the heatsink selection and record its attachment
+as a staff follow-up before assembly. This does not establish tested cooling,
+a safe stall duration or a per-motor current limit; see Current-evidence.md.
+
 ## Encoder and output interfaces
 
 U81 is SN74LVC14APWR powered at 3.3V. Its inputs accept up to 5.5V; its outputs

@@ -64,6 +64,9 @@ current; a high-current pack does not increase the L298's limits.
 The [Boyd 6396BG drawing](https://info.boydcorp.com/hubfs/Thermal/Air-Cooling/Boyd-Board-Level-Cooling-High-Power-Extruded-6390.pdf)
 specifies 41.91 × 25.4 × 25.4 mm. The old 28 × 16 mm reservation was too small.
 We updated the drawing envelope, but it is not a validated installation.
+The October 24 team reply relays Anson's acceptance of 6396BG for today's
+review; he will investigate the mounting hardware. The part choice is settled
+for this review, while the attachment remains a staff follow-up before assembly.
 Boyd lists TO-218/TO-220 compatibility; L298N is Multiwatt-15. Verify the hole,
 tab contact, mounting hardware and orientation on the actual course parts.
 Final clearance and thermal performance depend on that installation. Electrical
@@ -216,13 +219,14 @@ With5.1V,220ohms and an assumed0.2V transistor drop, typical published forward
 voltages give roughly7-14mA. Existing compatible lamps can be reused; do not
 order duplicates simply because the BOM includes a fallback.
 
-**Heatsink attachment remains one of four explicit purchasing exceptions,
-alongside the battery, charger and servo-side adapter lead.** Boyd6396BG is course-listed, but its published package
-list is TO-218/TO-220; our L298N is Multiwatt15. We have not treated a generic
-TO-220 mounting kit as a verified fit. The team needs to show the course
-heatsink/tab mounting arrangement or obtain the staff's intended attachment;
-then the screw length, nut and thermal interface can be selected. This is a
-specific geometry question, not a request for the team to research the whole BOM.
+**Three purchasing exceptions need resolution or explicit review: battery,
+charger and servo-side adapter lead.** The separate heatsink-attachment row
+stays in the BOM as a deferred staff follow-up, not a kit to order or a task
+that must be solved tonight. The team reports that Anson accepted 6396BG for
+the October 24 review and will investigate its mounting hardware. Boyd's
+published package list is TO-218/TO-220; our L298N is Multiwatt15. We have not
+verified a generic TO-220 mounting kit. After staff identifies the attachment,
+confirm the screw length, nut, thermal interface and installed clearances.
 
 No purchases or fabrication release have been made. The active board BOM
 remains [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv); off-board substitutions do not alter the circuit. The separate encoder-supply

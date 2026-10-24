@@ -18,8 +18,11 @@ The October 24 [TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792
 requires DigiKey or Mouser for parts outside the course list. Battery/charger
 and other external-hardware BOM rows remain provisional until that sourcing
 check is resolved; no replacement has been finalized.
-Motor cooling/protection behavior, heatsink fit, battery mounting and
-procurement decisions remain unresolved. The TAs confirmed on October 23 that
+The October 24 team reply relays Anson's acceptance of the proposed 6396BG
+heatsink and confirms that motor stall/L298 loss/temperature measurements
+are not needed for today's review. Mounting hardware is a staff follow-up;
+thermal performance and protection behavior are not validated. Battery mounting
+and procurement decisions remain unresolved. The TAs confirmed on October 23 that
 teams will assemble all SMD parts themselves, with TechSpark oven access tentative.
 BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Five switch footprints, routing,
 physical fit and hardware validation are unfinished. This is not a fabrication

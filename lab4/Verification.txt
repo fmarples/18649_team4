@@ -1,5 +1,10 @@
 Verification — 24 October 2026 design-review revision
 
+TA clarification update: documentation and purchasing-status fields only.
+No schematic/PCB values, BOM quantities or power assumptions changed. CSV
+comparison checks preserve all 127 rows, 284 circuit parts and quantity totals.
+The updated shared-report export still has four text pages and two figure pages.
+
 Schematic and BOM
 - KiCad 10.0.4 exports five schematic pages. Fresh ERC: zero errors/warnings.
 - Netlist/connectivity/BOM checks pass: 284 components, 297 nets. Circuit-BOM,
@@ -12,8 +17,9 @@ Schematic and BOM
   L298 paths, flyback polarity, motor sensors and sensed servo output.
 - All 127 purchasing-row totals equal circuit + additional + spare quantities;
   their schematic quantities sum to 284. No duplicate circuit references.
-- Four explicit request exceptions: battery, charger, servo-side adapter lead,
-  and L298 heatsink attachment. Tenergy11609/01025, Pololu2184 and dependent
+- Three active purchasing exceptions: battery, charger and servo-side adapter
+  lead. L298 heatsink attachment stays itemized as a deferred staff follow-up.
+  Tenergy11609/01025, Pololu2184 and dependent
   charger adapter reference rows have zero requested purchase quantities.
 - DigiKey-listed mechanical substitutes are specified. R420/R432 have named
   alternatives because original listings are out of stock. Buy either primary
@@ -49,7 +55,11 @@ Calculations and documents
   unmeasured. Different-model LD-3015MG excluded.10mOhm/gain50 yields50mV
   and~62ideal ADC counts at100mA;3A yields1.5V and0.09W shunt loss.
 - Lab2 telemetry lacks resolved calibration; no measured amperes invented.
-  Required stall/drop/temperature measurements and TA deferral remain pending.
+  Stall/drop/temperature measurements remain unmeasured. The October24 team
+  reply relays Anson's confirmation that they are not required for today's
+  review; the shared checklist also records that the listed measurements can wait.
+- Anson accepted6396BG for the preliminary review and will investigate mounting
+  hardware. This is course acceptance, not a physical or thermal test result.
 - Shared Lab4 report edited in place. Export has four text pages and two figure
   pages; questions/calculations/references retained and rendering inspected.
 - Existing Lab1 Requirement Document Section11 records the PCB revision,

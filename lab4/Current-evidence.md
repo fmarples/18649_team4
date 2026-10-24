@@ -1,7 +1,23 @@
 # Current evidence and measurement record
 
-23 October 2026. We distinguish component ratings, calculated allocations and
+24 October 2026. We distinguish component ratings, calculated allocations and
 measurements. Average current on the new PCB is unmeasured; it has not been built.
+
+## October 24 review clarification
+
+The October 24 team message relays Anson's confirmation that measured motor
+stall current and L298 loss/temperature are not necessary for today's review.
+The team also recorded in the shared checklist that the listed measurements
+can wait. We therefore submit the sourced calculations and labeled assumptions
+without treating these measurements as a prerequisite for October 24.
+They remain unmeasured; the clarification does not validate the estimates or
+qualify the assembled circuit. Later hardware validation remains necessary.
+
+The same reply accepts the proposed 6396BG heatsink for the review. Mounting
+hardware is unresolved and Anson will investigate it. Acceptance of the part
+does not establish its attachment, tested temperature or safe stall duration.
+The [shared report](https://docs.google.com/document/d/1zMR_S5QoFPES1BhswG5bhpLGAib2P71ri6rK2hKzBcc)
+records this review status. No battery vendor exception was supplied in this reply.
 
 ## Existing Lab 2 evidence
 
@@ -48,7 +64,7 @@ L298 voltage drop and stall temperature behavior. Page 12 requires numbers to
 identify their measured or datasheet basis, with a method for measurements.
 Therefore an unsupported guess cannot be presented as a completed answer.
 Any provisional estimate must name its source/assumption and pending check;
-only course staff can accept a deferred required measurement at review.
+course staff have now confirmed the above measurement deferral for October 24.
 
 Current-measurements.csv is an optional team recording aid. It is not an extra
 deliverable and its full set of suggested conditions is not a new requirement.
@@ -79,8 +95,8 @@ current blank if the instrument cannot capture the transient.
 The requested motor stall/loss/temperature evidence remains incomplete.
 Arrange a course-supervised method compatible with the driver limits; the
 handout's ten-second temperature question is not permission to exceed them.
-Where evidence is unavailable at review, state that explicitly. A calculation
-or an uncalibrated log does not replace a required measurement.
+The October 24 review uses the staff-confirmed deferral above. A calculation
+or an uncalibrated log does not become a measurement because it was deferred.
 
 
 ## October 24 servo source review and preliminary average case
@@ -128,5 +144,6 @@ not bound all driving. Keep the separate peak/stall stress cases.
 
 Power-budget.csv now records these provisional estimates. Power-calculations.json
 preserves the inputs and unrounded arithmetic. Confirm the operating profile
-with the team/TA or replace it with measured averages. Required motor stall,
-L298-drop/temperature evidence and staff agreement on any deferral remain open.
+with the team/TA or replace it with measured averages. Motor stall and
+L298-drop/temperature evidence remain unmeasured, with deferral confirmed for
+the October 24 review.

@@ -6,7 +6,7 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 | Deliverable | Current source | Review status |
 |---|---|---|
 | Schematic | KiCad/Lab4.kicad_sch and its four child sheets; Lab4-Circuits.pdf | 284 components / 297 nets; electrical checks pass. Thermal/protection and external interfaces still have explicit open decisions. |
-| Parts list | Preliminary-BOM.csv | Circuit plus itemized external/mechanical parts, sources and spares. Tenergy 11609/01025 are zero-quantity references under the October 24 DigiKey/Mouser sourcing rule; no replacement pack/charger is finalized. Fuse, spacers, fasteners, shunts, LEDs and adapter candidates are itemized; sourcing, physical/electrical qualification and heatsink attachment remain open. |
+| Parts list | Preliminary-BOM.csv | Circuit plus itemized external/mechanical parts, sources and spares. Battery, charger and servo-side adapter lead remain purchasing exceptions. Tenergy 11609/01025 are zero-quantity references under the DigiKey/Mouser rule. Anson accepted the 6396BG heatsink for review; its attachment is a deferred staff follow-up. Physical/electrical qualification remains open. |
 | Course assembly plan | BOM-Hand-assembly.csv; Assembly-options.md | TA confirmed team assembly of all SMD on October 23. Use course v3 stock first; TechSpark oven access is tentative. JLC comparison is historical. |
 | High-level design | Shared Lab 4 Writeup; Lab4-System.drawio | Power, three zones, dual CAN, sensing and proposed physical arrangement. Calculations are distinguished from measurements. |
 | Verification | Verification.txt, KiCad/ERC.txt, Placement-check.json, KiCad/Placement-DRC.json | Software checks only; no assembled-PCB test. |
@@ -24,9 +24,12 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
    purchases. The assembly question is answered: the team will assemble the
    board. The purchasing vendors are DigiKey/Mouser outside course stock. The team will send the three review
    deliverables to its small-group TA via Slack.
-3. Confirm course expectations for L298 brief-stall protection and the actual
-   heatsink mounting arrangement. Keep the course driver; do not call a 3.2 A
-   motor stall specification normal current or qualified driver operation.
+3. Record any clarification of expected L298 brief-stall/protection behavior,
+   or flag it as an open engineering question. The October 24 team reply relays
+   that Anson accepted 6396BG and will investigate its mounting hardware; the
+   shared checklist records that attachment is not needed for today's review.
+   Do not require the team to select a mounting kit tonight. This acceptance
+   does not establish a safe stall duration or a per-motor current limiter.
 4. The October 24 servo photos and reported functions, and one motor/encoder
    harness's reported order, are recorded in Actuator-design.md. Identify
    adapter parts and unresolved sourcing/fit in the review. Check the second
@@ -36,18 +39,18 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
    supply correction is implemented: J82/J83 use the nominal 3.3V logic rail.
    Actual voltage tolerance and signal quality still require validation. Connector
    family/part selection is documented, but physical compatibility is not tested.
-5. Complete the four-rail power budget with traceable measured/datasheet values
-   and calculations. Label provisional estimates and assumptions explicitly.
-   Existing Lab 2 telemetry is not calibrated evidence. The handout explicitly
-   requests measured motor stall current and L298 loss/temperature in Part 1.1;
-   these remain unfinished. The extra measurement worksheet is a recording aid,
-   not an additional course deliverable. Estimates do not complete the explicit
-   measurement requirement; acceptance of deferred measurements is up to staff.
+5. Use the completed four-rail planning case with its sources and explicit
+   assumptions. The team relays Anson's confirmation that measured motor stall
+   current and L298 loss/temperature are not needed for October 24; the shared
+   checklist also records that the listed measurements can wait. State that
+   they are deferred and unmeasured, not completed. Existing Lab 2 telemetry is
+   not calibrated evidence. The extra worksheet remains an optional recording aid.
 
 We do not represent these open decisions as completed. If an answer is not
 available before the review, the report should identify it and request specific
-feedback; this document does not establish that the TAs will accept an incomplete
-item. Littelfuse0297010.L is a review candidate, not a qualified protection
+feedback. The measurement and heatsink-attachment deferrals above have now
+been reported by the team; other unanswered items are not implicitly accepted.
+Littelfuse0297010.L is a review candidate, not a qualified protection
 design: normal/startup current and the complete power path still need checking.
 
 ## Work before fabrication
