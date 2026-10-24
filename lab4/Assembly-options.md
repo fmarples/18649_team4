@@ -1,15 +1,18 @@
 # Assembly options for the same Lab 4 design
 
-23 October 2026. We have not chosen an assembly service. Both lists use the
-same schematic references and quantities; they are not two circuit variants.
-The combined `Preliminary-BOM.csv` also includes external wiring, battery,
-charger, heatsink and mounting hardware. Those items are needed in either option.
+23 October 2026, updated after the TA reply. The course will have teams assemble
+all SMD parts themselves. TechSpark oven access is tentative. We therefore
+use **BOM-Hand-assembly.csv** as the active assembly list and course v3 stock
+as the first source. Additional purchases stay in Preliminary-BOM.csv.
+The JLC list below is a historical catalog comparison, not an assembly request
+or a second circuit. It does not create a JLC quote task for October 24.
+[TA assembly reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792811196129409?thread_ts=1792803278.879979&cid=C0BRYGTD4HH).
 
 | | Team assembly | JLCPCB plus team assembly |
 |---|---|---|
 | Parts list | BOM-Hand-assembly.csv | BOM-JLC-hybrid.csv |
 | Small surface-mount parts | Team solders/reflows all parts | Request top-side SMT assembly for supported, verified parts |
-| Through-hole and underside parts | Team installs them | Team installs L298, socket, connectors, fuse hardware and remaining through-hole parts |
+| Through-hole and underside parts | Team installs them | Request JLC assembly where eligible; obtain an exact-parts/process quote, including the underside Pi socket |
 | External wiring and mechanics | Team | Team |
 | Main constraint | LQFP/TSSOP and especially SOT-563 require suitable reflow/rework equipment and inspection | Staff approval, service quote, exact library matches, stock and lead time |
 
@@ -27,12 +30,35 @@ For hybrid assembly, we verified these library identities on 23 October:
 | SN74LVC14APWR | C7663 | [JLC part](https://jlcpcb.com/partdetail/TexasInstruments-SN74LVC14APWR/C7663) |
 | INA180A2IDBVR | C192764 | [JLC part](https://jlcpcb.com/partdetail/TexasInstruments-INA180A2IDBVR/C192764) |
 
-A library match does not reserve stock or approve a substitution. The MCU listing
-C116978 identifies STM32F401RET6; our BOM specifies RET6TR, so we have not silently
-treated it as an exact ordering-code match. We still need package/carrier review.
-Every other unmatched line remains explicit in the hybrid BOM.
+A library match does not reserve stock. ST lists RET6TR as tape/reel and RET6
+as tray, with the same LQFP64 device/package. We verified this carrier-only
+alternative and record STM32F401RET6 / C116978 in JLC_selected_MPN; the schematic
+keeps the course-stock RET6TR code. [ST tray part](https://estore.st.com/en/stm32f401ret6-cpn.html),
+[ST tape/reel part](https://estore.st.com/en/stm32f401ret6tr-cpn.html).
 
-After routing and design review, export the final factory BOM and component
-position list from that same board revision. Review all polarities, rotations,
-bottom-side parts and DNP choices in the assembly preview. Neither current CSV
-is a ready-to-order upload. [JLC BOM requirements](https://jlcpcb.com/help/article/bill-of-materials-for-pcb-assembly).
+Additional exact catalog matches:
+
+| MPN | JLC code | Source |
+|---|---|---|
+| MCP2515T-I/ST | C185941 | [TSSOP-20](https://jlcpcb.com/partdetail/MicrochipTech-MCP2515T_IST/C185941) |
+| WSL2512R0100FEA | C844901 | [10 mΩ / 1 W / 1%](https://jlcpcb.com/partdetail/VishayIntertech-WSL2512R0100FEA/C844901) |
+| MMBT3904-7-F | C94514 | [Diodes Incorporated SOT-23](https://jlcpcb.com/partdetail/DiodesIncorporated-MMBT3904_7F/C94514) |
+| ACS712ELCTR-05B-T | C44471 | [Allegro part](https://jlcpcb.com/partdetail/45473-ACS712ELCTR_05BT/C44471) |
+| L298N | C19922 | [ST Multiwatt-15 identity; assembly availability unconfirmed](https://jlcpcb.com/partdetail/STMicroelectronics-L298N/C19922) |
+
+Other unmatched lines remain explicit. Do not substitute the similarly named
+XBLW current sensor for Allegro without reviewing its specifications and package.
+
+JLCPCB supports eligible through-hole parts. Its guidance says two-sided
+placement requires Standard PCBA, including a through-hole part on the opposite
+side. Compare a quote including J70 against fitting that one socket ourselves.
+The latter is a fallback, not a requirement that all connectors be hand-soldered.
+[JLCPCB assembly guidance](https://jlcpcb.com/blog/reduce-pcb-assembly-cost-prototype).
+
+The course assembly decision supersedes our earlier preference for maximum
+JLCPCB assembly. Battery, charger, cables, crimps, standoffs and vehicle/heatsink
+installation also require team work. No stock has been reserved or ordered.
+The table above preserves the researched alternative only. For the current
+purchase request, use the hand-assembly BOM plus external items in the
+combined BOM. Confirm the stencil/paste/reflow arrangement with the course
+before assembly; it is not a prerequisite to submitting the schematic.

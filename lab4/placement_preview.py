@@ -59,7 +59,7 @@ side=[('What this establishes',[
     'No GPIO cable. Pin geometry checked.']),
     ('Still required before routing',[
     'Five verified switch footprints.',
-    'Resolve motor current limit and heat.',
+    'Verify motor protection and heatsink fit.',
     '1 oz copper; 0.15 mm buck-pad exception.',
     'Check battery holder, heatsink and cables.',
     'Confirm screws and vertical stack fit.']),

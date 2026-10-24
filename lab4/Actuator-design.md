@@ -19,8 +19,10 @@ bridge arrangement. **No autonomous motor current limiter is implemented.**
 The existing filtered ADC channels are measurement inputs, not a demonstrated
 fast protection system. Nor is a main pack fuse a 2A-per-motor limiter.
 
-ST specifies 2A DC per bridge and a 2A braking limit. The handout's 3.2A motor
-stall value therefore needs a limiting scheme or staff-approved driver change.
+ST specifies a 2A absolute DC limit per bridge and a 2A braking limit. The
+handout's 3.2A motor stall value is not normal running current. We keep the
+course driver and verify cooling and the course's expected brief-stall/protection
+behavior. Lab 2 operation does not qualify sustained stalls on a new PCB.
 At 1A per motor, the datasheet's 3.2V maximum bridge drop gives up to 6.4W for
 two motors, before other losses. At 2A each, 4.9V maximum gives 19.6W. A heatsink
 choice must be based on the agreed continuous current, ambient, case interface
@@ -72,6 +74,6 @@ capacitors give 9pF series capacitance; we assume another 3pF effective stray
 capacitance. This is a layout-dependent starting value, to check after routing.
 [Kyocera specification](https://www.mouser.com/datasheet/2/40/knsk_s_a0010201031_1-2585733.pdf).
 We use TI's documented SN65HVD231DR SOIC-8 order code; the earlier
-SN65HVD231MDREP string could not be verified. Confirm the exact course-stock
-part before treating a supplied device as equivalent.
+SN65HVD231MDREP string could not be verified. The October 23 v3 course list
+explicitly identifies SN65HVD231DR; that stock identity is now resolved.
 [TI orderable part](https://www.ti.com/product/SN65HVD231/part-details/SN65HVD231DR).

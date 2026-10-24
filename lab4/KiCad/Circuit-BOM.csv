@@ -1,6 +1,6 @@
 ﻿Sheet,Reference,Value,MPN,Footprint,Status
 Front,U10,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
-Front,U11,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,TI verified SOIC-8 order code; confirm course-stock equivalent before procurement
+Front,U11,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Front,Y10,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
 Front,C100,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
 Front,C101,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
@@ -14,7 +14,7 @@ Front,J11,CAN A test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical
 Front,JP10,TERM A,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
 Front,R102,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
 Front,U14,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
-Front,U15,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,TI verified SOIC-8 order code; confirm course-stock equivalent before procurement
+Front,U15,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Front,Y14,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
 Front,C140,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
 Front,C141,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
@@ -28,7 +28,7 @@ Front,J15,CAN B test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical
 Front,JP14,TERM B,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
 Front,R142,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
 Rear,U20,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
-Rear,U21,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,TI verified SOIC-8 order code; confirm course-stock equivalent before procurement
+Rear,U21,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Rear,Y20,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
 Rear,C200,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
 Rear,C201,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
@@ -42,7 +42,7 @@ Rear,J21,CAN A test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,
 Rear,JP20,TERM A,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
 Rear,R202,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
 Rear,U24,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
-Rear,U25,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,TI verified SOIC-8 order code; confirm course-stock equivalent before procurement
+Rear,U25,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Rear,Y24,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
 Rear,C240,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
 Rear,C241,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
@@ -56,7 +56,7 @@ Rear,J25,CAN B test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,
 Rear,JP24,TERM B,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Preliminary; verify before fabrication
 Rear,R242,120R,RC0603FR-07120RL,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
 Cockpit,U30,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
-Cockpit,U31,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,TI verified SOIC-8 order code; confirm course-stock equivalent before procurement
+Cockpit,U31,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Cockpit,Y30,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
 Cockpit,C300,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
 Cockpit,C301,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
@@ -68,7 +68,7 @@ Cockpit,C304,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; v
 Cockpit,J30,CAN A isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
 Cockpit,J31,CAN A test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
 Cockpit,U34,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
-Cockpit,U35,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,TI verified SOIC-8 order code; confirm course-stock equivalent before procurement
+Cockpit,U35,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Cockpit,Y34,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
 Cockpit,C340,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
 Cockpit,C341,18p C0G 50V,GRM1885C1H180JA01D,Capacitor_SMD:C_0603_1608Metric,CL=12pF; equal 18pF caps assume 3pF effective stray; tune after layout/clock measurement
@@ -79,7 +79,7 @@ Cockpit,C343,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; v
 Cockpit,C344,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
 Cockpit,J34,CAN B isolation,,Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical,Shunts 1-2 and 3-4; remove both to isolate this node
 Cockpit,J35,CAN B test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
-Front,R1,10mR / 1W / 1%,,Resistor_SMD:R_2512_6332Metric,Preliminary; verify before fabrication
+Front,R1,10mR / 1W / 1%,WSL2512R0100FEA,Lab4_Power:Vishay_WSL2512_7m_to_500m,Vishay 30100 p2 land pattern; 10mOhm 1W 1%; 0.16W at 4A; Kelvin routing still required
 Front,U1,INA180A2IDBVR,INA180A2IDBVR,Package_TO_SOT_SMD:SOT-23-5,Preliminary; verify before fabrication
 Front,C1,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
 Front,R2,4.7k,RC0603FR-074K7L,Resistor_SMD:R_0603_1608Metric,Preliminary; verify before fabrication
@@ -102,11 +102,11 @@ Rear,R8,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Preliminary; verify befo
 Rear,C8,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
 Rear,J3,Current test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
 Power,J40,Battery input: 1=+ 2=GND,DF63M-2P-3.96DSA,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,Teammate connector proposal; 14A header rating; verify wire/contact derating and fuse
-Power,F1,Fuse: rating TBD,3568 holder; fuse TBD,Fuse:Fuseholder_Blade_Mini_Keystone_3568,Fuse must coordinate with holder/wire rating and measured inrush; not selected from peak estimate alone
+Power,F1,Fuse: rating TBD,3568,Fuse:Fuseholder_Blade_Mini_Keystone_3568,Fuse must coordinate with holder/wire rating and measured inrush; not selected from peak estimate alone
 Power,Q1,DMPH3010LK3-13,DMPH3010LK3-13,Package_TO_SOT_SMD:TO-252-2,"Reverse-polarity: drain toward battery, source toward load. Manufacturer G1 D2 S3. Not a reverse-current blocker."
 Power,R400,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R401,47k,RC0603FR-0747KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
-Power,D40,12V gate clamp,BZT52C12 (Diotec),Diode_SMD:D_SOD-123F,"Cathode at source, anode at gate; clamp protects VGS, not the battery rail"
+Power,D40,12V gate clamp,BZT52C12,Diode_SMD:D_SOD-123F,"Cathode at source, anode at gate; clamp protects VGS, not the battery rail"
 Power,C400,1000u / 25V,UPW1E102MHD,Capacitor_THT:CP_Radial_D12.5mm_P5.00mm,"Nichicon: diameter 12.5 mm, height 20 mm, pitch 5 mm; 1.66 A high-frequency ripple rating. Application ripple/thermal check pending."
 Power,J41,VBAT test,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Calculated design; not bench validated
 Power,U40,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated design; not bench validated
@@ -163,11 +163,11 @@ Front,R500,10k BOOT0,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic c
 Front,J500,BOOT recovery,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,R501,10k NRST,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Front,C509,100n NRST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
-Front,SW50,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Front,SW50,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
 Front,J501,SWD (2.54mm),2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,J502,3.3V TTL UART,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,R502,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Front,SW51,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Front,SW51,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
 Front,C510,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Front,R510,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Front,D510,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
@@ -195,11 +195,11 @@ Rear,R600,10k BOOT0,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic co
 Rear,J600,BOOT recovery,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Rear,R601,10k NRST,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Rear,C609,100n NRST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
-Rear,SW60,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Rear,SW60,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
 Rear,J601,SWD (2.54mm),2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Rear,J602,3.3V TTL UART,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Rear,R602,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Rear,SW61,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Rear,SW61,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
 Rear,C610,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Rear,R610,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Rear,D610,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
@@ -221,7 +221,7 @@ Cockpit,J70,Raspberry Pi4 GPIO,ESQ-120-44-L-D,Lab4_Mechanical:Samtec_ESQ-120-44_
 Cockpit,C700,22u /16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,C701,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,R700,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Cockpit,SW70,SWT0210-045026GSA,SWT0210-045026GSA,,Electrical circuit placed; exact GCT footprint drawing still required
+Cockpit,SW70,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
 Cockpit,C702,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,R710,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Cockpit,D710,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
@@ -239,14 +239,14 @@ Rear,U80,L298N,L298N,Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.
 Rear,C800,100n 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Local decoupling; effective capacitance and layout to verify
 Rear,C801,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Local decoupling; effective capacitance and layout to verify
 Rear,C802,470u 25V,EEU-FR1E471,Capacitor_THT:CP_Radial_D8.0mm_P3.50mm,Local decoupling; effective capacitance and layout to verify
-Rear,D800,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D801,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D802,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D803,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D804,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D805,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D806,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
-Rear,D807,SK520B,SK520B,Diode_SMD:D_SMB,External motor clamp; verify supplier exact 5A/200V part and package
+Rear,D800,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D801,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D802,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D803,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D804,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D805,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D806,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
+Rear,D807,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
 Rear,J80,LEFT motor,DF63M-2P-3.96DSA,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
 Rear,J81,RIGHT motor,DF63M-2P-3.96DSA,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
 Rear,J82,LEFT encoder,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
@@ -265,21 +265,21 @@ Front,R540,100R,CRCW0603100RFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circu
 Front,J90,Servo: GND / 6.6V / PWM,DF63M-3P-3.96DSA,Connector_Hirose:Hirose_DF63M-3P-3.96DSA_1x03_P3.96mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
 Front,R550,2.2k,CRCW06032K20FKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Front,R560,100k,CRCW0603100KFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
-Front,Q550,MMBT3904,MMBT3904,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
+Front,Q550,MMBT3904,MMBT3904-7-F,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
 Front,R570,220R,CRCW0603220RFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Front,J550,FRONT LEFT lamp,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
 Front,R551,2.2k,CRCW06032K20FKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Front,R561,100k,CRCW0603100KFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
-Front,Q551,MMBT3904,MMBT3904,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
+Front,Q551,MMBT3904,MMBT3904-7-F,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
 Front,R571,220R,CRCW0603220RFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Front,J551,FRONT RIGHT lamp,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
 Rear,R650,2.2k,CRCW06032K20FKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Rear,R660,100k,CRCW0603100KFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
-Rear,Q650,MMBT3904,MMBT3904,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
+Rear,Q650,MMBT3904,MMBT3904-7-F,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
 Rear,R670,220R,CRCW0603220RFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Rear,J650,REAR LEFT lamp,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
 Rear,R651,2.2k,CRCW06032K20FKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Rear,R661,100k,CRCW0603100KFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
-Rear,Q651,MMBT3904,MMBT3904,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
+Rear,Q651,MMBT3904,MMBT3904-7-F,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
 Rear,R671,220R,CRCW0603220RFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Rear,J651,REAR RIGHT lamp,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power

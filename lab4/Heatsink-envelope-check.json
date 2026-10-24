@@ -1,0 +1,30 @@
+{
+  "status": "UNRESOLVED",
+  "envelope": {
+    "name": "6396BG 41.91x25.4 ENVELOPE / MOUNT TO VERIFY",
+    "x": 11.045,
+    "y": 10.3,
+    "w": 41.91,
+    "h": 25.4,
+    "kind": "missing",
+    "layer": "F.Cu"
+  },
+  "courtyard_intersections": [
+    "C3",
+    "C6",
+    "C800",
+    "C801",
+    "C802",
+    "D800",
+    "D801",
+    "D802",
+    "D803",
+    "J80",
+    "J81",
+    "R3",
+    "R6",
+    "U2",
+    "U3"
+  ],
+  "explanation": "Tentative 2D heatsink rectangle; actual Multiwatt mounting orientation and vertical clearance unverified. U80 excluded as intended attachment. This is not included in electrical DRC."
+}

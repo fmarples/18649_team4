@@ -759,16 +759,16 @@
     {
       "reference": "R1",
       "value": "10mR / 1W / 1%",
-      "footprint": "Resistor_SMD:R_2512_6332Metric",
+      "footprint": "Lab4_Power:Vishay_WSL2512_7m_to_500m",
       "x_mm": 27.0,
       "y_mm": 185.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        23.125,
-        183.025,
-        7.75,
-        3.95
+        23.005000000000003,
+        182.855,
+        7.99,
+        4.29
       ],
       "schematic": true
     },
@@ -4615,11 +4615,11 @@
   ],
   "reservations": [
     {
-      "name": "L298 HEATSINK ENVELOPE TO VERIFY",
-      "x": 18,
-      "y": 15,
-      "w": 28,
-      "h": 16,
+      "name": "6396BG 41.91x25.4 ENVELOPE / MOUNT TO VERIFY",
+      "x": 11.045,
+      "y": 10.3,
+      "w": 41.91,
+      "h": 25.4,
       "kind": "missing",
       "layer": "F.Cu"
     },

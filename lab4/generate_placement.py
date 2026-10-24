@@ -195,7 +195,7 @@ def reserve(name,x,y,w,h,kind='missing',exclude_footprints=True,layer=p.F_Cu,cop
         poly=z.Outline();poly.NewOutline()
         for xx,yy in [(x,y),(x+w,y),(x+w,y+h),(x,y+h)]:v=vec(xx,yy);poly.Append(v.x,v.y)
         b.Add(z)
-reserve('L298 HEATSINK ENVELOPE TO VERIFY',18,15,28,16,exclude_footprints=False)
+reserve('6396BG 41.91x25.4 ENVELOPE / MOUNT TO VERIFY',11.045,10.3,41.91,25.4,exclude_footprints=False)
 reserve('INPUT CONNECTOR ENVELOPE',66,5,12,12,exclude_footprints=False)
 
 reserve('Pi 4 BELOW PCB / TOP COMPONENTS ALLOWED',PI_X,PI_Y,85,56,'pi',False)

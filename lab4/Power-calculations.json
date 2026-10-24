@@ -1,6 +1,6 @@
 {
   "status": "Calculated design, not measured",
-  "battery": "AA series; 10-cell NiMH recommended, exact cells and holder unselected",
+  "battery": "Selected Tenergy 11609: ten Sub-C NiMH cells, nominal 12 V / 4.2 Ah; manufacturer-stated 30 A continuous discharge. Compatible charger 01025. Fit, wiring, operating cutoff and purchasing remain unverified.",
   "protected_input_design_range_V": [
     8,
     15

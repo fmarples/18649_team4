@@ -1,8 +1,8 @@
 # Lab 4: three-zone controller PCB
 
 We are designing a two-layer KiCad PCB with two STM32F401RET6 chips, six
-MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and an
-AA-powered supply. The Raspberry Pi remains a separate board connected through
+MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
+NiMH-powered supply based on the Tenergy 11609 Sub-C pack. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
 **Status, 23 October 2026:** schematic and unrouted placement for design review.
@@ -12,8 +12,11 @@ mechanical supports. The four chassis centers use the team's caliper measurement
 50 mm front, 105 mm rear, 220 mm longitudinal separation and aligned pair
 midpoints. Chassis holes measure 4.5 mm; M3/3.2 mm PCB drills remain a proposal.
 
-Motor current limiting, heatsink qualification, battery/charger ratings and
-procurement decisions remain unresolved. Five switch footprints, routing,
+We selected Tenergy 11609 with charger 01025 as the design/BOM baseline.
+Motor cooling/protection behavior, heatsink fit, battery mounting and
+procurement decisions remain unresolved. The TAs confirmed on October 23 that
+teams will assemble all SMD parts themselves, with TechSpark oven access tentative.
+BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Five switch footprints, routing,
 physical fit and hardware validation are unfinished. This is not a fabrication
 or purchasing release. The October 24 review covers schematic, BOM and high-level
 design; the board layout deadline is October 29.
@@ -55,11 +58,16 @@ for a TA submission so the reviewed version can be recovered later.
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |
 | [Power-budget.csv](Power-budget.csv) | Four rail allocations; average loads remain unmeasured. |
+| [Current-evidence.md](Current-evidence.md) | Why existing Lab 2 logs cannot establish calibrated average current. |
+| [Current-measurements.csv](Current-measurements.csv) | Rail/condition record for the remaining measurements. |
+| [Parts-review.md](Parts-review.md) | Course v3 reconciliation, documented selections and physical checks. |
+| [Course-stock-v3.csv](Course-stock-v3.csv) | Exact named course-stock parts and source links. |
+| [Review-package.md](Review-package.md) | October 24 deliverables and remaining review decisions. |
 | [Power-calculations.json](Power-calculations.json) | Calculated regulator ripple, peak current and enable thresholds. |
 | [Preliminary-BOM.csv](Preliminary-BOM.csv) | Placed quantities and additional planned parts, with procurement status. |
 | [KiCad/Circuit-BOM.csv](KiCad/Circuit-BOM.csv) | The 284 components currently placed in the schematic. |
-| [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv) | Team-assembly procurement view of the same circuit. |
-| [BOM-JLC-hybrid.csv](BOM-JLC-hybrid.csv) | JLCPCB/team split with verified library matches and explicit unknowns. |
+| [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv) | Active course/team-assembly procurement view. |
+| [BOM-JLC-hybrid.csv](BOM-JLC-hybrid.csv) | Historical catalog comparison; not the selected course assembly plan. |
 | [Assembly-options.md](Assembly-options.md) | Process differences, equipment and sourcing checks. |
 | [Actuator-design.md](Actuator-design.md) | Motor, encoder, servo and lamp circuits; ratings and connector pin definitions. |
 | [Design-review.csv](Design-review.csv) | Remaining engineering decisions and checks. |
@@ -77,9 +85,11 @@ with the repository. The other footprints come from the standard KiCad library.
 
 ## Power and pin decisions
 
-We selected AA cells in series and propose ten rechargeable NiMH cells for
-nominal 12 V. The team proposes the Dantona CMP-AA-21-37 2.1 Ah pack. Its
-discharge rating, matched charger and runtime remain unverified.
+We selected Tenergy 11609: ten Sub-C NiMH cells, nominal 12 V / 4.2 Ah, with
+a manufacturer-stated 30 A continuous discharge rating. Tenergy lists charger
+01025 as compatible. This replaces the earlier AA proposal; Dantona
+CMP-AA-21-37 is excluded from requested purchase quantities. Physical fit,
+wiring, cost and lead time still need checking before purchase. See Parts-review.md.
 The proposed branches are the unregulated motor supply, 6.6 V servo buck,
 5.1 V Pi/devices buck and 3.318 V logic buck. The protected-input electrical
 target is 8–15 V; this does not define the cells' allowed discharge voltage.
@@ -131,11 +141,11 @@ device-tree configuration and physical bus labels before relying on Linux
 - Resolve the 3.2 A motor stall specification against the L298N's 2 A DC/braking
   limits. The schematic has no autonomous motor current limiter; the filtered
   ADC and pack fuse do not establish one. Select the heatsink for the agreed load.
-- Confirm pack discharge capability, matched NiMH charger, fuse value, wiring
+- Confirm battery fit/purchasing, fuse value, operating stop voltage, wiring
   and exact connector/contact compatibility. J40/J80/J81 now use Hirose power
   connectors; new adapters require the actual vehicle cable pinouts.
-- Choose the assembly plan and finalize exact component sourcing. Both assembly
-  BOMs describe the same circuit; neither is an order-ready upload.
+- Finalize component quantities from course stock and the additional-parts request.
+  The course assembly plan is now team assembly; the JLC comparison is historical.
 - Verify the five GCT switch footprints and the remaining package/connector
   dimensions. Check the course-stock transceiver against the selected DR code.
 - Check the paper fit, standoffs, Pi/cable access and wheel/linkage clearance.

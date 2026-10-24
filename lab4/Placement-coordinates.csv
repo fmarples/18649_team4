@@ -45,7 +45,7 @@ JP10,TERM A,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,82.725,17
 JP14,TERM B,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,109.725,176.0,90.0,F.Cu,True
 Q550,MMBT3904,Package_TO_SOT_SMD:SOT-23,76.0,186.0,0.0,F.Cu,True
 Q551,MMBT3904,Package_TO_SOT_SMD:SOT-23,96.0,186.0,0.0,F.Cu,True
-R1,10mR / 1W / 1%,Resistor_SMD:R_2512_6332Metric,27.0,185.0,0.0,F.Cu,True
+R1,10mR / 1W / 1%,Lab4_Power:Vishay_WSL2512_7m_to_500m,27.0,185.0,0.0,F.Cu,True
 R2,4.7k,Resistor_SMD:R_0603_1608Metric,44.0,183.0,90.0,F.Cu,True
 R100,10k,Resistor_SMD:R_0603_1608Metric,69.0,166.0,90.0,F.Cu,True
 R101,10k,Resistor_SMD:R_0603_1608Metric,88.0,174.0,90.0,F.Cu,True

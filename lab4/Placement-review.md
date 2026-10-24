@@ -114,6 +114,16 @@ holes and component envelopes are derived from the same placement data.
 native KiCad plot with pads and references. `Placement-coordinates.csv` contains
 footprint anchor coordinates, not measured chassis coordinates.
 
+## Heatsink envelope review
+
+The stock Boyd 6396BG envelope is 41.91 × 25.4 × 25.4 mm. It replaces the
+undersized 28 × 16 mm drawing reservation. Its tentative rectangle overlaps
+several nearby part courtyards, including C800/C801 and the motor sensors.
+This is an unresolved mechanical-layout conflict, even though electrical DRC
+passes: the rectangle is a drawing, not a verified heatsink footprint/rule area.
+Choose and verify its Multiwatt mounting orientation before moving adjacent
+parts and routing. See Parts-review.md and Heatsink-envelope-check.json.
+
 ## Checks and remaining work
 
 KiCad 10.0.4 loads and plots the PCB. The 23 October placement DRC reports:
@@ -135,7 +145,7 @@ would require a new review. [JLCPCB capabilities](https://jlcpcb.com/capabilitie
 `KiCad/Placement-DRC.json` records those results. `Placement-check.json` also
 checks the 40 Pi mating positions, net mapping, outline, drill sizes, support
 envelopes and nominal insertion. These are software/geometric checks, not
-physical tests. Complete motor current protection and thermal selection,
+physical tests. Verify motor protection expectations and thermal design,
 five switch footprints, connector verification and detailed routing before
 fabrication. Follow the converter datasheet's switching-loop and feedback layout
 guidance; spreading footprints without routing does not validate a power layout.

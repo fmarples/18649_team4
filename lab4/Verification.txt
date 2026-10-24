@@ -7,9 +7,17 @@ Schematic and parts
 - Netlist checks cover MCU supply/VCAP/reset/BOOT0/SWD, host pins, Lab 3 probes,
   Pi supply separation, CAN isolation, L298 enables/outputs, flyback polarity,
   motor sensors in series, servo connector after shunt and encoder logic domain.
-- Circuit-BOM, hand-assembly BOM and hybrid BOM describe the same references.
+- Circuit-BOM, purchasing BOM, hand-assembly BOM and hybrid BOM describe the
+  same 284 references, base MPNs and footprints, without duplicate references.
 - 279 assigned footprints exist; five GCT switch footprints remain unassigned.
 - ACS712 library update preserved its electrical pin numbers/names/positions.
+- R1 uses WSL2512R0100FEA and the Vishay document 30100 land pattern.
+- Diotec BZT52C12 uses SOD-123F; full MMBT3904-7-F and Keystone 3568 holder
+  identities are recorded separately from the still-unselected fuse element.
+- Course v3 exact-stock list reconciled: 52 named parts plus generic headers.
+- Nine exact JLC catalog identities and one documented STM32 carrier alternative
+  recorded; this does not establish live stock or assembly-order acceptance.
+- The course requires team assembly; the JLC comparison is historical.
 
 Placement
 - Unrouted 120 x 234 mm board; 279 electrical footprints and eight supports.
@@ -26,10 +34,30 @@ Placement
 - Chassis supports keep 3 mm from hole edge. Pi supports use 3 mm radius from
   center around <=5 mm hardware; strict course interpretation remains open.
 - Updated placement preview and true-size PDF rendered and visually checked.
+- The corrected 41.91 x 25.4 mm tentative 6396BG envelope intersects 15 nearby
+  courtyards, excluding the intended U80 attachment. Heatsink-envelope-check.json
+  explicitly reports UNRESOLVED. Its mounting orientation and 3D fit are not
+  verified; the non-excluding drawing rectangle is not checked by electrical DRC.
 
 Limits
-No PCB hardware was powered, flashed or tested. Motor current limiting and
-heatsink qualification are unresolved. Battery discharge/charger ratings,
-fuse, cable adapters, actual package dimensions, converter stability, thermal
+No PCB hardware was powered, flashed or tested. Motor protection expectations
+and heatsink qualification are unresolved. Tenergy11609/01025 is the selected design/BOM baseline; discharge rating and
+charger compatibility are documented. Physical fit and purchasing remain open.
+Dantona is excluded from purchase quantities. Fuse, cable adapters, converter stability, thermal
 behavior, Wi-Fi, physical fit, routing and final manufacturing checks remain.
 Neither assembly BOM is a ready-to-order factory upload. No submission occurred.
+Lab 2 logs have unresolved current calibration; no average rail current was
+invented. Current-evidence.md explains the limit and Current-measurements.csv
+contains 12 unmeasured operating-condition rows.
+Shared Google Doc updated in place and read back; no competing Drive design
+copies were created. Local revised CAD/BOM/PDF files have not yet been pushed.
+
+October 23 deadline review update: TA confirmed all SMD will be assembled by
+the team; TechSpark oven access is tentative. Active BOM: BOM-Hand-assembly.csv.
+Course source: https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792811196129409?thread_ts=1792803278.879979&cid=C0BRYGTD4HH
+
+The fresh ERC run exposed two ACS712 library-mismatch warnings. Comparison
+showed only a doubled UTF-8 encoding of the plus/minus sign in the cached
+Description property. Corrected that property to match the installed symbol;
+all pin types, pin positions and graphics are unchanged. Re-exported schematic
+PDF and XML; all 297 net memberships are identical before/after the correction.

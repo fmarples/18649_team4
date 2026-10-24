@@ -36,7 +36,31 @@ for p in parts:
     c = components[p['Reference']]
     assert c.findtext('value') == p['Value'], f"Value differs: {p['Reference']}"
     assert (c.findtext('footprint') or '') == p['Footprint'], f"Footprint differs: {p['Reference']}"
+    fields = {f.attrib['name']: (f.text or '') for f in c.findall('fields/field')}
+    assert fields.get('MPN', '') == p['MPN'], f"MPN differs: {p['Reference']}"
 assert sum(int(p['Qty_in_current_schematic']) for p in csv_rows('Preliminary-BOM.csv')) == len(parts)
+
+# Assembly views must cover each schematic reference once, including unassigned
+# footprints. Carrier alternatives belong in their own column, not the base MPN.
+by_ref = {p['Reference']: p for p in parts}
+for name in ['BOM-Hand-assembly.csv', 'BOM-JLC-hybrid.csv', 'Preliminary-BOM.csv']:
+    seen = set()
+    for row in csv_rows(name):
+        if name == 'Preliminary-BOM.csv' and int(row['Qty_in_current_schematic']) == 0:
+            continue
+        refs = row['References'].split()
+        quantity = row['Qty_in_current_schematic'] if name == 'Preliminary-BOM.csv' else row['Quantity']
+        mpn = row['Part'] if name == 'Preliminary-BOM.csv' else row['MPN']
+        assert len(refs) == int(quantity), (name, 'quantity', refs)
+        for ref in refs:
+            assert ref not in seen, (name, 'duplicate', ref)
+            seen.add(ref)
+            # The procurement view names generic headers even when the schematic
+            # intentionally has no manufacturer-specific MPN for course headers.
+            expected = by_ref[ref]['MPN']
+            assert mpn == expected or (not expected and mpn == '2.54 mm breakaway header'), (name, ref, 'MPN')
+            assert row['Footprint'] == by_ref[ref]['Footprint'], (name, ref, 'footprint')
+    assert seen == set(by_ref), (name, 'reference coverage')
 
 # Package-specific support checks independent of the generated connection metadata.
 for zone, ref, prefix, hundred in [('Front', 'U50', 'F', 500), ('Rear', 'U60', 'R', 600)]:

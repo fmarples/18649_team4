@@ -1,0 +1,13 @@
+﻿Rail,Condition,Voltage_V,Average_A,Peak_A,Duration_s,Instrument,Calibration_evidence,Firmware_revision,Raw_record,Status
+Motor supply,Rest; bridge disabled,,,,,,,,,Not measured
+Motor supply,Steady representative driving,,,,,,,,,Not measured
+Motor supply,Startup transient,,,,,,,,,Not measured
+Servo supply,"Holding center, no external load",,,,,,,,,Not measured
+Servo supply,Repeated steering sweep,,,,,,,,,Not measured
+Servo supply,Holding representative steering load,,,,,,,,,Not measured
+Pi/devices supply,Boot,,,,,,,,,Not measured
+Pi/devices supply,Idle,,,,,,,,,Not measured
+Pi/devices supply,Wheel proxy and CAN traffic,,,,,,,,,Not measured
+Logic/CAN supply,Idle,,,,,,,,,Not measured
+Logic/CAN supply,Normal traffic; LEDs active,,,,,,,,,Not measured
+Battery input,Combined representative driving and steering,,,,,,,,,Not measured
