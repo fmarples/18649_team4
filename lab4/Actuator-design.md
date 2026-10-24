@@ -77,3 +77,15 @@ We use TI's documented SN65HVD231DR SOIC-8 order code; the earlier
 SN65HVD231MDREP string could not be verified. The October 23 v3 course list
 explicitly identifies SN65HVD231DR; that stock identity is now resolved.
 [TI orderable part](https://www.ti.com/product/SN65HVD231/part-details/SN65HVD231DR).
+
+## October 24 servo current lookup
+
+The exact-model [Hiwonder chassis specification](https://www.hiwonder.com/products/ackermann-steering-chassis)
+lists LD-1501MG no-load current100mA and stall current2.4-3A. The100mA value
+is a catalog reference; its voltage and static-hold/unloaded-motion condition
+are unspecified. It does not establish calibrated holding current at6.6V.
+Our10mOhm/gain50 circuit gives50mV output at100mA,1.5V at3A, and0.09W shunt
+dissipation at3A. The nominal20mA resolution target gives about12.4 ideal ADC
+counts at3.3V/12-bit. These arithmetic checks support retaining the selected
+shunt/gain for review; physical noise, offset and calibration remain open.
+See Current-evidence.md and Power-calculations.json for assumptions and sources.

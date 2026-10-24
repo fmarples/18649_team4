@@ -89,3 +89,12 @@ October 24 battery envelope evidence
   connector/cable routing or a completed dynamic vehicle-clearance test.
 - Existing metal-plate spacing is distinct from the proposed35mm PCB/chassis
   and22mm PCB/Pi spacers. No PCB mounting geometry changed.
+
+October24 servo current and preliminary power review
+- Verified exact-model Hiwonder LD-1501MG source:100mA no-load,2.4-3A stall.
+- Excluded different-model LD-3015MG page; static holding at6.6V remains unmeasured.
+- Recalculated10mOhm/gain50 ADC points and0.09W shunt loss at3A.
+- Added explicitly assumed average profile to Power-budget.csv and unrounded
+  arithmetic to Power-calculations.json:0.39A servo,22.0584W converted output,
+  2.882588A battery at12V/85%. Profile is not measured or a guaranteed bound.
+- No circuit, component count, net membership or PCB geometry changed.

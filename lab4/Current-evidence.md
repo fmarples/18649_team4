@@ -81,3 +81,52 @@ Arrange a course-supervised method compatible with the driver limits; the
 handout's ten-second temperature question is not permission to exceed them.
 Where evidence is unavailable at review, state that explicitly. A calculation
 or an uncalibrated log does not replace a required measurement.
+
+
+## October 24 servo source review and preliminary average case
+
+The [Hiwonder chassis specification](https://www.hiwonder.com/products/ackermann-steering-chassis)
+names **LD-1501MG**, with **100mA no-load** and **2.4-3A stall** current. This is
+an exact-model supplier source. The LD-3015MG product page is a different model
+and is excluded from our LD-1501MG evidence. The exact-model listing does not
+give the voltage/test method for these current values or define whether
+no-load means static holding or unloaded motion. We use100mA as a provisional
+no-load reference, not a measured static-hold value at6.6V. Source lookup is
+complete; the condition-specific measurement remains open.
+
+For the existing10mOhm shunt and INA180A2 gain50, Vout=0.5V/A. At100mA this
+gives1mV shunt drop,50mV output and about62 ideal counts (12-bit,3.3V reference).
+At3A it gives30mV drop,1.5V output and0.09W shunt dissipation. The proposed
+20mA change gives10mV, about12.4 ideal counts. The1W shunt rating therefore
+has arithmetic margin at the published stall endpoint, subject to its thermal
+conditions; offset/noise and the actual ADC/reference still need validation.
+Sources: [TI INA180](https://www.ti.com/lit/ds/symlink/ina180.pdf),
+[Vishay WSL2512](https://www.vishay.com/docs/30100/wsl.pdf).
+
+We prepared a **preliminary planning case**, not a measured or guaranteed
+average. It assumes both motor supply loads at the catalog rated0.36A each;
+servo current at100mA for90% of the interval and3A for10%; and continuous use
+of the existing3.3A Pi/devices and0.8A logic allocations. The90/10 split is a
+design assumption, not observed behavior. The3A point comes from the published
+stall endpoint; this calculation does not recommend sustained stalls. Treating
+motor winding current as supply current is also a planning simplification.
+
+| Rail | Assumed average in this case | Basis |
+|---|---:|---|
+| Motor supply |0.72A|2 x0.36A catalog rated point; full-time supply-current proxy|
+|6.6V servo|0.39A|0.90 x0.100 +0.10 x3.0|
+|5.1V Pi/devices|3.3A|Existing allocation assumed continuously consumed|
+|3.318V logic|0.8A|Existing allocation assumed continuously consumed|
+
+Regulated output power=6.6 x0.39+5.1 x3.3+3.318 x0.8=22.0584W.
+At nominal12V and assumed85% converter efficiency,
+Ibat=0.72+22.0584/(12 x0.85)=**2.883A**. This provides a transparent case for
+review; it is not a fuse rating, a validated maximum or a runtime guarantee.
+The electronics allocations are intentionally pessimistic consumption
+assumptions, but rated motor current and an assumed steering duty cycle do
+not bound all driving. Keep the separate peak/stall stress cases.
+
+Power-budget.csv now records these provisional estimates. Power-calculations.json
+preserves the inputs and unrounded arithmetic. Confirm the operating profile
+with the team/TA or replace it with measured averages. Required motor stall,
+L298-drop/temperature evidence and staff agreement on any deferral remain open.

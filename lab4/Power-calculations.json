@@ -1,6 +1,6 @@
 {
   "status": "Calculated design, not measured",
-  "battery": "Selected Tenergy 11609: ten Sub-C NiMH cells, nominal 12 V / 4.2 Ah; manufacturer-stated 30 A continuous discharge. Compatible charger 01025. Fit, wiring, operating cutoff and purchasing remain unverified.",
+  "battery": "Selected Tenergy11609: ten Sub-C NiMH cells, nominal12V/4.2Ah, stated30A continuous. Compatible charger01025. October24 cardboard envelope and paper mounting checks support preliminary fit; actual retention, harness, final stack, cutoff and purchasing remain open.",
   "protected_input_design_range_V": [
     8,
     15
@@ -42,5 +42,58 @@
       "feedback_bottom_ohm": 10000,
       "EN_rising_typ_V": 3.82109
     }
-  ]
+  ],
+  "servo_published_input": {
+    "model": "LD-1501MG",
+    "source_url": "https://www.hiwonder.com/products/ackermann-steering-chassis",
+    "retrieved": "2026-10-24",
+    "no_load_current_A": 0.1,
+    "stall_current_A": [
+      2.4,
+      3.0
+    ],
+    "condition_limit": "Current test voltage, temperature, tolerance, and static holding versus unloaded motion are not specified. Not a calibrated6.6V holding-current measurement.",
+    "excluded_model_source": "https://www.hiwonder.com/products/ld-3015mg (different model)"
+  },
+  "average_planning_case": {
+    "status": "Calculated preliminary scenario, not measured, not a verified conservative bound for all driving",
+    "motor_supply_current_A": 0.72,
+    "motor_basis": "Two catalog rated0.36A values treated as supply current under the stated nominal12V planning case; PWM/load dependence unvalidated.",
+    "servo_no_load_fraction_assumed": 0.9,
+    "servo_high_load_fraction_assumed": 0.1,
+    "servo_high_load_current_assumed_A": 3.0,
+    "servo_average_A": 0.39000000000000007,
+    "servo_basis": "Published no-load and upper stall endpoint mixed with an assumed90/10 profile; no sustained-stall operating permission.",
+    "pi_devices_sustained_allocation_assumed_A": 3.3,
+    "logic_sustained_allocation_assumed_A": 0.8,
+    "converter_efficiency_assumed": 0.85,
+    "battery_voltage_assumed_V": 12,
+    "regulated_output_power_W": 22.0584,
+    "battery_input_estimate_A": 2.8825882352941177,
+    "runtime": "Unverified; do not infer usable capacity or runtime guarantee from nominalAh."
+  },
+  "servo_sense_checks": {
+    "reference_voltage_assumed_V": 3.3,
+    "adc_bits": 12,
+    "shunt_ohm": 0.01,
+    "gain_V_per_V": 50.0,
+    "adc_mA_per_count": 1.611328125,
+    "published_no_load_point": {
+      "current_A": 0.1,
+      "shunt_drop_V": 0.001,
+      "output_V": 0.05,
+      "ideal_ADC_counts": 62.06060606060607,
+      "shunt_power_W": 0.00010000000000000002
+    },
+    "published_upper_stall_point": {
+      "current_A": 3,
+      "shunt_drop_V": 0.03,
+      "output_V": 1.5,
+      "ideal_ADC_counts": 1861.818181818182,
+      "shunt_power_W": 0.09
+    },
+    "target_change_A": 0.02,
+    "target_change_ideal_counts": 12.412121212121214,
+    "status": "Ideal arithmetic only; ADC/reference, amplifier offset, noise, shunt tolerance and calibration remain unvalidated."
+  }
 }
