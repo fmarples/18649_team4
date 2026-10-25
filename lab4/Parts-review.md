@@ -34,7 +34,8 @@ limits Amazon to batteries; a possible connector or charger exception would
 need a separate TA decision. We have not applied such an exception.
 
 We checked every supplier field in both active BOMs. In Preliminary-BOM.csv,
-94 rows now link only to DigiKey, 25 generic-header rows request course stock,
+93 rows link only to DigiKey, one provisional battery row links to Amazon,
+25 generic-header rows request course stock,
 two unresolved rows have no purchase link (charger and heatsink attachment),
 and six zero-quantity rows are references only. The 96-row hand-assembly BOM
 has 71 DigiKey-linked rows and the same 25 course-stock header rows.
@@ -72,8 +73,30 @@ provisional design tonight, identify the unresolved battery, and find a
 replacement within the next week. These replies remove final battery
 selection as a prerequisite to tonight's review; they do not place an order.
 We keep all new non-battery purchases, including the charger, on DigiKey/Mouser.
-Tenergy 11609/01025 remain zero-quantity design references; one pack and one
-compatible charger remain unresolved requests.
+Tenergy 11609/01025 remain zero-quantity design references. We identify one
+provisional Amazon pack below; a qualified pack/charger pair remains unresolved.
+
+We added the team's [Tenergy Amazon candidate, ASIN B077Y9HNTF](https://www.amazon.com/dp/B077Y9HNTF)
+to the existing one-pack BOM request for review, without adding a second battery.
+The supplied short link, https://a.co/d/0gL86VSB, resolves to this listing.
+It specifies 12V, 2000mAh NiMH and **2A maximum continuous discharge (1C)**.
+We found no documented 10A pulse rating or permitted duration. Its 2A limit is
+already below our assumed **2.883A battery-input planning case** in
+[Current-evidence.md](Current-evidence.md); that case is not measured consumption.
+The issue is a published continuous-current limit, not simply missing certification.
+We have not qualified this candidate for full-vehicle operation or purchase.
+
+The listing's 73.5x53.5x30.5mm dimensions are outside the checked
+115x50x50mm envelope in an axis-aligned orientation; the reported 51.75mm
+usable height is also less than 53.5mm. A different mounting arrangement
+would need checking. The title says bare leads while its specification table
+says Hitec, so the supplied lead end must be confirmed. The corresponding
+[Tenergy 11606 manufacturer page](https://power.tenergy.com/tenergy-nimh-12v-2000mah-battery-pack-w-bare-leads/)
+lists the same electrical limits and dimensions with bare leads. We use the
+verified ASIN as the BOM identifier because the Amazon-to-MPN mapping is not
+explicit. The manufacturer's recommended maximum charging current is 1A;
+do not transfer the older 4.2Ah reference pack's 2A charging setting to this pack.
+The exact charger, permitted supplier, delivery and final pack choice remain open.
 
 The earlier [Tenergy 11609](https://power.tenergy.com/at-tenergy-12v-4200mah-nimh-rechargeable-battery-pack-10s1p-50-4wh-30a-rate/)
 reference is ten Sub-C NiMH cells, 12V/4.2Ah, stated 30A continuous discharge,
@@ -98,7 +121,7 @@ Additional candidates screened on October 24:
 | Candidate | Published specification | Disposition |
 |---|---|---|
 | [Tenergy 11660](https://power.tenergy.com/at-tenergy-12v-3800mah-nimh-rechargeable-battery-pack-10s1p-45-6wh-10a-rate/) | 12V NiMH, 3.8Ah, 10A continuous; 95x67x40mm; $85.99, built to order | Does not fit the measured 115x50x50mm envelope in an axis-aligned orientation. A different mounting envelope and permitted source would be needed. |
-| [Tenergy 11606](https://power.tenergy.com/tenergy-nimh-12v-2000mah-battery-pack-w-bare-leads/) | 12V NiMH, 2Ah; manufacturer lists 2A discharge | Does not meet the approximately 10A screening target. No documented 10A pulse allowance was found; capacity does not supply that evidence. |
+| [Tenergy 11606](https://power.tenergy.com/tenergy-nimh-12v-2000mah-battery-pack-w-bare-leads/) | 12V NiMH, 2Ah; 2A maximum continuous; 73.5x53.5x30.5mm | Corresponding manufacturer reference for the provisional Amazon candidate above. Below the 2.883A planning case; 10A pulse capability and installed fit are unverified. |
 | [CNHL S220403BK shorty](https://chinahobbyline.com/products/cnhl-black-series-shorty-2200mah-3s-11-1v-40c-lipo-battery-with-xt60-plug) | 3S LiPo, 11.1V nominal/12.6V full, 2.2Ah, advertised 40C continuous; 77x33x26mm; XT60 and JST-XH balance lead | Fits the envelope by published dimensions, including the manufacturer's stated 1-5mm dimensional variation. Alternative only: changes the selected chemistry and requires lithium charging/cutoff provisions. |
 
 For the CNHL alternative, 40C x 2.2Ah = 88A is the manufacturer's advertised
@@ -127,7 +150,7 @@ reference leaves 4.99mm gross height allowance; the Dantona listing would
 leave 8.75mm with 43mm vertical. These are calculated allowances, before
 straps, leads and local obstacles. Actual retention and installed fit are untested.
 
-For review, resolve the exact pack from course stock, DigiKey/Mouser or the
+Before purchase, qualify the exact pack from course stock, DigiKey/Mouser or the
 battery-only Amazon exception, and identify a compatible permitted charger
 or request a specific exception for it. Normal current, peak duration, sag and protection
 must be assessed together. No published Ah value alone establishes allowable

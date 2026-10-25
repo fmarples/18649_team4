@@ -84,16 +84,29 @@ Supplier audit, October24 evening
 - Read the latest course battery thread and Anson/Ayaan DMs. Amazon is battery
   only. Ayaan allows the provisional battery design for tonight's review and
   a replacement next week; Anson allows somewhat longer delivery.
-- Preliminary BOM:127 rows.94 have DigiKey supplier links;25 generic-header
+- Preliminary BOM:127 rows.93 have DigiKey supplier links;1 provisional battery
+  row links to Amazon under the battery-only exception;25 generic-header
   rows are course-stock requests;2 have unresolved sourcing with no purchase
   link;6 are zero-quantity references. Hand BOM:96 rows,71 DigiKey-linked and
-  25 course-stock header rows. No active supplier URL points to another vendor.
+  25 course-stock header rows. All other active supplier URLs are DigiKey.
 - Six board-part rows now have exact-MPN DigiKey links. SN74LVC14APWR is out
   of stock on the checked listing. Wire links identify100ft spools, while
   requested quantities remain metres of lab cut lengths.
 - All quantities, MPNs, circuit references and footprints preserved by cell
   comparison. Original course-stock evidence and historical JLC comparison
   are unchanged. This audit does not establish stock allocation or physical fit.
+
+Provisional battery candidate, October24 evening
+- The team's short link resolves to Amazon ASIN B077Y9HNTF: Tenergy12V/2Ah NiMH.
+  The listing and corresponding11606 manufacturer page state2A maximum
+  continuous discharge. No10A pulse rating/duration was found.2A is below the
+  existing assumed2.883A battery planning case; actual consumption is unmeasured.
+- Listed73.5x53.5x30.5mm does not fit the checked115x50x50mm envelope
+  axis-aligned; reported51.75mm height is also less than53.5mm. Revised mounting
+  needs checking. Bare-leads/Hitec listing conflict remains unresolved.
+- Updated the existing one-pack BOM row; all quantities and all other BOM rows
+  preserved. Power-budget edit changes only the input-rail evidence note.
+  This records a review candidate, not a qualified battery or a purchase.
 
 Limits
 No PCB was built, powered or flashed. Battery/charger selection, L298 protection,
