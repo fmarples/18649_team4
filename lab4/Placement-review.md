@@ -111,7 +111,7 @@ For the fixed Pi mounting pattern H5-H8, the proposed clearance radius is 3 mm
 from the center, surrounding hardware of at most 5.5 mm diameter. These are
 different dimensions: a strict 3 mm margin from the Pi hole edge would require
 a 4.35 mm radius and would intersect the standard adjacent GPIO socket body.
-The nearest nominal socket-body edge is 3.345 mm from a Pi hole center (1.995 mm
+The nearest nominal socket-body edge is 3.337 mm from a Pi hole center (1.995 mm
 from its drilled edge). Confirm the course interpretation for these Pi supports
 before fabrication; we have not claimed the larger clearance is met there.
 
@@ -148,8 +148,8 @@ parity and excluded findings included, reports:
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
-- 345 missing connections in both the full connectivity count and DRC listing.
-  Local regulator/MCU/CAN routing has 2,214 segments, 275 vias and four ground zones.
+- 337 missing connections in both the full connectivity count and DRC listing.
+  Local regulator/MCU/CAN routing has 2,386 segments, 283 vias and four ground zones.
 - 0 missing footprints: all five GCT switches are now placed.
 
 The five switch geometries and contact maps are checked against the GCT A1

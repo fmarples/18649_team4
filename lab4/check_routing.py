@@ -1,4 +1,4 @@
-"""Verify routed regulator, MCU and CAN local copper with KiCad's graph.
+"""Verify routed regulator, MCU and CAN copper with KiCad's graph.
 
 Run with KiCad's Python. This checks saved copper, not just schematic net names.
 DRC, loop/thermal review and the rest of the board are separate requirements.
@@ -120,6 +120,15 @@ for n in [50, 60]:
     for name, members in groups.items():
         check_group(u, name, members)
 
+# Backbone pads must connect across all three zones, with termination on the
+# bus side of the isolation jumpers. Local transceiver nets are separate.
+for bus in ['A', 'B']:
+    for signal in ['H', 'L']:
+        net = f'/CAN_{bus}_{signal}'
+        members = sorted(key for key, a in pads.items() if a.GetNetname() == net)
+        assert len(members) == 8, (net, members)
+        check_group(f'CAN_{bus}', f'{signal} backbone', members)
+
 # The two physical pads of each switch pole must both reach the local circuit.
 for ref in ['SW50', 'SW51', 'SW60', 'SW61']:
     fp = next(f for f in board.GetFootprints() if f.GetReference() == ref)
@@ -146,7 +155,7 @@ for n in [10, 14, 20, 24, 30, 34]:
         if not top_only:
             errors.append({'reference': f'U{n}', 'group': 'clock layer', 'pin': pin})
 report = {
-    'status': 'PASS for local connectivity only' if not errors else 'FAIL',
+    'status': 'PASS for checked copper connections only' if not errors else 'FAIL',
     'fabrication_release': False,
     'errors': errors,
     'counts': {'track_segments': len(segments), 'through_vias': len(vias),
@@ -157,9 +166,14 @@ report = {
         f'{p.ToMM(v.GetWidth(p.F_Cu)):.2f}/{p.ToMM(v.GetDrill()):.2f}' for v in vias)),
     'checks': checks,
     'clock_routes': clock_routes,
+    'backbone_nets': [
+        {'net': net,
+         'total_copper_length_mm_all_branches': round(sum(p.ToMM(t.GetLength()) for t in segments if t.GetNetname() == net), 3),
+         'through_vias': sum(t.GetNetname() == net for t in vias)}
+        for net in ['/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L']],
     'remaining': [
         'Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.',
-        'Host SPI/interrupts, board-wide CAN A/B backbones, motor/servo, sensing and other signals need routing.',
+        'Host SPI/interrupts, motor/servo, sensing and other signals need routing.',
         'Local CAN/MCU supply groups still need their board-wide 3V3 feed.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.',

@@ -1,9 +1,10 @@
 # Local power, MCU and CAN routing
 
 25 October 2026. We routed the local circuits around both STM32s and all six
-CAN interfaces, preserving the three previously routed regulator groups.
-The saved PCB has **2,214 track segments, 275 through vias and four filled
-ground zones**. The full missing-connection count fell from **648 to 345**.
+CAN interfaces and joined the three zones through both CAN backbones,
+preserving the three previously routed regulator groups.
+The saved PCB has **2,386 track segments, 283 through vias and four filled
+ground zones**. The full missing-connection count fell from **648 to 337**.
 This is a partial routing revision, not a fabrication release.
 
 ## Connections completed in this revision
@@ -13,7 +14,12 @@ reset network, inactive RTS inputs and chip-select pull-up. TXD/RXD now reach
 the transceiver and test header. The transceiver has a local bypass connection,
 ground connections and CAN H/L connections to its isolation header. Each node's
 backbone-side test pins and, where fitted, termination jumper/resistor are
-connected locally. **The long CAN A/B backbones between nodes are not routed.**
+connected locally. Both CAN A/B backbones now connect the rear, cockpit and
+front nodes. The main runs are front-layer pairs with 0.20 mm tracks and
+0.60 mm center spacing (0.40 mm copper gap). Bus A goes around the Pi support
+and header; Bus B follows the right edge. Branch fanouts use both layers.
+These dimensions do not establish a controlled-impedance rating; pair/return
+geometry and signal behavior still need final review.
 
 We moved 48 CAN support footprints to shorten the critical paths. Each crystal
 is beside its controller's oscillator pins. All 12 oscillator nets use only
@@ -51,12 +57,14 @@ effective capacitance and thermal/current qualification remain open.
 ## Verification
 
 - `check_routing.py` walks KiCad's physical copper-connectivity graph. All
-  **111 local connection groups** pass: 21 regulator, 76 CAN and 14 MCU groups.
+  **115 connection groups** pass: 21 regulator, 76 local CAN, 14 MCU and
+  four complete backbone nets. Each backbone net reaches all eight required
+  pads across the three zones, with termination on the bus side of isolation.
   It also checks the duplicated physical switch contacts and front-only clock
   copper. Removing U10's OSC1 copper in a temporary copy correctly causes a
   failure even though the pads retain their schematic net names.
 - Fresh ERC, ordinary DRC and schematic parity have zero findings. The remaining
-  345 unconnected items are reported as fabrication blockers in
+  337 unconnected items are reported as fabrication blockers in
   [Fabrication-check.json](Fabrication-check.json), not suppressed.
 - All 284 electrical footprints and their pad nets match the schematic.
   Placement coordinates and previews match the saved board; all original
@@ -66,14 +74,14 @@ effective capacitance and thermal/current qualification remain open.
   [Routing-front.svg](Routing-front.svg) and [Routing-back.svg](Routing-back.svg).
 
 KiCad 10 caps its DRC unconnected list at 499 entries; our audit also records
-the full connectivity count. Both now report 345. The earlier regulator-only
+the full connectivity count. Both now report 337. The earlier regulator-only
 revision had 648 missing connections, although its DRC list stopped at 499.
 See the [KiCad DRC engine source](https://github.com/KiCad/kicad-source-mirror/blob/10.0/pcbnew/drc/drc_engine.cpp).
 
 ## Remaining routing
 
-Host SPI/chip-select/interrupt wiring, the long CAN A/B backbones, board-wide
-power, sensing, actuator and remaining probe/indicator signals still need
+Host SPI/chip-select/interrupt wiring, board-wide power, sensing, actuator
+and remaining probe/indicator signals still need
 routing. Review CAN pair geometry, continuous reference copper, return paths
 and power-loop/thermal behavior before layout freeze. These digital routes
 can continue without new lab measurements. Battery/input-power, motor-fault

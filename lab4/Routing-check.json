@@ -1,15 +1,15 @@
 {
-  "status": "PASS for local connectivity only",
+  "status": "PASS for checked copper connections only",
   "fabrication_release": false,
   "errors": [],
   "counts": {
-    "track_segments": 2214,
-    "through_vias": 275,
+    "track_segments": 2386,
+    "through_vias": 283,
     "copper_zones": 4,
-    "full_unconnected_count": 345
+    "full_unconnected_count": 337
   },
   "segment_width_counts_mm": {
-    "0.2": 2047,
+    "0.2": 2219,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
@@ -20,7 +20,7 @@
     "1.2": 3
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 251,
+    "0.70/0.30": 259,
     "0.80/0.40": 24
   },
   "checks": [
@@ -1379,6 +1379,70 @@
         "SW61.2"
       ],
       "physically_connected": true
+    },
+    {
+      "reference": "CAN_A",
+      "group": "H backbone",
+      "net": "/CAN_A_H",
+      "pads": [
+        "J10.2",
+        "J11.3",
+        "J20.2",
+        "J21.3",
+        "J30.2",
+        "J31.3",
+        "JP10.1",
+        "JP20.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "CAN_A",
+      "group": "L backbone",
+      "net": "/CAN_A_L",
+      "pads": [
+        "J10.4",
+        "J11.4",
+        "J20.4",
+        "J21.4",
+        "J30.4",
+        "J31.4",
+        "R102.2",
+        "R202.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "CAN_B",
+      "group": "H backbone",
+      "net": "/CAN_B_H",
+      "pads": [
+        "J14.2",
+        "J15.3",
+        "J24.2",
+        "J25.3",
+        "J34.2",
+        "J35.3",
+        "JP14.1",
+        "JP24.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "CAN_B",
+      "group": "L backbone",
+      "net": "/CAN_B_L",
+      "pads": [
+        "J14.4",
+        "J15.4",
+        "J24.4",
+        "J25.4",
+        "J34.4",
+        "J35.4",
+        "R142.2",
+        "R242.2"
+      ],
+      "physically_connected": true
     }
   ],
   "clock_routes": [
@@ -1455,13 +1519,35 @@
       "total_branch_length_mm": 9.649
     }
   ],
+  "backbone_nets": [
+    {
+      "net": "/CAN_A_H",
+      "total_copper_length_mm_all_branches": 256.566,
+      "through_vias": 4
+    },
+    {
+      "net": "/CAN_A_L",
+      "total_copper_length_mm_all_branches": 251.328,
+      "through_vias": 13
+    },
+    {
+      "net": "/CAN_B_H",
+      "total_copper_length_mm_all_branches": 242.011,
+      "through_vias": 4
+    },
+    {
+      "net": "/CAN_B_L",
+      "total_copper_length_mm_all_branches": 236.772,
+      "through_vias": 13
+    }
+  ],
   "remaining": [
     "Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.",
-    "Host SPI/interrupts, board-wide CAN A/B backbones, motor/servo, sensing and other signals need routing.",
+    "Host SPI/interrupts, motor/servo, sensing and other signals need routing.",
     "Local CAN/MCU supply groups still need their board-wide 3V3 feed.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
-  "source_sha256": "5a68261cc4a691e5accd8c4a4cc9e5fd94768dde4153962e5f44359ba7187e67"
+  "source_sha256": "49497b62b2fcae655de40ce066d62bfac6cf462ef3b4de06e6d04162cf9e9b92"
 }

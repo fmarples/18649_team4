@@ -186,3 +186,16 @@ October 25 MCU and CAN local routing
 - Preview coordinates, fit template, native plots and CAD hashes refreshed.
   Host SPI/interrupts, CAN backbones, power distribution and remaining signals
   still need routing. No hardware testing or component-rating qualification.
+
+
+October 25 CAN backbones
+- Both independent CAN backbones now connect rear, cockpit and front zones.
+  Main runs use F.Cu paired 0.20mm tracks, 0.60mm centers; fanouts use both
+  layers. Mount/antenna reservations and schematic topology are unchanged.
+- All 115 checked connection groups pass, including all eight required pads
+  on each of CAN_A_H/L and CAN_B_H/L. Local transceiver isolation is retained.
+- Saved totals: 2,386 segments, 283 vias and four ground zones; 337 unconnected
+  items remain. Fresh ERC/ordinary DRC/parity findings are zero.
+- Pair impedance, reference continuity and hardware signal quality are not
+  qualified. Host SPI/interrupts and remaining power/actuator/probe routes are
+  still open; this is not a manufacturing release.
