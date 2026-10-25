@@ -13,20 +13,25 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
 
 ## Decisions to close or present explicitly at the review
 
-1. Resolve a battery/charger combination under the October 24
+1. Present the provisional battery/charger design and unresolved procurement under the October 24
    [purchasing rule](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
    and its [battery-only Amazon exception](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869).
    Check the exact battery listing and Pittsburgh delivery; charger sourcing
    is not covered by that exception.
-   Tenergy 11609/01025 remains an earlier design reference, not a finalized
-   purchase. The team reports that a
+   Ayaan's October 24 evening DM permits tonight's review to use the provisional
+   design and identify a replacement for the following week. Anson allows
+   somewhat longer delivery. Tenergy 11609/01025 remains a design reference,
+   not a finalized purchase. All new non-battery purchases, including the
+   charger, must use DigiKey/Mouser. The team reports that a
    115x50x50mm cardboard stand-in fits between the chassis plates, with
    approximately 51.75mm usable height. Final strap/lead routing and an actual
    pack installation remain; the preliminary envelope check is complete.
 2. Reconcile requested quantities with course v3 stock and identify extra
    purchases. The assembly question is answered: the team will assemble the
    board. Use DigiKey/Mouser outside course stock, with the battery-only Amazon
-   exception described above. The team will send the three review
+   exception described above. The supplier check in Parts-review.md separates
+   permitted purchase links, course-stock requests, and unresolved items.
+   The team will send the three review
    deliverables to its small-group TA via Slack.
 3. Record any clarification of expected L298 brief-stall/protection behavior,
    or flag it as an open engineering question. The October 24 team reply relays

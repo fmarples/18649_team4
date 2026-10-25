@@ -26,15 +26,54 @@ parts and generic headers. Local stock does not establish quantities or JLCPCB s
   Exact stock must be checked when ordering. The original 75 kΩ and 22 kΩ resistor listings are out of stock.
   Documented alternatives are listed below; preserve feedback tolerances.
 
-## Battery and charger: purchasing unresolved
+## Supplier check, October 24 evening
+
+We use course stock first. All new non-battery purchases must use DigiKey or
+Mouser. The [20:09 EDT course reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792886971109979)
+limits Amazon to batteries; a possible connector or charger exception would
+need a separate TA decision. We have not applied such an exception.
+
+We checked every supplier field in both active BOMs. In Preliminary-BOM.csv,
+94 rows now link only to DigiKey, 25 generic-header rows request course stock,
+two unresolved rows have no purchase link (charger and heatsink attachment),
+and six zero-quantity rows are references only. The 96-row hand-assembly BOM
+has 71 DigiKey-linked rows and the same 25 course-stock header rows.
+These counts describe sourcing documentation, not 127 qualified purchases.
+
+- We replaced manufacturer-only links for J40/J80/J81, J90, U81 and the four
+  lamp transistors with exact-MPN DigiKey listings. No part, footprint or
+  quantity changed. U81 SN74LVC14APWR is out of stock on the checked listing;
+  it needs availability or a reviewed substitute before ordering.
+- The Amazon generic-header link came from the course's v3 list. We removed
+  it from the active purchasing fields and retained the original course list
+  as evidence. Confirm course quantities and row/pin dimensions; any shortage
+  must be sourced through DigiKey/Mouser, with a replacement MPN selected.
+- The 16AWG and 22AWG wire rows now link to DigiKey's exact Alpha Wire
+  RD005/BK005 spool listings. Our requests are still cut lengths in metres.
+  Those listings sell 100ft spools; do not interpret 6m or 2m as spool counts.
+  Use lab cut lengths first, or reconcile order units and cost before buying.
+- Manufacturer datasheets and zero-quantity research alternatives remain
+  technical references. LCSC fields and BOM-JLC-hybrid.csv are historical
+  assembly comparisons, not the active purchasing route.
+
+Supplier compliance does not establish stock availability, cable compatibility,
+or current capability. Battery/charger selection, servo-lead qualification,
+course quantities and deferred attachment hardware remain explicit open items.
+
+## Battery and charger: provisional review basis
 
 The [October 24 purchasing rule](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
-requires DigiKey or Mouser for parts outside the course list. A
-[later TA reply at 17:44 EDT](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869)
-allows Amazon for the battery only, with delivery set to Pittsburgh and
-preferably Prime one- or two-day delivery. It does not establish an exception
-for chargers or other vendors. Tenergy 11609/01025 remain zero-quantity
-references; one pack and one compatible charger remain unresolved requests.
+requires DigiKey or Mouser for parts outside the course list. The
+[battery-only Amazon exception](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869)
+asks for Pittsburgh delivery, preferably Prime one- or two-day delivery.
+In the October 24 evening DMs, Anson said the proposed Tenergy pair should
+work and allowed somewhat longer delivery. Ayaan allowed us to submit the
+provisional design tonight, identify the unresolved battery, and find a
+replacement within the next week. These replies remove final battery
+selection as a prerequisite to tonight's review; they do not place an order.
+We keep all new non-battery purchases, including the charger, on DigiKey/Mouser.
+Tenergy 11609/01025 remain zero-quantity design references; one pack and one
+compatible charger remain unresolved requests.
 
 The earlier [Tenergy 11609](https://power.tenergy.com/at-tenergy-12v-4200mah-nimh-rechargeable-battery-pack-10s1p-50-4wh-30a-rate/)
 reference is ten Sub-C NiMH cells, 12V/4.2Ah, stated 30A continuous discharge,

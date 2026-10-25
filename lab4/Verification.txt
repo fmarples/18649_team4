@@ -80,6 +80,21 @@ Servo-adapter sourcing review, October24
 - Documented conditional P1-to-J90 mapping and26-to22AWG transition.
   No fit, continuity, heating or voltage-drop test has been performed.
 
+Supplier audit, October24 evening
+- Read the latest course battery thread and Anson/Ayaan DMs. Amazon is battery
+  only. Ayaan allows the provisional battery design for tonight's review and
+  a replacement next week; Anson allows somewhat longer delivery.
+- Preliminary BOM:127 rows.94 have DigiKey supplier links;25 generic-header
+  rows are course-stock requests;2 have unresolved sourcing with no purchase
+  link;6 are zero-quantity references. Hand BOM:96 rows,71 DigiKey-linked and
+  25 course-stock header rows. No active supplier URL points to another vendor.
+- Six board-part rows now have exact-MPN DigiKey links. SN74LVC14APWR is out
+  of stock on the checked listing. Wire links identify100ft spools, while
+  requested quantities remain metres of lab cut lengths.
+- All quantities, MPNs, circuit references and footprints preserved by cell
+  comparison. Original course-stock evidence and historical JLC comparison
+  are unchanged. This audit does not establish stock allocation or physical fit.
+
 Limits
 No PCB was built, powered or flashed. Battery/charger selection, L298 protection,
 heatsink attachment, fuse coordination, course stock and adapter qualification
