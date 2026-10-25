@@ -286,3 +286,8 @@ H5,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,92.5
 H6,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,91.5,92.5,0.0,F.Cu,False
 H7,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,141.5,0.0,F.Cu,False
 H8,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,91.5,141.5,0.0,F.Cu,False
+SW60,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,12,81,0.0,F.Cu,True
+SW61,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,27,85,0.0,F.Cu,True
+SW50,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,12,185,0.0,F.Cu,True
+SW51,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,60,179,0.0,F.Cu,True
+SW70,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,12,144,0.0,F.Cu,True

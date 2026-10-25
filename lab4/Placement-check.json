@@ -1,14 +1,8 @@
 {
   "status": "PASS",
   "errors": [],
-  "schematic_footprints_present": 279,
-  "missing_footprints": [
-    "SW50",
-    "SW51",
-    "SW60",
-    "SW61",
-    "SW70"
-  ],
+  "schematic_footprints_present": 284,
+  "missing_footprints": [],
   "mechanical_holes": 8,
   "board_size_mm": [
     120,
@@ -23,11 +17,12 @@
     "All 40 bottom socket pad coordinates match physical Pi pin numbers",
     "Pi 58x49mm mounting pattern and 1.02mm socket drills",
     "Nominal socket insertion within manufacturer range",
-    "Preview coordinates match saved PCB"
+    "Preview coordinates match saved PCB",
+    "Five GCT switches: 1.4mm square pads and manufacturer common-terminal pairs"
   ],
   "pi_stack_nominal": {
     "socket_insertion_mm": 5.17,
-    "usb_to_main_pcb_mm": 6,
+    "usb_to_main_pcb_mm": 5.6,
     "pi_board_underside_above_chassis_mm": 11.4,
     "top_tht_refs_over_pi": [
       "J30",
@@ -38,9 +33,9 @@
     "max_tht_tail_projection_mm": 3
   },
   "limitations": [
-    "Not a physical fit or footprint-dimension validation",
-    "Unrouted and incomplete schematic",
-    "Chassis centers measured; PCB drill/fasteners and vertical fit still require verification",
+    "Not a physical fit test or complete footprint-dimension validation",
+    "Unrouted placement study",
+    "Chassis/Pi measurements complete; final cable envelopes and assembled fastener/mating checks remain",
     "Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review",
     "Pi pin protrusion/heatsink, Wi-Fi, thermals and socket tolerances need physical verification",
     "Placement checks do not replace the separate KiCad DRC report; board remains unrouted"

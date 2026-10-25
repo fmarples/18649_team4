@@ -5,9 +5,9 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 NiMH-powered supply with a battery/charger purchase still to finalize. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
-**Status, 24 October 2026:** schematic and unrouted placement for design review.
+**Status, 25 October 2026:** schematic and unrouted placement for design review.
 The five schematic pages contain 284 components and 297 nets. The proposed
-120 x 234 mm PCB contains 279 assigned electrical footprints and eight
+120 x 234 mm PCB contains 284 assigned electrical footprints and eight
 mechanical supports. The four chassis centers use the team's caliper measurements:
 50 mm front, 105 mm rear, 220 mm longitudinal separation and aligned pair
 midpoints. Chassis holes are confirmed smooth, 4.5 mm through-holes;
@@ -26,7 +26,7 @@ are not needed for today's review. Mounting hardware is a staff follow-up;
 thermal performance and protection behavior are not validated. Battery mounting
 and procurement decisions remain unresolved. The TAs confirmed on October 23 that
 teams will assemble all SMD parts themselves, with TechSpark oven access tentative.
-BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Five switch footprints, routing,
+BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Routing, power/heatsink decisions,
 physical fit and hardware validation are unfinished. This is not a fabrication
 or purchasing release. The October 24 review covers schematic, BOM and high-level
 design; the board layout deadline is October 29.
@@ -67,7 +67,7 @@ for a TA submission so the reviewed version can be recovered later.
 | [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
 | [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
 | [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |
-| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No placement violations; reported unrouted connections and five missing footprints remain. |
+| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No placement violations or missing footprints; 499 unconnected items remain. |
 | [Lab4-Circuits.pdf](Lab4-Circuits.pdf) | Five-page schematic preview. |
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |
@@ -170,8 +170,9 @@ device-tree configuration and physical bus labels before relying on Linux
   the selected spacer, fastener, shunt, LED and harness part numbers.
 - Finalize component quantities from course stock and the additional-parts request.
   The course assembly plan is now team assembly; the JLC comparison is historical.
-- Verify the five GCT switch footprints and the remaining package/connector
-  dimensions. Check the course-stock transceiver against the selected DR code.
+- The five GCT switch footprints and contact pairs are verified and placed;
+  see [Switch-footprint-review.md](Switch-footprint-review.md). Review remaining
+  package/connector dimensions and the course-stock transceiver's DR code.
 - The four chassis positions, Pi paper footprint and actual-Pi height checks
   are complete; no repeat measurements are requested. Before layout freeze,
   resolve remaining cable/port/steering envelopes using drawings or a quick
@@ -181,8 +182,8 @@ device-tree configuration and physical bus labels before relying on Linux
 ERC reports zero errors and zero warnings. Netlist checks cover all 284
 references and 297 nets, including motor current paths, flyback polarity,
 servo supply after its shunt, MCU support and Lab 3 pin reservations.
-Placement DRC reports zero violations, 499 unconnected items and five missing
-switch footprints. The unconnected count is the tool's report, not a completed
+Placement DRC reports zero violations, 499 unconnected items and zero missing
+footprints. The unconnected count is the tool's report, not a completed
 route. A package-specific 0.15 mm pad-clearance rule applies only inside U40-U42
 for the proposed 1 oz copper process; general trace clearance stays 0.20 mm.
 See Placement-review.md for the source and remaining limits.

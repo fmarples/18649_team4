@@ -13,10 +13,10 @@
     "socket": "Samtec ESQ-120-44-L-D",
     "socket_body_height_mm": 18.67,
     "gpio_tip_height_mm": 8.5,
-    "usb_height_mm": 16,
+    "usb_height_mm": 16.4,
     "header_insertion_min_mm": 3.68,
     "header_insertion_max_mm": 6.35,
-    "support_max_od_mm": 5,
+    "support_max_od_mm": 5.5,
     "provisional": true
   },
   "components": [
@@ -4611,6 +4611,86 @@
         6.095067
       ],
       "schematic": false
+    },
+    {
+      "reference": "SW60",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 12,
+      "y_mm": 81,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        7.704999999999998,
+        78.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW61",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 27,
+      "y_mm": 85,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        22.705,
+        82.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW50",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 12,
+      "y_mm": 185,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        7.704999999999998,
+        182.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW51",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 60,
+      "y_mm": 179,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        55.705,
+        176.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW70",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 12,
+      "y_mm": 144,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        7.704999999999998,
+        141.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
     }
   ],
   "reservations": [
@@ -4694,58 +4774,7 @@
       "h": 12,
       "kind": "rf",
       "layer": "B.Cu"
-    },
-    {
-      "name": "SW60 RESET",
-      "x": 8.5,
-      "y": 77.5,
-      "w": 7,
-      "h": 7,
-      "kind": "switch",
-      "layer": "F.Cu"
-    },
-    {
-      "name": "SW61 SELF TEST",
-      "x": 23.5,
-      "y": 81.5,
-      "w": 7,
-      "h": 7,
-      "kind": "switch",
-      "layer": "F.Cu"
-    },
-    {
-      "name": "SW50 RESET",
-      "x": 8.5,
-      "y": 181.5,
-      "w": 7,
-      "h": 7,
-      "kind": "switch",
-      "layer": "F.Cu"
-    },
-    {
-      "name": "SW51 SELF TEST",
-      "x": 56.5,
-      "y": 175.5,
-      "w": 7,
-      "h": 7,
-      "kind": "switch",
-      "layer": "F.Cu"
-    },
-    {
-      "name": "SW70 PI TEST",
-      "x": 8.5,
-      "y": 140.5,
-      "w": 7,
-      "h": 7,
-      "kind": "switch",
-      "layer": "F.Cu"
     }
   ],
-  "missing_footprints": [
-    "SW50",
-    "SW51",
-    "SW60",
-    "SW61",
-    "SW70"
-  ]
+  "missing_footprints": []
 }

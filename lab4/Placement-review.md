@@ -8,8 +8,9 @@ verified and the board is not ready for fabrication. See
 
 ## Arrangement
 
-We placed all 279 schematic components that currently have assigned footprints.
-The remaining five switches have marked space reservations, not invented pads.
+We placed all 284 schematic components. The five GCT switch footprints replace
+their drawing reservations; their geometry and internal contact pairs follow
+the manufacturer's A1 drawing. See [Switch-footprint-review.md](Switch-footprint-review.md).
 All 297 exported schematic nets are present, and the placed pads retain their
 schematic connectivity and reference identities.
 
@@ -47,10 +48,11 @@ be checked before procurement/fabrication.
 The proposed gap from the Pi's top PCB surface to our PCB underside is 22 mm.
 Using the published 8.5 mm GPIO tip height, nominal insertion is
 8.5 - (22 - 18.67) = **5.17 mm**, within the socket's 3.68-6.35 mm range.
-The Pi's 16 mm USB bodies leave **6 mm nominal clearance** to our PCB underside.
-Top-side through-hole joints over the Pi (J30/J31/J34/J35) must project no more
-than 3 mm below our board, leaving at least 3 mm nominal clearance even over a
-USB body. A fitted cooler, tolerances and other underside features can change
+The reported 18 mm Pi-board-bottom to USB-top height gives 16.4 mm above the
+Pi board when its assumed 1.6 mm thickness is subtracted. This leaves **5.6 mm
+nominal clearance** to our PCB underside. Top-side through-hole joints over the
+Pi (J30/J31/J34/J35) must project no more than 3 mm below our board, leaving
+2.6 mm nominal clearance over that USB envelope. A fitted cooler, tolerances and other underside features can change
 these results; this is a dimensional calculation, not a measured fit.
 
 We propose 35 mm chassis spacers and four equal 22 mm Pi spacer stacks. With a
@@ -144,13 +146,12 @@ parity and excluded findings included, reports:
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
 - 499 reported unconnected items: no copper tracks or zones have been routed.
-- 5 missing footprints: SW50, SW51, SW60, SW61 and SW70.
+- 0 missing footprints: all five GCT switches are now placed.
 
-Five stale resistor datasheet fields were synchronized with the schematic;
-these were metadata mismatches, not changes to placement or connectivity.
-The five missing switches are now also listed by the DRC's schematic-parity
-section. See `Fabrication-check.json` and `Fabrication-review.md` for the final
-submission audit; this placement result does not authorize fabrication.
+The five switch geometries and contact maps are checked against the GCT A1
+drawing. Their schematic fields and BOM entries agree. See `Fabrication-check.json`
+and `Fabrication-review.md` for the current submission audit; this placement
+result does not authorize fabrication.
 
 The three SOT-563 buck footprints have 0.15 mm adjacent pad gaps. We added a
 narrow pad-to-pad exception only within U40, U41 and U42, based on JLCPCB's
@@ -164,7 +165,7 @@ would require a new review. [JLCPCB capabilities](https://jlcpcb.com/capabilitie
 checks the 40 Pi mating positions, net mapping, outline, drill sizes, support
 envelopes and nominal insertion. These are software/geometric checks, not
 physical tests. Verify motor protection expectations and thermal design,
-five switch footprints, connector verification and detailed routing before
+remaining package/connector assumptions and detailed routing before
 fabrication. Follow the converter datasheet's switching-loop and feedback layout
 guidance; spreading footprints without routing does not validate a power layout.
 

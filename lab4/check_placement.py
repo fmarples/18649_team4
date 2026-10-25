@@ -16,7 +16,24 @@ fps={fp.GetReference():fp for fp in b.GetFootprints()}
 errors=[]
 schematic={c.attrib['ref']:c for c in tree.findall('components/comp')}
 missing=sorted(set(schematic)-set(fps))
-assert missing==['SW50','SW51','SW60','SW61','SW70'],missing
+assert not missing,('Missing schematic footprints:',missing)
+
+# GCT SWT0210 A1, component-side drawing: terminals 1/2 form one row,
+# terminals 3/4 the other. They become the two SW_Push logical contacts.
+# Check exact copper geometry as well as nets: a left/right contact grouping
+# would hold RESET/self-test permanently low despite an apparently valid BOM.
+for ref in ['SW50','SW51','SW60','SW61','SW70']:
+    fp=fps[ref]
+    expected={('1',-3.3,-1.5),('1',3.3,-1.5),('2',-3.3,1.5),('2',3.3,1.5)}
+    actual={(pad.GetNumber(),round(p.ToMM(pad.GetFPRelativePosition().x),3),
+             round(p.ToMM(pad.GetFPRelativePosition().y),3)) for pad in fp.Pads()}
+    if actual!=expected:errors.append(f'{ref} GCT terminal-pair geometry mismatch')
+    if len(list(fp.Pads()))!=4:errors.append(f'{ref} must have four physical pads')
+    for pad in fp.Pads():
+        if pad.GetAttribute()!=p.PAD_ATTRIB_SMD or any(abs(p.ToMM(v)-1.4)>.001 for v in [pad.GetSize().x,pad.GetSize().y]):
+            errors.append(f'{ref} GCT 1.4mm square SMD pad mismatch')
+    if str(fp.GetFPID().GetLibNickname())+':'+str(fp.GetFPID().GetLibItemName())!=schematic[ref].findtext('footprint'):
+        errors.append(f'{ref} schematic/board footprint mismatch')
 def box(fp):
     fp.BuildCourtyardCaches();bb=fp.GetCourtyard(p.B_CrtYd if fp.IsFlipped() else p.F_CrtYd).BBox()
     return [p.ToMM(bb.GetX())-40,p.ToMM(bb.GetY())-40,p.ToMM(bb.GetWidth()),p.ToMM(bb.GetHeight())]
@@ -63,7 +80,7 @@ insertion=pi['gpio_tip_height_mm']-(pi['board_gap_mm']-pi['socket_body_height_mm
 if not pi['header_insertion_min_mm']<=insertion<=pi['header_insertion_max_mm']:errors.append('Nominal header engagement out of range')
 usb_gap=pi['board_gap_mm']-pi['usb_height_mm']
 # Limit solder tails of top-side THT parts in the Pi projection to 3 mm below
-# our board, leaving >=3 mm above a 16 mm Pi USB body at 22 mm spacing.
+# our board, leaving 2.6 mm nominal above the inferred 16.4 mm USB envelope.
 tht_over_pi=[]
 for ref,fp in fps.items():
     if ref in schematic and ref!='J70' and hit(box(fp),[30,89,85,56]) and any(pad.GetAttribute()==p.PAD_ATTRIB_PTH for pad in fp.Pads()):
@@ -81,12 +98,13 @@ report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
         'Chassis 3mm-from-hole-edge and Pi 3mm-radius support envelopes clear',
         'All 40 bottom socket pad coordinates match physical Pi pin numbers',
         'Pi 58x49mm mounting pattern and 1.02mm socket drills',
-        'Nominal socket insertion within manufacturer range','Preview coordinates match saved PCB'],
-    pi_stack_nominal=dict(socket_insertion_mm=round(insertion,2),usb_to_main_pcb_mm=usb_gap,
+        'Nominal socket insertion within manufacturer range','Preview coordinates match saved PCB',
+        'Five GCT switches: 1.4mm square pads and manufacturer common-terminal pairs'],
+    pi_stack_nominal=dict(socket_insertion_mm=round(insertion,2),usb_to_main_pcb_mm=round(usb_gap,2),
         pi_board_underside_above_chassis_mm=round(pi['main_pcb_chassis_gap_mm']-pi['board_gap_mm']-pi['pi_thickness_assumed_mm'],2),
         top_tht_refs_over_pi=sorted(tht_over_pi),max_tht_tail_projection_mm=3),
-    limitations=['Not a physical fit or footprint-dimension validation','Unrouted and incomplete schematic',
-        'Chassis centers measured; PCB drill/fasteners and vertical fit still require verification',
+    limitations=['Not a physical fit test or complete footprint-dimension validation','Unrouted placement study',
+        'Chassis/Pi measurements complete; final cable envelopes and assembled fastener/mating checks remain',
         'Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review',
         'Pi pin protrusion/heatsink, Wi-Fi, thermals and socket tolerances need physical verification',
         'Placement checks do not replace the separate KiCad DRC report; board remains unrouted'])

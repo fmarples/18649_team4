@@ -183,6 +183,10 @@ for base,y in [(550,186),(650,76)]:
         place(f'R{base+10+i}',x-5,y+2,90)
         place(f'R{base+20+i}',x+5,y-2,90)
         place(f'J{base+i}',x+9,y+2)
+# Verified GCT A1 land pattern; physical terminal pairs are mapped to two contacts.
+for ref,x,y in [('SW60',12,81),('SW61',27,85),('SW50',12,185),('SW51',60,179),('SW70',12,144)]:
+    # Use the body/pad-pattern origin; the pin marker makes the drawn bbox asymmetric.
+    fps[ref].SetPosition(vec(x,y));positions[ref]=(x,y,0)
 assert set(positions)==set(fps),('Unplaced:',set(fps)-set(positions))
 
 reservations=[]
@@ -209,9 +213,6 @@ reserve('Pi microSD ACCESS BELOW BOARD',0,109,30,16,'cable',layer=p.B_Cu)
 # copper and components on both layers; still verify Wi-Fi with the metal car.
 for layer in [p.F_Cu,p.B_Cu]:
     reserve('Pi ANTENNA REVIEW / NO COPPER',26,98,18,12,'rf',layer=layer,copper=True)
-for name,x,y in [('SW60 RESET',12,81),('SW61 SELF TEST',27,85),('SW50 RESET',12,185),('SW51 SELF TEST',60,179),('SW70 PI TEST',12,144)]:
-    # Exact switch pads are not invented; these are only mechanical reservations.
-    reserve(name,x-3.5,y-3.5,7,7,'switch')
 
 def mount(ref,x,y,diam,kind):
     fp=load_fp('Lab4_Mechanical:Pi_support_M2.5_D5.5' if diam==2.7 else 'MountingHole:MountingHole_3.2mm_M3')
@@ -255,7 +256,7 @@ with (ROOT/'Placement-coordinates.csv').open('w',newline='',encoding='utf-8') as
 pi=dict(x_mm=PI_X,y_mm=PI_Y,width_mm=85,height_mm=56,orientation='component side up, below main PCB',
         board_gap_mm=22,main_pcb_chassis_gap_mm=35,pi_thickness_assumed_mm=1.6,
         socket='Samtec ESQ-120-44-L-D',socket_body_height_mm=18.67,
-        gpio_tip_height_mm=8.5,usb_height_mm=16,header_insertion_min_mm=3.68,header_insertion_max_mm=6.35,
-        support_max_od_mm=5,provisional=True)
+        gpio_tip_height_mm=8.5,usb_height_mm=16.4,header_insertion_min_mm=3.68,header_insertion_max_mm=6.35,
+        support_max_od_mm=5.5,provisional=True)
 (ROOT/'placement-data.json').write_text(json.dumps(dict(width_mm=W,height_mm=H,pi=pi,components=records,reservations=reservations,missing_footprints=missing),indent=2),encoding='utf-8')
 print(json.dumps(dict(board=str(args.output),schematic_footprints=len(comps)-len(missing),missing=missing,mechanical_holes=8,nets=len(netmap))))

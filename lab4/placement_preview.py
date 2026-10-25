@@ -20,7 +20,7 @@ S=6;OX=75;OY=180
 def xy(x,y):return OX+S*x,OY+S*y
 def rbox(x,y,w,h):return (*xy(x,y),*xy(x+w,y+h))
 dr.text((75,35),'Lab 4 | Direct Pi connection',font=ft(38,True),fill='#16354e')
-dr.text((75,89),'120 x 234 mm proposal  /  279 electrical footprints placed',font=ft(23),fill='#334b60')
+dr.text((75,89),'120 x 234 mm proposal  /  284 electrical footprints placed',font=ft(23),fill='#334b60')
 dr.text((75,125),'UNROUTED - measured chassis hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
 dr.rectangle(rbox(0,0,120,234),fill='white',outline='#16354e',width=3)
 for r in d['reservations']:
@@ -35,7 +35,7 @@ for c in d['components']:
     else:
         color='#c77729' if c['layer']=='B.Cu' else '#214b69' if ref.startswith('U') else '#6592a7' if ref.startswith('J') else '#abbbc6'
         dr.rectangle(rbox(x,y,w,h),fill=color,outline='#244052',width=1)
-        if ref.startswith(('U','J','L','F','Q')):dr.text(xy(x,y+h+.2),ref,font=ft(11),fill='#173b53')
+        if ref.startswith(('U','J','L','F','Q','SW')):dr.text(xy(x,y+h+.2),ref,font=ft(11),fill='#173b53')
 def onboard(lines,x,y):
     for i,line in enumerate(lines):dr.text(xy(x,y+i*3.1),line,font=ft(16,True),fill='#244052')
 
@@ -57,17 +57,17 @@ side=[('What this establishes',[
     'No copper tracks or ground planes yet.',
     'J70: bottom-mounted 40-pin socket.',
     'No GPIO cable. Pin geometry checked.']),
-    ('Still required before routing',[
-    'Five verified switch footprints.',
+    ('Remaining layout work',[
+    'Finalize power loops and local routing.',
     'Verify motor protection and heatsink fit.',
     '1 oz copper; 0.15 mm buck-pad exception.',
-    'Check battery holder, heatsink and cables.',
-    'Confirm screws and vertical stack fit.']),
+    'Check pack mounting and cable space.',
+    'Resolve remaining mounting clearances.']),
     ('Placement key',[
     'Blue block: Pi mounted BELOW this area.',
     'Orange connector: socket on underside.',
     'Pink: preliminary antenna review area.',
-    'Amber block: future circuit/switch space.',
+    'Amber block: provisional hardware space.',
     'Dark outlines: real component footprints.',
     'Battery pack mounts separately; no holder',
     'fit is claimed on this PCB.'])]
@@ -77,7 +77,7 @@ for title,lines in side:
     for line in lines:dr.text((860,y),line,font=ft(20),fill='#334b60');y+=30
     y+=38
 dr.text((75,1626),'Geometry proposal only. Board width over the tapered front plate and wheel/linkage clearance need a physical fit check.',font=ft(20),fill='#334b60')
-dr.text((75,1660),'Source: KiCad placement coordinates. The schematic is still incomplete; a successful placement is not a fabrication approval.',font=ft(20),fill='#334b60')
+dr.text((75,1660),'Source: KiCad placement coordinates. Routing and hardware decisions remain; placement is not fabrication approval.',font=ft(20),fill='#334b60')
 img.save(ROOT/'Placement-overview.png')
 
 pdf=canvas.Canvas(str(ROOT/'Placement-fit-template.pdf'),pagesize=(210*mm,297*mm))
@@ -140,7 +140,7 @@ sd.text((160,745),'Existing metal chassis plate',font=ft(23,True),fill='#4a525b'
 sd.text((550,325),'Tall socket',font=ft(22,True),fill='#263441')
 sd.text((550,355),'18.67 mm body',font=ft(19),fill='#263441')
 sd.text((730,395),'USB',font=ft(22,True),fill='#263441')
-sd.text((728,425),'16 mm',font=ft(20),fill='#263441')
+sd.text((728,425),'16.4 mm',font=ft(20),fill='#263441')
 def dimension(x,y1,y2,label,small=None):
     sd.line((x,y1,x,y2),fill='#235271',width=2)
     for y in (y1,y2):sd.line((x-8,y,x+8,y),fill='#235271',width=2)
@@ -148,7 +148,7 @@ def dimension(x,y1,y2,label,small=None):
     if small:sd.text((x+17,(y1+y2)/2+16),small,font=ft(18),fill='#334b60')
 dimension(1130,280,550,'22 mm','Pi-to-PCB gap')
 dimension(1130,571,700,'11.4 mm','before underside parts')
-sd.text((60,825),'35 mm chassis standoffs proposed. All heights and mating must be checked on the actual assembly.',font=ft(23),fill='#9b4800')
+sd.text((60,825),'35 mm chassis standoffs proposed. Caliper heights recorded; final mating is checked at assembly.',font=ft(23),fill='#9b4800')
 sideimg.save(ROOT/'Pi-stack-side-view.png')
 
 pdf.showPage()
@@ -170,14 +170,14 @@ pdf.setFont('Helvetica',9)
 for i,line in enumerate(['USB / Ethernet face right.', 'GPIO row faces the REAR.', 'microSD is on Pi underside.', 'Do not use this as a drill guide.', 'Main-PCB Pi origin: (30,89) mm.']):
     pdf.drawString(113*mm,(251-i*7)*mm,line)
 pdf.drawImage(str(ROOT/'Pi-stack-side-view.png'),15*mm,83*mm,width=180*mm,height=108*mm)
-pdf.setFont('Helvetica-Bold',10);pdf.drawString(15*mm,73*mm,'Record from the unpowered physical mock-up:')
+pdf.setFont('Helvetica-Bold',10);pdf.drawString(15*mm,73*mm,'Recorded geometry and remaining fit checks:')
 pdf.setFont('Helvetica',9)
-for i,line in enumerate(['Main-PCB underside above chassis: ______ mm (proposal 35 mm).',
-    'Pi top to main-PCB underside: ______ mm (proposal 22 mm).',
-    'Lowest Pi part / card / wire above metal: ______ mm.',
-    'Tallest Pi feature, including cooler: ______ mm above Pi board.',
-    'Compare H1-H4 with measured chassis holes; do not drill from this print.',
-    'Can USB, Ethernet, microSD and cables be reached? __________________']):
+for i,line in enumerate(['Chassis spacers: 35 mm nominal; four-hole paper fit passed with ~50 mm spacers.',
+    'Pi-to-PCB gap: 22 mm nominal; calculated socket engagement 5.17 mm.',
+    'Reported underside parts <5 mm; calculated nominal metal clearance 6.4 mm.',
+    'USB top measured ~18 mm from Pi board bottom; check any added cooler.',
+    'Chassis and Pi hole patterns checked; repeat only if the layout changes.',
+    'Still check unknown plug/cable/steering envelopes and assembled socket fit.']):
     pdf.drawString(15*mm,(65-i*7)*mm,line)
 pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi mounting hardware OD <=5.5 mm proposed. Review the course 3 mm hole-clearance interpretation before fabrication.')
 pdf.save()

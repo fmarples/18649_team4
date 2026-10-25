@@ -198,9 +198,10 @@ tab contact, mounting hardware and orientation on the actual course parts.
 Final clearance and thermal performance depend on that installation. Electrical
 DRC does not check an unattached heatsink.
 
-The exact GCT drawing has been located, but contact pairing and recommended
-pads have not been visually verified. Five switch footprints remain unassigned;
-we have not substituted an arbitrary 4.5 mm switch.
+The five GCT switch footprints are verified against the manufacturer's A1
+drawing and placed. Physical terminals 1/2 map to logical pad 1; terminals 3/4
+map to pad 2. The 1.4 mm square pad geometry and all five instances are checked.
+See [Switch-footprint-review.md](Switch-footprint-review.md).
 
 The October 24 servo photos and team report establish the visible wire order
 and reported functions: black=GND, red=existing 5V supply, white=PWM. See

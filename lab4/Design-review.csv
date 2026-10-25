@@ -10,17 +10,17 @@ Part 1.2,Direct Pi socket,J70 ESQ-120-44-L-D on B.Cu; all 40 pin positions and n
 Part 1.2,Pi wireless and cooling,Both-layer antenna review keepout added; Wi-Fi and temperature with metal chassis and final stack remain unmeasured
 Part 1.3,Motor ADC conditioning,"10k/10k divider, 1k/100n LPF; 8.54 mA/count at nominal 5.1 V sensor supply and 3.3 V ADC reference; calibration untested"
 Part 1.3,Servo shunt,Vishay WSL2512R0100FEA 10mOhm 1W 1%; manufacturer pads assigned. INA180A2 gain50; 1.61mA/count ideal; load and calibration unmeasured.
-Part 1.4,Exact MPNs and packages,Course v3 confirms SN65HVD231DR and SK520B exactly. R1 now WSL2512R0100FEA with Vishay land pattern. Five GCT switch footprints remain unassigned.
+Part 1.4,Exact MPNs and packages,Course v3 confirms SN65HVD231DR and SK520B exactly. R1 now WSL2512R0100FEA with Vishay land pattern. Five GCT footprints and physical contact pairs verified and placed; see Switch-footprint-review.md.
 Part 1.4,Crystal loading,12pF crystal load; 18pF equal C0G capacitors assume 3pF effective parasitic capacitance. Recheck after routing and clock verification.
 Part 1.5,Rule setup,"Proposed 1oz, 0.2mm general clearance/width, 0.3/0.7mm vias, 0.5mm edge. Exception: 0.15mm pad-to-pad only within U40-U42, per JLC SMD minimum; review if process changes."
 Part 2,Three-zone host pin mapping,Signal allocation connected to U50/U60/J70; PCB firmware port and physical CAN mapping still pending
 Part 2,CAN bus labels,Normalize CAN_A and CAN_B across Pi and both MCUs; earlier hardware labels differed
 Part 2,MCU support,"Placed both STM32F401RET6 circuits: supplies, 4.7uF VCAP1, reset, BOOT0, HSI/PLL assumption and SWD; not powered/tested"
 Part 2,Actuation and connectors,"Encoder J82.1/J83.1 corrected from5.1V to nominal3.3V logic rail. L298N/clamps/sensing/LED drivers connected. Adapter physical fit/continuity, L298 protection and heatsink qualification remain untested."
-Part 2,Diagnostics,"3 self-test / 2 reset buttons, 12 status LEDs and Lab3 probes placed electrically. Five GCT switch footprints still need verified contact map; physical access and firmware untested."
+Part 2,Diagnostics,"3 self-test / 2 reset buttons, 12 status LEDs and Lab3 probes placed electrically. Five GCT switch footprints/contact maps verified; physical access and firmware untested."
 Part 2,Inter-sheet connections,Explicit hierarchical power/GND/CAN ports connected; exported netlist checked for unwanted cross-zone signals
-Deliverables,ERC / DRC,"Schematic ERC zero errors/warnings; placement DRC zero violations, 499 reported unconnected items and 5 missing switch footprints. Unrouted; no fabrication approval."
-Deliverables,BOM / CPL / Gerbers,284 placed parts; active hand-assembly BOM and127-row combined procurement list. Four purchasing exceptions explicit. Five switch footprints/routing remain before final Gerbers; no factory assembly requirement.
+Deliverables,ERC / DRC,"Schematic ERC zero errors/warnings; placement DRC zero violations, 499 reported unconnected items and no missing switch footprints. Unrouted; no fabrication approval."
+Deliverables,BOM / CPL / Gerbers,284 placed parts; active hand-assembly BOM and127-row combined procurement list. Four purchasing exceptions explicit. Routing and engineering review remain before final Gerbers; assembly plan remains course/team soldering.
 Lab 1,Revision entry,"COMPLETE: Section11 added to existing Requirement Document onOctober24. Records Lab3 PB4 PWM to Lab4 PA9/PB7 firmware port, added sensing/LEDs/connectors, retained CAN catalog. Firmware port and real feedback not implemented."
 Power design,Three TPS564252 rails,"Circuits and calculations included; effective capacitance, load/thermal/transient and input qualification remain"
 Part 1.4,Course assembly decision,TA reply 23 Oct: team assembles all SMD; TechSpark ovens tentative. BOM-Hand-assembly.csv active; course v3 stock first. JLC list historical; no factory assembly quote required. https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792811196129409?thread_ts=1792803278.879979&cid=C0BRYGTD4HH

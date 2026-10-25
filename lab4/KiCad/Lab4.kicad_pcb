@@ -6718,6 +6718,169 @@
 			)
 		)
 	)
+	(footprint "Lab4_Switches:GCT_SWT0210_4.5x4.5mm"
+		(layer "F.Cu")
+		(uuid "1793465a-b64d-4336-89ae-8610cd42b094")
+		(at 67 125)
+		(descr "GCT SWT0210-045026GSA, drawing A1 02/09/25. Two logical contacts: top row pad 1 = manufacturer terminals 1/2; bottom row pad 2 = manufacturer terminals 3/4. See Switch-footprint-review.md.")
+		(tags "GCT SWT0210 tactile SPST NO 4.5mm")
+		(property "Reference" "SW61"
+			(at 0 -3.5 0)
+			(layer "F.Fab")
+			(uuid "6c2aee30-46f7-496b-af86-2271d0065543")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "SWT0210-045026GSA"
+			(at 0 3.5 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "10c9d8bc-eb23-4dc7-8c31-dc636e8fe45f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/8937/SWT0210.pdf"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8027f719-bdc3-4646-806a-6fa43c8ca3e9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6a8efdec-9a28-4867-ba42-3bec08d3dfb6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SWT0210-045026GSA"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "4a49ec42-f1c3-46f1-80d1-5816ad01323f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Design status" "GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md."
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "09aca793-4db8-4930-8a76-6deb9aee79a1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(path "/b7be6aee-00c5-4ccf-bc13-a9abb8324aae/d9a212f7-00f3-4544-86ad-18dd221b2005")
+		(sheetname "/Rear zone/")
+		(sheetfile "Rear.kicad_sch")
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_rect
+			(start -2.36 -2.36)
+			(end 2.36 2.36)
+			(stroke
+				(width 0.12)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "4c07e54d-afbd-427f-88e4-e535583fa702")
+		)
+		(fp_circle
+			(center -3.3 -2.7)
+			(end -3.15 -2.7)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "ed263323-25c2-43a7-909e-dc6c31a969b0")
+		)
+		(fp_rect
+			(start -4.25 -2.55)
+			(end 4.25 2.55)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+			(uuid "88ce0543-fda7-4b78-aa5d-242da3251fb7")
+		)
+		(fp_rect
+			(start -2.25 -2.25)
+			(end 2.25 2.25)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "dfd55e2f-cdd0-46cb-bb1b-a7677fc02df2")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 1.25 0)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "ec3a5115-cf02-4555-8a23-a0a56c1866d9")
+		)
+		(pad "1" smd rect
+			(at -3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Rear zone/R_SELFTEST_BUTTON")
+			(uuid "be575481-413b-40b9-b82c-4ccc761954f1")
+		)
+		(pad "1" smd rect
+			(at 3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Rear zone/R_SELFTEST_BUTTON")
+			(uuid "8c64ae40-9c8e-4c2e-b8d2-15f9c99d8870")
+		)
+		(pad "2" smd rect
+			(at -3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "5b8d4d40-d5c3-4b14-a159-d49b1bb93202")
+		)
+		(pad "2" smd rect
+			(at 3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "6eb87191-4fc9-437f-b183-477cf67921b0")
+		)
+		(embedded_fonts no)
+	)
 	(footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 		(layer "F.Cu")
 		(uuid "1a8a933e-3572-4210-9801-38599d6c0b4c")
@@ -18736,6 +18899,169 @@
 				(xyz 0 0 0)
 			)
 		)
+	)
+	(footprint "Lab4_Switches:GCT_SWT0210_4.5x4.5mm"
+		(layer "F.Cu")
+		(uuid "529e5b91-57ae-459e-bdd3-534d126e58eb")
+		(at 52 184)
+		(descr "GCT SWT0210-045026GSA, drawing A1 02/09/25. Two logical contacts: top row pad 1 = manufacturer terminals 1/2; bottom row pad 2 = manufacturer terminals 3/4. See Switch-footprint-review.md.")
+		(tags "GCT SWT0210 tactile SPST NO 4.5mm")
+		(property "Reference" "SW70"
+			(at 0 -3.5 0)
+			(layer "F.Fab")
+			(uuid "835b2ad0-e929-425a-a0d5-4d0a968aef57")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "SWT0210-045026GSA"
+			(at 0 3.5 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "31b767f5-4ebb-4b49-b57e-89a205e1b43f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/8937/SWT0210.pdf"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e674d154-502a-4d18-b895-093a834f3bdb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "eebd18f9-42f7-4bf0-be20-feece0f0531f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SWT0210-045026GSA"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "762aa3f8-85d3-403a-b0e7-b30caa0fbe6b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Design status" "GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md."
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "eeca4743-697b-47da-b310-9724aefed2c7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(path "/735cbdde-196f-4bd2-85f6-884dbb38b9aa/64158ab5-310a-4ad0-b31b-2aee9127c6dc")
+		(sheetname "/Cockpit zone/")
+		(sheetfile "Cockpit.kicad_sch")
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_rect
+			(start -2.36 -2.36)
+			(end 2.36 2.36)
+			(stroke
+				(width 0.12)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "230fc472-459e-4201-a4a1-7fd0d753901b")
+		)
+		(fp_circle
+			(center -3.3 -2.7)
+			(end -3.15 -2.7)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "4991774d-f5eb-4424-8396-08789bc627f3")
+		)
+		(fp_rect
+			(start -4.25 -2.55)
+			(end 4.25 2.55)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+			(uuid "55cfe58a-e9ee-4247-9b9a-62e8187254fb")
+		)
+		(fp_rect
+			(start -2.25 -2.25)
+			(end 2.25 2.25)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "72d849ea-2842-4e68-b08f-9875f326864e")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 1.25 0)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "6f400439-0314-41de-b33a-40543c8c45e8")
+		)
+		(pad "1" smd rect
+			(at -3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Cockpit zone/PI_SELFTEST_BUTTON")
+			(uuid "d8b26a4b-f4c1-4bf4-a462-b109b005f3db")
+		)
+		(pad "1" smd rect
+			(at 3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Cockpit zone/PI_SELFTEST_BUTTON")
+			(uuid "aa274395-23da-4e58-b12c-f4d40cb2d9c3")
+		)
+		(pad "2" smd rect
+			(at -3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "4cb1f1cf-ef61-4be5-ac69-a71a08a390c5")
+		)
+		(pad "2" smd rect
+			(at 3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "c3772234-502b-4d04-9e10-0a6ce2c9be11")
+		)
+		(embedded_fonts no)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
@@ -38047,6 +38373,169 @@
 			)
 		)
 	)
+	(footprint "Lab4_Switches:GCT_SWT0210_4.5x4.5mm"
+		(layer "F.Cu")
+		(uuid "a29e969e-15a6-4d5f-9fa6-5740c60b33f0")
+		(at 52 121)
+		(descr "GCT SWT0210-045026GSA, drawing A1 02/09/25. Two logical contacts: top row pad 1 = manufacturer terminals 1/2; bottom row pad 2 = manufacturer terminals 3/4. See Switch-footprint-review.md.")
+		(tags "GCT SWT0210 tactile SPST NO 4.5mm")
+		(property "Reference" "SW60"
+			(at 0 -3.5 0)
+			(layer "F.Fab")
+			(uuid "b61aaad2-8ffb-487a-bf18-3aeda5ff7470")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "SWT0210-045026GSA"
+			(at 0 3.5 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6b975fbe-fe70-4663-b9c4-68b1b87a7e1a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/8937/SWT0210.pdf"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c3b7b8fd-c99b-47a4-8ec6-c9174022cd21")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5c2653d7-1998-4a34-9a58-62b606df7653")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SWT0210-045026GSA"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "676bdad0-9189-4bcb-a60b-af4ed13ac1c4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Design status" "GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md."
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "58841ecd-fea1-4e8b-a8ed-8ed83479486f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(path "/b7be6aee-00c5-4ccf-bc13-a9abb8324aae/7b624a68-51ec-4a8e-be62-ecacb3168443")
+		(sheetname "/Rear zone/")
+		(sheetfile "Rear.kicad_sch")
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_rect
+			(start -2.36 -2.36)
+			(end 2.36 2.36)
+			(stroke
+				(width 0.12)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "93b15c45-9805-4c1f-a532-f8567db00096")
+		)
+		(fp_circle
+			(center -3.3 -2.7)
+			(end -3.15 -2.7)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "1b115465-d78a-43c6-b645-527321b18f1a")
+		)
+		(fp_rect
+			(start -4.25 -2.55)
+			(end 4.25 2.55)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+			(uuid "efc237d8-5ab1-46ef-8ed0-011579888f7d")
+		)
+		(fp_rect
+			(start -2.25 -2.25)
+			(end 2.25 2.25)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "48382e73-1bcc-4dab-acf9-ffc150fbb72c")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 1.25 0)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "3b062db0-2368-4f99-ae33-6f6b19bccc21")
+		)
+		(pad "1" smd rect
+			(at -3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Rear zone/R_RESET_N")
+			(uuid "f6dbf0bd-bbb0-4e16-9b83-482a61e43f72")
+		)
+		(pad "1" smd rect
+			(at 3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Rear zone/R_RESET_N")
+			(uuid "5a8af2de-e183-48b7-ac7d-f073c445934e")
+		)
+		(pad "2" smd rect
+			(at -3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "d67cbca2-828d-45a9-aad0-ed3074833ff1")
+		)
+		(pad "2" smd rect
+			(at 3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "a8d50286-9f57-4113-8f6b-be75215cc6d3")
+		)
+		(embedded_fonts no)
+	)
 	(footprint "Inductor_SMD:L_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "a4fb2014-38b6-48cb-8f99-cdd858122bc4")
@@ -52433,6 +52922,169 @@
 			)
 		)
 	)
+	(footprint "Lab4_Switches:GCT_SWT0210_4.5x4.5mm"
+		(layer "F.Cu")
+		(uuid "c8bc1f86-82e3-4241-84f2-dadffc994cf5")
+		(at 100 219)
+		(descr "GCT SWT0210-045026GSA, drawing A1 02/09/25. Two logical contacts: top row pad 1 = manufacturer terminals 1/2; bottom row pad 2 = manufacturer terminals 3/4. See Switch-footprint-review.md.")
+		(tags "GCT SWT0210 tactile SPST NO 4.5mm")
+		(property "Reference" "SW51"
+			(at 0 -3.5 0)
+			(layer "F.Fab")
+			(uuid "23d1ac7f-3a6a-4e63-9334-cea5972b0fa9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "SWT0210-045026GSA"
+			(at 0 3.5 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "42aae586-501d-4aa0-8223-c4fd2e6ff51b")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/8937/SWT0210.pdf"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "58e09d16-71d0-4d4b-baf4-958e97e602eb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "266d8409-8281-4090-a0b2-44c2d944ac7b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SWT0210-045026GSA"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "3a223971-9323-42dc-8ad4-d6e113bf68f6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Design status" "GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md."
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "329bf51a-f281-4b8f-9ab8-bb1111edd4d7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(path "/b2940267-5130-450b-8186-caee03d622fe/70ddadc3-f0d5-483d-b874-c86f7df71324")
+		(sheetname "/Front zone/")
+		(sheetfile "Front.kicad_sch")
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_rect
+			(start -2.36 -2.36)
+			(end 2.36 2.36)
+			(stroke
+				(width 0.12)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "96797e9f-8fe1-4f09-92fa-9be116cbae7a")
+		)
+		(fp_circle
+			(center -3.3 -2.7)
+			(end -3.15 -2.7)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "72b9880d-083f-4079-8257-b903b94bcbae")
+		)
+		(fp_rect
+			(start -4.25 -2.55)
+			(end 4.25 2.55)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+			(uuid "9b42815f-e2ad-4396-840c-2120ed5fab9e")
+		)
+		(fp_rect
+			(start -2.25 -2.25)
+			(end 2.25 2.25)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "d2c43624-98be-4a8a-abe7-4cabe7c24464")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 1.25 0)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "7b4bb81b-2acb-47f9-bfd8-67a03576b5cc")
+		)
+		(pad "1" smd rect
+			(at -3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Front zone/F_SELFTEST_BUTTON")
+			(uuid "cd777e8a-4122-4cee-b5a6-b96909aee710")
+		)
+		(pad "1" smd rect
+			(at 3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Front zone/F_SELFTEST_BUTTON")
+			(uuid "510d8abf-fc6a-4659-963f-eacf8ce67742")
+		)
+		(pad "2" smd rect
+			(at -3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "99d0b2c9-86ff-42a8-8642-d3117a328239")
+		)
+		(pad "2" smd rect
+			(at 3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "b00ec63b-4fb7-414e-94a4-cf471b8771b8")
+		)
+		(embedded_fonts no)
+	)
 	(footprint "Package_QFP:LQFP-64_10x10mm_P0.5mm"
 		(layer "F.Cu")
 		(uuid "cb237860-5504-4f57-b91e-99f8ab44eea9")
@@ -55999,6 +56651,169 @@
 				(xyz 0 0 0)
 			)
 		)
+	)
+	(footprint "Lab4_Switches:GCT_SWT0210_4.5x4.5mm"
+		(layer "F.Cu")
+		(uuid "d14de22f-cfe1-47d7-90ef-e7d777dabb8b")
+		(at 52 225)
+		(descr "GCT SWT0210-045026GSA, drawing A1 02/09/25. Two logical contacts: top row pad 1 = manufacturer terminals 1/2; bottom row pad 2 = manufacturer terminals 3/4. See Switch-footprint-review.md.")
+		(tags "GCT SWT0210 tactile SPST NO 4.5mm")
+		(property "Reference" "SW50"
+			(at 0 -3.5 0)
+			(layer "F.Fab")
+			(uuid "0c00989a-b695-4793-996c-d5fdb9d170aa")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.12)
+				)
+			)
+		)
+		(property "Value" "SWT0210-045026GSA"
+			(at 0 3.5 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6ea3448c-9dcd-4f7c-837d-81c22af132d9")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/8937/SWT0210.pdf"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2ede89ad-65ec-49e1-a992-443d7cb7a761")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5f75e103-d754-4b17-8fe3-c91646ad1d2b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SWT0210-045026GSA"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "970bc0ec-6178-4d23-b18b-bb0a2092757e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Design status" "GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md."
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "dada6708-1aaa-42b2-ab2c-e5db75304300")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(path "/b2940267-5130-450b-8186-caee03d622fe/9957b891-e9cd-461f-9453-20055512b338")
+		(sheetname "/Front zone/")
+		(sheetfile "Front.kicad_sch")
+		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(fp_rect
+			(start -2.36 -2.36)
+			(end 2.36 2.36)
+			(stroke
+				(width 0.12)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "0358ea45-4fd5-4cae-94f2-f50ae92bd88c")
+		)
+		(fp_circle
+			(center -3.3 -2.7)
+			(end -3.15 -2.7)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.SilkS")
+			(uuid "1e4ce8ca-392b-40ac-98c1-4d1dde3f8c42")
+		)
+		(fp_rect
+			(start -4.25 -2.55)
+			(end 4.25 2.55)
+			(stroke
+				(width 0.05)
+				(type default)
+			)
+			(fill no)
+			(layer "F.CrtYd")
+			(uuid "5ab7288f-4890-4269-a7c6-2d4890aace52")
+		)
+		(fp_rect
+			(start -2.25 -2.25)
+			(end 2.25 2.25)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "108b736b-5e5d-4843-ac77-4fac5c29fd1e")
+		)
+		(fp_circle
+			(center 0 0)
+			(end 1.25 0)
+			(stroke
+				(width 0.1)
+				(type default)
+			)
+			(fill no)
+			(layer "F.Fab")
+			(uuid "a1c8891d-8fc5-4321-b129-fa600c2aa98f")
+		)
+		(pad "1" smd rect
+			(at -3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Front zone/F_RESET_N")
+			(uuid "166a4e33-fc26-4075-bdfb-3d9b38900f99")
+		)
+		(pad "1" smd rect
+			(at 3.3 -1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/Front zone/F_RESET_N")
+			(uuid "24ade780-f93f-41df-a37f-44461836421a")
+		)
+		(pad "2" smd rect
+			(at -3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "44ba7e97-9f41-43c8-94ff-fcb764de5021")
+		)
+		(pad "2" smd rect
+			(at 3.3 1.5)
+			(size 1.4 1.4)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net "/GND")
+			(uuid "1c6c0c8c-9475-4d67-8832-b0fdf7c9e7fc")
+		)
+		(embedded_fonts no)
 	)
 	(footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
 		(layer "F.Cu")
@@ -68837,66 +69652,6 @@
 		(uuid "81ab86e8-1844-449b-ad17-d81b44664bb7")
 	)
 	(gr_line
-		(start 48.5 117.5)
-		(end 55.5 117.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "f2a79c18-d91a-4c52-8994-cbb4fbd2b705")
-	)
-	(gr_line
-		(start 48.5 124.5)
-		(end 48.5 117.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "a4e796a6-3015-474b-893f-3d56e669f8b9")
-	)
-	(gr_line
-		(start 48.5 180.5)
-		(end 55.5 180.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "d648d5d9-7dbc-472c-815a-7303a3913f66")
-	)
-	(gr_line
-		(start 48.5 187.5)
-		(end 48.5 180.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "ac6938b3-9b2b-4146-8c02-7555d0dbbc74")
-	)
-	(gr_line
-		(start 48.5 221.5)
-		(end 55.5 221.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "562829d4-4a0a-4144-9482-038d52db89ad")
-	)
-	(gr_line
-		(start 48.5 228.5)
-		(end 48.5 221.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "bcebd62b-2be8-40f8-802c-607fb0bfe998")
-	)
-	(gr_line
 		(start 51.045 50.3)
 		(end 92.955 50.3)
 		(stroke
@@ -68935,86 +69690,6 @@
 		)
 		(layer "Dwgs.User")
 		(uuid "ced161dd-b8d5-420d-907d-1b555949ecaa")
-	)
-	(gr_line
-		(start 55.5 117.5)
-		(end 55.5 124.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "504e3a48-492e-4b52-adab-0701bae4c136")
-	)
-	(gr_line
-		(start 55.5 124.5)
-		(end 48.5 124.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "46784761-58c5-4064-bb1c-478307f8c69b")
-	)
-	(gr_line
-		(start 55.5 180.5)
-		(end 55.5 187.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "861070c8-a491-4eca-9681-c14044edb822")
-	)
-	(gr_line
-		(start 55.5 187.5)
-		(end 48.5 187.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "e70e7acb-fa88-4078-a564-72df41170d69")
-	)
-	(gr_line
-		(start 55.5 221.5)
-		(end 55.5 228.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "b8368c8f-3f73-4db5-9cd8-3b8c930445c5")
-	)
-	(gr_line
-		(start 55.5 228.5)
-		(end 48.5 228.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "63b8a120-ce69-4cc8-b3e9-223da4990635")
-	)
-	(gr_line
-		(start 63.5 121.5)
-		(end 70.5 121.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "e6fab090-c672-4325-8d71-791b8eaf4dac")
-	)
-	(gr_line
-		(start 63.5 128.5)
-		(end 63.5 121.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "196ea728-b096-4436-93db-5a9b47a88c99")
 	)
 	(gr_line
 		(start 66 138)
@@ -69095,26 +69770,6 @@
 		)
 		(layer "Dwgs.User")
 		(uuid "820b20f9-58cd-4fdd-9b30-5017aae8ec36")
-	)
-	(gr_line
-		(start 70.5 121.5)
-		(end 70.5 128.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "6a76ec1b-aa13-46c2-9c77-1aaed3d0cb97")
-	)
-	(gr_line
-		(start 70.5 128.5)
-		(end 63.5 128.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "3e3a970d-1965-4228-b5d8-b703432e6ed3")
 	)
 	(gr_line
 		(start 70.5 129.5)
@@ -69275,46 +69930,6 @@
 		)
 		(layer "Dwgs.User")
 		(uuid "436a920a-7cb0-4abe-accc-ad14bd8d154c")
-	)
-	(gr_line
-		(start 96.5 215.5)
-		(end 103.5 215.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "761b3ddc-b1cd-4c56-9d3e-c27c612eee74")
-	)
-	(gr_line
-		(start 96.5 222.5)
-		(end 96.5 215.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "c4a4c3ef-373c-4842-9231-b62e36cd2593")
-	)
-	(gr_line
-		(start 103.5 215.5)
-		(end 103.5 222.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "49eb6cac-e206-401d-8110-6dd696ad23c5")
-	)
-	(gr_line
-		(start 103.5 222.5)
-		(end 96.5 222.5)
-		(stroke
-			(width 0.15)
-			(type default)
-		)
-		(layer "Dwgs.User")
-		(uuid "c21c1d2b-2e11-4166-81c5-d2d71d2e8b98")
 	)
 	(gr_line
 		(start 106 45)
@@ -69787,54 +70402,10 @@
 			)
 		)
 	)
-	(gr_text "SW60 RESET"
-		(at 52 121 0)
-		(layer "Dwgs.User")
-		(uuid "1da208e2-5503-4d26-b473-d217296bde07")
-		(effects
-			(font
-				(size 0.85 0.85)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "SW70 PI TEST"
-		(at 52 184 0)
-		(layer "Dwgs.User")
-		(uuid "d75ae2c9-cc85-4c2b-9d0a-83b546658665")
-		(effects
-			(font
-				(size 0.85 0.85)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "SW50 RESET"
-		(at 52 225 0)
-		(layer "Dwgs.User")
-		(uuid "8a8fd9d4-4cf9-485e-84ad-7fa8948d945b")
-		(effects
-			(font
-				(size 0.85 0.85)
-				(thickness 0.15)
-			)
-		)
-	)
 	(gr_text "Pi microSD ACCESS BELOW BOARD"
 		(at 55 157 0)
 		(layer "Dwgs.User")
 		(uuid "95131139-4a86-4958-b352-35c7d45287d0")
-		(effects
-			(font
-				(size 0.85 0.85)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "SW61 SELF TEST"
-		(at 67 125 0)
-		(layer "Dwgs.User")
-		(uuid "72aaf549-6ece-4a56-8a65-9ab42439095d")
 		(effects
 			(font
 				(size 0.85 0.85)
@@ -69857,17 +70428,6 @@
 		(at 75 144 0)
 		(layer "Dwgs.User")
 		(uuid "9b4f5431-b2e3-4dcf-b39a-a4c23f73bb79")
-		(effects
-			(font
-				(size 0.85 0.85)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "SW51 SELF TEST"
-		(at 100 219 0)
-		(layer "Dwgs.User")
-		(uuid "88c53a02-1f71-464c-bf5d-7a009b2db8a4")
 		(effects
 			(font
 				(size 0.85 0.85)
@@ -70179,66 +70739,6 @@
 	)
 	(zone
 		(layer "F.Cu")
-		(uuid "1dc2ca9e-1fe4-4336-8d48-6ab6921b5641")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(keepout
-			(tracks allowed)
-			(vias allowed)
-			(pads allowed)
-			(copperpour allowed)
-			(footprints not_allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-			(island_removal_mode 0)
-		)
-		(polygon
-			(pts
-				(xy 96.5 215.5) (xy 103.5 215.5) (xy 103.5 222.5) (xy 96.5 222.5)
-			)
-		)
-	)
-	(zone
-		(layer "F.Cu")
-		(uuid "38fd272b-3ef8-46e4-b6eb-8b907492df4c")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(keepout
-			(tracks allowed)
-			(vias allowed)
-			(pads allowed)
-			(copperpour allowed)
-			(footprints not_allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-			(island_removal_mode 0)
-		)
-		(polygon
-			(pts
-				(xy 63.5 121.5) (xy 70.5 121.5) (xy 70.5 128.5) (xy 63.5 128.5)
-			)
-		)
-	)
-	(zone
-		(layer "F.Cu")
 		(uuid "489f6cba-45bf-497c-83db-ecc767c14416")
 		(hatch edge 0.5)
 		(connect_pads
@@ -70362,36 +70862,6 @@
 	)
 	(zone
 		(layer "F.Cu")
-		(uuid "9e1a1bd7-d3fc-4bef-87d9-f6c263a679bf")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(keepout
-			(tracks allowed)
-			(vias allowed)
-			(pads allowed)
-			(copperpour allowed)
-			(footprints not_allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-			(island_removal_mode 0)
-		)
-		(polygon
-			(pts
-				(xy 48.5 221.5) (xy 55.5 221.5) (xy 55.5 228.5) (xy 48.5 228.5)
-			)
-		)
-	)
-	(zone
-		(layer "F.Cu")
 		(uuid "a23904bb-3577-41b9-ab2b-2b6b68459cc5")
 		(hatch edge 0.5)
 		(connect_pads
@@ -70428,36 +70898,6 @@
 				(xy 76.193122 262.547207) (xy 76.76412 262.741035) (xy 77.304935 263.007735) (xy 77.806311 263.342744)
 				(xy 78.25967 263.740329) (xy 78.657255 264.193688) (xy 78.992264 264.695064) (xy 79.258964 265.235879)
 				(xy 79.452792 265.806877) (xy 79.570432 266.398291)
-			)
-		)
-	)
-	(zone
-		(layer "F.Cu")
-		(uuid "a9aacf77-dc55-4a6e-b76e-280eb4ed3893")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(keepout
-			(tracks allowed)
-			(vias allowed)
-			(pads allowed)
-			(copperpour allowed)
-			(footprints not_allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-			(island_removal_mode 0)
-		)
-		(polygon
-			(pts
-				(xy 48.5 117.5) (xy 55.5 117.5) (xy 55.5 124.5) (xy 48.5 124.5)
 			)
 		)
 	)
@@ -70569,36 +71009,6 @@
 		(polygon
 			(pts
 				(xy 66 138) (xy 84 138) (xy 84 150) (xy 66 150)
-			)
-		)
-	)
-	(zone
-		(layer "F.Cu")
-		(uuid "feff19b0-9bd3-49c9-84e6-68ade5a836d2")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(keepout
-			(tracks allowed)
-			(vias allowed)
-			(pads allowed)
-			(copperpour allowed)
-			(footprints not_allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-			(island_removal_mode 0)
-		)
-		(polygon
-			(pts
-				(xy 48.5 180.5) (xy 55.5 180.5) (xy 55.5 187.5) (xy 48.5 187.5)
 			)
 		)
 	)

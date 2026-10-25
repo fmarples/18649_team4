@@ -9,14 +9,15 @@ The class fabrication batch follows the next morning.
 
 ## Current evidence
 
-The October 25 checks use the CAD at `c7ef66d` with five PCB datasheet fields
-synchronized to their schematic values (R540 and R800-R803). No pad, net,
-placement or routing changed. The fresh schematic export has
-284 components and 297 nets. ERC reports no findings under the configured rules;
-the existing connectivity/BOM and placement checks pass. These checks do not
-establish component ratings or completed routing. The board has 279 electrical
-footprints, eight supports, no routed tracks and no copper zones. Five switches
-are absent: SW50, SW51, SW60, SW61 and SW70.
+The October 25 update adds the five GCT switch footprints using the verified
+manufacturer A1 drawing. All 284 schematic components now have matching PCB
+footprints, with eight additional mechanical supports and 297 schematic nets.
+The switch contact pairs, pad dimensions and nets pass the placement checks;
+the circuit and three BOM views agree. Existing part positions and pad nets
+are unchanged. Fresh ERC, placement DRC and schematic parity report no findings
+under the configured rules. There are still 499 reported unconnected items,
+no routed tracks and no copper zones. These checks do not establish component
+ratings or completed routing.
 
 `Fabrication-check.json` records the fresh fabrication audit, its source hashes,
 missing parts, DRC results and ignored rule categories. It deliberately reports
@@ -55,20 +56,18 @@ be created by an estimate. See Current-evidence.md and Mechanical-evidence.md.
 
 ## Footprints and routing
 
-The GCT [SWT0210 manufacturer drawing hosted by Mouser](https://www.mouser.com/catalog/specsheets/GCT_05-30-2025_SWT0210%20Product%20Drawing.pdf)
-identifies the recommended land pattern and contact diagram. Verify the actual
-drawing, including which physical terminals are internally connected, before
-creating the local footprint and mapping the two-pin schematic switch onto it.
-The October 25 text retrieval located the drawing, but local downloads returned
-HTML and the available screenshot tool did not return viewable pixels. The five
-footprints have therefore not been assigned from an inferred pin arrangement.
+The five GCT footprints and their contact mapping are complete. We inspected
+the manufacturer's A1 drawing and used its 1.4 mm square lands. Physical
+terminals 1/2 share logical pad 1; terminals 3/4 share logical pad 2. See
+[Switch-footprint-review.md](Switch-footprint-review.md) for geometry, source
+and checks. Button access and final silkscreen remain part of layout review.
 
 After the mechanical and electrical decisions are settled:
 
-1. Assign all footprints and check pin 1, pad numbering, pitch, package/body
-   dimensions, polarity, drill sizes and courtyard. Update the schematic and all
-   three BOM views together. Keep course part numbers unless a replacement has
-   been checked. Place the real switches, replacing their drawing reservations.
+1. Review the remaining package-specific pin 1, pitch, polarity, drill,
+   courtyard and rating assumptions. All schematic parts now have footprints;
+   assignment alone does not qualify every package or connector. Keep the
+   schematic and all three BOM views consistent with any verified replacements.
 2. Resolve the heatsink conflict and tighten the power-stage placement according
    to the [TPS564252 layout guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf).
    Keep the input switching loop short and feedback away from the switch node.

@@ -163,11 +163,11 @@ Front,R500,10k BOOT0,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic c
 Front,J500,BOOT recovery,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,R501,10k NRST,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Front,C509,100n NRST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
-Front,SW50,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
+Front,SW50,SWT0210-045026GSA,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md.
 Front,J501,SWD (2.54mm),2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,J502,3.3V TTL UART,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,R502,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Front,SW51,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
+Front,SW51,SWT0210-045026GSA,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md.
 Front,C510,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Front,R510,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Front,D510,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
@@ -195,11 +195,11 @@ Rear,R600,10k BOOT0,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic co
 Rear,J600,BOOT recovery,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Rear,R601,10k NRST,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Rear,C609,100n NRST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
-Rear,SW60,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
+Rear,SW60,SWT0210-045026GSA,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md.
 Rear,J601,SWD (2.54mm),2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Rear,J602,3.3V TTL UART,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Rear,R602,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Rear,SW61,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
+Rear,SW61,SWT0210-045026GSA,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md.
 Rear,C610,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Rear,R610,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Rear,D610,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility
@@ -221,7 +221,7 @@ Cockpit,J70,Raspberry Pi4 GPIO,ESQ-120-44-L-D,Lab4_Mechanical:Samtec_ESQ-120-44_
 Cockpit,C700,22u /16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,C701,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,R700,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Cockpit,SW70,SWT0210-045026GSA,SWT0210-045026GSA,,GCT drawing located (25-Apr-2025); contact-pair/pad geometry visual verification still pending
+Cockpit,SW70,SWT0210-045026GSA,SWT0210-045026GSA,Lab4_Switches:GCT_SWT0210_4.5x4.5mm,GCT A1 drawing verified: physical terminals 1/2 -> logical pad 1; 3/4 -> pad 2. See Switch-footprint-review.md.
 Cockpit,C702,100n TEST,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,R710,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Cockpit,D710,STATUS green,LTST-C190GKT,LED_SMD:LED_0603_1608Metric,Active high; 1k limits current below 3.4 mA even at zero LED drop; verify visibility

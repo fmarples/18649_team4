@@ -74,7 +74,7 @@ design: normal/startup current and the complete power path still need checking.
 
 ## Work before fabrication
 
-Verify five GCT switch footprints; resolve the heatsink placement conflicts;
+The five GCT switch footprints are verified and placed. Resolve the heatsink placement conflicts;
 confirm the Pi/chassis spacer stack, cable reach and screw/washer clearances;
 complete routing, power copper and thermal design; confirm the course
 assembly/stencil process; and export/check Gerbers, drill files and final BOM.
