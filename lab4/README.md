@@ -33,6 +33,10 @@ design; the board layout deadline is October 29.
 
 ## Shared report and files
 
+- [October 29 fabrication review](Fabrication-review.md): remaining design decisions,
+  final deliverables and fresh-check instructions. The October 24 preliminary
+  package was emailed; the final Gradescope/fabrication submission remains open.
+- [October 29 must-do list](https://docs.google.com/document/d/1k5grd6PXWf11GlPkxlc1w4cDT9LOGJRj_YvyB7UWkLg/edit): team actions and decision targets.
 - [Lab 4 Writeup](https://docs.google.com/document/d/1zMR_S5QoFPES1BhswG5bhpLGAib2P71ri6rK2hKzBcc/edit): edit this same report for future revisions.
 - [Team Lab 4 Drive folder](https://drive.google.com/drive/u/1/folders/1j7L880-h1lnl-udWRu19jh2Ww-18leLq).
 - [Editable system diagram](Lab4-System.drawio), with [SVG](Lab4-System.svg) and [PNG](Lab4-System.png) previews.

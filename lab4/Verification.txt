@@ -119,8 +119,35 @@ TA review fields and U81 procurement, October24
   (1 installed+1 spare), the original schematic identifier, and the footprint.
   All other original fields are unchanged. No additional part row was added.
 
-Limits
+October 25 final-submission preparation
+- Confirmed the user sent the October 24 preliminary email to the small-group
+  TA with both teammates copied. That email is not the October 29 Gradescope
+  fabrication submission. No final submission or purchase has occurred.
+- Read current course/group/TA Slack messages and the final handout deliverables.
+  Recorded catalog-number guidance without assuming a waiver of BOM/CPL.
+- Fresh KiCad netlist: 284 components, 297 nets. Existing connectivity/BOM and
+  placement checks pass. ERC reports 0 findings under configured rules.
+- Added check_fabrication.py: fresh ERC/DRC/netlist, schematic parity, in-memory
+  zone refill, missing-footprint/routing checks and source hashes. It refuses
+  a directory containing old reports and does not save the CAD or submit files.
+- The audit exposed five stale Datasheet fields: R540 and R800-R803. Updated
+  only those five PCB strings to match the schematic; no footprint geometry,
+  pin mapping, position, BOM quantity or circuit changed.
+- Repeated the audit after that correction: 0 ERC findings, 0 ordinary DRC
+  violations, 499 unconnected items and 5 schematic-parity findings (the five
+  missing switches). No tracks or copper zones. Expected result: BLOCKED,
+  exit code 1. Detailed DRC is in KiCad/Placement-DRC.json; source hashes and
+  ignored check categories are in Fabrication-check.json.
+- Located the exact GCT switch manufacturer drawing, but the local download
+  returned HTML and screenshot tools did not return viewable pixels. Pad
+  dimensions/contact pairing were not visually verified; no guessed footprint
+  was assigned. The switches remain unresolved.
+- Created the October 29 team checklist in the existing Drive Lab 4 folder.
+  Engineering decisions and final package instructions are in Fabrication-review.md.
+
+Limits (current October 25)
 No PCB was built, powered or flashed. Battery/charger selection, L298 protection,
 heatsink attachment, fuse coordination, course stock and adapter qualification
 remain open. Five switch footprints, routing, thermal layout, physical stack
-and final fabrication checks remain. No purchase or TA submission occurred.
+and final fabrication checks remain. No purchase or final fabrication submission
+has occurred; the October 24 preliminary email has been sent.

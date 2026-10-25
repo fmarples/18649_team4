@@ -1,0 +1,114 @@
+{
+  "checked_at_utc": "2026-10-25T20:03:36.440206+00:00",
+  "automated_status": "BLOCKED",
+  "fabrication_release": false,
+  "counts": {
+    "schematic_components": 284,
+    "electrical_footprints": 279,
+    "track_segments_and_vias": 0,
+    "copper_zones": 0,
+    "erc_findings": 0,
+    "drc_violations": 0,
+    "unconnected_items": 499,
+    "schematic_parity_findings": 5
+  },
+  "unassigned_footprints": [
+    "SW50",
+    "SW51",
+    "SW60",
+    "SW61",
+    "SW70"
+  ],
+  "missing_board_components": [
+    "SW50",
+    "SW51",
+    "SW60",
+    "SW61",
+    "SW70"
+  ],
+  "board_only_references": [
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H6",
+    "H7",
+    "H8"
+  ],
+  "schematic_parity_types": {
+    "missing_footprint": 5
+  },
+  "blockers": [
+    "Assign and verify footprints for: SW50, SW51, SW60, SW61, SW70",
+    "Add missing board components: SW50, SW51, SW60, SW61, SW70",
+    "unconnected_items: 499 (inspect the fresh detailed report)",
+    "schematic_parity_findings: 5 (inspect the fresh detailed report)",
+    "No routing exists on the board.",
+    "No ground/power copper zones exist on the board."
+  ],
+  "ignored_drc_checks": [
+    {
+      "description": "Footprint has no courtyard defined",
+      "key": "missing_courtyard"
+    },
+    {
+      "description": "Track endpoint not centered on via",
+      "key": "track_not_centered_on_via"
+    },
+    {
+      "description": "Tuning profile track geometries",
+      "key": "tuning_profile_track_geometries"
+    },
+    {
+      "description": "Footprint doesn't match symbol's footprint filters",
+      "key": "footprint_filters_mismatch"
+    },
+    {
+      "description": "Footprint component type doesn't match footprint pads",
+      "key": "footprint_type_mismatch"
+    }
+  ],
+  "ignored_erc_checks": [
+    {
+      "description": "Global label only appears once in the schematic",
+      "key": "single_global_label"
+    },
+    {
+      "description": "Four connection points are joined together",
+      "key": "four_way_junction"
+    },
+    {
+      "description": "SPICE model issue",
+      "key": "simulation_model_issue"
+    },
+    {
+      "description": "Assigned footprint doesn't match footprint filters",
+      "key": "footprint_filter"
+    }
+  ],
+  "source_sha256": {
+    "KiCad/Cockpit.kicad_sch": "45b2dcfda441cdd96785fba3b8bb9ecc083723ec037ff714e8ac8d76a09326b5",
+    "KiCad/fp-lib-table": "c1c995e44c06c78cf08f7a67a967bfec053c7af4231124331e69b3031a654e01",
+    "KiCad/Front.kicad_sch": "ef7366144294f7466bd22ef0c8a2d57fe98fed0716ac66746d5a962aeab48837",
+    "KiCad/Lab4.kicad_dru": "b562451d1099a56da0d310ce7bc54970528d38ddd1f83eee65d30d4be2682006",
+    "KiCad/Lab4.kicad_pcb": "f812090a2b7c3edb4dcebacaff86ca8dc7dc1c14b21142ad14c1f4378d6b4642",
+    "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
+    "KiCad/Lab4.kicad_sch": "e9315b3b8b8d16fa63ffbfbd15729678265f9bfb871c27f55df3b86189eb969d",
+    "KiCad/Lab4_Logic.kicad_sym": "3486a6869c2c4513da075bbf78c8e8757130b33fb393ca133968d2a9d1c4961f",
+    "KiCad/Lab4_Mechanical.pretty/Pi_support_M2.5_D5.5.kicad_mod": "f79e80e5708a2b93bc05360dce2768fa15184d3e4d1072bcf194ed954f21e6d3",
+    "KiCad/Lab4_Mechanical.pretty/Samtec_ESQ-120-44_2x20_P2.54mm_H18.67.kicad_mod": "fcfdcc4fb2cb73528ba205da3d1147c2545f5bbea831f2d969c8880d5661aad4",
+    "KiCad/Lab4_Power.kicad_sym": "09b078835653c0dd69da3976d405e36355bc6fd5835a9926cd79574def6e3fe3",
+    "KiCad/Lab4_Power.pretty/Eaton_SDCHA1V8040.kicad_mod": "80921f4555eebe44350508fb43fc90378a24f9d8bc6290b186227981c0098221",
+    "KiCad/Lab4_Power.pretty/Vishay_WSL2512_7m_to_500m.kicad_mod": "fe1e3b0b09fe270ecb9d86aa1b9550eddcfea2594fb1b0ae99c69667dbbc75fe",
+    "KiCad/Power.kicad_sch": "7f0ee5bcbe1de82667c6484da8765837757312186e9b98f43b5206c0b4e74ccf",
+    "KiCad/Rear.kicad_sch": "e9d2eeb8464033832d025b63fb72f8a1d1eb1318fd7299be57c5e89cb9945cd8",
+    "KiCad/sym-lib-table": "60172994ff6f013cac20eb41c4b72b371a9f3c26b8c7c802c711ed13234c603b"
+  },
+  "limits": [
+    "PASS is not release authorization. Complete the engineering review in Fabrication-review.md.",
+    "Excluded findings are requested; project-level ignored DRC checks are listed for manual review.",
+    "No physical fit, current rating, transient response, thermal behavior or TA approval is inferred.",
+    "No CAD changes, manufacturing files, purchase or submission are made by this check."
+  ]
+}

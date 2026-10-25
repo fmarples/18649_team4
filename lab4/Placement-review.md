@@ -126,13 +126,20 @@ parts and routing. See Parts-review.md and Heatsink-envelope-check.json.
 
 ## Checks and remaining work
 
-KiCad 10.0.4 loads and plots the PCB. The 24 October placement DRC reports:
+KiCad 10.0.4 loads and plots the PCB. The 25 October DRC, rerun with schematic
+parity and excluded findings included, reports:
 
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
 - 499 reported unconnected items: no copper tracks or zones have been routed.
 - 5 missing footprints: SW50, SW51, SW60, SW61 and SW70.
+
+Five stale resistor datasheet fields were synchronized with the schematic;
+these were metadata mismatches, not changes to placement or connectivity.
+The five missing switches are now also listed by the DRC's schematic-parity
+section. See `Fabrication-check.json` and `Fabrication-review.md` for the final
+submission audit; this placement result does not authorize fabrication.
 
 The three SOT-563 buck footprints have 0.15 mm adjacent pad gaps. We added a
 narrow pad-to-pad exception only within U40, U41 and U42, based on JLCPCB's

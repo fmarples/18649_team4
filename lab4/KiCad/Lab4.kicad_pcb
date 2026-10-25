@@ -464,7 +464,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/20043/crcwce3.pdf"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW0603100RFKEA/1174554"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -18418,7 +18418,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/20043/crcwce3.pdf"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW0603100RFKEA/1174554"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -20133,7 +20133,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/20043/crcwce3.pdf"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW0603100RFKEA/1174554"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -33813,7 +33813,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/20043/crcwce3.pdf"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW0603100RFKEA/1174554"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -53667,7 +53667,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/20043/crcwce3.pdf"
+		(property "Datasheet" "https://www.digikey.com/en/products/detail/vishay-dale/CRCW0603100RFKEA/1174554"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
