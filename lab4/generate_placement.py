@@ -158,10 +158,12 @@ for ref,x,y,ang in [('R1',27,185,0),('U1',39,185,0),('C1',39,181,0),('R2',44,183
 for ref,x,y,ang in [('J40',74,7,0),('F1',88,17,90),('Q1',109,17,0),('R400',109,25,0),('R401',113,25,0),('D40',104,25,0),('C400',64,21,0),('J41',76,23,90)]:place(ref,x,y,ang)
 for k,x in enumerate([22,60,98]):
     base=410+k*10;y=204
-    place(f'U{40+k}',x-4,y)
-    place(f'L{k+1}',x+5.5,y)
-    for i,dx,dy,angle in [(0,-10,-4,0),(1,-7,-.5,90),(2,3,7,0),(3,7,7,0),(4,-3,4,90)]: place(f'C{base+i}',x+dx,y+dy,angle)
-    for i,dx,dy in [(0,-1,5),(1,-1,8),(2,-6,-6.5),(3,-3,-5),(4,0,-6)]:place(f'R{base+i}',x+dx,y+dy,90)
+    # TI TPS564252 Fig. 8-26: SW faces the inductor; FB stays on the
+    # opposite side. Actual loop copper, Kelvin ground and vias remain unrouted.
+    place(f'U{40+k}',x-4,y,180)
+    place(f'L{k+1}',x+2.5,y)
+    for i,dx,dy,angle in [(0,-3.8,6.5,180),(1,-3.8,2.4,180),(2,9,-2.2,90),(3,9,1.8,270),(4,-7.8,-.5,0)]: place(f'C{base+i}',x+dx,y+dy,angle)
+    for i,dx,dy,angle in [(0,-7.8,1.5,0),(1,-7.8,3.5,180),(2,-6,-6.5,90),(3,-3,-5,90),(4,-8,-4,0)]:place(f'R{base+i}',x+dx,y+dy,angle)
     place(f'J{42+k}',x+13.5,y,0)
     label(['6.6 V SERVO','5.1 V PI','3.3 V LOGIC'][k],x,194,.9)
 for ref,x,y in [('C700',19,85),('C701',21,80),('R700',6,140),('C702',20,145)]:place(ref,x,y)

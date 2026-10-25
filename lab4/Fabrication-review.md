@@ -9,12 +9,14 @@ The class fabrication batch follows the next morning.
 
 ## Current evidence
 
-The October 25 update adds the five GCT switch footprints using the verified
-manufacturer A1 drawing. All 284 schematic components now have matching PCB
+The October 25 updates add the five GCT switch footprints using the verified
+manufacturer A1 drawing and refine the three regulator groups. All 284 schematic components now have matching PCB
 footprints, with eight additional mechanical supports and 297 schematic nets.
 The switch contact pairs, pad dimensions and nets pass the placement checks;
-the circuit and three BOM views agree. Existing part positions and pad nets
-are unchanged. Fresh ERC, placement DRC and schematic parity report no findings
+the circuit and three BOM views agree. The regulator revision moves/rotates
+30 footprints while preserving their pad nets and all unrelated positions.
+The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
+Fresh ERC, placement DRC and schematic parity report no findings
 under the configured rules. There are still 499 reported unconnected items,
 no routed tracks and no copper zones. These checks do not establish component
 ratings or completed routing.

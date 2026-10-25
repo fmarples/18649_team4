@@ -20,6 +20,8 @@ end. Each node's CAN A and CAN B circuits form separate groups, with exposed
 isolation jumpers and test headers. MCU bypass capacitors follow the appropriate
 package sides; the detailed current loops still need refinement during routing.
 The three regulator groups sit along the front edge, away from the Pi reservation.
+We rotated them so their switching pins face the inductors and brought the
+local bypass and feedback parts closer. See [Power-stage-review.md](Power-stage-review.md).
 Their placement is preliminary; we have not routed or verified the switching
 loops, feedback paths, thermal copper or power distribution.
 

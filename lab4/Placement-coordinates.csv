@@ -232,21 +232,21 @@ U35,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,105.0,115.0675,0.0,F.Cu,Tru
 Y30,16 MHz,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,61.0,122.0,0.0,F.Cu,True
 Y34,16 MHz,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,95.0,122.0,0.0,F.Cu,True
 C400,1000u / 25V,Capacitor_THT:CP_Radial_D12.5mm_P5.00mm,61.676,21.0,0.0,F.Cu,True
-C410,22u / 25V,Capacitor_SMD:C_1210_3225Metric,12.0,200.0,0.0,F.Cu,True
-C411,100n / 50V,Capacitor_SMD:C_0603_1608Metric,15.0,203.5,90.0,F.Cu,True
-C412,22u / 16V,Capacitor_SMD:C_0805_2012Metric,25.0,211.0,0.0,F.Cu,True
-C413,22u / 16V,Capacitor_SMD:C_0805_2012Metric,29.0,211.0,0.0,F.Cu,True
-C414,22p C0G,Capacitor_SMD:C_0603_1608Metric,19.0,208.0,90.0,F.Cu,True
-C420,22u / 25V,Capacitor_SMD:C_1210_3225Metric,50.0,200.0,0.0,F.Cu,True
-C421,100n / 50V,Capacitor_SMD:C_0603_1608Metric,53.0,203.5,90.0,F.Cu,True
-C422,22u / 16V,Capacitor_SMD:C_0805_2012Metric,63.0,211.0,0.0,F.Cu,True
-C423,22u / 16V,Capacitor_SMD:C_0805_2012Metric,67.0,211.0,0.0,F.Cu,True
-C424,22p C0G,Capacitor_SMD:C_0603_1608Metric,57.0,208.0,90.0,F.Cu,True
-C430,22u / 25V,Capacitor_SMD:C_1210_3225Metric,88.0,200.0,0.0,F.Cu,True
-C431,100n / 50V,Capacitor_SMD:C_0603_1608Metric,91.0,203.5,90.0,F.Cu,True
-C432,22u / 16V,Capacitor_SMD:C_0805_2012Metric,101.0,211.0,0.0,F.Cu,True
-C433,22u / 16V,Capacitor_SMD:C_0805_2012Metric,105.0,211.0,0.0,F.Cu,True
-C434,22p C0G,Capacitor_SMD:C_0603_1608Metric,95.0,208.0,90.0,F.Cu,True
+C410,22u / 25V,Capacitor_SMD:C_1210_3225Metric,18.2,210.5,180.0,F.Cu,True
+C411,100n / 50V,Capacitor_SMD:C_0603_1608Metric,18.2,206.4,180.0,F.Cu,True
+C412,22u / 16V,Capacitor_SMD:C_0805_2012Metric,31.0,201.8,90.0,F.Cu,True
+C413,22u / 16V,Capacitor_SMD:C_0805_2012Metric,31.0,205.8,-90.0,F.Cu,True
+C414,22p C0G,Capacitor_SMD:C_0603_1608Metric,14.2,203.5,0.0,F.Cu,True
+C420,22u / 25V,Capacitor_SMD:C_1210_3225Metric,56.2,210.5,180.0,F.Cu,True
+C421,100n / 50V,Capacitor_SMD:C_0603_1608Metric,56.2,206.4,180.0,F.Cu,True
+C422,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69.0,201.8,90.0,F.Cu,True
+C423,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69.0,205.8,-90.0,F.Cu,True
+C424,22p C0G,Capacitor_SMD:C_0603_1608Metric,52.2,203.5,0.0,F.Cu,True
+C430,22u / 25V,Capacitor_SMD:C_1210_3225Metric,94.2,210.5,180.0,F.Cu,True
+C431,100n / 50V,Capacitor_SMD:C_0603_1608Metric,94.2,206.4,180.0,F.Cu,True
+C432,22u / 16V,Capacitor_SMD:C_0805_2012Metric,107.0,201.8,90.0,F.Cu,True
+C433,22u / 16V,Capacitor_SMD:C_0805_2012Metric,107.0,205.8,-90.0,F.Cu,True
+C434,22p C0G,Capacitor_SMD:C_0603_1608Metric,90.2,203.5,0.0,F.Cu,True
 D40,12V gate clamp,Diode_SMD:D_SOD-123F,104.0225,25.0,0.0,F.Cu,True
 F1,Fuse: rating TBD,Fuse:Fuseholder_Blade_Mini_Keystone_3568,86.3,21.96,90.0,F.Cu,True
 J40,Battery input: 1=+ 2=GND,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,72.02,6.95,0.0,F.Cu,True
@@ -254,30 +254,30 @@ J41,VBAT test,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,74.725,
 J42,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,35.5,201.46,0.0,F.Cu,True
 J43,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,73.5,201.46,0.0,F.Cu,True
 J44,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,111.5,201.46,0.0,F.Cu,True
-L1,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,27.5,204.0,0.0,F.Cu,True
-L2,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,65.5,204.0,0.0,F.Cu,True
-L3,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,103.5,204.0,0.0,F.Cu,True
+L1,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,24.5,204.0,0.0,F.Cu,True
+L2,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,62.5,204.0,0.0,F.Cu,True
+L3,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,100.5,204.0,0.0,F.Cu,True
 Q1,DMPH3010LK3-13,Package_TO_SOT_SMD:TO-252-2,109.84,17.0725,0.0,F.Cu,True
 R400,10k,Resistor_SMD:R_0603_1608Metric,109.0,25.0,0.0,F.Cu,True
 R401,47k,Resistor_SMD:R_0603_1608Metric,113.0,25.0,0.0,F.Cu,True
-R410,100k 1%,Resistor_SMD:R_0603_1608Metric,21.0,209.0,90.0,F.Cu,True
-R411,10k 1%,Resistor_SMD:R_0603_1608Metric,21.0,212.0,90.0,F.Cu,True
+R410,100k 1%,Resistor_SMD:R_0603_1608Metric,14.2,205.5,0.0,F.Cu,True
+R411,10k 1%,Resistor_SMD:R_0603_1608Metric,14.2,207.5,180.0,F.Cu,True
 R412,47k,Resistor_SMD:R_0603_1608Metric,16.0,197.5,90.0,F.Cu,True
 R413,10k,Resistor_SMD:R_0603_1608Metric,19.0,199.0,90.0,F.Cu,True
-R414,10k PG pullup,Resistor_SMD:R_0603_1608Metric,22.0,198.0,90.0,F.Cu,True
-R420,75k 0.1%,Resistor_SMD:R_0603_1608Metric,59.0,209.0,90.0,F.Cu,True
-R421,10k 0.1%,Resistor_SMD:R_0603_1608Metric,59.0,212.0,90.0,F.Cu,True
+R414,10k PG pullup,Resistor_SMD:R_0603_1608Metric,14.0,200.0,0.0,F.Cu,True
+R420,75k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,205.5,0.0,F.Cu,True
+R421,10k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,207.5,180.0,F.Cu,True
 R422,33k,Resistor_SMD:R_0603_1608Metric,54.0,197.5,90.0,F.Cu,True
 R423,10k,Resistor_SMD:R_0603_1608Metric,57.0,199.0,90.0,F.Cu,True
-R424,10k PG pullup,Resistor_SMD:R_0603_1608Metric,60.0,198.0,90.0,F.Cu,True
-R430,45.3k 1%,Resistor_SMD:R_0603_1608Metric,97.0,209.0,90.0,F.Cu,True
-R431,10k 1%,Resistor_SMD:R_0603_1608Metric,97.0,212.0,90.0,F.Cu,True
+R424,10k PG pullup,Resistor_SMD:R_0603_1608Metric,52.0,200.0,0.0,F.Cu,True
+R430,45.3k 1%,Resistor_SMD:R_0603_1608Metric,90.2,205.5,0.0,F.Cu,True
+R431,10k 1%,Resistor_SMD:R_0603_1608Metric,90.2,207.5,180.0,F.Cu,True
 R432,22k,Resistor_SMD:R_0603_1608Metric,92.0,197.5,90.0,F.Cu,True
 R433,10k,Resistor_SMD:R_0603_1608Metric,95.0,199.0,90.0,F.Cu,True
-R434,10k PG pullup,Resistor_SMD:R_0603_1608Metric,98.0,198.0,90.0,F.Cu,True
-U40,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,18.0,204.0975,0.0,F.Cu,True
-U41,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,56.0,204.0975,0.0,F.Cu,True
-U42,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,94.0,204.0975,0.0,F.Cu,True
+R434,10k PG pullup,Resistor_SMD:R_0603_1608Metric,90.0,200.0,0.0,F.Cu,True
+U40,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,18.0,203.9025,180.0,F.Cu,True
+U41,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,56.0,203.9025,180.0,F.Cu,True
+U42,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,94.0,203.9025,180.0,F.Cu,True
 H1,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2mm_M3,7.5,7.0,0.0,F.Cu,False
 H2,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2mm_M3,112.5,7.0,0.0,F.Cu,False
 H3,Measured chassis center; M3 PCB drill proposed,MountingHole:MountingHole_3.2mm_M3,35.0,227.0,0.0,F.Cu,False

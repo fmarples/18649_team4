@@ -62,6 +62,34 @@ for name in ['BOM-Hand-assembly.csv', 'BOM-JLC-hybrid.csv', 'Preliminary-BOM.csv
             assert row['Footprint'] == by_ref[ref]['Footprint'], (name, ref, 'footprint')
     assert seen == set(by_ref), (name, 'reference coverage')
 
+# TPS564252 DRL pin numbering and complete local support connectivity, checked
+# against TI SLUSEQ6A pp. 3, 16-17, independently of generator metadata.
+for i, prefix, output in [(0, 'P_SERVO', '/+6V6_SERVO'),
+                          (1, 'P_5V', '/+5V'), (2, 'P_3V3', '/+3V3')]:
+    u, base = f'U{40+i}', 410+10*i
+    local = '/Power/' + prefix
+    for pin, name in enumerate(['/VBAT_PROTECTED', local+'_SW', '/GND',
+                                local+'_PG', local+'_EN', local+'_FB'], 1):
+        expect(u, pin, name)
+    expect(f'L{i+1}', 1, local+'_SW'); expect(f'L{i+1}', 2, output)
+    # Only the regulator and inductor may touch the switching node.
+    assert nets[local+'_SW'] == {(u, '2'), (f'L{i+1}', '1')}
+    for offset, positive in [(0, '/VBAT_PROTECTED'), (1, '/VBAT_PROTECTED'),
+                              (2, output), (3, output)]:
+        expect(f'C{base+offset}', 1, positive)
+        expect(f'C{base+offset}', 2, '/GND')
+    for ref, first, second in [
+        (f'R{base}', output, local+'_FB'), (f'R{base+1}', local+'_FB', '/GND'),
+        (f'C{base+4}', output, local+'_FB'),
+        (f'R{base+2}', '/VBAT_PROTECTED', local+'_EN'),
+        (f'R{base+3}', local+'_EN', '/GND'),
+        (f'R{base+4}', '/+3V3', local+'_PG')]:
+        expect(ref, 1, first); expect(ref, 2, second)
+    assert nets[local+'_FB'] == {(u, '6'), (f'R{base}', '2'),
+                                (f'R{base+1}', '1'), (f'C{base+4}', '2')}
+    for pin, name in enumerate([output, local+'_PG', '/GND'], 1):
+        expect(f'J{42+i}', pin, name)
+
 # Package-specific support checks independent of the generated connection metadata.
 for zone, ref, prefix, hundred in [('Front', 'U50', 'F', 500), ('Rear', 'U60', 'R', 600)]:
     local = f'/{zone} zone/'
@@ -125,11 +153,6 @@ for part in root.findall('libparts/libpart'):
     if part.attrib['part'] == 'MCP2515_TSSOP20':
         assert part.find("pins/pin[@num='17']").attrib['type'] == 'tri_state'
 
-missing = sorted(r for r, c in components.items() if not c.findtext('footprint'))
-print(f'PASS: {len(components)} components; {len(nets)} nets; BOM, support circuits, interfaces, probe order and zone boundaries.')
-print('Unassigned footprints (still unresolved): ' + ', '.join(missing))
-print('These checks do not establish PCB completeness, ratings, physical fit, firmware operation or fabrication readiness.')
-
 # Actuator integration checks (independent of generator metadata).
 rear='/Rear zone/'; front='/Front zone/'
 for pin,name in {1:'/GND',2:rear+'LEFT_BRIDGE',3:rear+'LEFT_RETURN',4:'/VBAT_PROTECTED',5:rear+'R_LEFT_IN1',6:rear+'R_LEFT_ENABLE_PWM',7:rear+'R_LEFT_IN2',8:'/GND',9:'/+5V',10:rear+'R_RIGHT_IN3',11:rear+'R_RIGHT_ENABLE_PWM',12:rear+'R_RIGHT_IN4',13:rear+'RIGHT_BRIDGE',14:rear+'RIGHT_RETURN',15:'/GND'}.items():expect('U80',pin,name)
@@ -147,3 +170,7 @@ for ref in ['R804','R805','R806','R807']:
 for pin,name in zip([2,4,6,8],['R_LEFT_ENC_A','R_LEFT_ENC_B','R_RIGHT_ENC_A','R_RIGHT_ENC_B']):expect('U81',pin,rear+name)
 for pin in [11,13]:expect('U81',pin,'/GND')
 print('Actuator output, diode polarity, sensed current paths and encoder level-domain checks passed.')
+missing = sorted(r for r, c in components.items() if not c.findtext('footprint'))
+print(f'PASS: {len(components)} components; {len(nets)} nets; BOM, regulators, support circuits, interfaces, probe order and zone boundaries.')
+print('Unassigned footprints: ' + (', '.join(missing) or 'none'))
+print('These checks do not establish PCB completeness, ratings, physical fit, firmware operation or fabrication readiness.')

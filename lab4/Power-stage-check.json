@@ -1,0 +1,98 @@
+{
+  "status": "PASS for stated calculations and placement orientation only",
+  "fabrication_release": false,
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/tps564252.pdf",
+    "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf"
+  ],
+  "regulators": [
+    {
+      "reference": "U40",
+      "rail": "SERVO",
+      "output_nominal_V": 6.6,
+      "static_reference_and_resistor_corners_V": [
+        6.38397,
+        6.82203
+      ],
+      "feedback_resistor_tolerance_percent": 1.0,
+      "EN_rising_typical_V": 6.810965,
+      "EN_max_at_15V_1percent_external_resistors_no_internal_pulldown_V": 2.67526,
+      "allocated_output_A": 4.0,
+      "inductor_at_minus20percent_L_600kHz": {
+        "ripple_A_pp": 1.638298,
+        "peak_A": 4.819149,
+        "rms_A": 4.027862
+      },
+      "pad_center_distances_mm_not_routed_lengths": {
+        "SW_to_inductor": 2.964,
+        "VIN_to_100nF": 2.015,
+        "FB_to_top_resistor": 2.515,
+        "inductor_output_to_nearest_22uF": 3.772
+      }
+    },
+    {
+      "reference": "U41",
+      "rail": "5V",
+      "output_nominal_V": 5.1,
+      "static_reference_and_resistor_corners_V": [
+        5.014644,
+        5.185644
+      ],
+      "feedback_resistor_tolerance_percent": 0.1,
+      "EN_rising_typical_V": 5.136635,
+      "EN_max_at_15V_1percent_external_resistors_no_internal_pulldown_V": 3.542202,
+      "allocated_output_A": 3.3,
+      "inductor_at_minus20percent_L_600kHz": {
+        "ripple_A_pp": 1.492021,
+        "peak_A": 4.046011,
+        "rms_A": 3.327989
+      },
+      "pad_center_distances_mm_not_routed_lengths": {
+        "SW_to_inductor": 2.964,
+        "VIN_to_100nF": 2.015,
+        "FB_to_top_resistor": 2.515,
+        "inductor_output_to_nearest_22uF": 3.772
+      }
+    },
+    {
+      "reference": "U42",
+      "rail": "3V3",
+      "output_nominal_V": 3.318,
+      "static_reference_and_resistor_corners_V": [
+        3.215216,
+        3.423503
+      ],
+      "feedback_resistor_tolerance_percent": 1.0,
+      "EN_rising_typical_V": 3.82109,
+      "EN_max_at_15V_1percent_external_resistors_no_internal_pulldown_V": 4.752196,
+      "allocated_output_A": 0.8,
+      "inductor_at_minus20percent_L_600kHz": {
+        "ripple_A_pp": 1.145416,
+        "peak_A": 1.372708,
+        "rms_A": 0.865639
+      },
+      "pad_center_distances_mm_not_routed_lengths": {
+        "SW_to_inductor": 2.964,
+        "VIN_to_100nF": 2.015,
+        "FB_to_top_resistor": 2.515,
+        "inductor_output_to_nearest_22uF": 3.772
+      }
+    }
+  ],
+  "limitations": [
+    "600kHz and the internal 2Mohm EN pulldown are typical, not guaranteed bounds.",
+    "Static output corners omit wiring drop, load/line regulation, ripple and transients.",
+    "Inductor check uses allocated load, -20% inductance and nominal output voltage; not a full fault/temperature/frequency bound.",
+    "A 6.7A saturation rating does not cover worst-case 6.7A valley current limit plus ripple.",
+    "44uF output is nominal; manufacturer DC-bias/temperature data and loop review remain needed.",
+    "TI effective thermal data uses a 2oz EVM; our 1oz board has no validated thermal rating.",
+    "No copper routing, Kelvin feedback return, ground vias or switching-loop test is established.",
+    "EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on."
+  ],
+  "source_sha256": {
+    "KiCad/Lab4.kicad_pcb": "5044c9a8030385798620ef76a7a65429cfc34d46896490e88d43b1f1a42f6326",
+    "KiCad/Power.kicad_sch": "7f0ee5bcbe1de82667c6484da8765837757312186e9b98f43b5206c0b4e74ccf",
+    "KiCad/Circuit-BOM.csv": "24693a07c93c701bd316982f82fe96e269702272a1720acd1f43643a2ca97bfc",
+    "Power-calculations.json": "712e124a8aef46dd126c5aceff307ab8cb4b33a9e7a56711b3f986cbbf278c5b"
+  }
+}
