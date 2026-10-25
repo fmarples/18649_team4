@@ -151,7 +151,7 @@ Stock was visible on October 24 but is not reserved. Prices may change.
 | Pi screws | [Essentra 50M025045P005](https://www.digikey.com/en/products/detail/essentra-components/50M025045P005/11639454) | 8 + 2 | M2.5x5 nylon, 5mm pan head. No spacing washers; verify adjacent components and thread depth. |
 | Encoder housings | [Harwin M20-1060400](https://www.harwin.com/products/M20-1060400) | 2 + 1 | Four-position 2.54mm female housing for 0.64mm square pins; not keyed, so mark pin 1. |
 | Encoder contacts | [Harwin M20-1180046](https://cdn.harwin.com/pdfs/IS-15.pdf) | 8 + 4 | Loose tin contacts, 22-30AWG. Requires matching crimp tooling and wire dimensions. |
-| Servo adapter donor | Pololu 2184 is a reference only | 0 requested | A permitted source and the complete adapter current rating remain unresolved. Reuse/transition of the existing lead requires its wire size and contact fit. |
+| Servo adapter donor | [SparkFun 19224 / ROB-19224](https://www.digikey.com/en/products/detail/sparkfun-electronics/19224/16511100), candidate only | 1 adapter need; no released purchase | DigiKey 1568-19224-ND supplies the required male servo end with documented 26AWG wire. Contact-current rating and actual fit remain unverified. See the review below; do not directly crimp its 26AWG into the selected 20-22AWG Hirose terminal. |
 | Charger housing | [Hirose DF63A-2EP-3.96C](https://www.hirose.com/en/product/p/CL0680-0535-5-00) | 0 requested; reference only | Charger selection and its actual lead are unresolved. |
 | Charger contacts | [Hirose DF63-2022PC](https://www.hirose.com/en/product/p/CL0680-0539-6-00) | 0 requested; reference only | Contact choice depends on the selected charger lead; not the vehicle supply cable. |
 
@@ -194,9 +194,10 @@ voltage tolerance and signal quality still require hardware validation.
   transition to the actual servo plug remains a purchasing exception.
   [DFRobot FIT0033](https://www.dfrobot.com.cn/goods-380.html) is listed at
   800mA, so we rejected it for the 3A servo endpoint despite its plug shape.
-  Adafruit 973 lacks a verified wire/current rating in the reviewed listing.
+  SparkFun19224 is now a permitted-source candidate, not a qualified purchase.
+  Adafruit973 lacks a verified wire/current rating in the reviewed listing.
   The Pololu2184 reference is on hold under the vendor rule. Neither a plug
-  photograph nor 22AWG wire proves the complete original plug supports 4A.
+  photograph nor wire gauge establishes a complete harness current rating.
 - **Wire:** request cut lengths of [Alpha3057](https://www.alphawire.com/products/wire/hook-up-wire/premium/3057)
   stranded16AWG (3m red +3m black, including spare/routing allowance) and
   [Alpha3051](https://www.alphawire.com/disteAPI/SpecPDF/DownloadProductSpecPdf?productPartNumber=3051)
@@ -207,6 +208,40 @@ voltage tolerance and signal quality still require hardware validation.
 Contact models and wire ranges are selected; verify access to compatible
 crimp tools or purchased precrimp leads before buying loose terminals. We
 have not assumed a generic crimper produces a qualified Hirose connection.
+
+### Servo lead sourcing result — October 24
+
+We identified [SparkFun 19224](https://www.digikey.com/en/products/detail/sparkfun-electronics/19224/16511100)
+(manufacturer SKU ROB-19224; DigiKey 1568-19224-ND) as a candidate for TA
+review. The listing showed 19 available at $2.25 each on October 24; stock
+is not reserved. [SparkFun](https://www.sparkfun.com/servo-to-pigtail-cable-shrouded.html)
+specifies 170mm, 26AWG and a shrouded male servo connector. Its
+[drawing](https://cdn.sparkfun.com/assets/8/4/e/3/6/Schematic-19224-Servo_to_Pigtail_Cable_-_Shrouded.pdf)
+identifies a 2.54mm JR-FU housing, but gives no continuous or timed peak
+current rating. We therefore have not qualified it for the servo's published
+2.4-3A stall range. The 4A regulator allocation is headroom, not a measured
+servo demand or a harness rating.
+
+| Alternative checked | Result |
+|---|---|
+| DFRobot FIT0033 | Published 800mA rating; rejected for this servo endpoint. |
+| [Adafruit973 on DigiKey](https://www.digikey.com/en/products/detail/adafruit-industries-llc/973/5353631) | Appropriate connector description, but reviewed manufacturer information does not establish wire size or current rating. |
+| Pololu2184 | Documented 22AWG; permitted supplier and complete contact-current rating not verified. Zero purchase quantity. |
+| [TE AMPMODU MTE](https://www.te.com/content/dam/te-com/documents/industrial-automation-and-control/global/ENG_DS_4-1773458-0_AMPMODU_MTE_INTERCONNECT_SYS_0411.pdf) | Published 3A limit is for one contact in free air; housing compatibility with our servo is unverified. Not a qualified substitute. |
+
+The BOM preserves one unresolved adapter requirement, with the SparkFun
+candidate and supplier link attached. It does not add a second donor purchase.
+Our review question is: **Which course-stock or recommended lead should we
+use for the LD-1501MG? SparkFun19224 is available from DigiKey, but its
+published information does not establish the required current capability.**
+
+If that candidate is accepted for further qualification, its 26AWG tails need
+insulated transitions to 22AWG leads for the existing Hirose contacts. The
+transition does not increase the rating of the thinner cable or servo plug.
+The conditional wiring plan is in [Actuator-design.md](Actuator-design.md).
+The original servo lead stays intact. Fit, continuity, retention, voltage
+drop and heating must be checked before vehicle operation; no such test is
+claimed for the October 24 review.
 
 ## Fuse candidate and limits of the calculation
 

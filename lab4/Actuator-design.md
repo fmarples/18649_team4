@@ -105,6 +105,29 @@ unresolved sourcing/fit. Physical mating checks precede connector purchasing;
 finished-harness continuity checks precede first power after assembly. A
 completed harness is not claimed as part of this preliminary submission.
 
+The permitted-source candidate is SparkFun19224 (ROB-19224),
+[DigiKey1568-19224-ND](https://www.digikey.com/en/products/detail/sparkfun-electronics/19224/16511100).
+It is not a finalized selection: the manufacturer documents 26AWG and a
+2.54mm JR-FU male interface, but no cable/contact current rating. See
+[Parts-review.md](Parts-review.md) for the remaining review question.
+
+If qualified, preserve its shrouded servo-mating end and adapt its individual
+tails to 22AWG wire, then DF63A-2022SC contacts in DF63-3S-3.96C. Do not put
+26AWG directly in a 20-22AWG crimp. The conditional end-to-end map is:
+
+| Existing servo function | SparkFun P1 in its drawing | PCB J90 |
+|---|---|---|
+| White / PWM | 1 / yellow | 3 / PWM |
+| Red / supply | 2 / red | 2 / sensed6.6V |
+| Black / ground | 3 / brown | 1 / GND |
+
+These P1 numbers come from the manufacturer's drawing, not from the team's
+photo orientation. Confirm each conductor by continuity with power off;
+do not copy donor colors onto the PCB pin order. Keep every splice separately
+insulated and strain relieved, and verify that the servo cannot be plugged
+in backwards. Changing wire size does not qualify the original contacts or
+the donor's 26AWG section. This is an assembly plan, not an assembled harness.
+
 ### October 24 motor/encoder cable identification
 
 The October 24 team photo and accompanying report give the following order
