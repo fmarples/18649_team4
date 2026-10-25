@@ -44,7 +44,7 @@ These counts describe sourcing documentation, not 127 qualified purchases.
 - We replaced manufacturer-only links for J40/J80/J81, J90, U81 and the four
   lamp transistors with exact-MPN DigiKey listings. No part, footprint or
   quantity changed. U81 SN74LVC14APWR is out of stock on the checked listing;
-  it needs availability or a reviewed substitute before ordering.
+  the reviewed SN74LVC14APW carrier alternative below now resolves its source.
 - The Amazon generic-header link came from the course's v3 list. We removed
   it from the active purchasing fields and retained the original course list
   as evidence. Confirm course quantities and row/pin dimensions; any shortage
@@ -60,6 +60,35 @@ These counts describe sourcing documentation, not 127 qualified purchases.
 Supplier compliance does not establish stock availability, cable compatibility,
 or current capability. Battery/charger selection, servo-lead qualification,
 course quantities and deferred attachment hardware remain explicit open items.
+
+## TA review notes in the purchasing BOM
+
+The `TA_review` column in Preliminary-BOM.csv now identifies the requested
+follow-up directly beside each affected item. Existing `Status` and
+`Stock_status` notes still apply; a blank review cell does not certify a part.
+
+- **Course-stock quantities:** the v3 list identifies parts, but does not
+  publish the quantities allocated to us. The affected rows ask the TA to
+  confirm how many of `Requested_total` the course can supply. That column
+  includes proposed spares; it is total demand, not an additional purchase
+  on top of course stock. Buy only the shortfall through DigiKey/Mouser.
+  Generic headers also need the stated row/pin dimensions. This cannot be
+  closed by reading a distributor's inventory.
+- **Servo lead:** the unresolved adapter row asks for a course-stock or
+  DigiKey/Mouser male lead suitable for the LD-1501MG. SparkFun19224 remains
+  a candidate because the reviewed documentation gives no contact/cable
+  current rating for the 2.4-3A servo stall range. The focused question is in
+  the BOM itself. Physical fit, polarity, continuity, retention, voltage drop
+  and heating checks occur before powered use; they are not claimed complete.
+- **U81 source resolved:** use [SN74LVC14APW, DigiKey 296-26584-5-ND](https://www.digikey.com/en/products/detail/texas-instruments/SN74LVC14APW/1591867)
+  as the reviewed procurement alternative to SN74LVC14APWR. [TI's carrier-options table](https://www.ti.com/product/SN74LVC14A/part-details/SN74LVC14APWR)
+  identifies them as the same product supplied in different carriers. Both
+  use PW/TSSOP-14; the tube option needs no circuit or footprint change for
+  our team-assembly plan. DigiKey showed 291 available at $1.05 each on
+  October 24. Request **two individual ICs total: one installed plus one
+  spare**, not both ordering codes or an entire 90-piece tube. The BOM retains
+  the schematic's PWR identifier and explicitly records PW as the purchasing
+  alternative. Recheck stock when ordering and record the fitted ordering code.
 
 ## Battery and charger: provisional review basis
 

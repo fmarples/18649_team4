@@ -37,6 +37,10 @@ review. It is not a manufacturing release. Detailed PCB layout is due October 29
    board. Use DigiKey/Mouser outside course stock, with the battery-only Amazon
    exception described above. The supplier check in Parts-review.md separates
    permitted purchase links, course-stock requests, and unresolved items.
+   Preliminary-BOM.csv now has a `TA_review` column asking for course-stock
+   allocations and a suitable servo lead. U81 sourcing is resolved with the
+   reviewed SN74LVC14APW tube-pack alternative from DigiKey: two individual
+   ICs total, with no circuit or footprint change. Recheck stock at purchase.
    The team will send the three review
    deliverables to its small-group TA via Slack.
 3. Record any clarification of expected L298 brief-stall/protection behavior,

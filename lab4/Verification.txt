@@ -108,6 +108,17 @@ Provisional battery candidate, October24 evening
   preserved. Power-budget edit changes only the input-rail evidence note.
   This records a review candidate, not a qualified battery or a purchase.
 
+TA review fields and U81 procurement, October24
+- Added TA_review to the purchasing BOM:69 course-stock rows request actual
+  allocations;1 servo-adapter row requests a suitable lead/current-rating basis.
+  These notes are prepared for the TA, not sent. Physical tests remain open.
+- U81 alternative SN74LVC14APW / DigiKey296-26584-5-ND verified against TI's
+  carrier table: same device and PW/TSSOP-14, tube rather than reel. DigiKey
+  showed291 available at$1.05 each. Source resolved, stock not reserved.
+- Both active BOMs identify the alternative and retain quantity2 total
+  (1 installed+1 spare), the original schematic identifier, and the footprint.
+  All other original fields are unchanged. No additional part row was added.
+
 Limits
 No PCB was built, powered or flashed. Battery/charger selection, L298 protection,
 heatsink attachment, fuse coordination, course stock and adapter qualification
