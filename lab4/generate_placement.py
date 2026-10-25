@@ -99,9 +99,14 @@ def can_cell(n,x,y,term=True):
     k=n*10
     place(f'U{n}',x-4,y)
     place(f'U{n+1}',x+6,y)
-    place(f'Y{n}',x-4,y+7)
-    for ref,dx,dy in [(f'C{k}',-7,7),(f'C{k+1}',-1,7),(f'R{k}',-9,-3),(f'C{k+2}',-9,1),
-                      (f'R{k+1}',10,5),(f'C{k+3}',-4,-6),(f'C{k+4}',6,-4.5)]: place(ref,x+dx,y+dy,90)
+    # Native origins match the locally routed revision. Keep the crystal near
+    # OSC1/OSC2 and put the transceiver bypass in the gap between the two ICs.
+    for ref,dx,dy,angle in [(f'Y{n}',-10,3,0),(f'C{k}',-13.3,4.8,270),
+            (f'C{k+1}',-9.7,-.2,0),(f'R{k}',-2.9,-6.8,0),
+            (f'C{k+2}',.4,-6.8,0),(f'R{k+1}',.9,5.2,0),
+            (f'C{k+3}',.7,-4.5,0),(f'C{k+4}',1.05,.9,270)]:
+        fps[ref].SetOrientationDegrees(angle)
+        fps[ref].SetPosition(vec(x+dx,y+dy));positions[ref]=(x+dx,y+dy,angle)
     place(f'J{n}',x-7,y-13)
     place(f'J{n+1}',x+5,y-13,90)
     if term:

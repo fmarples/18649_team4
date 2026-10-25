@@ -168,3 +168,21 @@ October 25 initial regulator routing
 - Inspected native front/back copper plots. Kelvin return, switching loops,
   effective capacitance, thermal capability and remaining board routing need
   further engineering review. This is a partial routing revision, not release.
+
+
+October 25 MCU and CAN local routing
+- Moved 48 CAN support footprints; every pad net/value/footprint identity and
+  every original regulator track/via are preserved. No schematic or BOM change.
+- Routed six CAN crystal, bypass, reset, RTS/CS, TXD/RXD, isolation/test and
+  local termination groups; long inter-node backbones remain unrouted.
+- Routed both MCU bypass/bulk/VCAP/VDDA, reset, BOOT0 and self-test circuits.
+- Saved totals: 2,214 segments, 275 through vias, four filled ground zones.
+  Missing connections fell from 648 to 345; this is not fabrication-ready.
+- All 111 copper-connectivity groups pass. The checker rejects a deliberately
+  disconnected U10 OSC1 in a temporary board. All 12 oscillator nets stay on
+  F.Cu without vias; branch lengths are recorded in Routing-check.json.
+- Fresh ERC, ordinary DRC and schematic parity: zero findings. All 284 parts
+  and 297 nets agree; placement and existing regulator calculations pass.
+- Preview coordinates, fit template, native plots and CAD hashes refreshed.
+  Host SPI/interrupts, CAN backbones, power distribution and remaining signals
+  still need routing. No hardware testing or component-rating qualification.

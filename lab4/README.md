@@ -6,7 +6,7 @@ NiMH-powered supply with a battery/charger purchase still to finalize. The Raspb
 its 40-pin header.
 
 **Status, 25 October 2026:** schematic and partially routed PCB for design review.
-The three regulator groups have initial local routing; 648 connections remain.
+The regulator, MCU support and six CAN local groups are routed; 345 connections remain.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The five schematic pages contain 284 components and 297 nets. The proposed
 120 x 234 mm PCB contains 284 assigned electrical footprints and eight
@@ -62,14 +62,14 @@ for a TA submission so the reviewed version can be recovered later.
 | --- | --- |
 | [KiCad/Lab4.kicad_pro](KiCad/Lab4.kicad_pro) | Open this project in KiCad 10. |
 | [KiCad/Lab4.kicad_sch](KiCad/Lab4.kicad_sch) | Overview linking the Front, Rear, Cockpit and Power sheets. |
-| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 x 234 mm PCB with initial regulator routing and measured chassis centers. |
+| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 x 234 mm PCB with local regulator/MCU/CAN routing and measured chassis centers. |
 | [Placement-overview.png](Placement-overview.png) | Direct Pi stack: bottom socket and top circuitry above the Pi. |
 | [Pi-stack-side-view.png](Pi-stack-side-view.png) | Proposed 22 mm Pi gap and 35 mm chassis spacers; physical fit pending. |
 | [Placement-detail.svg](Placement-detail.svg) | Native KiCad plot with pads and references. |
 | [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
 | [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
 | [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |
-| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; capped unconnected list. Full count: 648. |
+| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; 345 unconnected items remain. |
 | [Lab4-Circuits.pdf](Lab4-Circuits.pdf) | Five-page schematic preview. |
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |
@@ -185,8 +185,8 @@ ERC reports zero errors and zero warnings. Netlist checks cover all 284
 references and 297 nets, including motor current paths, flyback polarity,
 servo supply after its shunt, MCU support and Lab 3 pin reservations.
 DRC reports zero ordinary violations and zero missing footprints. Its
-unconnected list is capped at 499; the full saved-board connectivity count is
-648. Initial routing contains 206 segments, 45 vias and four ground zones.
+unconnected list and full saved-board connectivity count both report 345.
+Partial routing contains 2,214 segments, 275 vias and four ground zones.
 A package-specific 0.15 mm pad-clearance rule applies only inside U40-U42
 for the proposed 1 oz copper process; general trace clearance stays 0.20 mm.
 See Placement-review.md for the source and remaining limits.

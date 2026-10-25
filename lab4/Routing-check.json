@@ -3,24 +3,24 @@
   "fabrication_release": false,
   "errors": [],
   "counts": {
-    "track_segments": 206,
-    "through_vias": 45,
+    "track_segments": 2214,
+    "through_vias": 275,
     "copper_zones": 4,
-    "full_unconnected_count": 648
+    "full_unconnected_count": 345
   },
   "segment_width_counts_mm": {
+    "0.2": 2047,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
     "0.8": 15,
     "0.5": 12,
     "1.0": 3,
-    "0.2": 39,
     "0.4": 3,
     "1.2": 3
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 21,
+    "0.70/0.30": 251,
     "0.80/0.40": 24
   },
   "checks": [
@@ -281,13 +281,1187 @@
         "J44.3"
       ],
       "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "OSC1",
+      "net": "/Front zone/F_A_OSC1",
+      "pads": [
+        "U10.9",
+        "Y10.1",
+        "C100.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "OSC2",
+      "net": "/Front zone/F_A_OSC2",
+      "pads": [
+        "U10.8",
+        "Y10.3",
+        "C101.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "RESET",
+      "net": "/Front zone/F_A_RESET",
+      "pads": [
+        "U10.19",
+        "C102.1",
+        "R100.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U10.4",
+        "U10.5",
+        "U10.7",
+        "U10.20",
+        "U11.3",
+        "C103.1",
+        "C104.1",
+        "R100.1",
+        "R101.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "CS pullup",
+      "net": "/Front zone/F_CS_A",
+      "pads": [
+        "U10.18",
+        "R101.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "TXD",
+      "net": "/Front zone/F_A_TXD",
+      "pads": [
+        "U10.1",
+        "U11.1",
+        "J11.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "RXD",
+      "net": "/Front zone/F_A_RXD",
+      "pads": [
+        "U10.2",
+        "U11.4",
+        "J11.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U10.10",
+        "U11.2",
+        "U11.8",
+        "Y10.2",
+        "Y10.4",
+        "C100.2",
+        "C101.2",
+        "C102.2",
+        "C103.2",
+        "C104.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "CAN H to isolation",
+      "net": "/Front zone/F_A_H_LOCAL",
+      "pads": [
+        "U11.7",
+        "J10.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "CAN L to isolation",
+      "net": "/Front zone/F_A_L_LOCAL",
+      "pads": [
+        "U11.6",
+        "J10.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "backbone H node",
+      "net": "/CAN_A_H",
+      "pads": [
+        "J10.2",
+        "J11.3",
+        "JP10.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "backbone L node",
+      "net": "/CAN_A_L",
+      "pads": [
+        "J10.4",
+        "J11.4",
+        "R102.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U10",
+      "group": "termination resistor",
+      "net": "/Front zone/F_A_TERM",
+      "pads": [
+        "JP10.2",
+        "R102.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "OSC1",
+      "net": "/Front zone/F_B_OSC1",
+      "pads": [
+        "U14.9",
+        "Y14.1",
+        "C140.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "OSC2",
+      "net": "/Front zone/F_B_OSC2",
+      "pads": [
+        "U14.8",
+        "Y14.3",
+        "C141.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "RESET",
+      "net": "/Front zone/F_B_RESET",
+      "pads": [
+        "U14.19",
+        "C142.1",
+        "R140.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U14.4",
+        "U14.5",
+        "U14.7",
+        "U14.20",
+        "U15.3",
+        "C143.1",
+        "C144.1",
+        "R140.1",
+        "R141.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "CS pullup",
+      "net": "/Front zone/F_CS_B",
+      "pads": [
+        "U14.18",
+        "R141.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "TXD",
+      "net": "/Front zone/F_B_TXD",
+      "pads": [
+        "U14.1",
+        "U15.1",
+        "J15.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "RXD",
+      "net": "/Front zone/F_B_RXD",
+      "pads": [
+        "U14.2",
+        "U15.4",
+        "J15.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U14.10",
+        "U15.2",
+        "U15.8",
+        "Y14.2",
+        "Y14.4",
+        "C140.2",
+        "C141.2",
+        "C142.2",
+        "C143.2",
+        "C144.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "CAN H to isolation",
+      "net": "/Front zone/F_B_H_LOCAL",
+      "pads": [
+        "U15.7",
+        "J14.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "CAN L to isolation",
+      "net": "/Front zone/F_B_L_LOCAL",
+      "pads": [
+        "U15.6",
+        "J14.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "backbone H node",
+      "net": "/CAN_B_H",
+      "pads": [
+        "J14.2",
+        "J15.3",
+        "JP14.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "backbone L node",
+      "net": "/CAN_B_L",
+      "pads": [
+        "J14.4",
+        "J15.4",
+        "R142.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U14",
+      "group": "termination resistor",
+      "net": "/Front zone/F_B_TERM",
+      "pads": [
+        "JP14.2",
+        "R142.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "OSC1",
+      "net": "/Rear zone/R_A_OSC1",
+      "pads": [
+        "U20.9",
+        "Y20.1",
+        "C200.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "OSC2",
+      "net": "/Rear zone/R_A_OSC2",
+      "pads": [
+        "U20.8",
+        "Y20.3",
+        "C201.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "RESET",
+      "net": "/Rear zone/R_A_RESET",
+      "pads": [
+        "U20.19",
+        "C202.1",
+        "R200.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U20.4",
+        "U20.5",
+        "U20.7",
+        "U20.20",
+        "U21.3",
+        "C203.1",
+        "C204.1",
+        "R200.1",
+        "R201.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "CS pullup",
+      "net": "/Rear zone/R_CS_A",
+      "pads": [
+        "U20.18",
+        "R201.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "TXD",
+      "net": "/Rear zone/R_A_TXD",
+      "pads": [
+        "U20.1",
+        "U21.1",
+        "J21.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "RXD",
+      "net": "/Rear zone/R_A_RXD",
+      "pads": [
+        "U20.2",
+        "U21.4",
+        "J21.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U20.10",
+        "U21.2",
+        "U21.8",
+        "Y20.2",
+        "Y20.4",
+        "C200.2",
+        "C201.2",
+        "C202.2",
+        "C203.2",
+        "C204.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "CAN H to isolation",
+      "net": "/Rear zone/R_A_H_LOCAL",
+      "pads": [
+        "U21.7",
+        "J20.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "CAN L to isolation",
+      "net": "/Rear zone/R_A_L_LOCAL",
+      "pads": [
+        "U21.6",
+        "J20.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "backbone H node",
+      "net": "/CAN_A_H",
+      "pads": [
+        "J20.2",
+        "J21.3",
+        "JP20.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "backbone L node",
+      "net": "/CAN_A_L",
+      "pads": [
+        "J20.4",
+        "J21.4",
+        "R202.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U20",
+      "group": "termination resistor",
+      "net": "/Rear zone/R_A_TERM",
+      "pads": [
+        "JP20.2",
+        "R202.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "OSC1",
+      "net": "/Rear zone/R_B_OSC1",
+      "pads": [
+        "U24.9",
+        "Y24.1",
+        "C240.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "OSC2",
+      "net": "/Rear zone/R_B_OSC2",
+      "pads": [
+        "U24.8",
+        "Y24.3",
+        "C241.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "RESET",
+      "net": "/Rear zone/R_B_RESET",
+      "pads": [
+        "U24.19",
+        "C242.1",
+        "R240.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U24.4",
+        "U24.5",
+        "U24.7",
+        "U24.20",
+        "U25.3",
+        "C243.1",
+        "C244.1",
+        "R240.1",
+        "R241.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "CS pullup",
+      "net": "/Rear zone/R_CS_B",
+      "pads": [
+        "U24.18",
+        "R241.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "TXD",
+      "net": "/Rear zone/R_B_TXD",
+      "pads": [
+        "U24.1",
+        "U25.1",
+        "J25.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "RXD",
+      "net": "/Rear zone/R_B_RXD",
+      "pads": [
+        "U24.2",
+        "U25.4",
+        "J25.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U24.10",
+        "U25.2",
+        "U25.8",
+        "Y24.2",
+        "Y24.4",
+        "C240.2",
+        "C241.2",
+        "C242.2",
+        "C243.2",
+        "C244.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "CAN H to isolation",
+      "net": "/Rear zone/R_B_H_LOCAL",
+      "pads": [
+        "U25.7",
+        "J24.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "CAN L to isolation",
+      "net": "/Rear zone/R_B_L_LOCAL",
+      "pads": [
+        "U25.6",
+        "J24.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "backbone H node",
+      "net": "/CAN_B_H",
+      "pads": [
+        "J24.2",
+        "J25.3",
+        "JP24.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "backbone L node",
+      "net": "/CAN_B_L",
+      "pads": [
+        "J24.4",
+        "J25.4",
+        "R242.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U24",
+      "group": "termination resistor",
+      "net": "/Rear zone/R_B_TERM",
+      "pads": [
+        "JP24.2",
+        "R242.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "OSC1",
+      "net": "/Cockpit zone/PI_A_OSC1",
+      "pads": [
+        "U30.9",
+        "Y30.1",
+        "C300.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "OSC2",
+      "net": "/Cockpit zone/PI_A_OSC2",
+      "pads": [
+        "U30.8",
+        "Y30.3",
+        "C301.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "RESET",
+      "net": "/Cockpit zone/PI_A_RESET",
+      "pads": [
+        "U30.19",
+        "C302.1",
+        "R300.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U30.4",
+        "U30.5",
+        "U30.7",
+        "U30.20",
+        "U31.3",
+        "C303.1",
+        "C304.1",
+        "R300.1",
+        "R301.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "CS pullup",
+      "net": "/Cockpit zone/PI_CS_A",
+      "pads": [
+        "U30.18",
+        "R301.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "TXD",
+      "net": "/Cockpit zone/PI_A_TXD",
+      "pads": [
+        "U30.1",
+        "U31.1",
+        "J31.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "RXD",
+      "net": "/Cockpit zone/PI_A_RXD",
+      "pads": [
+        "U30.2",
+        "U31.4",
+        "J31.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U30.10",
+        "U31.2",
+        "U31.8",
+        "Y30.2",
+        "Y30.4",
+        "C300.2",
+        "C301.2",
+        "C302.2",
+        "C303.2",
+        "C304.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "CAN H to isolation",
+      "net": "/Cockpit zone/PI_A_H_LOCAL",
+      "pads": [
+        "U31.7",
+        "J30.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "CAN L to isolation",
+      "net": "/Cockpit zone/PI_A_L_LOCAL",
+      "pads": [
+        "U31.6",
+        "J30.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "backbone H node",
+      "net": "/CAN_A_H",
+      "pads": [
+        "J30.2",
+        "J31.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U30",
+      "group": "backbone L node",
+      "net": "/CAN_A_L",
+      "pads": [
+        "J30.4",
+        "J31.4"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "OSC1",
+      "net": "/Cockpit zone/PI_B_OSC1",
+      "pads": [
+        "U34.9",
+        "Y34.1",
+        "C340.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "OSC2",
+      "net": "/Cockpit zone/PI_B_OSC2",
+      "pads": [
+        "U34.8",
+        "Y34.3",
+        "C341.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "RESET",
+      "net": "/Cockpit zone/PI_B_RESET",
+      "pads": [
+        "U34.19",
+        "C342.1",
+        "R340.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U34.4",
+        "U34.5",
+        "U34.7",
+        "U34.20",
+        "U35.3",
+        "C343.1",
+        "C344.1",
+        "R340.1",
+        "R341.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "CS pullup",
+      "net": "/Cockpit zone/PI_CS_B",
+      "pads": [
+        "U34.18",
+        "R341.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "TXD",
+      "net": "/Cockpit zone/PI_B_TXD",
+      "pads": [
+        "U34.1",
+        "U35.1",
+        "J35.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "RXD",
+      "net": "/Cockpit zone/PI_B_RXD",
+      "pads": [
+        "U34.2",
+        "U35.4",
+        "J35.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U34.10",
+        "U35.2",
+        "U35.8",
+        "Y34.2",
+        "Y34.4",
+        "C340.2",
+        "C341.2",
+        "C342.2",
+        "C343.2",
+        "C344.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "CAN H to isolation",
+      "net": "/Cockpit zone/PI_B_H_LOCAL",
+      "pads": [
+        "U35.7",
+        "J34.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "CAN L to isolation",
+      "net": "/Cockpit zone/PI_B_L_LOCAL",
+      "pads": [
+        "U35.6",
+        "J34.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "backbone H node",
+      "net": "/CAN_B_H",
+      "pads": [
+        "J34.2",
+        "J35.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U34",
+      "group": "backbone L node",
+      "net": "/CAN_B_L",
+      "pads": [
+        "J34.4",
+        "J35.4"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U50.1",
+        "U50.19",
+        "U50.32",
+        "U50.48",
+        "U50.64",
+        "C500.1",
+        "C501.1",
+        "C502.1",
+        "C503.1",
+        "C504.1",
+        "C505.1",
+        "FB50.1",
+        "R501.1",
+        "R502.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "VCAP",
+      "net": "/Front zone/F_VCAP1",
+      "pads": [
+        "U50.30",
+        "C506.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "VDDA",
+      "net": "/Front zone/F_VDDA",
+      "pads": [
+        "U50.13",
+        "C507.1",
+        "C508.1",
+        "FB50.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "RESET",
+      "net": "/Front zone/F_RESET_N",
+      "pads": [
+        "U50.7",
+        "C509.1",
+        "R501.2",
+        "SW50.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "self test",
+      "net": "/Front zone/F_SELFTEST_BUTTON",
+      "pads": [
+        "U50.2",
+        "C510.1",
+        "R502.2",
+        "SW51.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "BOOT0",
+      "net": "/Front zone/F_BOOT0",
+      "pads": [
+        "U50.60",
+        "R500.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U50.12",
+        "U50.18",
+        "U50.31",
+        "U50.47",
+        "U50.63",
+        "C500.2",
+        "C501.2",
+        "C502.2",
+        "C503.2",
+        "C504.2",
+        "C505.2",
+        "C506.2",
+        "C507.2",
+        "C508.2",
+        "C509.2",
+        "C510.2",
+        "R500.2",
+        "SW50.2",
+        "SW51.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "local supply",
+      "net": "/+3V3",
+      "pads": [
+        "U60.1",
+        "U60.19",
+        "U60.32",
+        "U60.48",
+        "U60.64",
+        "C600.1",
+        "C601.1",
+        "C602.1",
+        "C603.1",
+        "C604.1",
+        "C605.1",
+        "FB60.1",
+        "R601.1",
+        "R602.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "VCAP",
+      "net": "/Rear zone/R_VCAP1",
+      "pads": [
+        "U60.30",
+        "C606.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "VDDA",
+      "net": "/Rear zone/R_VDDA",
+      "pads": [
+        "U60.13",
+        "C607.1",
+        "C608.1",
+        "FB60.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "RESET",
+      "net": "/Rear zone/R_RESET_N",
+      "pads": [
+        "U60.7",
+        "C609.1",
+        "R601.2",
+        "SW60.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "self test",
+      "net": "/Rear zone/R_SELFTEST_BUTTON",
+      "pads": [
+        "U60.2",
+        "C610.1",
+        "R602.2",
+        "SW61.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "BOOT0",
+      "net": "/Rear zone/R_BOOT0",
+      "pads": [
+        "U60.60",
+        "R600.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U60.12",
+        "U60.18",
+        "U60.31",
+        "U60.47",
+        "U60.63",
+        "C600.2",
+        "C601.2",
+        "C602.2",
+        "C603.2",
+        "C604.2",
+        "C605.2",
+        "C606.2",
+        "C607.2",
+        "C608.2",
+        "C609.2",
+        "C610.2",
+        "R600.2",
+        "SW60.2",
+        "SW61.2"
+      ],
+      "physically_connected": true
+    }
+  ],
+  "clock_routes": [
+    {
+      "reference": "U10",
+      "pin": "8",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 5.622
+    },
+    {
+      "reference": "U10",
+      "pin": "9",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 9.649
+    },
+    {
+      "reference": "U14",
+      "pin": "8",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 5.622
+    },
+    {
+      "reference": "U14",
+      "pin": "9",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 9.649
+    },
+    {
+      "reference": "U20",
+      "pin": "8",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 5.622
+    },
+    {
+      "reference": "U20",
+      "pin": "9",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 9.649
+    },
+    {
+      "reference": "U24",
+      "pin": "8",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 5.622
+    },
+    {
+      "reference": "U24",
+      "pin": "9",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 9.649
+    },
+    {
+      "reference": "U30",
+      "pin": "8",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 5.622
+    },
+    {
+      "reference": "U30",
+      "pin": "9",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 9.649
+    },
+    {
+      "reference": "U34",
+      "pin": "8",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 5.622
+    },
+    {
+      "reference": "U34",
+      "pin": "9",
+      "top_only_no_vias": true,
+      "total_branch_length_mm": 9.649
     }
   ],
   "remaining": [
     "Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.",
-    "MCU/CAN, clocks, motor/servo, sensing and other signals are not routed.",
+    "Host SPI/interrupts, board-wide CAN A/B backbones, motor/servo, sensing and other signals need routing.",
+    "Local CAN/MCU supply groups still need their board-wide 3V3 feed.",
+    "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
-  "source_sha256": "bb98b5a7bda9cb5383449820cb50b701c0340079dd62e6f4a37db178b3da4d6a"
+  "source_sha256": "5a68261cc4a691e5accd8c4a4cc9e5fd94768dde4153962e5f44359ba7187e67"
 }

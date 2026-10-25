@@ -1,4 +1,4 @@
-"""Verify initial regulator copper connectivity with KiCad's connectivity graph.
+"""Verify routed regulator, MCU and CAN local copper with KiCad's graph.
 
 Run with KiCad's Python. This checks saved copper, not just schematic net names.
 DRC, loop/thermal review and the rest of the board are separate requirements.
@@ -22,10 +22,14 @@ connectivity = board.GetConnectivity()
 pads = {(f.GetReference(), a.GetNumber()): a
         for f in board.GetFootprints() for a in f.Pads()}
 pad_keys = {a.m_Uuid.AsString(): key for key, a in pads.items()}
+reachable_cache = {}
 
 
 def reachable(seed):
     """Walk physically touching copper of the seed's net, including vias/zones."""
+    seed_uid = seed.m_Uuid.AsString()
+    if seed_uid in reachable_cache:
+        return reachable_cache[seed_uid]
     pending, seen, result = [seed], set(), set()
     while pending:
         item = pending.pop()
@@ -37,11 +41,24 @@ def reachable(seed):
             result.add(pad_keys[uid])
         pending.extend(a for a in connectivity.GetConnectedItems(item)
                        if a.GetNetCode() == seed.GetNetCode())
+    for uid in seen:
+        reachable_cache[uid] = result
     return result
 
 
 checks = []
 errors = []
+def check_group(reference, name, members):
+    seed = pads[members[0]]
+    same_net = all(pads[m].GetNetCode() == seed.GetNetCode() for m in members)
+    missing = sorted(set(members)-reachable(seed))
+    if not same_net or missing:
+        errors.append({'reference': reference, 'group': name, 'same_net': same_net,
+                       'unreachable_pads': missing})
+    checks.append({'reference': reference, 'group': name, 'net': seed.GetNetname(),
+                   'pads': ['.'.join(m) for m in members],
+                   'physically_connected': same_net and not missing})
+
 for k in range(3):
     u, ind, j, base = f'U{40+k}', f'L{k+1}', f'J{42+k}', 410+10*k
     groups = {
@@ -57,15 +74,59 @@ for k in range(3):
                          (f'R{base+1}', '2'), (f'R{base+3}', '2'), (j, '3')],
     }
     for name, members in groups.items():
-        seed = pads[members[0]]
-        same_net = all(pads[m].GetNetCode() == seed.GetNetCode() for m in members)
-        missing = sorted(set(members)-reachable(seed))
-        if not same_net or missing:
-            errors.append({'reference': u, 'group': name, 'same_net': same_net,
-                           'unreachable_pads': missing})
-        checks.append({'reference': u, 'group': name, 'net': seed.GetNetname(),
-                       'pads': ['.'.join(m) for m in members],
-                       'physically_connected': same_net and not missing})
+        check_group(u, name, members)
+
+for n in [10, 14, 20, 24, 30, 34]:
+    u, t, j, test, y, base = f'U{n}', f'U{n+1}', f'J{n}', f'J{n+1}', f'Y{n}', n*10
+    groups = {
+        'OSC1': [(u, '9'), (y, '1'), (f'C{base}', '1')],
+        'OSC2': [(u, '8'), (y, '3'), (f'C{base+1}', '1')],
+        'RESET': [(u, '19'), (f'C{base+2}', '1'), (f'R{base}', '2')],
+        'local supply': [(u, a) for a in ['4', '5', '7', '20']] +
+                        [(t, '3'), (f'C{base+3}', '1'), (f'C{base+4}', '1'),
+                         (f'R{base}', '1'), (f'R{base+1}', '1')],
+        'CS pullup': [(u, '18'), (f'R{base+1}', '2')],
+        'TXD': [(u, '1'), (t, '1'), (test, '1')],
+        'RXD': [(u, '2'), (t, '4'), (test, '2')],
+        'local ground': [(u, '10'), (t, '2'), (t, '8'), (y, '2'), (y, '4')] +
+                        [(f'C{base+i}', '2') for i in range(5)],
+        'CAN H to isolation': [(t, '7'), (j, '1')],
+        'CAN L to isolation': [(t, '6'), (j, '3')],
+        'backbone H node': [(j, '2'), (test, '3')],
+        'backbone L node': [(j, '4'), (test, '4')],
+    }
+    if n < 30:
+        groups['backbone H node'].append((f'JP{n}', '1'))
+        groups['backbone L node'].append((f'R{base+2}', '2'))
+        groups['termination resistor'] = [(f'JP{n}', '2'), (f'R{base+2}', '1')]
+    for name, members in groups.items():
+        check_group(u, name, members)
+
+for n in [50, 60]:
+    u, base = f'U{n}', n*10
+    groups = {
+        'local supply': [(u, a) for a in ['1', '19', '32', '48', '64']] +
+                        [(f'C{base+i}', '1') for i in range(6)] +
+                        [(f'FB{n}', '1'), (f'R{base+1}', '1'), (f'R{base+2}', '1')],
+        'VCAP': [(u, '30'), (f'C{base+6}', '1')],
+        'VDDA': [(u, '13'), (f'C{base+7}', '1'), (f'C{base+8}', '1'), (f'FB{n}', '2')],
+        'RESET': [(u, '7'), (f'C{base+9}', '1'), (f'R{base+1}', '2'), (f'SW{n}', '1')],
+        'self test': [(u, '2'), (f'C{base+10}', '1'), (f'R{base+2}', '2'), (f'SW{n+1}', '1')],
+        'BOOT0': [(u, '60'), (f'R{base}', '1')],
+        'local ground': [(u, a) for a in ['12', '18', '31', '47', '63']] +
+                        [(f'C{base+i}', '2') for i in range(11)] +
+                        [(f'R{base}', '2'), (f'SW{n}', '2'), (f'SW{n+1}', '2')],
+    }
+    for name, members in groups.items():
+        check_group(u, name, members)
+
+# The two physical pads of each switch pole must both reach the local circuit.
+for ref in ['SW50', 'SW51', 'SW60', 'SW61']:
+    fp = next(f for f in board.GetFootprints() if f.GetReference() == ref)
+    for pin in ['1', '2']:
+        physical = [a for a in fp.Pads() if a.GetNumber() == pin]
+        if any((ref, pin) not in reachable(a) for a in physical):
+            errors.append({'reference': ref, 'group': 'physical switch pads', 'pin': pin})
 
 tracks = list(board.GetTracks())
 vias = [t for t in tracks if t.Type() == p.PCB_VIA_T]
@@ -73,6 +134,17 @@ segments = [t for t in tracks if t.Type() == p.PCB_TRACE_T]
 assert tracks and vias, 'No initial routing found'
 assert len({t.m_Uuid.AsString() for t in tracks}) == len(tracks)
 assert all(t.GetStart() != t.GetEnd() for t in segments)
+clock_routes = []
+for n in [10, 14, 20, 24, 30, 34]:
+    for pin in ['8', '9']:
+        net = pads[(f'U{n}', pin)].GetNetCode()
+        copper = [t for t in tracks if t.GetNetCode() == net]
+        top_only = all(t.Type() == p.PCB_TRACE_T and t.GetLayer() == p.F_Cu for t in copper)
+        length = sum(p.ToMM(t.GetLength()) for t in copper if t.Type() == p.PCB_TRACE_T)
+        clock_routes.append({'reference': f'U{n}', 'pin': pin,
+                             'top_only_no_vias': top_only, 'total_branch_length_mm': round(length, 3)})
+        if not top_only:
+            errors.append({'reference': f'U{n}', 'group': 'clock layer', 'pin': pin})
 report = {
     'status': 'PASS for local connectivity only' if not errors else 'FAIL',
     'fabrication_release': False,
@@ -84,9 +156,12 @@ report = {
     'via_diameter_drill_counts_mm': dict(Counter(
         f'{p.ToMM(v.GetWidth(p.F_Cu)):.2f}/{p.ToMM(v.GetDrill()):.2f}' for v in vias)),
     'checks': checks,
+    'clock_routes': clock_routes,
     'remaining': [
         'Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.',
-        'MCU/CAN, clocks, motor/servo, sensing and other signals are not routed.',
+        'Host SPI/interrupts, board-wide CAN A/B backbones, motor/servo, sensing and other signals need routing.',
+        'Local CAN/MCU supply groups still need their board-wide 3V3 feed.',
+        'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.',
         'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],
     'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),

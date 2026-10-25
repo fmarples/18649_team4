@@ -1,16 +1,16 @@
 {
-  "checked_at_utc": "2026-10-25T22:08:35.383323+00:00",
+  "checked_at_utc": "2026-10-25T22:42:55.224826+00:00",
   "automated_status": "BLOCKED",
   "fabrication_release": false,
   "counts": {
     "schematic_components": 284,
     "electrical_footprints": 284,
-    "track_segments_and_vias": 251,
+    "track_segments_and_vias": 2489,
     "copper_zones": 4,
     "erc_findings": 0,
     "drc_violations": 0,
-    "unconnected_items": 499,
-    "connectivity_unconnected_count": 648,
+    "unconnected_items": 345,
+    "connectivity_unconnected_count": 345,
     "schematic_parity_findings": 0
   },
   "unassigned_footprints": [],
@@ -27,8 +27,8 @@
   ],
   "schematic_parity_types": {},
   "blockers": [
-    "unconnected_items: 499 (inspect the fresh detailed report)",
-    "connectivity_unconnected_count: 648 (inspect the fresh detailed report)"
+    "unconnected_items: 345 (inspect the fresh detailed report)",
+    "connectivity_unconnected_count: 345 (inspect the fresh detailed report)"
   ],
   "ignored_drc_checks": [
     {
@@ -75,7 +75,7 @@
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
     "KiCad/Front.kicad_sch": "3d7ea407be613b6f300048d468a36f28fc2d900df20a72a846d9a130528c5448",
     "KiCad/Lab4.kicad_dru": "b562451d1099a56da0d310ce7bc54970528d38ddd1f83eee65d30d4be2682006",
-    "KiCad/Lab4.kicad_pcb": "bb98b5a7bda9cb5383449820cb50b701c0340079dd62e6f4a37db178b3da4d6a",
+    "KiCad/Lab4.kicad_pcb": "5a68261cc4a691e5accd8c4a4cc9e5fd94768dde4153962e5f44359ba7187e67",
     "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
     "KiCad/Lab4.kicad_sch": "e9315b3b8b8d16fa63ffbfbd15729678265f9bfb871c27f55df3b86189eb969d",
     "KiCad/Lab4_Logic.kicad_sym": "3486a6869c2c4513da075bbf78c8e8757130b33fb393ca133968d2a9d1c4961f",

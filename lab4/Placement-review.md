@@ -148,8 +148,8 @@ parity and excluded findings included, reports:
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
-- 648 missing connections in the full connectivity count; the DRC list is capped
-  at 499. Initial regulator routing has 206 segments, 45 vias and four ground zones.
+- 345 missing connections in both the full connectivity count and DRC listing.
+  Local regulator/MCU/CAN routing has 2,214 segments, 275 vias and four ground zones.
 - 0 missing footprints: all five GCT switches are now placed.
 
 The five switch geometries and contact maps are checked against the GCT A1
