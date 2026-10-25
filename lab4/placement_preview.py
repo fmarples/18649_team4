@@ -21,7 +21,7 @@ def xy(x,y):return OX+S*x,OY+S*y
 def rbox(x,y,w,h):return (*xy(x,y),*xy(x+w,y+h))
 dr.text((75,35),'Lab 4 | Direct Pi connection',font=ft(38,True),fill='#16354e')
 dr.text((75,89),'120 x 234 mm proposal  /  284 electrical footprints placed',font=ft(23),fill='#334b60')
-dr.text((75,125),'UNROUTED - measured chassis hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
+dr.text((75,125),'PARTIAL ROUTING - measured hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
 dr.rectangle(rbox(0,0,120,234),fill='white',outline='#16354e',width=3)
 for r in d['reservations']:
     if r['kind']=='clearance':continue
@@ -54,7 +54,7 @@ side=[('What this establishes',[
     'Rows 220 mm apart; centers aligned.']),
     ('Planned electrical connections',[
     'Every placed pad retains its schematic net.',
-    'No copper tracks or ground planes yet.',
+    'Initial regulator routing and ground fill.',
     'J70: bottom-mounted 40-pin socket.',
     'No GPIO cable. Pin geometry checked.']),
     ('Remaining layout work',[
@@ -84,7 +84,7 @@ pdf=canvas.Canvas(str(ROOT/'Placement-fit-template.pdf'),pagesize=(210*mm,297*mm
 pdf.setTitle('Lab 4 - 1:1 PCB fit template - provisional')
 pdf.setFont('Helvetica-Bold',14);pdf.drawString(15*mm,282*mm,'Lab 4 - provisional PCB fit template')
 pdf.setFont('Helvetica',9);pdf.drawString(15*mm,276*mm,'Print at 100% / Actual size. Check the 50 mm bar before comparing with the car.')
-pdf.setFont('Helvetica-Bold',9);pdf.drawString(15*mm,270*mm,'MEASURED HOLE CENTERS - UNROUTED - NOT FOR FABRICATION')
+pdf.setFont('Helvetica-Bold',9);pdf.drawString(15*mm,270*mm,'MEASURED HOLE CENTERS - PARTIAL ROUTING - NOT FOR FABRICATION')
 BX=45;BY=26
 def p_rect(x,y,w,h,fill=None,stroke='#577386'):
     pdf.setStrokeColor(HexColor(stroke));pdf.setLineWidth(.15*mm)

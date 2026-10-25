@@ -1,0 +1,293 @@
+{
+  "status": "PASS for local connectivity only",
+  "fabrication_release": false,
+  "errors": [],
+  "counts": {
+    "track_segments": 206,
+    "through_vias": 45,
+    "copper_zones": 4,
+    "full_unconnected_count": 648
+  },
+  "segment_width_counts_mm": {
+    "1.6": 3,
+    "0.6": 30,
+    "0.25": 98,
+    "0.8": 15,
+    "0.5": 12,
+    "1.0": 3,
+    "0.2": 39,
+    "0.4": 3,
+    "1.2": 3
+  },
+  "via_diameter_drill_counts_mm": {
+    "0.70/0.30": 21,
+    "0.80/0.40": 24
+  },
+  "checks": [
+    {
+      "reference": "U40",
+      "group": "SW",
+      "net": "/Power/P_SERVO_SW",
+      "pads": [
+        "U40.2",
+        "L1.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "FB",
+      "net": "/Power/P_SERVO_FB",
+      "pads": [
+        "U40.6",
+        "R410.2",
+        "R411.1",
+        "C414.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "EN",
+      "net": "/Power/P_SERVO_EN",
+      "pads": [
+        "U40.5",
+        "R412.2",
+        "R413.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "PG",
+      "net": "/Power/P_SERVO_PG",
+      "pads": [
+        "U40.4",
+        "R414.2",
+        "J42.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "local VIN",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "U40.1",
+        "C410.1",
+        "C411.1",
+        "R412.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "local output",
+      "net": "/+6V6_SERVO",
+      "pads": [
+        "L1.2",
+        "C412.1",
+        "C413.1",
+        "R410.1",
+        "C414.1",
+        "J42.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U40.3",
+        "C410.2",
+        "C411.2",
+        "C412.2",
+        "C413.2",
+        "R411.2",
+        "R413.2",
+        "J42.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "SW",
+      "net": "/Power/P_5V_SW",
+      "pads": [
+        "U41.2",
+        "L2.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "FB",
+      "net": "/Power/P_5V_FB",
+      "pads": [
+        "U41.6",
+        "R420.2",
+        "R421.1",
+        "C424.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "EN",
+      "net": "/Power/P_5V_EN",
+      "pads": [
+        "U41.5",
+        "R422.2",
+        "R423.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "PG",
+      "net": "/Power/P_5V_PG",
+      "pads": [
+        "U41.4",
+        "R424.2",
+        "J43.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "local VIN",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "U41.1",
+        "C420.1",
+        "C421.1",
+        "R422.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "local output",
+      "net": "/+5V",
+      "pads": [
+        "L2.2",
+        "C422.1",
+        "C423.1",
+        "R420.1",
+        "C424.1",
+        "J43.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U41.3",
+        "C420.2",
+        "C421.2",
+        "C422.2",
+        "C423.2",
+        "R421.2",
+        "R423.2",
+        "J43.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "SW",
+      "net": "/Power/P_3V3_SW",
+      "pads": [
+        "U42.2",
+        "L3.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "FB",
+      "net": "/Power/P_3V3_FB",
+      "pads": [
+        "U42.6",
+        "R430.2",
+        "R431.1",
+        "C434.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "EN",
+      "net": "/Power/P_3V3_EN",
+      "pads": [
+        "U42.5",
+        "R432.2",
+        "R433.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "PG",
+      "net": "/Power/P_3V3_PG",
+      "pads": [
+        "U42.4",
+        "R434.2",
+        "J44.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "local VIN",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "U42.1",
+        "C430.1",
+        "C431.1",
+        "R432.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "local output",
+      "net": "/+3V3",
+      "pads": [
+        "L3.2",
+        "C432.1",
+        "C433.1",
+        "R430.1",
+        "C434.1",
+        "J44.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "local ground",
+      "net": "/GND",
+      "pads": [
+        "U42.3",
+        "C430.2",
+        "C431.2",
+        "C432.2",
+        "C433.2",
+        "R431.2",
+        "R433.2",
+        "J44.3"
+      ],
+      "physically_connected": true
+    }
+  ],
+  "remaining": [
+    "Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.",
+    "MCU/CAN, clocks, motor/servo, sensing and other signals are not routed.",
+    "Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.",
+    "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
+  ],
+  "source_sha256": "bb98b5a7bda9cb5383449820cb50b701c0340079dd62e6f4a37db178b3da4d6a"
+}

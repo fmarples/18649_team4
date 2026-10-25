@@ -1,6 +1,6 @@
 # PCB placement review
 
-25 October 2026. The **unrouted 120 x 234 mm placement study** is in
+25 October 2026. The **partially routed 120 x 234 mm PCB** is in
 `KiCad/Lab4.kicad_pcb`. Its four-hole paper pattern passed the October 24 fit
 check, and actual Pi heights were measured. The populated assembly is not
 verified and the board is not ready for fabrication. See
@@ -22,8 +22,9 @@ package sides; the detailed current loops still need refinement during routing.
 The three regulator groups sit along the front edge, away from the Pi reservation.
 We rotated them so their switching pins face the inductors and brought the
 local bypass and feedback parts closer. See [Power-stage-review.md](Power-stage-review.md).
-Their placement is preliminary; we have not routed or verified the switching
-loops, feedback paths, thermal copper or power distribution.
+Their initial local routing is now connected and passes ordinary DRC. Switching
+loop/return-path review, thermal qualification and board-wide power distribution
+remain. See [Routing-review.md](Routing-review.md).
 
 We changed to a direct connection with the Raspberry Pi 4 **below** our PCB,
 component side facing up. J70 is a downward-facing female socket on B.Cu.
@@ -147,7 +148,8 @@ parity and excluded findings included, reports:
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
-- 499 reported unconnected items: no copper tracks or zones have been routed.
+- 648 missing connections in the full connectivity count; the DRC list is capped
+  at 499. Initial regulator routing has 206 segments, 45 vias and four ground zones.
 - 0 missing footprints: all five GCT switches are now placed.
 
 The five switch geometries and contact maps are checked against the GCT A1

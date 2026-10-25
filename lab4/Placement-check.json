@@ -8,7 +8,8 @@
     120,
     234
   ],
-  "tracks": 0,
+  "track_segments_and_vias": 251,
+  "copper_zones": 4,
   "checks": [
     "Placed netlist pads match schematic",
     "All courtyards inside provisional outline",
@@ -34,10 +35,10 @@
   },
   "limitations": [
     "Not a physical fit test or complete footprint-dimension validation",
-    "Unrouted placement study",
+    "Placement checks do not validate copper routing",
     "Chassis/Pi measurements complete; final cable envelopes and assembled fastener/mating checks remain",
     "Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review",
     "Pi pin protrusion/heatsink, Wi-Fi, thermals and socket tolerances need physical verification",
-    "Placement checks do not replace the separate KiCad DRC report; board remains unrouted"
+    "Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers"
   ]
 }

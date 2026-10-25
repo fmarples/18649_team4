@@ -16,10 +16,11 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-Fresh ERC, placement DRC and schematic parity report no findings
-under the configured rules. There are still 499 reported unconnected items,
-no routed tracks and no copper zones. These checks do not establish component
-ratings or completed routing.
+Initial regulator routing now adds 206 track segments, 45 vias and four ground
+zones. Fresh ERC, ordinary DRC and schematic parity report no findings under
+the configured rules. The full connectivity count is 648 missing connections;
+the DRC listing is capped at 499. See [Routing-review.md](Routing-review.md).
+These checks do not establish component ratings or completed board routing.
 
 `Fabrication-check.json` records the fresh fabrication audit, its source hashes,
 missing parts, DRC results and ignored rule categories. It deliberately reports
@@ -64,7 +65,8 @@ terminals 1/2 share logical pad 1; terminals 3/4 share logical pad 2. See
 [Switch-footprint-review.md](Switch-footprint-review.md) for geometry, source
 and checks. Button access and final silkscreen remain part of layout review.
 
-After the mechanical and electrical decisions are settled:
+Continue the settled local circuits now; only the affected input-power and
+L298 areas depend on the open mechanical/electrical decisions:
 
 1. Review the remaining package-specific pin 1, pitch, polarity, drill,
    courtyard and rating assumptions. All schematic parts now have footprints;
@@ -74,7 +76,8 @@ After the mechanical and electrical decisions are settled:
    to the [TPS564252 layout guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf).
    Keep the input switching loop short and feedback away from the switch node.
    Place bypass capacitors next to their IC supply pins and crystals next to
-   the MCP2515s. The current board is a placement study, not a validated power layout.
+   the MCP2515s. Initial regulator routing exists; its loop/thermal review and
+   board-wide distribution are unfinished.
 3. Route the battery, motor and regulator current paths with calculated copper
    widths/pours and returns. The handout's 0.50 mm power minimum is not a current
    rating. Route servo-shunt sense traces as a Kelvin pair so load-current copper
@@ -105,9 +108,9 @@ missing footprints, unrouted connections or reported findings. Inspect ignored
 rule categories and warnings; do not suppress real violations to get a pass.
 
 Run the existing `check_netlist.py` against the audit's `netlist.xml` to compare
-the circuit and purchasing/assembly BOMs. `check_placement.py` is specifically
-for the existing unrouted study; its zero-track assertion is not a final-board
-check. A final review must also check actual routing, return paths, thermal
+the circuit and purchasing/assembly BOMs. `check_placement.py` checks placement
+and mechanical geometry; `check_routing.py` checks the initial regulator copper
+connections. A final review must also check actual routing, return paths, thermal
 space, high-current copper and manufacturing files. Automated checks cannot
 replace those engineering judgments or the TA review.
 

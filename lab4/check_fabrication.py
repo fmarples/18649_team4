@@ -27,7 +27,7 @@ def digest(path):
 
 
 def run(command, output):
-    result = subprocess.run(command, capture_output=True, text=True, timeout=240)
+    result = subprocess.run(command, capture_output=True, text=True, timeout=600)
     if result.returncode != 0 or not output.is_file():
         raise RuntimeError(f"Command failed ({result.returncode}): {command}\n"
                            f"{result.stdout}\n{result.stderr}")
@@ -66,6 +66,7 @@ def main():
     tree = ET.parse(out/'netlist.xml').getroot()
     components = {c.attrib['ref']: c for c in tree.findall('components/comp')}
     board = pcbnew.LoadBoard(str(cad/'Lab4.kicad_pcb'))
+    board.BuildConnectivity()
     footprints = {f.GetReference(): f for f in board.GetFootprints()}
     unassigned = sorted(r for r, c in components.items() if not c.findtext('footprint'))
     missing = sorted(set(components)-set(footprints))
@@ -81,12 +82,13 @@ def main():
         'erc_findings': len(erc_findings),
         'drc_violations': len(drc.get('violations', [])),
         'unconnected_items': len(drc.get('unconnected_items', [])),
+        'connectivity_unconnected_count': board.GetConnectivity().GetUnconnectedCount(False),
         'schematic_parity_findings': len(drc.get('schematic_parity', [])),
     }
     blockers = []
     if unassigned: blockers.append('Assign and verify footprints for: '+', '.join(unassigned))
     if missing: blockers.append('Add missing board components: '+', '.join(missing))
-    for key in ['erc_findings', 'drc_violations', 'unconnected_items', 'schematic_parity_findings']:
+    for key in ['erc_findings', 'drc_violations', 'unconnected_items', 'connectivity_unconnected_count', 'schematic_parity_findings']:
         if counts[key]: blockers.append(f"{key}: {counts[key]} (inspect the fresh detailed report)")
     if not counts['track_segments_and_vias']: blockers.append('No routing exists on the board.')
     if not counts['copper_zones']: blockers.append('No ground/power copper zones exist on the board.')
@@ -105,6 +107,7 @@ def main():
         'ignored_erc_checks': erc.get('ignored_checks', []),
         'source_sha256': before,
         'limits': [
+            'KiCad 10 caps the DRC unconnected-item list at 499; connectivity_unconnected_count is the full saved-board ratsnest count.',
             'PASS is not release authorization. Complete the engineering review in Fabrication-review.md.',
             'Excluded findings are requested; project-level ignored DRC checks are listed for manual review.',
             'No physical fit, current rating, transient response, thermal behavior or TA approval is inferred.',

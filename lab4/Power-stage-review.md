@@ -1,8 +1,9 @@
 # Regulator circuit and placement review
 
-25 October 2026. We checked the three TPS564252 circuits and refined their
-unrouted placement. This completes the pin/divider review and this placement
-revision; it does not complete power routing or qualify the supplies.
+25 October 2026. We checked the three TPS564252 circuits, refined their
+placement and added initial local routing. This completes the pin/divider
+review and local connectivity pass; it does not qualify the supplies or finish
+board-wide power distribution. See [Routing-review.md](Routing-review.md).
 
 ## Circuit checks
 
@@ -45,9 +46,9 @@ The SW-to-inductor pad-center distance fell from 7.388 mm to 2.964 mm. The new
 100 nF-to-VIN distance is 2.015 mm and FB-to-top-resistor distance is 2.515 mm.
 These distances describe placement, not trace lengths or a tested noise limit.
 
-Routing still needs short, wide power connections, local ground vias, a
-separate output-sense trace and a Kelvin feedback ground connection. We must
-also check effective capacitor values under DC bias and review the control
+Initial routing now includes local power connections, ground vias and a
+separate output-sense trace. We still need to review the Kelvin feedback ground
+return, switching-loop geometry, effective capacitor values under DC bias and the control
 loop. Thermal performance remains unverified; the manufacturer's 2 oz
 evaluation board does not establish a rating for our 1 oz board. No additional
 team measurements were needed for this review.

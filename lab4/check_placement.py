@@ -89,10 +89,11 @@ for ref,fp in fps.items():
 for c in d['components']:
     pos=fps[c['reference']].GetPosition()
     if abs(p.ToMM(pos.x)-40-c['x_mm'])>.001 or abs(p.ToMM(pos.y)-40-c['y_mm'])>.001:errors.append('Stale preview '+c['reference'])
-assert len(b.GetTracks())==0,'Unexpected routing added to a placement-only study'
 report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
     schematic_footprints_present=len(set(fps)&set(schematic)),missing_footprints=missing,
-    mechanical_holes=8,board_size_mm=[d['width_mm'],d['height_mm']],tracks=0,
+    mechanical_holes=8,board_size_mm=[d['width_mm'],d['height_mm']],
+    track_segments_and_vias=len(b.GetTracks()),
+    copper_zones=sum(not z.GetIsRuleArea() for z in b.Zones()),
     checks=['Placed netlist pads match schematic','All courtyards inside provisional outline',
         'No bottom electrical part in Pi space except J70; top placement allowed',
         'Chassis 3mm-from-hole-edge and Pi 3mm-radius support envelopes clear',
@@ -103,11 +104,11 @@ report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
     pi_stack_nominal=dict(socket_insertion_mm=round(insertion,2),usb_to_main_pcb_mm=round(usb_gap,2),
         pi_board_underside_above_chassis_mm=round(pi['main_pcb_chassis_gap_mm']-pi['board_gap_mm']-pi['pi_thickness_assumed_mm'],2),
         top_tht_refs_over_pi=sorted(tht_over_pi),max_tht_tail_projection_mm=3),
-    limitations=['Not a physical fit test or complete footprint-dimension validation','Unrouted placement study',
+    limitations=['Not a physical fit test or complete footprint-dimension validation','Placement checks do not validate copper routing',
         'Chassis/Pi measurements complete; final cable envelopes and assembled fastener/mating checks remain',
         'Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review',
         'Pi pin protrusion/heatsink, Wi-Fi, thermals and socket tolerances need physical verification',
-        'Placement checks do not replace the separate KiCad DRC report; board remains unrouted'])
+        'Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers'])
 (ROOT/'Placement-check.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
 print(json.dumps(report,indent=2))
 sys.exit(bool(errors))

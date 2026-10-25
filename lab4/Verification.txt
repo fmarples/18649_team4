@@ -148,6 +148,23 @@ October 25 final-submission preparation
 Limits (current October 25)
 No PCB was built, powered or flashed. Battery/charger selection, L298 protection,
 heatsink attachment, fuse coordination, course stock and adapter qualification
-remain open. Five switch footprints, routing, thermal layout, physical stack
+remain open. The five switch footprints and initial regulator connectivity
+are complete; board-wide routing, power-loop/thermal review, physical stack
 and final fabrication checks remain. No purchase or final fabrication submission
 has occurred; the October 24 preliminary email has been sent.
+
+October 25 initial regulator routing
+- Added 206 track segments, 45 through vias and four filled ground zones.
+  All footprint positions/orientations, pad positions and nets are unchanged
+  from the preceding placement revision; schematic and BOM are unchanged.
+- check_routing.py walks actual copper connectivity: all 21 local regulator
+  groups pass. Global input/output distribution and two PG pull-ups remain.
+  A temporary copy with one SW escape removed fails U40-to-L1 connectivity as
+  expected; the checked source board was not changed by this negative test.
+- Fresh ERC 0, ordinary DRC 0, schematic parity 0; placement/netlist checks pass.
+  The full saved-board missing-connection count fell from 763 to 648. KiCad 10
+  caps the DRC unconnected list at 499; that was not the total. The fabrication
+  audit now records the full count and still exits 1/BLOCKED as expected.
+- Inspected native front/back copper plots. Kelvin return, switching loops,
+  effective capacitance, thermal capability and remaining board routing need
+  further engineering review. This is a partial routing revision, not release.

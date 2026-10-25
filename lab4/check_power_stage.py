@@ -98,7 +98,7 @@ report = {
         'A 6.7A saturation rating does not cover worst-case 6.7A valley current limit plus ripple.',
         '44uF output is nominal; manufacturer DC-bias/temperature data and loop review remain needed.',
         'TI effective thermal data uses a 2oz EVM; our 1oz board has no validated thermal rating.',
-        'No copper routing, Kelvin feedback return, ground vias or switching-loop test is established.',
+        'Initial local regulator tracks and ground vias exist; Kelvin return, loop quality and hardware behavior still need review.',
         'EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on.'],
     'source_sha256': {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                       for name in ['KiCad/Lab4.kicad_pcb', 'KiCad/Power.kicad_sch',
