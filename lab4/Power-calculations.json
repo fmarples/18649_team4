@@ -1,6 +1,6 @@
 {
   "status": "Calculated design, not measured",
-  "battery": "Unresolved purchase: DigiKey/Mouser required. Tenergy11609/01025 is a documented zero-quantity reference, pending vendor exception. Dantona candidates lack verified discharge/charger data. See Parts-review.md.",
+  "battery": "Unqualified review candidate: Amazon Tenergy B077Y9HNTF / 11606, 12V 2Ah. Battery-only Amazon exception; other purchases need DigiKey/Mouser or course stock. Published 2A continuous limit and no established 10A pulse rating; final pack/charger selection open. Tenergy11609/01025 are zero-quantity references. See Parts-review.md.",
   "protected_input_design_range_V": [
     8,
     15
@@ -105,5 +105,61 @@
     "setpoint_V": 3.318,
     "budget": "Included within provisional 0.8A logic allocation; not a measured or guaranteed maximum",
     "validation": "Nominal 3.3V matches earlier lab supply; actual tolerance and signals untested"
+  },
+  "estimate_sensitivity": {
+    "status": "Calculated scenarios, not measured or guaranteed load/efficiency bounds; not an operating instruction",
+    "planning_regulated_output_W": 22.0584,
+    "stress_regulated_output_W": 45.8844,
+    "assumptions": "Hold motor supply proxies at 0.72A planning and 6.4A stress; actual motor current depends on voltage/PWM/load. 80% and 85% efficiencies assumed. 8V is not an approved NiMH cutoff. Stress case exceeds L298 limits.",
+    "rows": [
+      {
+        "battery_V": 15,
+        "efficiency": 0.85,
+        "planning_A": 2.450070588235294,
+        "allocation_stress_A": 9.998776470588236
+      },
+      {
+        "battery_V": 15,
+        "efficiency": 0.8,
+        "planning_A": 2.5582,
+        "allocation_stress_A": 10.223700000000001
+      },
+      {
+        "battery_V": 12,
+        "efficiency": 0.85,
+        "planning_A": 2.8825882352941177,
+        "allocation_stress_A": 10.898470588235295
+      },
+      {
+        "battery_V": 12,
+        "efficiency": 0.8,
+        "planning_A": 3.0177499999999995,
+        "allocation_stress_A": 11.179625
+      },
+      {
+        "battery_V": 10,
+        "efficiency": 0.85,
+        "planning_A": 3.315105882352941,
+        "allocation_stress_A": 11.798164705882353
+      },
+      {
+        "battery_V": 10,
+        "efficiency": 0.8,
+        "planning_A": 3.4772999999999996,
+        "allocation_stress_A": 12.13555
+      },
+      {
+        "battery_V": 8,
+        "efficiency": 0.85,
+        "planning_A": 3.9638823529411766,
+        "allocation_stress_A": 13.147705882352941
+      },
+      {
+        "battery_V": 8,
+        "efficiency": 0.8,
+        "planning_A": 4.166625,
+        "allocation_stress_A": 13.5694375
+      }
+    ]
   }
 }

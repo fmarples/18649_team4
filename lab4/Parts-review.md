@@ -214,10 +214,13 @@ supply, yellow=A, blue=B, gray=encoder ground, black=motor lead 2. These are
 the attached jumper colors, not colors assigned to the motor's black ribbon
 cable. The adapter mapping is recorded in Actuator-design.md.
 
-Physical checks still needed: second motor harness agreement, exact plug
-mating geometry and wire gauges; actual encoder output type; heatsink fit;
-the battery retaining strap/lead route; and the proposed Pi/chassis vertical
-spacer stack. The battery envelope has passed the team's cardboard check.
+The October 24 actual-Pi caliper reply supports the nominal 35 mm chassis /
+22 mm Pi stack; see Mechanical-evidence.md. No repeat height measurement is
+requested. Review remaining cable/port/steering envelopes and heatsink
+installation where they affect fabrication. Second-harness agreement, adapter
+mating/continuity, wire identification and encoder signal checks belong to
+harness preparation/bring-up unless a connector change would alter PCB pads.
+Battery retention and lead routing follow the final pack choice. The battery envelope has passed the team's cardboard check.
 The four chassis center positions and 4.5 mm diameters are already established.
 The team also confirmed the chassis holes are smooth through-holes. Their
 diameter does not set the spacer thread: the proposed M3 fasteners use washers

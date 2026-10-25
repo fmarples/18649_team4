@@ -1,6 +1,6 @@
 # Current evidence and measurement record
 
-24 October 2026. We distinguish component ratings, calculated allocations and
+25 October 2026. We distinguish component ratings, calculated allocations and
 measurements. Average current on the new PCB is unmeasured; it has not been built.
 
 ## October 24 review clarification
@@ -147,3 +147,41 @@ preserves the inputs and unrounded arithmetic. Confirm the operating profile
 with the team/TA or replace it with measured averages. Motor stall and
 L298-drop/temperature evidence remain unmeasured, with deferral confirmed for
 the October 24 review.
+
+## October 25 estimate sensitivity and measurement scope
+
+The four-rail estimate and exact-model servo lookup are completed design work.
+We can continue with these explicitly labeled estimates; we do not need to
+rebuild Lab 2 to collect every row of the optional measurement worksheet.
+The handout separately asks for **measured** motor stall current and L298
+drop/temperature. The October 24 deferral is recorded above; confirm its scope
+for the final brief. The servo question asks for **no-load holding** current,
+not loaded holding. The supplier's 100 mA no-load entry does not specify whether
+the shaft is holding or moving. Keep that condition limitation explicit.
+The Pololu HD-1501MG and Hiwonder LD-3015MG are different models; neither replaces
+the LD-1501MG evidence just because a numerical value looks more conservative.
+
+We checked how the existing estimates change with input voltage and efficiency:
+
+| Battery voltage | Planning case, 85% | Planning case, 80% | Allocation/stall stress case, 85% | Allocation/stall stress case, 80% |
+| --- | ---: | ---: | ---: | ---: |
+| 15 V | 2.450 A | 2.558 A | 9.999 A | 10.224 A |
+| 12 V | 2.883 A | 3.018 A | 10.898 A | 11.180 A |
+| 10 V | 3.315 A | 3.477 A | 11.798 A | 12.136 A |
+| 8 V | 3.964 A | 4.167 A | 13.148 A | 13.569 A |
+
+Planning case: `0.72 + 22.0584/(Vbat × efficiency)` amperes.
+Stress case: `6.4 + 45.8844/(Vbat × efficiency)` amperes, with the servo at
+its provisional 4 A allocation, Pi/devices 3.3 A and logic 0.8 A. These sweep
+the arithmetic while holding the assumed motor input currents fixed; real
+motor current changes with voltage, PWM and load. The 80% efficiency case is a
+more pessimistic assumption, not a verified lower efficiency bound. The 8 V
+row is the electrical design-envelope case, not an approved NiMH discharge
+cutoff. The stress case exceeds L298 limits and is **not an operating or test
+instruction**, nor proof of the actual peak or its duration.
+
+This is a useful conservative sensitivity analysis within stated assumptions.
+It cannot certify a pack's missing discharge rating or establish a safe stall
+duration. A final battery choice still needs documented ratings or an explicitly
+accepted design change. New-board voltage, ripple, noise, calibration and
+temperature tests remain later bring-up work, not completed measurements.

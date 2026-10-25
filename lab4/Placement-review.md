@@ -1,8 +1,10 @@
 # PCB placement review
 
-23 October 2026. We updated the **unrouted 120 x 234 mm placement study** in
-`KiCad/Lab4.kicad_pcb`. We have not verified its fit on the car. It is not ready
-for fabrication.
+25 October 2026. The **unrouted 120 x 234 mm placement study** is in
+`KiCad/Lab4.kicad_pcb`. Its four-hole paper pattern passed the October 24 fit
+check, and actual Pi heights were measured. The populated assembly is not
+verified and the board is not ready for fabrication. See
+[Mechanical-evidence.md](Mechanical-evidence.md) for completed observations.
 
 ## Arrangement
 
@@ -56,7 +58,14 @@ We propose 35 mm chassis spacers and four equal 22 mm Pi spacer stacks. With a
 metal plate, before accounting for underside components, card, screws and wires.
 The four Pi supports use hardware no larger than 5.5 mm outside diameter.
 The socket carries signals and power; the supports carry mechanical loads.
-Ports, microSD, cooler and cable access need the physical mock-up. A provisional
+The October 24 caliper reply reports about 18 mm from Pi board bottom to USB
+top and less than 5 mm below the Pi. With the assumed 1.6 mm board thickness,
+these leave 5.6 mm above the USB and 6.4 mm below the reported underside
+envelope. A 3 mm downward solder tail leaves 2.6 mm nominal clearance above
+the USB. These are calculations from measurements, not an assembled fit test.
+We keep 35/22 mm as the nominal stack; no repeat height measurement is requested.
+Resolve remaining plug, cable, cooler or steering envelopes affecting layout;
+verify actual mating at assembly. A provisional
 antenna review zone excludes components/copper on both layers, but Wi-Fi and
 temperature must still be tested with the actual metal chassis and full stack.
 The battery pack needs a separate mounting location; no holder fit is claimed.
@@ -84,8 +93,9 @@ after rotating the photograph's front-left orientation into this board view.
 The 190/30/10 mm image annotations were not needed as extra constraints.
 
 Chassis holes measure 4.5 mm. We propose 3.2 mm PCB clearance holes for M3
-hardware; the actual thread, washer/nut arrangement and spacer heights still
-need checking. Hole diameter alone does not identify a screw thread. The team
+hardware with selected washers and female/female spacers. The team confirmed
+smooth chassis through-holes; no chassis thread identification is pending.
+Actual screw engagement is checked at assembly. The team
 reported clearance below the plate for fasteners and motor-wire reach of
 roughly 60 mm above it; these reports do not establish the complete stacked fit.
 We have not verified that a 120 mm rectangle clears the steering wheels through
@@ -101,8 +111,9 @@ from its drilled edge). Confirm the course interpretation for these Pi supports
 before fabrication; we have not claimed the larger clearance is met there.
 
 Bottom placement rule areas avoid the Pi body/ports while allowing top circuitry.
-The antenna review zone also excludes copper. Final cable envelopes, antenna
-performance, mounting coordinates and hardware dimensions remain to verify.
+The antenna review zone also excludes copper. Final cable envelopes and
+hardware fit remain to verify; chassis coordinates are measured and paper-checked.
+Antenna performance is a later powered test.
 
 `Placement-fit-template.pdf` is a two-page A4 fit template with a 50 mm scale bar.
 Page 1 is the true-size main PCB; page 2 includes a true-size Pi alignment drawing,

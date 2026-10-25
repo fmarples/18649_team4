@@ -135,7 +135,9 @@ the Pi through pins 2/4; power-path isolation is not implemented.
 J70 is now a bottom-mounted Samtec ESQ-120-44-L-D socket candidate, aligned
 directly to a component-side-up Pi below the main PCB. No GPIO cable is planned.
 Top-side cockpit CAN circuitry occupies part of that same area. We propose
-22 mm Pi spacers and 35 mm chassis spacers, pending physical fit. See the
+22 mm Pi spacers and 35 mm chassis spacers, now supported by the October 24
+Pi caliper measurements and nominal clearance calculations in
+[Mechanical-evidence.md](Mechanical-evidence.md). Actual assembly is untested. See the
 placement review for contact insertion, underside-tail limits, cooling/Wi-Fi
 checks and the Pi mounting-hole clearance interpretation that remains open.
 
@@ -170,9 +172,10 @@ device-tree configuration and physical bus labels before relying on Linux
   The course assembly plan is now team assembly; the JLC comparison is historical.
 - Verify the five GCT switch footprints and the remaining package/connector
   dimensions. Check the course-stock transceiver against the selected DR code.
-- The four chassis positions and Pi footprint passed the October 24 paper-fit
-  check. Verify the proposed final standoff stack, actual Pi/header engagement,
-  cable access and wheel/linkage clearance.
+- The four chassis positions, Pi paper footprint and actual-Pi height checks
+  are complete; no repeat measurements are requested. Before layout freeze,
+  resolve remaining cable/port/steering envelopes using drawings or a quick
+  unpowered check where necessary. Check actual mating and retention at assembly.
   Complete routing, power/thermal design and final DRC before fabrication.
 
 ERC reports zero errors and zero warnings. Netlist checks cover all 284

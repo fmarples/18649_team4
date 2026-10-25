@@ -141,6 +141,11 @@
 <polygon points="535,730 546.7058123305848,724.345448056554 546.7058123305848,735.654551943446" fill="#24834b"/>
 <polyline points="1510,1000 1580,1000 1580,700 1510,700" fill="none" stroke="#24834b" stroke-width="3"/>
 <polygon points="1510,700 1521.7058123305849,694.345448056554 1521.7058123305849,705.654551943446" fill="#24834b"/>
-<text x="60" y="890" font-family="Arial" font-size="20" fill="#172b3a" font-weight="normal">Also planned: buttons, LEDs, SWD</text>
-<text x="60" y="916" font-family="Arial" font-size="20" fill="#172b3a" font-weight="normal">and timing / power test points.</text>
+
+
+<text x="580" y="835" font-family="Arial" font-size="17" fill="#172b3a">Each zone: self-test button;</text>
+<text x="580" y="857" font-family="Arial" font-size="17" fill="#172b3a">STATUS, ERROR, DEG A / DEG B LEDs.</text>
+<text x="580" y="879" font-family="Arial" font-size="17" fill="#172b3a">Front/rear: two blinkers per zone.</text>
+<text x="580" y="901" font-family="Arial" font-size="17" fill="#172b3a">MCUs: reset, SWD and HSI/PLL.</text>
+<text x="580" y="923" font-family="Arial" font-size="17" fill="#172b3a">CAN: 16 MHz per controller; test points.</text>
 </svg>

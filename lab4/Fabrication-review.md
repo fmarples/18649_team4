@@ -29,7 +29,7 @@ the board as blocked. A placement-only pass must not be used as a release result
 | Battery and charger | Exact pack, continuous current and any pulse rating with duration, full-charge and discharged voltage bounds, dimensions, connector/polarity and compatible charger from a permitted source | Determines input voltage/current, connector, fuse, wiring and mechanical space. The provisional Amazon pack is not qualified: its published 2 A continuous rating does not cover the assumed 2.883 A planning case; no 10 A pulse rating was established. |
 | Motor protection and fuse | TA/course expectations for fault handling; chosen fuse time-current behavior versus wiring, connectors, holder and load/startup envelope | A 10 A input fuse is not fast protection for an individual L298 bridge. A circuit change must happen before routing. The raw 3.2 A motor stall figure is not an allowed continuous L298 operating point. |
 | L298 and 6396BG installation | Attachment orientation, height and any PCB mounting holes/insulation | The tentative heatsink rectangle intersects 15 other courtyards. Acceptance of the heatsink part for the preliminary review did not verify this installation. Resolve the envelope before moving nearby parts. See `Heatsink-envelope-check.json`. |
-| Pi and chassis stack | Actual Pi/socket/cooler/ports and screw-tail fit; selected spacers; full steering travel; reachable headers; course interpretation of the Pi mounting margin | Four-hole paper alignment was checked at approximately 50 mm chassis spacing. The model proposes 35 mm chassis spacing and a 22 mm Pi gap; these are not physically verified. Pi holes use a 3 mm radius from the center, not 3 mm from the drilled edge. |
+| Pi and chassis stack | Review only remaining layout-dependent cable/port/steering/cooler envelopes and the course interpretation of the Pi mounting margin | Four-hole paper alignment and actual Pi caliper heights are complete. We retain nominal 35 mm chassis and 22 mm Pi spacing, supported by Mechanical-evidence.md. Actual socket mating/fastener retention are assembly checks. Pi holes use a 3 mm radius from the center, not 3 mm from the drilled edge. |
 | Cable interfaces and stock | Confirm second motor harness, servo mating part/current capability and supplied quantities; choose permitted replacements if unavailable | A different PCB connector or part package changes pads and placement. Adapter continuity/temperature tests happen after assembly; the intended mating interface and rating basis must be established first. |
 
 Aim to resolve decisions that change CAD by Monday, October 26. This is a team
@@ -40,8 +40,18 @@ review allowance authorizes fabrication of an unresolved circuit.
 For the motor-stall and L298 drop/temperature questions, the recorded TA deferral
 only establishes that measurements were not needed on October 24. Confirm what
 the final brief should contain on October 29. Published values and calculations
-must stay labeled as such. Do not perform a prolonged stall through the L298 to
-produce a missing number.
+must stay labeled as such. The question is whether that allowance covers the
+final brief, not a request to repeat every possible current measurement. Servo
+no-load source research and four-rail planning estimates are already done.
+Do not perform a prolonged stall through the L298 to produce a missing number.
+
+The final design can use stated load scenarios and calculated dimensional
+margins. Physical tests of the unbuilt board are not prerequisites for
+generating fabrication files. Connector mating/continuity, loaded voltage,
+noise, thermal behavior and retention are checked at assembly/bring-up. Before
+fabrication, resolve uncertainties that could change the circuit, pads,
+outline or reserved space. An undocumented battery/connector rating cannot
+be created by an estimate. See Current-evidence.md and Mechanical-evidence.md.
 
 ## Footprints and routing
 
