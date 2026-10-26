@@ -3,32 +3,33 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 6466,
-    "B.Cu": 2894,
-    "In2.Cu": 4361
+    "F.Cu": 6964,
+    "B.Cu": 4054,
+    "In2.Cu": 4576
   },
   "errors": [],
   "counts": {
-    "track_segments": 13721,
-    "through_vias": 829,
+    "track_segments": 15594,
+    "through_vias": 879,
     "copper_zones": 6,
-    "full_unconnected_count": 59
+    "full_unconnected_count": 31
   },
   "segment_width_counts_mm": {
-    "0.2": 12109,
-    "0.8": 634,
-    "0.5": 188,
+    "0.2": 12555,
+    "0.8": 646,
+    "0.5": 771,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
     "0.3": 641,
-    "1.0": 3,
+    "1.0": 390,
     "0.4": 3,
+    "1.5": 351,
     "1.2": 3,
-    "2.0": 9
+    "2.0": 103
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 764,
+    "0.70/0.30": 814,
     "0.80/0.40": 65
   },
   "checks": [
@@ -2797,6 +2798,108 @@
       "physically_connected": true
     },
     {
+      "reference": "servo power",
+      "group": "shunt to connector",
+      "net": "/Front zone/SERVO_VPLUS",
+      "pads": [
+        "R1.2",
+        "J90.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V distribution",
+      "group": "regulator and every load group",
+      "net": "/+5V",
+      "pads": [
+        "L2.2",
+        "J70.2",
+        "J70.4",
+        "U80.9",
+        "U2.8",
+        "U3.8",
+        "C700.1",
+        "C701.1",
+        "R570.1",
+        "R571.1",
+        "R670.1",
+        "R671.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U80.2 U2.1 U2.2 D800.2 D801.1",
+      "net": "/Rear zone/LEFT_BRIDGE",
+      "pads": [
+        "U80.2",
+        "U2.1",
+        "U2.2",
+        "D800.2",
+        "D801.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U80.13 U3.1 U3.2 D804.2 D805.1",
+      "net": "/Rear zone/RIGHT_BRIDGE",
+      "pads": [
+        "U80.13",
+        "U3.1",
+        "U3.2",
+        "D804.2",
+        "D805.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U2.3 U2.4 J80.1",
+      "net": "/Rear zone/LEFT_MOTOR",
+      "pads": [
+        "U2.3",
+        "U2.4",
+        "J80.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U3.3 U3.4 J81.1",
+      "net": "/Rear zone/RIGHT_MOTOR",
+      "pads": [
+        "U3.3",
+        "U3.4",
+        "J81.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U80.3 J80.2 D802.2 D803.1",
+      "net": "/Rear zone/LEFT_RETURN",
+      "pads": [
+        "U80.3",
+        "J80.2",
+        "D802.2",
+        "D803.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U80.14 J81.2 D806.2 D807.1",
+      "net": "/Rear zone/RIGHT_RETURN",
+      "pads": [
+        "U80.14",
+        "J81.2",
+        "D806.2",
+        "D807.1"
+      ],
+      "physically_connected": true
+    },
+    {
       "reference": "rear UART",
       "group": "TX",
       "net": "/Rear zone/R_UART_CONSOLE_TX",
@@ -3049,6 +3152,26 @@
     },
     {
       "reference": "signal",
+      "group": "/Front zone/F_UART_CONSOLE_RX",
+      "net": "/Front zone/F_UART_CONSOLE_RX",
+      "pads": [
+        "J502.2",
+        "U50.45"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_RX_B_MARKER",
+      "net": "/Front zone/F_RX_B_MARKER",
+      "pads": [
+        "J503.4",
+        "U50.11"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
       "group": "/Front zone/F_DEG_B_LED",
       "net": "/Front zone/F_DEG_B_LED",
       "pads": [
@@ -3234,16 +3357,14 @@
   ],
   "remaining": [
     "Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.",
-    "Board-wide distribution is incomplete; the servo regulator reaches its shunt and several 3V3 branches are joined.",
-    "High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.",
+    "Battery/input-power distribution and two 3V3 pull-ups remain incomplete.",
+    "5V distribution and motor/servo outputs are connected; review voltage drop, via sharing and thermal current capability separately.",
     "The main CAN/MCU 3V3 groups now reach the regulator; remaining pull-ups and trunk voltage drop/current capability still need review.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
   "unfinished_signal_nets": [
-    "/Front zone/F_RX_B_MARKER",
-    "/Front zone/F_UART_CONSOLE_RX",
     "/Rear zone/R_DEG_A_LED",
     "/Rear zone/R_DEG_B_LED",
     "/Rear zone/R_REAR_LEFT_LED",
@@ -3252,5 +3373,5 @@
     "/Rear zone/R_RX_B_MARKER",
     "/Rear zone/R_TX_A_MARKER"
   ],
-  "source_sha256": "ca433f2457b9bfad80955827275ecbe3452e0270ea052805275f9290a64d4796"
+  "source_sha256": "57ac05825882190f50afedcad32bebe355c30a8bee3762b7d00687a4d8f8a109"
 }

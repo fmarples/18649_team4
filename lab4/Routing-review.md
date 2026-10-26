@@ -1,12 +1,46 @@
 # Power, MCU, CAN and signal routing
 
-26 October 2026. The saved **four-layer** PCB has **13,721 track segments,
-829 through vias and six filled ground zones**. Missing connections fell from
-**128 to 59** across today's revisions. **Nine MCU signal nets and board-wide
-power paths are still incomplete.** All 284 electrical footprints, eight supports,
+26 October 2026. The saved **four-layer** PCB has **15,594 track segments,
+879 through vias and six filled ground zones**. Missing connections fell from
+**59 to 31** in this revision. **Seven MCU signal nets, two 3.3 V pull-ups and
+input-power paths are still incomplete.** All 284 electrical footprints, eight supports,
 positions, values and pad nets are unchanged. This is not a fabrication release.
 
-## Latest MCU, supply and ground routing
+## Latest output-power and MCU routing
+
+We connected front RX-B timing and console RX, rerouting nearby 3.3 V,
+console TX and servo PWM copper. All prior checked connections still pass.
+We connected the 5 V regulator to the Pi and every other 5 V load group,
+the servo shunt output to J90, both motor outputs through the ACS712 primary
+terminals to their connectors, and all four flyback-diode pairs to the bridge
+outputs. The L298/input-power feeds are still incomplete; this is not a
+completed or powered motor circuit.
+
+The Pi feed uses 1.50 mm outer-layer copper; the servo load route uses 2.00 mm.
+Motor output branches use 1.00–1.50 mm copper with short 0.80 mm joins between
+paired ACS712 primary pads. Small 5 V load joins use 0.50 mm copper. These
+dimensions establish the saved geometry, not rated current capability.
+
+We corrected three motor-track approaches to meet the unchanged 0.30 mm hole
+clearance rule, removed unused rerouting stubs, and added ten ground stitching
+vias. U80.1 retains thermal relief with a 0-degree spoke angle and explicit
+0.20 mm spoke width/gap. No pad was newly converted to solid connection and
+no global rule was relaxed. Native DRC reports no starved thermal, dangling
+copper or disconnected GND items. The 14,532 retained old copper objects keep
+their geometry; 18 old objects on the rerouted nets were replaced or removed.
+
+All **285** targeted checks pass; ordinary DRC and schematic parity have zero
+findings. The connectivity checker now uses KiCad's `EXCLUDE_ZONES` flag for
+explicit ground bridges. The corrected feedback review finds pour-dependent
+returns, not the separate trace paths previously reported. See
+[Return-path-review.md](Return-path-review.md).
+
+[Supply-path-review.md](Supply-path-review.md) screens actual 3.3 V/5 V copper
+resistance. Shared-trunk loads, voltage margin, via current sharing and thermal
+capability remain open engineering work. The seven rear MCU signals and
+remaining supply routes can proceed without new measurements.
+
+## Earlier MCU, supply and ground routing
 
 We connected six further MCU nets: front console TX, task probe, front-left
 LED and degraded-B LED; rear right-encoder A and error LED. Nearby blocking
@@ -141,7 +175,7 @@ resistor; both motor-enable PWM nets and IN1/IN4; the lamp transistor/resistor
 connections; the Pi indicators, self-test and timing probes; and portions of
 the MCU debug, indicator and timing-header wiring. The fourth conditioned encoder
 output and IN2 are now routed. Several MCU diagnostic/indicator pins remain open;
-the exact nine incomplete signal-net names are in `Routing-check.json`.
+the exact seven incomplete signal-net names are in `Routing-check.json`.
 
 Signal tracks are 0.20 mm wide with 0.70/0.30 mm through vias. The switching
 regulator cells and mounting/antenna reservations are preserved. New routes
@@ -160,7 +194,7 @@ R1's two shunt terminals now have separate 0.20 mm sense connections to U1
 IN+ and IN-. They leave the inner terminal edges; the regulator power feed
 enters the opposite side of the source terminal. L1.2 reaches R1.1 through a
 2.0 mm main track with a short 0.80 mm pad approach. The load-side path from
-R1.2 to J90 is still open. These connections require a final noise/loop and
+R1.2 to J90 is now connected with 2.0 mm copper. These connections require a final noise/loop and
 current/temperature review; connectivity alone does not qualify the sensing
 accuracy or the load-current rating.
 

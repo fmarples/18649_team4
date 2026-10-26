@@ -8,10 +8,13 @@ report for disconnected copper islands.
 
 ## Connections and remaining geometry checks
 
-The three lower feedback resistors have explicit copper paths to their
-regulators' ground pins, even when zone objects are excluded from the graph.
-Their pad-center separation is 6.729 mm. This establishes connectivity, not a
-quiet Kelvin return: a path can still share copper with switching current.
+The three lower feedback resistors reach regulator ground through ground
+pours. The corrected zone-excluding check does **not** find a separate trace
+path to each regulator's ground pin. Their pad-center separation is 6.729 mm.
+Our earlier explicit-path statement was incorrect: filtering zones after a
+full connectivity traversal still allowed paths through them. The checker now
+passes KiCad's `EXCLUDE_ZONES` flag during traversal. This does not itself mean
+the circuit is disconnected, but a quiet feedback return has not been established.
 Before release, review the actual feedback branch and input/output capacitor
 return geometry against the [TPS564252 layout guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf),
 especially the separate feedback return, compact input loop and wide output
@@ -41,12 +44,18 @@ routes change layers. [Layer-stack.md](Layer-stack.md) explains why In2 signals
 also need the nearby B.Cu reference reviewed. Pair spacing, branch lengths
 and controlled impedance are not yet qualified.
 
-## Supply resistance check still required
+## Initial supply resistance screening
 
 The new 3.3 V joins connect the main MCU/CAN supply groups to the regulator;
-two encoder pull-ups remain disconnected. The new local 5 V branches are not
-the complete regulator-to-load network. Main Pi, servo and motor feeds are
-unfinished.
+two encoder pull-ups remain disconnected. The 5 V regulator now reaches all
+5 V load groups. The servo shunt reaches J90, and the motor outputs reach
+their sensors, connectors and flyback diodes. Input-power distribution and
+final current/return sizing remain unfinished.
+
+[Supply-path-review.md](Supply-path-review.md) now uses actual saved conductor
+geometry to screen the 3.3 V and 5 V paths. It flags the long supply paths for
+load allocation and widening/parallel-via review. The calculation does not
+establish thermal current capability or guaranteed load voltage.
 
 As a calculation example, using copper resistivity 1.72e-8 ohm-metres at about
 20 degrees C, a 100 mm long, 0.8 mm wide trace has resistance

@@ -1,7 +1,7 @@
 {
   "footprint_positions_values_padnets_zone_connection_modes_unchanged": true,
   "thermal_geometry_changes": {
-    "('J605', '1')": {
+    "('U80', '1')": {
       "before": [
         90.0,
         0,
@@ -15,38 +15,27 @@
     }
   },
   "copper_layers": 4,
-  "retained_copper_objects": 12358,
+  "retained_copper_objects": 14532,
   "retained_copper_geometry_changes": 0,
   "removed_copper_by_net": {
-    "/Front zone/F_SCK": 240,
-    "/Front zone/F_TX_A_MARKER": 56,
-    "/Front zone/F_DIR_A_MARKER": 140,
-    "/Rear zone/LEFT_ADC": 275,
-    "/Front zone/F_PID_MARKER": 67,
-    "/Rear zone/R_SWCLK": 50,
-    "/+3V3": 6,
-    "/Rear zone/R_STEER_TASK_MARKER": 90,
-    "/Rear zone/R_BOOT0": 27
+    "/+3V3": 13,
+    "/Front zone/F_UART_CONSOLE_TX": 1,
+    "/Front zone/F_SERVO_PWM": 4
   },
   "added_copper_by_net": {
-    "/Front zone/F_TX_A_MARKER": 145,
-    "/Front zone/F_FRONT_LEFT_LED": 117,
-    "/+3V3": 516,
-    "/Front zone/F_SCK": 269,
-    "/Rear zone/R_ERROR_LED": 20,
-    "/Front zone/F_DIR_A_MARKER": 142,
-    "/Front zone/F_TASK_PROBE": 123,
-    "/Front zone/F_PID_MARKER": 81,
-    "/Rear zone/R_RIGHT_ENC_A": 185,
-    "/Rear zone/R_SWCLK": 36,
-    "/Rear zone/LEFT_ADC": 169,
-    "/Rear zone/R_STEER_TASK_MARKER": 155,
-    "/+5V": 71,
-    "/Rear zone/R_BOOT0": 76,
-    "/GND": 20,
-    "/Front zone/F_UART_CONSOLE_TX": 8,
-    "/Front zone/F_DEG_B_LED": 59
-  },
-  "baseline_commit": "59efc4a0513ea0e9b7cffd000e92b47ae6bd1efd",
-  "source_sha256": "ca433f2457b9bfad80955827275ecbe3452e0270ea052805275f9290a64d4796"
+    "/+3V3": 87,
+    "/Front zone/F_RX_B_MARKER": 278,
+    "/Front zone/SERVO_VPLUS": 95,
+    "/Front zone/F_UART_CONSOLE_TX": 73,
+    "/Front zone/F_SERVO_PWM": 27,
+    "/+5V": 713,
+    "/Rear zone/LEFT_MOTOR": 110,
+    "/Rear zone/RIGHT_MOTOR": 96,
+    "/Rear zone/LEFT_BRIDGE": 22,
+    "/Rear zone/RIGHT_BRIDGE": 25,
+    "/Rear zone/LEFT_RETURN": 42,
+    "/Front zone/F_UART_CONSOLE_RX": 95,
+    "/Rear zone/RIGHT_RETURN": 268,
+    "/GND": 10
+  }
 }

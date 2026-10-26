@@ -8,11 +8,14 @@ its 40-pin header.
 **Status, 26 October 2026:** schematic and partially routed PCB for design review.
 The regulator/MCU/CAN support, CAN backbones and host interfaces are routed.
 We connected 76 sensing/control/debug/indicator nets, then the rear UART, initial
-3.3 V branches, servo-shunt inputs and 22 more MCU signals. 59 connections remain, including nine MCU
-signal nets; power distribution and return-path review are unfinished.
+3.3 V branches, servo-shunt inputs and 24 more MCU signals. The 5 V load groups
+and motor/servo outputs are connected. 31 connections remain, including seven
+MCU signal nets; input-power routing and final supply/return sizing are unfinished.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
+The [supply-path screening](Supply-path-review.md) calculates initial trace resistance;
+load allocation, voltage margin and thermal current capability still need review.
 On October 26 staff explicitly allowed four-layer boards. The saved PCB now
 uses F.Cu / In1.Cu ground / In2.Cu signals / B.Cu, with inner-layer keep-outs. Teams
 should plan stencil assembly, not assume board-house assembly. See the dated
@@ -82,7 +85,7 @@ for a TA submission so the reviewed version can be recovered later.
 | [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
 | [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
 | [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |
-| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; 59 unconnected items remain. |
+| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; 31 unconnected items remain. |
 | [Lab4-Circuits.pdf](Lab4-Circuits.pdf) | Five-page schematic preview. |
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |
@@ -198,8 +201,8 @@ ERC reports zero errors and zero warnings. Netlist checks cover all 284
 references and 297 nets, including motor current paths, flyback polarity,
 servo supply after its shunt, MCU support and Lab 3 pin reservations.
 DRC reports zero ordinary violations and zero missing footprints. Its
-unconnected list and full saved-board connectivity count both report 59.
-Partial routing contains 13,721 segments, 829 vias and six ground zones.
+unconnected list and full saved-board connectivity count both report 31.
+Partial routing contains 15,594 segments, 879 vias and six ground zones.
 A package-specific 0.15 mm pad-clearance rule applies only inside U40-U42
 for the proposed 1 oz copper process; general trace clearance stays 0.20 mm.
 See Placement-review.md for the source and remaining limits.

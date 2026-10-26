@@ -33,17 +33,11 @@ def reachable(seed):
     seed_uid = seed.m_Uuid.AsString()
     if seed_uid in reachable_cache:
         return reachable_cache[seed_uid]
-    pending, seen, result = [seed], set(), set()
-    while pending:
-        item = pending.pop()
-        uid = item.m_Uuid.AsString()
-        if uid in seen:
-            continue
-        seen.add(uid)
-        if uid in pad_keys:
-            result.add(pad_keys[uid])
-        pending.extend(a for a in connectivity.GetConnectedItems(item)
-                       if a.GetNetCode() == seed.GetNetCode())
+    # This API already returns the full connected component, not neighbours.
+    seen = {a.m_Uuid.AsString() for a in connectivity.GetConnectedItems(seed)
+            if a.GetNetCode() == seed.GetNetCode()}
+    seen.add(seed_uid)
+    result = {pad_keys[uid] for uid in seen if uid in pad_keys}
     for uid in seen:
         reachable_cache[uid] = result
         physical_reachable_cache[uid] = seen
@@ -264,6 +258,18 @@ for a, b in power_branches:
 check_group('servo sense', 'Kelvin IN+', [('R1', '1'), ('U1', '3')])
 check_group('servo sense', 'Kelvin IN-', [('R1', '2'), ('U1', '4')])
 check_group('servo power', 'regulator to shunt', [('L1', '2'), ('R1', '1')])
+check_group('servo power', 'shunt to connector', [('R1', '2'), ('J90', '2')])
+check_group('5V distribution', 'regulator and every load group', [
+    ('L2', '2'), ('J70', '2'), ('J70', '4'), ('U80', '9'),
+    ('U2', '8'), ('U3', '8'), ('C700', '1'), ('C701', '1'),
+    ('R570', '1'), ('R571', '1'), ('R670', '1'), ('R671', '1')])
+for endpoints in ['U80.2 U2.1 U2.2 D800.2 D801.1',
+                  'U80.13 U3.1 U3.2 D804.2 D805.1',
+                  'U2.3 U2.4 J80.1', 'U3.3 U3.4 J81.1',
+                  'U80.3 J80.2 D802.2 D803.1',
+                  'U80.14 J81.2 D806.2 D807.1']:
+    check_group('motor output', endpoints,
+                [tuple(s.split('.')) for s in endpoints.split()])
 check_group('rear UART', 'TX', [('U60', '44'), ('J602', '1')])
 check_group('rear UART', 'RX', [('U60', '45'), ('J602', '2')])
 check_group('filter ground', 'left', [('C5', '2'), ('U2', '5')])
@@ -285,6 +291,8 @@ for net, endpoints in {
         '/Front zone/F_FRONT_LEFT_LED': 'J503.10 R550.1 U50.20',
         '/Front zone/F_TASK_PROBE': 'J504.5 U50.39',
         '/Front zone/F_UART_CONSOLE_TX': 'J502.1 U50.44',
+        '/Front zone/F_UART_CONSOLE_RX': 'J502.2 U50.45',
+        '/Front zone/F_RX_B_MARKER': 'J503.4 U50.11',
         '/Front zone/F_DEG_B_LED': 'J503.8 R513.1 U50.27',
         '/Rear zone/R_ERROR_LED': 'J604.4 R611.1 U60.8',
         '/Rear zone/R_RIGHT_ENC_A': 'J605.5 U60.56 U81.6',
@@ -299,15 +307,12 @@ for endpoints in ['Q551.2 R561.2', 'U1.2 C1.2', 'U1.2 C2.2',
                   'D711.1 D712.1', 'D801.2 D803.2']:
     members = [tuple(s.split('.')) for s in endpoints.split()]
     seed, target = [pads[m] for m in members]
-    pending, seen = [seed], set()
-    while pending:
-        item = pending.pop()
-        uid = item.m_Uuid.AsString()
-        if uid in seen:
-            continue
-        seen.add(uid)
-        pending.extend(a for a in connectivity.GetConnectedItems(item)
-                       if a.Type() != p.PCB_ZONE_T and a.GetNetCode() == seed.GetNetCode())
+    # Exclude zones during traversal; filtering the returned objects afterward
+    # would still permit a connection that went through a zone.
+    seen = {a.m_Uuid.AsString() for a in
+            connectivity.GetConnectedItems(seed, p.EXCLUDE_ZONES)
+            if a.GetNetCode() == seed.GetNetCode()}
+    seen.add(seed.m_Uuid.AsString())
     connected = (seed.GetNetname() == target.GetNetname() == '/GND'
                  and target.m_Uuid.AsString() in seen)
     checks.append({'reference': 'ground bridge', 'group': endpoints, 'net': '/GND',
@@ -412,8 +417,8 @@ report = {
         for net in ['/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L']],
     'remaining': [
         'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
-        'Board-wide distribution is incomplete; the servo regulator reaches its shunt and several 3V3 branches are joined.',
-        'High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.',
+        'Battery/input-power distribution and two 3V3 pull-ups remain incomplete.',
+        '5V distribution and motor/servo outputs are connected; review voltage drop, via sharing and thermal current capability separately.',
         'The main CAN/MCU 3V3 groups now reach the regulator; remaining pull-ups and trunk voltage drop/current capability still need review.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.',

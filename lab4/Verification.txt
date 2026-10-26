@@ -333,3 +333,32 @@ October 26 additional MCU, supply and return-path review
 - Archived the last checked two-layer board, 59be0b1, at lab4-two-layer-archive.
   The four-layer lab4 branch remains active. Remaining routing, power/return,
   thermal and mechanical decisions still block fabrication; no hardware test.
+
+
+October 26 output-power routing and connectivity-check correction
+- Connected front RX-B marker and console RX. All 5V load groups now reach
+  L2; servo shunt output reaches J90; motor outputs reach ACS712 primary
+  pads, connectors and flyback diodes. Input-power feeds remain incomplete.
+- Saved totals: 15,594 segments, 879 vias, six zones; 31 missing connections
+  including seven rear MCU signal nets. All 285 targeted checks pass.
+- Ordinary native DRC/parity: zero findings; no disconnected GND islands,
+  starved thermals or dangling copper. Schematic ERC/netlist reused only after
+  all non-PCB CAD hashes matched the prior checked source; provenance recorded.
+- Footprint positions, values, pad nets and zone connection modes unchanged;
+  14,532 retained old copper objects preserve geometry. Eighteen old objects
+  on rerouted nets replaced/removed. Ten ground stitches added. U80.1 retains
+  thermal relief, now 0-degree angle and 0.20mm gap/spoke width. No global rule
+  relaxation or new solid-connected pad. Motor tracks meet 0.30mm hole clearance.
+- Corrected explicit-copper checks to pass KiCad EXCLUDE_ZONES during graph
+  traversal. Earlier filtering after traversal incorrectly admitted pour paths.
+  Five explicit ground-bridge checks still pass. Feedback returns depend on
+  pours; a separate quiet trace return was NOT established. Documentation corrected.
+- Added conductor-shape resistance graph and 3V3/5V screening, with native
+  connectivity cross-check and explicit copper/via/current assumptions. No
+  guaranteed voltage or thermal current rating inferred. Synthetic 10mm x 1mm
+  x 35um trace gives 4.914mOhm; touching/layer/separation cases checked.
+- A temporary fault board removes 5V and GND tracks while retaining zones;
+  the new 5V distribution check and all five explicit ground-bridge checks fail.
+- Seven MCU nets, two 3V3 pull-ups, input-power routing, supply sizing, feedback/
+  switching-loop, CAN and mechanical/protection reviews remain open. No hardware
+  measurements, purchase, submission or fabrication release claimed.

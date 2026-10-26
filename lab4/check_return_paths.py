@@ -15,14 +15,11 @@ source=args.board;b=p.LoadBoard(str(source));b.BuildConnectivity();cn=b.GetConne
 fps={f.GetReference():f for f in b.GetFootprints()};pads={(f.GetReference(),a.GetNumber()):a for f in b.GetFootprints() for a in f.Pads()}
 def xy(q):return (p.ToMM(q.x),p.ToMM(q.y))
 def explicit(a,c):
- queue=[a];seen=set()
- while queue:
-  n=queue.pop();uid=n.m_Uuid.AsString()
-  if uid in seen:continue
-  seen.add(uid)
-  if uid==c.m_Uuid.AsString():return True
-  queue.extend(x for x in cn.GetConnectedItems(n) if x.GetNetCode()==a.GetNetCode() and x.Type()!=p.PCB_ZONE_T)
- return False
+ # Exclude zones during traversal, not after the full component is returned.
+ seen={x.m_Uuid.AsString() for x in cn.GetConnectedItems(a,p.EXCLUDE_ZONES)
+       if x.GetNetCode()==a.GetNetCode()}
+ seen.add(a.m_Uuid.AsString())
+ return c.m_Uuid.AsString() in seen
 ground_sites=[xy(t.GetPosition()) for t in b.GetTracks() if t.Type()==p.PCB_VIA_T and t.GetNetname()=='/GND']
 ground_sites += [xy(a.GetPosition()) for a in pads.values() if a.GetNetname()=='/GND' and a.GetAttribute()==p.PAD_ATTRIB_PTH]
 plane=next(z.GetFilledPolysList(p.In1_Cu) for z in b.Zones() if not z.GetIsRuleArea() and z.GetLayer()==p.In1_Cu)
