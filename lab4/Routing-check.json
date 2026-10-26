@@ -3,13 +3,13 @@
   "fabrication_release": false,
   "errors": [],
   "counts": {
-    "track_segments": 5061,
-    "through_vias": 420,
+    "track_segments": 9961,
+    "through_vias": 631,
     "copper_zones": 4,
-    "full_unconnected_count": 305
+    "full_unconnected_count": 171
   },
   "segment_width_counts_mm": {
-    "0.2": 4647,
+    "0.2": 9547,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
@@ -21,7 +21,7 @@
     "1.2": 3
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 396,
+    "0.70/0.30": 607,
     "0.80/0.40": 24
   },
   "checks": [
@@ -1669,6 +1669,821 @@
         "U34.13"
       ],
       "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_CMD_TX_MARKER",
+      "net": "/Cockpit zone/PI_CMD_TX_MARKER",
+      "pads": [
+        "J70.13",
+        "J703.4"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_DEG_A_LED",
+      "net": "/Cockpit zone/PI_DEG_A_LED",
+      "pads": [
+        "J70.29",
+        "J703.7",
+        "R712.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_DEG_A_LED_ANODE",
+      "net": "/Cockpit zone/PI_DEG_A_LED_ANODE",
+      "pads": [
+        "D712.2",
+        "R712.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_DEG_B_LED",
+      "net": "/Cockpit zone/PI_DEG_B_LED",
+      "pads": [
+        "J70.31",
+        "J703.8",
+        "R713.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_DEG_B_LED_ANODE",
+      "net": "/Cockpit zone/PI_DEG_B_LED_ANODE",
+      "pads": [
+        "D713.2",
+        "R713.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_ERROR_LED",
+      "net": "/Cockpit zone/PI_ERROR_LED",
+      "pads": [
+        "J70.32",
+        "J704.4",
+        "R711.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_ERROR_LED_ANODE",
+      "net": "/Cockpit zone/PI_ERROR_LED_ANODE",
+      "pads": [
+        "D711.2",
+        "R711.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_SELFTEST_BUTTON",
+      "net": "/Cockpit zone/PI_SELFTEST_BUTTON",
+      "pads": [
+        "C702.1",
+        "J70.36",
+        "J704.3",
+        "R700.2",
+        "SW70.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_STATUS_LED",
+      "net": "/Cockpit zone/PI_STATUS_LED",
+      "pads": [
+        "J70.33",
+        "J704.5",
+        "R710.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_STATUS_LED_ANODE",
+      "net": "/Cockpit zone/PI_STATUS_LED_ANODE",
+      "pads": [
+        "D710.2",
+        "R710.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_TX_A_MARKER",
+      "net": "/Cockpit zone/PI_TX_A_MARKER",
+      "pads": [
+        "J70.15",
+        "J703.5"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_TX_B_MARKER",
+      "net": "/Cockpit zone/PI_TX_B_MARKER",
+      "pads": [
+        "J70.16",
+        "J703.6"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Cockpit zone/PI_UDP_RX_MARKER",
+      "net": "/Cockpit zone/PI_UDP_RX_MARKER",
+      "pads": [
+        "J70.11",
+        "J703.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_BOOT0",
+      "net": "/Front zone/F_BOOT0",
+      "pads": [
+        "J500.2",
+        "R500.1",
+        "U50.60"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_DEG_A_LED_ANODE",
+      "net": "/Front zone/F_DEG_A_LED_ANODE",
+      "pads": [
+        "D512.2",
+        "R512.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_DEG_B_LED_ANODE",
+      "net": "/Front zone/F_DEG_B_LED_ANODE",
+      "pads": [
+        "D513.2",
+        "R513.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_DIR_A_MARKER",
+      "net": "/Front zone/F_DIR_A_MARKER",
+      "pads": [
+        "J505.4",
+        "U50.29"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_ERROR_LED",
+      "net": "/Front zone/F_ERROR_LED",
+      "pads": [
+        "J503.13",
+        "J504.4",
+        "R511.1",
+        "U50.8"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_ERROR_LED_ANODE",
+      "net": "/Front zone/F_ERROR_LED_ANODE",
+      "pads": [
+        "D511.2",
+        "R511.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_LEFT_LED_BASE",
+      "net": "/Front zone/F_FRONT_LEFT_LED_BASE",
+      "pads": [
+        "Q550.1",
+        "R550.2",
+        "R560.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_LEFT_LED_PLUS",
+      "net": "/Front zone/F_FRONT_LEFT_LED_PLUS",
+      "pads": [
+        "J550.1",
+        "R570.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_LEFT_LED_SINK",
+      "net": "/Front zone/F_FRONT_LEFT_LED_SINK",
+      "pads": [
+        "J550.2",
+        "Q550.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_RIGHT_LED_BASE",
+      "net": "/Front zone/F_FRONT_RIGHT_LED_BASE",
+      "pads": [
+        "Q551.1",
+        "R551.2",
+        "R561.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_RIGHT_LED_PLUS",
+      "net": "/Front zone/F_FRONT_RIGHT_LED_PLUS",
+      "pads": [
+        "J551.1",
+        "R571.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_RIGHT_LED_SINK",
+      "net": "/Front zone/F_FRONT_RIGHT_LED_SINK",
+      "pads": [
+        "J551.2",
+        "Q551.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_PID_MARKER",
+      "net": "/Front zone/F_PID_MARKER",
+      "pads": [
+        "J504.7",
+        "U50.40"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_PWM_SET_MARKER",
+      "net": "/Front zone/F_PWM_SET_MARKER",
+      "pads": [
+        "J505.3",
+        "U50.62"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_RELAY_TX_MARKER",
+      "net": "/Front zone/F_RELAY_TX_MARKER",
+      "pads": [
+        "J503.12",
+        "U50.37"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_RESET_N",
+      "net": "/Front zone/F_RESET_N",
+      "pads": [
+        "C509.1",
+        "J501.5",
+        "R501.2",
+        "SW50.1",
+        "U50.7"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_SELFTEST_BUTTON",
+      "net": "/Front zone/F_SELFTEST_BUTTON",
+      "pads": [
+        "C510.1",
+        "J504.3",
+        "R502.2",
+        "SW51.1",
+        "U50.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_SERVO_PWM",
+      "net": "/Front zone/F_SERVO_PWM",
+      "pads": [
+        "J503.9",
+        "R530.1",
+        "R540.1",
+        "U50.42"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_STATUS_LED_ANODE",
+      "net": "/Front zone/F_STATUS_LED_ANODE",
+      "pads": [
+        "D510.2",
+        "R510.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_SWCLK",
+      "net": "/Front zone/F_SWCLK",
+      "pads": [
+        "J501.2",
+        "U50.49"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_SWDIO",
+      "net": "/Front zone/F_SWDIO",
+      "pads": [
+        "J501.4",
+        "U50.46"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/SERVO_ADC",
+      "net": "/Front zone/SERVO_ADC",
+      "pads": [
+        "C2.1",
+        "J1.2",
+        "J504.8",
+        "R2.2",
+        "U50.16"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/SERVO_PWM_OUT",
+      "net": "/Front zone/SERVO_PWM_OUT",
+      "pads": [
+        "J90.3",
+        "R540.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/SERVO_RAW",
+      "net": "/Front zone/SERVO_RAW",
+      "pads": [
+        "J1.1",
+        "R2.1",
+        "U1.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_ADC",
+      "net": "/Rear zone/LEFT_ADC",
+      "pads": [
+        "C5.1",
+        "J2.3",
+        "J604.10",
+        "R5.2",
+        "U60.16"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_ENC_A_IN",
+      "net": "/Rear zone/LEFT_ENC_A_IN",
+      "pads": [
+        "R800.2",
+        "U81.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_ENC_A_RAW",
+      "net": "/Rear zone/LEFT_ENC_A_RAW",
+      "pads": [
+        "J82.3",
+        "R800.1",
+        "R804.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_ENC_B_IN",
+      "net": "/Rear zone/LEFT_ENC_B_IN",
+      "pads": [
+        "R801.2",
+        "U81.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_ENC_B_RAW",
+      "net": "/Rear zone/LEFT_ENC_B_RAW",
+      "pads": [
+        "J82.4",
+        "R801.1",
+        "R805.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_FILTER",
+      "net": "/Rear zone/LEFT_FILTER",
+      "pads": [
+        "C4.1",
+        "U2.6"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_RAW",
+      "net": "/Rear zone/LEFT_RAW",
+      "pads": [
+        "J2.1",
+        "R3.1",
+        "U2.7"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/LEFT_SCALED",
+      "net": "/Rear zone/LEFT_SCALED",
+      "pads": [
+        "J2.2",
+        "R3.2",
+        "R4.1",
+        "R5.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_ADC",
+      "net": "/Rear zone/RIGHT_ADC",
+      "pads": [
+        "C8.1",
+        "J3.3",
+        "J604.11",
+        "R8.2",
+        "U60.17"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_ENC_A_IN",
+      "net": "/Rear zone/RIGHT_ENC_A_IN",
+      "pads": [
+        "R802.2",
+        "U81.5"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_ENC_A_RAW",
+      "net": "/Rear zone/RIGHT_ENC_A_RAW",
+      "pads": [
+        "J83.3",
+        "R802.1",
+        "R806.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_ENC_B_IN",
+      "net": "/Rear zone/RIGHT_ENC_B_IN",
+      "pads": [
+        "R803.2",
+        "U81.9"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_ENC_B_RAW",
+      "net": "/Rear zone/RIGHT_ENC_B_RAW",
+      "pads": [
+        "J83.4",
+        "R803.1",
+        "R807.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_FILTER",
+      "net": "/Rear zone/RIGHT_FILTER",
+      "pads": [
+        "C7.1",
+        "U3.6"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_RAW",
+      "net": "/Rear zone/RIGHT_RAW",
+      "pads": [
+        "J3.1",
+        "R6.1",
+        "U3.7"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/RIGHT_SCALED",
+      "net": "/Rear zone/RIGHT_SCALED",
+      "pads": [
+        "J3.2",
+        "R6.2",
+        "R7.1",
+        "R8.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_BOOT0",
+      "net": "/Rear zone/R_BOOT0",
+      "pads": [
+        "J600.2",
+        "R600.1",
+        "U60.60"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_DEG_A_LED_ANODE",
+      "net": "/Rear zone/R_DEG_A_LED_ANODE",
+      "pads": [
+        "D612.2",
+        "R612.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_DEG_B_LED_ANODE",
+      "net": "/Rear zone/R_DEG_B_LED_ANODE",
+      "pads": [
+        "D613.2",
+        "R613.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_ERROR_LED_ANODE",
+      "net": "/Rear zone/R_ERROR_LED_ANODE",
+      "pads": [
+        "D611.2",
+        "R611.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_LEFT_ENABLE_PWM",
+      "net": "/Rear zone/R_LEFT_ENABLE_PWM",
+      "pads": [
+        "J603.10",
+        "R630.1",
+        "U60.42",
+        "U80.6"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_LEFT_ENC_A",
+      "net": "/Rear zone/R_LEFT_ENC_A",
+      "pads": [
+        "J605.3",
+        "U60.28",
+        "U81.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_LEFT_ENC_B",
+      "net": "/Rear zone/R_LEFT_ENC_B",
+      "pads": [
+        "J605.4",
+        "U60.55",
+        "U81.4"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_LEFT_IN1",
+      "net": "/Rear zone/R_LEFT_IN1",
+      "pads": [
+        "R632.1",
+        "U60.34",
+        "U80.5"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_PWM_SET_MARKER",
+      "net": "/Rear zone/R_PWM_SET_MARKER",
+      "pads": [
+        "J603.9",
+        "U60.62"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_LEFT_LED_BASE",
+      "net": "/Rear zone/R_REAR_LEFT_LED_BASE",
+      "pads": [
+        "Q650.1",
+        "R650.2",
+        "R660.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_LEFT_LED_PLUS",
+      "net": "/Rear zone/R_REAR_LEFT_LED_PLUS",
+      "pads": [
+        "J650.1",
+        "R670.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_LEFT_LED_SINK",
+      "net": "/Rear zone/R_REAR_LEFT_LED_SINK",
+      "pads": [
+        "J650.2",
+        "Q650.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_RIGHT_LED_BASE",
+      "net": "/Rear zone/R_REAR_RIGHT_LED_BASE",
+      "pads": [
+        "Q651.1",
+        "R651.2",
+        "R661.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_RIGHT_LED_PLUS",
+      "net": "/Rear zone/R_REAR_RIGHT_LED_PLUS",
+      "pads": [
+        "J651.1",
+        "R671.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_RIGHT_LED_SINK",
+      "net": "/Rear zone/R_REAR_RIGHT_LED_SINK",
+      "pads": [
+        "J651.2",
+        "Q651.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RIGHT_ENABLE_PWM",
+      "net": "/Rear zone/R_RIGHT_ENABLE_PWM",
+      "pads": [
+        "J604.8",
+        "R631.1",
+        "U60.59",
+        "U80.11"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RIGHT_ENC_B",
+      "net": "/Rear zone/R_RIGHT_ENC_B",
+      "pads": [
+        "J605.6",
+        "U60.33",
+        "U81.8"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RIGHT_IN4",
+      "net": "/Rear zone/R_RIGHT_IN4",
+      "pads": [
+        "R635.1",
+        "U60.51",
+        "U80.12"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_SELFTEST_BUTTON",
+      "net": "/Rear zone/R_SELFTEST_BUTTON",
+      "pads": [
+        "C610.1",
+        "J604.3",
+        "R602.2",
+        "SW61.1",
+        "U60.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_STATUS_LED_ANODE",
+      "net": "/Rear zone/R_STATUS_LED_ANODE",
+      "pads": [
+        "D610.2",
+        "R610.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_SWCLK",
+      "net": "/Rear zone/R_SWCLK",
+      "pads": [
+        "J601.2",
+        "U60.49"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_SWDIO",
+      "net": "/Rear zone/R_SWDIO",
+      "pads": [
+        "J601.4",
+        "U60.46"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_TX_B_MARKER",
+      "net": "/Rear zone/R_TX_B_MARKER",
+      "pads": [
+        "J603.6",
+        "U60.15"
+      ],
+      "physically_connected": true
     }
   ],
   "clock_routes": [
@@ -1770,11 +2585,46 @@
   "remaining": [
     "Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.",
     "Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.",
-    "Motor/servo, sensing, debug/probe/indicator signals still need routing.",
+    "High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.",
     "Local CAN/MCU supply groups still need their board-wide 3V3 feed.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
-  "source_sha256": "32748581b620f30d4d4874fe0d05d19baebf7c521c2e99c29f16ad645e83e244"
+  "unfinished_signal_nets": [
+    "/Front zone/F_DEG_A_LED",
+    "/Front zone/F_DEG_B_LED",
+    "/Front zone/F_FRONT_LEFT_LED",
+    "/Front zone/F_FRONT_RIGHT_LED",
+    "/Front zone/F_RX_A_MARKER",
+    "/Front zone/F_RX_B_MARKER",
+    "/Front zone/F_STATUS_LED",
+    "/Front zone/F_STEER_TASK_MARKER",
+    "/Front zone/F_TASK_PROBE",
+    "/Front zone/F_TX_A_MARKER",
+    "/Front zone/F_TX_B_MARKER",
+    "/Front zone/F_UART_CONSOLE_RX",
+    "/Front zone/F_UART_CONSOLE_TX",
+    "/Rear zone/R_DEG_A_LED",
+    "/Rear zone/R_DEG_B_LED",
+    "/Rear zone/R_DIR_A_MARKER",
+    "/Rear zone/R_ERROR_LED",
+    "/Rear zone/R_LEFT_IN2",
+    "/Rear zone/R_OVERLOAD_MARKER",
+    "/Rear zone/R_PID_MARKER",
+    "/Rear zone/R_REAR_LEFT_LED",
+    "/Rear zone/R_REAR_RIGHT_LED",
+    "/Rear zone/R_RELAY_TX_MARKER",
+    "/Rear zone/R_RIGHT_ENC_A",
+    "/Rear zone/R_RIGHT_IN3",
+    "/Rear zone/R_RX_A_MARKER",
+    "/Rear zone/R_RX_B_MARKER",
+    "/Rear zone/R_STATUS_LED",
+    "/Rear zone/R_STEER_TASK_MARKER",
+    "/Rear zone/R_TASK_PROBE",
+    "/Rear zone/R_TX_A_MARKER",
+    "/Rear zone/R_UART_CONSOLE_RX",
+    "/Rear zone/R_UART_CONSOLE_TX"
+  ],
+  "source_sha256": "3f6d122a30c5fca80105d33a11ac7f470fcfb54ab5c50970b0ef782fb7e3f44c"
 }

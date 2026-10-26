@@ -222,3 +222,24 @@ October 25 host-interface routing
 - Board-wide supply, sensing, actuator, debug/probe/indicator routes and
   reference-plane/return-path review remain open. Battery/L298/heatsink
   decisions affect only their areas; remaining digital work can continue.
+
+
+October 25 sensing/control/debug/indicator routing
+- Connected 76 additional signal nets; 33 signal nets still require MCU fanout
+  work. These remaining signals are CAD tasks, not measurement dependencies.
+- All 212 targeted physical-connectivity checks pass. A temporary LEFT_ADC
+  copper-removal test fails the intended signal check with unchanged pad nets.
+- Corrected the duplicate switch-pad check to compare physical pad identities;
+  it found SW70's separated ground contacts, which are now connected.
+- Added local ground bridges, removed unfinished dead-end escapes, and used
+  solid ground connections on J501.3, J601.3/6, J704.2 and J70.20 where thermal
+  spokes were starved. Those pins need more soldering heat; global rules remain.
+- Preserved all 5,481 earlier track/via objects and all footprint positions,
+  values and pad nets. No schematic, BOM or mechanical geometry changed.
+- Saved totals: 9,961 segments, 631 vias and four filled ground zones;
+  full missing connections fell from 305 to 171. Ground count is 55.
+- Fresh ERC, ordinary DRC and schematic parity: zero findings. Placement and
+  regulator checks pass. Copper plots and source-hash records refreshed.
+- Board-wide power, remaining MCU fanout, Kelvin/return-path review and the
+  existing battery/L298/heatsink decisions remain open. No hardware tests or
+  fabrication release are claimed.

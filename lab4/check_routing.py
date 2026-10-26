@@ -1,4 +1,4 @@
-"""Verify routed regulator, MCU, CAN and host-interface copper with KiCad's graph.
+"""Verify routed regulator, MCU, CAN, host and signal copper with KiCad's graph.
 
 Run with KiCad's Python. This checks saved copper, not just schematic net names.
 DRC, loop/thermal review and the rest of the board are separate requirements.
@@ -25,6 +25,7 @@ pads = {(f.GetReference(), a.GetNumber()): a
         for f in board.GetFootprints() for a in f.Pads()}
 pad_keys = {a.m_Uuid.AsString(): key for key, a in pads.items()}
 reachable_cache = {}
+physical_reachable_cache = {}
 
 
 def reachable(seed):
@@ -45,6 +46,7 @@ def reachable(seed):
                        if a.GetNetCode() == seed.GetNetCode())
     for uid in seen:
         reachable_cache[uid] = result
+        physical_reachable_cache[uid] = seen
     return result
 
 
@@ -148,12 +150,98 @@ for host, ca, cb, host_pins in [
                                  ('host INT B', host_pins[6], cb)]:
         check_group(host, name, [(host, hp), (f'U{controller}', '13')])
 
+# Expected endpoints are fixed from the reviewed schematic, not inferred
+# from the copper being tested. Supply/load-current paths are separate.
+signal_groups = {
+    '/Cockpit zone/PI_CMD_TX_MARKER': 'J70.13 J703.4',
+    '/Cockpit zone/PI_DEG_A_LED': 'J70.29 J703.7 R712.1',
+    '/Cockpit zone/PI_DEG_A_LED_ANODE': 'D712.2 R712.2',
+    '/Cockpit zone/PI_DEG_B_LED': 'J70.31 J703.8 R713.1',
+    '/Cockpit zone/PI_DEG_B_LED_ANODE': 'D713.2 R713.2',
+    '/Cockpit zone/PI_ERROR_LED': 'J70.32 J704.4 R711.1',
+    '/Cockpit zone/PI_ERROR_LED_ANODE': 'D711.2 R711.2',
+    '/Cockpit zone/PI_SELFTEST_BUTTON': 'C702.1 J70.36 J704.3 R700.2 SW70.1',
+    '/Cockpit zone/PI_STATUS_LED': 'J70.33 J704.5 R710.1',
+    '/Cockpit zone/PI_STATUS_LED_ANODE': 'D710.2 R710.2',
+    '/Cockpit zone/PI_TX_A_MARKER': 'J70.15 J703.5',
+    '/Cockpit zone/PI_TX_B_MARKER': 'J70.16 J703.6',
+    '/Cockpit zone/PI_UDP_RX_MARKER': 'J70.11 J703.3',
+    '/Front zone/F_BOOT0': 'J500.2 R500.1 U50.60',
+    '/Front zone/F_DEG_A_LED_ANODE': 'D512.2 R512.2',
+    '/Front zone/F_DEG_B_LED_ANODE': 'D513.2 R513.2',
+    '/Front zone/F_DIR_A_MARKER': 'J505.4 U50.29',
+    '/Front zone/F_ERROR_LED': 'J503.13 J504.4 R511.1 U50.8',
+    '/Front zone/F_ERROR_LED_ANODE': 'D511.2 R511.2',
+    '/Front zone/F_FRONT_LEFT_LED_BASE': 'Q550.1 R550.2 R560.1',
+    '/Front zone/F_FRONT_LEFT_LED_PLUS': 'J550.1 R570.2',
+    '/Front zone/F_FRONT_LEFT_LED_SINK': 'J550.2 Q550.3',
+    '/Front zone/F_FRONT_RIGHT_LED_BASE': 'Q551.1 R551.2 R561.1',
+    '/Front zone/F_FRONT_RIGHT_LED_PLUS': 'J551.1 R571.2',
+    '/Front zone/F_FRONT_RIGHT_LED_SINK': 'J551.2 Q551.3',
+    '/Front zone/F_PID_MARKER': 'J504.7 U50.40',
+    '/Front zone/F_PWM_SET_MARKER': 'J505.3 U50.62',
+    '/Front zone/F_RELAY_TX_MARKER': 'J503.12 U50.37',
+    '/Front zone/F_RESET_N': 'C509.1 J501.5 R501.2 SW50.1 U50.7',
+    '/Front zone/F_SELFTEST_BUTTON': 'C510.1 J504.3 R502.2 SW51.1 U50.2',
+    '/Front zone/F_SERVO_PWM': 'J503.9 R530.1 R540.1 U50.42',
+    '/Front zone/F_STATUS_LED_ANODE': 'D510.2 R510.2',
+    '/Front zone/F_SWCLK': 'J501.2 U50.49',
+    '/Front zone/F_SWDIO': 'J501.4 U50.46',
+    '/Front zone/SERVO_ADC': 'C2.1 J1.2 J504.8 R2.2 U50.16',
+    '/Front zone/SERVO_PWM_OUT': 'J90.3 R540.2',
+    '/Front zone/SERVO_RAW': 'J1.1 R2.1 U1.1',
+    '/Rear zone/LEFT_ADC': 'C5.1 J2.3 J604.10 R5.2 U60.16',
+    '/Rear zone/LEFT_ENC_A_IN': 'R800.2 U81.1',
+    '/Rear zone/LEFT_ENC_A_RAW': 'J82.3 R800.1 R804.2',
+    '/Rear zone/LEFT_ENC_B_IN': 'R801.2 U81.3',
+    '/Rear zone/LEFT_ENC_B_RAW': 'J82.4 R801.1 R805.2',
+    '/Rear zone/LEFT_FILTER': 'C4.1 U2.6',
+    '/Rear zone/LEFT_RAW': 'J2.1 R3.1 U2.7',
+    '/Rear zone/LEFT_SCALED': 'J2.2 R3.2 R4.1 R5.1',
+    '/Rear zone/RIGHT_ADC': 'C8.1 J3.3 J604.11 R8.2 U60.17',
+    '/Rear zone/RIGHT_ENC_A_IN': 'R802.2 U81.5',
+    '/Rear zone/RIGHT_ENC_A_RAW': 'J83.3 R802.1 R806.2',
+    '/Rear zone/RIGHT_ENC_B_IN': 'R803.2 U81.9',
+    '/Rear zone/RIGHT_ENC_B_RAW': 'J83.4 R803.1 R807.2',
+    '/Rear zone/RIGHT_FILTER': 'C7.1 U3.6',
+    '/Rear zone/RIGHT_RAW': 'J3.1 R6.1 U3.7',
+    '/Rear zone/RIGHT_SCALED': 'J3.2 R6.2 R7.1 R8.1',
+    '/Rear zone/R_BOOT0': 'J600.2 R600.1 U60.60',
+    '/Rear zone/R_DEG_A_LED_ANODE': 'D612.2 R612.2',
+    '/Rear zone/R_DEG_B_LED_ANODE': 'D613.2 R613.2',
+    '/Rear zone/R_ERROR_LED_ANODE': 'D611.2 R611.2',
+    '/Rear zone/R_LEFT_ENABLE_PWM': 'J603.10 R630.1 U60.42 U80.6',
+    '/Rear zone/R_LEFT_ENC_A': 'J605.3 U60.28 U81.2',
+    '/Rear zone/R_LEFT_ENC_B': 'J605.4 U60.55 U81.4',
+    '/Rear zone/R_LEFT_IN1': 'R632.1 U60.34 U80.5',
+    '/Rear zone/R_PWM_SET_MARKER': 'J603.9 U60.62',
+    '/Rear zone/R_REAR_LEFT_LED_BASE': 'Q650.1 R650.2 R660.1',
+    '/Rear zone/R_REAR_LEFT_LED_PLUS': 'J650.1 R670.2',
+    '/Rear zone/R_REAR_LEFT_LED_SINK': 'J650.2 Q650.3',
+    '/Rear zone/R_REAR_RIGHT_LED_BASE': 'Q651.1 R651.2 R661.1',
+    '/Rear zone/R_REAR_RIGHT_LED_PLUS': 'J651.1 R671.2',
+    '/Rear zone/R_REAR_RIGHT_LED_SINK': 'J651.2 Q651.3',
+    '/Rear zone/R_RIGHT_ENABLE_PWM': 'J604.8 R631.1 U60.59 U80.11',
+    '/Rear zone/R_RIGHT_ENC_B': 'J605.6 U60.33 U81.8',
+    '/Rear zone/R_RIGHT_IN4': 'R635.1 U60.51 U80.12',
+    '/Rear zone/R_SELFTEST_BUTTON': 'C610.1 J604.3 R602.2 SW61.1 U60.2',
+    '/Rear zone/R_STATUS_LED_ANODE': 'D610.2 R610.2',
+    '/Rear zone/R_SWCLK': 'J601.2 U60.49',
+    '/Rear zone/R_SWDIO': 'J601.4 U60.46',
+    '/Rear zone/R_TX_B_MARKER': 'J603.6 U60.15',
+}
+for net, endpoints in signal_groups.items():
+    members = [tuple(endpoint.split('.')) for endpoint in endpoints.split()]
+    assert all(pads[m].GetNetname() == net for m in members), (net, members)
+    check_group('signal', net, members)
+
 # The two physical pads of each switch pole must both reach the local circuit.
-for ref in ['SW50', 'SW51', 'SW60', 'SW61']:
+for ref in ['SW50', 'SW51', 'SW60', 'SW61', 'SW70']:
     fp = next(f for f in board.GetFootprints() if f.GetReference() == ref)
     for pin in ['1', '2']:
         physical = [a for a in fp.Pads() if a.GetNumber() == pin]
-        if any((ref, pin) not in reachable(a) for a in physical):
+        reachable(physical[0])
+        if any(a.m_Uuid.AsString() not in physical_reachable_cache[physical[0].m_Uuid.AsString()] for a in physical):
             errors.append({'reference': ref, 'group': 'physical switch pads', 'pin': pin})
 
 tracks = list(board.GetTracks())
@@ -193,11 +281,12 @@ report = {
     'remaining': [
         'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
         'Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.',
-        'Motor/servo, sensing, debug/probe/indicator signals still need routing.',
+        'High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.',
         'Local CAN/MCU supply groups still need their board-wide 3V3 feed.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.',
         'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],
+    'unfinished_signal_nets': ['/Front zone/F_DEG_A_LED', '/Front zone/F_DEG_B_LED', '/Front zone/F_FRONT_LEFT_LED', '/Front zone/F_FRONT_RIGHT_LED', '/Front zone/F_RX_A_MARKER', '/Front zone/F_RX_B_MARKER', '/Front zone/F_STATUS_LED', '/Front zone/F_STEER_TASK_MARKER', '/Front zone/F_TASK_PROBE', '/Front zone/F_TX_A_MARKER', '/Front zone/F_TX_B_MARKER', '/Front zone/F_UART_CONSOLE_RX', '/Front zone/F_UART_CONSOLE_TX', '/Rear zone/R_DEG_A_LED', '/Rear zone/R_DEG_B_LED', '/Rear zone/R_DIR_A_MARKER', '/Rear zone/R_ERROR_LED', '/Rear zone/R_LEFT_IN2', '/Rear zone/R_OVERLOAD_MARKER', '/Rear zone/R_PID_MARKER', '/Rear zone/R_REAR_LEFT_LED', '/Rear zone/R_REAR_RIGHT_LED', '/Rear zone/R_RELAY_TX_MARKER', '/Rear zone/R_RIGHT_ENC_A', '/Rear zone/R_RIGHT_IN3', '/Rear zone/R_RX_A_MARKER', '/Rear zone/R_RX_B_MARKER', '/Rear zone/R_STATUS_LED', '/Rear zone/R_STEER_TASK_MARKER', '/Rear zone/R_TASK_PROBE', '/Rear zone/R_TX_A_MARKER', '/Rear zone/R_UART_CONSOLE_RX', '/Rear zone/R_UART_CONSOLE_TX'],
     'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
 }
 args.output.write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
