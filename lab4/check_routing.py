@@ -235,6 +235,24 @@ for net, endpoints in signal_groups.items():
     assert all(pads[m].GetNetname() == net for m in members), (net, members)
     check_group('signal', net, members)
 
+# Board-wide branches are checked individually: these do not claim that all
+# loads already reach the regulator. Kelvin geometry is reviewed separately.
+power_branches = [
+    ('C1.1', 'U1.5'), ('C803.1', 'U81.14'), ('R805.1', 'R806.1'),
+    ('C503.1', 'J501.1'), ('C1.1', 'C500.1'), ('C503.1', 'J500.1'),
+    ('C244.1', 'C803.1'), ('J83.1', 'R805.1'), ('J501.1', 'R700.1'),
+    ('C1.1', 'R424.1'), ('C600.1', 'J82.1'),
+]
+for a, b in power_branches:
+    check_group('3V3 branch', f'{a} to {b}', [tuple(a.split('.')), tuple(b.split('.'))])
+check_group('servo sense', 'Kelvin IN+', [('R1', '1'), ('U1', '3')])
+check_group('servo sense', 'Kelvin IN-', [('R1', '2'), ('U1', '4')])
+check_group('servo power', 'regulator to shunt', [('L1', '2'), ('R1', '1')])
+check_group('rear UART', 'TX', [('U60', '44'), ('J602', '1')])
+check_group('rear UART', 'RX', [('U60', '45'), ('J602', '2')])
+check_group('filter ground', 'left', [('C5', '2'), ('U2', '5')])
+check_group('filter ground', 'right', [('C8', '2'), ('U3', '5')])
+
 # The two physical pads of each switch pole must both reach the local circuit.
 for ref in ['SW50', 'SW51', 'SW60', 'SW61', 'SW70']:
     fp = next(f for f in board.GetFootprints() if f.GetReference() == ref)
@@ -280,13 +298,13 @@ report = {
         for net in ['/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L']],
     'remaining': [
         'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
-        'Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.',
+        'Board-wide distribution is incomplete; the servo regulator reaches its shunt and several 3V3 branches are joined.',
         'High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.',
         'Local CAN/MCU supply groups still need their board-wide 3V3 feed.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
-        'Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.',
+        'Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.',
         'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],
-    'unfinished_signal_nets': ['/Front zone/F_DEG_A_LED', '/Front zone/F_DEG_B_LED', '/Front zone/F_FRONT_LEFT_LED', '/Front zone/F_FRONT_RIGHT_LED', '/Front zone/F_RX_A_MARKER', '/Front zone/F_RX_B_MARKER', '/Front zone/F_STATUS_LED', '/Front zone/F_STEER_TASK_MARKER', '/Front zone/F_TASK_PROBE', '/Front zone/F_TX_A_MARKER', '/Front zone/F_TX_B_MARKER', '/Front zone/F_UART_CONSOLE_RX', '/Front zone/F_UART_CONSOLE_TX', '/Rear zone/R_DEG_A_LED', '/Rear zone/R_DEG_B_LED', '/Rear zone/R_DIR_A_MARKER', '/Rear zone/R_ERROR_LED', '/Rear zone/R_LEFT_IN2', '/Rear zone/R_OVERLOAD_MARKER', '/Rear zone/R_PID_MARKER', '/Rear zone/R_REAR_LEFT_LED', '/Rear zone/R_REAR_RIGHT_LED', '/Rear zone/R_RELAY_TX_MARKER', '/Rear zone/R_RIGHT_ENC_A', '/Rear zone/R_RIGHT_IN3', '/Rear zone/R_RX_A_MARKER', '/Rear zone/R_RX_B_MARKER', '/Rear zone/R_STATUS_LED', '/Rear zone/R_STEER_TASK_MARKER', '/Rear zone/R_TASK_PROBE', '/Rear zone/R_TX_A_MARKER', '/Rear zone/R_UART_CONSOLE_RX', '/Rear zone/R_UART_CONSOLE_TX'],
+    'unfinished_signal_nets': ['/Front zone/F_DEG_A_LED', '/Front zone/F_DEG_B_LED', '/Front zone/F_FRONT_LEFT_LED', '/Front zone/F_FRONT_RIGHT_LED', '/Front zone/F_RX_A_MARKER', '/Front zone/F_RX_B_MARKER', '/Front zone/F_STATUS_LED', '/Front zone/F_STEER_TASK_MARKER', '/Front zone/F_TASK_PROBE', '/Front zone/F_TX_A_MARKER', '/Front zone/F_TX_B_MARKER', '/Front zone/F_UART_CONSOLE_RX', '/Front zone/F_UART_CONSOLE_TX', '/Rear zone/R_DEG_A_LED', '/Rear zone/R_DEG_B_LED', '/Rear zone/R_DIR_A_MARKER', '/Rear zone/R_ERROR_LED', '/Rear zone/R_LEFT_IN2', '/Rear zone/R_OVERLOAD_MARKER', '/Rear zone/R_PID_MARKER', '/Rear zone/R_REAR_LEFT_LED', '/Rear zone/R_REAR_RIGHT_LED', '/Rear zone/R_RELAY_TX_MARKER', '/Rear zone/R_RIGHT_ENC_A', '/Rear zone/R_RIGHT_IN3', '/Rear zone/R_RX_A_MARKER', '/Rear zone/R_RX_B_MARKER', '/Rear zone/R_STATUS_LED', '/Rear zone/R_STEER_TASK_MARKER', '/Rear zone/R_TASK_PROBE', '/Rear zone/R_TX_A_MARKER'],
     'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
 }
 args.output.write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')

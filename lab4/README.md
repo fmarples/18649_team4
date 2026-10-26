@@ -7,7 +7,9 @@ its 40-pin header.
 
 **Status, 25 October 2026:** schematic and partially routed PCB for design review.
 The regulator/MCU/CAN support, CAN backbones and host interfaces are routed.
-We connected 76 additional sensing/control/debug/indicator nets; 171 connections remain.
+We connected 76 sensing/control/debug/indicator nets, then the rear UART, initial
+3.3 V branches and servo-shunt inputs. 128 connections remain, including 31 MCU
+signal nets; power distribution and return-path review are unfinished.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The five schematic pages contain 284 components and 297 nets. The proposed
 120 x 234 mm PCB contains 284 assigned electrical footprints and eight
@@ -70,7 +72,7 @@ for a TA submission so the reviewed version can be recovered later.
 | [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
 | [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
 | [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |
-| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; 171 unconnected items remain. |
+| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; 128 unconnected items remain. |
 | [Lab4-Circuits.pdf](Lab4-Circuits.pdf) | Five-page schematic preview. |
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |
@@ -186,8 +188,8 @@ ERC reports zero errors and zero warnings. Netlist checks cover all 284
 references and 297 nets, including motor current paths, flyback polarity,
 servo supply after its shunt, MCU support and Lab 3 pin reservations.
 DRC reports zero ordinary violations and zero missing footprints. Its
-unconnected list and full saved-board connectivity count both report 171.
-Partial routing contains 9,961 segments, 631 vias and four ground zones.
+unconnected list and full saved-board connectivity count both report 128.
+Partial routing contains 10,332 segments, 703 vias and five ground zones.
 A package-specific 0.15 mm pad-clearance rule applies only inside U40-U42
 for the proposed 1 oz copper process; general trace clearance stays 0.20 mm.
 See Placement-review.md for the source and remaining limits.

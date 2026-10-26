@@ -3,26 +3,27 @@
   "fabrication_release": false,
   "errors": [],
   "counts": {
-    "track_segments": 9961,
-    "through_vias": 631,
-    "copper_zones": 4,
-    "full_unconnected_count": 171
+    "track_segments": 10332,
+    "through_vias": 703,
+    "copper_zones": 5,
+    "full_unconnected_count": 128
   },
   "segment_width_counts_mm": {
-    "0.2": 9547,
+    "0.2": 9607,
+    "0.8": 261,
+    "0.5": 24,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
-    "0.8": 15,
-    "0.3": 247,
-    "0.5": 12,
+    "0.3": 291,
     "1.0": 3,
     "0.4": 3,
-    "1.2": 3
+    "1.2": 3,
+    "2.0": 9
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 607,
-    "0.80/0.40": 24
+    "0.70/0.30": 638,
+    "0.80/0.40": 65
   },
   "checks": [
     {
@@ -2484,6 +2485,186 @@
         "U60.15"
       ],
       "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C1.1 to U1.5",
+      "net": "/+3V3",
+      "pads": [
+        "C1.1",
+        "U1.5"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C803.1 to U81.14",
+      "net": "/+3V3",
+      "pads": [
+        "C803.1",
+        "U81.14"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "R805.1 to R806.1",
+      "net": "/+3V3",
+      "pads": [
+        "R805.1",
+        "R806.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C503.1 to J501.1",
+      "net": "/+3V3",
+      "pads": [
+        "C503.1",
+        "J501.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C1.1 to C500.1",
+      "net": "/+3V3",
+      "pads": [
+        "C1.1",
+        "C500.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C503.1 to J500.1",
+      "net": "/+3V3",
+      "pads": [
+        "C503.1",
+        "J500.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C244.1 to C803.1",
+      "net": "/+3V3",
+      "pads": [
+        "C244.1",
+        "C803.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "J83.1 to R805.1",
+      "net": "/+3V3",
+      "pads": [
+        "J83.1",
+        "R805.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "J501.1 to R700.1",
+      "net": "/+3V3",
+      "pads": [
+        "J501.1",
+        "R700.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C1.1 to R424.1",
+      "net": "/+3V3",
+      "pads": [
+        "C1.1",
+        "R424.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C600.1 to J82.1",
+      "net": "/+3V3",
+      "pads": [
+        "C600.1",
+        "J82.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "servo sense",
+      "group": "Kelvin IN+",
+      "net": "/+6V6_SERVO",
+      "pads": [
+        "R1.1",
+        "U1.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "servo sense",
+      "group": "Kelvin IN-",
+      "net": "/Front zone/SERVO_VPLUS",
+      "pads": [
+        "R1.2",
+        "U1.4"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "servo power",
+      "group": "regulator to shunt",
+      "net": "/+6V6_SERVO",
+      "pads": [
+        "L1.2",
+        "R1.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "rear UART",
+      "group": "TX",
+      "net": "/Rear zone/R_UART_CONSOLE_TX",
+      "pads": [
+        "U60.44",
+        "J602.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "rear UART",
+      "group": "RX",
+      "net": "/Rear zone/R_UART_CONSOLE_RX",
+      "pads": [
+        "U60.45",
+        "J602.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "filter ground",
+      "group": "left",
+      "net": "/GND",
+      "pads": [
+        "C5.2",
+        "U2.5"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "filter ground",
+      "group": "right",
+      "net": "/GND",
+      "pads": [
+        "C8.2",
+        "U3.5"
+      ],
+      "physically_connected": true
     }
   ],
   "clock_routes": [
@@ -2584,11 +2765,11 @@
   ],
   "remaining": [
     "Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.",
-    "Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.",
+    "Board-wide distribution is incomplete; the servo regulator reaches its shunt and several 3V3 branches are joined.",
     "High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.",
     "Local CAN/MCU supply groups still need their board-wide 3V3 feed.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
-    "Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.",
+    "Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
   "unfinished_signal_nets": [
@@ -2622,9 +2803,7 @@
     "/Rear zone/R_STATUS_LED",
     "/Rear zone/R_STEER_TASK_MARKER",
     "/Rear zone/R_TASK_PROBE",
-    "/Rear zone/R_TX_A_MARKER",
-    "/Rear zone/R_UART_CONSOLE_RX",
-    "/Rear zone/R_UART_CONSOLE_TX"
+    "/Rear zone/R_TX_A_MARKER"
   ],
-  "source_sha256": "3f6d122a30c5fca80105d33a11ac7f470fcfb54ab5c50970b0ef782fb7e3f44c"
+  "source_sha256": "b7de86f76ec4a797a76b7f355abd3a2f71b1ded6242966fdda5b500d093acd57"
 }

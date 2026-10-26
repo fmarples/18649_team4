@@ -243,3 +243,25 @@ October 25 sensing/control/debug/indicator routing
 - Board-wide power, remaining MCU fanout, Kelvin/return-path review and the
   existing battery/L298/heatsink decisions remain open. No hardware tests or
   fabrication release are claimed.
+
+
+October 25 rear UART, initial supply branches and ground reference
+- Added rear UART TX/RX, eleven 3.3 V branch joins, both servo-shunt sense
+  inputs and L1.2-to-R1.1 power feed. The shunt-to-servo load path and the
+  remaining 31 MCU signal nets are open; board-wide power is incomplete.
+- Added front GND reference outside the three regulator cells, 41 stitching
+  vias and explicit C5/C8 filter-ground traces to the corresponding sensors.
+- Restored thermal relief on J501.3/J601.3. Solid GND pads now are J601.6,
+  J704.2, J70.20 and J70.14. Global rules and minimum spokes are unchanged.
+- Footprint positions/values/pad nets are unchanged. Two old 3V3 segments
+  were replaced; their unused four-segment/one-via stub was removed.
+  All other prior copper objects are preserved.
+- 230 targeted checks pass. A temporary board with the SERVO_VPLUS
+  sense copper removed fails its Kelvin IN- check despite unchanged pad nets.
+- Fresh ERC/ordinary DRC/schematic parity: zero findings. Saved totals:
+  10,332 segments, 703 vias, five zones; 128 missing connections, down from 171.
+  Placement and regulator checks pass; native copper previews refreshed.
+- Native unconnected items, rather than the zone graph alone, remain the
+  authority for disconnected islands. Power width, return paths, sensing
+  geometry and thermal qualification remain open. No hardware test or
+  fabrication release is claimed.

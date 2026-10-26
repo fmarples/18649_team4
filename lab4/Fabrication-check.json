@@ -1,16 +1,16 @@
 {
-  "checked_at_utc": "2026-10-26T01:27:17.996484+00:00",
+  "checked_at_utc": "2026-10-26T03:46:07.624416+00:00",
   "automated_status": "BLOCKED",
   "fabrication_release": false,
   "counts": {
     "schematic_components": 284,
     "electrical_footprints": 284,
-    "track_segments_and_vias": 10592,
-    "copper_zones": 4,
+    "track_segments_and_vias": 11035,
+    "copper_zones": 5,
     "erc_findings": 0,
     "drc_violations": 0,
-    "unconnected_items": 171,
-    "connectivity_unconnected_count": 171,
+    "unconnected_items": 128,
+    "connectivity_unconnected_count": 128,
     "schematic_parity_findings": 0
   },
   "unassigned_footprints": [],
@@ -27,8 +27,8 @@
   ],
   "schematic_parity_types": {},
   "blockers": [
-    "unconnected_items: 171 (inspect the fresh detailed report)",
-    "connectivity_unconnected_count: 171 (inspect the fresh detailed report)"
+    "unconnected_items: 128 (inspect the fresh detailed report)",
+    "connectivity_unconnected_count: 128 (inspect the fresh detailed report)"
   ],
   "ignored_drc_checks": [
     {
@@ -75,7 +75,7 @@
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
     "KiCad/Front.kicad_sch": "3d7ea407be613b6f300048d468a36f28fc2d900df20a72a846d9a130528c5448",
     "KiCad/Lab4.kicad_dru": "b562451d1099a56da0d310ce7bc54970528d38ddd1f83eee65d30d4be2682006",
-    "KiCad/Lab4.kicad_pcb": "3f6d122a30c5fca80105d33a11ac7f470fcfb54ab5c50970b0ef782fb7e3f44c",
+    "KiCad/Lab4.kicad_pcb": "b7de86f76ec4a797a76b7f355abd3a2f71b1ded6242966fdda5b500d093acd57",
     "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
     "KiCad/Lab4.kicad_sch": "e9315b3b8b8d16fa63ffbfbd15729678265f9bfb871c27f55df3b86189eb969d",
     "KiCad/Lab4_Logic.kicad_sym": "3486a6869c2c4513da075bbf78c8e8757130b33fb393ca133968d2a9d1c4961f",
@@ -95,5 +95,9 @@
     "Excluded findings are requested; project-level ignored DRC checks are listed for manual review.",
     "No physical fit, current rating, transient response, thermal behavior or TA approval is inferred.",
     "No CAD changes, manufacturing files, purchase or submission are made by this check."
-  ]
+  ],
+  "schematic_check_provenance": {
+    "checked_at_utc": "2026-10-26T03:37:28.681698+00:00",
+    "reuse_reason": "Schematic/netlist checks from the same routing review; every non-PCB CAD source hash was verified unchanged. PCB DRC and parity rerun on the current board."
+  }
 }

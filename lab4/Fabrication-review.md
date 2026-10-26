@@ -16,11 +16,11 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-Partial power/MCU/CAN, host and signal routing now contains 9,961 track
-segments, 631 vias and four ground zones. All 212 targeted connection
+Partial power/MCU/CAN, host and signal routing now contains 10,332 track
+segments, 703 vias and five ground zones. All 230 targeted connection
 checks pass. Fresh ERC, ordinary DRC and schematic parity report no findings
 under the configured rules. Both the full connectivity count and DRC listing
-report 171 missing connections. See [Routing-review.md](Routing-review.md).
+report 128 missing connections. See [Routing-review.md](Routing-review.md).
 These checks do not establish component ratings or completed board routing.
 
 `Fabrication-check.json` records the fresh fabrication audit, its source hashes,
