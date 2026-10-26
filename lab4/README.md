@@ -9,8 +9,10 @@ its 40-pin header.
 The regulator/MCU/CAN support, CAN backbones and host interfaces are routed.
 We connected 76 sensing/control/debug/indicator nets, then the rear UART, initial
 3.3 V branches, servo-shunt inputs and 24 more MCU signals. The 5 V load groups
-and motor/servo outputs are connected. 31 connections remain, including seven
-MCU signal nets; input-power routing and final supply/return sizing are unfinished.
+and motor/servo outputs are connected. We also connected the rear-left lamp,
+both remaining 3.3 V pull-ups and the existing input-power circuit. Seven
+connections remain: six rear MCU signals and the unused Pi 3.3 V header net.
+Final supply/return sizing and battery/protection decisions remain unfinished.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.

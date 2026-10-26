@@ -1,44 +1,63 @@
 # Power, MCU, CAN and signal routing
 
-26 October 2026. The saved **four-layer** PCB has **15,594 track segments,
-879 through vias and six filled ground zones**. Missing connections fell from
-**59 to 31** in this revision. **Seven MCU signal nets, two 3.3 V pull-ups and
-input-power paths are still incomplete.** All 284 electrical footprints, eight supports,
-positions, values and pad nets are unchanged. This is not a fabrication release.
+26 October 2026. The saved **four-layer** PCB has **16,865 track
+segments, 906 through vias and six filled ground zones**. Missing connections
+fell from **31 to 7** in this revision: six rear MCU signals and the unused Pi
+3.3 V header net. The existing input circuit and every 3.3 V supply pad are now
+connected. Current capacity, voltage margin and return geometry still need
+review. This is not a fabrication release.
 
-## Latest output-power and MCU routing
+## Latest input-power, pull-up and MCU routing
 
-We connected front RX-B timing and console RX, rerouting nearby 3.3 V,
-console TX and servo PWM copper. All prior checked connections still pass.
-We connected the 5 V regulator to the Pi and every other 5 V load group,
-the servo shunt output to J90, both motor outputs through the ACS712 primary
-terminals to their connectors, and all four flyback-diode pairs to the bridge
-outputs. The L298/input-power feeds are still incomplete; this is not a
-completed or powered motor circuit.
+We connected the rear-left lamp signal between U60.24, J603.12 and R650.1.
+We rotated encoder pull-ups R804/R807 by 180 degrees to expose their supply
+pads, connected them to 3.3 V and restored their encoder-signal branches.
+We moved C606 2 mm and rotated it 180 degrees to open the rear MCU fan-out;
+its VCAP1 connection stays on F.Cu without vias. We repaired the nearby
+R_LEFT_IN2 route and ground branch, then removed unused rerouting stubs.
+All other footprint positions, values, local pad geometry and pad nets are
+unchanged. Placement data and fit previews match these three changes.
 
-The Pi feed uses 1.50 mm outer-layer copper; the servo load route uses 2.00 mm.
-Motor output branches use 1.00–1.50 mm copper with short 0.80 mm joins between
-paired ACS712 primary pads. Small 5 V load joins use 0.50 mm copper. These
-dimensions establish the saved geometry, not rated current capability.
+The input circuit now connects the battery header, both physical pad pairs
+of the fuse holder, Q1 reverse-polarity circuit, protected input capacitor,
+L298 supply/flyback branches, and all three regulator inputs. Main input
+tracks use 2.0 mm outer copper, with a 1.2 mm Q1 source escape and a 1.5 mm
+regulator feed. Flyback supply branches use 1.0–1.5 mm copper. These are saved
+dimensions, not qualified current ratings. Final battery/protection decisions
+can still change this circuit.
 
-We corrected three motor-track approaches to meet the unchanged 0.30 mm hole
-clearance rule, removed unused rerouting stubs, and added ten ground stitching
-vias. U80.1 retains thermal relief with a 0-degree spoke angle and explicit
-0.20 mm spoke width/gap. No pad was newly converted to solid connection and
-no global rule was relaxed. Native DRC reports no starved thermal, dangling
-copper or disconnected GND items. The 14,532 retained old copper objects keep
-their geometry; 18 old objects on the rerouted nets were replaced or removed.
+We replaced five vias inside SMD solder pads (R1.2, U2.3, U3.4, Q1.3 and
+C430.1) with two 0.70/0.30 mm vias per site outside the pads. This reduces
+solder-wicking exposure and adds parallel paths; it does not establish equal
+current sharing or thermal capacity. Other power-pad transitions still need
+review, including D807.1, D804.1 and D802.2.
 
-All **285** targeted checks pass; ordinary DRC and schematic parity have zero
-findings. The connectivity checker now uses KiCad's `EXCLUDE_ZONES` flag for
-explicit ground bridges. The corrected feedback review finds pour-dependent
-returns, not the separate trace paths previously reported. See
-[Return-path-review.md](Return-path-review.md).
+All **292** targeted connection checks pass. The new checks include every
+physical input/supply pad, including repeated fuse-holder pin numbers, and
+exclude ground pours during traversal. Removing BAT_FUSED copper on a test
+copy correctly fails the input check. Fresh native DRC has no ordinary
+violations, dangling copper, starved thermals or disconnected GND items;
+schematic parity is clear. No thermal override or global rule changed.
 
-[Supply-path-review.md](Supply-path-review.md) screens actual 3.3 V/5 V copper
-resistance. Shared-trunk loads, voltage margin, via current sharing and thermal
-capability remain open engineering work. The seven rear MCU signals and
-remaining supply routes can proceed without new measurements.
+Six rear signals remain: degraded-A/B indicators, rear-right lamp and
+RX-A/RX-B/TX-A timing markers. The other missing connection joins J70's
+stacked unused Pi 3.3 V pins 1/17 in the schematic symbol. Resolve this CAD
+representation without connecting Pi 3.3 V to the board regulator. Neither
+issue needs new hardware measurements.
+
+[Supply-path-review.md](Supply-path-review.md) and
+[Return-path-review.md](Return-path-review.md) separate these completed
+connections from pending load allocation, voltage/thermal sizing, regulator
+feedback returns and CAN reference review.
+
+## Earlier output-power and MCU routing
+
+The preceding revision connected front RX-B timing, console RX, all 5 V load
+groups, servo output, motor outputs through their current sensors and
+connectors, and flyback pairs. It added ten ground stitches and changed
+U80.1's thermal-spoke angle to 0 degrees with 0.20 mm width/gap. These
+connections remain checked; the input-feed work described above completes
+their previously missing supply connections.
 
 ## Earlier MCU, supply and ground routing
 
@@ -48,10 +67,10 @@ signals were rerouted and rechecked. Footprint positions and pad nets stayed
 unchanged; signal tracks remain 0.20 mm with 0.70/0.30 mm through vias.
 
 Nine new 3.3 V joins connect the main MCU/CAN groups to the logic regulator.
-R804.1 and R807.1 are still disconnected, leaving three separate 3.3 V pad
-groups. Seven local 5 V joins connect bypass, sensor, header and pull-up
-branches; they do not complete the regulator-to-load distribution. Supply
-width, voltage drop and load-current capability still need review.
+At that checkpoint R804.1 and R807.1 were disconnected; both are now connected.
+Seven local 5 V joins connect bypass, sensor, header and pull-up branches;
+the later output-power revision completed regulator-to-load connectivity.
+Supply width, voltage drop and load-current capability still need review.
 
 We added twenty ground stitching vias near CAN layer transitions and changed
 J605.1's thermal-spoke angle from 90 to 0 degrees and set explicit 0.20 mm spoke

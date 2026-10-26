@@ -362,3 +362,15 @@ October 26 output-power routing and connectivity-check correction
 - Seven MCU nets, two 3V3 pull-ups, input-power routing, supply sizing, feedback/
   switching-loop, CAN and mechanical/protection reviews remain open. No hardware
   measurements, purchase, submission or fabrication release claimed.
+
+26 October 2026 — input-power, encoder pull-ups and rear-left lamp routing
+- Board SHA256: 55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e
+- 16,865 segments, 906 vias, six filled GND zones, four copper layers.
+- 292 targeted connection checks pass; fault-injected BAT_FUSED disconnect fails as expected.
+- Placement passes for 284 electrical parts/eight supports; C606 moved/rotated and R804/R807 rotated. Preview centers and angles match.
+- 16432 retained copper objects preserve geometry. Values, local pad geometry, pad nets and thermal settings unchanged.
+- Five power-via sites now use pairs outside SMD solder pads.
+- Native DRC: zero ordinary violations; no dangling copper, starved thermals or disconnected GND. Seven missing connections remain; schematic parity zero.
+- ERC/netlist reused only after verifying unchanged non-PCB CAD hashes; PCB DRC/parity rerun.
+- Return and supply screenings regenerated. Feedback returns still pour-dependent; supply voltage/current/thermal margins and six MCU signals remain unfinished.
+- No fabrication release, powered test or physical measurement is claimed.

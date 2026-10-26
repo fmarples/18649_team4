@@ -1609,12 +1609,12 @@
       "value": "4.7u VCAP1",
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "x_mm": 32.0,
-      "y_mm": 72.0,
-      "rotation_deg": 0.0,
+      "y_mm": 74.0,
+      "rotation_deg": 180.0,
       "layer": "F.Cu",
       "bbox": [
         30.254999999999995,
-        70.975,
+        72.975,
         3.49,
         2.05
       ],
@@ -2874,7 +2874,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 75.0,
       "y_mm": 61.0,
-      "rotation_deg": 90.0,
+      "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
         74.225,
@@ -2922,7 +2922,7 @@
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 90.0,
       "y_mm": 61.0,
-      "rotation_deg": 90.0,
+      "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
         89.225,

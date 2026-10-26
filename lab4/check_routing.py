@@ -296,15 +296,35 @@ for net, endpoints in {
         '/Front zone/F_DEG_B_LED': 'J503.8 R513.1 U50.27',
         '/Rear zone/R_ERROR_LED': 'J604.4 R611.1 U60.8',
         '/Rear zone/R_RIGHT_ENC_A': 'J605.5 U60.56 U81.6',
+        '/Rear zone/R_REAR_LEFT_LED': 'J603.12 R650.1 U60.24',
 }.items():
     members = [tuple(s.split('.')) for s in endpoints.split()]
     assert all(pads[m].GetNetname() == net for m in members)
     check_group('signal', net, members)
 
+# Check every physical pad, including the fuse holder's repeated pin numbers.
+# Exclude pours during traversal so a stale zone cannot hide a missing trace.
+for net in ['/Power/BAT_PLUS', '/Power/BAT_FUSED', '/Power/RP_GATE',
+            '/VBAT_PROTECTED', '/+3V3']:
+    physical_pads = [a for f in board.GetFootprints() for a in f.Pads()
+                     if a.GetNetname() == net]
+    seed = physical_pads[0]
+    seen = {a.m_Uuid.AsString() for a in
+            connectivity.GetConnectedItems(seed, p.EXCLUDE_ZONES)}
+    seen.add(seed.m_Uuid.AsString())
+    missing = [a for a in physical_pads if a.m_Uuid.AsString() not in seen]
+    if missing:
+        errors.append({'reference': 'supply distribution', 'group': net,
+                       'unreachable_pad_uuids': [a.m_Uuid.AsString() for a in missing]})
+    checks.append({'reference': 'supply distribution', 'group': net, 'net': net,
+                   'pads': [a.GetParentFootprint().GetReference()+'.'+a.GetNumber()
+                            for a in physical_pads],
+                   'physically_connected': not missing, 'zones_excluded': True})
+
 # These new ground bridges must have explicit copper continuity. In particular,
 # a common zone object containing two separate islands must not satisfy them.
 for endpoints in ['Q551.2 R561.2', 'U1.2 C1.2', 'U1.2 C2.2',
-                  'D711.1 D712.1', 'D801.2 D803.2']:
+                  'D711.1 D712.1', 'D801.2 D803.2', 'C606.2 R633.2']:
     members = [tuple(s.split('.')) for s in endpoints.split()]
     seed, target = [pads[m] for m in members]
     # Exclude zones during traversal; filtering the returned objects afterward
@@ -417,9 +437,9 @@ report = {
         for net in ['/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L']],
     'remaining': [
         'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
-        'Battery/input-power distribution and two 3V3 pull-ups remain incomplete.',
+        'The existing input-power circuit and all 3V3 pads are connected; power sizing and final battery/protection choices remain open.',
         '5V distribution and motor/servo outputs are connected; review voltage drop, via sharing and thermal current capability separately.',
-        'The main CAN/MCU 3V3 groups now reach the regulator; remaining pull-ups and trunk voltage drop/current capability still need review.',
+        'All CAN/MCU and encoder pull-up 3V3 groups now reach the regulator; trunk voltage drop/current capability still need review.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.',
         'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],

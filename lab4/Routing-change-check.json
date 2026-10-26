@@ -1,41 +1,66 @@
 {
-  "footprint_positions_values_padnets_zone_connection_modes_unchanged": true,
-  "thermal_geometry_changes": {
-    "('U80', '1')": {
-      "before": [
-        90.0,
-        0,
-        0
-      ],
-      "after": [
-        0.0,
-        200000,
-        200000
-      ]
+  "baseline_commit": "580b0346dd5cdf53b05266be9226339c047af028",
+  "source_sha256": "55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e",
+  "footprint_values_local_pad_geometry_padnets_zone_modes_unchanged": true,
+  "placement_changes_native_nm": {
+    "C606": {
+      "position": {
+        "before": [
+          72000000,
+          112000000
+        ],
+        "after": [
+          72000000,
+          114000000
+        ]
+      },
+      "angle": {
+        "before": 0.0,
+        "after": 180.0
+      }
+    },
+    "R804": {
+      "angle": {
+        "before": 90.0,
+        "after": -90.0
+      }
+    },
+    "R807": {
+      "angle": {
+        "before": 90.0,
+        "after": -90.0
+      }
     }
   },
+  "thermal_geometry_changes": {},
   "copper_layers": 4,
-  "retained_copper_objects": 14532,
+  "retained_copper_objects": 16432,
   "retained_copper_geometry_changes": 0,
   "removed_copper_by_net": {
-    "/+3V3": 13,
-    "/Front zone/F_UART_CONSOLE_TX": 1,
-    "/Front zone/F_SERVO_PWM": 4
+    "/GND": 21,
+    "/Rear zone/R_LEFT_IN2": 7,
+    "/Rear zone/RIGHT_ENC_B_RAW": 3,
+    "/Rear zone/R_VCAP1": 4,
+    "/Rear zone/LEFT_ENC_A_RAW": 3,
+    "/Rear zone/RIGHT_MOTOR": 1,
+    "/Front zone/SERVO_VPLUS": 1,
+    "/Rear zone/LEFT_MOTOR": 1
   },
   "added_copper_by_net": {
-    "/+3V3": 87,
-    "/Front zone/F_RX_B_MARKER": 278,
-    "/Front zone/SERVO_VPLUS": 95,
-    "/Front zone/F_UART_CONSOLE_TX": 73,
-    "/Front zone/F_SERVO_PWM": 27,
-    "/+5V": 713,
-    "/Rear zone/LEFT_MOTOR": 110,
-    "/Rear zone/RIGHT_MOTOR": 96,
-    "/Rear zone/LEFT_BRIDGE": 22,
-    "/Rear zone/RIGHT_BRIDGE": 25,
-    "/Rear zone/LEFT_RETURN": 42,
-    "/Front zone/F_UART_CONSOLE_RX": 95,
-    "/Rear zone/RIGHT_RETURN": 268,
-    "/GND": 10
-  }
+    "/VBAT_PROTECTED": 932,
+    "/Rear zone/R_LEFT_IN2": 66,
+    "/Rear zone/R_REAR_LEFT_LED": 232,
+    "/GND": 13,
+    "/Rear zone/RIGHT_ENC_B_RAW": 3,
+    "/Rear zone/RIGHT_MOTOR": 6,
+    "/Power/BAT_FUSED": 9,
+    "/+3V3": 19,
+    "/Rear zone/LEFT_MOTOR": 6,
+    "/Power/RP_GATE": 28,
+    "/Rear zone/LEFT_ENC_A_RAW": 3,
+    "/Rear zone/R_VCAP1": 7,
+    "/Power/BAT_PLUS": 9,
+    "/Front zone/SERVO_VPLUS": 6
+  },
+  "rear_VCAP1_front_only_no_vias": true
 }

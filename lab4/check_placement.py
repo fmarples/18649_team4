@@ -89,6 +89,8 @@ for ref,fp in fps.items():
 for c in d['components']:
     pos=fps[c['reference']].GetPosition()
     if abs(p.ToMM(pos.x)-40-c['x_mm'])>.001 or abs(p.ToMM(pos.y)-40-c['y_mm'])>.001:errors.append('Stale preview '+c['reference'])
+    angle=(fps[c['reference']].GetOrientationDegrees()-c['rotation_deg']+180)%360-180
+    if abs(angle)>.001:errors.append('Stale preview rotation '+c['reference'])
 report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
     schematic_footprints_present=len(set(fps)&set(schematic)),missing_footprints=missing,
     mechanical_holes=8,board_size_mm=[d['width_mm'],d['height_mm']],

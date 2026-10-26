@@ -8,6 +8,12 @@ verified and the board is not ready for fabrication. See
 
 ## Arrangement
 
+The latest routing revision moves C606 from (32,72) to (32,74) mm and rotates
+it 180 degrees. R804 and R807 retain their centers and rotate from 90 to
+-90 degrees. These changes open their connections without changing pad
+nets, values or footprints. The placement checker now verifies preview
+rotations as well as centers. All other placements are unchanged.
+
 We placed all 284 schematic components. The five GCT switch footprints replace
 their drawing reservations; their geometry and internal contact pairs follow
 the manufacturer's A1 drawing. See [Switch-footprint-review.md](Switch-footprint-review.md).
@@ -23,8 +29,8 @@ The three regulator groups sit along the front edge, away from the Pi reservatio
 We rotated them so their switching pins face the inductors and brought the
 local bypass and feedback parts closer. See [Power-stage-review.md](Power-stage-review.md).
 Their initial local routing is now connected and passes ordinary DRC. Switching
-loop/return-path review, thermal qualification and board-wide power distribution
-remain. See [Routing-review.md](Routing-review.md).
+loop/return-path review and thermal qualification remain; the existing supply
+nets are connected. See [Routing-review.md](Routing-review.md).
 
 We changed to a direct connection with the Raspberry Pi 4 **below** our PCB,
 component side facing up. J70 is a downward-facing female socket on B.Cu.

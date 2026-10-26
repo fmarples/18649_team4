@@ -45,12 +45,15 @@ not establish current capacity. Motor and servo routes need the same current,
 voltage-drop and return-path review; this script currently screens only 3.3 V
 and 5 V.
 
-The placement screen also finds via centers inside power SMD pads R1.2,
-U2.3, U3.4 and D807.1. Move these transitions off the solder lands and provide
-adequate parallel copper/vias during the power-routing refinement, unless an
-explicitly reviewed fabrication/assembly treatment supports them. Ordinary
-DRC does not check solder wicking or establish their current rating. Existing
-small-signal/supply via-in-pad sites also need an assembly review.
+We moved the five transitions at R1.2, U2.3, U3.4, Q1.3 and C430.1 outside
+their SMD solder lands and used two 0.70/0.30 mm vias at each site. The supply
+paths remain connected. Parallel vias still require current-sharing and
+temperature review; a DRC pass does not establish their rating.
+
+Power-pad overlaps remain at D807.1, D804.1 and D802.2. The sense-branch via
+at U1.4 and other small-signal/supply sites also need assembly review. Move
+these transitions or explicitly qualify the fabrication treatment before
+release. Ordinary DRC does not check solder wicking.
 
 ## Checker validation
 

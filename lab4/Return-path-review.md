@@ -21,8 +21,8 @@ especially the separate feedback return, compact input loop and wide output
 capacitor return. Effective capacitance under DC bias remains a separate check.
 
 Both INA180 inputs have explicit paths to the corresponding R1 shunt pads.
-Keep these as separate sense branches at the shunt terminals when completing
-the servo load route; do not move a sense connection onto a distant power
+Keep these as separate sense branches at the shunt terminals while refining
+the connected servo load route; do not move a sense connection onto a distant power
 trace. The [INA180 layout guidance](https://www.ti.com/lit/ds/symlink/ina180.pdf)
 calls for Kelvin connections and closely matched input routing. Final loop
 area and noise coupling still need review. U2/U3 are ACS712 magnetic current
@@ -47,10 +47,10 @@ and controlled impedance are not yet qualified.
 ## Initial supply resistance screening
 
 The new 3.3 V joins connect the main MCU/CAN supply groups to the regulator;
-two encoder pull-ups remain disconnected. The 5 V regulator now reaches all
+both encoder pull-ups are now connected. The 5 V regulator now reaches all
 5 V load groups. The servo shunt reaches J90, and the motor outputs reach
-their sensors, connectors and flyback diodes. Input-power distribution and
-final current/return sizing remain unfinished.
+their sensors, connectors and flyback diodes. The existing input-power circuit is now connected. Final current/return
+sizing and battery/protection decisions remain unfinished.
 
 [Supply-path-review.md](Supply-path-review.md) now uses actual saved conductor
 geometry to screen the 3.3 V and 5 V paths. It flags the long supply paths for
