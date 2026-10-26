@@ -1,10 +1,11 @@
-# Local power, MCU and CAN routing
+# Power, MCU, CAN and host-interface routing
 
 25 October 2026. We routed the local circuits around both STM32s and all six
-CAN interfaces and joined the three zones through both CAN backbones,
-preserving the three previously routed regulator groups.
-The saved PCB has **2,386 track segments, 283 through vias and four filled
-ground zones**. The full missing-connection count fell from **648 to 337**.
+CAN interfaces, joined the three zones through both CAN backbones, and routed
+all three hosts' SPI, chip-select and interrupt connections. The three
+previously routed regulator groups are preserved.
+The saved PCB has **5,061 track segments, 420 through vias and four filled
+ground zones**. The full missing-connection count fell from **648 to 305**.
 This is a partial routing revision, not a fabrication release.
 
 ## Connections completed in this revision
@@ -41,6 +42,28 @@ these local routes. The new local signal tracks are 0.20 mm wide; vias are
 0.70 mm diameter with 0.30 mm drills. The general 0.20 mm clearance and existing
 fabrication rules are unchanged.
 
+## Host interfaces
+
+Both STM32s and the Pi now connect to their two MCP2515 controllers. We kept
+the Lab 3 pin assignments: shared SCK/MISO/MOSI and independent CS/INT per
+controller. The six CS pull-ups remain on their corresponding chip-select
+nets. Short pin escapes lead to through vias; longer connections use both
+copper layers. The Pi controller escapes extend into open space before
+joining the header and second controller.
+
+This pass changes only copper. Component values, footprints, positions,
+schematic pin nets and all previously checked track/via objects are preserved.
+Host signal width is 0.20 mm and new vias use 0.70 mm diameter / 0.30 mm drills.
+We added 0.20–0.30 mm local ground bridges where bottom-layer signals divided
+the reference copper, then rerouted affected host signals around those bridges.
+J604.1 uses a 45-degree thermal-spoke angle, and both J604 ground pads have
+explicit copper connections to the ground network. The minimum-spoke rule
+is unchanged. Native DRC checks the resulting ground islands; the grouped-zone
+connectivity graph alone does not establish their continuity.
+These routes still need signal-return/ground-plane review with the rest of
+the board; no SPI waveform, maximum clock speed or hardware operation has
+been validated.
+
 ## Previously completed regulator connections
 
 Each TPS564252 connects to its local input capacitors and enable divider,
@@ -57,15 +80,19 @@ effective capacitance and thermal/current qualification remain open.
 ## Verification
 
 - `check_routing.py` walks KiCad's physical copper-connectivity graph. All
-  **115 connection groups** pass: 21 regulator, 76 local CAN, 14 MCU and
-  four complete backbone nets. Each backbone net reaches all eight required
+  **136 targeted connection checks** pass: 21 regulator, 76 local CAN, 14 MCU,
+  four backbone nets and 21 host-interface nets. Each backbone net reaches all eight required
   pads across the three zones, with termination on the bus side of isolation.
   It also checks the duplicated physical switch contacts and front-only clock
   copper. Removing U10's OSC1 copper in a temporary copy correctly causes a
-  failure even though the pads retain their schematic net names.
+  failure even though the pads retain their schematic net names. A second
+  temporary fault test removes front-host SCK copper and correctly fails
+  the new U50 host-SCK check.
 - Fresh ERC, ordinary DRC and schematic parity have zero findings. The remaining
-  337 unconnected items are reported as fabrication blockers in
+  305 unconnected items are reported as fabrication blockers in
   [Fabrication-check.json](Fabrication-check.json), not suppressed.
+  No net's missing-connection count increased from the previous revision;
+  ground's count decreased from 58 to 56. Whole-board routing is unfinished.
 - All 284 electrical footprints and their pad nets match the schematic.
   Placement coordinates and previews match the saved board; all original
   regulator track/via objects and all non-CAN footprint positions are preserved.
@@ -74,15 +101,14 @@ effective capacitance and thermal/current qualification remain open.
   [Routing-front.svg](Routing-front.svg) and [Routing-back.svg](Routing-back.svg).
 
 KiCad 10 caps its DRC unconnected list at 499 entries; our audit also records
-the full connectivity count. Both now report 337. The earlier regulator-only
+the full connectivity count. Both now report 305. The earlier regulator-only
 revision had 648 missing connections, although its DRC list stopped at 499.
 See the [KiCad DRC engine source](https://github.com/KiCad/kicad-source-mirror/blob/10.0/pcbnew/drc/drc_engine.cpp).
 
 ## Remaining routing
 
-Host SPI/chip-select/interrupt wiring, board-wide power, sensing, actuator
-and remaining probe/indicator signals still need
-routing. Review CAN pair geometry, continuous reference copper, return paths
+Board-wide power, sensing, actuator, debug and remaining probe/indicator
+signals still need routing. Review CAN pair geometry, continuous reference copper, return paths
 and power-loop/thermal behavior before layout freeze. These digital routes
 can continue without new lab measurements. Battery/input-power, motor-fault
 protection and heatsink choices affect their specific areas.

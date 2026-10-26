@@ -199,3 +199,26 @@ October 25 CAN backbones
 - Pair impedance, reference continuity and hardware signal quality are not
   qualified. Host SPI/interrupts and remaining power/actuator/probe routes are
   still open; this is not a manufacturing release.
+
+
+October 25 host-interface routing
+- Routed retained Lab 3 SCK/MISO/MOSI, separate CS and separate INT for both
+  STM32s and the Pi. All six controller CS pull-ups remain connected.
+- All 136 targeted connection checks pass, including 21 complete host-interface
+  nets. A temporary board with front-host SCK copper removed correctly fails
+  the host-SCK check while its pad net names remain unchanged.
+- Preserved all prior 2,669 track/via objects and every footprint/pad net,
+  component value and position. No schematic or purchasing change.
+- Saved totals: 5,061 segments, 420 vias and four filled ground zones.
+  305 full missing connections remain; the board is not fabrication-ready.
+- Fresh ERC/ordinary DRC/schematic parity: zero findings. Placement and
+  existing regulator calculation checks pass. Copper previews refreshed.
+- Added 0.20–0.30 mm ground bridges around divided bottom copper and rerouted
+  affected host signals. Connected both J604 ground pads explicitly and
+  changed J604.1 thermal spokes to 45 degrees; the minimum-spoke rule is
+  unchanged. Native DRC remains required for zone islands; grouped-zone
+  reachability alone does not prove continuity. No net's missing-connection
+  count increased; ground decreased from 58 to 56.
+- Board-wide supply, sensing, actuator, debug/probe/indicator routes and
+  reference-plane/return-path review remain open. Battery/L298/heatsink
+  decisions affect only their areas; remaining digital work can continue.

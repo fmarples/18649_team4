@@ -1,7 +1,9 @@
-"""Verify routed regulator, MCU and CAN copper with KiCad's graph.
+"""Verify routed regulator, MCU, CAN and host-interface copper with KiCad's graph.
 
 Run with KiCad's Python. This checks saved copper, not just schematic net names.
 DRC, loop/thermal review and the rest of the board are separate requirements.
+Zone objects can contain multiple filled islands. The grouped-zone graph is
+not an island-continuity proof; inspect native DRC's unconnected items too.
 """
 from pathlib import Path
 from collections import Counter
@@ -129,6 +131,23 @@ for bus in ['A', 'B']:
         assert len(members) == 8, (net, members)
         check_group(f'CAN_{bus}', f'{signal} backbone', members)
 
+# Check the retained Lab 3 host mapping, including each CS pull-up. The three
+# shared SPI signals reach both controllers; CS and INT remain independent.
+for host, ca, cb, host_pins in [
+        ('U50', 10, 14, ['21', '22', '23', '58', '38', '43', '57']),
+        ('U60', 20, 24, ['21', '22', '23', '58', '38', '43', '57']),
+        ('J70', 30, 34, ['23', '21', '19', '24', '26', '22', '18'])]:
+    for name, hp, cp in zip(['host SCK', 'host MISO', 'host MOSI'],
+                            host_pins[:3], ['14', '17', '16']):
+        check_group(host, name, [(host, hp), (f'U{ca}', cp), (f'U{cb}', cp)])
+    for name, hp, controller in [('host CS A', host_pins[3], ca),
+                                 ('host CS B', host_pins[4], cb)]:
+        check_group(host, name, [(host, hp), (f'U{controller}', '18'),
+                                (f'R{controller*10+1}', '2')])
+    for name, hp, controller in [('host INT A', host_pins[5], ca),
+                                 ('host INT B', host_pins[6], cb)]:
+        check_group(host, name, [(host, hp), (f'U{controller}', '13')])
+
 # The two physical pads of each switch pole must both reach the local circuit.
 for ref in ['SW50', 'SW51', 'SW60', 'SW61']:
     fp = next(f for f in board.GetFootprints() if f.GetReference() == ref)
@@ -172,8 +191,9 @@ report = {
          'through_vias': sum(t.GetNetname() == net for t in vias)}
         for net in ['/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L']],
     'remaining': [
+        'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
         'Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.',
-        'Host SPI/interrupts, motor/servo, sensing and other signals need routing.',
+        'Motor/servo, sensing, debug/probe/indicator signals still need routing.',
         'Local CAN/MCU supply groups still need their board-wide 3V3 feed.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.',

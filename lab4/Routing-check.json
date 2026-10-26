@@ -3,24 +3,25 @@
   "fabrication_release": false,
   "errors": [],
   "counts": {
-    "track_segments": 2386,
-    "through_vias": 283,
+    "track_segments": 5061,
+    "through_vias": 420,
     "copper_zones": 4,
-    "full_unconnected_count": 337
+    "full_unconnected_count": 305
   },
   "segment_width_counts_mm": {
-    "0.2": 2219,
+    "0.2": 4647,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
     "0.8": 15,
+    "0.3": 247,
     "0.5": 12,
     "1.0": 3,
     "0.4": 3,
     "1.2": 3
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 259,
+    "0.70/0.30": 396,
     "0.80/0.40": 24
   },
   "checks": [
@@ -1443,6 +1444,231 @@
         "R242.2"
       ],
       "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host SCK",
+      "net": "/Front zone/F_SCK",
+      "pads": [
+        "U50.21",
+        "U10.14",
+        "U14.14"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host MISO",
+      "net": "/Front zone/F_MISO",
+      "pads": [
+        "U50.22",
+        "U10.17",
+        "U14.17"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host MOSI",
+      "net": "/Front zone/F_MOSI",
+      "pads": [
+        "U50.23",
+        "U10.16",
+        "U14.16"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host CS A",
+      "net": "/Front zone/F_CS_A",
+      "pads": [
+        "U50.58",
+        "U10.18",
+        "R101.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host CS B",
+      "net": "/Front zone/F_CS_B",
+      "pads": [
+        "U50.38",
+        "U14.18",
+        "R141.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host INT A",
+      "net": "/Front zone/F_INT_A",
+      "pads": [
+        "U50.43",
+        "U10.13"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U50",
+      "group": "host INT B",
+      "net": "/Front zone/F_INT_B",
+      "pads": [
+        "U50.57",
+        "U14.13"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host SCK",
+      "net": "/Rear zone/R_SCK",
+      "pads": [
+        "U60.21",
+        "U20.14",
+        "U24.14"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host MISO",
+      "net": "/Rear zone/R_MISO",
+      "pads": [
+        "U60.22",
+        "U20.17",
+        "U24.17"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host MOSI",
+      "net": "/Rear zone/R_MOSI",
+      "pads": [
+        "U60.23",
+        "U20.16",
+        "U24.16"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host CS A",
+      "net": "/Rear zone/R_CS_A",
+      "pads": [
+        "U60.58",
+        "U20.18",
+        "R201.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host CS B",
+      "net": "/Rear zone/R_CS_B",
+      "pads": [
+        "U60.38",
+        "U24.18",
+        "R241.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host INT A",
+      "net": "/Rear zone/R_INT_A",
+      "pads": [
+        "U60.43",
+        "U20.13"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U60",
+      "group": "host INT B",
+      "net": "/Rear zone/R_INT_B",
+      "pads": [
+        "U60.57",
+        "U24.13"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host SCK",
+      "net": "/Cockpit zone/PI_SCK",
+      "pads": [
+        "J70.23",
+        "U30.14",
+        "U34.14"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host MISO",
+      "net": "/Cockpit zone/PI_MISO",
+      "pads": [
+        "J70.21",
+        "U30.17",
+        "U34.17"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host MOSI",
+      "net": "/Cockpit zone/PI_MOSI",
+      "pads": [
+        "J70.19",
+        "U30.16",
+        "U34.16"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host CS A",
+      "net": "/Cockpit zone/PI_CS_A",
+      "pads": [
+        "J70.24",
+        "U30.18",
+        "R301.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host CS B",
+      "net": "/Cockpit zone/PI_CS_B",
+      "pads": [
+        "J70.26",
+        "U34.18",
+        "R341.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host INT A",
+      "net": "/Cockpit zone/PI_INT_A",
+      "pads": [
+        "J70.22",
+        "U30.13"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "J70",
+      "group": "host INT B",
+      "net": "/Cockpit zone/PI_INT_B",
+      "pads": [
+        "J70.18",
+        "U34.13"
+      ],
+      "physically_connected": true
     }
   ],
   "clock_routes": [
@@ -1542,12 +1768,13 @@
     }
   ],
   "remaining": [
+    "Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.",
     "Regulator inputs and outputs still require board-wide distribution; two PG pull-ups await 3V3.",
-    "Host SPI/interrupts, motor/servo, sensing and other signals need routing.",
+    "Motor/servo, sensing, debug/probe/indicator signals still need routing.",
     "Local CAN/MCU supply groups still need their board-wide 3V3 feed.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Review Kelvin feedback returns, effective capacitance, loop geometry and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
-  "source_sha256": "49497b62b2fcae655de40ce066d62bfac6cf462ef3b4de06e6d04162cf9e9b92"
+  "source_sha256": "32748581b620f30d4d4874fe0d05d19baebf7c521c2e99c29f16ad645e83e244"
 }
