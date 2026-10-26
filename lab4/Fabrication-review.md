@@ -16,11 +16,11 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-Partial power/MCU/CAN, host and signal routing now contains 12,516 track
-segments, 793 vias and six ground zones on four copper layers. All 253 targeted
+Partial power/MCU/CAN, host and signal routing now contains 13,721 track
+segments, 829 vias and six ground zones on four copper layers. All 275 targeted
 connection checks pass. ERC on the unchanged schematic and fresh PCB DRC/parity report no findings
 under the configured rules. Both the full connectivity count and DRC listing
-report 81 missing connections. See [Routing-review.md](Routing-review.md).
+report 59 missing connections. See [Routing-review.md](Routing-review.md).
 These checks do not establish component ratings or completed board routing.
 
 `Fabrication-check.json` records the fresh fabrication audit, its source hashes,
@@ -33,7 +33,10 @@ Staff [explicitly allow four-layer PCBs](https://18449-f26.slack.com/archives/C0
 The saved PCB now has an internal ground plane on In1.Cu and signal routes on
 In2.Cu, with the mounting/antenna keep-outs extended to both inner layers. The
 nominal board thickness remains 1.6 mm. No controlled impedance is claimed.
-This layout change needs no new hardware measurements. Final physical stack,
+The [JLC04161H-7628 reference stack](Layer-stack.md) is documented. The initial
+[return-path review](Return-path-review.md) separates verified connections from
+the remaining noise/current geometry checks. This work needs no new hardware
+measurements. Final physical stack,
 copper weights, clearances and Gerber layer set must agree before fabrication.
 
 Staff [do not expect board-house assembly; plan to use a stencil](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793033592291259).

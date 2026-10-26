@@ -308,3 +308,28 @@ October 26 four-layer routing
 - Four native layer plots generated. Physical stack/copper weights, remaining
   routing, return paths, current capability and mechanical decisions are open.
   The board remains blocked for fabrication; no new hardware measurements.
+
+
+October 26 additional MCU, supply and return-path review
+- Connected six more MCU nets: front console TX, task probe, front-left LED,
+  degraded-B LED; rear right-encoder A and error LED. Nine MCU signal nets remain.
+- Added nine 3.3 V joins and seven local 5 V joins. Main MCU/CAN 3.3 V groups
+  reach the regulator; R804.1/R807.1 and complete power distribution remain open.
+- Added twenty GND vias near CAN layer transitions. J605.1 now uses a 0-degree
+  thermal-spoke angle and explicit 0.20 mm spoke/gap overrides. No new solid
+  pad, relaxed global rule or footprint/pad-net change was introduced.
+- Compared against 59efc4a: 951 old copper objects replaced/removed on the
+  rerouted nets; all 12,358 retained objects have unchanged geometry.
+- All 275 targeted connection checks pass. Fresh native ordinary DRC and
+  schematic parity: zero findings; no GND unconnected items. Schematic ERC
+  reused only after all non-PCB source hashes matched the checked sources.
+- Final saved counts: 13,721 segments, 829 vias, six zones, four copper layers.
+  Native DRC and full connectivity agree on 59 missing connections (was 81).
+  Placement and regulator calculation/orientation checks pass. Four copper
+  previews regenerated and inspected; reports reference the saved board hash.
+- Documented JLC04161H-7628 as the physical reference stack. Return-path checks
+  record regulator-ground and shunt-input connectivity plus CAN-via ground
+  distances. These do not prove quiet Kelvin routing, impedance or current rating.
+- Archived the last checked two-layer board, 59be0b1, at lab4-two-layer-archive.
+  The four-layer lab4 branch remains active. Remaining routing, power/return,
+  thermal and mechanical decisions still block fabrication; no hardware test.

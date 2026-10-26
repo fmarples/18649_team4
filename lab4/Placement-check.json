@@ -8,7 +8,7 @@
     120,
     234
   ],
-  "track_segments_and_vias": 13309,
+  "track_segments_and_vias": 14550,
   "copper_zones": 6,
   "checks": [
     "Placed netlist pads match schematic",

@@ -3,21 +3,21 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 6207,
-    "B.Cu": 1800,
-    "In2.Cu": 4509
+    "F.Cu": 6466,
+    "B.Cu": 2894,
+    "In2.Cu": 4361
   },
   "errors": [],
   "counts": {
-    "track_segments": 12516,
-    "through_vias": 793,
+    "track_segments": 13721,
+    "through_vias": 829,
     "copper_zones": 6,
-    "full_unconnected_count": 81
+    "full_unconnected_count": 59
   },
   "segment_width_counts_mm": {
-    "0.2": 11409,
-    "0.8": 282,
-    "0.5": 35,
+    "0.2": 12109,
+    "0.8": 634,
+    "0.5": 188,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
@@ -28,7 +28,7 @@
     "2.0": 9
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 728,
+    "0.70/0.30": 764,
     "0.80/0.40": 65
   },
   "checks": [
@@ -2857,6 +2857,230 @@
       "physically_connected": true
     },
     {
+      "reference": "3V3 branch",
+      "group": "C104.1 R140.1",
+      "net": "/+3V3",
+      "pads": [
+        "C104.1",
+        "R140.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "J83.1 R602.1",
+      "net": "/+3V3",
+      "pads": [
+        "J83.1",
+        "R602.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "R141.1 J44.1",
+      "net": "/+3V3",
+      "pads": [
+        "R141.1",
+        "J44.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "J83.1 J600.1",
+      "net": "/+3V3",
+      "pads": [
+        "J83.1",
+        "J600.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "R340.1 C304.1",
+      "net": "/+3V3",
+      "pads": [
+        "R340.1",
+        "C304.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "J500.1 R100.1",
+      "net": "/+3V3",
+      "pads": [
+        "J500.1",
+        "R100.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "J500.1 R301.1",
+      "net": "/+3V3",
+      "pads": [
+        "J500.1",
+        "R301.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "C601.1 R300.1",
+      "net": "/+3V3",
+      "pads": [
+        "C601.1",
+        "R300.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "R414.1 C1.1",
+      "net": "/+3V3",
+      "pads": [
+        "R414.1",
+        "C1.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "C3.1 U2.8",
+      "net": "/+5V",
+      "pads": [
+        "C3.1",
+        "U2.8"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "C6.1 U3.8",
+      "net": "/+5V",
+      "pads": [
+        "C6.1",
+        "U3.8"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "C801.1 U80.9",
+      "net": "/+5V",
+      "pads": [
+        "C801.1",
+        "U80.9"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "C700.1 C701.1",
+      "net": "/+5V",
+      "pads": [
+        "C700.1",
+        "C701.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "J70.2 J70.4",
+      "net": "/+5V",
+      "pads": [
+        "J70.2",
+        "J70.4"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "R570.1 R571.1",
+      "net": "/+5V",
+      "pads": [
+        "R570.1",
+        "R571.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "5V local branch",
+      "group": "R670.1 R671.1",
+      "net": "/+5V",
+      "pads": [
+        "R670.1",
+        "R671.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_LEFT_LED",
+      "net": "/Front zone/F_FRONT_LEFT_LED",
+      "pads": [
+        "J503.10",
+        "R550.1",
+        "U50.20"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_TASK_PROBE",
+      "net": "/Front zone/F_TASK_PROBE",
+      "pads": [
+        "J504.5",
+        "U50.39"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_UART_CONSOLE_TX",
+      "net": "/Front zone/F_UART_CONSOLE_TX",
+      "pads": [
+        "J502.1",
+        "U50.44"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_DEG_B_LED",
+      "net": "/Front zone/F_DEG_B_LED",
+      "pads": [
+        "J503.8",
+        "R513.1",
+        "U50.27"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_ERROR_LED",
+      "net": "/Rear zone/R_ERROR_LED",
+      "pads": [
+        "J604.4",
+        "R611.1",
+        "U60.8"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RIGHT_ENC_A",
+      "net": "/Rear zone/R_RIGHT_ENC_A",
+      "pads": [
+        "J605.5",
+        "U60.56",
+        "U81.6"
+      ],
+      "physically_connected": true
+    },
+    {
       "reference": "ground bridge",
       "group": "Q551.2 R561.2",
       "net": "/GND",
@@ -3012,27 +3236,21 @@
     "Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.",
     "Board-wide distribution is incomplete; the servo regulator reaches its shunt and several 3V3 branches are joined.",
     "High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.",
-    "Local CAN/MCU supply groups still need their board-wide 3V3 feed.",
+    "The main CAN/MCU 3V3 groups now reach the regulator; remaining pull-ups and trunk voltage drop/current capability still need review.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
   "unfinished_signal_nets": [
-    "/Front zone/F_DEG_B_LED",
-    "/Front zone/F_FRONT_LEFT_LED",
     "/Front zone/F_RX_B_MARKER",
-    "/Front zone/F_TASK_PROBE",
     "/Front zone/F_UART_CONSOLE_RX",
-    "/Front zone/F_UART_CONSOLE_TX",
     "/Rear zone/R_DEG_A_LED",
     "/Rear zone/R_DEG_B_LED",
-    "/Rear zone/R_ERROR_LED",
     "/Rear zone/R_REAR_LEFT_LED",
     "/Rear zone/R_REAR_RIGHT_LED",
-    "/Rear zone/R_RIGHT_ENC_A",
     "/Rear zone/R_RX_A_MARKER",
     "/Rear zone/R_RX_B_MARKER",
     "/Rear zone/R_TX_A_MARKER"
   ],
-  "source_sha256": "276818f7b0597da95af909033b21ce8b412989af94dd4ae33fc6d6641df51a6b"
+  "source_sha256": "ca433f2457b9bfad80955827275ecbe3452e0270ea052805275f9290a64d4796"
 }

@@ -271,6 +271,28 @@ check_group('filter ground', 'right', [('C8', '2'), ('U3', '5')])
 check_group('3V3 branch', 'rear pull-up to encoder supply', [('R201', '1'), ('R805', '1')])
 check_group('3V3 branch', 'encoder pull-up to bypass', [('R806', '1'), ('C803', '1')])
 
+# October 26 supply joins and MCU connections. These checks deliberately use
+# fixed schematic endpoints, so removing their copper must fail the check.
+for endpoints in ['C104.1 R140.1', 'J83.1 R602.1', 'R141.1 J44.1',
+                  'J83.1 J600.1', 'R340.1 C304.1', 'J500.1 R100.1',
+                  'J500.1 R301.1', 'C601.1 R300.1', 'R414.1 C1.1']:
+    check_group('3V3 branch', endpoints, [tuple(s.split('.')) for s in endpoints.split()])
+for endpoints in ['C3.1 U2.8', 'C6.1 U3.8', 'C801.1 U80.9',
+                  'C700.1 C701.1', 'J70.2 J70.4',
+                  'R570.1 R571.1', 'R670.1 R671.1']:
+    check_group('5V local branch', endpoints, [tuple(s.split('.')) for s in endpoints.split()])
+for net, endpoints in {
+        '/Front zone/F_FRONT_LEFT_LED': 'J503.10 R550.1 U50.20',
+        '/Front zone/F_TASK_PROBE': 'J504.5 U50.39',
+        '/Front zone/F_UART_CONSOLE_TX': 'J502.1 U50.44',
+        '/Front zone/F_DEG_B_LED': 'J503.8 R513.1 U50.27',
+        '/Rear zone/R_ERROR_LED': 'J604.4 R611.1 U60.8',
+        '/Rear zone/R_RIGHT_ENC_A': 'J605.5 U60.56 U81.6',
+}.items():
+    members = [tuple(s.split('.')) for s in endpoints.split()]
+    assert all(pads[m].GetNetname() == net for m in members)
+    check_group('signal', net, members)
+
 # These new ground bridges must have explicit copper continuity. In particular,
 # a common zone object containing two separate islands must not satisfy them.
 for endpoints in ['Q551.2 R561.2', 'U1.2 C1.2', 'U1.2 C2.2',
@@ -392,7 +414,7 @@ report = {
         'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
         'Board-wide distribution is incomplete; the servo regulator reaches its shunt and several 3V3 branches are joined.',
         'High-current motor/servo paths and any failed signal groups remain pending; see Routing-review.md.',
-        'Local CAN/MCU supply groups still need their board-wide 3V3 feed.',
+        'The main CAN/MCU 3V3 groups now reach the regulator; remaining pull-ups and trunk voltage drop/current capability still need review.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.',
         'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],
