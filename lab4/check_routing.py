@@ -187,6 +187,7 @@ signal_groups = {
     '/Front zone/F_STATUS_LED_ANODE': 'D510.2 R510.2',
     '/Front zone/F_SWCLK': 'J501.2 U50.49',
     '/Front zone/F_SWDIO': 'J501.4 U50.46',
+    '/Front zone/F_TX_A_MARKER': 'J503.5 U50.14',
     '/Front zone/SERVO_ADC': 'C2.1 J1.2 J504.8 R2.2 U50.16',
     '/Front zone/SERVO_PWM_OUT': 'J90.3 R540.2',
     '/Front zone/SERVO_RAW': 'J1.1 R2.1 U1.1',
@@ -223,12 +224,15 @@ signal_groups = {
     '/Rear zone/R_REAR_RIGHT_LED_SINK': 'J651.2 Q651.3',
     '/Rear zone/R_RIGHT_ENABLE_PWM': 'J604.8 R631.1 U60.59 U80.11',
     '/Rear zone/R_RIGHT_ENC_B': 'J605.6 U60.33 U81.8',
+    '/Rear zone/R_RIGHT_IN3': 'R634.1 U60.36 U80.10',
     '/Rear zone/R_RIGHT_IN4': 'R635.1 U60.51 U80.12',
     '/Rear zone/R_SELFTEST_BUTTON': 'C610.1 J604.3 R602.2 SW61.1 U60.2',
     '/Rear zone/R_STATUS_LED_ANODE': 'D610.2 R610.2',
     '/Rear zone/R_SWCLK': 'J601.2 U60.49',
     '/Rear zone/R_SWDIO': 'J601.4 U60.46',
     '/Rear zone/R_TX_B_MARKER': 'J603.6 U60.15',
+    '/Rear zone/R_RELAY_TX_MARKER': 'J605.7 U60.37',
+    '/Rear zone/R_STEER_TASK_MARKER': 'J604.6 U60.9',
 }
 for net, endpoints in signal_groups.items():
     members = [tuple(endpoint.split('.')) for endpoint in endpoints.split()]
@@ -253,6 +257,30 @@ check_group('rear UART', 'RX', [('U60', '45'), ('J602', '2')])
 check_group('filter ground', 'left', [('C5', '2'), ('U2', '5')])
 check_group('filter ground', 'right', [('C8', '2'), ('U3', '5')])
 
+# These new ground bridges must have explicit copper continuity. In particular,
+# a common zone object containing two separate islands must not satisfy them.
+for endpoints in ['Q551.2 R561.2', 'U1.2 C1.2', 'U1.2 C2.2',
+                  'D711.1 D712.1', 'D801.2 D803.2']:
+    members = [tuple(s.split('.')) for s in endpoints.split()]
+    seed, target = [pads[m] for m in members]
+    pending, seen = [seed], set()
+    while pending:
+        item = pending.pop()
+        uid = item.m_Uuid.AsString()
+        if uid in seen:
+            continue
+        seen.add(uid)
+        pending.extend(a for a in connectivity.GetConnectedItems(item)
+                       if a.Type() != p.PCB_ZONE_T and a.GetNetCode() == seed.GetNetCode())
+    connected = (seed.GetNetname() == target.GetNetname() == '/GND'
+                 and target.m_Uuid.AsString() in seen)
+    checks.append({'reference': 'ground bridge', 'group': endpoints, 'net': '/GND',
+                   'pads': endpoints.split(), 'physically_connected': connected,
+                   'zone_objects_excluded': True})
+    if not connected:
+        errors.append({'reference': 'ground bridge', 'group': endpoints,
+                       'reason': 'No explicit copper path excluding zone objects'})
+
 # The two physical pads of each switch pole must both reach the local circuit.
 for ref in ['SW50', 'SW51', 'SW60', 'SW61', 'SW70']:
     fp = next(f for f in board.GetFootprints() if f.GetReference() == ref)
@@ -261,6 +289,48 @@ for ref in ['SW50', 'SW51', 'SW60', 'SW61', 'SW70']:
         reachable(physical[0])
         if any(a.m_Uuid.AsString() not in physical_reachable_cache[physical[0].m_Uuid.AsString()] for a in physical):
             errors.append({'reference': ref, 'group': 'physical switch pads', 'pin': pin})
+
+# Track the previously incomplete MCU signals from the reviewed schematic.
+# Derive their current status from copper, rather than a stale hand-written list.
+pending_signal_groups = {
+    '/Front zone/F_DEG_A_LED': 'J503.7 R512.1 U50.26',
+    '/Front zone/F_DEG_B_LED': 'J503.8 R513.1 U50.27',
+    '/Front zone/F_FRONT_LEFT_LED': 'J503.10 R550.1 U50.20',
+    '/Front zone/F_FRONT_RIGHT_LED': 'J503.11 R551.1 U50.61',
+    '/Front zone/F_RX_A_MARKER': 'J503.3 U50.10',
+    '/Front zone/F_RX_B_MARKER': 'J503.4 U50.11',
+    '/Front zone/F_STATUS_LED': 'R510.1 U50.50',
+    '/Front zone/F_STEER_TASK_MARKER': 'J504.6 U50.9',
+    '/Front zone/F_TASK_PROBE': 'J504.5 U50.39',
+    '/Front zone/F_TX_A_MARKER': 'J503.5 U50.14',
+    '/Front zone/F_TX_B_MARKER': 'J503.6 U50.15',
+    '/Front zone/F_UART_CONSOLE_RX': 'J502.2 U50.45',
+    '/Front zone/F_UART_CONSOLE_TX': 'J502.1 U50.44',
+    '/Rear zone/R_DEG_A_LED': 'J603.7 R612.1 U60.26',
+    '/Rear zone/R_DEG_B_LED': 'J603.8 R613.1 U60.27',
+    '/Rear zone/R_DIR_A_MARKER': 'J603.11 U60.29',
+    '/Rear zone/R_ERROR_LED': 'J604.4 R611.1 U60.8',
+    '/Rear zone/R_LEFT_IN2': 'R633.1 U60.35 U80.7',
+    '/Rear zone/R_OVERLOAD_MARKER': 'J604.9 U60.52',
+    '/Rear zone/R_PID_MARKER': 'J604.7 U60.40',
+    '/Rear zone/R_REAR_LEFT_LED': 'J603.12 R650.1 U60.24',
+    '/Rear zone/R_REAR_RIGHT_LED': 'J603.13 R651.1 U60.25',
+    '/Rear zone/R_RELAY_TX_MARKER': 'J605.7 U60.37',
+    '/Rear zone/R_RIGHT_ENC_A': 'J605.5 U60.56 U81.6',
+    '/Rear zone/R_RIGHT_IN3': 'R634.1 U60.36 U80.10',
+    '/Rear zone/R_RX_A_MARKER': 'J603.3 U60.10',
+    '/Rear zone/R_RX_B_MARKER': 'J603.4 U60.11',
+    '/Rear zone/R_STATUS_LED': 'R610.1 U60.50',
+    '/Rear zone/R_STEER_TASK_MARKER': 'J604.6 U60.9',
+    '/Rear zone/R_TASK_PROBE': 'J604.5 U60.39',
+    '/Rear zone/R_TX_A_MARKER': 'J603.5 U60.14',
+}
+unfinished_signal_nets = []
+for net, endpoints in pending_signal_groups.items():
+    members = [tuple(s.split('.')) for s in endpoints.split()]
+    assert all(pads[m].GetNetname() == net for m in members), (net, members)
+    if set(members) - reachable(pads[members[0]]):
+        unfinished_signal_nets.append(net)
 
 tracks = list(board.GetTracks())
 vias = [t for t in tracks if t.Type() == p.PCB_VIA_T]
@@ -304,7 +374,7 @@ report = {
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.',
         'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],
-    'unfinished_signal_nets': ['/Front zone/F_DEG_A_LED', '/Front zone/F_DEG_B_LED', '/Front zone/F_FRONT_LEFT_LED', '/Front zone/F_FRONT_RIGHT_LED', '/Front zone/F_RX_A_MARKER', '/Front zone/F_RX_B_MARKER', '/Front zone/F_STATUS_LED', '/Front zone/F_STEER_TASK_MARKER', '/Front zone/F_TASK_PROBE', '/Front zone/F_TX_A_MARKER', '/Front zone/F_TX_B_MARKER', '/Front zone/F_UART_CONSOLE_RX', '/Front zone/F_UART_CONSOLE_TX', '/Rear zone/R_DEG_A_LED', '/Rear zone/R_DEG_B_LED', '/Rear zone/R_DIR_A_MARKER', '/Rear zone/R_ERROR_LED', '/Rear zone/R_LEFT_IN2', '/Rear zone/R_OVERLOAD_MARKER', '/Rear zone/R_PID_MARKER', '/Rear zone/R_REAR_LEFT_LED', '/Rear zone/R_REAR_RIGHT_LED', '/Rear zone/R_RELAY_TX_MARKER', '/Rear zone/R_RIGHT_ENC_A', '/Rear zone/R_RIGHT_IN3', '/Rear zone/R_RX_A_MARKER', '/Rear zone/R_RX_B_MARKER', '/Rear zone/R_STATUS_LED', '/Rear zone/R_STEER_TASK_MARKER', '/Rear zone/R_TASK_PROBE', '/Rear zone/R_TX_A_MARKER'],
+    'unfinished_signal_nets': unfinished_signal_nets,
     'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
 }
 args.output.write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')

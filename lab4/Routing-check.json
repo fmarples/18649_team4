@@ -3,26 +3,26 @@
   "fabrication_release": false,
   "errors": [],
   "counts": {
-    "track_segments": 10332,
-    "through_vias": 703,
+    "track_segments": 11368,
+    "through_vias": 766,
     "copper_zones": 5,
-    "full_unconnected_count": 128
+    "full_unconnected_count": 101
   },
   "segment_width_counts_mm": {
-    "0.2": 9607,
+    "0.2": 10293,
     "0.8": 261,
     "0.5": 24,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
-    "0.3": 291,
+    "0.3": 641,
     "1.0": 3,
     "0.4": 3,
     "1.2": 3,
     "2.0": 9
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 638,
+    "0.70/0.30": 701,
     "0.80/0.40": 65
   },
   "checks": [
@@ -2033,6 +2033,16 @@
     },
     {
       "reference": "signal",
+      "group": "/Front zone/F_TX_A_MARKER",
+      "net": "/Front zone/F_TX_A_MARKER",
+      "pads": [
+        "J503.5",
+        "U50.14"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
       "group": "/Front zone/SERVO_ADC",
       "net": "/Front zone/SERVO_ADC",
       "pads": [
@@ -2424,6 +2434,17 @@
     },
     {
       "reference": "signal",
+      "group": "/Rear zone/R_RIGHT_IN3",
+      "net": "/Rear zone/R_RIGHT_IN3",
+      "pads": [
+        "R634.1",
+        "U60.36",
+        "U80.10"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
       "group": "/Rear zone/R_RIGHT_IN4",
       "net": "/Rear zone/R_RIGHT_IN4",
       "pads": [
@@ -2483,6 +2504,26 @@
       "pads": [
         "J603.6",
         "U60.15"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RELAY_TX_MARKER",
+      "net": "/Rear zone/R_RELAY_TX_MARKER",
+      "pads": [
+        "J605.7",
+        "U60.37"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_STEER_TASK_MARKER",
+      "net": "/Rear zone/R_STEER_TASK_MARKER",
+      "pads": [
+        "J604.6",
+        "U60.9"
       ],
       "physically_connected": true
     },
@@ -2665,6 +2706,61 @@
         "U3.5"
       ],
       "physically_connected": true
+    },
+    {
+      "reference": "ground bridge",
+      "group": "Q551.2 R561.2",
+      "net": "/GND",
+      "pads": [
+        "Q551.2",
+        "R561.2"
+      ],
+      "physically_connected": true,
+      "zone_objects_excluded": true
+    },
+    {
+      "reference": "ground bridge",
+      "group": "U1.2 C1.2",
+      "net": "/GND",
+      "pads": [
+        "U1.2",
+        "C1.2"
+      ],
+      "physically_connected": true,
+      "zone_objects_excluded": true
+    },
+    {
+      "reference": "ground bridge",
+      "group": "U1.2 C2.2",
+      "net": "/GND",
+      "pads": [
+        "U1.2",
+        "C2.2"
+      ],
+      "physically_connected": true,
+      "zone_objects_excluded": true
+    },
+    {
+      "reference": "ground bridge",
+      "group": "D711.1 D712.1",
+      "net": "/GND",
+      "pads": [
+        "D711.1",
+        "D712.1"
+      ],
+      "physically_connected": true,
+      "zone_objects_excluded": true
+    },
+    {
+      "reference": "ground bridge",
+      "group": "D801.2 D803.2",
+      "net": "/GND",
+      "pads": [
+        "D801.2",
+        "D803.2"
+      ],
+      "physically_connected": true,
+      "zone_objects_excluded": true
     }
   ],
   "clock_routes": [
@@ -2782,7 +2878,6 @@
     "/Front zone/F_STATUS_LED",
     "/Front zone/F_STEER_TASK_MARKER",
     "/Front zone/F_TASK_PROBE",
-    "/Front zone/F_TX_A_MARKER",
     "/Front zone/F_TX_B_MARKER",
     "/Front zone/F_UART_CONSOLE_RX",
     "/Front zone/F_UART_CONSOLE_TX",
@@ -2795,15 +2890,12 @@
     "/Rear zone/R_PID_MARKER",
     "/Rear zone/R_REAR_LEFT_LED",
     "/Rear zone/R_REAR_RIGHT_LED",
-    "/Rear zone/R_RELAY_TX_MARKER",
     "/Rear zone/R_RIGHT_ENC_A",
-    "/Rear zone/R_RIGHT_IN3",
     "/Rear zone/R_RX_A_MARKER",
     "/Rear zone/R_RX_B_MARKER",
     "/Rear zone/R_STATUS_LED",
-    "/Rear zone/R_STEER_TASK_MARKER",
     "/Rear zone/R_TASK_PROBE",
     "/Rear zone/R_TX_A_MARKER"
   ],
-  "source_sha256": "b7de86f76ec4a797a76b7f355abd3a2f71b1ded6242966fdda5b500d093acd57"
+  "source_sha256": "6b598c561a532e2bed7e1bb5ebcf1c9da2554efbc08d454796c54a43914289b6"
 }

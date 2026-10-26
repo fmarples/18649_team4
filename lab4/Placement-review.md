@@ -1,6 +1,6 @@
 # PCB placement review
 
-25 October 2026. The **partially routed 120 x 234 mm PCB** is in
+26 October 2026. The **partially routed 120 x 234 mm PCB** is in
 `KiCad/Lab4.kicad_pcb`. Its four-hole paper pattern passed the October 24 fit
 check, and actual Pi heights were measured. The populated assembly is not
 verified and the board is not ready for fabrication. See
@@ -142,14 +142,14 @@ parts and routing. See Parts-review.md and Heatsink-envelope-check.json.
 
 ## Checks and remaining work
 
-KiCad 10.0.4 loads and plots the PCB. The 25 October DRC, rerun with schematic
+KiCad 10.0.4 loads and plots the PCB. The 26 October DRC, rerun with schematic
 parity and excluded findings included, reports:
 
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
-- 128 missing connections in both the full connectivity count and DRC listing.
-  Partial power/CAN/host/signal routing has 10,332 segments, 703 vias and five ground zones.
+- 101 missing connections in both the full connectivity count and DRC listing.
+  Partial power/CAN/host/signal routing has 11,368 segments, 766 vias and five ground zones.
 - 0 missing footprints: all five GCT switches are now placed.
 
 The five switch geometries and contact maps are checked against the GCT A1

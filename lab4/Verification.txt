@@ -265,3 +265,25 @@ October 25 rear UART, initial supply branches and ground reference
   authority for disconnected islands. Power width, return paths, sensing
   geometry and thermal qualification remain open. No hardware test or
   fabrication release is claimed.
+
+
+October 26 MCU fanout and ground-bridge routing
+- Connected rear IN3, front TX-A marker, rear relay-TX marker and rear
+  steering-task marker. The remaining MCU signal count is now 27.
+- Rerouted rear IN1, front error LED, rear left-enable PWM and rear LEFT_ADC:
+  554 old copper objects replaced; all 10,481 unrelated old objects unchanged.
+  All footprint positions/values/pad nets and thermal overrides are unchanged.
+- Added 25 ground joins; removed unused escape stubs and redundant vias.
+  Saved totals: 11,368 segments, 766 vias, five zones; 101 missing connections.
+- All 239 targeted checks pass. Five ground-bridge checks exclude zone objects.
+  A temporary copper-removal test fails rear IN3 and all five bridge checks
+  while pad nets remain unchanged. Remaining signal names are derived from
+  connectivity against fixed schematic endpoints, rather than a static list.
+- Fresh native ordinary DRC and schematic parity: zero findings. Schematic
+  ERC/netlist reused only after every non-PCB CAD source hash matched the
+  earlier same-review audit; provenance recorded in Fabrication-check.json.
+  Placement and regulator checks pass. Native copper plots inspected.
+- Staff allow four layers and expect stencil assembly (October 26 Slack).
+  Four-layer migration is under evaluation; this checkpoint is still two-layer.
+  Power/return, remaining signal, thermal and mechanical work remain open.
+  No new hardware test or fabrication release is claimed.
