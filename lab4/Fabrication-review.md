@@ -16,11 +16,11 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-Partial power/MCU/CAN, host and signal routing now contains 11,368 track
-segments, 766 vias and five ground zones. All 239 targeted connection
-checks pass. Fresh ERC, ordinary DRC and schematic parity report no findings
+Partial power/MCU/CAN, host and signal routing now contains 12,516 track
+segments, 793 vias and six ground zones on four copper layers. All 253 targeted
+connection checks pass. ERC on the unchanged schematic and fresh PCB DRC/parity report no findings
 under the configured rules. Both the full connectivity count and DRC listing
-report 101 missing connections. See [Routing-review.md](Routing-review.md).
+report 81 missing connections. See [Routing-review.md](Routing-review.md).
 These checks do not establish component ratings or completed board routing.
 
 `Fabrication-check.json` records the fresh fabrication audit, its source hashes,
@@ -30,9 +30,10 @@ the board as blocked. A placement-only pass must not be used as a release result
 ## October 26 course updates
 
 Staff [explicitly allow four-layer PCBs](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793033728122419).
-We are evaluating a four-layer revision with an internal ground reference and
-more signal-routing space; the saved checkpoint is still two-layer. This is a
-layout change, not a new hardware-measurement requirement. Final layer stack,
+The saved PCB now has an internal ground plane on In1.Cu and signal routes on
+In2.Cu, with the mounting/antenna keep-outs extended to both inner layers. The
+nominal board thickness remains 1.6 mm. No controlled impedance is claimed.
+This layout change needs no new hardware measurements. Final physical stack,
 copper weights, clearances and Gerber layer set must agree before fabrication.
 
 Staff [do not expect board-house assembly; plan to use a stencil](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793033592291259).

@@ -287,3 +287,24 @@ October 26 MCU fanout and ground-bridge routing
   Four-layer migration is under evaluation; this checkpoint is still two-layer.
   Power/return, remaining signal, thermal and mechanical work remain open.
   No new hardware test or fabrication release is claimed.
+
+
+October 26 four-layer routing
+- Implemented F.Cu / In1.Cu ground / In2.Cu signals / B.Cu, following the
+  October 26 staff clarification. Extended all rule areas to both inner layers.
+- Added twelve more MCU nets and two 3.3 V supply joins. Fifteen MCU signal
+  nets and twelve separate 3.3 V pad groups remain; full power is incomplete.
+- Replaced 330 old objects on four blocking nets. Retained 11,804 old objects,
+  of which 4,509 only changed from B.Cu to In2.Cu; all other geometry unchanged.
+- All footprint positions, values, pad nets, drills and connection modes unchanged.
+  U81.13 thermal angle/gap/spoke adjusted to 45 degrees/0.20/0.20 mm;
+  seven 0.20 mm segments join U81.13 to U81.11. No new solid-connected
+  pads and no relaxed global rule.
+- All 253 targeted connection checks pass. Native ordinary DRC/parity zero;
+  no GND unconnected items. Final DRC/full-connectivity count: 81 missing.
+  Saved counts: 12,516 segments, 793 vias, six filled ground zones.
+- Schematic ERC/netlist reused only after all non-PCB source hashes matched;
+  fresh PCB DRC/parity and placement/regulator checks performed.
+- Four native layer plots generated. Physical stack/copper weights, remaining
+  routing, return paths, current capability and mechanical decisions are open.
+  The board remains blocked for fabrication; no new hardware measurements.

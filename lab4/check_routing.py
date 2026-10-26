@@ -153,6 +153,18 @@ for host, ca, cb, host_pins in [
 # Expected endpoints are fixed from the reviewed schematic, not inferred
 # from the copper being tested. Supply/load-current paths are separate.
 signal_groups = {
+    '/Rear zone/R_OVERLOAD_MARKER': 'J604.9 U60.52',
+    '/Front zone/F_DEG_A_LED': 'J503.7 R512.1 U50.26',
+    '/Front zone/F_TX_B_MARKER': 'J503.6 U50.15',
+    '/Rear zone/R_PID_MARKER': 'J604.7 U60.40',
+    '/Rear zone/R_STATUS_LED': 'R610.1 U60.50',
+    '/Front zone/F_FRONT_RIGHT_LED': 'J503.11 R551.1 U50.61',
+    '/Front zone/F_RX_A_MARKER': 'J503.3 U50.10',
+    '/Front zone/F_STATUS_LED': 'R510.1 U50.50',
+    '/Front zone/F_STEER_TASK_MARKER': 'J504.6 U50.9',
+    '/Rear zone/R_DIR_A_MARKER': 'J603.11 U60.29',
+    '/Rear zone/R_LEFT_IN2': 'R633.1 U60.35 U80.7',
+    '/Rear zone/R_TASK_PROBE': 'J604.5 U60.39',
     '/Cockpit zone/PI_CMD_TX_MARKER': 'J70.13 J703.4',
     '/Cockpit zone/PI_DEG_A_LED': 'J70.29 J703.7 R712.1',
     '/Cockpit zone/PI_DEG_A_LED_ANODE': 'D712.2 R712.2',
@@ -256,6 +268,8 @@ check_group('rear UART', 'TX', [('U60', '44'), ('J602', '1')])
 check_group('rear UART', 'RX', [('U60', '45'), ('J602', '2')])
 check_group('filter ground', 'left', [('C5', '2'), ('U2', '5')])
 check_group('filter ground', 'right', [('C8', '2'), ('U3', '5')])
+check_group('3V3 branch', 'rear pull-up to encoder supply', [('R201', '1'), ('R805', '1')])
+check_group('3V3 branch', 'encoder pull-up to bypass', [('R806', '1'), ('C803', '1')])
 
 # These new ground bridges must have explicit copper continuity. In particular,
 # a common zone object containing two separate islands must not satisfy them.
@@ -338,6 +352,12 @@ segments = [t for t in tracks if t.Type() == p.PCB_TRACE_T]
 assert tracks and vias, 'No initial routing found'
 assert len({t.m_Uuid.AsString() for t in tracks}) == len(tracks)
 assert all(t.GetStart() != t.GetEnd() for t in segments)
+assert board.GetCopperLayerCount() == 4, 'The reviewed layout uses four copper layers'
+assert all(t.GetNetname() == '/GND' for t in segments if t.GetLayer() == p.In1_Cu)
+assert any(not z.GetIsRuleArea() and z.GetLayer() == p.In1_Cu and
+           z.GetNetname() == '/GND' for z in board.Zones()), 'Missing internal ground plane'
+assert all(z.GetLayerSet().Contains(p.In1_Cu) and z.GetLayerSet().Contains(p.In2_Cu)
+           for z in board.Zones() if z.GetIsRuleArea()), 'Inner-layer keep-out missing'
 clock_routes = []
 for n in [10, 14, 20, 24, 30, 34]:
     for pin in ['8', '9']:
@@ -352,6 +372,8 @@ for n in [10, 14, 20, 24, 30, 34]:
 report = {
     'status': 'PASS for checked copper connections only' if not errors else 'FAIL',
     'fabrication_release': False,
+    'copper_layer_count': board.GetCopperLayerCount(),
+    'track_segments_by_layer': dict(Counter(board.GetLayerName(t.GetLayer()) for t in segments)),
     'errors': errors,
     'counts': {'track_segments': len(segments), 'through_vias': len(vias),
                'copper_zones': sum(not z.GetIsRuleArea() for z in board.Zones()),

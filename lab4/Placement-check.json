@@ -8,8 +8,8 @@
     120,
     234
   ],
-  "track_segments_and_vias": 12134,
-  "copper_zones": 5,
+  "track_segments_and_vias": 13309,
+  "copper_zones": 6,
   "checks": [
     "Placed netlist pads match schematic",
     "All courtyards inside provisional outline",

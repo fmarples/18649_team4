@@ -1,30 +1,50 @@
 # Power, MCU, CAN and signal routing
 
-26 October 2026. We added four MCU signal nets and repaired ground breaks.
-The saved two-layer checkpoint has **11,368 track segments, 766 through vias
-and five filled ground zones**. Missing connections fell from **128 to 101**.
-**27 MCU signal nets and board-wide power paths are still incomplete.**
-All 284 electrical footprints, eight supports, positions, values and pad nets
-are unchanged. This is a partial routing revision, not a fabrication release.
+26 October 2026. The saved **four-layer** PCB has **12,516 track segments,
+793 through vias and six filled ground zones**. Missing connections fell from
+**128 to 81** across today's revisions. **15 MCU signal nets and board-wide
+power paths are still incomplete.** All 284 electrical footprints, eight supports,
+positions, values and pad nets are unchanged. This is not a fabrication release.
 
-## October 26 fanout and ground repair
+## October 26 four-layer routing
+
+Staff [allow four layers](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793033728122419).
+We added a ground plane on In1.Cu and moved eligible thin signal routes from
+B.Cu to In2.Cu. The final board retains 4,509 of those moved segments. Wider
+power/ground tracks and nets with bottom SMD pads stayed on the outer layers.
+Mounting and antenna rule areas now apply to both inner layers. The six ground
+zones are filled; native DRC reports no disconnected GND items. This does not
+establish low-noise or sufficient high-current return paths everywhere.
+
+We added twelve MCU nets after the earlier four-net checkpoint: front right LED,
+RX-A marker, status LED, steering-task marker, degraded-A LED and TX-B marker;
+rear direction-A marker, IN2, task probe, PID marker, status LED and overload marker.
+To make room we rerouted front MOSI/servo PWM and rear INT-A/IN4. Their 330 old
+copper objects were replaced. All 11,804 other retained old copper objects keep
+their geometry; only the selected B.Cu-to-In2.Cu layer changes differ.
+
+We added 0.50 mm R201.1-to-R805.1 and 0.80 mm R806.1-to-C803.1 supply joins.
+Twelve separate 3.3 V pad groups still need to be united into the full supply.
+Widths are design choices, not measured current/temperature ratings.
+
+U81.13 initially had only one usable ground thermal spoke. We changed its angle
+to 45 degrees and its spoke width/gap to 0.20/0.20 mm, then added a seven-segment
+0.20 mm ground connection to U81.11. Native DRC checks the resulting island
+continuity. It remains a thermal-relief pad; no additional solid pad or global
+rule relaxation was used. No starved thermal or dangling copper findings remain.
+
+The nominal board thickness remains 1.6 mm. We still need to choose the
+fabricator's physical layer stack and copper weights, review CAN geometry and
+return paths, and export all four copper Gerbers for fabrication. No controlled
+impedance is claimed. The four SVG layer previews are inspection aids.
+
+## Earlier October 26 two-layer checkpoint
 
 We connected rear IN3, front TX-A marker, rear relay-TX marker and rear
-steering-task marker. To make room, we rerouted rear IN1, front error LED,
-rear left-enable PWM and rear LEFT_ADC. Their original 554 track/via objects
-were replaced; all 10,481 other previous copper objects are unchanged.
-All earlier connection checks still pass.
-
-We added 25 ground joins using 0.20–0.30 mm tracks and through vias where
-needed, then removed unused escape stubs and redundant vias. These bridges
-repair local connectivity; they do not prove low-noise or adequate high-current
-returns everywhere. Six native GND missing-connection items remain. General
-clearance, thermal settings and mounting keep-outs are unchanged.
-
-Staff now [allow four layers](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793033728122419).
-A four-layer trial is being checked to add a continuous internal ground
-reference and free outer-layer routing space. It is not part of this checkpoint.
-No additional measurements are needed to continue that digital layout work.
+steering-task marker, rerouting rear IN1, front error LED, rear left-enable PWM
+and rear LEFT_ADC. We also added 25 ground joins. That checked checkpoint had
+101 missing connections and 239 passing connection checks. Its source and
+validation remain in Git history; the four-layer board supersedes it.
 
 ## Connections completed in this revision
 
@@ -36,7 +56,8 @@ backbone-side test pins and, where fitted, termination jumper/resistor are
 connected locally. Both CAN A/B backbones now connect the rear, cockpit and
 front nodes. The main runs are front-layer pairs with 0.20 mm tracks and
 0.60 mm center spacing (0.40 mm copper gap). Bus A goes around the Pi support
-and header; Bus B follows the right edge. Branch fanouts use both layers.
+and header; Bus B follows the right edge. Branch fanouts now use the outer
+layers and In2.Cu.
 These dimensions do not establish a controlled-impedance rating; pair/return
 geometry and signal behavior still need final review.
 
@@ -65,7 +86,7 @@ fabrication rules are unchanged.
 Both STM32s and the Pi now connect to their two MCP2515 controllers. We kept
 the Lab 3 pin assignments: shared SCK/MISO/MOSI and independent CS/INT per
 controller. The six CS pull-ups remain on their corresponding chip-select
-nets. Short pin escapes lead to through vias; longer connections use both
+nets. Short pin escapes lead to through vias; longer connections use the signal
 copper layers. The Pi controller escapes extend into open space before
 joining the header and second controller.
 
@@ -89,9 +110,9 @@ output/filter/divider/ADC chains; all four encoder input filters and three of
 the four conditioned encoder outputs; servo PWM and its connector-side series
 resistor; both motor-enable PWM nets and IN1/IN4; the lamp transistor/resistor
 connections; the Pi indicators, self-test and timing probes; and portions of
-the MCU debug, indicator and timing-header wiring. IN2, the fourth encoder
-output and several MCU diagnostic/indicator pins are still open. The exact
-27 incomplete signal-net names are in `Routing-check.json`.
+the MCU debug, indicator and timing-header wiring. The fourth conditioned encoder
+output and several MCU diagnostic/indicator pins are still open; IN2 is now routed. The exact
+15 incomplete signal-net names are in `Routing-check.json`.
 
 Signal tracks are 0.20 mm wide with 0.70/0.30 mm through vias. The switching
 regulator cells and mounting/antenna reservations are preserved. New routes
@@ -166,10 +187,10 @@ effective capacitance and thermal/current qualification remain open.
 ## Verification
 
 - `check_routing.py` walks KiCad's physical copper-connectivity graph. All
-  **239 targeted connection checks** pass: 21 regulator, 76 local CAN, 14 MCU,
+  **253 targeted connection checks** pass: 21 regulator, 76 local CAN, 14 MCU,
   four backbone nets, 21 host-interface nets, 76 additional signal nets, eleven
   supply branches, two shunt inputs, one servo power-feed connection, two UART
-  nets, two filter-ground connections, four more MCU signal nets and five
+  nets, two filter-ground connections, sixteen more MCU signal nets, two further supply joins and five
   explicit ground-bridge checks. Those five exclude zone objects, which can
   otherwise represent multiple disconnected islands. Each backbone net reaches all eight required
   pads across the three zones, with termination on the bus side of isolation.
@@ -187,7 +208,7 @@ effective capacitance and thermal/current qualification remain open.
   check and all five zone-excluding bridge checks fail as intended.
 - ERC on the unchanged schematic, fresh ordinary DRC and schematic parity
   have zero findings. The remaining
-  101 unconnected items are reported as fabrication blockers in
+  81 unconnected items are reported as fabrication blockers in
   [Fabrication-check.json](Fabrication-check.json), not suppressed.
   Whole-board routing is unfinished; ground/return continuity remains a release check.
 - All 284 electrical footprints and their pad nets match the schematic.
@@ -195,16 +216,17 @@ effective capacitance and thermal/current qualification remain open.
   regulator track/via objects and all non-CAN footprint positions are preserved.
 - [Routing-check.json](Routing-check.json) records connection groups, clock
   lengths, widths, via sizes and the source hash. Native copper plots are
-  [Routing-front.svg](Routing-front.svg) and [Routing-back.svg](Routing-back.svg).
+  [front](Routing-front.svg), [back](Routing-back.svg),
+  [inner ground](Routing-inner-ground.svg) and [inner signals](Routing-inner-signals.svg).
 
 KiCad 10 caps its DRC unconnected list at 499 entries; our audit also records
-the full connectivity count. Both now report 101. The earlier regulator-only
+the full connectivity count. Both now report 81. The earlier regulator-only
 revision had 648 missing connections, although its DRC list stopped at 499.
 See the [KiCad DRC engine source](https://github.com/KiCad/kicad-source-mirror/blob/10.0/pcbnew/drc/drc_engine.cpp).
 
 ## Remaining routing
 
-Board-wide power/load-current paths and 27 MCU-related signal nets still need
+Board-wide power/load-current paths and 15 MCU-related signal nets still need
 routing. The two Kelvin input connections exist; their final geometry review
 is still required. Review CAN pair geometry, continuous reference copper, return paths
 and power-loop/thermal behavior before layout freeze. These digital routes

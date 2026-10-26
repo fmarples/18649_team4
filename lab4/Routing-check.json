@@ -1,17 +1,23 @@
 {
   "status": "PASS for checked copper connections only",
   "fabrication_release": false,
+  "copper_layer_count": 4,
+  "track_segments_by_layer": {
+    "F.Cu": 6207,
+    "B.Cu": 1800,
+    "In2.Cu": 4509
+  },
   "errors": [],
   "counts": {
-    "track_segments": 11368,
-    "through_vias": 766,
-    "copper_zones": 5,
-    "full_unconnected_count": 101
+    "track_segments": 12516,
+    "through_vias": 793,
+    "copper_zones": 6,
+    "full_unconnected_count": 81
   },
   "segment_width_counts_mm": {
-    "0.2": 10293,
-    "0.8": 261,
-    "0.5": 24,
+    "0.2": 11409,
+    "0.8": 282,
+    "0.5": 35,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
@@ -22,7 +28,7 @@
     "2.0": 9
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 701,
+    "0.70/0.30": 728,
     "0.80/0.40": 65
   },
   "checks": [
@@ -1673,6 +1679,129 @@
     },
     {
       "reference": "signal",
+      "group": "/Rear zone/R_OVERLOAD_MARKER",
+      "net": "/Rear zone/R_OVERLOAD_MARKER",
+      "pads": [
+        "J604.9",
+        "U60.52"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_DEG_A_LED",
+      "net": "/Front zone/F_DEG_A_LED",
+      "pads": [
+        "J503.7",
+        "R512.1",
+        "U50.26"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_TX_B_MARKER",
+      "net": "/Front zone/F_TX_B_MARKER",
+      "pads": [
+        "J503.6",
+        "U50.15"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_PID_MARKER",
+      "net": "/Rear zone/R_PID_MARKER",
+      "pads": [
+        "J604.7",
+        "U60.40"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_STATUS_LED",
+      "net": "/Rear zone/R_STATUS_LED",
+      "pads": [
+        "R610.1",
+        "U60.50"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_FRONT_RIGHT_LED",
+      "net": "/Front zone/F_FRONT_RIGHT_LED",
+      "pads": [
+        "J503.11",
+        "R551.1",
+        "U50.61"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_RX_A_MARKER",
+      "net": "/Front zone/F_RX_A_MARKER",
+      "pads": [
+        "J503.3",
+        "U50.10"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_STATUS_LED",
+      "net": "/Front zone/F_STATUS_LED",
+      "pads": [
+        "R510.1",
+        "U50.50"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Front zone/F_STEER_TASK_MARKER",
+      "net": "/Front zone/F_STEER_TASK_MARKER",
+      "pads": [
+        "J504.6",
+        "U50.9"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_DIR_A_MARKER",
+      "net": "/Rear zone/R_DIR_A_MARKER",
+      "pads": [
+        "J603.11",
+        "U60.29"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_LEFT_IN2",
+      "net": "/Rear zone/R_LEFT_IN2",
+      "pads": [
+        "R633.1",
+        "U60.35",
+        "U80.7"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_TASK_PROBE",
+      "net": "/Rear zone/R_TASK_PROBE",
+      "pads": [
+        "J604.5",
+        "U60.39"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
       "group": "/Cockpit zone/PI_CMD_TX_MARKER",
       "net": "/Cockpit zone/PI_CMD_TX_MARKER",
       "pads": [
@@ -2708,6 +2837,26 @@
       "physically_connected": true
     },
     {
+      "reference": "3V3 branch",
+      "group": "rear pull-up to encoder supply",
+      "net": "/+3V3",
+      "pads": [
+        "R201.1",
+        "R805.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "3V3 branch",
+      "group": "encoder pull-up to bypass",
+      "net": "/+3V3",
+      "pads": [
+        "R806.1",
+        "C803.1"
+      ],
+      "physically_connected": true
+    },
+    {
       "reference": "ground bridge",
       "group": "Q551.2 R561.2",
       "net": "/GND",
@@ -2869,33 +3018,21 @@
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
   "unfinished_signal_nets": [
-    "/Front zone/F_DEG_A_LED",
     "/Front zone/F_DEG_B_LED",
     "/Front zone/F_FRONT_LEFT_LED",
-    "/Front zone/F_FRONT_RIGHT_LED",
-    "/Front zone/F_RX_A_MARKER",
     "/Front zone/F_RX_B_MARKER",
-    "/Front zone/F_STATUS_LED",
-    "/Front zone/F_STEER_TASK_MARKER",
     "/Front zone/F_TASK_PROBE",
-    "/Front zone/F_TX_B_MARKER",
     "/Front zone/F_UART_CONSOLE_RX",
     "/Front zone/F_UART_CONSOLE_TX",
     "/Rear zone/R_DEG_A_LED",
     "/Rear zone/R_DEG_B_LED",
-    "/Rear zone/R_DIR_A_MARKER",
     "/Rear zone/R_ERROR_LED",
-    "/Rear zone/R_LEFT_IN2",
-    "/Rear zone/R_OVERLOAD_MARKER",
-    "/Rear zone/R_PID_MARKER",
     "/Rear zone/R_REAR_LEFT_LED",
     "/Rear zone/R_REAR_RIGHT_LED",
     "/Rear zone/R_RIGHT_ENC_A",
     "/Rear zone/R_RX_A_MARKER",
     "/Rear zone/R_RX_B_MARKER",
-    "/Rear zone/R_STATUS_LED",
-    "/Rear zone/R_TASK_PROBE",
     "/Rear zone/R_TX_A_MARKER"
   ],
-  "source_sha256": "6b598c561a532e2bed7e1bb5ebcf1c9da2554efbc08d454796c54a43914289b6"
+  "source_sha256": "276818f7b0597da95af909033b21ce8b412989af94dd4ae33fc6d6641df51a6b"
 }

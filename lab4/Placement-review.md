@@ -148,8 +148,8 @@ parity and excluded findings included, reports:
 - 0 placement violations, including courtyard overlap, pad shorts, clearance,
   solder-mask bridges and rule-area conflicts.
 - 0 placed-pad net conflicts or symbol-field mismatches.
-- 101 missing connections in both the full connectivity count and DRC listing.
-  Partial power/CAN/host/signal routing has 11,368 segments, 766 vias and five ground zones.
+- 81 missing connections in both the full connectivity count and DRC listing.
+  Partial power/CAN/host/signal routing has 12,516 segments, 793 vias and six ground zones across four copper layers.
 - 0 missing footprints: all five GCT switches are now placed.
 
 The five switch geometries and contact maps are checked against the GCT A1
