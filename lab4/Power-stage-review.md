@@ -46,10 +46,10 @@ The SW-to-inductor pad-center distance fell from 7.388 mm to 2.964 mm. The new
 100 nF-to-VIN distance is 2.015 mm and FB-to-top-resistor distance is 2.515 mm.
 These distances describe placement, not trace lengths or a tested noise limit.
 
-Initial routing now includes local power connections, ground vias and a
-separate output-sense trace. We still need to review the Kelvin feedback ground
-return, switching-loop geometry, effective capacitor values under DC bias and the control
-loop. Thermal performance remains unverified; the manufacturer's 2 oz
+Routing now includes local power connections, ground vias, a separate
+output-sense trace and explicit feedback-resistor ground branches for all three
+regulators. We still need to review the feedback-return noise geometry, switching
+loops, effective capacitor values under DC bias and the control loop. Thermal performance remains unverified; the manufacturer's 2 oz
 evaluation board does not establish a rating for our 1 oz board. No additional
 team measurements were needed for this review.
 
@@ -57,4 +57,4 @@ team measurements were needed for this review.
 
 - [TI TPS564252 datasheet](https://www.ti.com/lit/ds/symlink/tps564252.pdf), pinout, electrical limits and design/layout guidance.
 - [Eaton SDCHA1V80 datasheet](https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf), 4R7 rating conditions. Its layout guidance also advises against traces/vias underneath the inductor.
-- [Fabrication-check.json](Fabrication-check.json) records the current ERC/DRC/parity results and remaining routing blockers. The board is not released for fabrication.
+- [Fabrication-check.json](Fabrication-check.json) records the current ERC/DRC/parity results and remaining engineering limits. The board is not released for fabrication.

@@ -137,7 +137,7 @@ for pin in [2, 4]: expect('J70', pin, '/+5V')
 for pin in [6, 9, 14, 20, 25, 30, 34, 39]: expect('J70', pin, '/GND')
 for pin in [1, 17, 27, 28]:
     members = nets[pin_net[('J70', str(pin))]]
-    assert all(r == 'J70' for r, _ in members), f'Pi reserved pin connected: {pin}'
+    assert members == {('J70', str(pin))}, f'Pi reserved pin must have its own no-connect: {pin}'
 
 # Lab 3 p17 specifies this physical probe-header order.
 probe_common = ['GND', 'GND', 'RX_A_MARKER', 'RX_B_MARKER', 'TX_A_MARKER', 'TX_B_MARKER', 'DEG_A_LED', 'DEG_B_LED']

@@ -1,13 +1,51 @@
 # Power, MCU, CAN and signal routing
 
-26 October 2026. The saved **four-layer** PCB has **16,865 track
-segments, 906 through vias and six filled ground zones**. Missing connections
-fell from **31 to 7** in this revision: six rear MCU signals and the unused Pi
-3.3 V header net. The existing input circuit and every 3.3 V supply pad are now
-connected. Current capacity, voltage margin and return geometry still need
-review. This is not a fabrication release.
+26 October 2026. Every required PCB connection is now routed. The saved
+**four-layer** board has **15,406 track segments, 949 through vias
+and six filled ground zones**. Native DRC, ERC and schematic parity report
+zero findings, and all **306** targeted connection checks pass. Both native
+DRC and the full connectivity count report **zero missing connections**.
+Power/current sizing, switching-loop and CAN return geometry, and the open
+battery/protection/mechanical decisions still require review. This is not a
+fabrication release or a powered test.
 
-## Latest input-power, pull-up and MCU routing
+## Signal completion and feedback returns
+
+We routed the rear degraded-A/B indicators, rear-right lamp and RX-A/RX-B/TX-A
+timing markers. We rearranged nearby rear MCU routes, restored the affected
+SWD and control connections, and removed unused routing stubs. Footprint
+positions, values and local pad geometry are unchanged from revision 58f60c7.
+The internal In1.Cu layer remains a ground plane. Existing track/via minimums
+and clearance rules are unchanged.
+
+The Pi symbol formerly stacked unused 3.3 V pins 1 and 17 on one schematic
+connection. We separated pin 17 and gave both pins individual no-connect
+markers. The schematic now has 298 nets; only J70.17's net assignment changed.
+Neither Pi 3.3 V pin connects to our regulator or to added PCB copper.
+
+We added explicit 0.20 mm front-copper traces from the three lower feedback
+resistors to their regulator ground pins. Zone-excluded checks now verify
+all three paths. These branches give the feedback circuits a defined copper
+connection; the shared ground pour, switching-loop geometry and noise coupling
+still need engineering review.
+
+Three more power transitions now use pairs of 0.70/0.30 mm vias outside their
+SMD lands: two sites at D804.1 and one at D802.2. This reduces solder wicking
+and adds parallel paths without claiming a current or thermal rating.
+D807.1 and the small-signal via at U1.4 remain for assembly review.
+
+D612.1 now connects through a short explicit ground trace to the via at
+(70.3325, 91.8) mm in KiCad coordinates. Its local pour contact is disabled
+because the crowded fill produced an isolated thermal spoke. This avoids a
+solid-pad soldering override. All other pad zone-connection settings are
+unchanged. The ground plane and remaining ground connections pass native DRC.
+
+Fresh schematic, placement, routing and fabrication audits agree. Deliberately
+removing RX-B copper, merging the unused Pi nets or undoing D612's connection
+setting on a temporary copy makes the corresponding checks fail. Updated
+copper previews and source hashes accompany this revision.
+
+## Earlier input-power, pull-up and MCU routing
 
 We connected the rear-left lamp signal between U60.24, J603.12 and R650.1.
 We rotated encoder pull-ups R804/R807 by 180 degrees to expose their supply
@@ -39,11 +77,8 @@ copy correctly fails the input check. Fresh native DRC has no ordinary
 violations, dangling copper, starved thermals or disconnected GND items;
 schematic parity is clear. No thermal override or global rule changed.
 
-Six rear signals remain: degraded-A/B indicators, rear-right lamp and
-RX-A/RX-B/TX-A timing markers. The other missing connection joins J70's
-stacked unused Pi 3.3 V pins 1/17 in the schematic symbol. Resolve this CAD
-representation without connecting Pi 3.3 V to the board regulator. Neither
-issue needs new hardware measurements.
+At that checkpoint, six rear signals and the stacked unused Pi 3.3 V pins
+remained open. The signal-completion revision above resolves those connections.
 
 [Supply-path-review.md](Supply-path-review.md) and
 [Return-path-review.md](Return-path-review.md) separate these completed

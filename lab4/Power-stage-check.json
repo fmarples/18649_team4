@@ -90,7 +90,7 @@
     "EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on."
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e",
+    "KiCad/Lab4.kicad_pcb": "187575872e391bd4516b903cca55fa80ec087a5ad42a5063d9e8ea8257501ae3",
     "KiCad/Power.kicad_sch": "7f0ee5bcbe1de82667c6484da8765837757312186e9b98f43b5206c0b4e74ccf",
     "KiCad/Circuit-BOM.csv": "24693a07c93c701bd316982f82fe96e269702272a1720acd1f43643a2ca97bfc",
     "Power-calculations.json": "712e124a8aef46dd126c5aceff307ab8cb4b33a9e7a56711b3f986cbbf278c5b"

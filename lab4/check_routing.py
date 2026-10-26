@@ -147,6 +147,12 @@ for host, ca, cb, host_pins in [
 # Expected endpoints are fixed from the reviewed schematic, not inferred
 # from the copper being tested. Supply/load-current paths are separate.
 signal_groups = {
+    '/Rear zone/R_DEG_A_LED': 'J603.7 R612.1 U60.26',
+    '/Rear zone/R_DEG_B_LED': 'J603.8 R613.1 U60.27',
+    '/Rear zone/R_REAR_RIGHT_LED': 'J603.13 R651.1 U60.25',
+    '/Rear zone/R_RX_A_MARKER': 'J603.3 U60.10',
+    '/Rear zone/R_RX_B_MARKER': 'J603.4 U60.11',
+    '/Rear zone/R_TX_A_MARKER': 'J603.5 U60.14',
     '/Rear zone/R_OVERLOAD_MARKER': 'J604.9 U60.52',
     '/Front zone/F_DEG_A_LED': 'J503.7 R512.1 U50.26',
     '/Front zone/F_TX_B_MARKER': 'J503.6 U50.15',
@@ -394,6 +400,42 @@ for net, endpoints in pending_signal_groups.items():
         unfinished_signal_nets.append(net)
 
 tracks = list(board.GetTracks())
+# Each unused Pi supply/EEPROM pin has its own no-connect marker. In
+# particular, the two Pi 3V3 outputs must not share an accidental PCB net.
+for pin in ['1', '17', '27', '28']:
+    a = pads[('J70', pin)]
+    isolated = ({key for key, q in pads.items() if q.GetNetCode() == a.GetNetCode()}
+                == {('J70', pin)} and
+                not any(t.GetNetCode() == a.GetNetCode() for t in tracks))
+    checks.append({'reference': 'J70', 'group': 'unused pin '+pin,
+                   'net': a.GetNetname(), 'isolated_without_copper': isolated})
+    if not isolated:
+        errors.append({'reference': 'J70', 'group': 'unused pin '+pin})
+
+# A ground pour can connect these pads without a deliberate feedback branch.
+# Check the new branches with zones excluded from the traversal itself.
+for u, r in [('U40', 'R411'), ('U41', 'R421'), ('U42', 'R431')]:
+    a, c = pads[(r, '2')], pads[(u, '3')]
+    seen = {q.m_Uuid.AsString() for q in connectivity.GetConnectedItems(a, p.EXCLUDE_ZONES)}
+    connected = c.m_Uuid.AsString() in seen
+    checks.append({'reference': u, 'group': 'feedback ground trace',
+                   'pads': [r+'.2', u+'.3'], 'connected_excluding_zones': connected})
+    if not connected:
+        errors.append({'reference': u, 'group': 'feedback ground trace'})
+
+# D612 uses an explicit ground trace instead of a starved local pour contact.
+a = pads[('D612', '1')]
+ground_bridge = any(
+    q.Type() == p.PCB_VIA_T and q.GetNetname() == '/GND' and
+    abs(p.ToMM(q.GetPosition().x) - 70.3325) < .001 and
+    abs(p.ToMM(q.GetPosition().y) - 91.8) < .001
+    for q in connectivity.GetConnectedItems(a, p.EXCLUDE_ZONES))
+ground_bridge = ground_bridge and a.GetLocalZoneConnection() == p.ZONE_CONNECTION_NONE
+checks.append({'reference': 'D612', 'group': 'explicit LED ground trace',
+               'connected_excluding_zones': ground_bridge})
+if not ground_bridge:
+    errors.append({'reference': 'D612', 'group': 'explicit LED ground trace'})
+
 vias = [t for t in tracks if t.Type() == p.PCB_VIA_T]
 segments = [t for t in tracks if t.Type() == p.PCB_TRACE_T]
 assert tracks and vias, 'No initial routing found'

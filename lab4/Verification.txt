@@ -374,3 +374,17 @@ October 26 output-power routing and connectivity-check correction
 - ERC/netlist reused only after verifying unchanged non-PCB CAD hashes; PCB DRC/parity rerun.
 - Return and supply screenings regenerated. Feedback returns still pour-dependent; supply voltage/current/thermal margins and six MCU signals remain unfinished.
 - No fabrication release, powered test or physical measurement is claimed.
+
+26 October 2026 — MCU signal completion and feedback-return refinement
+- Board SHA256: 187575872e391bd4516b903cca55fa80ec087a5ad42a5063d9e8ea8257501ae3
+- 15,406 segments, 949 vias, six filled GND zones, four copper layers.
+- All 306 targeted checks pass; full saved-board unconnected count is zero.
+- Fresh ERC, native DRC and schematic parity: zero findings and zero missing connections.
+- 284 schematic components/298 nets; all electrical footprints and eight supports pass placement checks.
+- Footprint positions, values and local pad geometry unchanged. Only J70.17's net and D612.1's pour connection mode changed.
+- All six rear MCU signals now connect. Three regulator feedback ground branches pass zone-excluded traversal.
+- Two D804.1 transition sites and one D802.2 site now use paired vias outside solder pads.
+- Temporary fault injection detects missing RX-B copper, merged Pi unused nets and an incorrect D612 ground setting.
+- Copper/placement previews and PDF schematic updated and visually inspected.
+- Source checks and return/supply/power screenings regenerated; no manufacturing or submission release.
+- Power/CAN/thermal review and unresolved battery, protection and mechanical decisions remain open.

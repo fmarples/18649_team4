@@ -3,33 +3,33 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 7134,
-    "B.Cu": 4975,
-    "In2.Cu": 4756
+    "F.Cu": 6524,
+    "B.Cu": 4812,
+    "In2.Cu": 4070
   },
   "errors": [],
   "counts": {
-    "track_segments": 16865,
-    "through_vias": 906,
+    "track_segments": 15406,
+    "through_vias": 949,
     "copper_zones": 6,
-    "full_unconnected_count": 7
+    "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
-    "0.2": 12832,
+    "0.2": 11361,
     "0.8": 646,
     "0.5": 783,
     "0.3": 718,
     "1.6": 3,
     "0.6": 30,
     "0.25": 98,
-    "1.0": 411,
+    "1.0": 423,
     "2.0": 149,
     "1.5": 1154,
     "0.4": 12,
     "1.2": 29
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 841,
+    "0.70/0.30": 884,
     "0.80/0.40": 65
   },
   "checks": [
@@ -1675,6 +1675,69 @@
       "pads": [
         "J70.18",
         "U34.13"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_DEG_A_LED",
+      "net": "/Rear zone/R_DEG_A_LED",
+      "pads": [
+        "J603.7",
+        "R612.1",
+        "U60.26"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_DEG_B_LED",
+      "net": "/Rear zone/R_DEG_B_LED",
+      "pads": [
+        "J603.8",
+        "R613.1",
+        "U60.27"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_REAR_RIGHT_LED",
+      "net": "/Rear zone/R_REAR_RIGHT_LED",
+      "pads": [
+        "J603.13",
+        "R651.1",
+        "U60.25"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RX_A_MARKER",
+      "net": "/Rear zone/R_RX_A_MARKER",
+      "pads": [
+        "J603.3",
+        "U60.10"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_RX_B_MARKER",
+      "net": "/Rear zone/R_RX_B_MARKER",
+      "pads": [
+        "J603.4",
+        "U60.11"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "signal",
+      "group": "/Rear zone/R_TX_A_MARKER",
+      "net": "/Rear zone/R_TX_A_MARKER",
+      "pads": [
+        "J603.5",
+        "U60.14"
       ],
       "physically_connected": true
     },
@@ -3464,6 +3527,62 @@
       ],
       "physically_connected": true,
       "zone_objects_excluded": true
+    },
+    {
+      "reference": "J70",
+      "group": "unused pin 1",
+      "net": "unconnected-(J70-3V3-Pad1)",
+      "isolated_without_copper": true
+    },
+    {
+      "reference": "J70",
+      "group": "unused pin 17",
+      "net": "unconnected-(J70-3V3-Pad17)",
+      "isolated_without_copper": true
+    },
+    {
+      "reference": "J70",
+      "group": "unused pin 27",
+      "net": "unconnected-(J70-ID_SD_I2C0{slash}GPIO00-Pad27)",
+      "isolated_without_copper": true
+    },
+    {
+      "reference": "J70",
+      "group": "unused pin 28",
+      "net": "unconnected-(J70-ID_SC_I2C0{slash}GPIO01-Pad28)",
+      "isolated_without_copper": true
+    },
+    {
+      "reference": "U40",
+      "group": "feedback ground trace",
+      "pads": [
+        "R411.2",
+        "U40.3"
+      ],
+      "connected_excluding_zones": true
+    },
+    {
+      "reference": "U41",
+      "group": "feedback ground trace",
+      "pads": [
+        "R421.2",
+        "U41.3"
+      ],
+      "connected_excluding_zones": true
+    },
+    {
+      "reference": "U42",
+      "group": "feedback ground trace",
+      "pads": [
+        "R431.2",
+        "U42.3"
+      ],
+      "connected_excluding_zones": true
+    },
+    {
+      "reference": "D612",
+      "group": "explicit LED ground trace",
+      "connected_excluding_zones": true
     }
   ],
   "clock_routes": [
@@ -3571,13 +3690,6 @@
     "Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.",
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
-  "unfinished_signal_nets": [
-    "/Rear zone/R_DEG_A_LED",
-    "/Rear zone/R_DEG_B_LED",
-    "/Rear zone/R_REAR_RIGHT_LED",
-    "/Rear zone/R_RX_A_MARKER",
-    "/Rear zone/R_RX_B_MARKER",
-    "/Rear zone/R_TX_A_MARKER"
-  ],
-  "source_sha256": "55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e"
+  "unfinished_signal_nets": [],
+  "source_sha256": "187575872e391bd4516b903cca55fa80ec087a5ad42a5063d9e8ea8257501ae3"
 }

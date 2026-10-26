@@ -1,66 +1,180 @@
 {
-  "baseline_commit": "580b0346dd5cdf53b05266be9226339c047af028",
-  "source_sha256": "55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e",
-  "footprint_values_local_pad_geometry_padnets_zone_modes_unchanged": true,
-  "placement_changes_native_nm": {
-    "C606": {
-      "position": {
+  "baseline_commit": "58f60c7289a15d6868785c57a878a4c3e722cb21",
+  "source_sha256": "187575872e391bd4516b903cca55fa80ec087a5ad42a5063d9e8ea8257501ae3",
+  "footprint_positions_values_local_pad_geometry_unchanged": true,
+  "pad_net_and_zone_connection_changes": {
+    "D612": [
+      {
         "before": [
-          72000000,
-          112000000
+          "1",
+          [
+            -787500,
+            0
+          ],
+          "/GND",
+          [
+            875000,
+            950000
+          ],
+          [
+            0,
+            0
+          ],
+          -1
         ],
         "after": [
-          72000000,
-          114000000
+          "1",
+          [
+            -787500,
+            0
+          ],
+          "/GND",
+          [
+            875000,
+            950000
+          ],
+          [
+            0,
+            0
+          ],
+          0
         ]
-      },
-      "angle": {
-        "before": 0.0,
-        "after": 180.0
       }
-    },
-    "R804": {
-      "angle": {
-        "before": 90.0,
-        "after": -90.0
+    ],
+    "J70": [
+      {
+        "before": [
+          "17",
+          [
+            0,
+            -20320000
+          ],
+          "unconnected-(J70-3V3-Pad1)",
+          [
+            1800000,
+            1800000
+          ],
+          [
+            1020000,
+            1020000
+          ],
+          -1
+        ],
+        "after": [
+          "17",
+          [
+            0,
+            -20320000
+          ],
+          "unconnected-(J70-3V3-Pad17)",
+          [
+            1800000,
+            1800000
+          ],
+          [
+            1020000,
+            1020000
+          ],
+          -1
+        ]
       }
-    },
-    "R807": {
-      "angle": {
-        "before": 90.0,
-        "after": -90.0
-      }
-    }
+    ]
   },
-  "thermal_geometry_changes": {},
   "copper_layers": 4,
-  "retained_copper_objects": 16432,
-  "retained_copper_geometry_changes": 0,
+  "retained_copper_objects": 14671,
+  "retained_copper_geometry_changes": [],
   "removed_copper_by_net": {
-    "/GND": 21,
-    "/Rear zone/R_LEFT_IN2": 7,
-    "/Rear zone/RIGHT_ENC_B_RAW": 3,
-    "/Rear zone/R_VCAP1": 4,
-    "/Rear zone/LEFT_ENC_A_RAW": 3,
-    "/Rear zone/RIGHT_MOTOR": 1,
-    "/Front zone/SERVO_VPLUS": 1,
-    "/Rear zone/LEFT_MOTOR": 1
+    "/Rear zone/R_PID_MARKER": 67,
+    "/Rear zone/R_DEG_B_LED": 113,
+    "/Rear zone/R_LEFT_ENC_A": 56,
+    "/Rear zone/R_RELAY_TX_MARKER": 45,
+    "/Rear zone/R_RIGHT_IN3": 112,
+    "/Rear zone/R_REAR_LEFT_LED": 209,
+    "/Rear zone/LEFT_ADC": 145,
+    "/Rear zone/R_SWDIO": 152,
+    "/Rear zone/R_LEFT_ENABLE_PWM": 256,
+    "/Rear zone/R_OVERLOAD_MARKER": 107,
+    "/Rear zone/R_TX_B_MARKER": 55,
+    "/Rear zone/R_STATUS_LED": 27,
+    "/Rear zone/R_RIGHT_ENABLE_PWM": 282,
+    "/Rear zone/RIGHT_ADC": 58,
+    "/Rear zone/R_SELFTEST_BUTTON": 51,
+    "/Rear zone/R_RIGHT_ENC_A": 146,
+    "/Rear zone/R_LEFT_IN2": 191,
+    "/Rear zone/R_LEFT_IN1": 144,
+    "/Rear zone/R_DIR_A_MARKER": 114,
+    "/Rear zone/R_RIGHT_IN4": 48,
+    "/Rear zone/R_STEER_TASK_MARKER": 148,
+    "/Rear zone/R_ERROR_LED": 195,
+    "/GND": 12,
+    "/Rear zone/R_LEFT_ENC_B": 90,
+    "/Rear zone/R_PWM_SET_MARKER": 35,
+    "/Rear zone/R_INT_A": 9,
+    "/Rear zone/R_SCK": 24,
+    "/Rear zone/R_MOSI": 18,
+    "/Rear zone/R_MISO": 48,
+    "/Rear zone/R_INT_B": 7,
+    "/Rear zone/R_REAR_RIGHT_LED": 17,
+    "/Rear zone/R_SWCLK": 36,
+    "/Rear zone/R_DEG_A_LED": 26,
+    "/Rear zone/R_TASK_PROBE": 13,
+    "/Rear zone/R_RIGHT_ENC_B": 10,
+    "/Rear zone/R_CS_A": 7,
+    "/Rear zone/R_UART_CONSOLE_TX": 8,
+    "/Rear zone/R_CS_B": 13,
+    "/Rear zone/LEFT_RETURN": 1,
+    "/VBAT_PROTECTED": 2,
+    "/Rear zone/R_UART_CONSOLE_RX": 3
   },
   "added_copper_by_net": {
-    "/VBAT_PROTECTED": 932,
-    "/Rear zone/R_LEFT_IN2": 66,
-    "/Rear zone/R_REAR_LEFT_LED": 232,
-    "/GND": 13,
-    "/Rear zone/RIGHT_ENC_B_RAW": 3,
-    "/Rear zone/RIGHT_MOTOR": 6,
-    "/Power/BAT_FUSED": 9,
-    "/+3V3": 19,
-    "/Rear zone/LEFT_MOTOR": 6,
-    "/Power/RP_GATE": 28,
-    "/Rear zone/LEFT_ENC_A_RAW": 3,
-    "/Rear zone/R_VCAP1": 7,
-    "/Power/BAT_PLUS": 9,
-    "/Front zone/SERVO_VPLUS": 6
+    "/Rear zone/R_LEFT_IN1": 51,
+    "/Rear zone/R_SWDIO": 147,
+    "/Rear zone/R_LEFT_IN2": 35,
+    "/Rear zone/RIGHT_ADC": 78,
+    "/Rear zone/R_SELFTEST_BUTTON": 30,
+    "/Rear zone/R_SCK": 17,
+    "/Rear zone/R_CS_B": 14,
+    "/Rear zone/R_LEFT_ENC_A": 20,
+    "/Rear zone/R_RX_B_MARKER": 201,
+    "/Rear zone/R_RIGHT_IN4": 41,
+    "/Rear zone/R_DEG_B_LED": 32,
+    "/GND": 41,
+    "/Rear zone/R_RIGHT_ENABLE_PWM": 39,
+    "/Rear zone/R_RIGHT_IN3": 94,
+    "/Rear zone/R_REAR_LEFT_LED": 28,
+    "/Rear zone/R_TASK_PROBE": 9,
+    "/Rear zone/R_LEFT_ENABLE_PWM": 43,
+    "/Rear zone/R_STEER_TASK_MARKER": 131,
+    "/Rear zone/R_TX_B_MARKER": 16,
+    "/Rear zone/R_ERROR_LED": 31,
+    "/Rear zone/R_RIGHT_ENC_B": 11,
+    "/Rear zone/R_TX_A_MARKER": 101,
+    "/Rear zone/R_LEFT_ENC_B": 18,
+    "/Rear zone/R_RX_A_MARKER": 82,
+    "/Rear zone/R_PWM_SET_MARKER": 18,
+    "/Rear zone/R_STATUS_LED": 47,
+    "/Rear zone/R_DEG_A_LED": 28,
+    "/Rear zone/R_REAR_RIGHT_LED": 21,
+    "/Rear zone/LEFT_ADC": 56,
+    "/Rear zone/LEFT_RETURN": 6,
+    "/Rear zone/R_MISO": 18,
+    "/VBAT_PROTECTED": 12,
+    "/Rear zone/R_RIGHT_ENC_A": 18,
+    "/Rear zone/R_RELAY_TX_MARKER": 17,
+    "/Rear zone/R_PID_MARKER": 17,
+    "/Rear zone/R_OVERLOAD_MARKER": 16,
+    "/Rear zone/R_UART_CONSOLE_RX": 9,
+    "/Rear zone/R_INT_B": 19,
+    "/Rear zone/R_MOSI": 16,
+    "/Rear zone/R_CS_A": 8,
+    "/Rear zone/R_UART_CONSOLE_TX": 14,
+    "/Rear zone/R_DIR_A_MARKER": 13,
+    "/Rear zone/R_SWCLK": 11,
+    "/Rear zone/R_INT_A": 10
   },
-  "rear_VCAP1_front_only_no_vias": true
+  "notes": [
+    "J70.17 has its own no-connect net; no Pi 3V3 connection is added.",
+    "D612.1 uses an explicit ground trace with its local pour connection disabled. Other pad zone modes are unchanged.",
+    "Rear MCU active signals were rerouted; GND plane remains reserved on In1.Cu."
+  ]
 }

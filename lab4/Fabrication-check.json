@@ -1,16 +1,16 @@
 {
-  "checked_at_utc": "2026-10-26T21:43:44.275691+00:00",
-  "automated_status": "BLOCKED",
+  "checked_at_utc": "2026-10-26T23:42:33.959031+00:00",
+  "automated_status": "PASS",
   "fabrication_release": false,
   "counts": {
     "schematic_components": 284,
     "electrical_footprints": 284,
-    "track_segments_and_vias": 17771,
+    "track_segments_and_vias": 16355,
     "copper_zones": 6,
     "erc_findings": 0,
     "drc_violations": 0,
-    "unconnected_items": 7,
-    "connectivity_unconnected_count": 7,
+    "unconnected_items": 0,
+    "connectivity_unconnected_count": 0,
     "schematic_parity_findings": 0
   },
   "unassigned_footprints": [],
@@ -26,10 +26,7 @@
     "H8"
   ],
   "schematic_parity_types": {},
-  "blockers": [
-    "unconnected_items: 7 (inspect the fresh detailed report)",
-    "connectivity_unconnected_count: 7 (inspect the fresh detailed report)"
-  ],
+  "blockers": [],
   "ignored_drc_checks": [
     {
       "description": "Footprint has no courtyard defined",
@@ -71,14 +68,14 @@
     }
   ],
   "source_sha256": {
-    "KiCad/Cockpit.kicad_sch": "67a09e928da1675f1fb0037541d22082067049d597d465f6215fa626eb81f63a",
+    "KiCad/Cockpit.kicad_sch": "9e0556b4401ece1febc5379bd64ce753b457f294555820cc4ec24a5a3ba9e0c5",
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
     "KiCad/Front.kicad_sch": "3d7ea407be613b6f300048d468a36f28fc2d900df20a72a846d9a130528c5448",
     "KiCad/Lab4.kicad_dru": "b562451d1099a56da0d310ce7bc54970528d38ddd1f83eee65d30d4be2682006",
-    "KiCad/Lab4.kicad_pcb": "55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e",
+    "KiCad/Lab4.kicad_pcb": "187575872e391bd4516b903cca55fa80ec087a5ad42a5063d9e8ea8257501ae3",
     "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
     "KiCad/Lab4.kicad_sch": "e9315b3b8b8d16fa63ffbfbd15729678265f9bfb871c27f55df3b86189eb969d",
-    "KiCad/Lab4_Logic.kicad_sym": "3486a6869c2c4513da075bbf78c8e8757130b33fb393ca133968d2a9d1c4961f",
+    "KiCad/Lab4_Logic.kicad_sym": "a7cc334c57f19446561936baf69d1b216339a3ddf4b31bcd6b13f833eb90dc09",
     "KiCad/Lab4_Mechanical.pretty/Pi_support_M2.5_D5.5.kicad_mod": "f79e80e5708a2b93bc05360dce2768fa15184d3e4d1072bcf194ed954f21e6d3",
     "KiCad/Lab4_Mechanical.pretty/Samtec_ESQ-120-44_2x20_P2.54mm_H18.67.kicad_mod": "fcfdcc4fb2cb73528ba205da3d1147c2545f5bbea831f2d969c8880d5661aad4",
     "KiCad/Lab4_Power.kicad_sym": "09b078835653c0dd69da3976d405e36355bc6fd5835a9926cd79574def6e3fe3",
@@ -95,9 +92,5 @@
     "Excluded findings are requested; project-level ignored DRC checks are listed for manual review.",
     "No physical fit, current rating, transient response, thermal behavior or TA approval is inferred.",
     "No CAD changes, manufacturing files, purchase or submission are made by this check."
-  ],
-  "schematic_check_provenance": {
-    "checked_at_utc": "2026-10-26T04:21:24.344504+00:00",
-    "reuse_reason": "Schematic/netlist checks from the same routing review; every non-PCB CAD source hash was verified unchanged. PCB DRC and parity rerun on the current board."
-  }
+  ]
 }

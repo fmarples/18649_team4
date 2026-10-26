@@ -50,8 +50,10 @@ their SMD solder lands and used two 0.70/0.30 mm vias at each site. The supply
 paths remain connected. Parallel vias still require current-sharing and
 temperature review; a DRC pass does not establish their rating.
 
-Power-pad overlaps remain at D807.1, D804.1 and D802.2. The sense-branch via
-at U1.4 and other small-signal/supply sites also need assembly review. Move
+We also moved two transition sites at D804.1 and one at D802.2 outside
+their solder lands, with paired vias at each site. D807.1 remains unresolved.
+The sense-branch via at U1.4 and other small-signal/supply sites also need
+assembly review. Move
 these transitions or explicitly qualify the fabrication treatment before
 release. Ordinary DRC does not check solder wicking.
 

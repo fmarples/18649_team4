@@ -1,5 +1,5 @@
 {
-  "source_sha256": "55691214fbd29d5567c898a5e81419e3b43605a97771e3a350a1f9581c22e16e",
+  "source_sha256": "187575872e391bd4516b903cca55fa80ec087a5ad42a5063d9e8ea8257501ae3",
   "fabrication_release": false,
   "can": [
     {
@@ -259,7 +259,7 @@
           "nearest_ground_transition_mm": 2.608
         }
       ],
-      "reference_void_sample_count": 121,
+      "reference_void_sample_count": 120,
       "reference_void_samples_mm": [
         [
           124.5,
@@ -680,7 +680,7 @@
           "nearest_ground_transition_mm": 0.922
         }
       ],
-      "reference_void_sample_count": 121,
+      "reference_void_sample_count": 120,
       "reference_void_samples_mm": [
         [
           155.2,
@@ -850,21 +850,21 @@
       "regulator": "U40",
       "lower_feedback_resistor": "R411",
       "pad_center_distance_mm": 6.729,
-      "explicit_copper_path_excluding_zones": false,
+      "explicit_copper_path_excluding_zones": true,
       "interpretation": "A zone-free path is a connectivity test, not proof of an isolated quiet Kelvin return."
     },
     {
       "regulator": "U41",
       "lower_feedback_resistor": "R421",
       "pad_center_distance_mm": 6.729,
-      "explicit_copper_path_excluding_zones": false,
+      "explicit_copper_path_excluding_zones": true,
       "interpretation": "A zone-free path is a connectivity test, not proof of an isolated quiet Kelvin return."
     },
     {
       "regulator": "U42",
       "lower_feedback_resistor": "R431",
       "pad_center_distance_mm": 6.729,
-      "explicit_copper_path_excluding_zones": false,
+      "explicit_copper_path_excluding_zones": true,
       "interpretation": "A zone-free path is a connectivity test, not proof of an isolated quiet Kelvin return."
     }
   ],

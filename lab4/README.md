@@ -5,14 +5,13 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 NiMH-powered supply with a battery/charger purchase still to finalize. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
-**Status, 26 October 2026:** schematic and partially routed PCB for design review.
-The regulator/MCU/CAN support, CAN backbones and host interfaces are routed.
-We connected 76 sensing/control/debug/indicator nets, then the rear UART, initial
-3.3 V branches, servo-shunt inputs and 24 more MCU signals. The 5 V load groups
-and motor/servo outputs are connected. We also connected the rear-left lamp,
-both remaining 3.3 V pull-ups and the existing input-power circuit. Seven
-connections remain: six rear MCU signals and the unused Pi 3.3 V header net.
-Final supply/return sizing and battery/protection decisions remain unfinished.
+**Status, 26 October 2026:** all required PCB connections are routed, with
+zero missing connections and zero native DRC/ERC/schematic-parity findings.
+All 306 targeted connection checks pass. We completed the six remaining rear
+MCU signals, separated the unused Pi 3.3 V pins, added three explicit feedback
+ground branches and moved three more power-via sites outside solder pads.
+Final supply/return sizing, CAN geometry and battery/protection/mechanical
+decisions remain unfinished. The board is not released for fabrication.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
@@ -26,7 +25,7 @@ The last checked two-layer layout is preserved at the
 [lab4-two-layer-archive tag](https://github.com/fmarples/18649_team4/tree/lab4-two-layer-archive/lab4)
 (commit `59be0b1`). It is a historical, partially routed checkpoint; use the
 current `lab4` branch for further design work.
-The five schematic pages contain 284 components and 297 nets. The proposed
+The five schematic pages contain 284 components and 298 nets. The proposed
 120 x 234 mm PCB contains 284 assigned electrical footprints and eight
 mechanical supports. The four chassis centers use the team's caliper measurements:
 50 mm front, 105 mm rear, 220 mm longitudinal separation and aligned pair
@@ -46,7 +45,7 @@ are not needed for today's review. Mounting hardware is a staff follow-up;
 thermal performance and protection behavior are not validated. Battery mounting
 and procurement decisions remain unresolved. The TAs confirmed on October 23 that
 teams will assemble all SMD parts themselves, with TechSpark oven access tentative.
-BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Routing, power/heatsink decisions,
+BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Power/CAN review, power/heatsink decisions,
 physical fit and hardware validation are unfinished. This is not a fabrication
 or purchasing release. The October 24 review covers schematic, BOM and high-level
 design; the board layout deadline is October 29.

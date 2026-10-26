@@ -11,23 +11,23 @@ The class fabrication batch follows the next morning.
 
 The October 25 updates add the five GCT switch footprints using the verified
 manufacturer A1 drawing and refine the three regulator groups. All 284 schematic components now have matching PCB
-footprints, with eight additional mechanical supports and 297 schematic nets.
+footprints, with eight additional mechanical supports and 298 schematic nets.
 The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-Partial power/MCU/CAN, host and signal routing now contains 16,865 track
-segments, 906 vias and six ground zones on four copper layers. All 292 targeted
-connection checks pass. ERC on the unchanged schematic, ordinary PCB DRC and
-fresh schematic parity have zero findings under the configured rules.
-Both the full connectivity count and DRC listing
-report 7 missing connections: six rear MCU signals and the unused Pi 3.3 V
-header net. The existing input circuit and all 3.3 V pads are connected. See [Routing-review.md](Routing-review.md).
-These checks do not establish component ratings or completed board routing.
+The current routing contains 15,406 track segments, 949 vias and six
+ground zones on four copper layers. All 306 targeted connection checks pass.
+Fresh ERC, native PCB DRC and schematic parity have zero findings; native
+DRC and the full connectivity count both report zero missing connections.
+The schematic separates the two unused Pi 3.3 V pins into individual
+no-connect nets. All 284 electrical footprints and eight supports match.
+See [Routing-review.md](Routing-review.md) for the signal and power-return changes.
 
-`Fabrication-check.json` records the fresh fabrication audit, its source hashes,
-missing parts, DRC results and ignored rule categories. It deliberately reports
-the board as blocked. A placement-only pass must not be used as a release result.
+`Fabrication-check.json` records an automated PASS with source hashes and
+ignored rule categories. This establishes the checked CAD connections and
+rules, not current/thermal ratings, physical fit or release approval. The
+engineering decisions and export/review tasks below still block fabrication.
 
 ## October 26 course updates
 

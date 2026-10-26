@@ -8,13 +8,12 @@ report for disconnected copper islands.
 
 ## Connections and remaining geometry checks
 
-The three lower feedback resistors reach regulator ground through ground
-pours. The corrected zone-excluding check does **not** find a separate trace
-path to each regulator's ground pin. Their pad-center separation is 6.729 mm.
-Our earlier explicit-path statement was incorrect: filtering zones after a
-full connectivity traversal still allowed paths through them. The checker now
-passes KiCad's `EXCLUDE_ZONES` flag during traversal. This does not itself mean
-the circuit is disconnected, but a quiet feedback return has not been established.
+The three lower feedback resistors now have explicit 0.20 mm front-copper
+branches to their regulator ground pins. All three paths pass a connectivity
+check with zones excluded during traversal. Their pad-center separation is
+6.729 mm. The earlier revision connected them through pours only; that
+limitation is now corrected. Because the traces share the ground pour, these
+checks do not establish an isolated quiet return or measured noise performance.
 Before release, review the actual feedback branch and input/output capacitor
 return geometry against the [TPS564252 layout guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf),
 especially the separate feedback return, compact input loop and wide output
