@@ -1,7 +1,8 @@
 # Actuator circuit review
 
-23 October 2026. These circuits are connected in the schematic and included in
-the unrouted placement. We have not powered or tested the new PCB.
+Updated 27 October 2026. These circuits are connected in the schematic and
+routed on the active PCB. We have not powered or tested the new PCB; the
+heatsink footprint and local placement/routing repair are still pending.
 
 ## Motor stage
 
@@ -31,9 +32,11 @@ and thermal resistance; we have not qualified sustained stalls.
 
 For the October 24 preliminary review, the team relays that Anson accepted
 the proposed 6396BG heatsink and confirmed that motor stall current and
-L298 loss/temperature measurements are not needed today. He will investigate
-the mounting hardware. We keep the heatsink selection and record its attachment
-as a staff follow-up before assembly. This does not establish tested cooling,
+L298 loss/temperature measurements were not needed for that preliminary deadline.
+The October 27 [drawing-based review](Heatsink-mounting-review.md) now specifies
+the soldered anchors, M3 tab clamp and thermal interface. Implementing that
+mounting in the PCB is digital work, not a new measurement request.
+This does not establish tested cooling,
 a safe stall duration or a per-motor current limit; see Current-evidence.md.
 
 ## Encoder and output interfaces

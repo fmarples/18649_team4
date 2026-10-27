@@ -109,21 +109,26 @@ smooth chassis through-holes; no chassis thread identification is pending.
 Actual screw engagement is checked at assembly. The team
 reported clearance below the plate for fasteners and motor-wire reach of
 roughly 60 mm above it; these reports do not establish the complete stacked fit.
-We have not verified that a 120 mm rectangle clears the steering wheels through
-their full travel.
+The [mechanical assessment](Mechanical-evidence.md) now gives an 8.75 mm nominal
+main-PCB-to-tire vertical separation under its level-ground assumptions, or
+3.75 mm with an additional 5 mm sensitivity allowance. It does not qualify the
+lower Pi, spacers, cables or complete horizontal steering sweep. Keep the
+unpowered full-travel check for assembly rather than requesting another broad
+measurement campaign before continuing CAD.
 
 For chassis holes H1-H4 we kept a 3 mm margin outside each hole edge.
 For the fixed Pi mounting pattern H5-H8, the proposed clearance radius is 3 mm
 from the center, surrounding hardware of at most 5.5 mm diameter. These are
 different dimensions: a strict 3 mm margin from the Pi hole edge would require
 a 4.35 mm radius and would intersect the standard adjacent GPIO socket body.
-The nearest nominal socket-body edge is 3.337 mm from a Pi hole center (1.995 mm
+The nearest nominal socket-body edge is 3.345 mm from a Pi hole center (1.995 mm
 from its drilled edge). Confirm the course interpretation for these Pi supports
 before fabrication; we have not claimed the larger clearance is met there.
 
 Bottom placement rule areas avoid the Pi body/ports while allowing top circuitry.
-The antenna review zone also excludes copper. Final cable envelopes and
-hardware fit remain to verify; chassis coordinates are measured and paper-checked.
+The antenna review zone also excludes copper. Plug/cooler selection limits and
+microSD service access are defined in Mechanical-evidence.md. Specific optional
+accessories must fit those limits; chassis coordinates are measured and paper-checked.
 Antenna performance is a later powered test.
 
 `Placement-fit-template.pdf` is a two-page A4 fit template with a 50 mm scale bar.
@@ -138,13 +143,16 @@ footprint anchor coordinates, not measured chassis coordinates.
 
 ## Heatsink envelope review
 
-The stock Boyd 6396BG envelope is 41.91 × 25.4 × 25.4 mm. It replaces the
-undersized 28 × 16 mm drawing reservation. Its tentative rectangle overlaps
-several nearby part courtyards, including C800/C801 and the motor sensors.
-This is an unresolved mechanical-layout conflict, even though electrical DRC
-passes: the rectangle is a drawing, not a verified heatsink footprint/rule area.
-Choose and verify its Multiwatt mounting orientation before moving adjacent
-parts and routing. See Parts-review.md and Heatsink-envelope-check.json.
+The stock Boyd 6396BG is 41.91 × 25.4 × 25.4 mm. The October 27
+[mounting study](Heatsink-mounting-review.md) establishes the anchor geometry,
+tab clamp, orientation and nominal vertical fit from drawings. The former
+15-courtyard rectangle is historical; it used a different tentative datum.
+At the present U80 position, the fin/web clearance screen intersects eight
+electrical parts and H1. Moving the sink and U80 by (+3, −3) mm leaves C800,
+C802 and J80 in that screen. This candidate is not applied: the footprint,
+part movement and affected copper rerouting still need implementation and
+all-layer checking. Electrical DRC on the unchanged board does not check the
+new heatsink. See Heatsink-mounting-check.json for exact geometry and limits.
 
 ## Checks and remaining work
 

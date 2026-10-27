@@ -22,6 +22,14 @@ The [ground-plane DC screen](Ground-plane-review.md) and 17 additional
 their documented scope. They change no CAD/BOM files. Local return/contact
 losses and final component/process qualification remain separate.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
+The [6396BG mounting review](Heatsink-mounting-review.md) now defines its
+soldered anchors, M3 clamp and nominal height from drawings. The active PCB
+still needs the footprint and local placement/routing repair; the review
+does not require another physical measurement.
+The [nominal mechanical fit review](Mechanical-evidence.md) now defines
+plug/cooler envelopes, card access and a conditional main-PCB/tire clearance
+screen. It removes the need for another general pre-assembly measurement visit;
+actual mating, retention, full steering and powered tests remain assembly checks.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
 The [supply-path screening](Supply-path-review.md) includes shared-load allocation;

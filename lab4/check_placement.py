@@ -107,9 +107,9 @@ report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
         pi_board_underside_above_chassis_mm=round(pi['main_pcb_chassis_gap_mm']-pi['board_gap_mm']-pi['pi_thickness_assumed_mm'],2),
         top_tht_refs_over_pi=sorted(tht_over_pi),max_tht_tail_projection_mm=3),
     limitations=['Not a physical fit test or complete footprint-dimension validation','Placement checks do not validate copper routing',
-        'Chassis/Pi measurements complete; final cable envelopes and assembled fastener/mating checks remain',
+        'Nominal chassis/Pi/port-envelope review complete; use Mechanical-fit-check.json for dimensions and model limits',
         'Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review',
-        'Pi pin protrusion/heatsink, Wi-Fi, thermals and socket tolerances need physical verification',
+        'Keep <=3mm tails and choose accessories within the documented envelope; mating, retention, full steering and powered performance are assembly checks',
         'Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers'])
 (ROOT/'Placement-check.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
 print(json.dumps(report,indent=2))

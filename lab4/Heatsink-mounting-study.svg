@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 740">
+<rect width="1300" height="740" fill="white"/>
+<g font-family="Arial,sans-serif" fill="#172b3a">
+<text x="30" y="34" font-size="23">6396BG / L298N — drawing-based mounting study</text>
+<text x="30" y="59" font-size="15">Top view of existing layout; no CAD placement changes. Dimensions in mm.</text>
+<rect x="591.4749999999999" y="534.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="600.0" y="551.0" font-size="11" text-anchor="middle">R8</text>
+<rect x="287.655" y="292.115" width="228.69" height="121.77000000000001" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="402.0" y="353.0" font-size="11" text-anchor="middle">U80</text>
+<rect x="624.4749999999999" y="468.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="633.0" y="485.0" font-size="11" text-anchor="middle">R6</text>
+<rect x="316.4749999999999" y="534.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="325.0" y="551.0" font-size="11" text-anchor="middle">R5</text>
+<rect x="591.4749999999999" y="501.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="600.0" y="518.0" font-size="11" text-anchor="middle">C7</text>
+<rect x="349.4749999999999" y="501.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="358.0" y="518.0" font-size="11" text-anchor="middle">R4</text>
+<rect x="492.80499999999995" y="488.54750000000007" width="82.39" height="60.39" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="534.0" y="518.7425000000001" font-size="11" text-anchor="middle">U3</text>
+<rect x="472.125" y="575.0350000000001" width="123.75" height="39.93" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="534.0" y="595.0" font-size="11" text-anchor="middle">J3</text>
+<rect x="669.6025" y="492.755" width="81.28999999999999" height="50.489999999999995" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="710.2475" y="518.0" font-size="11" text-anchor="middle">D805</text>
+<rect x="349.4749999999999" y="468.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="358.0" y="485.0" font-size="11" text-anchor="middle">R3</text>
+<rect x="97.6025" y="316.755" width="81.28999999999999" height="50.489999999999995" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="138.2475" y="342.0" font-size="11" text-anchor="middle">D801</text>
+<rect x="624.4749999999999" y="534.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="633.0" y="551.0" font-size="11" text-anchor="middle">C8</text>
+<rect x="591.4749999999999" y="468.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="600.0" y="485.0" font-size="11" text-anchor="middle">C6</text>
+<rect x="374.2249999999999" y="619.4749999999999" width="33.55" height="17.05" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="391.0" y="628.0" font-size="11" text-anchor="middle">R612</text>
+<rect x="316.4749999999999" y="468.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="325.0" y="485.0" font-size="11" text-anchor="middle">C3</text>
+<rect x="97.6025" y="382.755" width="81.28999999999999" height="50.489999999999995" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="138.2475" y="408.0" font-size="11" text-anchor="middle">D802</text>
+<rect x="561.2249999999999" y="366.4749999999999" width="33.55" height="17.05" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="578.0" y="375.0" font-size="11" text-anchor="middle">C800</text>
+<rect x="94.08283000000003" y="138.527214" width="76.862159" height="76.945572" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="132.51390950000007" y="177.0" font-size="11" text-anchor="middle">H1</text>
+<rect x="608.7985699999999" y="129.74137100000002" width="94.517258" height="94.51724700000001" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="656.057199" y="176.9999945" font-size="11" text-anchor="middle">C802</text>
+<rect x="669.6025" y="558.755" width="81.28999999999999" height="50.489999999999995" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="710.2475" y="584.0" font-size="11" text-anchor="middle">D806</text>
+<rect x="561.2249999999999" y="399.4749999999999" width="33.55" height="17.05" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="578.0" y="408.0" font-size="11" text-anchor="middle">C801</text>
+<rect x="97.6025" y="448.755" width="81.28999999999999" height="50.489999999999995" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="138.2475" y="474.0" font-size="11" text-anchor="middle">D803</text>
+<rect x="308.225" y="619.4749999999999" width="33.55" height="17.05" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="325.0" y="628.0" font-size="11" text-anchor="middle">R611</text>
+<rect x="197.125" y="575.0350000000001" width="123.75" height="39.93" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="259.0" y="595.0" font-size="11" text-anchor="middle">J2</text>
+<rect x="440.2249999999999" y="619.4749999999999" width="33.55" height="17.05" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="457.0" y="628.0" font-size="11" text-anchor="middle">R613</text>
+<rect x="683.9690169999999" y="259.03256600000003" width="143.962423" height="143.934868" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="755.9502284999999" y="331.0" font-size="11" text-anchor="middle">C400</text>
+<rect x="97.6025" y="250.755" width="81.28999999999999" height="50.489999999999995" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="138.2475" y="276.0" font-size="11" text-anchor="middle">D800</text>
+<rect x="260.375" y="127.00499999999998" width="107.25" height="99.99" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="314.0" y="177.0" font-size="11" text-anchor="middle">J80</text>
+<rect x="669.6025" y="426.755" width="81.28999999999999" height="50.489999999999995" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="710.2475" y="452.0" font-size="11" text-anchor="middle">D804</text>
+<rect x="624.4749999999999" y="501.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="633.0" y="518.0" font-size="11" text-anchor="middle">R7</text>
+<rect x="242.22500000000002" y="619.4749999999999" width="33.55" height="17.05" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="259.0" y="628.0" font-size="11" text-anchor="middle">R610</text>
+<rect x="436.375" y="127.00499999999998" width="107.25" height="99.99" fill="#ffe6de" stroke="#9aa9b5" opacity="1"/>
+<text x="490.0" y="177.0" font-size="11" text-anchor="middle">J81</text>
+<rect x="316.4749999999999" y="501.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="325.0" y="518.0" font-size="11" text-anchor="middle">C4</text>
+<rect x="349.4749999999999" y="534.2249999999999" width="17.05" height="33.55" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="358.0" y="551.0" font-size="11" text-anchor="middle">C5</text>
+<rect x="217.80500000000004" y="488.54750000000007" width="82.39" height="60.39" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="259.0" y="518.7425000000001" font-size="11" text-anchor="middle">U2</text>
+<rect x="171.495" y="147.02500000000006" width="461.01" height="279.4" fill="none" stroke="#d48a00" opacity="1"/>
+<rect x="171.495" y="147.02500000000006" width="105.48999999999995" height="279.4" fill="#34495e" stroke="#172b3a" opacity="0.32"/>
+<rect x="527.0150000000001" y="147.02500000000006" width="105.48999999999988" height="279.4" fill="#34495e" stroke="#172b3a" opacity="0.32"/>
+<rect x="276.985" y="278.09000000000003" width="250.03000000000011" height="17.27" fill="#34495e" stroke="#172b3a" opacity="0.32"/>
+<circle cx="262.29999999999995" cy="286.7250000000001" r="24.75" fill="none" stroke="#007c91" stroke-width="2"/>
+<circle cx="262.29999999999995" cy="286.7250000000001" r="15.895000000000001" fill="white" stroke="#007c91"/>
+<circle cx="541.7" cy="286.7250000000001" r="24.75" fill="none" stroke="#007c91" stroke-width="2"/>
+<circle cx="541.7" cy="286.7250000000001" r="15.895000000000001" fill="white" stroke="#007c91"/>
+<text x="850" y="100" font-size="14">Mounting plan from manufacturer drawings</text>
+<text x="850" y="124" font-size="14">Two soldered anchor pins: 25.40 mm pitch</text>
+<text x="850" y="148" font-size="14">Recommended finished plated holes: 2.89 mm</text>
+<text x="850" y="172" font-size="14">Sink: 41.91 wide x 25.40 deep x 25.40 high</text>
+<text x="850" y="196" font-size="14">One M3 screw + nut through the device tab</text>
+<text x="850" y="220" font-size="14">Sink screw center: 19.05 mm above base</text>
+<text x="850" y="244" font-size="14"></text>
+<text x="850" y="268" font-size="14">Green circles: proposed anchor pads/holes</text>
+<text x="850" y="292" font-size="14">Dark blocks: conservative fin/web occupied space</text>
+<text x="850" y="316" font-size="14">Orange outline: outer bounding rectangle</text>
+<text x="850" y="340" font-size="14">Red parts: clearance-screen intersections</text>
+<text x="850" y="364" font-size="14"></text>
+<text x="850" y="388" font-size="14">Layout repair is still required:</text>
+<text x="850" y="412" font-size="14">C800, C801, C802, D800, D801, D802, H1</text>
+<text x="850" y="436" font-size="14">J80, J81</text>
+<text x="850" y="460" font-size="14">Reroute copper around both anchor holes.</text>
+<text x="850" y="484" font-size="14"></text>
+<text x="850" y="508" font-size="14">Flush mount / 1.6 mm PCB height screen:</text>
+<text x="850" y="532" font-size="14">Minimum lead projection, either row: 1.05 mm</text>
+<text x="850" y="556" font-size="14">Lead bend above PCB: 0.95–1.40 mm</text>
+<text x="850" y="580" font-size="14">Package bottom above PCB: 3.95–4.70 mm</text>
+<text x="850" y="604" font-size="14">These are calculations, not physical fit tests.</text>
+</g></svg>

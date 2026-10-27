@@ -36,9 +36,9 @@
   "limitations": [
     "Not a physical fit test or complete footprint-dimension validation",
     "Placement checks do not validate copper routing",
-    "Chassis/Pi measurements complete; final cable envelopes and assembled fastener/mating checks remain",
+    "Nominal chassis/Pi/port-envelope review complete; use Mechanical-fit-check.json for dimensions and model limits",
     "Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review",
-    "Pi pin protrusion/heatsink, Wi-Fi, thermals and socket tolerances need physical verification",
+    "Keep <=3mm tails and choose accessories within the documented envelope; mating, retention, full steering and powered performance are assembly checks",
     "Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers"
   ]
 }

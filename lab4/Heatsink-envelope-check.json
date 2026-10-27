@@ -1,5 +1,5 @@
 {
-  "status": "UNRESOLVED",
+  "status": "SUPERSEDED_PROVISIONAL_RECTANGLE",
   "envelope": {
     "name": "6396BG 41.91x25.4 ENVELOPE / MOUNT TO VERIFY",
     "x": 11.045,
@@ -26,5 +26,6 @@
     "U2",
     "U3"
   ],
-  "explanation": "Tentative 2D heatsink rectangle; actual Multiwatt mounting orientation and vertical clearance unverified. U80 excluded as intended attachment. This is not included in electrical DRC."
+  "explanation": "Historical full rectangle at a tentative datum; retain the original 15 intersections for provenance. Use the October 27 drawing-based mounting study for current geometry. Neither study is installed in the active PCB.",
+  "superseded_by": "Heatsink-mounting-check.json"
 }

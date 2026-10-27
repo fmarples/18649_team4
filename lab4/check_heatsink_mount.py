@@ -1,0 +1,200 @@
+"""Drawing-based 6396BG mounting study against the saved board (no CAD edits).
+
+Run with KiCad Python. Dimensions/datums and limitations are explained in
+Heatsink-mounting-review.md. Bounding boxes screen clearance; they do not
+assert physical collision with every fin. The active PCB remains unchanged.
+"""
+import hashlib
+import html
+import json
+from pathlib import Path
+import pcbnew as p
+
+ROOT = Path(__file__).resolve().parent
+board_file = ROOT / 'KiCad/Lab4.kicad_pcb'
+b = p.LoadBoard(str(board_file))
+lib = ROOT / 'KiCad/Lab4_Mechanical.pretty'
+mount = p.FootprintLoad(str(lib), 'Boyd_6396BG_StraightPins')
+assert mount is not None
+anchor_pads = sorted(mount.Pads(), key=lambda pad: pad.GetNumber())
+assert len(anchor_pads) == 2
+for pad, x in zip(anchor_pads, [-12.7, 12.7]):
+    assert abs(p.ToMM(pad.GetPosition().x) - x) < 1e-6
+    assert abs(p.ToMM(pad.GetPosition().y)) < 1e-6
+    assert abs(p.ToMM(pad.GetDrillSize().x) - 2.89) < 1e-6
+    assert abs(p.ToMM(pad.GetSize().x) - 4.5) < 1e-6
+mount.BuildCourtyardCaches()
+assert mount.GetCourtyard(p.F_CrtYd).OutlineCount() == 1
+fps = {f.GetReference(): f for f in b.GetFootprints()}
+u = fps['U80']
+assert u.GetValue() == 'L298N'
+assert u.GetOrientationDegrees() == 0 and not u.IsFlipped()
+assert u.GetFPIDAsString() == 'Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical'
+mm = p.ToMM
+ox, oy = mm(u.GetPosition().x), mm(u.GetPosition().y)
+# F.Fab back of metal tab is 9.58 mm behind odd-numbered lead row.
+# Even-numbered row is 5.08 mm behind it; drawing M is 4.55 nominal.
+cx, face_y = ox + 8.89, oy - 9.58
+row_y = face_y - 1.57 / 2
+pins = [[cx - 12.7, row_y], [cx + 12.7, row_y]]
+rect = [cx - 41.91 / 2, row_y - 25.4 / 2, 41.91, 25.4]
+# Conservative solid blocks enclose the fins and anchor barrels. The open
+# channel is NOT filled: it deliberately accommodates U80. 2.67 is used as
+# an anchor-barrel envelope from the current family drawing, not a PCB drill.
+barrel_r = 2.67 / 2
+left_end, right_start = pins[0][0] + barrel_r, pins[1][0] - barrel_r
+solids = [
+    [rect[0], rect[1], left_end - rect[0], rect[3]],
+    [right_start, rect[1], rect[0] + rect[2] - right_start, rect[3]],
+    [left_end, face_y - 1.57, right_start - left_end, 1.57],
+]
+
+
+def bbox(fp):
+    fp.BuildCourtyardCaches()
+    bb = fp.GetCourtyard(p.F_CrtYd).BBox()
+    return [mm(bb.GetX()), mm(bb.GetY()), mm(bb.GetWidth()), mm(bb.GetHeight())]
+
+
+def intersects(a, c, margin=0):
+    x, y, w, h = a; q, r, s, t = c
+    return min(x+w+margin, q+s) > max(x-margin, q)+.001 and min(y+h+margin, r+t) > max(y-margin, r)+.001
+
+
+boxes = {r: bbox(f) for r, f in fps.items() if not f.IsFlipped()}
+outer_hits = sorted(r for r, v in boxes.items() if r != 'U80' and intersects(rect, v))
+solid_hits = sorted(r for r, v in boxes.items() if r != 'U80' and any(intersects(s, v, .5) for s in solids))
+
+# Search nearby alternatives without moving the routed board. Chassis holes
+# stay fixed; screen their specified 4.6 mm support radius, not just drill size.
+candidates = []
+for dx in range(-10, 21):
+    for dy in range(-3, 21):
+        moved = [[s[0]+dx,s[1]+dy,s[2],s[3]] for s in solids]
+        if any(s[0]-.5<40 or s[1]-.5<40 or s[0]+s[2]+.5>160 or s[1]+s[3]+.5>274 for s in moved):continue
+        hole_hit = False
+        for hn in ['H1','H2','H3','H4']:
+            hp = fps[hn].GetPosition(); hx,hy = mm(hp.x),mm(hp.y)
+            for x,y,w,h in moved:
+                q=max(x-hx,0,hx-x-w);r=max(y-hy,0,hy-y-h)
+                if q*q+r*r<(4.6+.5)**2:hole_hit=True
+        if hole_hit:continue
+        body = [boxes['U80'][0]+dx,boxes['U80'][1]+dy,*boxes['U80'][2:]]
+        hits = sorted(r for r,v in boxes.items() if r!='U80' and
+                      (any(intersects(s,v,.5) for s in moved) or intersects(body,v)))
+        candidates.append({'dx_mm':dx,'dy_mm':dy,'affected_courtyards':hits,
+                           'count':len(hits),'displacement_mm':(dx*dx+dy*dy)**.5})
+candidates.sort(key=lambda c:(c['count'],c['displacement_mm']))
+
+
+def point_segment_distance(x, y, a, c):
+    dx, dy = c[0]-a[0], c[1]-a[1]
+    t = max(0, min(1, ((x-a[0])*dx+(y-a[1])*dy)/(dx*dx+dy*dy))) if dx*dx+dy*dy else 0
+    return ((x-a[0]-t*dx)**2+(y-a[1]-t*dy)**2)**.5
+
+
+anchor_copper = []
+for x, y in pins:
+    hits = []
+    for tr in b.GetTracks():
+        a, c = tr.GetStart(), tr.GetEnd()
+        d = point_segment_distance(x, y, [mm(a.x),mm(a.y)], [mm(c.x),mm(c.y)])
+        # Proposed 4.5 mm pad diameter plus 0.2 mm clearance.
+        width = tr.GetWidth(p.F_Cu) if isinstance(tr, p.PCB_VIA) else tr.GetWidth()
+        if d < 2.25 + .2 + mm(width)/2:
+            hits.append({'net':tr.GetNetname(), 'layer':b.GetLayerName(tr.GetLayer())})
+    anchor_copper.append({'center_mm':[x,y], 'track_or_via_hits':len(hits),
+                          'nets':sorted(set(h['net'] for h in hits))})
+
+result = {
+    'status':'DRAWING_STUDY_COMPLETE_LAYOUT_NOT_IMPLEMENTED',
+    'pcb_sha256':hashlib.sha256(board_file.read_bytes()).hexdigest(),
+    'library_footprint':'Lab4_Mechanical:Boyd_6396BG_StraightPins',
+    'library_footprint_check':'PASS: two pads, 25.4 mm pitch, 2.89 mm drills, 4.5 mm pads, one closed courtyard',
+    'library_footprint_installed_in_active_board':False,
+    'coordinate_system':'KiCad absolute mm; subtract (40,40) for board-relative coordinates',
+    'part':'6396BG straight pins; NOT 6396B-P2G',
+    'body_mm':[41.91,25.4,25.4], 'pin_centers_mm':pins,
+    'recommended_finished_pth_diameter_mm':2.89,
+    'study_pad_diameter_mm':4.5, 'device_mount_hole_diameter_mm':3.81,
+    'device_screw_center_height_above_sink_bottom_mm':19.05,
+    'mounting_face_y_mm':face_y, 'outer_envelope_mm':rect,
+    'conservative_fin_web_blocks_mm':solids, 'block_clearance_mm':.5,
+    'outer_envelope_courtyard_intersections':outer_hits,
+    'fin_web_clearance_screen_intersections':solid_hits,
+    'anchor_copper_screen':anchor_copper,
+    'nearby_clearance_candidates_NOT_applied':candidates[:5],
+    'nominal_uninsulated_flush_mount': {
+        'pcb_thickness_mm':1.6,
+        'st_short_lead_hole_to_tip_min_mm':21.9,
+        'st_short_lead_hole_to_tip_max_mm':22.5,
+        'short_lead_below_board_min_mm':round(21.9-19.05-1.6,3),
+        'short_lead_below_board_max_mm':round(22.5-19.05-1.6,3),
+        'other_row_hole_to_tip_min_mm':21.7,
+        'minimum_either_row_below_board_mm':round(21.7-19.05-1.6,3),
+        'bend_plane_above_board_min_mm':round(19.05-18.1,3),
+        'bend_plane_above_board_max_mm':round(19.05-17.65,3),
+        'package_bottom_above_board_min_mm':round(19.05-(17.75-2.65),3),
+        'package_bottom_above_board_max_mm':round(19.05-(17.25-2.9),3),
+    },
+    'limits':[
+        'No footprint/hole/component or copper changed in active board.',
+        'A fin-block/courtyard intersection is a clearance-screen finding, not measured physical interference.',
+        'No credit for mounting components under the heatsink or between individual fins.',
+        'No thermal qualification or complete supplier tolerance stack.',
+        'Copper screen covers tracks/vias; pads, all-layer zones and DRC must be checked when installing anchors.',
+        'Soldered anchor pads are mechanical. Do not depend on the anodized body as insulation or as a reliable ground connection.',
+    ],
+}
+(ROOT/'Heatsink-mounting-check.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+
+# A standalone dimensioned study; not a replacement for the active board.
+svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 740">',
+     '<rect width="1300" height="740" fill="white"/>',
+     '<g font-family="Arial,sans-serif" fill="#172b3a">',
+     '<text x="30" y="34" font-size="23">6396BG / L298N — drawing-based mounting study</text>',
+     '<text x="30" y="59" font-size="15">Top view of existing layout; no CAD placement changes. Dimensions in mm.</text>']
+scale=11
+def xy(x,y):return 50+(x-40)*scale,100+(y-40)*scale
+def rectangle(a,fill,stroke,opacity=1):
+    x,y=xy(a[0],a[1]);w,h=a[2]*scale,a[3]*scale
+    svg.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill}" stroke="{stroke}" opacity="{opacity}"/>')
+for r,v in boxes.items():
+    if v[0]<100 and v[1]+v[3]<90 and v[0]+v[2]>40 and v[1]+v[3]>40:
+        rectangle(v,'#ffe6de' if r in solid_hits else '#f1f5f9','#9aa9b5')
+        x,y=xy(v[0]+v[2]/2,v[1]+v[3]/2)
+        svg.append(f'<text x="{x}" y="{y}" font-size="11" text-anchor="middle">{html.escape(r)}</text>')
+rectangle(rect,'none','#d48a00')
+for s in solids:rectangle(s,'#34495e','#172b3a',.32)
+for x,y in pins:
+    a,c=xy(x,y)
+    svg.append(f'<circle cx="{a}" cy="{c}" r="{2.25*scale}" fill="none" stroke="#007c91" stroke-width="2"/>')
+    svg.append(f'<circle cx="{a}" cy="{c}" r="{2.89/2*scale}" fill="white" stroke="#007c91"/>')
+labels=[
+    'Mounting plan from manufacturer drawings',
+    'Two soldered anchor pins: 25.40 mm pitch',
+    'Recommended finished plated holes: 2.89 mm',
+    'Sink: 41.91 wide x 25.40 deep x 25.40 high',
+    'One M3 screw + nut through the device tab',
+    'Sink screw center: 19.05 mm above base',
+    '',
+    'Green circles: proposed anchor pads/holes',
+    'Dark blocks: conservative fin/web occupied space',
+    'Orange outline: outer bounding rectangle',
+    'Red parts: clearance-screen intersections',
+    '',
+    'Layout repair is still required:',
+    ', '.join(solid_hits[:7]),
+    ', '.join(solid_hits[7:]),
+    'Reroute copper around both anchor holes.',
+    '',
+    'Flush mount / 1.6 mm PCB height screen:',
+    'Minimum lead projection, either row: 1.05 mm',
+    'Lead bend above PCB: 0.95–1.40 mm',
+    'Package bottom above PCB: 3.95–4.70 mm',
+    'These are calculations, not physical fit tests.',
+]
+for i,line in enumerate(labels):svg.append(f'<text x="850" y="{100+i*24}" font-size="14">{html.escape(line)}</text>')
+svg.append('</g></svg>')
+(ROOT/'Heatsink-mounting-study.svg').write_text('\n'.join(svg)+'\n',encoding='utf-8')
+print(json.dumps({k:result[k] for k in ['status','pin_centers_mm','fin_web_clearance_screen_intersections','anchor_copper_screen','nominal_uninsulated_flush_mount']},indent=2))

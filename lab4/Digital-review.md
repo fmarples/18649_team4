@@ -17,13 +17,18 @@ released the board for fabrication or tested a built PCB.
 | Circuit/package consistency | Netlist/pad checks pass. Manufacturer package/pinout checks now cover U40–U42, U1, U81, D40, both MCUs, all six CAN controllers/transceivers, both ACS712 sensors and Q1; see [Critical-package-review.md](Critical-package-review.md). The Pi socket and switch geometry checks remain valid. Inductors, connectors/fuse hardware, remaining discretes and L298 installation still need the relevant drawing/process checks. |
 | Power-margin sensitivity | Compared CAN, encoder and Pi limits separately; calculated capacitor-retention targets, feed-forward zeros/poles, converter ripple/loss and L298 cooling requirements. Four independent numerical tests pass; results were regenerated for the wider supply copper. Setpoints and BOM did not change in this pass. See Power-margin-review.md. |
 | Bulk ground-plane DC loss | Extracted saved In1 fill, modeled three DC current cases on three meshes with two port radii, and compared load grounds with feedback-reference grounds. Four independent sheet-solver tests pass. Positive Pi ground offsets are 2.6–6.5 mV in these cases; local connections, contacts and dynamics are excluded. See [Ground-plane-review.md](Ground-plane-review.md). |
+| Heatsink mounting research | Defined the 6396BG anchors, M3 tab clamp, hardware and nominal height from Boyd/ST drawings. A nearby U80/sink placement reduces the fin/web screen to C800, C802 and J80. The candidate is not yet applied. See [Heatsink-mounting-review.md](Heatsink-mounting-review.md). |
+| Nominal mechanical fit | Recomputed Pi heights, engagement and support/socket distances from saved CAD; defined plug/cooler selection envelopes and microSD service access. A conditional main-board/tire screen gives 8.75 mm, or 3.75 mm with a 5 mm sensitivity allowance. Complete vehicle sweep and actual mating remain assembly checks. See [Mechanical-evidence.md](Mechanical-evidence.md). |
 
 The component centers, pad shapes/nets, mounting geometry, CAN backbone and
 project rules are unchanged by the preceding width-only pass. R430/R431 retain the
 precision parts selected in the previous revision. The schematic PDF,
 current CSV BOMs, board previews and verification reports describe this revision.
-The subsequent ground-plane and additional package reviews change no CAD or
-BOM files, so the prior native checks still match their source hashes.
+The ground-plane and additional package reviews change no CAD/BOM files.
+The subsequent mechanical review adds a library-only heatsink footprint and
+specifies its mounting kit in two purchasing-BOM rows; it does not alter the
+active schematic or PCB. Fresh placement/netlist checks pass. Prior native
+ERC/DRC results still match the unchanged active CAD hashes.
 
 ## Findings that still prevent release
 
@@ -38,11 +43,14 @@ BOM files, so the prior native checks still match their source hashes.
   select documented alternatives, then settle the feed-forward values. The
   completed sensitivity review does not establish full-loop stability. Finish
   the cooling assessment after the input/load envelope and heatsink placement
-  are fixed; a detailed thermal model with guessed attachment is premature.
+  are fixed. The drawing-based tab/anchor arrangement is now specified.
 - **Design choices:** settle the battery/charger and input protection, L298
-  fault expectations, heatsink attachment/envelope, Pi mounting-margin
+  fault expectations, Pi mounting-margin
   interpretation and servo mating-part rating. These affect the design;
   no repeat chassis measurements are requested.
+- **Heatsink implementation:** install the specified two-anchor footprint,
+  move U80 and the affected neighbors, reroute and check the copper. Mounting
+  research is complete; this CAD work does not depend on new measurements.
 - **Purchasing and exports:** reconcile course stock and the two precision
   resistor changes with the previously uploaded purchasing snapshot. Generate
   and inspect final manufacturing files after affected design changes.

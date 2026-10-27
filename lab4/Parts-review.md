@@ -187,16 +187,14 @@ current; a high-current pack does not increase the L298's limits.
 
 ## Open package and mechanical checks
 
-The [Boyd 6396BG drawing](https://info.boydcorp.com/hubfs/Thermal/Air-Cooling/Boyd-Board-Level-Cooling-High-Power-Extruded-6390.pdf)
-specifies 41.91 × 25.4 × 25.4 mm. The old 28 × 16 mm reservation was too small.
-We updated the drawing envelope, but it is not a validated installation.
-The October 24 team reply relays Anson's acceptance of 6396BG for today's
-review; he will investigate the mounting hardware. The part choice is settled
-for this review, while the attachment remains a staff follow-up before assembly.
-Boyd lists TO-218/TO-220 compatibility; L298N is Multiwatt-15. Verify the hole,
-tab contact, mounting hardware and orientation on the actual course parts.
-Final clearance and thermal performance depend on that installation. Electrical
-DRC does not check an unattached heatsink.
+The October 27 [6396BG mounting review](Heatsink-mounting-review.md) defines
+two soldered PCB anchors and an M3 screw/nut clamp against the L298 tab,
+with a thin thermal-grease interface. Boyd/ST drawings support the nominal
+vertical fit. We have specified one hardware kit; course allocation remains
+unconfirmed. No new lab measurement is needed to discover the mounting method.
+The footprint, nearby placement changes and copper repair still need to be
+implemented before fabrication. Actual fit and powered temperature are
+assembly checks, not completed measurements.
 
 The five GCT switch footprints are verified against the manufacturer's A1
 drawing and placed. Physical terminals 1/2 map to logical pad 1; terminals 3/4
@@ -385,13 +383,11 @@ voltages give roughly7-14mA. Existing compatible lamps can be reused; do not
 order duplicates simply because the BOM includes a fallback.
 
 **Three purchasing exceptions need resolution or explicit review: battery,
-charger and servo-side adapter lead.** The separate heatsink-attachment row
-stays in the BOM as a deferred staff follow-up, not a kit to order or a task
-that must be solved tonight. The team reports that Anson accepted 6396BG for
-the October 24 review and will investigate its mounting hardware. Boyd's
-published package list is TO-218/TO-220; our L298N is Multiwatt15. We have not
-verified a generic TO-220 mounting kit. After staff identifies the attachment,
-confirm the screw length, nut, thermal interface and installed clearances.
+charger and servo-side adapter lead.** The heatsink attachment is now a
+specified one-kit demand in the BOM, with steel screw/nut/washer references
+and thermal-interface guidance in [Heatsink-mounting-review.md](Heatsink-mounting-review.md).
+Course supply and any distributor pack rounding remain unconfirmed. The
+earlier staff follow-up does not prevent drawing-based design work.
 
 No purchases or fabrication release have been made. The active board BOM
 remains [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv); off-board substitutions do not alter the circuit. The separate encoder-supply

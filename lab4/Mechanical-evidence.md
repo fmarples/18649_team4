@@ -1,6 +1,6 @@
 # Mechanical evidence and dimensional checks
 
-25 October 2026. We reconciled the October 23–24 measurement photos, team
+Updated 27 October 2026. We reconciled the October 23–24 measurement photos, team
 confirmations and the replies in the [original checklist](https://docs.google.com/document/d/1P07nc_d7xIuWZ1wto0kTwSsNMT-0vlnfMW1e4U4-y5E/edit).
 These observations support the design; they do not describe an assembled PCB.
 
@@ -38,25 +38,78 @@ No cooler dimensions were supplied; a cooler is not included in this clearance
 claim. A different cooler or longer solder tails must be checked against the
 available space before installation.
 
-These calculations complete the nominal height assessment. Actual connector
-engagement, fastener retention and powered thermal behavior remain assembly
-checks. Before freezing the outline/connector positions, only unresolved
-geometry needs review: cable exits/plug access, steering sweep and heatsink
-installation. Use existing dimensions/drawings where sufficient; a quick
-unpowered mock-up is needed only where those cannot establish clearance.
-Do not rebuild the Lab 2 circuit to repeat these observations.
+These calculations complete the nominal height assessment. We do not request
+another height measurement or a pre-assembly lab visit for it. Actual connector
+engagement, fastener retention and powered thermal behavior are assembly checks.
+The reproducible [dimensional check](check_mechanical_fit.py) reads the saved
+board and produces [Mechanical-fit-check.json](Mechanical-fit-check.json).
+Its results are calculated dimensions, not additional physical observations.
+
+## Port, cable and steering assessment
+
+We can continue the design using explicit accessory envelopes. An unspecified
+plug or cooler cannot be declared compatible, but it need not stop placement:
+we choose accessories to fit the available space. The Pi is powered through
+the 40-pin socket in this design; a USB-C power cable is not part of the normal
+vehicle power path. USB/Ethernet cables are optional service accessories.
+
+| Item | Drawing-based result and design constraint | Status |
+| --- | --- | --- |
+| USB/Ethernet access | The Pi board edge is 5 mm inside the main PCB edge. The existing bottom-side port corridor opens to that edge. Keep any plug/boot portion under the main PCB within 18 mm above the Pi top surface; with tails at most 3 mm, this leaves 1 mm nominal vertical space. A plug extending horizontally beyond the main board is allowed. | Corridor and height limit defined; a particular cable is not qualified until its drawing satisfies the envelope. |
+| Cooler | Total installed cooler height, including its interface, must fit the same 18 mm upper-side envelope wherever a 3 mm solder tail overlaps. A cooler is not presently selected or included in the BOM fit claim. | Selection constraint defined; no measurement needed for a future part with a drawing. |
+| microSD access | The Pi's left edge is 30 mm inside the main board. The saved lower-side access corridor extends to the left board edge. The calculated 6.4 mm residual lower clearance supports card-level access; it does not guarantee fingertip access. Install the card before stacking and use a thin card-handling tool for later service if required. | Service method defined; no requirement to fit a hand in the gap. |
+| Motor/servo leads | Reported motor lead reach is about 60 mm above the chassis, versus a 35 mm PCB underside height. The 25 mm difference must also accommodate PCB/connector height and bends; it is not proof that every lead reaches every connector. Use the already planned adapter harnesses, cut to route with slack and secured away from moving parts. | No board change or repeat photograph needed. Actual adapter length/continuity is checked when making it. |
+| Main PCB above tires | The recorded 75 mm tire diameter and 51.75 mm interplate gap give the vertical screen below. | Nominal main-board clearance calculated; complete vehicle sweep is an assembly check. |
+
+For the tire screen, assume upright wheels on level ground and a rigid chassis.
+Conservatively set lower-plate ground clearance and plate thickness to zero;
+both positive dimensions would raise the main PCB. Its lowest allowed solder
+tail is then at least 51.75 + 35 − 3 = **83.75 mm above ground**, compared with
+the nominal tire top at 75 mm: **8.75 mm separation**. Even allocating another
+5 mm for combined dimensional/deflection uncertainty leaves **3.75 mm**.
+That 5 mm is a sensitivity allowance, not a measured or guaranteed tolerance.
+The 75 mm figure is the team's recorded wheel diameter in
+[HARDWARE.md](../doc/HARDWARE.md); the 51.75 mm figure is the October 24 report.
+This vertical result does not depend on the steering angle while tires stay
+upright on the same level surface.
+
+The screen covers the main PCB and its limited solder tails. It does not cover
+the lower Pi, long chassis spacers, loose cables, tire camber or obstacle travel.
+The [chassis drawings/photos](https://www.hiwonder.com/products/ackermann-steering-chassis?variant=40382428348503)
+do not dimension all steering pivots, stops or cable paths, so we do not claim
+a mathematically complete swept-volume check. We retain the present outline
+and stack as the nominal design, route cables inboard, and keep a full left/right
+unpowered steering check for assembly. There is no new general measurement
+request or requirement to dismantle Lab 3 before continuing CAD.
+
+## Checks that actually require hardware
+
+After assembly, confirm socket mating, screw engagement/retention, adapter
+continuity/polarity and unpowered full steering travel with the installed
+cables. Loaded voltage, ripple, noise, radio performance and temperature are
+powered bring-up tests. Calculations support design choices but cannot report
+those outcomes for a board that has not been built. They are not pre-fabrication
+measurement tasks in the October 29 checklist.
 
 ## Heatsink and mounting-margin limits
 
 The October 24 message reports TA acceptance of **6396BG** for the preliminary
 review and staff follow-up on attachment hardware. Published dimensions are
 available; measuring them again is not a prerequisite for placement.
-The unresolved issue is its attachment to the L298N and resulting occupied
-space: the tentative envelope intersects 15 courtyards. A nominal envelope can
-be designed from the drawing, but an unverified mounting method cannot be
-declared resolved by adding a margin.
+The October 27 [mounting review](Heatsink-mounting-review.md) now specifies
+the two soldered anchors, M3 tab clamp, thermal interface and nominal vertical
+fit from Boyd/ST drawings. No new measurement is needed to determine that
+method. The old 15-courtyard rectangle is superseded by a drawing-based
+fin/web screen and a nearby placement candidate. Installing the footprint,
+moving the affected parts and rerouting their copper remain digital work;
+the actual assembled fit and temperature have not been tested.
 
-The Pi supports' 3 mm radius from the hole center remains a course-rule
-interpretation, not a missing measurement. The adjacent GPIO socket conflicts
-with a literal 3 mm margin from the drilled edge. See
-[Placement-review.md](Placement-review.md) for the numbers.
+The saved socket body is **3.345 mm from the nearest Pi hole centers**. This
+corrects the older 3.337 mm center-distance text; the 1.995 mm edge distance was
+already correct. A 5.5 mm maximum hardware diameter leaves **0.595 mm nominal
+body clearance**. However, the 2.7 mm hole plus a literal 3 mm edge margin needs
+radius 1.35 + 3 = 4.35 mm, exceeding the available distance by **1.005 mm**.
+Thus physical nominal fit and the course-rule interpretation are different
+questions. No measurement or conservative estimate changes that rule conflict.
+We still need the TA's interpretation, or a deliberate mounting redesign, before
+claiming compliance. See [Placement-review.md](Placement-review.md).

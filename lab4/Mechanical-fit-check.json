@@ -1,0 +1,76 @@
+{
+  "status": "NOMINAL_CALCULATIONS_COMPLETE_NOT_ASSEMBLY_QUALIFICATION",
+  "pcb_sha256": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d",
+  "pi_stack_mm": {
+    "chassis_gap": 35,
+    "pi_gap": 22,
+    "pi_underside_above_chassis": 11.4,
+    "underside_clearance_after_5mm_envelope": 6.4,
+    "usb_clearance_after_3mm_tails": 2.6,
+    "conservative_18mm_top_envelope_clearance": 1.0,
+    "socket_insertion": 5.17,
+    "insertion_lower_margin": 1.49,
+    "insertion_upper_margin": 1.18
+  },
+  "socket_body_absolute_mm": [
+    76.845,
+    130.024999,
+    128.155,
+    134.974999
+  ],
+  "pi_supports": [
+    {
+      "reference": "H5",
+      "drill_mm": 2.7,
+      "center_to_socket_body_mm": 3.345,
+      "hole_edge_to_socket_body_mm": 1.995,
+      "hardware_to_socket_mm": 0.595,
+      "strict_3mm_hole_edge_margin_shortfall_mm": 1.005
+    },
+    {
+      "reference": "H6",
+      "drill_mm": 2.7,
+      "center_to_socket_body_mm": 3.345,
+      "hole_edge_to_socket_body_mm": 1.995,
+      "hardware_to_socket_mm": 0.595,
+      "strict_3mm_hole_edge_margin_shortfall_mm": 1.005
+    },
+    {
+      "reference": "H7",
+      "drill_mm": 2.7,
+      "center_to_socket_body_mm": 46.6451,
+      "hole_edge_to_socket_body_mm": 45.2951,
+      "hardware_to_socket_mm": 43.8951,
+      "strict_3mm_hole_edge_margin_shortfall_mm": 0
+    },
+    {
+      "reference": "H8",
+      "drill_mm": 2.7,
+      "center_to_socket_body_mm": 46.6451,
+      "hole_edge_to_socket_body_mm": 45.2951,
+      "hardware_to_socket_mm": 43.8951,
+      "strict_3mm_hole_edge_margin_shortfall_mm": 0
+    }
+  ],
+  "main_board_wheel_vertical_screen_mm": {
+    "wheel_diameter_reported": 75.0,
+    "interplate_height_reported": 51.75,
+    "pcb_tail_to_tire_clearance_lower_bound_under_model": 8.75,
+    "additional_unverified_height_allowance": 5.0,
+    "clearance_with_that_allowance": 3.75
+  },
+  "port_envelope_limits_mm": {
+    "top_side_plug_or_cooler_height_max_with_1mm_margin": 18.0,
+    "pi_usb_ethernet_board_edge_recess": 5,
+    "pi_microsd_board_edge_recess": 30
+  },
+  "limits": [
+    "No new measurements and no active PCB edits.",
+    "Wheel calculation assumes upright tires on a level surface and a rigid chassis; lower plate ground clearance is conservatively taken as zero.",
+    "Wheel result applies to the main PCB and <=3 mm downward tails, not the lower Pi, chassis spacers, loose cables, obstacles or unspecified camber.",
+    "Complete horizontal wheel sweep is not established without pivot/stop geometry; retain full-steering inspection as an unpowered assembly check.",
+    "Plug/cooler envelopes are selection limits, not proof that an unspecified accessory fits.",
+    "Pi 3 mm hole-edge rule interpretation is unresolved despite positive nominal hardware/body clearance.",
+    "Engagement, fastener retention, continuity and powered behavior require the assembled hardware."
+  ]
+}

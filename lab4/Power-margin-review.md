@@ -190,11 +190,11 @@ across heat loads, orientations or obstructed airflow. Neither its acceptance
 for review nor this arithmetic establishes sustained two-bridge operation
 at the absolute maximum. Do not extrapolate the table to a 3.2 A motor stall.
 
-The [mounting drawing](https://info.boydcorp.com/hubfs/Thermal/Air-Cooling/Boyd-Board-Level-Cooling-High-Power-Extruded-6390.pdf)
-and electrical calculation are available now. The actual attachment, interface
-and motor-fault policy still determine the useful final thermal model. A
-detailed temperature simulation with guessed attachment would add false
-precision; resolving those choices is the next useful step.
+The [mounting review](Heatsink-mounting-review.md) now specifies a screw-clamped,
+greased tab interface and two soldered PCB anchors from manufacturer drawings.
+The remaining placement changes, airflow and motor-fault/duty policy determine
+the final cooling assessment. The assumed 1 °C/W interface above is still a
+screening value, not a measured or guaranteed resistance for this assembly.
 
 ## Verification and remaining work
 
