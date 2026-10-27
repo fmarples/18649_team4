@@ -93,6 +93,16 @@ is the manufacturer data source; a generic X5R curve is not a substitute.
 If exact data cannot support these targets, choose a documented replacement
 or additional capacitance and update the affected footprints/BOM.
 
+The follow-up search found Murata's [LTspice dynamic-model library](https://www.murata.com/en-SG/tool/data/librarydata/library-ltspice),
+listed as version 26.06, updated August 27, 2026. Its earlier
+[supported-part list](https://www.murata.com/-/media/webrenewal/tool/library/common-pdf/dynamic-model/component-list-d-mlcc-2504.ashx?cvid=20250523010405000000&la=en)
+includes both selected capacitor families. The model download and SimSurfing
+requests were inaccessible during this review, so we obtained no model-derived
+capacitance or ESR result. Use an accessible manufacturer dynamic model to
+evaluate the exact parts under bias; a zero-bias static model cannot close
+this question. Keep model results separate from guaranteed limits, temperature
+and aging evidence. No capacitor or feed-forward value changed.
+
 The sensitivity grid gives input-capacitor ripple up to 2.107/1.719/0.464 A
 RMS and combined output-capacitor ripple up to 1.021/0.931/0.461 A RMS for
 servo/5 V/logic. These are valid continuous-current model cases only, not
