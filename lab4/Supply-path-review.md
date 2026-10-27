@@ -31,7 +31,7 @@ and the omitted losses mean it is not a guaranteed worst-case load voltage.
 | --- | ---: | ---: |
 | L2.2 to Pi J70.2 | 0.0495 ohm | 0.164 V at 3.3 A |
 | L2.2 to Pi J70.4 | 0.0511 ohm | 0.169 V at 3.3 A |
-| L3.2 to checked MCU/CAN supply pads | 0.0671–0.3855 ohm | 0.0537–0.3084 V at 0.8 A |
+| L3.2 to checked MCU/CAN supply pads | 0.0671–0.3892 ohm | 0.0537–0.3114 V at 0.8 A |
 
 For example, subtracting the J70.4 path drop from the regulator's 5.014644 V
 static component-tolerance corner gives 4.846 V before the omitted losses.
@@ -48,7 +48,7 @@ The CAN-reference repair replaces a 10.833 mm 3.3 V feed with a 47.303 mm
 route and four added vias. Its minimum width is 0.50 mm, with clear sections
 widened as far as 1.50 mm. Moving solder-pad vias also adds local copper.
 Together these changes increase the largest 3.3 V path screening drop from
-0.2803 V to 0.3084 V under the same full-rail stress. Preserving the CAN
+0.2803 V to 0.3114 V under the same full-rail stress. Preserving the CAN
 reference does not remove the need to size this longer supply path. The full
 0.8 A stress on each individual MCU/CAN branch is not its expected load.
 
@@ -88,13 +88,14 @@ paths remain connected. Parallel vias still require current-sharing and
 temperature review; a DRC pass does not establish their rating.
 
 We also moved two transition sites at D804.1 and one at D802.2 outside
-their solder lands, with paired vias at each site. The latest pass also moves
+their solder lands, with paired vias at each site. A preceding pass also moved
 D807.1 and U1.4 outside their lands; D807 uses a 0.80/0.40 mm via and 0.80 mm
-bridges. Across the latest routing passes, we relocated 78 existing vias and
+bridges. Across the latest routing passes, we relocated 97 existing vias and
 removed one redundant ground via. Nominal drill/land intersections fell
-from 98 to 19. See
-[Solder-via-review.md](Solder-via-review.md) for the remaining sites and
-mask/paste limitations. Ordinary DRC does not check solder wicking.
+from 98 to zero. See
+[Solder-via-review.md](Solder-via-review.md) for the remaining mask/paste
+limitations. The latest 19 moves add no supply-net vias; the 1.50 mm VBAT
+reroute stays on B.Cu. Pi feed resistance is unchanged. Ordinary DRC does not check solder wicking.
 
 ## Checker validation
 

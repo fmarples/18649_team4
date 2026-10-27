@@ -19,6 +19,21 @@ board = p.LoadBoard(str(args.board))
 lands = [a for f in board.GetFootprints() for a in f.Pads()
          if a.GetAttribute() == p.PAD_ATTRIB_SMD]
 rows = []
+near_openings = []
+apertures = []
+for pad in lands:
+    for copper, mask, paste in ((p.F_Cu, p.F_Mask, p.F_Paste),
+                                (p.B_Cu, p.B_Mask, p.B_Paste)):
+        if not pad.IsOnLayer(copper):
+            continue
+        margin = pad.GetSolderPasteMargin(copper)
+        apertures.append(dict(
+            pad=pad.GetParentFootprint().GetReference()+'.'+pad.GetNumber(),
+            layer=board.GetLayerName(copper),
+            mask_present=pad.IsOnLayer(mask), paste_present=pad.IsOnLayer(paste),
+            mask_expansion_mm=p.ToMM(pad.GetSolderMaskExpansion(copper)),
+            paste_margin_mm=[p.ToMM(margin.x), p.ToMM(margin.y)]))
+via_tenting = Counter()
 for via in board.GetTracks():
     if via.Type() != p.PCB_VIA_T:
         continue
@@ -28,10 +43,27 @@ for via in board.GetTracks():
     hole.SetPosition(via.GetPosition())
     hole.SetWidth(via.GetDrill())
     drill_shape = hole.GetEffectiveShape(p.F_Cu)
+    for layer in (p.F_Cu, p.B_Cu):
+        via_tenting[board.GetLayerName(layer)+'_tented' if via.IsTented(layer)
+                    else board.GetLayerName(layer)+'_open'] += 1
+    search_box = via.GetBoundingBox()
+    search_box.Inflate(p.FromMM(.1))
     for pad in lands:
-        if not via.GetBoundingBox().Intersects(pad.GetBoundingBox()):
+        if not search_box.Intersects(pad.GetBoundingBox()):
             continue
         for layer in (p.F_Cu, p.B_Cu):
+            if not pad.IsOnLayer(layer):
+                continue
+            margin = pad.GetSolderPasteMargin(layer)
+            # With zero mask/paste expansion the copper shape also describes
+            # those nominal apertures. Nonzero margins are reported separately.
+            if (pad.GetSolderMaskExpansion(layer) == 0 and
+                    margin.x == 0 and margin.y == 0 and
+                    drill_shape.Collide(pad.GetEffectiveShape(layer), p.FromMM(.1))):
+                near_openings.append(dict(
+                    pad=pad.GetParentFootprint().GetReference()+'.'+pad.GetNumber(),
+                    via_uuid=via.m_Uuid.AsString(),
+                    layer=board.GetLayerName(layer)))
             if (pad.IsOnLayer(layer) and
                     drill_shape.Collide(pad.GetEffectiveShape(layer), 0)):
                 rows.append(dict(
@@ -51,10 +83,28 @@ report = dict(
     affected_pads=len({r['pad'] for r in rows}),
     counts_by_net=dict(sorted(Counter(r['net'] for r in rows).items())),
     intersections=rows,
+    mask_paste_configuration=dict(
+        checked_smd_pad_sides=len(apertures),
+        via_tenting_counts=dict(sorted(via_tenting.items())),
+        nonzero_margin_pad_sides=[r for r in apertures if
+            r['mask_expansion_mm'] != 0 or any(r['paste_margin_mm'])],
+        pad_sides_without_direct_mask_or_paste=[r for r in apertures if
+            not (r['mask_present'] and r['paste_present'])],
+        separate_paste_only_pads=[dict(reference=f.GetReference(),
+            number=a.GetNumber(), size_mm=[p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)],
+            x_mm=p.ToMM(a.GetPosition().x), y_mm=p.ToMM(a.GetPosition().y))
+            for f in board.GetFootprints() for a in f.Pads()
+            if (a.IsOnLayer(p.F_Paste) or a.IsOnLayer(p.B_Paste)) and
+            not (a.IsOnLayer(p.F_Cu) or a.IsOnLayer(p.B_Cu))],
+        nominal_drill_to_zero_margin_opening_review_gap_mm=.1,
+        nominal_drills_within_review_gap=sorted(near_openings,
+            key=lambda r: (r['pad'], r['via_uuid'])),
+        note='0.1 mm is an inspection target, not a qualified fabrication tolerance.'),
     method='Nominal circular via drill intersects actual SMD copper-pad shape.',
     limitations=[
-        'No drill tolerance, solder-mask opening or paste-aperture analysis.',
-        'Vias beside lands can still need solder-mask separation review.',
+        'No drill/registration tolerance or exported-Gerber/stencil inspection.',
+        'Aperture separation uses copper shape only where effective mask/paste margins are zero; inspect other margins separately.',
+        'Tenting settings are design requests, not a guarantee of a sealed hole.',
         'A net match or ordinary DRC pass does not qualify solder wicking.',
         'Resolve listed sites by routing changes or explicitly qualified fabrication/assembly treatment; do not assume tenting equals filling/capping.',
     ])

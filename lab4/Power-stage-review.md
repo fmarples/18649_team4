@@ -53,6 +53,30 @@ loops, effective capacitor values under DC bias and the control loop. Thermal pe
 evaluation board does not establish a rating for our 1 oz board. No additional
 team measurements were needed for this review.
 
+## Output-filter sensitivity
+
+Each buck has two GRM219R61C226ME15L capacitors, or 44 uF nominal.
+We used the effective capacitance in TI's equation
+`f = 1 / (2*pi*sqrt(L*C))` to see how loss of capacitance changes the LC
+pole. With the selected 4.7 uH inductor at its -20% tolerance:
+
+| Assumed total effective capacitance | Calculated LC pole |
+| --- | ---: |
+| 44 uF | 12.37 kHz |
+| 33 uF | 14.29 kHz |
+| 22 uF | 17.50 kHz |
+| 16.84 uF | 20.00 kHz |
+| 11 uF | 24.75 kHz |
+
+These are sensitivity cases, not measured or manufacturer-specified values
+for these capacitors. About 16.84 uF gives TI's approximate 20 kHz design
+target at the low-inductance corner. This is not a guaranteed stability
+boundary. The remaining component check is the actual combined capacitance
+after voltage bias, tolerance, temperature and aging at each rail voltage,
+followed by the complete loop/transient review. We cannot count the full
+44 uF as effective capacitance merely because it is the BOM value. The
+calculation is recorded in `Power-stage-check.json`.
+
 ## References and verification
 
 - [TI TPS564252 datasheet](https://www.ti.com/lit/ds/symlink/tps564252.pdf), pinout, electrical limits and design/layout guidance.

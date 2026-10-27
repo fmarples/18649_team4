@@ -442,3 +442,14 @@ October 26 output-power routing and connectivity-check correction
 - Fresh native ERC/DRC/parity: zero findings and zero missing connections.
 - Copper previews regenerated. Remaining 19 sites and engineering limits are listed
   in the reviews; no fabrication release or hardware validation is claimed.
+
+2026-10-26 — Finish nominal solder-pad via overlap corrections
+- Moved all 19 remaining sites; baseline total 97 relocated plus one redundant via removed.
+- Nominal drill/land intersections: 98 -> 0. 16,446 segments, 970 vias, six ground zones.
+- Footprints/pads/nets/zone settings/project rules/CAN backbone unchanged. Eleven signal/ground vias added; no new supply vias.
+- Native ERC/DRC/schematic parity: zero findings; zero missing connections. All 306 targeted checks pass; 284-part/298-net BOM and placement checks pass.
+- CAN reference scan still has zero void samples outside its stated exclusions; all transition distances remain under the 3 mm review target.
+- Pi resistance unchanged. Maximum 3.3 V full-allocation screening drop: 0.311364 V; not a measured branch drop.
+- Mask/paste configuration recorded, including Q1's separate paste windows and 13 small nominal drill-to-opening gaps for registration review. Analytic gap fixture passes.
+- Added LC-pole sensitivity cases using effective capacitance; actual DC-bias/temperature/aging values and loop/thermal review remain open.
+- Reviewed regenerated front, back and internal-ground previews. No fabrication release.

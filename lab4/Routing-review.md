@@ -1,7 +1,7 @@
 # Power, MCU, CAN and signal routing
 
 26 October 2026. Every required PCB connection is now routed. The saved
-**four-layer** board has **15,886 track segments, 959 through vias
+**four-layer** board has **16,446 track segments, 970 through vias
 and six filled ground zones**. Native DRC, ERC and schematic parity report
 zero findings, and all **306** targeted connection checks pass. Both native
 DRC and the full connectivity count report **zero missing connections**.
@@ -25,10 +25,10 @@ The updated [supply screening](Supply-path-review.md) records the increased
 resistance so the next current-allocation review includes that tradeoff.
 
 We inventoried nominal via-drill intersections with SMD solder lands and moved
-78 existing vias outside those lands, including D807.1 and U1.4. We also
+97 existing vias outside those lands, including D807.1 and U1.4. We also
 removed one redundant ground via. The count fell
-from 98 to 19; [Solder-via-review.md](Solder-via-review.md) identifies the
-remaining work. D807's relocated via is 0.80/0.40 mm with 0.80 mm bridges.
+from 98 to zero; [Solder-via-review.md](Solder-via-review.md) distinguishes this
+completed overlap correction from the remaining mask/assembly review. D807's relocated via is 0.80/0.40 mm with 0.80 mm bridges.
 One added ground stitch near CAN_B_L preserves a nearby return transition
 after the ground-via moves. All recorded CAN signal transitions are within
 3 mm of a ground transition, our review target rather than a device limit.
@@ -44,6 +44,13 @@ crystal ground vias at Y20/Y24/Y30/Y34. C200.2 uses its existing ground path
 through the via at (105.5, 89.3) mm, so its redundant via through the solder
 land was removed. The pad and every formerly attached trace still connect
 with zones excluded. No new drill/land intersections were introduced.
+
+The latest pass resolves all 19 remaining overlapping sites by moving vias
+and rerouting neighboring signals at their existing widths. It adds 11
+signal/ground vias; no additional supply-net vias are introduced. The affected
+VBAT segment stays on B.Cu at 1.50 mm width. Component placement and the CAN
+backbone are unchanged. The small 3.3 V branch extensions raise the largest
+full-rail screening drop from 0.3084 V to 0.3114 V; the Pi paths are unchanged.
 
 The sections below record earlier checkpoints. Their then-pending items are
 superseded by the current status above and the linked engineering reviews.

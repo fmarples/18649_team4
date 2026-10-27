@@ -23,6 +23,37 @@
         "peak_A": 4.819149,
         "rms_A": 4.027862
       },
+      "output_filter_sensitivity_not_qualification": {
+        "nominal_total_capacitance_uF": 44,
+        "effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF": 16.842,
+        "cases": [
+          {
+            "assumed_total_effective_capacitance_uF": 44,
+            "LC_pole_kHz_nominal_L": 11.067,
+            "LC_pole_kHz_minus20percent_L": 12.374
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 33,
+            "LC_pole_kHz_nominal_L": 12.78,
+            "LC_pole_kHz_minus20percent_L": 14.288
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 22,
+            "LC_pole_kHz_nominal_L": 15.652,
+            "LC_pole_kHz_minus20percent_L": 17.499
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 16.84,
+            "LC_pole_kHz_nominal_L": 17.89,
+            "LC_pole_kHz_minus20percent_L": 20.001
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 11,
+            "LC_pole_kHz_nominal_L": 22.135,
+            "LC_pole_kHz_minus20percent_L": 24.747
+          }
+        ]
+      },
       "pad_center_distances_mm_not_routed_lengths": {
         "SW_to_inductor": 2.964,
         "VIN_to_100nF": 2.015,
@@ -46,6 +77,37 @@
         "ripple_A_pp": 1.492021,
         "peak_A": 4.046011,
         "rms_A": 3.327989
+      },
+      "output_filter_sensitivity_not_qualification": {
+        "nominal_total_capacitance_uF": 44,
+        "effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF": 16.842,
+        "cases": [
+          {
+            "assumed_total_effective_capacitance_uF": 44,
+            "LC_pole_kHz_nominal_L": 11.067,
+            "LC_pole_kHz_minus20percent_L": 12.374
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 33,
+            "LC_pole_kHz_nominal_L": 12.78,
+            "LC_pole_kHz_minus20percent_L": 14.288
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 22,
+            "LC_pole_kHz_nominal_L": 15.652,
+            "LC_pole_kHz_minus20percent_L": 17.499
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 16.84,
+            "LC_pole_kHz_nominal_L": 17.89,
+            "LC_pole_kHz_minus20percent_L": 20.001
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 11,
+            "LC_pole_kHz_nominal_L": 22.135,
+            "LC_pole_kHz_minus20percent_L": 24.747
+          }
+        ]
       },
       "pad_center_distances_mm_not_routed_lengths": {
         "SW_to_inductor": 2.964,
@@ -71,6 +133,37 @@
         "peak_A": 1.372708,
         "rms_A": 0.865639
       },
+      "output_filter_sensitivity_not_qualification": {
+        "nominal_total_capacitance_uF": 44,
+        "effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF": 16.842,
+        "cases": [
+          {
+            "assumed_total_effective_capacitance_uF": 44,
+            "LC_pole_kHz_nominal_L": 11.067,
+            "LC_pole_kHz_minus20percent_L": 12.374
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 33,
+            "LC_pole_kHz_nominal_L": 12.78,
+            "LC_pole_kHz_minus20percent_L": 14.288
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 22,
+            "LC_pole_kHz_nominal_L": 15.652,
+            "LC_pole_kHz_minus20percent_L": 17.499
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 16.84,
+            "LC_pole_kHz_nominal_L": 17.89,
+            "LC_pole_kHz_minus20percent_L": 20.001
+          },
+          {
+            "assumed_total_effective_capacitance_uF": 11,
+            "LC_pole_kHz_nominal_L": 22.135,
+            "LC_pole_kHz_minus20percent_L": 24.747
+          }
+        ]
+      },
       "pad_center_distances_mm_not_routed_lengths": {
         "SW_to_inductor": 2.964,
         "VIN_to_100nF": 2.015,
@@ -90,7 +183,7 @@
     "EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on."
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "2fafdd1f2d24dd7ce12cd0fb9be1f3a67b1bfe29f4ed01ded549d0737fcb1211",
+    "KiCad/Lab4.kicad_pcb": "2c4f088cca8c71dfad6316b3bb2576c719431a5183d8421c224647bac5a3a89d",
     "KiCad/Power.kicad_sch": "7f0ee5bcbe1de82667c6484da8765837757312186e9b98f43b5206c0b4e74ccf",
     "KiCad/Circuit-BOM.csv": "24693a07c93c701bd316982f82fe96e269702272a1720acd1f43643a2ca97bfc",
     "Power-calculations.json": "712e124a8aef46dd126c5aceff307ab8cb4b33a9e7a56711b3f986cbbf278c5b"

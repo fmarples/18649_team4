@@ -60,6 +60,19 @@ for i, allocation in enumerate(design['regulators']):
     peak = load+ripple/2
     rms = math.sqrt(load**2+ripple**2/12)
     assert peak < 6.7 and rms < 5.8, (u, 'allocated-load inductor check')
+    for ref in (f'C{base+2}', f'C{base+3}'):
+        assert parts[ref]['MPN'] == 'GRM219R61C226ME15L', ref
+    # TI Eq. 4 uses effective capacitance. These are sensitivity cases,
+    # not claimed DC-bias/temperature characteristics of the selected MLCC.
+    nominal_l = allocation['inductance_uH']*1e-6
+    filter_cases = []
+    for effective_uF in (44, 33, 22, 16.84, 11):
+        filter_cases.append({
+            'assumed_total_effective_capacitance_uF': effective_uF,
+            'LC_pole_kHz_nominal_L': round(1/(2*math.pi*math.sqrt(
+                nominal_l*effective_uF*1e-6))/1000, 3),
+            'LC_pole_kHz_minus20percent_L': round(1/(2*math.pi*math.sqrt(
+                inductance*effective_uF*1e-6))/1000, 3)})
     # Physical orientation check: a direct SW-to-L route must depart the
     # power side, rather than cross the device toward its feedback pins.
     sw, fb, l_in = point(u, 2), point(u, 6), point(ind, 1)
@@ -75,6 +88,11 @@ for i, allocation in enumerate(design['regulators']):
         'inductor_at_minus20percent_L_600kHz': {
             'ripple_A_pp': round(ripple, 6), 'peak_A': round(peak, 6),
             'rms_A': round(rms, 6)},
+        'output_filter_sensitivity_not_qualification': {
+            'nominal_total_capacitance_uF': 44,
+            'effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF':
+                round(1/((2*math.pi*20000)**2*inductance)*1e6, 3),
+            'cases': filter_cases},
         'pad_center_distances_mm_not_routed_lengths': {
             'SW_to_inductor': distance((u, 2), (ind, 1)),
             'VIN_to_100nF': distance((u, 1), (f'C{base+1}', 1)),

@@ -1,194 +1,148 @@
 {
-  "source_sha256": "2fafdd1f2d24dd7ce12cd0fb9be1f3a67b1bfe29f4ed01ded549d0737fcb1211",
+  "source_sha256": "2c4f088cca8c71dfad6316b3bb2576c719431a5183d8421c224647bac5a3a89d",
   "fabrication_release": false,
-  "status": "Assembly review required",
-  "intersecting_vias": 19,
-  "affected_pads": 19,
-  "counts_by_net": {
-    "/+3V3": 7,
-    "/+5V": 2,
-    "/Cockpit zone/PI_ERROR_LED_ANODE": 1,
-    "/GND": 7,
-    "/Rear zone/LEFT_ENC_B_IN": 1,
-    "/Rear zone/LEFT_RAW": 1
+  "status": "No drill/land intersections found",
+  "intersecting_vias": 0,
+  "affected_pads": 0,
+  "counts_by_net": {},
+  "intersections": [],
+  "mask_paste_configuration": {
+    "checked_smd_pad_sides": 798,
+    "via_tenting_counts": {
+      "B.Cu_tented": 970,
+      "F.Cu_tented": 970
+    },
+    "nonzero_margin_pad_sides": [],
+    "pad_sides_without_direct_mask_or_paste": [
+      {
+        "pad": "Q1.2",
+        "layer": "F.Cu",
+        "mask_present": true,
+        "paste_present": false,
+        "mask_expansion_mm": 0.0,
+        "paste_margin_mm": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "separate_paste_only_pads": [
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 149.425,
+        "y_mm": 55.5475
+      },
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 149.425,
+        "y_mm": 58.5975
+      },
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 152.775,
+        "y_mm": 55.5475
+      },
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 152.775,
+        "y_mm": 58.5975
+      }
+    ],
+    "nominal_drill_to_zero_margin_opening_review_gap_mm": 0.1,
+    "nominal_drills_within_review_gap": [
+      {
+        "pad": "C505.2",
+        "via_uuid": "df6f7576-f27e-4608-89ca-74cf7117356f",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "C6.1",
+        "via_uuid": "d8492c3b-186a-4e64-af9e-ffe989df2145",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "C608.2",
+        "via_uuid": "2fbaced2-35f8-4a72-b7d2-220c93c366de",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "R512.1",
+        "via_uuid": "2a271dee-0f4d-4537-b629-0d6a380bfd3d",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "R550.1",
+        "via_uuid": "5a6b2354-59c9-4503-8f93-d0a51489c1f8",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "R651.1",
+        "via_uuid": "13d05f75-0c53-43c2-8d9a-795f3dd1b076",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "SW61.1",
+        "via_uuid": "a962726a-d665-48fb-8861-479f81e4fa43",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "Y10.4",
+        "via_uuid": "bfa89817-ec06-4639-b17a-3d4bef1c84f4",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "Y14.4",
+        "via_uuid": "e144ecb2-539a-444d-b206-7e2731e664e3",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "Y20.4",
+        "via_uuid": "e0582a39-e62e-4796-8cca-ac7a012cb0f8",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "Y24.4",
+        "via_uuid": "b7151081-a9d2-47b9-a667-3292d92e8f0f",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "Y30.4",
+        "via_uuid": "16cf531f-489a-43ef-8872-436a486518d0",
+        "layer": "F.Cu"
+      },
+      {
+        "pad": "Y34.4",
+        "via_uuid": "485f3581-06e0-4627-9298-760429994e9a",
+        "layer": "F.Cu"
+      }
+    ],
+    "note": "0.1 mm is an inspection target, not a qualified fabrication tolerance."
   },
-  "intersections": [
-    {
-      "pad": "C4.2",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "eb697000-13b1-4d08-9d4b-98a8df8db8ff",
-      "x_mm": 65.0,
-      "y_mm": 77.1,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "C503.1",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "8bc6360d-dc52-4db1-ab47-d98973ab8c51",
-      "x_mm": 66.2,
-      "y_mm": 195.0,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "C504.1",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "cd2b9625-cabc-4729-b75c-11ec6366386b",
-      "x_mm": 62.6,
-      "y_mm": 200.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "C604.1",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "5b3f3397-86af-4809-b2c7-8cb4c3666cb8",
-      "x_mm": 62.5,
-      "y_mm": 101.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "C604.2",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "ef21424f-0e7b-4a90-820d-4c66856e362b",
-      "x_mm": 63.15,
-      "y_mm": 99.15,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "C701.1",
-      "net": "/+5V",
-      "layer": "F.Cu",
-      "via_uuid": "c7da9f6f-1cd7-4a28-92a5-be5b8396832b",
-      "x_mm": 60.4,
-      "y_mm": 120.5,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "D613.1",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "8a19ea0b-b398-4fcd-8745-b0cac6c81f1a",
-      "x_mm": 76.2325,
-      "y_mm": 91.3,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R201.1",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "ee2616d1-573e-44a7-8b83-76195ba6e1ca",
-      "x_mm": 118.3,
-      "y_mm": 89.3,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R300.1",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "973847e5-a4b9-4988-9a2e-62969e57710a",
-      "x_mm": 101.3,
-      "y_mm": 148.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R301.1",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "1822b283-c603-4686-ae8c-efea2238fda7",
-      "x_mm": 105.1,
-      "y_mm": 160.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R631.2",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "851ed80c-9b73-4cff-8927-8d8f93b2bbb2",
-      "x_mm": 65.7,
-      "y_mm": 116.0,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R634.2",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "e046e98d-f307-4d72-9daa-7569749d8612",
-      "x_mm": 77.05,
-      "y_mm": 116.0,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R711.2",
-      "net": "/Cockpit zone/PI_ERROR_LED_ANODE",
-      "layer": "F.Cu",
-      "via_uuid": "6ab11289-da47-48e2-bfd3-3ab122cb2102",
-      "x_mm": 82.8,
-      "y_mm": 121.1,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "R801.2",
-      "net": "/Rear zone/LEFT_ENC_B_IN",
-      "layer": "F.Cu",
-      "via_uuid": "7e1f3c9f-f23f-40be-a807-99447880fb11",
-      "x_mm": 120.1,
-      "y_mm": 104.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "U11.2",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "94539406-6316-417c-9074-979d929b06a0",
-      "x_mm": 122.3,
-      "y_mm": 208.7,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "U2.7",
-      "net": "/Rear zone/LEFT_RAW",
-      "layer": "F.Cu",
-      "via_uuid": "9e835abd-731b-4cf7-80fd-34e0251067b5",
-      "x_mm": 61.5,
-      "y_mm": 77.4,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "U2.8",
-      "net": "/+5V",
-      "layer": "F.Cu",
-      "via_uuid": "1a72f6dc-652c-45d0-86f5-36654f98a87e",
-      "x_mm": 61.45,
-      "y_mm": 76.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "U20.10",
-      "net": "/GND",
-      "layer": "F.Cu",
-      "via_uuid": "ea406aca-f20f-4696-83ea-4937625dad95",
-      "x_mm": 112.1,
-      "y_mm": 87.2,
-      "drill_mm": 0.3
-    },
-    {
-      "pad": "U60.32",
-      "net": "/+3V3",
-      "layer": "F.Cu",
-      "via_uuid": "6bfa975c-1970-4da9-8c05-82517fdd3929",
-      "x_mm": 75.0,
-      "y_mm": 110.2,
-      "drill_mm": 0.3
-    }
-  ],
   "method": "Nominal circular via drill intersects actual SMD copper-pad shape.",
   "limitations": [
-    "No drill tolerance, solder-mask opening or paste-aperture analysis.",
-    "Vias beside lands can still need solder-mask separation review.",
+    "No drill/registration tolerance or exported-Gerber/stencil inspection.",
+    "Aperture separation uses copper shape only where effective mask/paste margins are zero; inspect other margins separately.",
+    "Tenting settings are design requests, not a guarantee of a sealed hole.",
     "A net match or ordinary DRC pass does not qualify solder wicking.",
     "Resolve listed sites by routing changes or explicitly qualified fabrication/assembly treatment; do not assume tenting equals filling/capping."
   ]
