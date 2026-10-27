@@ -42,4 +42,9 @@ source-row mappings and the workbook hash.
 
 The requested destination is the
 [course BOM folder](https://drive.google.com/drive/folders/15MCRrvGx3S5bV2gtYmitpYQ7jAbZF8_f).
-This record documents preparation; it does not record an upload or order.
+We uploaded the Excel file on October 26, 2026 at 9:51 p.m. EDT.
+The folder listing confirms the filename, Excel format and 20,471-byte size.
+The [uploaded workbook](https://docs.google.com/spreadsheets/d/1jn-2KS-h_1bZtQV-ySlfCStYBRyWNMzS/edit?usp=drivesdk&ouid=101000648938892436394&rtpof=true&sd=true)
+contains the reviewed file from revision da8d5e6. The upload record is included
+in Specialty-BOM-check.json; open purchasing selections remain identified in
+the workbook.

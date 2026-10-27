@@ -790,5 +790,17 @@
   },
   "purchasing_alternative": {
     "U81": "Request SN74LVC14APW carrier alternative, 2 individual ICs total. Schematic MPN SN74LVC14APWR is unchanged."
+  },
+  "upload": {
+    "file_id": "1jn-2KS-h_1bZtQV-ySlfCStYBRyWNMzS",
+    "folder_id": "15MCRrvGx3S5bV2gtYmitpYQ7jAbZF8_f",
+    "uploaded_at_utc": "2026-10-27T01:51:40.173Z",
+    "local_date": "2026-10-26",
+    "local_time": "21:51 EDT",
+    "file_name": "TEAM_4_BOM_Lab4.xlsx",
+    "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "verified_folder_listing": true,
+    "verified_size_bytes": 20471,
+    "source_revision": "da8d5e6177e99f8e8d73c98c7af88790c400c606"
   }
 }
