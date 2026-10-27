@@ -1,5 +1,5 @@
 {
-  "source_sha256": "29d6cd46095b53525015c990b50795ad0b960cf5855cb1583dffc3030c5dc6b3",
+  "source_sha256": "73eb6586650cae8aeedbf9f9429d2027f47d2480ba865b94423da091a4cf709e",
   "fabrication_release": false,
   "status": "Geometry measured; engineering review required",
   "sample_spacing_max_mm": 0.5,
@@ -18,62 +18,7 @@
       ],
       "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 57.71,
       "length_percent_with_opposite_line_on_same_layer_within_1mm": 60.12,
-      "reference_void_samples_away_from_own_holes": [
-        {
-          "x_mm": 118.3,
-          "y_mm": 203.85,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 118.3,
-          "y_mm": 203.35,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 118.55,
-          "y_mm": 204.4,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 118.45,
-          "y_mm": 204.35,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 121.6,
-          "y_mm": 210.65,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 118.35,
-          "y_mm": 204.15,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 118.4,
-          "y_mm": 204.25,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 118.15,
-          "y_mm": 202.95,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 117.85,
-          "y_mm": 202.65,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        }
-      ]
+      "reference_void_samples_away_from_own_holes": []
     },
     {
       "net": "/CAN_A_L",
@@ -88,26 +33,7 @@
       ],
       "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 59.53,
       "length_percent_with_opposite_line_on_same_layer_within_1mm": 62.87,
-      "reference_void_samples_away_from_own_holes": [
-        {
-          "x_mm": 119.771,
-          "y_mm": 202.771,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 119.6,
-          "y_mm": 202.35,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        },
-        {
-          "x_mm": 119.6,
-          "y_mm": 201.85,
-          "signal_layer": "In2.Cu",
-          "reference_layer": "B.Cu"
-        }
-      ]
+      "reference_void_samples_away_from_own_holes": []
     },
     {
       "net": "/CAN_B_H",

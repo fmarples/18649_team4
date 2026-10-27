@@ -16,7 +16,7 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-The current routing contains 15,418 track segments, 955 vias and six
+The current routing contains 15,679 track segments, 960 vias and six
 ground zones on four copper layers. All 306 targeted connection checks pass.
 Fresh ERC, native PCB DRC and schematic parity have zero findings; native
 DRC and the full connectivity count both report zero missing connections.
@@ -24,9 +24,12 @@ The schematic separates the two unused Pi 3.3 V pins into individual
 no-connect nets. All 284 electrical footprints and eight supports match.
 See [Routing-review.md](Routing-review.md) for the signal and power changes.
 Selected Pi/motor/servo traces are wider; the screened Pi feed drop is now
-0.169 V at 3.3 A. [CAN-geometry-review.md](CAN-geometry-review.md) identifies
-bus-A reference gaps and remaining layer/branch review. These checks do not
-settle load voltage, thermal capability or signal integrity.
+0.169 V at 3.3 A. The [CAN review](CAN-geometry-review.md) now records zero
+sampled reference gaps after moving adjacent 3.3 V/MOSI copper; layer/branch
+review remains open. We moved 70 existing vias off SMD solder lands, reducing
+nominal drill/land intersections from 98 to 28. The remaining locations are
+listed in [Solder-via-check.json](Solder-via-check.json). These checks do not
+settle load voltage, thermal capability, assembly treatment or signal integrity.
 
 `Fabrication-check.json` records an automated PASS with source hashes and
 ignored rule categories. This establishes the checked CAD connections and
@@ -96,8 +99,10 @@ L298 areas depend on the open mechanical/electrical decisions:
 
 1. Review the remaining package-specific pin 1, pitch, polarity, drill,
    courtyard and rating assumptions. All schematic parts now have footprints;
-   assignment alone does not qualify every package or connector. Keep the
-   schematic and all three BOM views consistent with any verified replacements.
+   assignment alone does not qualify every package or connector. Resolve the
+   28 remaining via-drill/SMD-land intersections in
+   [Solder-via-review.md](Solder-via-review.md), then check mask/paste separation.
+   Keep the schematic and all three BOM views consistent with any replacements.
 2. Resolve the heatsink conflict and tighten the power-stage placement according
    to the [TPS564252 layout guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf).
    Keep the input switching loop short and feedback away from the switch node.

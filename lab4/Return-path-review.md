@@ -41,9 +41,13 @@ A sampled void is a location to inspect, not automatically an electrical
 failure. Check the filled In1 plane and bottom ground fill, especially where
 routes change layers. [Layer-stack.md](Layer-stack.md) explains why In2 signals
 also need the nearby B.Cu reference reviewed. The [CAN geometry audit](CAN-geometry-review.md) now records branch-inclusive
-lengths, pair proximity and the remaining bus-A reference gaps. These gaps
-coincide with bottom 3.3 V and MOSI routes near the front CAN circuit. Final
-pair/stub refinement and controlled impedance remain unqualified.
+lengths, pair proximity and the repaired bus-A reference crossings. Rerouting
+the adjacent 3.3 V and MOSI copper leaves zero CAN reference-void samples
+outside the checker's own-pad/via exclusions. That checker uses In1 for F.Cu
+and B.Cu for In2, unlike the broad In1-only screening in Return-path-check.json.
+We added one further ground stitch near CAN_B_L after moving a ground via
+off a solder land. All CAN transitions remain within our 3 mm review target.
+Final pair/stub refinement and controlled impedance remain unqualified.
 
 ## Initial supply resistance screening
 

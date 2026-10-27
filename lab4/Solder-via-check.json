@@ -1,0 +1,279 @@
+{
+  "source_sha256": "73eb6586650cae8aeedbf9f9429d2027f47d2480ba865b94423da091a4cf709e",
+  "fabrication_release": false,
+  "status": "Assembly review required",
+  "intersecting_vias": 28,
+  "affected_pads": 28,
+  "counts_by_net": {
+    "/+3V3": 7,
+    "/+5V": 2,
+    "/Cockpit zone/PI_ERROR_LED_ANODE": 1,
+    "/Front zone/F_SELFTEST_BUTTON": 1,
+    "/GND": 13,
+    "/Rear zone/LEFT_ENC_B_IN": 1,
+    "/Rear zone/LEFT_RAW": 1,
+    "/Rear zone/R_A_H_LOCAL": 1,
+    "/Rear zone/R_B_H_LOCAL": 1
+  },
+  "intersections": [
+    {
+      "pad": "C140.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "60517b5d-7833-449a-8a74-2e83379e013a",
+      "x_mm": 132.1,
+      "y_mm": 214.7,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C200.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "095c0d4b-33d9-4d97-a6fe-9e06dec5eef7",
+      "x_mm": 104.6,
+      "y_mm": 89.3,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C4.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "eb697000-13b1-4d08-9d4b-98a8df8db8ff",
+      "x_mm": 65.0,
+      "y_mm": 77.1,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C503.1",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "8bc6360d-dc52-4db1-ab47-d98973ab8c51",
+      "x_mm": 66.2,
+      "y_mm": 195.0,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C504.1",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "cd2b9625-cabc-4729-b75c-11ec6366386b",
+      "x_mm": 62.6,
+      "y_mm": 200.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C604.1",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "5b3f3397-86af-4809-b2c7-8cb4c3666cb8",
+      "x_mm": 62.5,
+      "y_mm": 101.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C604.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "ef21424f-0e7b-4a90-820d-4c66856e362b",
+      "x_mm": 63.15,
+      "y_mm": 99.15,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "C701.1",
+      "net": "/+5V",
+      "layer": "F.Cu",
+      "via_uuid": "c7da9f6f-1cd7-4a28-92a5-be5b8396832b",
+      "x_mm": 60.4,
+      "y_mm": 120.5,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "D613.1",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "8a19ea0b-b398-4fcd-8745-b0cac6c81f1a",
+      "x_mm": 76.2325,
+      "y_mm": 91.3,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R201.1",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "ee2616d1-573e-44a7-8b83-76195ba6e1ca",
+      "x_mm": 118.3,
+      "y_mm": 89.3,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R300.1",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "973847e5-a4b9-4988-9a2e-62969e57710a",
+      "x_mm": 101.3,
+      "y_mm": 148.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R301.1",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "1822b283-c603-4686-ae8c-efea2238fda7",
+      "x_mm": 105.1,
+      "y_mm": 160.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R502.2",
+      "net": "/Front zone/F_SELFTEST_BUTTON",
+      "layer": "F.Cu",
+      "via_uuid": "d9700298-6ad1-4cbb-9946-6a36213e8341",
+      "x_mm": 81.8,
+      "y_mm": 208.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R631.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "851ed80c-9b73-4cff-8927-8d8f93b2bbb2",
+      "x_mm": 65.7,
+      "y_mm": 116.0,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R634.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "e046e98d-f307-4d72-9daa-7569749d8612",
+      "x_mm": 77.05,
+      "y_mm": 116.0,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R711.2",
+      "net": "/Cockpit zone/PI_ERROR_LED_ANODE",
+      "layer": "F.Cu",
+      "via_uuid": "6ab11289-da47-48e2-bfd3-3ab122cb2102",
+      "x_mm": 82.8,
+      "y_mm": 121.1,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "R801.2",
+      "net": "/Rear zone/LEFT_ENC_B_IN",
+      "layer": "F.Cu",
+      "via_uuid": "7e1f3c9f-f23f-40be-a807-99447880fb11",
+      "x_mm": 120.1,
+      "y_mm": 104.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U11.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "94539406-6316-417c-9074-979d929b06a0",
+      "x_mm": 122.3,
+      "y_mm": 208.7,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U2.7",
+      "net": "/Rear zone/LEFT_RAW",
+      "layer": "F.Cu",
+      "via_uuid": "9e835abd-731b-4cf7-80fd-34e0251067b5",
+      "x_mm": 61.5,
+      "y_mm": 77.4,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U2.8",
+      "net": "/+5V",
+      "layer": "F.Cu",
+      "via_uuid": "1a72f6dc-652c-45d0-86f5-36654f98a87e",
+      "x_mm": 61.45,
+      "y_mm": 76.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U20.10",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "ea406aca-f20f-4696-83ea-4937625dad95",
+      "x_mm": 112.1,
+      "y_mm": 87.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U21.7",
+      "net": "/Rear zone/R_A_H_LOCAL",
+      "layer": "F.Cu",
+      "via_uuid": "96da52a5-43db-4c9c-97b8-7115515513f7",
+      "x_mm": 126.2,
+      "y_mm": 83.1,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U25.7",
+      "net": "/Rear zone/R_B_H_LOCAL",
+      "layer": "F.Cu",
+      "via_uuid": "e53b87bf-d7bd-4401-a858-18d507a5100a",
+      "x_mm": 153.2,
+      "y_mm": 83.1,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "U60.32",
+      "net": "/+3V3",
+      "layer": "F.Cu",
+      "via_uuid": "6bfa975c-1970-4da9-8c05-82517fdd3929",
+      "x_mm": 75.0,
+      "y_mm": 110.2,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "Y20.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "82ea7d82-e179-4d93-b433-01ee974b9b39",
+      "x_mm": 108.3,
+      "y_mm": 87.6,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "Y24.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "57d97a87-d18f-49e8-9853-cf3e4cab4f75",
+      "x_mm": 135.3,
+      "y_mm": 87.6,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "Y30.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "08477115-230f-4ec2-a3c1-4f26319244c9",
+      "x_mm": 95.4,
+      "y_mm": 158.4,
+      "drill_mm": 0.3
+    },
+    {
+      "pad": "Y34.2",
+      "net": "/GND",
+      "layer": "F.Cu",
+      "via_uuid": "a086d854-3a5a-4711-a164-47e8ccaf1d31",
+      "x_mm": 129.4,
+      "y_mm": 158.4,
+      "drill_mm": 0.3
+    }
+  ],
+  "method": "Nominal circular via drill intersects actual SMD copper-pad shape.",
+  "limitations": [
+    "No drill tolerance, solder-mask opening or paste-aperture analysis.",
+    "Vias beside lands can still need solder-mask separation review.",
+    "A net match or ordinary DRC pass does not qualify solder wicking.",
+    "Resolve listed sites by routing changes or explicitly qualified fabrication/assembly treatment; do not assume tenting equals filling/capping."
+  ]
+}

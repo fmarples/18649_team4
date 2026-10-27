@@ -7,18 +7,22 @@ its 40-pin header.
 
 **Status, 26 October 2026:** all required PCB connections are routed, with
 zero missing connections and zero native DRC/ERC/schematic-parity findings.
-All 306 targeted connection checks pass. We widened selected Pi, motor and
-servo power traces and reinforced seven Pi-supply via transitions. The maximum
-screened Pi feed drop decreased from 0.191 V to 0.169 V at 3.3 A. Motor/servo
-copper calculations and a CAN geometry audit now identify specific remaining
-review locations. Final supply/return sizing, CAN refinement and
+All 306 targeted connection checks pass. We repaired the sampled CAN ground
+reference by rerouting adjacent 3.3 V/MOSI copper without changing the CAN
+backbone. We also moved 70 existing vias off SMD solder lands, reducing
+nominal drill/land intersections from 98 to 28. Earlier Pi/motor/servo copper
+widening remains in place. The Pi feed screening drop is 0.169 V at 3.3 A;
+the longer 3.3 V feed now needs current-allocation and voltage-margin review.
+Remaining solder-pad vias, supply/return sizing, CAN branches and
 battery/protection/mechanical decisions remain unfinished. The board is not released for fabrication.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
 The [supply-path screening](Supply-path-review.md) calculates initial trace resistance;
 load allocation, voltage margin and thermal current capability still need review.
-The [CAN geometry audit](CAN-geometry-review.md) records branch lengths and localized ground-reference gaps.
+The [CAN geometry audit](CAN-geometry-review.md) records branch lengths and
+the repaired sampled ground reference. The [solder-via review](Solder-via-review.md)
+lists the remaining assembly-sensitive routing sites.
 On October 26 staff explicitly allowed four-layer boards. The saved PCB now
 uses F.Cu / In1.Cu ground / In2.Cu signals / B.Cu, with inner-layer keep-outs. Teams
 should plan stencil assembly, not assume board-house assembly. See the dated

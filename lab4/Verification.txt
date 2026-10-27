@@ -406,3 +406,24 @@ October 26 output-power routing and connectivity-check correction
 - Remaining: bus-A reference crossings, load/return/thermal and switching-loop review,
   effective capacitance, D807.1/U1.4 pad-via treatment and hardware decisions.
 - No fabrication release, submission, hardware measurement or rated-current claim.
+
+26 October 2026 — CAN reference repair and solder-pad via relocation
+- Board SHA256: 73eb6586650cae8aeedbf9f9429d2027f47d2480ba865b94423da091a4cf709e
+- 15,679 segments, 960 vias, six filled ground zones; In1 ground only.
+- 70 existing vias moved outside SMD solder lands, including D807.1 and U1.4.
+  Nominal drill/land intersections decrease from 98 vias/96 pads to 28 vias/28 pads;
+  the remaining set is a strict subset of the baseline, with no new intersections.
+- Rerouted adjacent 3V3 and F_MOSI copper; CAN backbone copper unchanged.
+  CAN reference scan now finds zero void samples outside own-pad/via exclusions.
+- Replacement 3V3 feed: 47.303mm versus 10.833mm, four added 0.70/0.30mm vias,
+  minimum width 0.50mm. One added GND stitch preserves nearby CAN_B_L return.
+- Largest 3V3 full-rail stress drop increases from 0.2803V to 0.3084V at 0.8A;
+  this is not a branch-current estimate. Pi/motor/servo screening remains recorded.
+- Footprint positions, values, pad geometry/nets, zone settings and design rules unchanged.
+- Fresh ERC, native DRC and schematic parity: zero findings; zero missing connections.
+  All 306 targeted checks, 284-part/298-net BOM checks and eight-support placement pass.
+- Feedback-ground and shunt-sense paths remain connected with zones excluded.
+- Current checks, calculation reports and four copper previews regenerated.
+- Remaining: 28 solder-pad via sites, mask/paste, current/return/thermal and switching
+  geometry, CAN branch/detour review, and unresolved hardware decisions.
+- No fabrication release, hardware test, measurement, purchase or submission claimed.

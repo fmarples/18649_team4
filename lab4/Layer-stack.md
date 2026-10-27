@@ -27,7 +27,7 @@ In1 plane. Merely moving a signal to an inner layer does not give it a
 continuous nearby ground reference. CAN pair spacing, detours, layer changes
 and return continuity still need final refinement. The initial
 [CAN geometry audit](CAN-geometry-review.md) records the measured copper and
-specific reference gaps; its nominal front-pair estimate is not a fabrication
+the repaired reference crossings; its nominal front-pair estimate is not a fabrication
 impedance qualification.
 
 The inner copper is thinner than the outer copper. The new supply joins

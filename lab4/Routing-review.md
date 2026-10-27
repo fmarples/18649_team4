@@ -1,7 +1,7 @@
 # Power, MCU, CAN and signal routing
 
 26 October 2026. Every required PCB connection is now routed. The saved
-**four-layer** board has **15,418 track segments, 955 through vias
+**four-layer** board has **15,679 track segments, 960 through vias
 and six filled ground zones**. Native DRC, ERC and schematic parity report
 zero findings, and all **306** targeted connection checks pass. Both native
 DRC and the full connectivity count report **zero missing connections**.
@@ -9,7 +9,39 @@ Power/current sizing, switching-loop and CAN return geometry, and the open
 battery/protection/mechanical decisions still require review. This is not a
 fabrication release or a powered test.
 
-## Power-width refinement and CAN geometry audit
+## CAN reference repair and solder-pad via relocation
+
+We rerouted nearby 3.3 V and F_MOSI copper to restore bottom-layer ground
+beneath the affected inner-layer CAN-A segments. The CAN backbone tracks and
+vias are unchanged. The reference scan now finds zero gaps on all four CAN
+nets at its sampled locations, excluding each signal's own through-hole
+clearances. This is a local geometric improvement, not signal-integrity
+qualification; layer detours and node/test/termination branches still need review.
+
+The new 3.3 V feed is 47.303 mm long instead of 10.833 mm and uses four added
+0.70/0.30 mm vias. Its narrowest section is 0.50 mm; clear sections are wider.
+This preserves the nearby CAN reference at the cost of a longer supply path.
+The updated [supply screening](Supply-path-review.md) records the increased
+resistance so the next current-allocation review includes that tradeoff.
+
+We inventoried nominal via-drill intersections with SMD solder lands and moved
+70 existing vias outside those lands, including D807.1 and U1.4. The count fell
+from 98 to 28; [Solder-via-review.md](Solder-via-review.md) identifies the
+remaining work. D807's relocated via is 0.80/0.40 mm with 0.80 mm bridges.
+One added ground stitch near CAN_B_L preserves a nearby return transition
+after the ground-via moves. All recorded CAN signal transitions are within
+3 mm of a ground transition, our review target rather than a device limit.
+
+Footprint positions, pad geometry/nets, zone connection settings and design
+rules are unchanged from revision 6164a13. In1 remains ground only. Fresh
+ERC, DRC and schematic parity have zero findings; all 306 targeted checks
+pass and the full connectivity count is zero. Explicit feedback-ground and
+shunt-sense paths still pass with zones excluded. No hardware tests are claimed.
+
+The sections below record earlier checkpoints. Their then-pending items are
+superseded by the current status above and the linked engineering reviews.
+
+## Earlier power-width refinement and CAN geometry audit
 
 We widened 107 existing 5 V segments and 333 motor/servo segments where
 clearance permitted. We added six parallel 0.70/0.30 mm vias along the Pi feed,

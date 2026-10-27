@@ -27,27 +27,30 @@ give 124 ohms differential using our [reference stack](Layer-stack.md):
 calculation. It omits solder mask, nearby coplanar fill, bends, pad transitions,
 In2 routing and fabrication tolerances; it is not a whole-bus impedance claim.
 
-## Locations requiring refinement
+## Ground-reference repair and remaining review
 
 The checker samples trace centerlines at intervals no greater than 0.5 mm,
 excluding samples within 1 mm of the same signal's through-hole pads/vias.
 The F.Cu routes have In1 ground underneath at the remaining sample points.
 In2 is closest to B.Cu, whose ground fill contains other routes.
 
-The remaining sampled reference gaps are on bus A:
+The previous scan found nine CAN_A_H and three CAN_A_L reference-void samples
+near the front CAN circuit. We rerouted the bottom 3.3 V feed around the
+affected area and moved the F_MOSI crossing. The updated scan finds **zero
+reference-void samples on all four nets** outside the excluded pad/via areas.
+The CAN backbone copper itself is unchanged, so the lengths above are unchanged.
+Sampling does not establish a continuous reference everywhere.
 
-- Around x = 117.85–119.77 mm, y = 201.85–204.40 mm, both CAN lines pass over
-  the clearance around a bottom-layer 3.3 V route.
-- At approximately (121.60, 210.65) mm, CAN_A_H passes over the clearance
-  around bottom-layer F_MOSI routing.
+The replacement 3.3 V feed uses four added vias and a 0.50 mm minimum width;
+its length increases from 10.833 mm to 47.303 mm. Clear sections are wider.
+The F_MOSI replacement decreases from 10.533 mm to 9.292 mm without added
+signal vias. [Supply-path-review.md](Supply-path-review.md) records the
+resistance cost of preserving the CAN reference. We also added one ground
+stitch near the CAN_B_L transition at (151.4, 209.4) mm after relocating a
+ground via away from a solder pad. Coordinates are KiCad board coordinates.
 
-Coordinates use KiCad's board coordinates. These are localized return-path
-interruptions to inspect and improve, not proof of a failed CAN link. The
-checker found no additional bus-B gaps outside the excluded pad/via areas;
-sampling does not establish a continuous reference everywhere.
-
-Before release, reduce these crossings and unequal layer detours, inspect
-node/test/termination branches, and confirm the chosen fabrication stack.
+Before release, review unequal layer detours, node/test/termination branches
+and the chosen fabrication stack.
 The [transceiver layout guidance](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf)
 and [TI CAN physical-layer guide](https://www.ti.com/lit/an/slla270/slla270.pdf)
 support short branches and low-inductance reference paths. We have not measured

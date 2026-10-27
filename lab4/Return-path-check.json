@@ -1,5 +1,5 @@
 {
-  "source_sha256": "29d6cd46095b53525015c990b50795ad0b960cf5855cb1583dffc3030c5dc6b3",
+  "source_sha256": "73eb6586650cae8aeedbf9f9429d2027f47d2480ba865b94423da091a4cf709e",
   "fabrication_release": false,
   "can": [
     {
@@ -652,7 +652,7 @@
         {
           "x_mm": 151.4,
           "y_mm": 209.4,
-          "nearest_ground_transition_mm": 2.214
+          "nearest_ground_transition_mm": 0.922
         },
         {
           "x_mm": 149.2,
