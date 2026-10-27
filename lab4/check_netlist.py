@@ -136,9 +136,10 @@ for bus in ['A', 'B']:
         assert not any(r.startswith('U') for r, _ in nets[name]), 'Transceiver bypasses isolation jumper'
 
 # Pi supply isolation, ground pins and EEPROM reservations.
-for pin in [2, 4]: expect('J70', pin, '/+5V')
-for pin in [6, 9, 14, 20, 25, 30, 34, 39]: expect('J70', pin, '/GND')
-for pin in [1, 17, 27, 28]:
+for pin in [4]: expect('J70', pin, '/+5V')
+for pin in [6, 9, 14, 20, 25, 30, 34]: expect('J70', pin, '/GND')
+assert not any(('J70', str(pin)) in pin_net for pin in [1, 2, 39, 40]), 'Socket must omit Pi end pairs'
+for pin in [17, 27, 28]:
     members = nets[pin_net[('J70', str(pin))]]
     assert members == {('J70', str(pin))}, f'Pi reserved pin must have its own no-connect: {pin}'
 
@@ -167,11 +168,14 @@ for j,side in [(80,'LEFT'),(81,'RIGHT')]:
 for pin,net in [(1,'/GND'),(2,front+'SERVO_VPLUS'),(3,front+'SERVO_PWM_OUT')]:expect('J90',pin,net)
 expect('U81',14,'/+3V3');expect('U81',7,'/GND')
 for ref in ['J82','J83']:
-    expect(ref,1,'/+3V3');expect(ref,2,'/GND')
+    expect(ref,1,rear+'ENC_4V');expect(ref,2,'/GND')
 for ref in ['R804','R805','R806','R807']:
     expect(ref,1,'/+3V3')
 for pin,name in zip([2,4,6,8],['R_LEFT_ENC_A','R_LEFT_ENC_B','R_RIGHT_ENC_A','R_RIGHT_ENC_B']):expect('U81',pin,rear+name)
 for pin in [11,13]:expect('U81',pin,'/GND')
+for pin,net in {1:'/GND',2:'/+5V',3:rear+'ENC_4V'}.items():expect('U82',pin,net)
+for ref,net in [('C804','/+5V'),('C805',rear+'ENC_4V')]:
+    expect(ref,1,net);expect(ref,2,'/GND')
 print('Actuator output, diode polarity, sensed current paths and encoder level-domain checks passed.')
 missing = sorted(r for r, c in components.items() if not c.findtext('footprint'))
 print(f'PASS: {len(components)} components; {len(nets)} nets; BOM, regulators, support circuits, interfaces, probe order and zone boundaries.')

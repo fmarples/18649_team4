@@ -4,6 +4,7 @@ Run with KiCad's Python: check_placement.py schematic-netlist.xml
 These checks do not replace DRC, datasheet review or a physical fit check.
 """
 import json
+import hashlib
 import sys
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -55,13 +56,14 @@ for ref,fp in fps.items():
     if ref in schematic:
         for hole in [f'H{i}' for i in range(1,9)]:
             pos=fps[hole].GetPosition();hx=p.ToMM(pos.x)-40;hy=p.ToMM(pos.y)-40
-            r=4.6 if int(hole[1:])<5 else 3.0
+            r=p.ToMM(next(iter(fps[hole].Pads())).GetDrillSize().x)/2+3
             # Distance from the hole center to the courtyard rectangle.
             dx=max(x-hx,0,hx-(x+w));dy=max(y-hy,0,hy-(y+h))
             if dx*dx+dy*dy < r*r:errors.append(f'{ref} in {hole} support envelope')
 # Check physical mating geometry, not just logical net names. Mirrored header
 # rows can pass ordinary schematic-net checks and still connect 5V incorrectly.
 pi=d['pi'];socket=fps['J70']
+if {a.GetNumber() for a in socket.Pads()} != {str(n) for n in range(3,39)}:errors.append('J70 must mate Pi physical pins3-38 only')
 if socket.GetLayer()!=p.B_Cu:errors.append('J70 must be on bottom')
 for pad in socket.Pads():
     n=int(pad.GetNumber());pair=(n-1)//2
@@ -98,8 +100,8 @@ report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
     copper_zones=sum(not z.GetIsRuleArea() for z in b.Zones()),
     checks=['Placed netlist pads match schematic','All courtyards inside provisional outline',
         'No bottom electrical part in Pi space except J70; top placement allowed',
-        'Chassis 3mm-from-hole-edge and Pi 3mm-radius support envelopes clear',
-        'All 40 bottom socket pad coordinates match physical Pi pin numbers',
+        'All eight supports: components clear 3mm from finished hole edge',
+        'All 36 bottom socket pad coordinates match physical Pi pin numbers',
         'Pi 58x49mm mounting pattern and 1.02mm socket drills',
         'Nominal socket insertion within manufacturer range','Preview coordinates match saved PCB',
         'Five GCT switches: 1.4mm square pads and manufacturer common-terminal pairs'],
@@ -108,9 +110,10 @@ report=dict(status='PASS' if not errors else 'FAIL',errors=errors,
         top_tht_refs_over_pi=sorted(tht_over_pi),max_tht_tail_projection_mm=3),
     limitations=['Not a physical fit test or complete footprint-dimension validation','Placement checks do not validate copper routing',
         'Nominal chassis/Pi/port-envelope review complete; use Mechanical-fit-check.json for dimensions and model limits',
-        'Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review',
+        'Shortened socket omits Pi pins1/2/39/40; align first socket pair to Pi3/4 during assembly',
         'Keep <=3mm tails and choose accessories within the documented envelope; mating, retention, full steering and powered performance are assembly checks',
         'Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers'])
+report['source_sha256'] = hashlib.sha256((ROOT/'KiCad/Lab4.kicad_pcb').read_bytes()).hexdigest()
 (ROOT/'Placement-check.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
 print(json.dumps(report,indent=2))
 sys.exit(bool(errors))

@@ -145,7 +145,7 @@ PI_X, PI_Y = 30, 89
 fp=fps['J70'];fp.Flip(fp.GetPosition(),p.FLIP_DIRECTION_LEFT_RIGHT)
 fp.SetOrientationDegrees(270);fp.SetPosition(vec(PI_X+8.37,PI_Y+4.77))
 positions['J70']=(PI_X+32.5,PI_Y+3.5,270)
-label('J70 SOCKET ON UNDERSIDE / PIN 1',PI_X+32.5,PI_Y-3,.8)
+label('J70 UNDERSIDE / ALIGN PI PIN3',PI_X+32.5,PI_Y-3,.8)
 label('1',PI_X+8.37,PI_Y+8,.85,p.F_SilkS)
 label('2',PI_X+8.37,PI_Y-1,.85,p.F_SilkS)
 
@@ -222,19 +222,17 @@ for layer in [p.F_Cu,p.B_Cu]:
     reserve('Pi ANTENNA REVIEW / NO COPPER',26,98,18,12,'rf',layer=layer,copper=True)
 
 def mount(ref,x,y,diam,kind):
-    fp=load_fp('Lab4_Mechanical:Pi_support_M2.5_D5.5' if diam==2.7 else 'MountingHole:MountingHole_3.2mm_M3')
+    fp=load_fp('Lab4_Mechanical:Pi_support_M2.5_D5.5' if diam==2.7 else 'Lab4_Mechanical:Chassis_support_M3_3mm_edge')
     fp.SetReference(ref);fp.SetValue(kind);fp.SetPosition(vec(x,y));fp.SetBoardOnly(True);fp.Value().SetVisible(False);b.Add(fp);fps[ref]=fp;positions[ref]=(x,y,0)
-    # Chassis: 3 mm from hole edge. Pi: 3 mm from center, accommodating <=5.5 mm
-    # hardware plus margin, because the standard Pi GPIO connector is close.
-    # This distinction is recorded as a course-clearance review item.
-    r=3 if diam==2.7 else diam/2+3
+    # All support holes: 3mm from the finished hole edge, including copper.
+    r=diam/2+3
     rect(x-r,y-r,2*r,2*r)
     # Reserve copper for the screw/spacer on both sides. The empty NPTH pad is
     # permitted; electrical footprint clearance is checked separately.
-    for layer in [p.F_Cu,p.B_Cu]:
-        z=p.ZONE(b);z.SetLayer(layer);z.SetIsRuleArea(True)
+    for layer in b.GetEnabledLayers().CuStack():
+        z=p.ZONE(b);z.SetLayer(layer);z.SetIsRuleArea(True);z.SetZoneName(ref+' 3mm FROM HOLE EDGE / NO COPPER')
         z.SetDoNotAllowTracks(True);z.SetDoNotAllowVias(True);z.SetDoNotAllowZoneFills(True)
-        z.SetDoNotAllowPads(False);z.SetDoNotAllowFootprints(False)
+        z.SetDoNotAllowPads(False);z.SetDoNotAllowFootprints(False) # Electrical pads checked by check_mounting_clearance.py
         poly=z.Outline();poly.NewOutline()
         # Circumscribed polygon keeps the minimum clearance at least r.
         rr=r/math.cos(math.pi/48)
@@ -262,7 +260,7 @@ with (ROOT/'Placement-coordinates.csv').open('w',newline='',encoding='utf-8') as
     keys=['reference','value','footprint','x_mm','y_mm','rotation_deg','layer','schematic'];w=csv.DictWriter(f,keys,extrasaction='ignore');w.writeheader();w.writerows(records)
 pi=dict(x_mm=PI_X,y_mm=PI_Y,width_mm=85,height_mm=56,orientation='component side up, below main PCB',
         board_gap_mm=22,main_pcb_chassis_gap_mm=35,pi_thickness_assumed_mm=1.6,
-        socket='Samtec ESQ-120-44-L-D',socket_body_height_mm=18.67,
+        socket='Samtec ESQ-118-44-L-D (Pi3-38)',socket_body_height_mm=18.67,
         gpio_tip_height_mm=8.5,usb_height_mm=16.4,header_insertion_min_mm=3.68,header_insertion_max_mm=6.35,
         support_max_od_mm=5.5,provisional=True)
 (ROOT/'placement-data.json').write_text(json.dumps(dict(width_mm=W,height_mm=H,pi=pi,components=records,reservations=reservations,missing_footprints=missing),indent=2),encoding='utf-8')

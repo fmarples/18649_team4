@@ -56,6 +56,7 @@ def extract(destination):
         r = row["ref"]
         port(r, ["2"] if r in ["U11", "U15", "U21", "U25", "U31", "U35"] else None)
     for row in allocation["five_volt"]["loads"]: port(row["ref"])
+    for r in ["J82", "J83"]: port(r)
     for r in ["U40", "U41", "U42", "R421", "R431", "J90", "J40"]: port(r)
     # Keep motor sense grounds distinct from the driver's logic ground.
     ports["motor_left"] = {"sites": [{"id": "U80.1", "xy_mm": xy(pads[("U80", "1")].GetPosition()), "projection_mm": 0.}], "ground_pads": ["1"], "location_only_proxy": False}
@@ -141,7 +142,14 @@ def solve(directory, output):
             base = np.zeros(len(xy))
             for rail, regulator in [("logic", "U42"), ("five_volt", "U41")]:
                 for load in allocations[rail]["loads"]:
-                    base += load["allocation_A"] * (weights[load["ref"]] - weights[regulator])
+                    if load["ref"] == "U82":
+                        # LDO input current returns at the two encoder ground
+                        # pins; only its 4 uA quiescent allocation returns at U82.
+                        base += .02 * (weights["J82"] - weights[regulator])
+                        base += .02 * (weights["J83"] - weights[regulator])
+                        base += (load["allocation_A"]-.04) * (weights["U82"] - weights[regulator])
+                    else:
+                        base += load["allocation_A"] * (weights[load["ref"]] - weights[regulator])
             cases = [("logic_and_5V_output_loops_only", base, None)]
             # Positive current enters the ground plane. An averaged buck has
             # ground-pin current Iin-Iout; the battery return extracts Iin.

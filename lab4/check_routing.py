@@ -256,17 +256,20 @@ for net, endpoints in signal_groups.items():
 power_branches = [
     ('C1.1', 'U1.5'), ('C803.1', 'U81.14'), ('R805.1', 'R806.1'),
     ('C503.1', 'J501.1'), ('C1.1', 'C500.1'), ('C503.1', 'J500.1'),
-    ('C244.1', 'C803.1'), ('J83.1', 'R805.1'), ('J501.1', 'R700.1'),
-    ('C1.1', 'R424.1'), ('C600.1', 'J82.1'),
+    ('C244.1', 'C803.1'), ('C803.1', 'R805.1'), ('J501.1', 'R700.1'),
+    ('C1.1', 'R424.1'), ('C600.1', 'R804.1'),
 ]
 for a, b in power_branches:
     check_group('3V3 branch', f'{a} to {b}', [tuple(a.split('.')), tuple(b.split('.'))])
+check_group('encoder power','4V output and both encoders',[('U82','3'),('C805','1'),('J82','1'),('J83','1')])
+check_group('encoder power','5V input and bypass',[('L2','2'),('U82','2'),('C804','1')])
+check_group('encoder power','ground',[('U82','1'),('C804','2'),('C805','2')])
 check_group('servo sense', 'Kelvin IN+', [('R1', '1'), ('U1', '3')])
 check_group('servo sense', 'Kelvin IN-', [('R1', '2'), ('U1', '4')])
 check_group('servo power', 'regulator to shunt', [('L1', '2'), ('R1', '1')])
 check_group('servo power', 'shunt to connector', [('R1', '2'), ('J90', '2')])
 check_group('5V distribution', 'regulator and every load group', [
-    ('L2', '2'), ('J70', '2'), ('J70', '4'), ('U80', '9'),
+    ('L2', '2'), ('J70', '4'), ('U80', '9'),
     ('U2', '8'), ('U3', '8'), ('C700', '1'), ('C701', '1'),
     ('R570', '1'), ('R571', '1'), ('R670', '1'), ('R671', '1')])
 for endpoints in ['U80.2 U2.1 U2.2 D800.2 D801.1',
@@ -285,12 +288,12 @@ check_group('3V3 branch', 'encoder pull-up to bypass', [('R806', '1'), ('C803', 
 
 # October 26 supply joins and MCU connections. These checks deliberately use
 # fixed schematic endpoints, so removing their copper must fail the check.
-for endpoints in ['C104.1 R140.1', 'J83.1 R602.1', 'R141.1 J44.1',
-                  'J83.1 J600.1', 'R340.1 C304.1', 'J500.1 R100.1',
+for endpoints in ['C104.1 R140.1', 'R806.1 R602.1', 'R141.1 J44.1',
+                  'R806.1 J600.1', 'R340.1 C304.1', 'J500.1 R100.1',
                   'J500.1 R301.1', 'C601.1 R300.1', 'R414.1 C1.1']:
     check_group('3V3 branch', endpoints, [tuple(s.split('.')) for s in endpoints.split()])
 for endpoints in ['C3.1 U2.8', 'C6.1 U3.8', 'C801.1 U80.9',
-                  'C700.1 C701.1', 'J70.2 J70.4',
+                  'C700.1 C701.1', 'C700.1 J70.4',
                   'R570.1 R571.1', 'R670.1 R671.1']:
     check_group('5V local branch', endpoints, [tuple(s.split('.')) for s in endpoints.split()])
 for net, endpoints in {
@@ -402,7 +405,7 @@ for net, endpoints in pending_signal_groups.items():
 tracks = list(board.GetTracks())
 # Each unused Pi supply/EEPROM pin has its own no-connect marker. In
 # particular, the two Pi 3V3 outputs must not share an accidental PCB net.
-for pin in ['1', '17', '27', '28']:
+for pin in ['17', '27', '28']:
     a = pads[('J70', pin)]
     isolated = ({key for key, q in pads.items() if q.GetNetCode() == a.GetNetCode()}
                 == {('J70', pin)} and
@@ -445,8 +448,12 @@ assert board.GetCopperLayerCount() == 4, 'The reviewed layout uses four copper l
 assert all(t.GetNetname() == '/GND' for t in segments if t.GetLayer() == p.In1_Cu)
 assert any(not z.GetIsRuleArea() and z.GetLayer() == p.In1_Cu and
            z.GetNetname() == '/GND' for z in board.Zones()), 'Missing internal ground plane'
+# Existing antenna/access reservations span the inner layers. The new
+# mounting exclusions are one zone per layer; top heatsink metal has its own
+# surface-only exclusions. check_mounting_clearance.py verifies all 32 hole
+# zones and actual pad/track/via/fill separation independently.
 assert all(z.GetLayerSet().Contains(p.In1_Cu) and z.GetLayerSet().Contains(p.In2_Cu)
-           for z in board.Zones() if z.GetIsRuleArea()), 'Inner-layer keep-out missing'
+           for z in board.Zones() if z.GetIsRuleArea() and not z.GetZoneName()), 'Inner-layer reservation missing'
 clock_routes = []
 for n in [10, 14, 20, 24, 30, 34]:
     for pin in ['8', '9']:
@@ -484,7 +491,7 @@ report = {
         'All CAN/MCU and encoder pull-up 3V3 groups now reach the regulator; trunk voltage drop/current capability still need review.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',
         'Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.',
-        'Power-input, motor protection and heatsink decisions remain open; no fabrication release.'],
+        'Power-input and motor protection decisions remain open. Heatsink mounting is implemented; operating temperature is unqualified. No fabrication release.'],
     'unfinished_signal_nets': unfinished_signal_nets,
     'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
 }

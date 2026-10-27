@@ -20,7 +20,7 @@ S=6;OX=75;OY=180
 def xy(x,y):return OX+S*x,OY+S*y
 def rbox(x,y,w,h):return (*xy(x,y),*xy(x+w,y+h))
 dr.text((75,35),'Lab 4 | Direct Pi connection',font=ft(38,True),fill='#16354e')
-dr.text((75,89),'120 x 234 mm proposal  /  284 electrical footprints placed',font=ft(23),fill='#334b60')
+dr.text((75,89),'120 x 234 mm proposal  /  287 electrical footprints placed',font=ft(23),fill='#334b60')
 dr.text((75,125),'PLACEMENT PREVIEW - measured hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
 dr.rectangle(rbox(0,0,120,234),fill='white',outline='#16354e',width=3)
 for r in d['reservations']:
@@ -28,7 +28,7 @@ for r in d['reservations']:
     dr.rectangle(rbox(r['x'],r['y'],r['w'],r['h']),fill=colors[r['kind']],outline='#b17820' if r['kind'] in ['missing','switch'] else '#7392b6',width=2)
 for c in d['components']:
     x,y,w,h=c['bbox'];ref=c['reference']
-    if not c['schematic']:
+    if not c['schematic'] and ref.startswith('H') and ref[1:].isdigit():
         rad=(2.7 if int(ref[1:])>=5 else 3.2)/2
         cx,cy=c['x_mm'],c['y_mm'];dr.ellipse(rbox(cx-rad,cy-rad,2*rad,2*rad),fill='white',outline='#9b4800' if int(ref[1:])<5 else '#315d9b',width=2)
         dr.text(xy(cx-3,cy-6),ref,font=ft(13,True),fill='#173b53')
@@ -55,14 +55,14 @@ side=[('What this establishes',[
     ('Planned electrical connections',[
     'Every placed pad retains its schematic net.',
     'Signal and supply connections routed.',
-    'J70: bottom-mounted 40-pin socket.',
+    'J70: underside socket mates Pi pins 3-38.',
     'No GPIO cable. Pin geometry checked.']),
     ('Remaining layout work',[
     'Review power loops and return paths.',
     'Verify motor protection and heatsink fit.',
     '1 oz copper; 0.15 mm buck-pad exception.',
     'Check pack mounting and cable space.',
-    'Resolve remaining mounting clearances.']),
+    '3 mm clearance from all hole edges.']),
     ('Placement key',[
     'Blue block: Pi mounted BELOW this area.',
     'Orange connector: socket on underside.',
@@ -76,7 +76,7 @@ for title,lines in side:
     dr.text((860,y),title,font=ft(25,True),fill='#16354e');y+=43
     for line in lines:dr.text((860,y),line,font=ft(20),fill='#334b60');y+=30
     y+=38
-dr.text((75,1626),'Geometry proposal only. Board width over the tapered front plate and wheel/linkage clearance need a physical fit check.',font=ft(20),fill='#334b60')
+dr.text((75,1626),'Paper mounting pattern and nominal height checked. Socket mating and full steering are assembly checks.',font=ft(20),fill='#334b60')
 dr.text((75,1660),'Source: KiCad placement coordinates. Routing and hardware decisions remain; placement is not fabrication approval.',font=ft(20),fill='#334b60')
 img.save(ROOT/'Placement-overview.png')
 
@@ -98,7 +98,7 @@ for r in d['reservations']:
     if r['kind']!='clearance':p_rect(r['x'],r['y'],r['w'],r['h'],colors[r['kind']])
 for c in d['components']:
     ref=c['reference']
-    if c['schematic']:
+    if c['schematic'] or ref.startswith('HS'):
         p_rect(*c['bbox'],None,'#648293')
     else:
         cx=(BX+c['x_mm'])*mm;cy=(BY+234-c['y_mm'])*mm
@@ -163,11 +163,11 @@ for i in range(1,41):
     x=8.37+2.54*((i-1)//2);y=4.77 if i%2 else 2.23
     pdf.circle((PX+x)*mm,(PY+56-y)*mm,.5*mm,stroke=1,fill=0)
 pdf.setFillColor(HexColor('#16354e'))
-pdf.setFont('Helvetica-Bold',8);pdf.drawString(31*mm,244*mm,'Pin 1: inner row, left end')
+pdf.setFont('Helvetica-Bold',8);pdf.drawString(31*mm,244*mm,'Pi pin1: inner row / leave pair1-2 unused')
 pdf.drawString(34*mm,220*mm,'Raspberry Pi 4: 85 x 56 mm')
 pdf.drawString(34*mm,215*mm,'58 x 49 mm hole centers')
 pdf.setFont('Helvetica',9)
-for i,line in enumerate(['USB / Ethernet face right.', 'GPIO row faces the REAR.', 'microSD is on Pi underside.', 'Do not use this as a drill guide.', 'Main-PCB Pi origin: (30,89) mm.']):
+for i,line in enumerate(['USB / Ethernet face right.', 'GPIO row faces the REAR.', 'Socket mates Pi pins3-38 only.', 'Do not use this as a drill guide.', 'Main-PCB Pi origin: (30,89) mm.']):
     pdf.drawString(113*mm,(251-i*7)*mm,line)
 pdf.drawImage(str(ROOT/'Pi-stack-side-view.png'),15*mm,83*mm,width=180*mm,height=108*mm)
 pdf.setFont('Helvetica-Bold',10);pdf.drawString(15*mm,73*mm,'Recorded geometry and remaining fit checks:')
@@ -179,6 +179,6 @@ for i,line in enumerate(['Chassis spacers: 35 mm nominal; four-hole paper fit pa
     'Chassis and Pi hole patterns checked; repeat only if the layout changes.',
     'Still check unknown plug/cable/steering envelopes and assembled socket fit.']):
     pdf.drawString(15*mm,(65-i*7)*mm,line)
-pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi mounting hardware OD <=5.5 mm proposed. Review the course 3 mm hole-clearance interpretation before fabrication.')
+pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi hardware OD <=5.5 mm. All holes: 3 mm from hole edge. Socket first pair aligns to Pi3/4, not1/2.')
 pdf.save()
 print('Created direct-Pi placement overview, side view and two-page true-size fit template.')

@@ -3,41 +3,42 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 6929,
-    "B.Cu": 5037,
-    "In2.Cu": 4639
+    "F.Cu": 7242,
+    "B.Cu": 5695,
+    "In2.Cu": 5256
   },
   "errors": [],
   "counts": {
-    "track_segments": 16605,
-    "through_vias": 973,
+    "track_segments": 18193,
+    "through_vias": 1017,
     "copper_zones": 6,
     "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
     "0.25": 179,
-    "0.6": 261,
+    "0.6": 246,
     "0.8": 391,
     "0.3": 882,
-    "0.2": 11723,
-    "2.0": 205,
-    "2.5": 108,
-    "1.75": 91,
-    "0.4": 116,
-    "1.0": 528,
-    "3.0": 334,
-    "1.5": 1082,
-    "0.5": 354,
-    "1.25": 108,
+    "0.2": 12652,
+    "2.0": 182,
+    "0.5": 921,
+    "2.5": 77,
+    "1.75": 77,
+    "0.4": 125,
+    "1.0": 682,
+    "3.0": 273,
+    "1.5": 1159,
+    "1.25": 106,
     "1.2": 29,
+    "1.38": 2,
     "3.5": 31,
     "4.0": 129,
-    "2.25": 42,
-    "2.75": 12
+    "2.25": 39,
+    "2.75": 11
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 906,
-    "0.80/0.40": 67
+    "0.70/0.30": 951,
+    "0.80/0.40": 66
   },
   "checks": [
     {
@@ -2799,10 +2800,10 @@
     },
     {
       "reference": "3V3 branch",
-      "group": "J83.1 to R805.1",
+      "group": "C803.1 to R805.1",
       "net": "/+3V3",
       "pads": [
-        "J83.1",
+        "C803.1",
         "R805.1"
       ],
       "physically_connected": true
@@ -2829,11 +2830,45 @@
     },
     {
       "reference": "3V3 branch",
-      "group": "C600.1 to J82.1",
+      "group": "C600.1 to R804.1",
       "net": "/+3V3",
       "pads": [
         "C600.1",
-        "J82.1"
+        "R804.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "encoder power",
+      "group": "4V output and both encoders",
+      "net": "/Rear zone/ENC_4V",
+      "pads": [
+        "U82.3",
+        "C805.1",
+        "J82.1",
+        "J83.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "encoder power",
+      "group": "5V input and bypass",
+      "net": "/+5V",
+      "pads": [
+        "L2.2",
+        "U82.2",
+        "C804.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "encoder power",
+      "group": "ground",
+      "net": "/GND",
+      "pads": [
+        "U82.1",
+        "C804.2",
+        "C805.2"
       ],
       "physically_connected": true
     },
@@ -2883,7 +2918,6 @@
       "net": "/+5V",
       "pads": [
         "L2.2",
-        "J70.2",
         "J70.4",
         "U80.9",
         "U2.8",
@@ -3041,10 +3075,10 @@
     },
     {
       "reference": "3V3 branch",
-      "group": "J83.1 R602.1",
+      "group": "R806.1 R602.1",
       "net": "/+3V3",
       "pads": [
-        "J83.1",
+        "R806.1",
         "R602.1"
       ],
       "physically_connected": true
@@ -3061,10 +3095,10 @@
     },
     {
       "reference": "3V3 branch",
-      "group": "J83.1 J600.1",
+      "group": "R806.1 J600.1",
       "net": "/+3V3",
       "pads": [
-        "J83.1",
+        "R806.1",
         "J600.1"
       ],
       "physically_connected": true
@@ -3161,10 +3195,10 @@
     },
     {
       "reference": "5V local branch",
-      "group": "J70.2 J70.4",
+      "group": "C700.1 J70.4",
       "net": "/+5V",
       "pads": [
-        "J70.2",
+        "C700.1",
         "J70.4"
       ],
       "physically_connected": true
@@ -3364,7 +3398,6 @@
         "R601.1",
         "C103.1",
         "R434.1",
-        "J82.1",
         "C243.1",
         "U11.3",
         "R804.1",
@@ -3456,7 +3489,6 @@
         "C143.1",
         "C500.1",
         "C1.1",
-        "J83.1",
         "R300.1",
         "U24.4",
         "U24.5",
@@ -3534,12 +3566,6 @@
       ],
       "physically_connected": true,
       "zone_objects_excluded": true
-    },
-    {
-      "reference": "J70",
-      "group": "unused pin 1",
-      "net": "unconnected-(J70-3V3-Pad1)",
-      "isolated_without_copper": true
     },
     {
       "reference": "J70",
@@ -3669,12 +3695,12 @@
   "backbone_nets": [
     {
       "net": "/CAN_A_H",
-      "total_copper_length_mm_all_branches": 256.566,
+      "total_copper_length_mm_all_branches": 248.654,
       "through_vias": 4
     },
     {
       "net": "/CAN_A_L",
-      "total_copper_length_mm_all_branches": 251.328,
+      "total_copper_length_mm_all_branches": 242.119,
       "through_vias": 13
     },
     {
@@ -3695,8 +3721,8 @@
     "All CAN/MCU and encoder pull-up 3V3 groups now reach the regulator; trunk voltage drop/current capability still need review.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
     "Kelvin shunt inputs are connected; review their noise/loop geometry, feedback returns and thermal/current capability.",
-    "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
+    "Power-input and motor protection decisions remain open. Heatsink mounting is implemented; operating temperature is unqualified. No fabrication release."
   ],
   "unfinished_signal_nets": [],
-  "source_sha256": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d"
+  "source_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071"
 }

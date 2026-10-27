@@ -1,5 +1,16 @@
 # Digital design review — October 27
 
+## Current revision — October 27
+
+The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
+older socket, heatsink-placement and encoder-voltage statements below. All
+eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
+have a separate 4.0 V supply. Current JSON checks carry the active board hash.
+Battery/protection, Pi voltage margin and exact capacitor data remain open.
+
+## Earlier review record
+
+
 The four-layer PCB is fully connected, with 284 electrical footprints,
 16,605 trace segments and 973 vias. Fresh ERC, DRC and schematic comparison
 have zero findings; all 306 targeted connection checks pass. We have not

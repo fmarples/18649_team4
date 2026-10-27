@@ -105,7 +105,7 @@ Cockpit,DEG_B_LED,BCM6,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the 
 Cockpit,ERROR_LED,BCM12,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.,J70.32 -> PI_ERROR_LED
 Cockpit,STATUS_LED,BCM13,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.,J70.33 -> PI_STATUS_LED
 Cockpit,SELFTEST_BUTTON,BCM16,Proposed PCB addition,A=CE0/IRQ25 and B=CE1/IRQ24 is the PCB proposal. Verify installed overlay and map Linux can0/can1 to physical buses; numbering can swap.,J70.36 -> PI_SELFTEST_BUTTON
-Cockpit,5V_INPUT,Power/reserved,Proposed PCB,Board feeds Pi; avoid simultaneous USB-C power without power-path isolation.,J70.2 / J70.4 -> +5V
-Cockpit,GND,Power/reserved,Proposed PCB,Common ground; keep motor/servo high-current returns away from logic supply path.,J70.6/9/14/20/25/30/34/39 -> GND
+Cockpit,5V_INPUT,Power/reserved,Proposed PCB,Board feeds Pi; avoid simultaneous USB-C power without power-path isolation.,J70.4 -> +5V
+Cockpit,GND,Power/reserved,Proposed PCB,Common ground; keep motor/servo high-current returns away from logic supply path.,J70.6/9/14/20/25/30/34 -> GND
 Cockpit,PI_3V3_DO_NOT_JOIN,Power/reserved,Proposed PCB,Do not tie Pi 3.3 V output to the independent PCB regulator.,Reserved / intentionally unconnected
 Cockpit,ID_EEPROM_RESERVED,Power/reserved,Proposed PCB,Leave ID_SD/ID_SC reserved unless adding a compliant HAT EEPROM.,Reserved / intentionally unconnected

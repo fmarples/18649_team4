@@ -69,16 +69,17 @@ results = dict(
         pi_usb_ethernet_board_edge_recess=data['width_mm']-pi['x_mm']-pi['width_mm'],
         pi_microsd_board_edge_recess=pi['x_mm']),
     limits=[
-        'No new measurements and no active PCB edits.',
+        'Drawing-based calculation, not a new physical measurement.',
         'Wheel calculation assumes upright tires on a level surface and a rigid chassis; lower plate ground clearance is conservatively taken as zero.',
         'Wheel result applies to the main PCB and <=3 mm downward tails, not the lower Pi, chassis spacers, loose cables, obstacles or unspecified camber.',
         'Complete horizontal wheel sweep is not established without pivot/stop geometry; retain full-steering inspection as an unpowered assembly check.',
         'Plug/cooler envelopes are selection limits, not proof that an unspecified accessory fits.',
-        'Pi 3 mm hole-edge rule interpretation is unresolved despite positive nominal hardware/body clearance.',
+        'User-directed 3mm clearance from finished hole edge applies to components and copper at every chassis/Pi support.',
         'Engagement, fastener retention, continuity and powered behavior require the assembled hardware.',
     ])
 assert pi['header_insertion_min_mm'] <= insertion <= pi['header_insertion_max_mm']
 assert min(s['hardware_to_socket_mm'] for s in support_distances) > 0
+assert min(s['hole_edge_to_socket_body_mm'] for s in support_distances) >= 3
 assert results['pi_stack_mm']['conservative_18mm_top_envelope_clearance'] >= 1
 (ROOT/'Mechanical-fit-check.json').write_text(json.dumps(results, indent=2)+'\n', encoding='utf-8')
 print(json.dumps(results, indent=2))

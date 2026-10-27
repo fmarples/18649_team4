@@ -7,45 +7,29 @@ The [handout](https://drive.google.com/file/d/1BY2rbBwuB3GaSkNRFC7Hki2tzdnRCmCk/
 requires the final files on Gradescope by **October 29, 2026, 11:59 p.m.**
 The class fabrication batch follows the next morning.
 
-## Current evidence
+## October 27 mounting and encoder revision
 
-The October 25 updates add the five GCT switch footprints using the verified
-manufacturer A1 drawing and refine the three regulator groups. All 284 schematic components now have matching PCB
-footprints, with eight additional mechanical supports and 298 schematic nets.
-The switch contact pairs, pad dimensions and nets pass the placement checks;
-the circuit and three BOM views agree. The regulator revision moves/rotates
-30 footprints while preserving their pad nets and all unrelated positions.
-The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-The current routing contains 16,605 track segments, 973 vias and six
-ground zones on four copper layers. All 306 targeted connection checks pass.
-Fresh ERC, native PCB DRC and schematic parity have zero findings; native
-DRC and the full connectivity count both report zero missing connections.
-The schematic separates the two unused Pi 3.3 V pins into individual
-no-connect nets. All 284 electrical footprints and eight supports match.
-See [Routing-review.md](Routing-review.md) for the signal and power changes.
-The latest [digital review](Digital-review.md) records shared-trunk current
-allocation, the latest 768 wider logic and 541 wider five-volt segments,
-precision feedback resistors,
-CAN branches/detours, separate sense taps and functional labels. All 32
-near-opening via sites were moved; the 0.15 mm nominal screen is now clear.
-The later [ground-plane screen](Ground-plane-review.md) calculates bulk In1 DC
-loss in stated scenarios; it does not establish total return loss, effective
-capacitor bias behavior or board temperature. The source/BOM resistor changes must also
-be reconciled with the October 26 purchasing snapshot.
-The subsequent [power-margin review](Power-margin-review.md) completes voltage,
-capacitor/feed-forward and thermal sensitivity calculations. Its voltage
-results now include the wider supply copper. It identifies an encoder
-supply-range question and limited Pi margin;
-component-data and design closure remain necessary.
-The [package review](Critical-package-review.md) now adds both MCUs, all
-CAN controllers/transceivers, both ACS712 sensors and the input MOSFET.
-These 17 checks pass without changing CAD. The selected Pi socket's solder
-process remains subject to the specific note in [Assembly-options.md](Assembly-options.md).
+We implemented the 3 mm clearance from the **finished hole edge** at all
+four chassis and four Pi support holes. The exclusions cover components,
+tracks, vias and filled copper on all four layers. The Pi socket is now
+**Samtec ESQ-118-44-L-D**, mating physical Pi pins **3–38**. The first socket
+pair must align with Pi pins 3/4, not 1/2. Pin 4 alone supplies 5 V. All used
+signals and Lab 3 assignments are unchanged. Do not substitute the old
+40-contact socket: it violates the hole-edge clearance.
 
-`Fabrication-check.json` records an automated PASS with source hashes and
-ignored rule categories. This establishes the checked CAD connections and
-rules, not current/thermal ratings, physical fit or release approval. The
-engineering decisions and export/review tasks below still block fabrication.
+We also installed the 6396BG anchor footprint, moved U80/C800/C802/J80,
+and repaired local routing. A new 4.0 V encoder rail replaces the marginal
+3.3 V encoder feed; the signal buffer and its pull-ups remain at 3.3 V.
+See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
+for exact parts, calculations, checks and remaining limitations.
+
+The current board has 287 electrical footprints plus eight supports and
+HS80, 18,193 track segments, 1,017 vias and six filled ground zones.
+All 308 targeted connection checks pass. Native findings are recorded in
+[Fabrication-check.json](Fabrication-check.json); a clean automated result
+does not authorize fabrication. Battery/fault handling, Pi voltage margin,
+exact buck-capacitor data and final purchasing/manufacturing review remain.
+
 
 ## October 26 course updates
 
@@ -72,8 +56,8 @@ included, matching the [October 25 clarification](https://18449-f26.slack.com/ar
 | --- | --- | --- |
 | Battery and charger | Exact pack, continuous current and any pulse rating with duration, full-charge and discharged voltage bounds, dimensions, connector/polarity and compatible charger from a permitted source | Determines input voltage/current, connector, fuse, wiring and mechanical space. The provisional Amazon pack is not qualified: its published 2 A continuous rating does not cover the assumed 2.883 A planning case; no 10 A pulse rating was established. |
 | Motor protection and fuse | TA/course expectations for fault handling; chosen fuse time-current behavior versus wiring, connectors, holder and load/startup envelope | A 10 A input fuse is not fast protection for an individual L298 bridge. A circuit change must happen before routing. The raw 3.2 A motor stall figure is not an allowed continuous L298 operating point. |
-| L298 and 6396BG installation | Implement the drawing-based footprint, component moves and local copper repair | Mounting research is complete: two 2.89 mm finished plated holes at 25.4 mm pitch, M3 tab clamp and nominal vertical fit. The proposed (+3, −3) mm U80/sink move still affects C800, C802 and J80. It has not been applied or rerouted. See `Heatsink-mounting-review.md`; no new measurement is required for this CAD work. |
-| Pi and chassis stack | Resolve the course interpretation of the Pi mounting margin; keep accessories within the calculated envelopes | Nominal 35 mm/22 mm heights, socket engagement, port/cooler limits and conditional main-board/tire clearance are reviewed in Mechanical-evidence.md. No repeat height/photograph task is required. A 5.5 mm support has 0.595 mm nominal socket clearance, but the strict 3 mm hole-edge rule is short by 1.005 mm. Mating, retention and full installed steering are assembly checks. |
+| L298 cooling/fault envelope | Mounting geometry is implemented and checked; finalize allowable motor current/duty and fault handling | The heatsink footprint and routing no longer await a measurement. Thermal qualification still depends on the operating envelope. |
+| Pi and chassis stack | Completed drawing-based review: 35 mm chassis / 22 mm Pi gap; all eight supports satisfy the 3 mm hole-edge rule | ESQ-118-44-L-D clears the Pi hole edge by 4.535 mm. Keep accessories and hardware within documented envelopes; actual mating/retention/steering are assembly checks. No rule exception is pending. |
 | Cable interfaces and stock | Select a servo mating part with documented current capability and confirm supplied quantities; choose permitted replacements if unavailable | A different PCB connector or package changes pads and placement. The second motor harness, adapter fit/continuity and temperature are checked during assembly; they do not require a new photo task now. The intended mating interface and rating basis must still be established before release. |
 
 Resolve decisions that change CAD now, before the Wednesday final-export target. This is a team
@@ -109,7 +93,7 @@ recheck button access if the heatsink or neighboring placement changes.
 The required electrical connections are routed. Do not treat the completed
 signal-routing and label work as pending. Before release:
 
-1. Resolve the input-power/protection and heatsink decisions above, then update
+1. Resolve the input-power/protection and operating-load decisions above, then update
    only their affected schematic, placement and routes.
 2. Close the remaining component and power-margin findings in
    [Digital-review.md](Digital-review.md): encoder supply qualification,

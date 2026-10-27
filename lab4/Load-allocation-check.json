@@ -1,10 +1,10 @@
 {
-  "source_sha256": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d",
+  "source_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
   "fabrication_release": false,
   "method": "Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.",
   "logic": {
     "net": "/+3V3",
-    "total_allocated_A": 0.716719,
+    "total_allocated_A": 0.676719,
     "source_minimum_V": 3.262881,
     "loads": [
       {
@@ -13,17 +13,17 @@
         "allocation_A": 0.07,
         "basis": "70mA allocation: MCU internal maximum plus ADC and GPIO/indicator allowance; not measured",
         "path_R_ohm": 0.147131,
-        "shared_tree_drop_V": 0.060064,
-        "static_source_minus_drop_V": 3.202817
+        "shared_tree_drop_V": 0.056476,
+        "static_source_minus_drop_V": 3.206405
       },
       {
         "ref": "U60",
         "pin": "19",
         "allocation_A": 0.07,
         "basis": "70mA allocation: MCU internal maximum plus ADC and GPIO/indicator allowance; not measured",
-        "path_R_ohm": 0.241013,
-        "shared_tree_drop_V": 0.093096,
-        "static_source_minus_drop_V": 3.169785
+        "path_R_ohm": 0.244296,
+        "shared_tree_drop_V": 0.085688,
+        "static_source_minus_drop_V": 3.177193
       },
       {
         "ref": "U10",
@@ -31,8 +31,8 @@
         "allocation_A": 0.01,
         "basis": "10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz",
         "path_R_ohm": 0.069369,
-        "shared_tree_drop_V": 0.044204,
-        "static_source_minus_drop_V": 3.218677
+        "shared_tree_drop_V": 0.041487,
+        "static_source_minus_drop_V": 3.221394
       },
       {
         "ref": "U14",
@@ -40,26 +40,26 @@
         "allocation_A": 0.01,
         "basis": "10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz",
         "path_R_ohm": 0.019655,
-        "shared_tree_drop_V": 0.013172,
-        "static_source_minus_drop_V": 3.249709
+        "shared_tree_drop_V": 0.012443,
+        "static_source_minus_drop_V": 3.250438
       },
       {
         "ref": "U20",
         "pin": "20",
         "allocation_A": 0.01,
         "basis": "10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz",
-        "path_R_ohm": 0.214713,
-        "shared_tree_drop_V": 0.09339,
-        "static_source_minus_drop_V": 3.169491
+        "path_R_ohm": 0.224287,
+        "shared_tree_drop_V": 0.088125,
+        "static_source_minus_drop_V": 3.174756
       },
       {
         "ref": "U24",
         "pin": "20",
         "allocation_A": 0.01,
         "basis": "10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz",
-        "path_R_ohm": 0.237571,
-        "shared_tree_drop_V": 0.094956,
-        "static_source_minus_drop_V": 3.167925
+        "path_R_ohm": 0.247144,
+        "shared_tree_drop_V": 0.089691,
+        "static_source_minus_drop_V": 3.17319
       },
       {
         "ref": "U30",
@@ -67,8 +67,8 @@
         "allocation_A": 0.01,
         "basis": "10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz",
         "path_R_ohm": 0.127657,
-        "shared_tree_drop_V": 0.073249,
-        "static_source_minus_drop_V": 3.189632
+        "shared_tree_drop_V": 0.068208,
+        "static_source_minus_drop_V": 3.194673
       },
       {
         "ref": "U34",
@@ -76,8 +76,8 @@
         "allocation_A": 0.01,
         "basis": "10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz",
         "path_R_ohm": 0.158804,
-        "shared_tree_drop_V": 0.07654,
-        "static_source_minus_drop_V": 3.186341
+        "shared_tree_drop_V": 0.071499,
+        "static_source_minus_drop_V": 3.191382
       },
       {
         "ref": "U11",
@@ -85,8 +85,8 @@
         "allocation_A": 0.077,
         "basis": "17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously",
         "path_R_ohm": 0.076913,
-        "shared_tree_drop_V": 0.044222,
-        "static_source_minus_drop_V": 3.218659
+        "shared_tree_drop_V": 0.04156,
+        "static_source_minus_drop_V": 3.221321
       },
       {
         "ref": "U15",
@@ -94,26 +94,26 @@
         "allocation_A": 0.077,
         "basis": "17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously",
         "path_R_ohm": 0.031095,
-        "shared_tree_drop_V": 0.014053,
-        "static_source_minus_drop_V": 3.248828
+        "shared_tree_drop_V": 0.013324,
+        "static_source_minus_drop_V": 3.249557
       },
       {
         "ref": "U21",
         "pin": "3",
         "allocation_A": 0.077,
         "basis": "17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously",
-        "path_R_ohm": 0.226583,
-        "shared_tree_drop_V": 0.094304,
-        "static_source_minus_drop_V": 3.168577
+        "path_R_ohm": 0.236157,
+        "shared_tree_drop_V": 0.089039,
+        "static_source_minus_drop_V": 3.173842
       },
       {
         "ref": "U25",
         "pin": "3",
         "allocation_A": 0.077,
         "basis": "17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously",
-        "path_R_ohm": 0.230565,
-        "shared_tree_drop_V": 0.094885,
-        "static_source_minus_drop_V": 3.167996
+        "path_R_ohm": 0.240139,
+        "shared_tree_drop_V": 0.08962,
+        "static_source_minus_drop_V": 3.173261
       },
       {
         "ref": "U31",
@@ -121,8 +121,8 @@
         "allocation_A": 0.077,
         "basis": "17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously",
         "path_R_ohm": 0.135941,
-        "shared_tree_drop_V": 0.074527,
-        "static_source_minus_drop_V": 3.188354
+        "shared_tree_drop_V": 0.069486,
+        "static_source_minus_drop_V": 3.193395
       },
       {
         "ref": "U35",
@@ -130,17 +130,17 @@
         "allocation_A": 0.077,
         "basis": "17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously",
         "path_R_ohm": 0.170591,
-        "shared_tree_drop_V": 0.077448,
-        "static_source_minus_drop_V": 3.185433
+        "shared_tree_drop_V": 0.072407,
+        "static_source_minus_drop_V": 3.190474
       },
       {
         "ref": "U81",
         "pin": "14",
         "allocation_A": 0.005,
         "basis": "5mA switching allowance, not measured",
-        "path_R_ohm": 0.220162,
-        "shared_tree_drop_V": 0.093973,
-        "static_source_minus_drop_V": 3.168908
+        "path_R_ohm": 0.229736,
+        "shared_tree_drop_V": 0.088708,
+        "static_source_minus_drop_V": 3.174173
       },
       {
         "ref": "U1",
@@ -148,35 +148,17 @@
         "allocation_A": 0.001,
         "basis": "1mA allowance",
         "path_R_ohm": 0.149856,
-        "shared_tree_drop_V": 0.05822,
-        "static_source_minus_drop_V": 3.204661
-      },
-      {
-        "ref": "J82",
-        "pin": "1",
-        "allocation_A": 0.02,
-        "basis": "20mA provisional encoder allowance; module current unknown",
-        "path_R_ohm": 0.254121,
-        "shared_tree_drop_V": 0.093169,
-        "static_source_minus_drop_V": 3.169712
-      },
-      {
-        "ref": "J83",
-        "pin": "1",
-        "allocation_A": 0.02,
-        "basis": "20mA provisional encoder allowance; module current unknown",
-        "path_R_ohm": 0.187322,
-        "shared_tree_drop_V": 0.089747,
-        "static_source_minus_drop_V": 3.173134
+        "shared_tree_drop_V": 0.054632,
+        "static_source_minus_drop_V": 3.208249
       },
       {
         "ref": "R601",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.219992,
-        "shared_tree_drop_V": 0.090869,
-        "static_source_minus_drop_V": 3.172012
+        "path_R_ohm": 0.223275,
+        "shared_tree_drop_V": 0.083898,
+        "static_source_minus_drop_V": 3.178983
       },
       {
         "ref": "R434",
@@ -184,35 +166,35 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.036281,
-        "shared_tree_drop_V": 0.00033,
-        "static_source_minus_drop_V": 3.262551
+        "shared_tree_drop_V": 0.000312,
+        "static_source_minus_drop_V": 3.262569
       },
       {
         "ref": "R804",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.203627,
-        "shared_tree_drop_V": 0.091401,
-        "static_source_minus_drop_V": 3.17148
+        "path_R_ohm": 0.213201,
+        "shared_tree_drop_V": 0.086136,
+        "static_source_minus_drop_V": 3.176745
       },
       {
         "ref": "R805",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.199184,
-        "shared_tree_drop_V": 0.091903,
-        "static_source_minus_drop_V": 3.170978
+        "path_R_ohm": 0.208758,
+        "shared_tree_drop_V": 0.086638,
+        "static_source_minus_drop_V": 3.176243
       },
       {
         "ref": "R602",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.177293,
-        "shared_tree_drop_V": 0.087356,
-        "static_source_minus_drop_V": 3.175525
+        "path_R_ohm": 0.180576,
+        "shared_tree_drop_V": 0.081162,
+        "static_source_minus_drop_V": 3.181719
       },
       {
         "ref": "R502",
@@ -220,8 +202,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.152386,
-        "shared_tree_drop_V": 0.058542,
-        "static_source_minus_drop_V": 3.204339
+        "shared_tree_drop_V": 0.054954,
+        "static_source_minus_drop_V": 3.207927
       },
       {
         "ref": "R340",
@@ -229,8 +211,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.152551,
-        "shared_tree_drop_V": 0.075995,
-        "static_source_minus_drop_V": 3.186886
+        "shared_tree_drop_V": 0.070954,
+        "static_source_minus_drop_V": 3.191927
       },
       {
         "ref": "R700",
@@ -238,8 +220,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.116608,
-        "shared_tree_drop_V": 0.056708,
-        "static_source_minus_drop_V": 3.206173
+        "shared_tree_drop_V": 0.05312,
+        "static_source_minus_drop_V": 3.209761
       },
       {
         "ref": "R301",
@@ -247,8 +229,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.118937,
-        "shared_tree_drop_V": 0.069649,
-        "static_source_minus_drop_V": 3.193232
+        "shared_tree_drop_V": 0.064892,
+        "static_source_minus_drop_V": 3.197989
       },
       {
         "ref": "R414",
@@ -256,26 +238,26 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.191894,
-        "shared_tree_drop_V": 0.058232,
-        "static_source_minus_drop_V": 3.204649
+        "shared_tree_drop_V": 0.054644,
+        "static_source_minus_drop_V": 3.208237
       },
       {
         "ref": "R241",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.244275,
-        "shared_tree_drop_V": 0.094959,
-        "static_source_minus_drop_V": 3.167922
+        "path_R_ohm": 0.253849,
+        "shared_tree_drop_V": 0.089694,
+        "static_source_minus_drop_V": 3.173187
       },
       {
         "ref": "R807",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.21271,
-        "shared_tree_drop_V": 0.092742,
-        "static_source_minus_drop_V": 3.170139
+        "path_R_ohm": 0.222284,
+        "shared_tree_drop_V": 0.087477,
+        "static_source_minus_drop_V": 3.175404
       },
       {
         "ref": "R100",
@@ -283,17 +265,17 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.072745,
-        "shared_tree_drop_V": 0.046795,
-        "static_source_minus_drop_V": 3.216086
+        "shared_tree_drop_V": 0.043885,
+        "static_source_minus_drop_V": 3.218996
       },
       {
         "ref": "R201",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.207787,
-        "shared_tree_drop_V": 0.092786,
-        "static_source_minus_drop_V": 3.170095
+        "path_R_ohm": 0.217361,
+        "shared_tree_drop_V": 0.087521,
+        "static_source_minus_drop_V": 3.17536
       },
       {
         "ref": "R430",
@@ -301,8 +283,8 @@
         "allocation_A": 7.947019867549669e-05,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.033677,
-        "shared_tree_drop_V": 0.000328,
-        "static_source_minus_drop_V": 3.262553
+        "shared_tree_drop_V": 0.000311,
+        "static_source_minus_drop_V": 3.26257
       },
       {
         "ref": "R141",
@@ -310,17 +292,17 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.013304,
-        "shared_tree_drop_V": 0.00953,
-        "static_source_minus_drop_V": 3.253351
+        "shared_tree_drop_V": 0.008997,
+        "static_source_minus_drop_V": 3.253884
       },
       {
         "ref": "R806",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.204794,
-        "shared_tree_drop_V": 0.092548,
-        "static_source_minus_drop_V": 3.170333
+        "path_R_ohm": 0.214368,
+        "shared_tree_drop_V": 0.087283,
+        "static_source_minus_drop_V": 3.175598
       },
       {
         "ref": "R424",
@@ -328,8 +310,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.158825,
-        "shared_tree_drop_V": 0.05822,
-        "static_source_minus_drop_V": 3.204661
+        "shared_tree_drop_V": 0.054632,
+        "static_source_minus_drop_V": 3.208249
       },
       {
         "ref": "R140",
@@ -337,8 +319,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.023031,
-        "shared_tree_drop_V": 0.016075,
-        "static_source_minus_drop_V": 3.246806
+        "shared_tree_drop_V": 0.015153,
+        "static_source_minus_drop_V": 3.247728
       },
       {
         "ref": "R101",
@@ -346,8 +328,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.07707,
-        "shared_tree_drop_V": 0.044193,
-        "static_source_minus_drop_V": 3.218688
+        "shared_tree_drop_V": 0.041476,
+        "static_source_minus_drop_V": 3.221405
       },
       {
         "ref": "R341",
@@ -355,26 +337,26 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.162632,
-        "shared_tree_drop_V": 0.076417,
-        "static_source_minus_drop_V": 3.186464
+        "shared_tree_drop_V": 0.071376,
+        "static_source_minus_drop_V": 3.191505
       },
       {
         "ref": "R200",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.218089,
-        "shared_tree_drop_V": 0.093267,
-        "static_source_minus_drop_V": 3.169614
+        "path_R_ohm": 0.227663,
+        "shared_tree_drop_V": 0.088002,
+        "static_source_minus_drop_V": 3.174879
       },
       {
         "ref": "R240",
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.243528,
-        "shared_tree_drop_V": 0.094959,
-        "static_source_minus_drop_V": 3.167922
+        "path_R_ohm": 0.253102,
+        "shared_tree_drop_V": 0.089694,
+        "static_source_minus_drop_V": 3.173187
       },
       {
         "ref": "R501",
@@ -382,8 +364,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.113425,
-        "shared_tree_drop_V": 0.057689,
-        "static_source_minus_drop_V": 3.205192
+        "shared_tree_drop_V": 0.054101,
+        "static_source_minus_drop_V": 3.20878
       },
       {
         "ref": "R300",
@@ -391,53 +373,62 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.130836,
-        "shared_tree_drop_V": 0.074373,
-        "static_source_minus_drop_V": 3.188508
+        "shared_tree_drop_V": 0.06914,
+        "static_source_minus_drop_V": 3.193741
       }
     ],
-    "total_tree_loss_W": 0.050205,
-    "largest_drop_V": 0.094959
+    "total_tree_loss_W": 0.043622,
+    "largest_drop_V": 0.089694
   },
   "five_volt": {
     "net": "/+5V",
-    "total_allocated_A": 3.165525,
+    "total_allocated_A": 3.205529,
     "source_minimum_V": 5.014644,
     "loads": [
+      {
+        "ref": "U82",
+        "pin": "2",
+        "allocation_A": 0.040004,
+        "basis": "40mA encoder planning load plus4uA maximum quiescent allowance",
+        "path_R_ohm": 0.154305,
+        "shared_tree_drop_V": 0.156976,
+        "static_source_minus_drop_V": 4.857668
+      },
       {
         "ref": "J70",
         "pin": "4",
         "allocation_A": 3.0,
-        "basis": "Pi planning allocation; both pins physically connected, all allocated to the worse single path",
-        "path_R_ohm": 0.048188,
-        "shared_tree_drop_V": 0.149796,
-        "static_source_minus_drop_V": 4.864848
+        "basis": "Pi planning allocation through physical pin4; socket covers pins3-38",
+        "path_R_ohm": 0.047162,
+        "shared_tree_drop_V": 0.148441,
+        "static_source_minus_drop_V": 4.866203
       },
       {
         "ref": "U80",
         "pin": "9",
         "allocation_A": 0.04,
         "basis": "L298 logic allowance",
-        "path_R_ohm": 0.096066,
-        "shared_tree_drop_V": 0.134111,
-        "static_source_minus_drop_V": 4.880533
+        "path_R_ohm": 0.100124,
+        "shared_tree_drop_V": 0.131091,
+        "static_source_minus_drop_V": 4.883553
       },
       {
         "ref": "U2",
         "pin": "8",
         "allocation_A": 0.015,
         "basis": "ACS712 allowance",
-        "path_R_ohm": 0.082789,
-        "shared_tree_drop_V": 0.133324,
-        "static_source_minus_drop_V": 4.88132
+        "path_R_ohm": 0.082565,
+        "shared_tree_drop_V": 0.130068,
+        "static_source_minus_drop_V": 4.884576
       },
       {
         "ref": "U3",
         "pin": "8",
         "allocation_A": 0.015,
         "basis": "ACS712 allowance",
-        "path_R_ohm": 0.132074,
-        "shared_tree_drop_V": 0.134651,
-        "static_source_minus_drop_V": 4.879993
+        "path_R_ohm": 0.125164,
+        "shared_tree_drop_V": 0.131466,
+        "static_source_minus_drop_V": 4.883178
       },
       {
         "ref": "R570",
@@ -462,18 +453,18 @@
         "pin": "1",
         "allocation_A": 0.023863636363636365,
         "basis": "Lamp resistor zero-forward-drop bound, not nominal LED current",
-        "path_R_ohm": 0.134211,
-        "shared_tree_drop_V": 0.153817,
-        "static_source_minus_drop_V": 4.860827
+        "path_R_ohm": 0.133184,
+        "shared_tree_drop_V": 0.155763,
+        "static_source_minus_drop_V": 4.858881
       },
       {
         "ref": "R671",
         "pin": "1",
         "allocation_A": 0.023863636363636365,
         "basis": "Lamp resistor zero-forward-drop bound, not nominal LED current",
-        "path_R_ohm": 0.143713,
-        "shared_tree_drop_V": 0.154044,
-        "static_source_minus_drop_V": 4.8606
+        "path_R_ohm": 0.142686,
+        "shared_tree_drop_V": 0.156511,
+        "static_source_minus_drop_V": 4.858133
       },
       {
         "ref": "R420",
@@ -485,8 +476,47 @@
         "static_source_minus_drop_V": 5.014623
       }
     ],
-    "total_tree_loss_W": 0.466203,
-    "largest_drop_V": 0.154044
+    "total_tree_loss_W": 0.468307,
+    "largest_drop_V": 0.156976
+  },
+  "encoder": {
+    "net": "/Rear zone/ENC_4V",
+    "total_allocated_A": 0.04,
+    "source_minimum_V": 3.796,
+    "loads": [
+      {
+        "ref": "J82",
+        "pin": "1",
+        "allocation_A": 0.02,
+        "basis": "20mA planning allowance per encoder; not measured",
+        "path_R_ohm": 0.14751,
+        "shared_tree_drop_V": 0.003918,
+        "static_source_minus_drop_V": 3.792082
+      },
+      {
+        "ref": "J83",
+        "pin": "1",
+        "allocation_A": 0.02,
+        "basis": "20mA planning allowance per encoder; not measured",
+        "path_R_ohm": 0.048373,
+        "shared_tree_drop_V": 0.001935,
+        "static_source_minus_drop_V": 3.794065
+      }
+    ],
+    "total_tree_loss_W": 0.000117,
+    "largest_drop_V": 0.003918
+  },
+  "encoder_regulator_screen": {
+    "output_envelope_V": [
+      3.796,
+      4.204
+    ],
+    "dropout_headroom_V": 0.30366800000000094,
+    "rated_output_A": 0.25,
+    "planning_output_A": 0.04,
+    "thermal_model_W": 0.05818100000000001,
+    "TO92_theta_JA_C_per_W": 131.9,
+    "limitations": "Datasheet extreme sums and allocated loads; not measured load/line/transient behavior."
   },
   "sense_path_shared_conductor_counts": {
     "high_side": 0,

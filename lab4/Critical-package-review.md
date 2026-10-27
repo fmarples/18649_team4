@@ -20,7 +20,7 @@ The current native DRC passes, including the existing local SOT-563 pad
 clearance rule. We did not relax rules or alter paste apertures for this check.
 
 We also reran the existing placement checks for the five GCT switch contact
-pairs/pads and the bottom Pi socket's forty physical pin coordinates, drill
+pairs/pads and the bottom Pi socket's retained physical pin coordinates (Pi3–38), drill
 sizes and 58 × 49 mm mounting pattern. Those checks pass. L298/heatsink
 installation and the rest of the manufacturer drawing audit remain separate
 from the package checks above. Actual socket mating and solder quality are

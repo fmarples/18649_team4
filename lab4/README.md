@@ -5,31 +5,31 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 NiMH-powered supply with a battery/charger purchase still to finalize. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
-**Status, 27 October 2026:** all required PCB connections are routed, with
-zero missing connections and zero native DRC/ERC/schematic-parity findings.
-All 306 targeted connection checks pass. Current allocation, CAN branches,
-nominal drill/aperture clearance, labels and current mask/paste plots have
-been reviewed. The latest pass widens 768 logic and 541 five-volt segments, lowering the
-worst logic feed drop from 144 to 95 mV. Precision feedback resistors and
-the earlier clearance of 32 near-aperture via sites are retained. The
-[power-margin review](Power-margin-review.md) adds verified calculations for
-voltage limits, capacitance, feed-forward behavior and heat. Encoder supply
-qualification, Pi/logic feed/return refinement, exact capacitor data and final
-cooling/battery/protection/mechanical decisions remain open. The board is not
-released for fabrication. See [Digital-review.md](Digital-review.md).
-The [ground-plane DC screen](Ground-plane-review.md) and 17 additional
-[manufacturer package checks](Critical-package-review.md) are complete for
-their documented scope. They change no CAD/BOM files. Local return/contact
-losses and final component/process qualification remain separate.
-See [Routing-review.md](Routing-review.md) for the completed scope and limits.
-The [6396BG mounting review](Heatsink-mounting-review.md) now defines its
-soldered anchors, M3 clamp and nominal height from drawings. The active PCB
-still needs the footprint and local placement/routing repair; the review
-does not require another physical measurement.
-The [nominal mechanical fit review](Mechanical-evidence.md) now defines
-plug/cooler envelopes, card access and a conditional main-PCB/tire clearance
-screen. It removes the need for another general pre-assembly measurement visit;
-actual mating, retention, full steering and powered tests remain assembly checks.
+## October 27 mounting and encoder revision
+
+We implemented the 3 mm clearance from the **finished hole edge** at all
+four chassis and four Pi support holes. The exclusions cover components,
+tracks, vias and filled copper on all four layers. The Pi socket is now
+**Samtec ESQ-118-44-L-D**, mating physical Pi pins **3–38**. The first socket
+pair must align with Pi pins 3/4, not 1/2. Pin 4 alone supplies 5 V. All used
+signals and Lab 3 assignments are unchanged. Do not substitute the old
+40-contact socket: it violates the hole-edge clearance.
+
+We also installed the 6396BG anchor footprint, moved U80/C800/C802/J80,
+and repaired local routing. A new 4.0 V encoder rail replaces the marginal
+3.3 V encoder feed; the signal buffer and its pull-ups remain at 3.3 V.
+See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
+for exact parts, calculations, checks and remaining limitations.
+
+The current board has 287 electrical footprints plus eight supports and
+HS80, 18,193 track segments, 1,017 vias and six filled ground zones.
+All 308 targeted connection checks pass. Native findings are recorded in
+[Fabrication-check.json](Fabrication-check.json); a clean automated result
+does not authorize fabrication. Battery/fault handling, Pi voltage margin,
+exact buck-capacitor data and final purchasing/manufacturing review remain.
+
+
+
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
 The [supply-path screening](Supply-path-review.md) includes shared-load allocation;

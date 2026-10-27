@@ -1,8 +1,8 @@
-"""Drawing-based 6396BG mounting study against the saved board (no CAD edits).
+"""Verify the implemented 6396BG / L298N drawing-based mounting.
 
 Run with KiCad Python. Dimensions/datums and limitations are explained in
 Heatsink-mounting-review.md. Bounding boxes screen clearance; they do not
-assert physical collision with every fin. The active PCB remains unchanged.
+assert physical collision with every fin. The active footprint, reserved metal space and pad locations are checked.
 """
 import hashlib
 import html
@@ -65,53 +65,34 @@ boxes = {r: bbox(f) for r, f in fps.items() if not f.IsFlipped()}
 outer_hits = sorted(r for r, v in boxes.items() if r != 'U80' and intersects(rect, v))
 solid_hits = sorted(r for r, v in boxes.items() if r != 'U80' and any(intersects(s, v, .5) for s in solids))
 
-# Search nearby alternatives without moving the routed board. Chassis holes
-# stay fixed; screen their specified 4.6 mm support radius, not just drill size.
-candidates = []
-for dx in range(-10, 21):
-    for dy in range(-3, 21):
-        moved = [[s[0]+dx,s[1]+dy,s[2],s[3]] for s in solids]
-        if any(s[0]-.5<40 or s[1]-.5<40 or s[0]+s[2]+.5>160 or s[1]+s[3]+.5>274 for s in moved):continue
-        hole_hit = False
-        for hn in ['H1','H2','H3','H4']:
-            hp = fps[hn].GetPosition(); hx,hy = mm(hp.x),mm(hp.y)
-            for x,y,w,h in moved:
-                q=max(x-hx,0,hx-x-w);r=max(y-hy,0,hy-y-h)
-                if q*q+r*r<(4.6+.5)**2:hole_hit=True
-        if hole_hit:continue
-        body = [boxes['U80'][0]+dx,boxes['U80'][1]+dy,*boxes['U80'][2:]]
-        hits = sorted(r for r,v in boxes.items() if r!='U80' and
-                      (any(intersects(s,v,.5) for s in moved) or intersects(body,v)))
-        candidates.append({'dx_mm':dx,'dy_mm':dy,'affected_courtyards':hits,
-                           'count':len(hits),'displacement_mm':(dx*dx+dy*dy)**.5})
-candidates.sort(key=lambda c:(c['count'],c['displacement_mm']))
-
-
-def point_segment_distance(x, y, a, c):
-    dx, dy = c[0]-a[0], c[1]-a[1]
-    t = max(0, min(1, ((x-a[0])*dx+(y-a[1])*dy)/(dx*dx+dy*dy))) if dx*dx+dy*dy else 0
-    return ((x-a[0]-t*dx)**2+(y-a[1]-t*dy)**2)**.5
-
-
-anchor_copper = []
-for x, y in pins:
-    hits = []
-    for tr in b.GetTracks():
-        a, c = tr.GetStart(), tr.GetEnd()
-        d = point_segment_distance(x, y, [mm(a.x),mm(a.y)], [mm(c.x),mm(c.y)])
-        # Proposed 4.5 mm pad diameter plus 0.2 mm clearance.
-        width = tr.GetWidth(p.F_Cu) if isinstance(tr, p.PCB_VIA) else tr.GetWidth()
-        if d < 2.25 + .2 + mm(width)/2:
-            hits.append({'net':tr.GetNetname(), 'layer':b.GetLayerName(tr.GetLayer())})
-    anchor_copper.append({'center_mm':[x,y], 'track_or_via_hits':len(hits),
-                          'nets':sorted(set(h['net'] for h in hits))})
-
+# Check the installed anchors and drawing-to-device relationship.
+hs=fps['HS80']; assert hs.GetFPIDAsString()=='Lab4_Mechanical:Boyd_6396BG_StraightPins'
+assert hs.GetAttributes() & p.FP_BOARD_ONLY
+for pad,expected in zip(sorted(hs.Pads(),key=lambda a:a.GetNumber()),pins):
+    actual=[mm(pad.GetPosition().x),mm(pad.GetPosition().y)]
+    assert max(abs(x-y) for x,y in zip(actual,expected))<1e-5
+    assert abs(mm(pad.GetDrillSize().x)-2.89)<1e-6
+    assert abs(mm(pad.GetSize().x)-4.5)<1e-6 and pad.GetNetname()=='/GND'
+solid_hits=[r for r in solid_hits if r!='HS80']
+assert not solid_hits,solid_hits
+# Screen unrelated top copper against the actual fin/web envelopes. Anchors
+# are the intentional plated mounting contacts; all other pads are excluded.
+copper_hits=[]
+for x,y,w,h in solids:
+    shape=p.SHAPE_RECT(p.VECTOR2I(p.FromMM(x),p.FromMM(y)),p.FromMM(w),p.FromMM(h))
+    for item in list(b.GetTracks())+[a for f in b.GetFootprints() if f.GetReference()!='HS80' for a in f.Pads()]:
+        if item.IsOnLayer(p.F_Cu) and item.GetEffectiveShape(p.F_Cu).Collide(shape,p.FromMM(.199)):
+            copper_hits.append(item.m_Uuid.AsString())
+    for zone in b.Zones():
+        if not zone.GetIsRuleArea() and zone.IsOnLayer(p.F_Cu) and zone.GetFilledPolysList(p.F_Cu).Collide(shape,p.FromMM(.199)):
+            copper_hits.append(zone.m_Uuid.AsString())
+assert not copper_hits,copper_hits
 result = {
-    'status':'DRAWING_STUDY_COMPLETE_LAYOUT_NOT_IMPLEMENTED',
+    'status':'PASS_IMPLEMENTED_DRAWING_BASED_MOUNTING',
     'pcb_sha256':hashlib.sha256(board_file.read_bytes()).hexdigest(),
     'library_footprint':'Lab4_Mechanical:Boyd_6396BG_StraightPins',
     'library_footprint_check':'PASS: two pads, 25.4 mm pitch, 2.89 mm drills, 4.5 mm pads, one closed courtyard',
-    'library_footprint_installed_in_active_board':False,
+    'library_footprint_installed_in_active_board':True,
     'coordinate_system':'KiCad absolute mm; subtract (40,40) for board-relative coordinates',
     'part':'6396BG straight pins; NOT 6396B-P2G',
     'body_mm':[41.91,25.4,25.4], 'pin_centers_mm':pins,
@@ -122,8 +103,7 @@ result = {
     'conservative_fin_web_blocks_mm':solids, 'block_clearance_mm':.5,
     'outer_envelope_courtyard_intersections':outer_hits,
     'fin_web_clearance_screen_intersections':solid_hits,
-    'anchor_copper_screen':anchor_copper,
-    'nearby_clearance_candidates_NOT_applied':candidates[:5],
+    'unrelated_top_copper_in_metal_envelopes':copper_hits,
     'nominal_uninsulated_flush_mount': {
         'pcb_thickness_mm':1.6,
         'st_short_lead_hole_to_tip_min_mm':21.9,
@@ -138,11 +118,11 @@ result = {
         'package_bottom_above_board_max_mm':round(19.05-(17.25-2.9),3),
     },
     'limits':[
-        'No footprint/hole/component or copper changed in active board.',
+        'Drawing-based placement and copper checks pass; no physical fit or thermal test is claimed.',
         'A fin-block/courtyard intersection is a clearance-screen finding, not measured physical interference.',
         'No credit for mounting components under the heatsink or between individual fins.',
         'No thermal qualification or complete supplier tolerance stack.',
-        'Copper screen covers tracks/vias; pads, all-layer zones and DRC must be checked when installing anchors.',
+        'Native DRC independently checks plated-anchor clearance on all copper layers; this script screens top metal contact.',
         'Soldered anchor pads are mechanical. Do not depend on the anodized body as insulation or as a reliable ground connection.',
     ],
 }
@@ -153,7 +133,7 @@ svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 740">',
      '<rect width="1300" height="740" fill="white"/>',
      '<g font-family="Arial,sans-serif" fill="#172b3a">',
      '<text x="30" y="34" font-size="23">6396BG / L298N — drawing-based mounting study</text>',
-     '<text x="30" y="59" font-size="15">Top view of existing layout; no CAD placement changes. Dimensions in mm.</text>']
+     '<text x="30" y="59" font-size="15">Implemented top view. Coordinates and dimensions in mm; physical assembly untested.</text>']
 scale=11
 def xy(x,y):return 50+(x-40)*scale,100+(y-40)*scale
 def rectangle(a,fill,stroke,opacity=1):
@@ -183,10 +163,10 @@ labels=[
     'Orange outline: outer bounding rectangle',
     'Red parts: clearance-screen intersections',
     '',
-    'Layout repair is still required:',
-    ', '.join(solid_hits[:7]),
-    ', '.join(solid_hits[7:]),
-    'Reroute copper around both anchor holes.',
+    'Placement and local routing implemented.',
+    'No unrelated courtyard in fin/web +0.5mm.',
+    'No unrelated copper under top metal.',
+    'U80/tab overlap is an explicit paired exception.',
     '',
     'Flush mount / 1.6 mm PCB height screen:',
     'Minimum lead projection, either row: 1.05 mm',
@@ -197,4 +177,4 @@ labels=[
 for i,line in enumerate(labels):svg.append(f'<text x="850" y="{100+i*24}" font-size="14">{html.escape(line)}</text>')
 svg.append('</g></svg>')
 (ROOT/'Heatsink-mounting-study.svg').write_text('\n'.join(svg)+'\n',encoding='utf-8')
-print(json.dumps({k:result[k] for k in ['status','pin_centers_mm','fin_web_clearance_screen_intersections','anchor_copper_screen','nominal_uninsulated_flush_mount']},indent=2))
+print(json.dumps({k:result[k] for k in ['status','pin_centers_mm','fin_web_clearance_screen_intersections','unrelated_top_copper_in_metal_envelopes','nominal_uninsulated_flush_mount']},indent=2))

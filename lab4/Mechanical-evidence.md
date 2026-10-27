@@ -50,7 +50,7 @@ Its results are calculated dimensions, not additional physical observations.
 We can continue the design using explicit accessory envelopes. An unspecified
 plug or cooler cannot be declared compatible, but it need not stop placement:
 we choose accessories to fit the available space. The Pi is powered through
-the 40-pin socket in this design; a USB-C power cable is not part of the normal
+the shortened socket covering Pi pins 3–38 in this design; a USB-C power cable is not part of the normal
 vehicle power path. USB/Ethernet cables are optional service accessories.
 
 | Item | Drawing-based result and design constraint | Status |
@@ -91,25 +91,15 @@ powered bring-up tests. Calculations support design choices but cannot report
 those outcomes for a board that has not been built. They are not pre-fabrication
 measurement tasks in the October 29 checklist.
 
-## Heatsink and mounting-margin limits
+## Implemented heatsink and mounting margins
 
-The October 24 message reports TA acceptance of **6396BG** for the preliminary
-review and staff follow-up on attachment hardware. Published dimensions are
-available; measuring them again is not a prerequisite for placement.
-The October 27 [mounting review](Heatsink-mounting-review.md) now specifies
-the two soldered anchors, M3 tab clamp, thermal interface and nominal vertical
-fit from Boyd/ST drawings. No new measurement is needed to determine that
-method. The old 15-courtyard rectangle is superseded by a drawing-based
-fin/web screen and a nearby placement candidate. Installing the footprint,
-moving the affected parts and rerouting their copper remain digital work;
-the actual assembled fit and temperature have not been tested.
+The October 27 drawing-based heatsink installation is now on the PCB.
+Its anchor pattern, local routing and fin/web clearances pass the recorded
+checks; no repeat measurement is requested. See Heatsink-mounting-review.md.
 
-The saved socket body is **3.345 mm from the nearest Pi hole centers**. This
-corrects the older 3.337 mm center-distance text; the 1.995 mm edge distance was
-already correct. A 5.5 mm maximum hardware diameter leaves **0.595 mm nominal
-body clearance**. However, the 2.7 mm hole plus a literal 3 mm edge margin needs
-radius 1.35 + 3 = 4.35 mm, exceeding the available distance by **1.005 mm**.
-Thus physical nominal fit and the course-rule interpretation are different
-questions. No measurement or conservative estimate changes that rule conflict.
-We still need the TA's interpretation, or a deliberate mounting redesign, before
-claiming compliance. See [Placement-review.md](Placement-review.md).
+The user directed 3 mm from the finished hole edge at all chassis/Pi supports,
+including copper. The shortened ESQ-118-44-L-D socket provides 4.535 mm
+from the nearest Pi hole edge and 3.135 mm from 5.5 mm OD hardware.
+The old 0.595 mm hardware clearance and 1.005 mm rule shortfall describe
+the superseded 40-contact socket. The new socket covers Pi3–38 only;
+assembly must align its first pair to Pi3/4. See Mounting-and-encoder-revision.md.

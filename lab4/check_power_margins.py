@@ -87,7 +87,7 @@ def calculate():
     targets = [
         ("CAN", "logic", ["U11", "U15", "U21", "U25", "U31", "U35"], 3.0,
          "SN65HVD231 recommended VCC minimum"),
-        ("Encoders", "logic", ["J82", "J83"], 3.3,
+        ("Encoders", "encoder", ["J82", "J83"], 3.3,
          "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown"),
         ("Pi warning screen", "five_volt", ["J70"], 4.63 * 1.05,
          "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification"),

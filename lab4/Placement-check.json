@@ -1,21 +1,21 @@
 {
   "status": "PASS",
   "errors": [],
-  "schematic_footprints_present": 284,
+  "schematic_footprints_present": 287,
   "missing_footprints": [],
   "mechanical_holes": 8,
   "board_size_mm": [
     120,
     234
   ],
-  "track_segments_and_vias": 17578,
+  "track_segments_and_vias": 19210,
   "copper_zones": 6,
   "checks": [
     "Placed netlist pads match schematic",
     "All courtyards inside provisional outline",
     "No bottom electrical part in Pi space except J70; top placement allowed",
-    "Chassis 3mm-from-hole-edge and Pi 3mm-radius support envelopes clear",
-    "All 40 bottom socket pad coordinates match physical Pi pin numbers",
+    "All eight supports: components clear 3mm from finished hole edge",
+    "All 36 bottom socket pad coordinates match physical Pi pin numbers",
     "Pi 58x49mm mounting pattern and 1.02mm socket drills",
     "Nominal socket insertion within manufacturer range",
     "Preview coordinates match saved PCB",
@@ -37,8 +37,9 @@
     "Not a physical fit test or complete footprint-dimension validation",
     "Placement checks do not validate copper routing",
     "Nominal chassis/Pi/port-envelope review complete; use Mechanical-fit-check.json for dimensions and model limits",
-    "Pi uses 3mm radius from center; strict 3mm from hole edge conflicts with standard GPIO body and needs course review",
+    "Shortened socket omits Pi pins1/2/39/40; align first socket pair to Pi3/4 during assembly",
     "Keep <=3mm tails and choose accessories within the documented envelope; mating, retention, full steering and powered performance are assembly checks",
     "Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers"
-  ]
+  ],
+  "source_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071"
 }

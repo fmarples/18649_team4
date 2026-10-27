@@ -217,7 +217,7 @@ Rear,R632,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Sche
 Rear,R633,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Rear,R634,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
 Rear,R635,10k boot pulldown,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
-Cockpit,J70,Raspberry Pi4 GPIO,ESQ-120-44-L-D,Lab4_Mechanical:Samtec_ESQ-120-44_2x20_P2.54mm_H18.67,Bottom-mounted direct Pi socket; 22mm nominal board gap; verify mating and fit. Pi 3.3V and ID pins intentionally unconnected
+Cockpit,J70,Pi GPIO pins3-38 / ESQ-118-44-L-D,ESQ-118-44-L-D,Lab4_Mechanical:Samtec_ESQ-118-44_2x18_PiPins3-38_H18.67,"Bottom 36-contact socket mates Pi physical pins3-38; omit1/2/39/40 to clear all Pi holes by3mm from edge. Pin4 alone supplies5V; all used signals unchanged. Align to Pi3/4, not1/2. 22mm nominal gap. Samtec ESQ/TSW catalog5.7A/contact is supporting evidence, not a tested Pi assembly. Hand solder per Samtec process limits."
 Cockpit,C700,22u /16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,C701,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Locate at associated supply pin; verify effective capacitance
 Cockpit,R700,10k TEST pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Schematic connected; placement and hardware validation pending
@@ -283,3 +283,6 @@ Rear,R661,100k,CRCW0603100KFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circui
 Rear,Q651,MMBT3904,MMBT3904-7-F,Package_TO_SOT_SMD:SOT-23,Low-side lamp switch; 220R limits 5.1V LED current; not for incandescent lamps
 Rear,R671,220R,CRCW0603220RFKEA,Resistor_SMD:R_0603_1608Metric,Calculated circuit; not hardware validated
 Rear,J651,REAR RIGHT lamp,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,Board-defined pin order; build/verify adapter to existing cable before power
+Rear,U82,MCP1700-4002E/TO,MCP1700-4002E/TO,Package_TO_SOT_THT:TO-92_Inline_Wide,"4V encoder supply; 250mA rating; 40mA planning load; pin1 GND,2 input,3 output"
+Rear,C804,10u 16V 10% low-ESR,TPSB106K016R0800,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,Polarized 10uF/16V tantalum; 0.8ohm maximum ESR at100kHz/25C; pad1 positive; input/output bypass for U82
+Rear,C805,10u 16V 10% low-ESR,TPSB106K016R0800,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,Polarized 10uF/16V tantalum; 0.8ohm maximum ESR at100kHz/25C; pad1 positive; input/output bypass for U82

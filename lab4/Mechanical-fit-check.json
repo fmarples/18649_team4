@@ -1,6 +1,6 @@
 {
   "status": "NOMINAL_CALCULATIONS_COMPLETE_NOT_ASSEMBLY_QUALIFICATION",
-  "pcb_sha256": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d",
+  "pcb_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
   "pi_stack_mm": {
     "chassis_gap": 35,
     "pi_gap": 22,
@@ -13,42 +13,42 @@
     "insertion_upper_margin": 1.18
   },
   "socket_body_absolute_mm": [
-    76.845,
+    79.385,
     130.024999,
-    128.155,
+    125.615,
     134.974999
   ],
   "pi_supports": [
     {
       "reference": "H5",
       "drill_mm": 2.7,
-      "center_to_socket_body_mm": 3.345,
-      "hole_edge_to_socket_body_mm": 1.995,
-      "hardware_to_socket_mm": 0.595,
-      "strict_3mm_hole_edge_margin_shortfall_mm": 1.005
+      "center_to_socket_body_mm": 5.885,
+      "hole_edge_to_socket_body_mm": 4.535,
+      "hardware_to_socket_mm": 3.135,
+      "strict_3mm_hole_edge_margin_shortfall_mm": 0
     },
     {
       "reference": "H6",
       "drill_mm": 2.7,
-      "center_to_socket_body_mm": 3.345,
-      "hole_edge_to_socket_body_mm": 1.995,
-      "hardware_to_socket_mm": 0.595,
-      "strict_3mm_hole_edge_margin_shortfall_mm": 1.005
+      "center_to_socket_body_mm": 5.885,
+      "hole_edge_to_socket_body_mm": 4.535,
+      "hardware_to_socket_mm": 3.135,
+      "strict_3mm_hole_edge_margin_shortfall_mm": 0
     },
     {
       "reference": "H7",
       "drill_mm": 2.7,
-      "center_to_socket_body_mm": 46.6451,
-      "hole_edge_to_socket_body_mm": 45.2951,
-      "hardware_to_socket_mm": 43.8951,
+      "center_to_socket_body_mm": 46.8957,
+      "hole_edge_to_socket_body_mm": 45.5457,
+      "hardware_to_socket_mm": 44.1457,
       "strict_3mm_hole_edge_margin_shortfall_mm": 0
     },
     {
       "reference": "H8",
       "drill_mm": 2.7,
-      "center_to_socket_body_mm": 46.6451,
-      "hole_edge_to_socket_body_mm": 45.2951,
-      "hardware_to_socket_mm": 43.8951,
+      "center_to_socket_body_mm": 46.8957,
+      "hole_edge_to_socket_body_mm": 45.5457,
+      "hardware_to_socket_mm": 44.1457,
       "strict_3mm_hole_edge_margin_shortfall_mm": 0
     }
   ],
@@ -65,12 +65,12 @@
     "pi_microsd_board_edge_recess": 30
   },
   "limits": [
-    "No new measurements and no active PCB edits.",
+    "Drawing-based calculation, not a new physical measurement.",
     "Wheel calculation assumes upright tires on a level surface and a rigid chassis; lower plate ground clearance is conservatively taken as zero.",
     "Wheel result applies to the main PCB and <=3 mm downward tails, not the lower Pi, chassis spacers, loose cables, obstacles or unspecified camber.",
     "Complete horizontal wheel sweep is not established without pivot/stop geometry; retain full-steering inspection as an unpowered assembly check.",
     "Plug/cooler envelopes are selection limits, not proof that an unspecified accessory fits.",
-    "Pi 3 mm hole-edge rule interpretation is unresolved despite positive nominal hardware/body clearance.",
+    "User-directed 3mm clearance from finished hole edge applies to components and copper at every chassis/Pi support.",
     "Engagement, fastener retention, continuity and powered behavior require the assembled hardware."
   ]
 }

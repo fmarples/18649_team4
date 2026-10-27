@@ -112,7 +112,7 @@ logic=[]
 for r in ['U50','U60']:logic.append((r,['1','19','32','48','64'],.070,'70mA allocation: MCU internal maximum plus ADC and GPIO/indicator allowance; not measured'))
 for r in ['U10','U14','U20','U24','U30','U34']:logic.append((r,['20'],.010,'10mA datasheet maximum at specified 5.5V/25MHz test; used as planning allowance at 3.3V/16MHz'))
 for r in ['U11','U15','U21','U25','U31','U35']:logic.append((r,['3'],.077,'17mA no-load maximum + 3.6V/60ohm=60mA bus-drive allocation; all six allocated simultaneously'))
-logic.extend([('U81',['14'],.005,'5mA switching allowance, not measured'),('U1',['5'],.001,'1mA allowance'),('J82',['1'],.020,'20mA provisional encoder allowance; module current unknown'),('J83',['1'],.020,'20mA provisional encoder allowance; module current unknown')])
+logic.extend([('U81',['14'],.005,'5mA switching allowance, not measured'),('U1',['5'],.001,'1mA allowance')])
 for f in board.GetFootprints():
  if f.GetReference().startswith('R'):
   ps=[a for a in f.Pads() if a.GetNetname()=='/+3V3']
@@ -123,10 +123,18 @@ power_report = json.loads((ROOT/'Power-stage-check.json').read_text())
 assert power_report['source_sha256']['KiCad/Lab4.kicad_pcb'] == hashlib.sha256(args.board.read_bytes()).hexdigest(), 'Run check_power_stage.py for the current board first'
 corner=power_report['regulators']
 out=dict(source_sha256=hashlib.sha256(args.board.read_bytes()).hexdigest(),fabrication_release=False,method='Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.',logic=allocation('/+3V3',('L3','2'),logic,corner[2]['static_reference_and_resistor_corners_V'][0]))
-loads5=[('J70',['2','4'],3.0,'Pi planning allocation; both pins physically connected, all allocated to the worse single path'),('U80',['9'],.040,'L298 logic allowance'),('U2',['8'],.015,'ACS712 allowance'),('U3',['8'],.015,'ACS712 allowance')]
+loads5=[('U82',['2'],.040004,'40mA encoder planning load plus4uA maximum quiescent allowance'),('J70',['4'],3.0,'Pi planning allocation through physical pin4; socket covers pins3-38'),('U80',['9'],.040,'L298 logic allowance'),('U2',['8'],.015,'ACS712 allowance'),('U3',['8'],.015,'ACS712 allowance')]
 for r in ['R570','R571','R670','R671']:loads5.append((r,['1'],5.25/220,'Lamp resistor zero-forward-drop bound, not nominal LED current'))
 loads5.append(('R420',['1'],5.25/75000,'Feedback divider bounded by top resistor alone'))
 out['five_volt']=allocation('/+5V',('L2','2'),loads5,corner[1]['static_reference_and_resistor_corners_V'][0])
+# Conservative regulator envelope: +/-3% full-temperature accuracy,
+# +/-1.5% full-load regulation and +/-0.1%/V across the entire 6V input span.
+# Their arithmetic sum is deliberately pessimistic; no transient/ground loss included.
+encoder_min=4*(1-.03-.015-.006)
+out['encoder']=allocation('/Rear zone/ENC_4V',('U82','3'),[(r,['1'],.020,'20mA planning allowance per encoder; not measured') for r in ['J82','J83']],encoder_min)
+out['encoder_regulator_screen']={'output_envelope_V':[encoder_min,4*(1+.03+.015+.006)],'dropout_headroom_V':next(r['static_source_minus_drop_V'] for r in out['five_volt']['loads'] if r['ref']=='U82')-(4*(1+.03+.015+.006)+.35),'rated_output_A':.250,'planning_output_A':.040,'thermal_model_W':(5.25-encoder_min)*.040+5.25*.000004,'TO92_theta_JA_C_per_W':131.9,'limitations':'Datasheet extreme sums and allocated loads; not measured load/line/transient behavior.'}
+assert out['encoder_regulator_screen']['dropout_headroom_V']>0
+assert min(r['static_source_minus_drop_V'] for r in out['encoder']['loads'])>3.3
 # Topological independence of dedicated sense traces from the servo load route.
 a=route('/+6V6_SERVO',('L1','2'),('R1','1'));k=route('/+6V6_SERVO',('R1','1'),('U1','3'))
 c=route('/Front zone/SERVO_VPLUS',('R1','2'),('J90','2'));d=route('/Front zone/SERVO_VPLUS',('R1','2'),('U1','4'))

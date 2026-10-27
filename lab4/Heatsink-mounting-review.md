@@ -2,7 +2,7 @@
 
 27 October 2026. We can define the mounting from the manufacturer drawings.
 We do not need another lab measurement to identify the attachment method.
-The active PCB still needs the anchor holes, nearby placement changes and
+The active PCB includes the anchor holes, nearby placement changes and
 affected copper rerouting. This review does not qualify operating temperature.
 
 ## Mounting we will use
@@ -94,54 +94,25 @@ forcing the device leads to align. Solder the intended anchor pins, not the
 anodized aluminum body. The heat sink's thermal mass may require a suitable
 iron tip/preheat process; inspect the finished joints.
 
-## Placement findings and remaining CAD work
+## Implemented placement and checks
 
-[check_heatsink_mount.py](check_heatsink_mount.py) reads the saved board and
-produces [the coordinate/clearance report](Heatsink-mounting-check.json) and
-[the top-view study](Heatsink-mounting-study.svg). It makes no PCB changes.
-The library footprint `Lab4_Mechanical:Boyd_6396BG_StraightPins` is prepared
-and loads in KiCad with two checked pads and one closed courtyard. It reserves
-conservative fin/web space while leaving the central device channel open.
-It is not yet installed in the active board, and the screw/tool-access
-reservation must be applied with the paired L298 placement.
-Coordinates below are KiCad absolute millimeters; subtract (40, 40) for the
-board-relative origin.
+The documented move is now implemented. U80 is at (66.11, 64.34) mm;
+HS80 is at (75.00, 53.975) mm. C800 is at (88, 71.5), C802 at
+(101.35, 47), and J80 at (67.1, 46.95). Chassis and Pi hole centers did
+not move. These coordinates are absolute KiCad millimeters; subtract
+(40, 40) for board-relative positions.
 
-At the current U80 position, the back face of its tab is y = 57.76 mm. Placing
-the 1.57 mm web behind that face gives anchors at **(59.30, 56.975)** and
-**(84.70, 56.975)**. The sink's outer rectangle starts at (51.045, 44.275).
-The KiCad even-row-to-tab datum is 4.50 mm, within ST's 4.25–4.85 mm interval.
+The installed anchor pads are (62.30, 53.975) and (87.70, 53.975).
+The fin/web envelopes plus 0.5 mm contain no unrelated component courtyard.
+The independent top-metal check finds no unrelated top copper within its
+0.2 mm margin. Native DRC checks the plated anchors on every copper layer.
+U80/HS80 alone have a deliberate courtyard-overlap exception for the clamp.
 
-The former 15-courtyard result used a tentative full rectangle at a different
-y position. It is preserved as historical evidence in
-[Heatsink-envelope-check.json](Heatsink-envelope-check.json), not used as the
-current count. The new conservative fin/web blocks plus 0.5 mm clearance
-intersect **C800, C801, C802, D800, D801, D802, H1, J80 and J81**. This is a
-screen against courtyards, not a measured physical collision. U80 occupies
-the intended central channel and is excluded from that count.
+All displaced connections were rerouted and ground zones refilled. The
+previous 15-conflict rectangle and placement candidates are historical
+studies, superseded by [Heatsink-mounting-check.json](Heatsink-mounting-check.json)
+and [the updated drawing](Heatsink-mounting-study.svg).
 
-A nearby placement search keeps all chassis supports fixed. Moving U80 and
-the sink **+3 mm in x and −3 mm in y** leaves only **C800, C802 and J80** in
-the conservative clearance screen. This is the preferred candidate for the
-next placement pass, not an implemented or fully qualified placement. The
-search does not assume that existing copper moves safely with components.
-
-Remaining design work is digital:
-
-1. Install a two-anchor heatsink footprint using the published hole geometry.
-   Reserve the fins, web, screw and tool-access spaces. Any intended overlap
-   with U80 must be specifically documented rather than disabling general
-   courtyard checking.
-2. Move U80 and the affected neighbors, retaining the local bypass and motor
-   current paths. Reconnect its 15 pads and all displaced traces. The two
-   anchors at the existing location already intersect copper on three nets;
-   these are not spare mounting locations in the routed board.
-3. Refill all planes and check all-layer pad/hole/copper clearance, electrical
-   DRC, schematic parity, connectivity, labels and local power/return paths.
-4. Re-evaluate the finalized cooling arrangement and operating duty. A valid
-   mounting geometry does not establish a safe stall duration or continuous
-   L298 current. See [Power-margin-review.md](Power-margin-review.md).
-
-No new physical measurement is requested for these steps. If the delivered
-sink is a different variant, or the course supplies a different attachment,
-record that change and compare it with this plan before assembly.
+The remaining decision is operating current/duty and fault protection, not
+the attachment method. Check actual dry fit, clamp retention and soldering
+when assembling; temperature and stall behavior remain untested.

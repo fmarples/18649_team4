@@ -4773,7 +4773,7 @@
       "ref": "J82",
       "lib": "Connector_Generic:Conn_01x04",
       "nets": {
-        "1": "+3V3",
+        "1": "ENC_4V",
         "2": "GND",
         "3": "LEFT_ENC_A_RAW",
         "4": "LEFT_ENC_B_RAW"
@@ -4873,7 +4873,7 @@
       "ref": "J83",
       "lib": "Connector_Generic:Conn_01x04",
       "nets": {
-        "1": "+3V3",
+        "1": "ENC_4V",
         "2": "GND",
         "3": "RIGHT_ENC_A_RAW",
         "4": "RIGHT_ENC_B_RAW"
@@ -5250,6 +5250,65 @@
         [
           "2",
           "Pin_2"
+        ]
+      ]
+    },
+    {
+      "ref": "U82",
+      "lib": "Lab4_Power:MCP1700_4V_TO92",
+      "nets": {
+        "1": "GND",
+        "2": "+5V",
+        "3": "ENC_4V"
+      },
+      "pins": [
+        [
+          "1",
+          "GND"
+        ],
+        [
+          "2",
+          "VI"
+        ],
+        [
+          "3",
+          "VO"
+        ]
+      ]
+    },
+    {
+      "ref": "C804",
+      "lib": "Device:C_Polarized",
+      "nets": {
+        "1": "+5V",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
+        ]
+      ]
+    },
+    {
+      "ref": "C805",
+      "lib": "Device:C_Polarized",
+      "nets": {
+        "1": "ENC_4V",
+        "2": "GND"
+      },
+      "pins": [
+        [
+          "1",
+          ""
+        ],
+        [
+          "2",
+          ""
         ]
       ]
     }
@@ -5977,9 +6036,8 @@
     },
     {
       "ref": "J70",
-      "lib": "Lab4_Logic:Pi4_Powered_Header",
+      "lib": "Lab4_Logic:Pi4_Powered_Header_3_to_38",
       "nets": {
-        "2": "+5V",
         "4": "+5V",
         "6": "GND",
         "9": "GND",
@@ -5988,7 +6046,6 @@
         "25": "GND",
         "30": "GND",
         "34": "GND",
-        "39": "GND",
         "23": "PI_SCK",
         "21": "PI_MISO",
         "19": "PI_MOSI",
@@ -6007,14 +6064,6 @@
         "36": "PI_SELFTEST_BUTTON"
       },
       "pins": [
-        [
-          "1",
-          "3V3"
-        ],
-        [
-          "2",
-          "5V"
-        ],
         [
           "3",
           "SDA_I2C1/GPIO02"
@@ -6158,14 +6207,6 @@
         [
           "38",
           "GPIO20/SPI1_MOSI/PCM_DIN/PWM1"
-        ],
-        [
-          "39",
-          "GND"
-        ],
-        [
-          "40",
-          "GPIO21/SPI1_SCLK/PCM_DOUT"
         ]
       ]
     },

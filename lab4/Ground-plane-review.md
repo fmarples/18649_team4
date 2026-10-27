@@ -1,5 +1,16 @@
 # Ground-plane DC screen — October 27
 
+## Current revision — October 27
+
+The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
+older socket, heatsink-placement and encoder-voltage statements below. All
+eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
+have a separate 4.0 V supply. Current JSON checks carry the active board hash.
+Battery/protection, Pi voltage margin and exact capacitor data remain open.
+
+## Earlier review record
+
+
 We modeled the saved inner ground fill as a resistor sheet. In the cases
 with a positive Pi ground offset, the modeled offset is about 2.6–6.5 mV,
 compared with the existing 150 mV supply-feed drop at the assumed 3 A load.

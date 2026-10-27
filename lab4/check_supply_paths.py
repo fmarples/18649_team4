@@ -138,10 +138,11 @@ rails = [
              [(u, '3') for u in ('U11', 'U15', 'U21', 'U25', 'U31', 'U35')],
              corners['3V3']['allocated_output_A'],
              corners['3V3']['static_reference_and_resistor_corners_V'][0]),
-    evaluate('/+5V', ('L2', '2'), [('J70', '2'), ('J70', '4'), ('U80', '9'), ('U2', '8'), ('U3', '8')],
+    evaluate('/+5V', ('L2', '2'), [('J70', '4'), ('U80', '9'), ('U2', '8'), ('U3', '8'), ('U82','2')],
              corners['5V']['allocated_output_A'],
              corners['5V']['static_reference_and_resistor_corners_V'][0]),
 ]
+rails.append(evaluate('/Rear zone/ENC_4V',('U82','3'),[('J82','1'),('J83','1')],.040,4*(1-.03-.015-.006)))
 actuator_paths = [
     evaluate('/+6V6_SERVO', ('L1','2'), [('R1','1')], 4.0,
              corners['SERVO']['static_reference_and_resistor_corners_V'][0]),

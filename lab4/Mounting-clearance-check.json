@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "pcb_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
+  "rule": "3mm from finished hole edge, all chassis/Pi supports",
+  "holes": [
+    {
+      "reference": "H1",
+      "finished_drill_mm": 3.2,
+      "minimum_clear_radius_mm": 4.6,
+      "layers": 4
+    },
+    {
+      "reference": "H2",
+      "finished_drill_mm": 3.2,
+      "minimum_clear_radius_mm": 4.6,
+      "layers": 4
+    },
+    {
+      "reference": "H3",
+      "finished_drill_mm": 3.2,
+      "minimum_clear_radius_mm": 4.6,
+      "layers": 4
+    },
+    {
+      "reference": "H4",
+      "finished_drill_mm": 3.2,
+      "minimum_clear_radius_mm": 4.6,
+      "layers": 4
+    },
+    {
+      "reference": "H5",
+      "finished_drill_mm": 2.7,
+      "minimum_clear_radius_mm": 4.35,
+      "layers": 4
+    },
+    {
+      "reference": "H6",
+      "finished_drill_mm": 2.7,
+      "minimum_clear_radius_mm": 4.35,
+      "layers": 4
+    },
+    {
+      "reference": "H7",
+      "finished_drill_mm": 2.7,
+      "minimum_clear_radius_mm": 4.35,
+      "layers": 4
+    },
+    {
+      "reference": "H8",
+      "finished_drill_mm": 2.7,
+      "minimum_clear_radius_mm": 4.35,
+      "layers": 4
+    }
+  ],
+  "errors": [],
+  "limits": [
+    "Checks the saved filled geometry, not an assembled fit.",
+    "NPTH drill pads are excluded; electrical pads are checked.",
+    "Use hardware within the documented maximum outside diameters."
+  ]
+}

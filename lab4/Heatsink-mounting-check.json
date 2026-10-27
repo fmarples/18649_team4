@@ -1,9 +1,9 @@
 {
-  "status": "DRAWING_STUDY_COMPLETE_LAYOUT_NOT_IMPLEMENTED",
-  "pcb_sha256": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d",
+  "status": "PASS_IMPLEMENTED_DRAWING_BASED_MOUNTING",
+  "pcb_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
   "library_footprint": "Lab4_Mechanical:Boyd_6396BG_StraightPins",
   "library_footprint_check": "PASS: two pads, 25.4 mm pitch, 2.89 mm drills, 4.5 mm pads, one closed courtyard",
-  "library_footprint_installed_in_active_board": false,
+  "library_footprint_installed_in_active_board": true,
   "coordinate_system": "KiCad absolute mm; subtract (40,40) for board-relative coordinates",
   "part": "6396BG straight pins; NOT 6396B-P2G",
   "body_mm": [
@@ -13,151 +13,53 @@
   ],
   "pin_centers_mm": [
     [
-      59.3,
-      56.97500000000001
+      62.3,
+      53.97500000000001
     ],
     [
-      84.7,
-      56.97500000000001
+      87.7,
+      53.97500000000001
     ]
   ],
   "recommended_finished_pth_diameter_mm": 2.89,
   "study_pad_diameter_mm": 4.5,
   "device_mount_hole_diameter_mm": 3.81,
   "device_screw_center_height_above_sink_bottom_mm": 19.05,
-  "mounting_face_y_mm": 57.760000000000005,
+  "mounting_face_y_mm": 54.760000000000005,
   "outer_envelope_mm": [
-    51.045,
-    44.275000000000006,
+    54.045,
+    41.275000000000006,
     41.91,
     25.4
   ],
   "conservative_fin_web_blocks_mm": [
     [
-      51.045,
-      44.275000000000006,
+      54.045,
+      41.275000000000006,
       9.589999999999996,
       25.4
     ],
     [
-      83.36500000000001,
-      44.275000000000006,
+      86.36500000000001,
+      41.275000000000006,
       9.58999999999999,
       25.4
     ],
     [
-      60.635,
-      56.190000000000005,
+      63.635,
+      53.190000000000005,
       22.73000000000001,
       1.57
     ]
   ],
   "block_clearance_mm": 0.5,
   "outer_envelope_courtyard_intersections": [
-    "C800",
-    "C801",
-    "C802",
-    "D800",
-    "D801",
-    "D802",
+    "HS80",
     "J80",
     "J81"
   ],
-  "fin_web_clearance_screen_intersections": [
-    "C800",
-    "C801",
-    "C802",
-    "D800",
-    "D801",
-    "D802",
-    "H1",
-    "J80",
-    "J81"
-  ],
-  "anchor_copper_screen": [
-    {
-      "center_mm": [
-        59.3,
-        56.97500000000001
-      ],
-      "track_or_via_hits": 10,
-      "nets": [
-        "/Rear zone/LEFT_BRIDGE",
-        "/Rear zone/LEFT_MOTOR",
-        "/VBAT_PROTECTED"
-      ]
-    },
-    {
-      "center_mm": [
-        84.7,
-        56.97500000000001
-      ],
-      "track_or_via_hits": 1,
-      "nets": [
-        "/VBAT_PROTECTED"
-      ]
-    }
-  ],
-  "nearby_clearance_candidates_NOT_applied": [
-    {
-      "dx_mm": 3,
-      "dy_mm": -3,
-      "affected_courtyards": [
-        "C800",
-        "C802",
-        "J80"
-      ],
-      "count": 3,
-      "displacement_mm": 4.242640687119285
-    },
-    {
-      "dx_mm": 4,
-      "dy_mm": -3,
-      "affected_courtyards": [
-        "C800",
-        "C802",
-        "J80"
-      ],
-      "count": 3,
-      "displacement_mm": 5.0
-    },
-    {
-      "dx_mm": 3,
-      "dy_mm": -1,
-      "affected_courtyards": [
-        "C800",
-        "C801",
-        "C802",
-        "J80"
-      ],
-      "count": 4,
-      "displacement_mm": 3.1622776601683795
-    },
-    {
-      "dx_mm": 2,
-      "dy_mm": -3,
-      "affected_courtyards": [
-        "C800",
-        "C802",
-        "J80",
-        "J81"
-      ],
-      "count": 4,
-      "displacement_mm": 3.605551275463989
-    },
-    {
-      "dx_mm": 3,
-      "dy_mm": -2,
-      "affected_courtyards": [
-        "C800",
-        "C801",
-        "C802",
-        "J80"
-      ],
-      "count": 4,
-      "displacement_mm": 3.605551275463989
-    }
-  ],
+  "fin_web_clearance_screen_intersections": [],
+  "unrelated_top_copper_in_metal_envelopes": [],
   "nominal_uninsulated_flush_mount": {
     "pcb_thickness_mm": 1.6,
     "st_short_lead_hole_to_tip_min_mm": 21.9,
@@ -172,11 +74,11 @@
     "package_bottom_above_board_max_mm": 4.7
   },
   "limits": [
-    "No footprint/hole/component or copper changed in active board.",
+    "Drawing-based placement and copper checks pass; no physical fit or thermal test is claimed.",
     "A fin-block/courtyard intersection is a clearance-screen finding, not measured physical interference.",
     "No credit for mounting components under the heatsink or between individual fins.",
     "No thermal qualification or complete supplier tolerance stack.",
-    "Copper screen covers tracks/vias; pads, all-layer zones and DRC must be checked when installing anchors.",
+    "Native DRC independently checks plated-anchor clearance on all copper layers; this script screens top metal contact.",
     "Soldered anchor pads are mechanical. Do not depend on the anodized body as insulation or as a reliable ground connection."
   ]
 }

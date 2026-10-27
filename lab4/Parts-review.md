@@ -1,5 +1,16 @@
 # Parts and physical interface review
 
+## Current revision — October 27
+
+The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
+older socket, heatsink-placement and encoder-voltage statements below. All
+eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
+have a separate 4.0 V supply. Current JSON checks carry the active board hash.
+Battery/protection, Pi voltage margin and exact capacitor data remain open.
+
+## Earlier review record
+
+
 24 October 2026. We reconciled the design with the course's
 [v3 stock-list reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792789284321879).
 Tom says it lists the parts on hand, excluding front current-sensing additions

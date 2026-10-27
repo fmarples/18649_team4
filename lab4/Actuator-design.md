@@ -1,5 +1,16 @@
 # Actuator circuit review
 
+## Current revision — October 27
+
+The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
+older socket, heatsink-placement and encoder-voltage statements below. All
+eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
+have a separate 4.0 V supply. Current JSON checks carry the active board hash.
+Battery/protection, Pi voltage margin and exact capacitor data remain open.
+
+## Earlier review record
+
+
 Updated 27 October 2026. These circuits are connected in the schematic and
 routed on the active PCB. We have not powered or tested the new PCB; the
 heatsink footprint and local placement/routing repair are still pending.

@@ -10,3 +10,6 @@
 (rule "SOT563 internal pad clearance 1oz"
   (condition "A.Type == 'Pad' && B.Type == 'Pad' && ((A.memberOfFootprint('U40') && B.memberOfFootprint('U40')) || (A.memberOfFootprint('U41') && B.memberOfFootprint('U41')) || (A.memberOfFootprint('U42') && B.memberOfFootprint('U42')))")
   (constraint clearance (min 0.15mm)))
+
+# Intended U80 tab-to-HS80 web mating; exact position separately checked.
+(rule "L298 tab clamped to HS80" (condition "(A.Reference == 'HS80' && B.Reference == 'U80') || (A.Reference == 'U80' && B.Reference == 'HS80')") (constraint courtyard_clearance (min -1mm)))

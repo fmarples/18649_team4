@@ -1,64 +1,36 @@
 # Power margins, capacitors and thermal review
 
 27 October 2026. We recalculated these margins after widening existing
-3.3 V and 5 V traces. Setpoints and BOM are unchanged in this pass. The
+3.3 V and 5 V traces. The buck setpoints are unchanged; the later revision adds the encoder LDO. The
 calculations identify limits of the present design; they do not
 qualify it for fabrication. [Power-margin-check.json](Power-margin-check.json)
 records the source hashes, assumptions and numerical results. The existing
 8–15 V input envelope makes this work useful before the battery is selected.
 
-## Voltage available at the loads
+## Current voltage results
 
-The source corners include reference and divider tolerances. We subtract the
-shared-current tree drops from [Supply-path-review.md](Supply-path-review.md).
-That model counts whole trace segments and assigns the Pi current to one
-power pin, so it can overstate positive-feed loss. It omits ground, contact,
-heating and dynamic losses, so its result is not a guaranteed lower bound.
+The mounting/encoder revision adds a separate 4.0 V supply. Its conservative
+static connector screen is 3.792/3.794 V, rather than the earlier 3.17 V
+from the logic rail. The LVC14A and pull-ups remain at 3.3 V. See
+[Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md).
 
-| Load | Static source minimum | Positive-feed drop | Calculated load voltage before other losses | Comparison |
-| --- | ---: | ---: | ---: | --- |
-| Worst CAN transceiver, U25 | 3.2629 V | 0.0949 V | 3.1680 V | 0.1680 V above its 3.0 V minimum |
-| Worst encoder connector, J82 | 3.2629 V | 0.0932 V | 3.1697 V | 0.1303 V below the recorded 3.3 V range endpoint |
-| Pi, J70 | 5.0146 V | 0.1498 V | 4.8648 V | Only 0.0033 V above the upper corner of its low-voltage detector |
+The current shared-current positive-feed model gives U25 3.1733 V and
+J70 4.8662 V at the assumed 3 A Pi allocation. The latter leaves only
+4.7 mV above the 4.8615 V upper warning-threshold corner before other
+losses. This is not enough demonstrated margin. The warning threshold is
+not itself the Pi's guaranteed operating specification.
 
-The CAN comparison uses the [SN65HVD231 operating limit](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf).
-The [recorded motor specification](../doc/HARDWARE.md) gives the encoder supply
-as 3.3–5 V without endpoint tolerance. Earlier operation from nominal 3.3 V
-does not establish operation at 3.17 V. Even eliminating all trace drop would
-leave the present source low corner below 3.3 V. Thus widening copper alone
-does not close this encoder specification question.
-
-[Raspberry Pi documents](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
-a 4.63 V ±5% low-voltage detector: its upper corner is 4.8615 V. This is a
-warning threshold, not a minimum operating specification or proof of failure.
-The present screen cannot guarantee warning-free operation at the full 3 A
-allocation.
-
-Multiplying conductor resistance by an assumed 1.45 and reserving 50 mV for
-return loss gives 3.075 V at U25 and 4.747 V at J70. The multiplier represents
-approximately 60 °C copper and 20% width reduction; it is not a complete
-manufacturing or temperature bound. A nominal 15.2 µm copper sheet has about
-1.13 milliohms per square. A hypothetical five-square path at 3 A loses
-17 mV; the real plane's apertures, spreading and shared currents determine its
-loss. This example is not a ground-plane extraction.
-
-The subsequent [ground-plane screen](Ground-plane-review.md) extracts the
-saved In1 fill and balances shared DC currents in three scenarios. Positive
-Pi ground offsets are about 2.6–6.5 mV over its mesh/port sweep. Local tracks,
-spokes, barrels and contacts remain excluded; the 50 mV allowance above is
-still an assumption, not a measured or simulated total-return bound.
-The new review also separates contact-resistance sensitivity from an actual
-connector specification. The full Pi/encoder voltage decisions remain open.
-
-**Design decision:** the latest copper refinement reduces the worst logic
-feed drop by about 34% and the Pi feed drop by about 6% in the same model.
-It does not close the full voltage budget. Before release, include ground,
-contact and regulator load/line behavior in the assessment; improve the Pi
-feed further if required. Establish the encoder's actual allowed range or select a
-separate supply within its documented range. Do not raise the common logic
-voltage blindly, or move encoders directly to the existing 5 V rail: that
-rail's static upper corner is 5.186 V. The [SN74LVC14A](https://www.ti.com/lit/ds/symlink/sn74lvc14a.pdf)
-accepts inputs up to 5.5 V, but that does not set the encoder's supply limit.
+These predecessor-tree calculations count whole items, omit parallel copper
+and pad spreading, and omit contact/local return/heating/dynamic losses.
+They are neither measured voltage nor guaranteed worst-case bounds.
+[Load-allocation-check.json](Load-allocation-check.json),
+[Ground-plane-check.json](Ground-plane-check.json) and
+[Power-margin-check.json](Power-margin-check.json) contain refreshed results.
+The ground model now returns the 40 mA encoder load at J82/J83; only U82's
+quiescent allocation returns at U82. Final Pi/load/thermal decisions remain
+open. A larger power-routing redesign should use the confirmed load and
+battery envelope. No generic efficiency or contact-resistance assumption
+has been promoted to a guaranteed specification.
 
 ## Effective capacitance and ripple
 

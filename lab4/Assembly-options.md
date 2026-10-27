@@ -1,5 +1,16 @@
 # Assembly options for the same Lab 4 design
 
+## Current revision — October 27
+
+The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
+older socket, heatsink-placement and encoder-voltage statements below. All
+eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
+have a separate 4.0 V supply. Current JSON checks carry the active board hash.
+Battery/protection, Pi voltage margin and exact capacitor data remain open.
+
+## Earlier review record
+
+
 23 October 2026, updated after the TA reply. The course will have teams assemble
 all SMD parts themselves. TechSpark oven access is tentative. We therefore
 use **BOM-Hand-assembly.csv** as the active assembly list and course v3 stock

@@ -1,5 +1,16 @@
 # Supply-path resistance screening
 
+## Current revision — October 27
+
+The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
+older socket, heatsink-placement and encoder-voltage statements below. All
+eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
+have a separate 4.0 V supply. Current JSON checks carry the active board hash.
+Battery/protection, Pi voltage margin and exact capacitor data remain open.
+
+## Earlier review record
+
+
 26 October 2026. We calculated resistance from the saved trace geometry. This
 is an initial sizing check, not a powered test or fabrication release.
 `check_supply_paths.py` and [Supply-path-check.json](Supply-path-check.json)

@@ -10,7 +10,7 @@
     "board_gap_mm": 22,
     "main_pcb_chassis_gap_mm": 35,
     "pi_thickness_assumed_mm": 1.6,
-    "socket": "Samtec ESQ-120-44-L-D",
+    "socket": "Samtec ESQ-118-44-L-D; physical Pi pins3-38",
     "socket_body_height_mm": 18.67,
     "gpio_tip_height_mm": 8.5,
     "usb_height_mm": 16.4,
@@ -33,22 +33,6 @@
         180.225,
         3.05,
         1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C2",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 44.0,
-      "y_mm": 187.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        43.224999999999994,
-        185.475,
-        1.55,
-        3.05
       ],
       "schematic": true
     },
@@ -136,7 +120,7 @@
       "reference": "C140",
       "value": "18p C0G 50V",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 91.7,
+      "x_mm": 91.69999999999999,
       "y_mm": 173.8,
       "rotation_deg": -90.0,
       "layer": "F.Cu",
@@ -152,7 +136,7 @@
       "reference": "C141",
       "value": "18p C0G 50V",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 95.3,
+      "x_mm": 95.30000000000001,
       "y_mm": 168.8,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -184,7 +168,7 @@
       "reference": "C143",
       "value": "100n",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 105.7,
+      "x_mm": 105.69999999999999,
       "y_mm": 164.5,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -200,13 +184,653 @@
       "reference": "C144",
       "value": "100n",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 106.05,
+      "x_mm": 106.05000000000001,
       "y_mm": 169.9,
       "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
         105.275,
         168.375,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C2",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 44.0,
+      "y_mm": 187.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        43.224999999999994,
+        185.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C200",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 64.7,
+      "y_mm": 48.8,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        63.925,
+        47.275000000000006,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C201",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 68.3,
+      "y_mm": 43.8,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        66.775,
+        43.025000000000006,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C202",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 78.4,
+      "y_mm": 37.2,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        76.875,
+        36.424999,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C203",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 78.7,
+      "y_mm": 39.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        77.175,
+        38.724999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C204",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 79.05,
+      "y_mm": 44.900000000000006,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        78.275,
+        43.375,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C240",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 91.69999999999999,
+      "y_mm": 48.8,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        90.92499900000001,
+        47.275000000000006,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C241",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 95.30000000000001,
+      "y_mm": 43.8,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        93.775,
+        43.025000000000006,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C242",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 105.4,
+      "y_mm": 37.2,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        103.875,
+        36.424999,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C243",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 105.69999999999999,
+      "y_mm": 39.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        104.17500000000001,
+        38.724999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C244",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 106.05000000000001,
+      "y_mm": 44.900000000000006,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        105.275,
+        43.375,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C3",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 25.0,
+      "y_mm": 35.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        24.224999999999994,
+        33.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C300",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 51.7,
+      "y_mm": 119.80000000000001,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        50.925,
+        118.275,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C301",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 55.3,
+      "y_mm": 114.80000000000001,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        53.775000000000006,
+        114.025,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C302",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 65.4,
+      "y_mm": 108.19999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        63.875,
+        107.42500000000001,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C303",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 65.7,
+      "y_mm": 110.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        64.175,
+        109.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C304",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 66.05,
+      "y_mm": 115.9,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        65.275,
+        114.375,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C340",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 85.7,
+      "y_mm": 119.80000000000001,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        84.925,
+        118.275,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C341",
+      "value": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 89.30000000000001,
+      "y_mm": 114.80000000000001,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        87.775,
+        114.025,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C342",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 99.4,
+      "y_mm": 108.19999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        97.875,
+        107.42500000000001,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C343",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 99.69999999999999,
+      "y_mm": 110.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        98.17500000000001,
+        109.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C344",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 100.05000000000001,
+      "y_mm": 115.9,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        99.275,
+        114.375,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C4",
+      "value": "1n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 25.0,
+      "y_mm": 38.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        24.224999999999994,
+        36.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C400",
+      "value": "1000u / 25V",
+      "footprint": "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm",
+      "x_mm": 61.67604,
+      "y_mm": 21.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        57.63354699999999,
+        14.457506000000002,
+        13.087493,
+        13.084988
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C410",
+      "value": "22u / 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 18.200000000000003,
+      "y_mm": 210.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        15.854999999999997,
+        208.855,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C411",
+      "value": "100n / 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 18.200000000000003,
+      "y_mm": 206.4,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        16.674999999999997,
+        205.625,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C412",
+      "value": "22u / 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 31.0,
+      "y_mm": 201.8,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        29.974999999999994,
+        200.055,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C413",
+      "value": "22u / 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 31.0,
+      "y_mm": 205.8,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        29.974999999999994,
+        204.055,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C414",
+      "value": "22p C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 14.200000000000003,
+      "y_mm": 203.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        12.674999999999997,
+        202.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C420",
+      "value": "22u / 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 56.2,
+      "y_mm": 210.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        53.855000000000004,
+        208.855,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C421",
+      "value": "100n / 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 56.2,
+      "y_mm": 206.4,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        54.675,
+        205.625,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C422",
+      "value": "22u / 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 69.0,
+      "y_mm": 201.8,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        67.975,
+        200.055,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C423",
+      "value": "22u / 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 69.0,
+      "y_mm": 205.8,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        67.975,
+        204.055,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C424",
+      "value": "22p C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 52.2,
+      "y_mm": 203.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        50.675,
+        202.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C430",
+      "value": "22u / 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 94.19999999999999,
+      "y_mm": 210.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        91.85499899999999,
+        208.855,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C431",
+      "value": "100n / 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 94.19999999999999,
+      "y_mm": 206.4,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        92.67499900000001,
+        205.625,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C432",
+      "value": "22u / 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 107.0,
+      "y_mm": 201.8,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        105.975,
+        200.055,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C433",
+      "value": "22u / 16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 107.0,
+      "y_mm": 205.8,
+      "rotation_deg": -90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        105.975,
+        204.055,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C434",
+      "value": "22p C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 90.19999999999999,
+      "y_mm": 203.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        88.67499900000001,
+        202.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C5",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 28.0,
+      "y_mm": 41.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        27.224999999999994,
+        39.474999999999994,
         1.55,
         3.05
       ],
@@ -389,10 +1013,394 @@
       "schematic": true
     },
     {
+      "reference": "C6",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 50.0,
+      "y_mm": 35.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        49.224999999999994,
+        33.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C600",
+      "value": "100n VDD19",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 28.0,
+      "y_mm": 72.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        26.474999999999994,
+        71.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C601",
+      "value": "100n VDD32",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 37.0,
+      "y_mm": 72.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        35.474999999999994,
+        71.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C602",
+      "value": "100n VDD48",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 39.0,
+      "y_mm": 60.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        38.224999999999994,
+        58.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C603",
+      "value": "100n VDD64",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 27.0,
+      "y_mm": 56.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        25.474999999999994,
+        55.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C604",
+      "value": "100n VBAT",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 23.0,
+      "y_mm": 60.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        22.225,
+        58.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C605",
+      "value": "4.7u VDD bulk",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 20.0,
+      "y_mm": 63.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        18.975,
+        61.254999999999995,
+        2.05,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C606",
+      "value": "4.7u VCAP1",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 32.0,
+      "y_mm": 74.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        30.254999999999995,
+        72.975,
+        3.49,
+        2.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C607",
+      "value": "100n VDDA",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 23.0,
+      "y_mm": 67.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        22.225,
+        65.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C608",
+      "value": "1u VDDA",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 20.0,
+      "y_mm": 67.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        19.225,
+        65.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C609",
+      "value": "100n NRST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 23.0,
+      "y_mm": 63.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        22.225,
+        61.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C610",
+      "value": "100n TEST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 41.0,
+      "y_mm": 72.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        40.224999999999994,
+        70.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C7",
+      "value": "1n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 50.0,
+      "y_mm": 38.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        49.224999999999994,
+        36.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C700",
+      "value": "22u /16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "x_mm": 19.0,
+      "y_mm": 85.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        17.255000000000003,
+        83.975,
+        3.49,
+        2.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C701",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 21.0,
+      "y_mm": 80.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        19.475,
+        79.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C702",
+      "value": "100n TEST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 20.0,
+      "y_mm": 145.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        18.475,
+        144.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C8",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 53.0,
+      "y_mm": 41.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        52.224999999999994,
+        39.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C800",
+      "value": "100n 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 48.0,
+      "y_mm": 31.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        46.474999999999994,
+        30.724999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C801",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 48.0,
+      "y_mm": 28.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        46.474999999999994,
+        27.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C802",
+      "value": "470u 25V",
+      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+      "x_mm": 61.349999999999994,
+      "y_mm": 7.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        58.802521,
+        2.703761,
+        8.592478,
+        8.592477
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C803",
+      "value": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "x_mm": 106.0,
+      "y_mm": 62.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        104.475,
+        61.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C804",
+      "value": "10u 16V 10% low-ESR",
+      "footprint": "Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B",
+      "x_mm": 99.5,
+      "y_mm": 89.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        96.995,
+        87.305,
+        5.01,
+        3.39
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C805",
+      "value": "10u 16V 10% low-ESR",
+      "footprint": "Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B",
+      "x_mm": 106.0,
+      "y_mm": 89.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        103.495,
+        87.305,
+        5.01,
+        3.39
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D40",
+      "value": "12V gate clamp",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "x_mm": 104.02250000000001,
+      "y_mm": 25.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        101.7775,
+        23.805,
+        4.49,
+        2.39
+      ],
+      "schematic": true
+    },
+    {
       "reference": "D510",
       "value": "STATUS green",
       "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 19.02,
+      "x_mm": 19.020000000000003,
       "y_mm": 150.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -408,7 +1416,7 @@
       "reference": "D511",
       "value": "ERR red",
       "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 25.02,
+      "x_mm": 25.019999999999996,
       "y_mm": 150.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -424,7 +1432,7 @@
       "reference": "D512",
       "value": "DEG_A yellow",
       "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 31.02,
+      "x_mm": 31.019999999999996,
       "y_mm": 150.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -440,7 +1448,7 @@
       "reference": "D513",
       "value": "DEG_B yellow",
       "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 37.02,
+      "x_mm": 37.019999999999996,
       "y_mm": 150.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -449,6 +1457,278 @@
         149.225,
         3.05,
         1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D610",
+      "value": "STATUS green",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 19.020000000000003,
+      "y_mm": 51.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        17.494999999999997,
+        50.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D611",
+      "value": "ERR red",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 25.019999999999996,
+      "y_mm": 51.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        23.494999999999997,
+        50.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D612",
+      "value": "DEG_A yellow",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 31.019999999999996,
+      "y_mm": 51.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        29.495000000000005,
+        50.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D613",
+      "value": "DEG_B yellow",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 37.019999999999996,
+      "y_mm": 51.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        35.495000000000005,
+        50.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D710",
+      "value": "STATUS green",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 35.019999999999996,
+      "y_mm": 85.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        33.495000000000005,
+        84.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D711",
+      "value": "ERR red",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 42.019999999999996,
+      "y_mm": 85.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        40.495000000000005,
+        84.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D712",
+      "value": "DEG_A yellow",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 49.019999999999996,
+      "y_mm": 85.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        47.495000000000005,
+        84.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D713",
+      "value": "DEG_B yellow",
+      "footprint": "LED_SMD:LED_0603_1608Metric",
+      "x_mm": 56.019999999999996,
+      "y_mm": 85.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        54.495000000000005,
+        84.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D800",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 8.0225,
+      "y_mm": 16.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        4.327500000000001,
+        13.704999999999998,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D801",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 8.0225,
+      "y_mm": 22.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        4.327500000000001,
+        19.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D802",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 8.0225,
+      "y_mm": 28.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        4.327500000000001,
+        25.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D803",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 8.0225,
+      "y_mm": 34.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        4.327500000000001,
+        31.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D804",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 60.022499999999994,
+      "y_mm": 32.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        56.3275,
+        29.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D805",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 60.022499999999994,
+      "y_mm": 38.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        56.3275,
+        35.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D806",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 60.022499999999994,
+      "y_mm": 44.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        56.3275,
+        41.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "D807",
+      "value": "SK520B",
+      "footprint": "Diode_SMD:D_SMB",
+      "x_mm": 60.022499999999994,
+      "y_mm": 50.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        56.3275,
+        47.705,
+        7.39,
+        4.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "F1",
+      "value": "Fuse: rating TBD",
+      "footprint": "Fuse:Fuseholder_Blade_Mini_Keystone_3568",
+      "x_mm": 86.3,
+      "y_mm": 21.96,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        84.335,
+        8.704999999999998,
+        7.33,
+        16.59
       ],
       "schematic": true
     },
@@ -469,10 +1749,170 @@
       "schematic": true
     },
     {
+      "reference": "FB60",
+      "value": "600R @100MHz",
+      "footprint": "Inductor_SMD:L_0603_1608Metric",
+      "x_mm": 20.0,
+      "y_mm": 70.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        18.475,
+        69.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "H1",
+      "value": "Measured chassis center; M3 PCB drill proposed",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "x_mm": 7.5,
+      "y_mm": 7.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        2.8524749999999983,
+        2.353738,
+        9.292524,
+        9.292523
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H2",
+      "value": "Measured chassis center; M3 PCB drill proposed",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "x_mm": 112.5,
+      "y_mm": 7.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        107.852475,
+        2.353738,
+        9.292524,
+        9.292523
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H3",
+      "value": "Measured chassis center; M3 PCB drill proposed",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "x_mm": 35.0,
+      "y_mm": 227.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        30.352475,
+        222.35373800000002,
+        9.292524,
+        9.292523
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H4",
+      "value": "Measured chassis center; M3 PCB drill proposed",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "x_mm": 85.0,
+      "y_mm": 227.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        80.352475,
+        222.35373800000002,
+        9.292524,
+        9.292523
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H5",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
+      "x_mm": 33.5,
+      "y_mm": 92.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        29.107462999999996,
+        88.10253900000001,
+        8.787536,
+        8.794922
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H6",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
+      "x_mm": 91.5,
+      "y_mm": 92.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        87.107463,
+        88.10253900000001,
+        8.787536,
+        8.794922
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H7",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
+      "x_mm": 33.5,
+      "y_mm": 141.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        29.107462999999996,
+        137.102539,
+        8.787536,
+        8.794922
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "H8",
+      "value": "Pi support <=5.5mm hardware OD",
+      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
+      "x_mm": 91.5,
+      "y_mm": 141.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        87.107463,
+        137.102539,
+        8.787536,
+        8.794922
+      ],
+      "schematic": false
+    },
+    {
+      "reference": "HS80",
+      "value": "6396BG",
+      "footprint": "Lab4_Mechanical:Boyd_6396BG_StraightPins",
+      "x_mm": 35.0,
+      "y_mm": 13.975000000000001,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        13.5,
+        0.7299999999999969,
+        43.0,
+        26.49
+      ],
+      "schematic": false
+    },
+    {
       "reference": "J1",
       "value": "Sense test points",
       "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
-      "x_mm": 48.46,
+      "x_mm": 48.459999999999994,
       "y_mm": 185.0,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
@@ -549,18 +1989,242 @@
       "schematic": true
     },
     {
-      "reference": "J90",
-      "value": "Servo: GND / 6.6V / PWM",
-      "footprint": "Connector_Hirose:Hirose_DF63M-3P-3.96DSA_1x03_P3.96mm_Vertical",
-      "x_mm": 103.045,
-      "y_mm": 221.95,
+      "reference": "J2",
+      "value": "Current test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 15.189999999999998,
+      "y_mm": 45.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        13.375,
+        43.185,
+        11.25,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J20",
+      "value": "CAN A isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "x_mm": 69.725,
+      "y_mm": 29.724999999999994,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        100.13999999999999,
-        217.45499999999998,
-        13.72,
+        67.91,
+        27.909999999999997,
+        6.18,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J21",
+      "value": "CAN A test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 79.19,
+      "y_mm": 31.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        77.375,
+        29.185000000000002,
+        11.25,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J24",
+      "value": "CAN B isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "x_mm": 96.725,
+      "y_mm": 29.724999999999994,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        94.91,
+        27.909999999999997,
+        6.18,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J25",
+      "value": "CAN B test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 106.19,
+      "y_mm": 31.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        104.375,
+        29.185000000000002,
+        11.25,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J3",
+      "value": "Current test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 40.19,
+      "y_mm": 45.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        38.375,
+        43.185,
+        11.25,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J30",
+      "value": "CAN A isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "x_mm": 56.724999999999994,
+      "y_mm": 100.725,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        54.91,
+        98.91,
+        6.18,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J31",
+      "value": "CAN A test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 66.19,
+      "y_mm": 102.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        64.375,
+        100.185,
+        11.25,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J34",
+      "value": "CAN B isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "x_mm": 90.725,
+      "y_mm": 100.725,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        88.91,
+        98.91,
+        6.18,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J35",
+      "value": "CAN B test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 100.19,
+      "y_mm": 102.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        98.375,
+        100.185,
+        11.25,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J40",
+      "value": "Battery input: 1=+ 2=GND",
+      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
+      "x_mm": 72.02,
+      "y_mm": 6.950000000000003,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        69.125,
+        2.4549999999999983,
+        9.75,
         9.09
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J41",
+      "value": "VBAT test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "x_mm": 74.725,
+      "y_mm": 23.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        72.91,
+        21.185000000000002,
+        6.18,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J42",
+      "value": "Rail / PG / GND",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "x_mm": 35.5,
+      "y_mm": 201.46,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        33.685,
+        199.645,
+        3.63,
+        8.71
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J43",
+      "value": "Rail / PG / GND",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "x_mm": 73.5,
+      "y_mm": 201.46,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        71.685,
+        199.645,
+        3.63,
+        8.71
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J44",
+      "value": "Rail / PG / GND",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "x_mm": 111.5,
+      "y_mm": 201.46,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        109.685,
+        199.645,
+        3.63,
+        8.71
       ],
       "schematic": true
     },
@@ -693,6 +2357,262 @@
       "schematic": true
     },
     {
+      "reference": "J600",
+      "value": "BOOT recovery",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "x_mm": 43.0,
+      "y_mm": 54.224999999999994,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        41.185,
+        52.41,
+        3.63,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J601",
+      "value": "SWD (2.54mm)",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical",
+      "x_mm": 16.0,
+      "y_mm": 57.650000000000006,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        14.185000000000002,
+        55.834999999999994,
+        3.63,
+        16.33
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J602",
+      "value": "3.3V TTL UART",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "x_mm": 45.0,
+      "y_mm": 61.459999999999994,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        43.185,
+        59.644999999999996,
+        3.63,
+        8.71
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J603",
+      "value": "LAB3 rows 1-13",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
+      "x_mm": 4.0,
+      "y_mm": 45.765,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        2.1850000000000023,
+        43.94,
+        3.63,
+        34.12
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J604",
+      "value": "Additional probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Vertical",
+      "x_mm": 54.0,
+      "y_mm": 48.3,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        52.185,
+        46.485,
+        3.63,
+        29.03
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J605",
+      "value": "Reserved / encoder probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical",
+      "x_mm": 61.0,
+      "y_mm": 58.379999999999995,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        59.185,
+        56.55500000000001,
+        3.63,
+        18.89
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J650",
+      "value": "REAR LEFT lamp",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "x_mm": 90.0,
+      "y_mm": 76.725,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        88.185,
+        74.91,
+        3.63,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J651",
+      "value": "REAR RIGHT lamp",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "x_mm": 113.0,
+      "y_mm": 76.725,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        111.185,
+        74.91,
+        3.63,
+        6.18
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J70",
+      "value": "Pi GPIO pins3-38 / ESQ-118-44-L-D",
+      "footprint": "Lab4_Mechanical:Samtec_ESQ-118-44_2x18_PiPins3-38_H18.67",
+      "x_mm": 38.370000000000005,
+      "y_mm": 93.77000000000001,
+      "rotation_deg": -90.0,
+      "layer": "B.Cu",
+      "bbox": [
+        39.09,
+        89.72999899999999,
+        46.82,
+        5.54
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J703",
+      "value": "LAB3 rows 1-13",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
+      "x_mm": 4.0,
+      "y_mm": 88.76499999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        2.1850000000000023,
+        86.94,
+        3.63,
+        34.12
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J704",
+      "value": "Pi extra probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical",
+      "x_mm": 10.0,
+      "y_mm": 125.91999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        8.185000000000002,
+        124.10499999999999,
+        3.63,
+        13.79
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J80",
+      "value": "LEFT motor",
+      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
+      "x_mm": 27.099999999999994,
+      "y_mm": 6.950000000000003,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        24.204999,
+        2.4549999999999983,
+        9.75,
+        9.09
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J81",
+      "value": "RIGHT motor",
+      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
+      "x_mm": 38.019999999999996,
+      "y_mm": 6.950000000000003,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        35.125,
+        2.4549999999999983,
+        9.75,
+        9.09
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J82",
+      "value": "LEFT encoder",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 15.0,
+      "y_mm": 94.19,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        13.185000000000002,
+        92.375,
+        3.63,
+        11.25
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J83",
+      "value": "RIGHT encoder",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "x_mm": 66.0,
+      "y_mm": 73.19,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        64.185,
+        71.375,
+        3.63,
+        11.25
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "J90",
+      "value": "Servo: GND / 6.6V / PWM",
+      "footprint": "Connector_Hirose:Hirose_DF63M-3P-3.96DSA_1x03_P3.96mm_Vertical",
+      "x_mm": 103.04499999999999,
+      "y_mm": 221.95,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        100.13999999999999,
+        217.45499999999998,
+        13.72,
+        9.09
+      ],
+      "schematic": true
+    },
+    {
       "reference": "JP10",
       "value": "TERM A",
       "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
@@ -721,6 +2641,102 @@
         174.185,
         6.18,
         3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "JP20",
+      "value": "TERM A",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "x_mm": 82.725,
+      "y_mm": 51.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        80.91,
+        49.185,
+        6.18,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "JP24",
+      "value": "TERM B",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "x_mm": 109.725,
+      "y_mm": 51.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        107.91,
+        49.185,
+        6.18,
+        3.63
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "L1",
+      "value": "4.7uH / 5.8A",
+      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
+      "x_mm": 24.5,
+      "y_mm": 204.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        19.955,
+        199.555,
+        9.09,
+        8.89
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "L2",
+      "value": "4.7uH / 5.8A",
+      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
+      "x_mm": 62.5,
+      "y_mm": 204.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        57.955,
+        199.555,
+        9.09,
+        8.89
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "L3",
+      "value": "4.7uH / 5.8A",
+      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
+      "x_mm": 100.5,
+      "y_mm": 204.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        95.95500000000001,
+        199.555,
+        9.09,
+        8.89
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Q1",
+      "value": "DMPH3010LK3-13",
+      "footprint": "Package_TO_SOT_SMD:TO-252-2",
+      "x_mm": 109.84,
+      "y_mm": 17.072499999999998,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        103.405,
+        13.527500000000003,
+        11.19,
+        7.09
       ],
       "schematic": true
     },
@@ -757,6 +2773,38 @@
       "schematic": true
     },
     {
+      "reference": "Q650",
+      "value": "MMBT3904",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "x_mm": 81.0,
+      "y_mm": 76.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        79.025,
+        74.255,
+        3.95,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Q651",
+      "value": "MMBT3904",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "x_mm": 104.0,
+      "y_mm": 76.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        102.025,
+        74.255,
+        3.95,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
       "reference": "R1",
       "value": "10mR / 1W / 1%",
       "footprint": "Lab4_Power:Vishay_WSL2512_7m_to_500m",
@@ -769,22 +2817,6 @@
         182.855,
         7.99,
         4.29
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R2",
-      "value": "4.7k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 44.0,
-      "y_mm": 183.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        43.224999999999994,
-        181.475,
-        1.55,
-        3.05
       ],
       "schematic": true
     },
@@ -881,6 +2913,502 @@
         171.725,
         3.05,
         1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R2",
+      "value": "4.7k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 44.0,
+      "y_mm": 183.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        43.224999999999994,
+        181.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R200",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 75.1,
+      "y_mm": 37.2,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        73.575,
+        36.424999,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R201",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 78.9,
+      "y_mm": 49.2,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        77.375,
+        48.424999,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R202",
+      "value": "120R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 84.0,
+      "y_mm": 47.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        82.475,
+        46.724999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R240",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 102.1,
+      "y_mm": 37.2,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        100.57499999999999,
+        36.424999,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R241",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 105.9,
+      "y_mm": 49.2,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        104.375,
+        48.424999,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R242",
+      "value": "120R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 111.0,
+      "y_mm": 47.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        109.475,
+        46.724999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R3",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 28.0,
+      "y_mm": 35.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        27.224999999999994,
+        33.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R300",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 62.099999999999994,
+      "y_mm": 108.19999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        60.575,
+        107.42500000000001,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R301",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 65.9,
+      "y_mm": 120.19999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        64.375,
+        119.42500000000001,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R340",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 96.1,
+      "y_mm": 108.19999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        94.57499999999999,
+        107.42500000000001,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R341",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 99.9,
+      "y_mm": 120.19999999999999,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        98.375,
+        119.42500000000001,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R4",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 28.0,
+      "y_mm": 38.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        27.224999999999994,
+        36.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R400",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 109.0,
+      "y_mm": 25.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        107.475,
+        24.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R401",
+      "value": "47k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 113.0,
+      "y_mm": 25.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        111.475,
+        24.224999999999994,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R410",
+      "value": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 14.200000000000003,
+      "y_mm": 205.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        12.674999999999997,
+        204.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R411",
+      "value": "10k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 14.200000000000003,
+      "y_mm": 207.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        12.674999999999997,
+        206.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R412",
+      "value": "47k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 16.0,
+      "y_mm": 197.5,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        15.225000000000001,
+        195.975,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R413",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 19.0,
+      "y_mm": 199.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        18.225,
+        197.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R414",
+      "value": "10k PG pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 14.0,
+      "y_mm": 200.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        12.475000000000001,
+        199.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R420",
+      "value": "75k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 52.2,
+      "y_mm": 205.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        50.675,
+        204.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R421",
+      "value": "10k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 52.2,
+      "y_mm": 207.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        50.675,
+        206.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R422",
+      "value": "33k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 54.0,
+      "y_mm": 197.5,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        53.224999999999994,
+        195.975,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R423",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 57.0,
+      "y_mm": 199.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        56.224999999999994,
+        197.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R424",
+      "value": "10k PG pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 52.0,
+      "y_mm": 200.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        50.474999999999994,
+        199.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R430",
+      "value": "45.3k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 90.19999999999999,
+      "y_mm": 205.5,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        88.67499900000001,
+        204.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R431",
+      "value": "10k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 90.19999999999999,
+      "y_mm": 207.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        88.67499900000001,
+        206.725,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R432",
+      "value": "22k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 92.0,
+      "y_mm": 197.5,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        91.225,
+        195.975,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R433",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 95.0,
+      "y_mm": 199.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        94.225,
+        197.475,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R434",
+      "value": "10k PG pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 90.0,
+      "y_mm": 200.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        88.475,
+        199.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R5",
+      "value": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 25.0,
+      "y_mm": 41.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        24.224999999999994,
+        39.474999999999994,
+        1.55,
+        3.05
       ],
       "schematic": true
     },
@@ -1125,1238 +3653,6 @@
       "schematic": true
     },
     {
-      "reference": "U1",
-      "value": "INA180A2IDBVR",
-      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
-      "x_mm": 39.0,
-      "y_mm": 185.0875,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        36.905,
-        183.3425,
-        4.19,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U10",
-      "value": "MCP2515T-I/ST",
-      "footprint": "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm",
-      "x_mm": 74.1875,
-      "y_mm": 169.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        70.2925,
-        165.455,
-        7.79,
-        7.09
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U11",
-      "value": "SN65HVD231DR",
-      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
-      "x_mm": 84.0,
-      "y_mm": 169.0675,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        80.255,
-        166.3225,
-        7.49,
-        5.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U14",
-      "value": "MCP2515T-I/ST",
-      "footprint": "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm",
-      "x_mm": 101.1875,
-      "y_mm": 169.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        97.29249999999999,
-        165.455,
-        7.79,
-        7.09
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U15",
-      "value": "SN65HVD231DR",
-      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
-      "x_mm": 111.0,
-      "y_mm": 169.0675,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        107.255,
-        166.3225,
-        7.49,
-        5.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U50",
-      "value": "STM32F401RET6TR",
-      "footprint": "Package_QFP:LQFP-64_10x10mm_P0.5mm",
-      "x_mm": 31.0,
-      "y_mm": 163.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        24.254999999999995,
-        156.255,
-        13.49,
-        13.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Y10",
-      "value": "16 MHz",
-      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-      "x_mm": 68.0,
-      "y_mm": 172.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        65.855,
-        170.205,
-        4.29,
-        3.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Y14",
-      "value": "16 MHz",
-      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-      "x_mm": 95.0,
-      "y_mm": 172.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        92.85499999999999,
-        170.205,
-        4.29,
-        3.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C3",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 25.0,
-      "y_mm": 35.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        24.224999999999994,
-        33.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C4",
-      "value": "1n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 25.0,
-      "y_mm": 38.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        24.224999999999994,
-        36.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C5",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 28.0,
-      "y_mm": 41.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        27.224999999999994,
-        39.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C6",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 50.0,
-      "y_mm": 35.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        49.224999999999994,
-        33.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C7",
-      "value": "1n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 50.0,
-      "y_mm": 38.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        49.224999999999994,
-        36.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C8",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 53.0,
-      "y_mm": 41.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        52.224999999999994,
-        39.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C200",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 64.7,
-      "y_mm": 48.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        63.925,
-        47.275000000000006,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C201",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 68.3,
-      "y_mm": 43.8,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        66.775,
-        43.025000000000006,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C202",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 78.4,
-      "y_mm": 37.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        76.875,
-        36.424999,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C203",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 78.7,
-      "y_mm": 39.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        77.175,
-        38.724999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C204",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 79.05,
-      "y_mm": 44.9,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        78.275,
-        43.375,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C240",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 91.7,
-      "y_mm": 48.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        90.92499900000001,
-        47.275000000000006,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C241",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 95.3,
-      "y_mm": 43.8,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        93.775,
-        43.025000000000006,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C242",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 105.4,
-      "y_mm": 37.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        103.875,
-        36.424999,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C243",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 105.7,
-      "y_mm": 39.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        104.17500000000001,
-        38.724999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C244",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 106.05,
-      "y_mm": 44.9,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        105.275,
-        43.375,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C600",
-      "value": "100n VDD19",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 28.0,
-      "y_mm": 72.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        26.474999999999994,
-        71.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C601",
-      "value": "100n VDD32",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 37.0,
-      "y_mm": 72.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        35.474999999999994,
-        71.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C602",
-      "value": "100n VDD48",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 39.0,
-      "y_mm": 60.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        38.224999999999994,
-        58.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C603",
-      "value": "100n VDD64",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 27.0,
-      "y_mm": 56.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        25.474999999999994,
-        55.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C604",
-      "value": "100n VBAT",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 23.0,
-      "y_mm": 60.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        22.225,
-        58.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C605",
-      "value": "4.7u VDD bulk",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 20.0,
-      "y_mm": 63.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        18.975,
-        61.254999999999995,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C606",
-      "value": "4.7u VCAP1",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 32.0,
-      "y_mm": 74.0,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        30.254999999999995,
-        72.975,
-        3.49,
-        2.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C607",
-      "value": "100n VDDA",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 23.0,
-      "y_mm": 67.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        22.225,
-        65.475,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C608",
-      "value": "1u VDDA",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 20.0,
-      "y_mm": 67.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        19.225,
-        65.475,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C609",
-      "value": "100n NRST",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 23.0,
-      "y_mm": 63.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        22.225,
-        61.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C610",
-      "value": "100n TEST",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 41.0,
-      "y_mm": 72.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        40.224999999999994,
-        70.475,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C800",
-      "value": "100n 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 48.0,
-      "y_mm": 25.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        46.474999999999994,
-        24.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C801",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 48.0,
-      "y_mm": 28.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        46.474999999999994,
-        27.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C802",
-      "value": "470u 25V",
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
-      "x_mm": 53.3473,
-      "y_mm": 7.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        50.79987,
-        2.703761,
-        8.592478,
-        8.592477
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C803",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 106.0,
-      "y_mm": 62.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        104.475,
-        61.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D610",
-      "value": "STATUS green",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 19.02,
-      "y_mm": 51.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        17.494999999999997,
-        50.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D611",
-      "value": "ERR red",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 25.02,
-      "y_mm": 51.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        23.494999999999997,
-        50.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D612",
-      "value": "DEG_A yellow",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 31.02,
-      "y_mm": 51.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        29.495000000000005,
-        50.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D613",
-      "value": "DEG_B yellow",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 37.02,
-      "y_mm": 51.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        35.495000000000005,
-        50.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D800",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 8.0225,
-      "y_mm": 16.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        4.327500000000001,
-        13.704999999999998,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D801",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 8.0225,
-      "y_mm": 22.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        4.327500000000001,
-        19.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D802",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 8.0225,
-      "y_mm": 28.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        4.327500000000001,
-        25.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D803",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 8.0225,
-      "y_mm": 34.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        4.327500000000001,
-        31.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D804",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 60.0225,
-      "y_mm": 32.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        56.3275,
-        29.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D805",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 60.0225,
-      "y_mm": 38.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        56.3275,
-        35.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D806",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 60.0225,
-      "y_mm": 44.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        56.3275,
-        41.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D807",
-      "value": "SK520B",
-      "footprint": "Diode_SMD:D_SMB",
-      "x_mm": 60.0225,
-      "y_mm": 50.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        56.3275,
-        47.705,
-        7.39,
-        4.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "FB60",
-      "value": "600R @100MHz",
-      "footprint": "Inductor_SMD:L_0603_1608Metric",
-      "x_mm": 20.0,
-      "y_mm": 70.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        18.475,
-        69.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J2",
-      "value": "Current test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 15.19,
-      "y_mm": 45.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        13.375,
-        43.185,
-        11.25,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J3",
-      "value": "Current test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 40.19,
-      "y_mm": 45.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        38.375,
-        43.185,
-        11.25,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J20",
-      "value": "CAN A isolation",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
-      "x_mm": 69.725,
-      "y_mm": 29.725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        67.91,
-        27.909999999999997,
-        6.18,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J21",
-      "value": "CAN A test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 79.19,
-      "y_mm": 31.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        77.375,
-        29.185000000000002,
-        11.25,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J24",
-      "value": "CAN B isolation",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
-      "x_mm": 96.725,
-      "y_mm": 29.725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        94.91,
-        27.909999999999997,
-        6.18,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J25",
-      "value": "CAN B test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 106.19,
-      "y_mm": 31.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        104.375,
-        29.185000000000002,
-        11.25,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J80",
-      "value": "LEFT motor",
-      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
-      "x_mm": 22.02,
-      "y_mm": 6.95,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        19.125,
-        2.4549999999999983,
-        9.75,
-        9.09
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J81",
-      "value": "RIGHT motor",
-      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
-      "x_mm": 38.02,
-      "y_mm": 6.95,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        35.125,
-        2.4549999999999983,
-        9.75,
-        9.09
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J82",
-      "value": "LEFT encoder",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 15.0,
-      "y_mm": 94.19,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        13.185000000000002,
-        92.375,
-        3.63,
-        11.25
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J83",
-      "value": "RIGHT encoder",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 66.0,
-      "y_mm": 73.19,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        64.185,
-        71.375,
-        3.63,
-        11.25
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J600",
-      "value": "BOOT recovery",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-      "x_mm": 43.0,
-      "y_mm": 54.225,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        41.185,
-        52.41,
-        3.63,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J601",
-      "value": "SWD (2.54mm)",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical",
-      "x_mm": 16.0,
-      "y_mm": 57.65,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        14.185000000000002,
-        55.834999999999994,
-        3.63,
-        16.33
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J602",
-      "value": "3.3V TTL UART",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
-      "x_mm": 45.0,
-      "y_mm": 61.46,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        43.185,
-        59.644999999999996,
-        3.63,
-        8.71
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J603",
-      "value": "LAB3 rows 1-13",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
-      "x_mm": 4.0,
-      "y_mm": 45.765,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        2.1850000000000023,
-        43.94,
-        3.63,
-        34.12
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J604",
-      "value": "Additional probes",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Vertical",
-      "x_mm": 54.0,
-      "y_mm": 48.3,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        52.185,
-        46.485,
-        3.63,
-        29.03
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J605",
-      "value": "Reserved / encoder probes",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical",
-      "x_mm": 61.0,
-      "y_mm": 58.38,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        59.185,
-        56.55500000000001,
-        3.63,
-        18.89
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J650",
-      "value": "REAR LEFT lamp",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-      "x_mm": 90.0,
-      "y_mm": 76.725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.185,
-        74.91,
-        3.63,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J651",
-      "value": "REAR RIGHT lamp",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-      "x_mm": 113.0,
-      "y_mm": 76.725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        111.185,
-        74.91,
-        3.63,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "JP20",
-      "value": "TERM A",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-      "x_mm": 82.725,
-      "y_mm": 51.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        80.91,
-        49.185,
-        6.18,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "JP24",
-      "value": "TERM B",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-      "x_mm": 109.725,
-      "y_mm": 51.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        107.91,
-        49.185,
-        6.18,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Q650",
-      "value": "MMBT3904",
-      "footprint": "Package_TO_SOT_SMD:SOT-23",
-      "x_mm": 81.0,
-      "y_mm": 76.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        79.025,
-        74.255,
-        3.95,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Q651",
-      "value": "MMBT3904",
-      "footprint": "Package_TO_SOT_SMD:SOT-23",
-      "x_mm": 104.0,
-      "y_mm": 76.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        102.025,
-        74.255,
-        3.95,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R3",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 28.0,
-      "y_mm": 35.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        27.224999999999994,
-        33.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R4",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 28.0,
-      "y_mm": 38.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        27.224999999999994,
-        36.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R5",
-      "value": "1k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 25.0,
-      "y_mm": 41.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        24.224999999999994,
-        39.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
       "reference": "R6",
       "value": "10k",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
@@ -2369,134 +3665,6 @@
         33.474999999999994,
         1.55,
         3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R7",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 53.0,
-      "y_mm": 38.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        52.224999999999994,
-        36.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R8",
-      "value": "1k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 50.0,
-      "y_mm": 41.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        49.224999999999994,
-        39.474999999999994,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R200",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 75.1,
-      "y_mm": 37.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        73.575,
-        36.424999,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R201",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 78.9,
-      "y_mm": 49.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        77.375,
-        48.424999,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R202",
-      "value": "120R",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 84.0,
-      "y_mm": 47.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        82.475,
-        46.724999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R240",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 102.1,
-      "y_mm": 37.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        100.57499999999999,
-        36.424999,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R241",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 105.9,
-      "y_mm": 49.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        104.375,
-        48.424999,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R242",
-      "value": "120R",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 111.0,
-      "y_mm": 47.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        109.475,
-        46.724999999999994,
-        3.05,
-        1.55
       ],
       "schematic": true
     },
@@ -2632,7 +3800,7 @@
       "reference": "R631",
       "value": "10k boot pulldown",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 24.8,
+      "x_mm": 24.799999999999997,
       "y_mm": 76.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -2648,7 +3816,7 @@
       "reference": "R632",
       "value": "10k boot pulldown",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 28.6,
+      "x_mm": 28.599999999999994,
       "y_mm": 76.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -2664,7 +3832,7 @@
       "reference": "R633",
       "value": "10k boot pulldown",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 32.4,
+      "x_mm": 32.400000000000006,
       "y_mm": 76.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
@@ -2805,6 +3973,118 @@
       "schematic": true
     },
     {
+      "reference": "R7",
+      "value": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 53.0,
+      "y_mm": 38.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        52.224999999999994,
+        36.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R700",
+      "value": "10k TEST pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 6.0,
+      "y_mm": 140.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        4.475000000000001,
+        139.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R710",
+      "value": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 35.0,
+      "y_mm": 81.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        33.474999999999994,
+        80.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R711",
+      "value": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 42.0,
+      "y_mm": 81.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        40.474999999999994,
+        80.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R712",
+      "value": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 49.0,
+      "y_mm": 81.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        47.474999999999994,
+        80.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R713",
+      "value": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 56.0,
+      "y_mm": 81.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        54.474999999999994,
+        80.225,
+        3.05,
+        1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "R8",
+      "value": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "x_mm": 50.0,
+      "y_mm": 41.0,
+      "rotation_deg": 90.0,
+      "layer": "F.Cu",
+      "bbox": [
+        49.224999999999994,
+        39.474999999999994,
+        1.55,
+        3.05
+      ],
+      "schematic": true
+    },
+    {
       "reference": "R800",
       "value": "100R",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
@@ -2933,31 +4213,175 @@
       "schematic": true
     },
     {
-      "reference": "U2",
-      "value": "ACS712ELCTR-05B-T",
-      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
-      "x_mm": 19.0,
-      "y_mm": 38.0675,
+      "reference": "SW50",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 12.0,
+      "y_mm": 185.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        15.255000000000003,
-        35.322500000000005,
+        7.704999999999998,
+        182.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW51",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 60.0,
+      "y_mm": 179.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        55.705,
+        176.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW60",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 12.0,
+      "y_mm": 81.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        7.704999999999998,
+        78.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW61",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 27.0,
+      "y_mm": 85.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        22.705,
+        82.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "SW70",
+      "value": "SWT0210-045026GSA",
+      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
+      "x_mm": 12.0,
+      "y_mm": 144.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        7.704999999999998,
+        141.405,
+        8.59,
+        5.19
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "U1",
+      "value": "INA180A2IDBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "x_mm": 39.0,
+      "y_mm": 185.0875,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        36.905,
+        183.3425,
+        4.19,
+        3.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "U10",
+      "value": "MCP2515T-I/ST",
+      "footprint": "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm",
+      "x_mm": 74.1875,
+      "y_mm": 169.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        70.2925,
+        165.455,
+        7.79,
+        7.09
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "U11",
+      "value": "SN65HVD231DR",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "x_mm": 84.0,
+      "y_mm": 169.0675,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        80.255,
+        166.3225,
         7.49,
         5.49
       ],
       "schematic": true
     },
     {
-      "reference": "U3",
-      "value": "ACS712ELCTR-05B-T",
-      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
-      "x_mm": 44.0,
-      "y_mm": 38.0675,
+      "reference": "U14",
+      "value": "MCP2515T-I/ST",
+      "footprint": "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm",
+      "x_mm": 101.1875,
+      "y_mm": 169.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        40.254999999999995,
+        97.29249999999999,
+        165.455,
+        7.79,
+        7.09
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "U15",
+      "value": "SN65HVD231DR",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "x_mm": 111.0,
+      "y_mm": 169.0675,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        107.255,
+        166.3225,
+        7.49,
+        5.49
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "U2",
+      "value": "ACS712ELCTR-05B-T",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "x_mm": 19.0,
+      "y_mm": 38.067499999999995,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        15.255000000000003,
         35.322500000000005,
         7.49,
         5.49
@@ -2985,7 +4409,7 @@
       "value": "SN65HVD231DR",
       "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
       "x_mm": 84.0,
-      "y_mm": 44.0675,
+      "y_mm": 44.067499999999995,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
@@ -3017,7 +4441,7 @@
       "value": "SN65HVD231DR",
       "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
       "x_mm": 111.0,
-      "y_mm": 44.0675,
+      "y_mm": 44.067499999999995,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
@@ -3029,610 +4453,18 @@
       "schematic": true
     },
     {
-      "reference": "U60",
-      "value": "STM32F401RET6TR",
-      "footprint": "Package_QFP:LQFP-64_10x10mm_P0.5mm",
-      "x_mm": 31.0,
-      "y_mm": 64.0,
+      "reference": "U3",
+      "value": "ACS712ELCTR-05B-T",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "x_mm": 44.0,
+      "y_mm": 38.067499999999995,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        24.254999999999995,
-        57.254999999999995,
-        13.49,
-        13.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U80",
-      "value": "L298N",
-      "footprint": "Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical",
-      "x_mm": 23.11,
-      "y_mm": 27.34,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        21.604999999999997,
-        17.465000000000003,
-        20.79,
-        11.07
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "U81",
-      "value": "SN74LVC14APWR",
-      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
-      "x_mm": 99.0,
-      "y_mm": 62.0825,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        95.10499999999999,
-        59.287499999999994,
-        7.79,
-        5.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Y20",
-      "value": "16 MHz",
-      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-      "x_mm": 68.0,
-      "y_mm": 47.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        65.855,
-        45.205,
-        4.29,
-        3.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Y24",
-      "value": "16 MHz",
-      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-      "x_mm": 95.0,
-      "y_mm": 47.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        92.85499999999999,
-        45.205,
-        4.29,
-        3.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C300",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 51.7,
-      "y_mm": 119.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        50.925,
-        118.275,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C301",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 55.3,
-      "y_mm": 114.8,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        53.775000000000006,
-        114.025,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C302",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 65.4,
-      "y_mm": 108.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        63.875,
-        107.42500000000001,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C303",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 65.7,
-      "y_mm": 110.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        64.175,
-        109.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C304",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 66.05,
-      "y_mm": 115.9,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        65.275,
-        114.375,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C340",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 85.7,
-      "y_mm": 119.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        84.925,
-        118.275,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C341",
-      "value": "18p C0G 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 89.3,
-      "y_mm": 114.8,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        87.775,
-        114.025,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C342",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 99.4,
-      "y_mm": 108.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        97.875,
-        107.42500000000001,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C343",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 99.7,
-      "y_mm": 110.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        98.17500000000001,
-        109.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C344",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 100.05,
-      "y_mm": 115.9,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        99.275,
-        114.375,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C700",
-      "value": "22u /16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 19.0,
-      "y_mm": 85.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        17.255000000000003,
-        83.975,
-        3.49,
-        2.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C701",
-      "value": "100n",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 21.0,
-      "y_mm": 80.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        19.475,
-        79.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C702",
-      "value": "100n TEST",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 20.0,
-      "y_mm": 145.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        18.475,
-        144.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D710",
-      "value": "STATUS green",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 35.02,
-      "y_mm": 85.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        33.495000000000005,
-        84.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D711",
-      "value": "ERR red",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 42.02,
-      "y_mm": 85.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        40.495000000000005,
-        84.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D712",
-      "value": "DEG_A yellow",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 49.02,
-      "y_mm": 85.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        47.495000000000005,
-        84.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D713",
-      "value": "DEG_B yellow",
-      "footprint": "LED_SMD:LED_0603_1608Metric",
-      "x_mm": 56.02,
-      "y_mm": 85.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        54.495000000000005,
-        84.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J30",
-      "value": "CAN A isolation",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
-      "x_mm": 56.725,
-      "y_mm": 100.725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        54.91,
-        98.91,
-        6.18,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J31",
-      "value": "CAN A test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 66.19,
-      "y_mm": 102.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        64.375,
-        100.185,
-        11.25,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J34",
-      "value": "CAN B isolation",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
-      "x_mm": 90.725,
-      "y_mm": 100.725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.91,
-        98.91,
-        6.18,
-        6.18
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J35",
-      "value": "CAN B test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
-      "x_mm": 100.19,
-      "y_mm": 102.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        98.375,
-        100.185,
-        11.25,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J70",
-      "value": "Raspberry Pi4 GPIO",
-      "footprint": "Lab4_Mechanical:Samtec_ESQ-120-44_2x20_P2.54mm_H18.67",
-      "x_mm": 38.37,
-      "y_mm": 93.77,
-      "rotation_deg": -90.0,
-      "layer": "B.Cu",
-      "bbox": [
-        36.55,
-        89.72999899999999,
-        51.9,
-        5.54
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J703",
-      "value": "LAB3 rows 1-13",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
-      "x_mm": 4.0,
-      "y_mm": 88.765,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        2.1850000000000023,
-        86.94,
-        3.63,
-        34.12
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J704",
-      "value": "Pi extra probes",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical",
-      "x_mm": 10.0,
-      "y_mm": 125.92,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        8.185000000000002,
-        124.10499999999999,
-        3.63,
-        13.79
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R300",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 62.1,
-      "y_mm": 108.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        60.575,
-        107.42500000000001,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R301",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 65.9,
-      "y_mm": 120.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        64.375,
-        119.42500000000001,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R340",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 96.1,
-      "y_mm": 108.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        94.57499999999999,
-        107.42500000000001,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R341",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 99.9,
-      "y_mm": 120.2,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        98.375,
-        119.42500000000001,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R700",
-      "value": "10k TEST pullup",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 6.0,
-      "y_mm": 140.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        4.475000000000001,
-        139.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R710",
-      "value": "1k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 35.0,
-      "y_mm": 81.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        33.474999999999994,
-        80.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R711",
-      "value": "1k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 42.0,
-      "y_mm": 81.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        40.474999999999994,
-        80.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R712",
-      "value": "1k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 49.0,
-      "y_mm": 81.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        47.474999999999994,
-        80.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R713",
-      "value": "1k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 56.0,
-      "y_mm": 81.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        54.474999999999994,
-        80.225,
-        3.05,
-        1.55
+        40.254999999999995,
+        35.322500000000005,
+        7.49,
+        5.49
       ],
       "schematic": true
     },
@@ -3701,742 +4533,6 @@
       "schematic": true
     },
     {
-      "reference": "Y30",
-      "value": "16 MHz",
-      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-      "x_mm": 55.0,
-      "y_mm": 118.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        52.855000000000004,
-        116.20500000000001,
-        4.29,
-        3.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Y34",
-      "value": "16 MHz",
-      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
-      "x_mm": 89.0,
-      "y_mm": 118.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        86.855,
-        116.20500000000001,
-        4.29,
-        3.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C400",
-      "value": "1000u / 25V",
-      "footprint": "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm",
-      "x_mm": 61.676,
-      "y_mm": 21.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        57.63354699999999,
-        14.457506000000002,
-        13.087493,
-        13.084988
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C410",
-      "value": "22u / 25V",
-      "footprint": "Capacitor_SMD:C_1210_3225Metric",
-      "x_mm": 18.2,
-      "y_mm": 210.5,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        15.854999999999997,
-        208.855,
-        4.69,
-        3.29
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C411",
-      "value": "100n / 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 18.2,
-      "y_mm": 206.4,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        16.674999999999997,
-        205.625,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C412",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 31.0,
-      "y_mm": 201.8,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        29.974999999999994,
-        200.055,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C413",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 31.0,
-      "y_mm": 205.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        29.974999999999994,
-        204.055,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C414",
-      "value": "22p C0G",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 14.2,
-      "y_mm": 203.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        12.674999999999997,
-        202.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C420",
-      "value": "22u / 25V",
-      "footprint": "Capacitor_SMD:C_1210_3225Metric",
-      "x_mm": 56.2,
-      "y_mm": 210.5,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        53.855000000000004,
-        208.855,
-        4.69,
-        3.29
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C421",
-      "value": "100n / 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 56.2,
-      "y_mm": 206.4,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        54.675,
-        205.625,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C422",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 69.0,
-      "y_mm": 201.8,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        67.975,
-        200.055,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C423",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 69.0,
-      "y_mm": 205.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        67.975,
-        204.055,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C424",
-      "value": "22p C0G",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 52.2,
-      "y_mm": 203.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        50.675,
-        202.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C430",
-      "value": "22u / 25V",
-      "footprint": "Capacitor_SMD:C_1210_3225Metric",
-      "x_mm": 94.2,
-      "y_mm": 210.5,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        91.85499899999999,
-        208.855,
-        4.69,
-        3.29
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C431",
-      "value": "100n / 50V",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 94.2,
-      "y_mm": 206.4,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        92.67499900000001,
-        205.625,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C432",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 107.0,
-      "y_mm": 201.8,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        105.975,
-        200.055,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C433",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 107.0,
-      "y_mm": 205.8,
-      "rotation_deg": -90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        105.975,
-        204.055,
-        2.05,
-        3.49
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "C434",
-      "value": "22p C0G",
-      "footprint": "Capacitor_SMD:C_0603_1608Metric",
-      "x_mm": 90.2,
-      "y_mm": 203.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.67499900000001,
-        202.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "D40",
-      "value": "12V gate clamp",
-      "footprint": "Diode_SMD:D_SOD-123F",
-      "x_mm": 104.0225,
-      "y_mm": 25.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        101.7775,
-        23.805,
-        4.49,
-        2.39
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "F1",
-      "value": "Fuse: rating TBD",
-      "footprint": "Fuse:Fuseholder_Blade_Mini_Keystone_3568",
-      "x_mm": 86.3,
-      "y_mm": 21.96,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        84.335,
-        8.704999999999998,
-        7.33,
-        16.59
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J40",
-      "value": "Battery input: 1=+ 2=GND",
-      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
-      "x_mm": 72.02,
-      "y_mm": 6.95,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        69.125,
-        2.4549999999999983,
-        9.75,
-        9.09
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J41",
-      "value": "VBAT test",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
-      "x_mm": 74.725,
-      "y_mm": 23.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        72.91,
-        21.185000000000002,
-        6.18,
-        3.63
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J42",
-      "value": "Rail / PG / GND",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
-      "x_mm": 35.5,
-      "y_mm": 201.46,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        33.685,
-        199.645,
-        3.63,
-        8.71
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J43",
-      "value": "Rail / PG / GND",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
-      "x_mm": 73.5,
-      "y_mm": 201.46,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        71.685,
-        199.645,
-        3.63,
-        8.71
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "J44",
-      "value": "Rail / PG / GND",
-      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
-      "x_mm": 111.5,
-      "y_mm": 201.46,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        109.685,
-        199.645,
-        3.63,
-        8.71
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "L1",
-      "value": "4.7uH / 5.8A",
-      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
-      "x_mm": 24.5,
-      "y_mm": 204.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        19.955,
-        199.555,
-        9.09,
-        8.89
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "L2",
-      "value": "4.7uH / 5.8A",
-      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
-      "x_mm": 62.5,
-      "y_mm": 204.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        57.955,
-        199.555,
-        9.09,
-        8.89
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "L3",
-      "value": "4.7uH / 5.8A",
-      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
-      "x_mm": 100.5,
-      "y_mm": 204.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        95.95500000000001,
-        199.555,
-        9.09,
-        8.89
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "Q1",
-      "value": "DMPH3010LK3-13",
-      "footprint": "Package_TO_SOT_SMD:TO-252-2",
-      "x_mm": 109.84,
-      "y_mm": 17.0725,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        103.405,
-        13.527500000000003,
-        11.19,
-        7.09
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R400",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 109.0,
-      "y_mm": 25.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        107.475,
-        24.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R401",
-      "value": "47k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 113.0,
-      "y_mm": 25.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        111.475,
-        24.224999999999994,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R410",
-      "value": "100k 1%",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 14.2,
-      "y_mm": 205.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        12.674999999999997,
-        204.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R411",
-      "value": "10k 1%",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 14.2,
-      "y_mm": 207.5,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        12.674999999999997,
-        206.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R412",
-      "value": "47k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 16.0,
-      "y_mm": 197.5,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        15.225000000000001,
-        195.975,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R413",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 19.0,
-      "y_mm": 199.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        18.225,
-        197.475,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R414",
-      "value": "10k PG pullup",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 14.0,
-      "y_mm": 200.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        12.475000000000001,
-        199.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R420",
-      "value": "75k 0.1%",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 52.2,
-      "y_mm": 205.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        50.675,
-        204.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R421",
-      "value": "10k 0.1%",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 52.2,
-      "y_mm": 207.5,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        50.675,
-        206.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R422",
-      "value": "33k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 54.0,
-      "y_mm": 197.5,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        53.224999999999994,
-        195.975,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R423",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 57.0,
-      "y_mm": 199.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        56.224999999999994,
-        197.475,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R424",
-      "value": "10k PG pullup",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 52.0,
-      "y_mm": 200.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        50.474999999999994,
-        199.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R430",
-      "value": "45.3k 0.1%",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 90.2,
-      "y_mm": 205.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.67499900000001,
-        204.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R431",
-      "value": "10k 0.1%",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 90.2,
-      "y_mm": 207.5,
-      "rotation_deg": 180.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.67499900000001,
-        206.725,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R432",
-      "value": "22k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 92.0,
-      "y_mm": 197.5,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        91.225,
-        195.975,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R433",
-      "value": "10k",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 95.0,
-      "y_mm": 199.0,
-      "rotation_deg": 90.0,
-      "layer": "F.Cu",
-      "bbox": [
-        94.225,
-        197.475,
-        1.55,
-        3.05
-      ],
-      "schematic": true
-    },
-    {
-      "reference": "R434",
-      "value": "10k PG pullup",
-      "footprint": "Resistor_SMD:R_0603_1608Metric",
-      "x_mm": 90.0,
-      "y_mm": 200.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.475,
-        199.225,
-        3.05,
-        1.55
-      ],
-      "schematic": true
-    },
-    {
       "reference": "U40",
       "value": "TPS564252DRLR",
       "footprint": "Package_TO_SOT_SMD:SOT-563",
@@ -4485,210 +4581,178 @@
       "schematic": true
     },
     {
-      "reference": "H1",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "MountingHole:MountingHole_3.2mm_M3",
-      "x_mm": 7.5,
-      "y_mm": 7.0,
+      "reference": "U50",
+      "value": "STM32F401RET6TR",
+      "footprint": "Package_QFP:LQFP-64_10x10mm_P0.5mm",
+      "x_mm": 31.0,
+      "y_mm": 163.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        4.007530000000003,
-        3.5024739999999994,
-        6.987469,
-        6.995052
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H2",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "MountingHole:MountingHole_3.2mm_M3",
-      "x_mm": 112.5,
-      "y_mm": 7.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        109.00753,
-        3.5024739999999994,
-        6.987469,
-        6.995052
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H3",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "MountingHole:MountingHole_3.2mm_M3",
-      "x_mm": 35.0,
-      "y_mm": 227.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        31.507530000000003,
-        223.502474,
-        6.987469,
-        6.995052
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H4",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "MountingHole:MountingHole_3.2mm_M3",
-      "x_mm": 85.0,
-      "y_mm": 227.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        81.50753,
-        223.502474,
-        6.987469,
-        6.995052
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H5",
-      "value": "Pi support <=5.5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
-      "x_mm": 33.5,
-      "y_mm": 92.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        30.457538,
-        89.45246599999999,
-        6.087461,
-        6.095067
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H6",
-      "value": "Pi support <=5.5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
-      "x_mm": 91.5,
-      "y_mm": 92.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.457538,
-        89.45246599999999,
-        6.087461,
-        6.095067
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H7",
-      "value": "Pi support <=5.5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
-      "x_mm": 33.5,
-      "y_mm": 141.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        30.457538,
-        138.452466,
-        6.087461,
-        6.095067
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "H8",
-      "value": "Pi support <=5.5mm hardware OD",
-      "footprint": "Lab4_Mechanical:Pi_support_M2.5_D5.5",
-      "x_mm": 91.5,
-      "y_mm": 141.5,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        88.457538,
-        138.452466,
-        6.087461,
-        6.095067
-      ],
-      "schematic": false
-    },
-    {
-      "reference": "SW60",
-      "value": "SWT0210-045026GSA",
-      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
-      "x_mm": 12.0,
-      "y_mm": 81.0,
-      "rotation_deg": 0.0,
-      "layer": "F.Cu",
-      "bbox": [
-        7.704999999999998,
-        78.405,
-        8.59,
-        5.19
+        24.254999999999995,
+        156.255,
+        13.49,
+        13.49
       ],
       "schematic": true
     },
     {
-      "reference": "SW61",
-      "value": "SWT0210-045026GSA",
-      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
-      "x_mm": 27.0,
-      "y_mm": 85.0,
+      "reference": "U60",
+      "value": "STM32F401RET6TR",
+      "footprint": "Package_QFP:LQFP-64_10x10mm_P0.5mm",
+      "x_mm": 31.0,
+      "y_mm": 64.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        22.705,
-        82.405,
-        8.59,
-        5.19
+        24.254999999999995,
+        57.254999999999995,
+        13.49,
+        13.49
       ],
       "schematic": true
     },
     {
-      "reference": "SW50",
-      "value": "SWT0210-045026GSA",
-      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
-      "x_mm": 12.0,
-      "y_mm": 185.0,
+      "reference": "U80",
+      "value": "L298N",
+      "footprint": "Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical",
+      "x_mm": 26.11,
+      "y_mm": 24.340000000000003,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        7.704999999999998,
-        182.405,
-        8.59,
-        5.19
+        24.605000000000004,
+        14.465000000000003,
+        20.79,
+        11.07
       ],
       "schematic": true
     },
     {
-      "reference": "SW51",
-      "value": "SWT0210-045026GSA",
-      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
-      "x_mm": 60.0,
-      "y_mm": 179.0,
+      "reference": "U81",
+      "value": "SN74LVC14APWR",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "x_mm": 99.0,
+      "y_mm": 62.082499999999996,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        55.705,
-        176.405,
-        8.59,
-        5.19
+        95.10499999999999,
+        59.287499999999994,
+        7.79,
+        5.59
       ],
       "schematic": true
     },
     {
-      "reference": "SW70",
-      "value": "SWT0210-045026GSA",
-      "footprint": "Lab4_Switches:GCT_SWT0210_4.5x4.5mm",
-      "x_mm": 12.0,
-      "y_mm": 144.0,
+      "reference": "U82",
+      "value": "MCP1700-4002E/TO",
+      "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+      "x_mm": 100.0,
+      "y_mm": 84.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        7.704999999999998,
-        141.405,
-        8.59,
-        5.19
+        98.945,
+        81.225,
+        7.19,
+        4.83
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Y10",
+      "value": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "x_mm": 68.0,
+      "y_mm": 172.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        65.855,
+        170.205,
+        4.29,
+        3.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Y14",
+      "value": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "x_mm": 95.0,
+      "y_mm": 172.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        92.85499999999999,
+        170.205,
+        4.29,
+        3.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Y20",
+      "value": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "x_mm": 68.0,
+      "y_mm": 47.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        65.855,
+        45.205,
+        4.29,
+        3.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Y24",
+      "value": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "x_mm": 95.0,
+      "y_mm": 47.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        92.85499999999999,
+        45.205,
+        4.29,
+        3.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Y30",
+      "value": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "x_mm": 55.0,
+      "y_mm": 118.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        52.855000000000004,
+        116.20500000000001,
+        4.29,
+        3.59
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "Y34",
+      "value": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "x_mm": 89.0,
+      "y_mm": 118.0,
+      "rotation_deg": 0.0,
+      "layer": "F.Cu",
+      "bbox": [
+        86.855,
+        116.20500000000001,
+        4.29,
+        3.59
       ],
       "schematic": true
     }

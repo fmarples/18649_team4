@@ -1,5 +1,5 @@
 {
-  "source_sha256": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d",
+  "source_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
   "fabrication_release": false,
   "status": "Geometry measured; engineering review required",
   "sample_spacing_max_mm": 0.5,
@@ -7,32 +7,32 @@
   "nets": [
     {
       "net": "/CAN_A_H",
-      "branch_inclusive_length_mm": 256.566,
+      "branch_inclusive_length_mm": 248.654,
       "length_by_layer_mm": {
-        "F.Cu": 224.096,
+        "F.Cu": 216.184,
         "In2.Cu": 32.471
       },
       "via_count": 4,
       "trace_widths_mm": [
         0.2
       ],
-      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 57.71,
-      "length_percent_with_opposite_line_on_same_layer_within_1mm": 60.12,
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 47.59,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 50.34,
       "reference_void_samples_away_from_own_holes": []
     },
     {
       "net": "/CAN_A_L",
-      "branch_inclusive_length_mm": 251.328,
+      "branch_inclusive_length_mm": 242.119,
       "length_by_layer_mm": {
-        "F.Cu": 185.117,
+        "F.Cu": 175.909,
         "In2.Cu": 66.21
       },
       "via_count": 13,
       "trace_widths_mm": [
         0.2
       ],
-      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 59.53,
-      "length_percent_with_opposite_line_on_same_layer_within_1mm": 62.87,
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 49.41,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 53.48,
       "reference_void_samples_away_from_own_holes": []
     },
     {
