@@ -1,5 +1,5 @@
 {
-  "source_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
+  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
   "fabrication_release": false,
   "method": "Shortest conductor-item paths: whole segments and full 1.6mm vias, not exact extracted transmission-line lengths. CAN branch length stops at bus-side isolation pad; local transceiver copper and jumper are additional.",
   "can_topology": [
@@ -250,8 +250,8 @@
       "target": "R420.1",
       "net": "/+5V",
       "connected": true,
-      "length_mm": 43.474,
-      "vias": 0
+      "length_mm": 25.148,
+      "vias": 2
     },
     {
       "source": "U42.1",
@@ -1885,6 +1885,97 @@
       "stroke_mm": 0.15
     },
     {
+      "text": "PIN MAP: count from square pin 1; G = GND",
+      "xy": [
+        100.0,
+        236.5
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J603 2:G 3:RXA 10:LPWM 12:RL 13:RR",
+      "xy": [
+        100.0,
+        238.1
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J703 4:CMD 5:TXA 7:DEGA 8:DEGB",
+      "xy": [
+        100.0,
+        239.7
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J504 1:G 2:G 3:SELF 4:ERR",
+      "xy": [
+        100.0,
+        241.3
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J604 1:G 2:G 3:SELF 4:ERR 5:TASK 9:OVLD 10:LADC",
+      "xy": [
+        100.0,
+        242.9
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J505 1:G 2:G    J605 7:RELAY    J503 9:SERVO",
+      "xy": [
+        100.0,
+        244.5
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J83 2:G    J2 2:SCALED 4:G",
+      "xy": [
+        100.0,
+        246.1
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
       "text": "J505 FRONT EXTRA",
       "xy": [
         101.0,
@@ -2174,7 +2265,7 @@
       "text": "J43 5V1 / PG / G",
       "xy": [
         113.5,
-        238.19675
+        164.69675
       ],
       "layer": "F.Silkscreen",
       "size": [
@@ -2201,97 +2292,6 @@
       "xy": [
         114.0,
         52.99325
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "PIN MAP: count from square pin 1; G = GND",
-      "xy": [
-        115.0,
-        165.5
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "J603 2:G 3:RXA 10:LPWM 12:RL 13:RR",
-      "xy": [
-        115.0,
-        167.1
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "J703 4:CMD 5:TXA 7:DEGA 8:DEGB",
-      "xy": [
-        115.0,
-        168.7
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "J504 1:G 2:G 3:SELF 4:ERR",
-      "xy": [
-        115.0,
-        170.3
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "J604 1:G 2:G 3:SELF 4:ERR 5:TASK 9:OVLD 10:LADC",
-      "xy": [
-        115.0,
-        171.9
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "J505 1:G 2:G    J605 7:RELAY    J503 9:SERVO",
-      "xy": [
-        115.0,
-        173.5
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.0,
-        1.0
-      ],
-      "stroke_mm": 0.15
-    },
-    {
-      "text": "J83 2:G    J2 2:SCALED 4:G",
-      "xy": [
-        115.0,
-        175.1
       ],
       "layer": "F.Silkscreen",
       "size": [
@@ -2343,7 +2343,7 @@
       "text": "PG",
       "xy": [
         116.725,
-        244.0
+        170.5
       ],
       "layer": "F.Silkscreen",
       "size": [

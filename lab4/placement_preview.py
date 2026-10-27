@@ -39,12 +39,12 @@ for c in d['components']:
 def onboard(lines,x,y):
     for i,line in enumerate(lines):dr.text(xy(x,y+i*3.1),line,font=ft(16,True),fill='#244052')
 
-onboard(['Pi BELOW this area','Top CAN circuits shown'],46,134)
+# Pi position is explained in the key; avoid text over the relocated 5 V cell.
 
 dr.text(xy(42,235),'FRONT / STEERING',font=ft(17,True),fill='#16354e')
 dr.text(xy(38,-5),'REAR / DRIVE MOTORS',font=ft(17,True),fill='#16354e')
 side=[('What this establishes',[
-    'Actual footprint sizes and initial locations.',
+    'Actual footprint sizes and saved locations.',
     'Pi underneath; top-side parts overlap it.',
     'A board-size proposal to check on the car.']),
     ('Mounting proposals',[
@@ -59,7 +59,7 @@ side=[('What this establishes',[
     'No GPIO cable. Pin geometry checked.']),
     ('Remaining layout work',[
     'Review power loops and return paths.',
-    'Verify motor protection and heatsink fit.',
+    'Qualify motor protection and cooling.',
     '1 oz copper; 0.15 mm buck-pad exception.',
     'Check pack mounting and cable space.',
     '3 mm clearance from all hole edges.']),
@@ -77,7 +77,7 @@ for title,lines in side:
     for line in lines:dr.text((860,y),line,font=ft(20),fill='#334b60');y+=30
     y+=38
 dr.text((75,1626),'Paper mounting pattern and nominal height checked. Socket mating and full steering are assembly checks.',font=ft(20),fill='#334b60')
-dr.text((75,1660),'Source: KiCad placement coordinates. Routing and hardware decisions remain; placement is not fabrication approval.',font=ft(20),fill='#334b60')
+dr.text((75,1660),'Source: KiCad placement coordinates. Power qualification and final exports remain; not fabrication approval.',font=ft(20),fill='#334b60')
 img.save(ROOT/'Placement-overview.png')
 
 pdf=canvas.Canvas(str(ROOT/'Placement-fit-template.pdf'),pagesize=(210*mm,297*mm))
@@ -108,7 +108,7 @@ for c in d['components']:
         pdf.setFillColor(HexColor('#000000'));pdf.setFont('Helvetica-Bold',7)
         pdf.drawString(cx+2*mm,cy+2*mm,ref)
 pdf.setFillColor(HexColor('#183b55'));pdf.setFont('Helvetica-Bold',10)
-pdf.setFont('Helvetica',7);pdf.drawCentredString(115*mm,123*mm,'Pi BELOW PCB / H5-H8 supports')
+pdf.setFont('Helvetica',7);pdf.drawCentredString(115*mm,115*mm,'Pi BELOW PCB / H5-H8 supports')
 pdf.setFillColor(HexColor('#000000'));pdf.setFont('Helvetica',8)
 pdf.drawString(15*mm,20*mm,'H1-H4: measured centers; M3 PCB drills proposed. Chassis holes measured 4.5 mm.')
 pdf.drawString(15*mm,15*mm,'Check wires, steering travel, Pi below the PCB, port access and separate battery location.')

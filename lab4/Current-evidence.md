@@ -58,13 +58,22 @@ develop the schematic and preliminary power budget. A nominal sensor reading
 with unresolved calibration is not a reliable estimate of physical current.
 We do not need a separate measurement campaign for every design iteration.
 
-The Lab 4 handout, Part 1.1 (page 3), requests a four-rail table containing peak
-and average current, and explicitly asks for measured motor stall current,
-L298 voltage drop and stall temperature behavior. Page 12 requires numbers to
-identify their measured or datasheet basis, with a method for measurements.
-Therefore an unsupported guess cannot be presented as a completed answer.
-Any provisional estimate must name its source/assumption and pending check;
-course staff have now confirmed the above measurement deferral for October 24.
+On October 27 we rechecked the distinction between guidance and deliverables.
+The [Lab 4 handout](https://drive.google.com/file/d/1BY2rbBwuB3GaSkNRFC7Hki2tzdnRCmCk/view)
+requests the power-budget table at the Part 1.1 checkpoint and in the final
+brief (pp. 11–12). The motor-stall, L298 drop/temperature and servo-holding
+prompts are in the **Guiding Questions** on pp. 3–4. Lab 2 p. 5 explicitly
+says its guiding questions are not required writeup answers. We should not
+turn these into an additional measurement campaign or a blanket waiver request
+without a specific course instruction.
+
+We will include the required budget with each value identified as a component
+rating, calculation, assumption or measurement. Measurements need their method
+and conditions. A provisional calculation is useful for design and reporting;
+it does not demonstrate that the assembled board works. The October 24 TA
+clarification remains a historical review allowance, not blanket approval of
+the final electrical design. Battery capability, voltage margins and driver
+fault handling must still have a defensible design basis before fabrication.
 
 Current-measurements.csv is an optional team recording aid. It is not an extra
 deliverable and its full set of suggested conditions is not a new requirement.
@@ -92,11 +101,11 @@ current blank if the instrument cannot capture the transient.
 5. Repeat on the assembled PCB at 6.6/5.1/3.318 V, including sag, overshoot and
    temperature. Earlier measurements do not establish these new rail behaviors.
 
-The requested motor stall/loss/temperature evidence remains incomplete.
-Arrange a course-supervised method compatible with the driver limits; the
-handout's ten-second temperature question is not permission to exceed them.
-The October 24 review uses the staff-confirmed deferral above. A calculation
-or an uncalibrated log does not become a measurement because it was deferred.
+Motor stall/loss/temperature measurements remain unperformed. The protocol
+above is for later validation if needed, not a new pre-submission requirement.
+Any stall test must use a course-supervised method compatible with the driver
+limits; the guiding ten-second temperature question does not permit exceeding
+them. A calculation or uncalibrated log must not be presented as a measurement.
 
 
 ## October 24 servo source review and preliminary average case

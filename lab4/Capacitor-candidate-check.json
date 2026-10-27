@@ -1,0 +1,83 @@
+{
+  "status": "candidate comparison only; no part selected",
+  "source": "https://www.we-online.com/components/media/o753710v410%20ANP114a_Polarization%20DC%20Bias%20MLCC_EN.pdf",
+  "source_locations": "Equations 3--5, pp.4--5; Table 2, p.10; nF/V explanation p.9",
+  "unchanged_selected_output_part": "GRM219R61C226ME15L",
+  "fabrication_release": false,
+  "results": [
+    {
+      "mpn": "885012108018",
+      "package": "1206",
+      "a": 22000.0,
+      "cs": 3544.0,
+      "h": 7.84,
+      "b": 7.44,
+      "vmax": 16.0,
+      "tabulated_astar_nF": 21234.6,
+      "cases": [
+        {
+          "voltage_V": 3.37,
+          "typical_per_part_uF": 17.038360397020117,
+          "two_parts_minus20percent_tol_minus15percent_temp_minus20percent_aging_uF": 18.53773611195789,
+          "LC_kHz_at_3p76uH": 19.063290296499115,
+          "LC_kHz_at_2p63uH": 22.79365179827402
+        },
+        {
+          "voltage_V": 5.19,
+          "typical_per_part_uF": 13.004886867776332,
+          "two_parts_minus20percent_tol_minus15percent_temp_minus20percent_aging_uF": 14.149316912140652,
+          "LC_kHz_at_3p76uH": 21.8201872029873,
+          "LC_kHz_at_2p63uH": 26.090026513911155
+        },
+        {
+          "voltage_V": 6.82,
+          "typical_per_part_uF": 10.11487125204218,
+          "two_parts_minus20percent_tol_minus15percent_temp_minus20percent_aging_uF": 11.004979922221892,
+          "LC_kHz_at_3p76uH": 24.741816517831126,
+          "LC_kHz_at_2p63uH": 29.583368966887907
+        }
+      ]
+    },
+    {
+      "mpn": "885012109010",
+      "package": "1210",
+      "a": 22000.0,
+      "cs": 11252.3,
+      "h": 29.51,
+      "b": 25.43,
+      "vmax": 16.0,
+      "tabulated_astar_nF": 43952.8,
+      "cases": [
+        {
+          "voltage_V": 3.37,
+          "typical_per_part_uF": 21.308282105774296,
+          "two_parts_minus20percent_tol_minus15percent_temp_minus20percent_aging_uF": 23.183410931082438,
+          "LC_kHz_at_3p76uH": 17.046591052279265,
+          "LC_kHz_at_2p63uH": 20.382318831108776
+        },
+        {
+          "voltage_V": 5.19,
+          "typical_per_part_uF": 20.403041146899984,
+          "two_parts_minus20percent_tol_minus15percent_temp_minus20percent_aging_uF": 22.19850876782718,
+          "LC_kHz_at_3p76uH": 17.42064813093854,
+          "LC_kHz_at_2p63uH": 20.829572514551074
+        },
+        {
+          "voltage_V": 6.82,
+          "typical_per_part_uF": 19.331692037176758,
+          "two_parts_minus20percent_tol_minus15percent_temp_minus20percent_aging_uF": 21.032880936448315,
+          "LC_kHz_at_3p76uH": 17.896859451775263,
+          "LC_kHz_at_2p63uH": 21.398970286956708
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Fitted typical C(V) curves at the manufacturer's conditions, not production/temperature/aging guarantees.",
+    "20% aging is an explicit sensitivity motivated by the note's general discussion, not an exact-part guaranteed bound.",
+    "No ESR, capacitor heating, complete converter loop or load-transient qualification is implied.",
+    "Both candidates need larger footprints than the selected 0805 output capacitors and verified purchasing availability.",
+    "16V output candidates are not selected replacements for the 25V input capacitor; input-capacitance evidence remains open.",
+    "LC pole near 20kHz is design guidance, not a pass/fail stability boundary."
+  ]
+}

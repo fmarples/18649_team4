@@ -6,7 +6,11 @@ The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All
 eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
 have a separate 4.0 V supply. Current JSON checks carry the active board hash.
-Battery/protection, Pi voltage margin and exact capacitor data remain open.
+The later 5 V regulator relocation shortens the Pi feed and preserves local
+VIN/SW/FB geometry. Fresh native checks and all 308 targeted connections
+pass; the active board has 19,513 track/via items. See
+[Power-stage-review.md](Power-stage-review.md). Battery/protection, complete
+Pi voltage margin and exact capacitor data remain open.
 
 ## Earlier review record
 

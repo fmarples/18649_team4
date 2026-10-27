@@ -91,14 +91,16 @@ installed anchors and fin/web space. Placement, pin-map, routing, supply,
 ground-plane, solder-via, CAN/reference and package checks were refreshed.
 The full native audit is recorded in [Fabrication-check.json](Fabrication-check.json).
 
-The Pi positive-feed screen is **4.8662 V at 3 A** before contact, local-ground,
-regulator dynamic and heating losses. Its upper low-voltage warning threshold
-is 4.8615 V, leaving inadequate demonstrated margin. Attempts at a broad
-new direct feed did not produce a valid routed candidate and were not adopted;
-this is a routing/placement problem, not a theoretical impossibility. Final
-battery/input and load assumptions should be settled before a larger power
-placement redesign. Exact buck-capacitor bias/aging data remain unavailable;
-we have not invented a retention factor or claimed full-loop stability.
+The subsequent 5 V regulator relocation improves the Pi positive-feed screen
+from **4.8662 to 4.9116 V at 3 A**, before contact, local-ground, regulator
+dynamic and heating losses. Its upper low-voltage warning-threshold corner
+is 4.8615 V; that threshold is not a guaranteed operating specification.
+The rerouted candidate passes native DRC. Final battery/input and load
+assumptions are still needed for full power qualification. Exact selected
+buck-capacitor bias/aging data remain unavailable. Published typical models
+for two unselected alternatives are compared in
+[Power-margin-review.md](Power-margin-review.md); neither is qualified by
+that comparison alone.
 
 Further release work therefore needs the final battery/charger and motor
 fault expectations, a defensible Pi load/voltage budget, capacitor data or a

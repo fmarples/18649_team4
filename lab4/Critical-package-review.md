@@ -53,6 +53,36 @@ Sources: [TI SN65HVD231](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf),
 [Microchip MCP2515, TSSOP drawing and land pattern](https://ww1.microchip.com/downloads/en/DeviceDoc/MCP2515-Family-Data-Sheet-DS20001801K.pdf),
 [ST STM32F401 pin table and LQFP64 drawing](https://www.st.com/resource/en/datasheet/stm32f401re.pdf).
 
-The remaining manufacturer audit covers inductors, connectors/fuse hardware,
-remaining discrete parts and the L298 installation. Solder-process suitability,
-current capacity and mechanical fit are separate from pad/pinout agreement.
+## Eleven further package checks
+
+The saved-pad check now covers 28 components. Four MMBT3904-7-F lamp
+transistors have base/emitter/collector on pads 1/2/3. Their 1.475 × 0.60 mm
+lands at 1.875 mm row spacing cover the specified SOT23 lead region; they
+differ from Diodes' 0.90 × 0.80 mm suggested pattern at 2.00 mm rows.
+The diode and transistor footprints must not be interchanged based on
+their three-pad appearance. [Diodes DS30036, pp.1 and 6](https://www.diodes.com/datasheet/download/MMBT3904.pdf).
+
+L1–L3 match Eaton's 8.5 mm outer land span, 2.8 mm inner gap and 6.6 mm
+land width. The 0.15 mm-or-thicker paste recommendation needs reconciliation
+with the eventual assembly process; a correct footprint does not resolve
+that process choice. [Eaton ELX1097, p.3](https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf).
+
+J40/J80/J81/J90 match the Hirose straight-header drawing: 3.96 mm pitch,
+1.8 mm terminal holes and a 1.6 mm guide hole offset 1.5 × 3.25 mm.
+Their battery/motor/servo pin assignments also match the schematic.
+This closes the board-header geometry check, not the mating harness or
+crimp qualification. The catalog's straight-header hand-solder condition
+is 290 °C for 3 seconds; the solid ground pads need suitable preheating
+and technique rather than unlimited dwell. [Hirose drawing and catalog](https://www.hirose.com/en/product/p/CL0680-0567-0-00).
+
+Keystone explicitly lists holder 3568 for Littelfuse 297 MINI fuses and
+rates the holder at 30 A. This closes the fuse-family compatibility lookup;
+it does not select the fuse current or prove coordination with the battery,
+wiring and PCB. Its detailed drill-pattern review is still open.
+[Keystone 3568](https://www.keyelco.com/product.cfm/product_id/306).
+
+Remaining drawing/process work covers the fuse-holder drill pattern,
+remaining discrete/passive packages and the chosen soldering process.
+The integrated L298/heatsink installation is reviewed separately in
+Mounting-and-encoder-revision.md. Current capacity, capacitor behavior and
+thermal qualification remain separate from the passed pad/pinout checks.

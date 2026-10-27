@@ -89,8 +89,9 @@ calculation is recorded in `Power-stage-check.json`.
 [Digital-geometry-check.json](Digital-geometry-check.json) measures the same
 local pattern for each regulator: VIN to 100 nF is 1.974 mm, SW to inductor
 2.415 mm and FB to its resistor 2.720 mm, all without vias. The explicit
-lower-divider return is 9.250 mm on front copper. The 44.811 mm output-sense
-route is on the quiet output net; it is not the high-impedance FB node.
+lower-divider return is 9.250 mm on front copper. The output-sense paths are
+44.811 mm for servo/logic and 25.148 mm for the relocated 5 V cell. These
+are on the quiet output nets, not the high-impedance FB nodes.
 These whole-item lengths identify geometry for review, not loop inductance.
 The return shares ground copper, so it is not an isolated Kelvin ground.
 
@@ -126,3 +127,17 @@ component/thermal decisions; they do not validate the present capacitors or
 cooling layout. Exact part data, final loop selection and the cooling assessment
 remain open. No capacitor value, voltage setpoint or PCB geometry changed in
 this later calculation-only pass.
+
+## Pi supply relocation — October 27
+
+We moved U41, L2 and their eleven local capacitors/resistors/test header
+73.5 mm toward the Pi. The short VIN, SW, FB and divider-ground pattern
+is preserved, including its local ground fill/vias. We rerouted input/output,
+power-good and neighboring signals, removed the abandoned supply branches,
+and routed the output-sense connection around the inductor body. The new
+1.5 mm output connection joins the existing distribution tree.
+
+The positive-feed screen at a 3 A Pi allocation improves from 4.8662 to
+4.9116 V. This is not a loaded-voltage measurement or full margin approval;
+contacts, local returns, heat and regulator dynamics still matter. See
+[Power-margin-review.md](Power-margin-review.md) for the tradeoff and limits.

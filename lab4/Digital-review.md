@@ -6,7 +6,24 @@ The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All
 eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
 have a separate 4.0 V supply. Current JSON checks carry the active board hash.
-Battery/protection, Pi voltage margin and exact capacitor data remain open.
+The subsequent 5 V cell relocation improves the calculated Pi feed from
+4.8662 to 4.9116 V at the 3 A allocation, before local return/contact/hot/dynamic
+losses. All 308 targeted checks and fresh native ERC/DRC/parity pass. There
+are 287 electrical footprints and 19,513 track/via items. The package script
+now checks 28 components, adding the four Hirose headers, three inductors
+and four LED transistors. A published typical capacitor-model comparison
+is recorded without changing the selected parts. See
+[Power-stage-review.md](Power-stage-review.md),
+[Power-margin-review.md](Power-margin-review.md) and
+[Critical-package-review.md](Critical-package-review.md).
+
+**Current release work:** battery/charger and motor-fault decisions; complete
+Pi feed/return/contact/thermal/dynamic budget; exact input/output capacitor
+and loop qualification; remaining fuse/discrete/assembly-process review;
+servo mating-part rating and stock reconciliation; final exports and review.
+Heatsink placement, encoder supply correction and hole-edge clearance are
+complete in CAD. Historical open items below are superseded where those
+corrections apply. No physical operation or fabrication release is claimed.
 
 ## Earlier review record
 
@@ -86,7 +103,7 @@ not require a new general measurement campaign.
 - [Resistor procurement change](Parts-review.md#logic-divider-tolerance-change--october-27).
 - [Ground-plane model and contact sensitivity](Ground-plane-review.md),
   [mesh results](Ground-plane-check.json) and
-  [17 additional package checks](Selected-package-check.json).
+  [selected package checks](Selected-package-check.json).
 
 Run the `check_*.py` tools with KiCad's bundled Python. Run
 `check_power_stage.py` before `check_load_allocation.py` and

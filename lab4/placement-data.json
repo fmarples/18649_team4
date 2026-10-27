@@ -665,12 +665,12 @@
       "value": "22u / 25V",
       "footprint": "Capacitor_SMD:C_1210_3225Metric",
       "x_mm": 56.2,
-      "y_mm": 210.5,
+      "y_mm": 137.0,
       "rotation_deg": 180.0,
       "layer": "F.Cu",
       "bbox": [
         53.855000000000004,
-        208.855,
+        135.355,
         4.69,
         3.29
       ],
@@ -681,12 +681,12 @@
       "value": "100n / 50V",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
       "x_mm": 56.2,
-      "y_mm": 206.4,
+      "y_mm": 132.9,
       "rotation_deg": 180.0,
       "layer": "F.Cu",
       "bbox": [
         54.675,
-        205.625,
+        132.125,
         3.05,
         1.55
       ],
@@ -697,12 +697,12 @@
       "value": "22u / 16V",
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "x_mm": 69.0,
-      "y_mm": 201.8,
+      "y_mm": 128.3,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
       "bbox": [
         67.975,
-        200.055,
+        126.555,
         2.05,
         3.49
       ],
@@ -713,12 +713,12 @@
       "value": "22u / 16V",
       "footprint": "Capacitor_SMD:C_0805_2012Metric",
       "x_mm": 69.0,
-      "y_mm": 205.8,
+      "y_mm": 132.3,
       "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
         67.975,
-        204.055,
+        130.555,
         2.05,
         3.49
       ],
@@ -729,12 +729,12 @@
       "value": "22p C0G",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
       "x_mm": 52.2,
-      "y_mm": 203.5,
+      "y_mm": 130.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
         50.675,
-        202.725,
+        129.225,
         3.05,
         1.55
       ],
@@ -2201,12 +2201,12 @@
       "value": "Rail / PG / GND",
       "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
       "x_mm": 73.5,
-      "y_mm": 201.46,
+      "y_mm": 127.96,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
         71.685,
-        199.645,
+        126.14500000000001,
         3.63,
         8.71
       ],
@@ -2697,12 +2697,12 @@
       "value": "4.7uH / 5.8A",
       "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
       "x_mm": 62.5,
-      "y_mm": 204.0,
+      "y_mm": 130.5,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
         57.955,
-        199.555,
+        126.055,
         9.09,
         8.89
       ],
@@ -3241,12 +3241,12 @@
       "value": "75k 0.1%",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 52.2,
-      "y_mm": 205.5,
+      "y_mm": 132.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
         50.675,
-        204.725,
+        131.225,
         3.05,
         1.55
       ],
@@ -3257,12 +3257,12 @@
       "value": "10k 0.1%",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 52.2,
-      "y_mm": 207.5,
+      "y_mm": 134.0,
       "rotation_deg": 180.0,
       "layer": "F.Cu",
       "bbox": [
         50.675,
-        206.725,
+        133.225,
         3.05,
         1.55
       ],
@@ -3273,12 +3273,12 @@
       "value": "33k",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 54.0,
-      "y_mm": 197.5,
+      "y_mm": 124.0,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
       "bbox": [
         53.224999999999994,
-        195.975,
+        122.475,
         1.55,
         3.05
       ],
@@ -3289,12 +3289,12 @@
       "value": "10k",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 57.0,
-      "y_mm": 199.0,
+      "y_mm": 125.5,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
       "bbox": [
         56.224999999999994,
-        197.475,
+        123.975,
         1.55,
         3.05
       ],
@@ -3305,12 +3305,12 @@
       "value": "10k PG pullup",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 52.0,
-      "y_mm": 200.0,
+      "y_mm": 126.5,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
         50.474999999999994,
-        199.225,
+        125.725,
         3.05,
         1.55
       ],
@@ -4553,12 +4553,12 @@
       "value": "TPS564252DRLR",
       "footprint": "Package_TO_SOT_SMD:SOT-563",
       "x_mm": 56.0,
-      "y_mm": 203.9025,
+      "y_mm": 130.4025,
       "rotation_deg": 180.0,
       "layer": "F.Cu",
       "bbox": [
         54.754999999999995,
-        202.9075,
+        129.4075,
         2.49,
         1.99
       ],

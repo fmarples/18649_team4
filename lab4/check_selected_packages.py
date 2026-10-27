@@ -73,6 +73,45 @@ for ref in ["U50", "U60"]:
            **{n: "/GND" for n in ["12", "18", "31", "47", "63"]},
            "7": "RESET_N", "13": "VDDA", "30": "VCAP1", "46": "SWDIO", "49": "SWCLK", "60": "BOOT0"}, qfp)
 
+# Diodes DS30036: base 1, emitter 2, collector 3. Library SOT23 lands
+# cover the specified leads; comparison to the suggested pattern is in the review.
+for ref in ["Q550", "Q551", "Q650", "Q651"]:
+    check(ref, "MMBT3904", "Package_TO_SOT_SMD:SOT-23",
+          {"1": "LED_BASE", "2": "/GND", "3": "LED_SINK"},
+          {"1": [-.9375, -.95, 1.475, .6], "2": [-.9375, .95, 1.475, .6],
+           "3": [.9375, 0, 1.475, .6]})
+
+# Eaton ELX1097 p.3: 8.5mm outer span, 2.8mm inner gap, 6.6mm land width.
+for ref, switch, output in [("L1", "P_SERVO_SW", "/+6V6_SERVO"),
+                            ("L2", "P_5V_SW", "/+5V"),
+                            ("L3", "P_3V3_SW", "/+3V3")]:
+    check(ref, "4.7uH / 5.8A", "Lab4_Power:Eaton_SDCHA1V8040",
+          {"1": switch, "2": output},
+          {"1": [-2.825, 0, 2.85, 6.6], "2": [2.825, 0, 2.85, 6.6]})
+
+# Hirose EDC-378620-00: 3.96mm pitch, 1.8mm terminal drills, 1.6mm
+# guide hole at (-1.5,3.25) in this component-side footprint orientation.
+for ref, value, nets in [
+        ("J40", "Battery input: 1=+ 2=GND", ["BAT_PLUS", "/GND"]),
+        ("J80", "LEFT motor", ["LEFT_MOTOR", "LEFT_RETURN"]),
+        ("J81", "RIGHT motor", ["RIGHT_MOTOR", "RIGHT_RETURN"]),
+        ("J90", "Servo: GND / 6.6V / PWM", ["/GND", "SERVO_VPLUS", "SERVO_PWM_OUT"])]:
+    count = len(nets)
+    check(ref, value, f"Connector_Hirose:Hirose_DF63M-{count}P-3.96DSA_1x0{count}_P3.96mm_Vertical",
+          {str(i+1): net for i, net in enumerate(nets)},
+          {str(i+1): [3.96*i, 0, 2.46, 2.8] for i in range(count)})
+    for pad in fps[ref].Pads():
+        if pad.GetNumber():
+            assert pad.GetAttribute() == p.PAD_ATTRIB_PTH
+            assert abs(p.ToMM(pad.GetDrillSize().x)-1.8) < 1e-6
+        else:
+            assert pad.GetAttribute() == p.PAD_ATTRIB_NPTH
+            assert abs(p.ToMM(pad.GetDrillSize().x)-1.6) < 1e-6
+            assert abs(p.ToMM(pad.GetFPRelativePosition().x)+1.5) < 1e-6
+            assert abs(p.ToMM(pad.GetFPRelativePosition().y)-3.25) < 1e-6
+    rows[-1]["terminal_drill_mm"] = 1.8
+    rows[-1]["guide_drill_mm"] = 1.6
+
 report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
               fabrication_release=False, checked_components=len(rows), results=rows,
               limitations=["Checks only the listed identities, pad coordinates and pin nets.",
@@ -82,6 +121,9 @@ report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
                        "https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.pdf",
                        "https://www.diodes.com/datasheet/download/DMPH3010LK3.pdf",
                        "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP2515-Family-Data-Sheet-DS20001801K.pdf",
-                       "https://www.st.com/resource/en/datasheet/stm32f401re.pdf"])
+                       "https://www.st.com/resource/en/datasheet/stm32f401re.pdf",
+                       "https://www.diodes.com/datasheet/download/MMBT3904.pdf",
+                       "https://www.hirose.com/en/product/p/CL0680-0567-0-00",
+                       "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf"])
 (ROOT / "Selected-package-check.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 print(f"PASS: {len(rows)} selected components; saved pad geometry and critical pin nets match")

@@ -24,7 +24,9 @@ See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
 The current board has 287 electrical footprints plus eight supports and
-HS80, 18,193 track segments, 1,017 vias and six filled ground zones.
+HS80, 19,513 track/via items and six filled ground zones after the 5 V cell
+relocation. The positive-feed Pi screen improves to 4.9116 V at 3 A; local
+return/contact/heating/dynamic losses are not included in that number.
 All 308 targeted connection checks pass. Native findings are recorded in
 [Fabrication-check.json](Fabrication-check.json); a clean automated result
 does not authorize fabrication. Battery/fault handling, Pi voltage margin,
@@ -65,13 +67,16 @@ planning target, not a separate course deadline. If an answer is unavailable,
 obtain an explicit TA-approved design/deferral; do not infer that an October 24
 review allowance authorizes fabrication of an unresolved circuit.
 
-For the motor-stall and L298 drop/temperature questions, the recorded TA deferral
-only establishes that measurements were not needed on October 24. Confirm what
-the final brief should contain on October 29. Published values and calculations
-must stay labeled as such. The question is whether that allowance covers the
-final brief, not a request to repeat every possible current measurement. Servo
-no-load source research and four-rail planning estimates are already done.
-Do not perform a prolonged stall through the L298 to produce a missing number.
+The motor-stall, L298 drop/temperature and servo-holding prompts appear under
+**Guiding Questions** in Lab 4 (pp. 3–4). The required final brief is specified
+separately on pp. 11–12. We will provide the required power budget and explain
+the sources and assumptions; a new measurement campaign or blanket measurement
+waiver is not a release prerequisite solely because of those guiding questions.
+Lab 2 p. 5 also explicitly distinguishes guiding questions from graded
+deliverables. This is a reading of the handouts, not a new TA waiver. Any
+specific subsequent TA requirement still applies. Source research and planning
+estimates are complete; the board's actual voltage, temperature and fault
+behavior remain untested. Electrical design limits still need to be justified.
 
 The final design can use stated load scenarios and calculated dimensional
 margins. Physical tests of the unbuilt board are not prerequisites for
@@ -96,7 +101,7 @@ signal-routing and label work as pending. Before release:
 1. Resolve the input-power/protection and operating-load decisions above, then update
    only their affected schematic, placement and routes.
 2. Close the remaining component and power-margin findings in
-   [Digital-review.md](Digital-review.md): encoder supply qualification,
+   [Digital-review.md](Digital-review.md):
    Pi/logic feed and return refinement, exact input/output capacitance data,
    final feed-forward choice and cooling assessment. The analytical screens
    in [Power-margin-review.md](Power-margin-review.md) are complete; they are

@@ -1,7 +1,8 @@
 # Power margins, capacitors and thermal review
 
-27 October 2026. We recalculated these margins after widening existing
-3.3 V and 5 V traces. The buck setpoints are unchanged; the later revision adds the encoder LDO. The
+27 October 2026. We recalculated these margins after moving the 5 V regulator
+closer to the Pi and rerouting its connections. The buck setpoints are unchanged;
+the separate encoder LDO remains in place. The
 calculations identify limits of the present design; they do not
 qualify it for fabrication. [Power-margin-check.json](Power-margin-check.json)
 records the source hashes, assumptions and numerical results. The existing
@@ -14,11 +15,14 @@ static connector screen is 3.792/3.794 V, rather than the earlier 3.17 V
 from the logic rail. The LVC14A and pull-ups remain at 3.3 V. See
 [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md).
 
-The current shared-current positive-feed model gives U25 3.1733 V and
-J70 4.8662 V at the assumed 3 A Pi allocation. The latter leaves only
-4.7 mV above the 4.8615 V upper warning-threshold corner before other
-losses. This is not enough demonstrated margin. The warning threshold is
-not itself the Pi's guaranteed operating specification.
+The current shared-current positive-feed model gives U25 3.1677 V and
+J70 4.9116 V at the assumed 3 A Pi allocation. Moving the 5 V cell 73.5 mm
+toward the Pi reduces the modeled shared feed drop from about 150 to 103 mV.
+The Pi result improves by 45.4 mV; the necessary logic-rail detour costs
+about 5.6 mV at U25. The new Pi result is 50.1 mV above the 4.8615 V upper
+warning-threshold corner before other losses. This is an improvement, not
+demonstrated full operating margin. The warning threshold is not itself
+the Pi's guaranteed operating specification.
 
 These predecessor-tree calculations count whole items, omit parallel copper
 and pad spreading, and omit contact/local return/heating/dynamic losses.
@@ -74,6 +78,28 @@ capacitance or ESR result. Use an accessible manufacturer dynamic model to
 evaluate the exact parts under bias; a zero-bias static model cannot close
 this question. Keep model results separate from guaranteed limits, temperature
 and aging evidence. No capacitor or feed-forward value changed.
+
+### Documented alternative comparison
+
+We implemented the fitted typical voltage-bias model in
+[Wurth ANP114](https://www.we-online.com/components/media/o753710v410%20ANP114a_Polarization%20DC%20Bias%20MLCC_EN.pdf),
+equations 3–5 and Table 2, for two **unselected** 22 µF alternatives.
+[Capacitor-candidate-check.json](Capacitor-candidate-check.json) records
+the arithmetic and its limits; `check_capacitor_candidates.py` reproduces it.
+
+| Candidate | Package | Typical capacitance at 3.37 / 5.19 / 6.82 V, per part |
+| --- | --- | --- |
+| 885012108018 | 1206 | 17.04 / 13.00 / 10.11 µF |
+| 885012109010 | 1210 | 21.31 / 20.40 / 19.33 µF |
+
+The larger candidate retains more capacitance in this published typical model.
+For two parts, applying separate −20% tolerance, −15% temperature and an
+assumed −20% aging sensitivity gives 23.18/22.20/21.03 µF. This multiplication
+is not a manufacturer's guaranteed combined minimum. Both candidates need
+larger lands than our 0805 parts, verified purchasing availability, ESR/heating
+data and a complete loop review. Their 16 V rating also does not replace the
+25 V input-capacitor selection. We have not changed the BOM on the strength
+of a typical capacitance curve alone.
 
 The sensitivity grid gives input-capacitor ripple up to 2.107/1.719/0.464 A
 RMS and combined output-capacitor ripple up to 1.021/0.931/0.461 A RMS for
@@ -138,8 +164,8 @@ our 1 oz outer copper, ground connections and nearby heat sources differ.
 The JEDEC thermal figure is also not a board-specific prediction. See
 [TI's thermal-metric guidance](https://www.ti.com/lit/an/spra953c/spra953c.pdf).
 
-We should preserve heat-spreading copper and ground vias when resolving the
-heatsink conflicts, then evaluate the finalized layout and intended duty.
+We preserved local heat-spreading copper and ground vias in the placement
+changes; the finalized layout and intended duty still need evaluation.
 The servo's 4 A allocation is not a claim of sustained 4 A operation. The
 published servo stall endpoint is 3 A, and a realistic duty profile must be
 kept separate from the full-allocation sensitivity cases.
@@ -164,7 +190,7 @@ at the absolute maximum. Do not extrapolate the table to a 3.2 A motor stall.
 
 The [mounting review](Heatsink-mounting-review.md) now specifies a screw-clamped,
 greased tab interface and two soldered PCB anchors from manufacturer drawings.
-The remaining placement changes, airflow and motor-fault/duty policy determine
+The implemented placement, airflow and motor-fault/duty policy determine
 the final cooling assessment. The assumed 1 °C/W interface above is still a
 screening value, not a measured or guaranteed resistance for this assembly.
 
@@ -178,8 +204,9 @@ pass. Source hashes match the saved PCB and prerequisite reports.
 
 Completed: the voltage-limit comparison, capacitor-retention targets,
 feed-forward comparison, ripple/current and thermal sensitivity calculations.
-Still open: supply/return refinement, encoder supply qualification, exact
-capacitor data and final loop choice, final cooling layout, and the existing
-battery/protection/mechanical decisions. These are not all measurement
+Still open: the full supply/return budget, exact capacitor data and final
+loop choice, cooling qualification, battery/protection decisions and final
+assembly process. Encoder supply calculations and heatsink placement are
+complete for their stated assumptions. These are not all measurement
 dependencies. Physical voltage/ripple/temperature tests belong after assembly;
 we do not request a new general measurement campaign for this review.

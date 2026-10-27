@@ -39,11 +39,11 @@ C411,100n / 50V,Capacitor_SMD:C_0603_1608Metric,18.200000000000003,206.4,180,F.C
 C412,22u / 16V,Capacitor_SMD:C_0805_2012Metric,31,201.8,90,F.Cu,true
 C413,22u / 16V,Capacitor_SMD:C_0805_2012Metric,31,205.8,-90,F.Cu,true
 C414,22p C0G,Capacitor_SMD:C_0603_1608Metric,14.200000000000003,203.5,0,F.Cu,true
-C420,22u / 25V,Capacitor_SMD:C_1210_3225Metric,56.2,210.5,180,F.Cu,true
-C421,100n / 50V,Capacitor_SMD:C_0603_1608Metric,56.2,206.4,180,F.Cu,true
-C422,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69,201.8,90,F.Cu,true
-C423,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69,205.8,-90,F.Cu,true
-C424,22p C0G,Capacitor_SMD:C_0603_1608Metric,52.2,203.5,0,F.Cu,true
+C420,22u / 25V,Capacitor_SMD:C_1210_3225Metric,56.2,137.0,180,F.Cu,true
+C421,100n / 50V,Capacitor_SMD:C_0603_1608Metric,56.2,132.9,180,F.Cu,true
+C422,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69,128.3,90,F.Cu,true
+C423,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69,132.3,-90,F.Cu,true
+C424,22p C0G,Capacitor_SMD:C_0603_1608Metric,52.2,130.0,0,F.Cu,true
 C430,22u / 25V,Capacitor_SMD:C_1210_3225Metric,94.19999999999999,210.5,180,F.Cu,true
 C431,100n / 50V,Capacitor_SMD:C_0603_1608Metric,94.19999999999999,206.4,180,F.Cu,true
 C432,22u / 16V,Capacitor_SMD:C_0805_2012Metric,107,201.8,90,F.Cu,true
@@ -135,7 +135,7 @@ J35,CAN B test,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,100.19
 J40,Battery input: 1=+ 2=GND,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,72.02,6.950000000000003,0,F.Cu,true
 J41,VBAT test,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,74.725,23,90,F.Cu,true
 J42,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,35.5,201.46,0,F.Cu,true
-J43,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,73.5,201.46,0,F.Cu,true
+J43,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,73.5,127.96,0,F.Cu,true
 J44,Rail / PG / GND,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,111.5,201.46,0,F.Cu,true
 J500,BOOT recovery,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,43,153.225,0,F.Cu,true
 J501,SWD (2.54mm),Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,16,156.65,0,F.Cu,true
@@ -166,7 +166,7 @@ JP14,TERM B,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,109.725,1
 JP20,TERM A,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,82.725,51,90,F.Cu,true
 JP24,TERM B,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,109.725,51,90,F.Cu,true
 L1,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,24.5,204,0,F.Cu,true
-L2,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,62.5,204,0,F.Cu,true
+L2,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,62.5,130.5,0,F.Cu,true
 L3,4.7uH / 5.8A,Lab4_Power:Eaton_SDCHA1V8040,100.5,204,0,F.Cu,true
 Q1,DMPH3010LK3-13,Package_TO_SOT_SMD:TO-252-2,109.84,17.072499999999998,0,F.Cu,true
 Q550,MMBT3904,Package_TO_SOT_SMD:SOT-23,76,186,0,F.Cu,true
@@ -200,11 +200,11 @@ R411,10k 1%,Resistor_SMD:R_0603_1608Metric,14.200000000000003,207.5,180,F.Cu,tru
 R412,47k,Resistor_SMD:R_0603_1608Metric,16,197.5,90,F.Cu,true
 R413,10k,Resistor_SMD:R_0603_1608Metric,19,199,90,F.Cu,true
 R414,10k PG pullup,Resistor_SMD:R_0603_1608Metric,14,200,0,F.Cu,true
-R420,75k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,205.5,0,F.Cu,true
-R421,10k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,207.5,180,F.Cu,true
-R422,33k,Resistor_SMD:R_0603_1608Metric,54,197.5,90,F.Cu,true
-R423,10k,Resistor_SMD:R_0603_1608Metric,57,199,90,F.Cu,true
-R424,10k PG pullup,Resistor_SMD:R_0603_1608Metric,52,200,0,F.Cu,true
+R420,75k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,132.0,0,F.Cu,true
+R421,10k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,134.0,180,F.Cu,true
+R422,33k,Resistor_SMD:R_0603_1608Metric,54,124.0,90,F.Cu,true
+R423,10k,Resistor_SMD:R_0603_1608Metric,57,125.5,90,F.Cu,true
+R424,10k PG pullup,Resistor_SMD:R_0603_1608Metric,52,126.5,0,F.Cu,true
 R430,45.3k 0.1%,Resistor_SMD:R_0603_1608Metric,90.19999999999999,205.5,0,F.Cu,true
 R431,10k 0.1%,Resistor_SMD:R_0603_1608Metric,90.19999999999999,207.5,180,F.Cu,true
 R432,22k,Resistor_SMD:R_0603_1608Metric,92,197.5,90,F.Cu,true
@@ -282,7 +282,7 @@ U31,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,71,115.0675,0,F.Cu,true
 U34,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,95.1875,115,0,F.Cu,true
 U35,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,105,115.0675,0,F.Cu,true
 U40,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,18,203.9025,180,F.Cu,true
-U41,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,56,203.9025,180,F.Cu,true
+U41,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,56,130.4025,180,F.Cu,true
 U42,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,94,203.9025,180,F.Cu,true
 U50,STM32F401RET6TR,Package_QFP:LQFP-64_10x10mm_P0.5mm,31,163,0,F.Cu,true
 U60,STM32F401RET6TR,Package_QFP:LQFP-64_10x10mm_P0.5mm,31,64,0,F.Cu,true

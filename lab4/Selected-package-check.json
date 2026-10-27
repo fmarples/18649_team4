@@ -1,7 +1,7 @@
 {
-  "source_sha256": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
+  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
   "fabrication_release": false,
-  "checked_components": 17,
+  "checked_components": 28,
   "results": [
     {
       "ref": "U11",
@@ -2298,6 +2298,324 @@
         ]
       },
       "result": "match"
+    },
+    {
+      "ref": "Q550",
+      "part": "MMBT3904",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "numbered_pads": 3,
+      "checked_pin_nets": {
+        "1": "LED_BASE",
+        "2": "/GND",
+        "3": "LED_SINK"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.9375,
+          -0.95,
+          1.475,
+          0.6
+        ],
+        "2": [
+          -0.9375,
+          0.95,
+          1.475,
+          0.6
+        ],
+        "3": [
+          0.9375,
+          0,
+          1.475,
+          0.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "Q551",
+      "part": "MMBT3904",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "numbered_pads": 3,
+      "checked_pin_nets": {
+        "1": "LED_BASE",
+        "2": "/GND",
+        "3": "LED_SINK"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.9375,
+          -0.95,
+          1.475,
+          0.6
+        ],
+        "2": [
+          -0.9375,
+          0.95,
+          1.475,
+          0.6
+        ],
+        "3": [
+          0.9375,
+          0,
+          1.475,
+          0.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "Q650",
+      "part": "MMBT3904",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "numbered_pads": 3,
+      "checked_pin_nets": {
+        "1": "LED_BASE",
+        "2": "/GND",
+        "3": "LED_SINK"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.9375,
+          -0.95,
+          1.475,
+          0.6
+        ],
+        "2": [
+          -0.9375,
+          0.95,
+          1.475,
+          0.6
+        ],
+        "3": [
+          0.9375,
+          0,
+          1.475,
+          0.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "Q651",
+      "part": "MMBT3904",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "numbered_pads": 3,
+      "checked_pin_nets": {
+        "1": "LED_BASE",
+        "2": "/GND",
+        "3": "LED_SINK"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.9375,
+          -0.95,
+          1.475,
+          0.6
+        ],
+        "2": [
+          -0.9375,
+          0.95,
+          1.475,
+          0.6
+        ],
+        "3": [
+          0.9375,
+          0,
+          1.475,
+          0.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "L1",
+      "part": "4.7uH / 5.8A",
+      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "P_SERVO_SW",
+        "2": "/+6V6_SERVO"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -2.825,
+          0,
+          2.85,
+          6.6
+        ],
+        "2": [
+          2.825,
+          0,
+          2.85,
+          6.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "L2",
+      "part": "4.7uH / 5.8A",
+      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "P_5V_SW",
+        "2": "/+5V"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -2.825,
+          0,
+          2.85,
+          6.6
+        ],
+        "2": [
+          2.825,
+          0,
+          2.85,
+          6.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "L3",
+      "part": "4.7uH / 5.8A",
+      "footprint": "Lab4_Power:Eaton_SDCHA1V8040",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "P_3V3_SW",
+        "2": "/+3V3"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -2.825,
+          0,
+          2.85,
+          6.6
+        ],
+        "2": [
+          2.825,
+          0,
+          2.85,
+          6.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "J40",
+      "part": "Battery input: 1=+ 2=GND",
+      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "BAT_PLUS",
+        "2": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0,
+          2.46,
+          2.8
+        ],
+        "2": [
+          3.96,
+          0,
+          2.46,
+          2.8
+        ]
+      },
+      "result": "match",
+      "terminal_drill_mm": 1.8,
+      "guide_drill_mm": 1.6
+    },
+    {
+      "ref": "J80",
+      "part": "LEFT motor",
+      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "LEFT_MOTOR",
+        "2": "LEFT_RETURN"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0,
+          2.46,
+          2.8
+        ],
+        "2": [
+          3.96,
+          0,
+          2.46,
+          2.8
+        ]
+      },
+      "result": "match",
+      "terminal_drill_mm": 1.8,
+      "guide_drill_mm": 1.6
+    },
+    {
+      "ref": "J81",
+      "part": "RIGHT motor",
+      "footprint": "Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "RIGHT_MOTOR",
+        "2": "RIGHT_RETURN"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0,
+          2.46,
+          2.8
+        ],
+        "2": [
+          3.96,
+          0,
+          2.46,
+          2.8
+        ]
+      },
+      "result": "match",
+      "terminal_drill_mm": 1.8,
+      "guide_drill_mm": 1.6
+    },
+    {
+      "ref": "J90",
+      "part": "Servo: GND / 6.6V / PWM",
+      "footprint": "Connector_Hirose:Hirose_DF63M-3P-3.96DSA_1x03_P3.96mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {
+        "1": "/GND",
+        "2": "SERVO_VPLUS",
+        "3": "SERVO_PWM_OUT"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0,
+          2.46,
+          2.8
+        ],
+        "2": [
+          3.96,
+          0,
+          2.46,
+          2.8
+        ],
+        "3": [
+          7.92,
+          0,
+          2.46,
+          2.8
+        ]
+      },
+      "result": "match",
+      "terminal_drill_mm": 1.8,
+      "guide_drill_mm": 1.6
     }
   ],
   "limitations": [
@@ -2310,6 +2628,9 @@
     "https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.pdf",
     "https://www.diodes.com/datasheet/download/DMPH3010LK3.pdf",
     "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP2515-Family-Data-Sheet-DS20001801K.pdf",
-    "https://www.st.com/resource/en/datasheet/stm32f401re.pdf"
+    "https://www.st.com/resource/en/datasheet/stm32f401re.pdf",
+    "https://www.diodes.com/datasheet/download/MMBT3904.pdf",
+    "https://www.hirose.com/en/product/p/CL0680-0567-0-00",
+    "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf"
   ]
 }

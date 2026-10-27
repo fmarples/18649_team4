@@ -1,11 +1,11 @@
 {
-  "checked_at_utc": "2026-10-27T20:10:41.915404+00:00",
+  "checked_at_utc": "2026-10-27T21:22:14.551088+00:00",
   "automated_status": "PASS",
   "fabrication_release": false,
   "counts": {
     "schematic_components": 287,
     "electrical_footprints": 287,
-    "track_segments_and_vias": 19210,
+    "track_segments_and_vias": 19513,
     "copper_zones": 6,
     "erc_findings": 0,
     "drc_violations": 0,
@@ -73,7 +73,7 @@
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
     "KiCad/Front.kicad_sch": "3d7ea407be613b6f300048d468a36f28fc2d900df20a72a846d9a130528c5448",
     "KiCad/Lab4.kicad_dru": "c6deb3b4968bdd62c1870a5a2d08509afa870baa4c69af7c25982cd938a250c6",
-    "KiCad/Lab4.kicad_pcb": "8484127c7b972debbd57d80076d85ffa7a918fb4d4a358de7395b123fdb8d071",
+    "KiCad/Lab4.kicad_pcb": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
     "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
     "KiCad/Lab4.kicad_sch": "e9315b3b8b8d16fa63ffbfbd15729678265f9bfb871c27f55df3b86189eb969d",
     "KiCad/Lab4_Logic.kicad_sym": "9282bfef36f6ec97c9f21daf90d966cb1d9d4c4d2789dc5ea5344dc1be62f463",
