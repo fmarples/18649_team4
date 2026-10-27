@@ -1,0 +1,1089 @@
+{
+  "status": "Calculations complete; design margins NOT qualified",
+  "fabrication_release": false,
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/tps564252.pdf",
+    "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf",
+    "https://www.mouser.com/datasheet/2/281/1/GRM219R61C226ME15_01A-1986409.pdf",
+    "https://www.farnell.com/datasheets/4088151.pdf",
+    "https://www.raspberrypi.com/documentation/computers/raspberry-pi.html",
+    "https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf",
+    "doc/HARDWARE.md (encoder range in recorded motor specification)",
+    "https://www.st.com/resource/en/datasheet/l298.pdf",
+    "https://www.farnell.com/datasheets/1581373.pdf"
+  ],
+  "source_sha256": {
+    "KiCad/Lab4.kicad_pcb": "cc2385edf2a6b9e605f3df45e81070224e65ce804bfa04e328ca284747cc25ce",
+    "Power-stage-check.json": "b609dddcea2b77b4b36cc2bd6c1299dda43d60a254fecc415f59a1be08c8b22e",
+    "Power-calculations.json": "712e124a8aef46dd126c5aceff307ab8cb4b33a9e7a56711b3f986cbbf278c5b",
+    "Load-allocation-check.json": "a4f18a63c63cc5741ee8abbcd7058afc062be0383fc6d9ca33b0ffa582d73442",
+    "Supply-path-check.json": "8f3d120b42870945dbcafae1c9ab83b2ca09f92534a171f5dc133012787e17e8",
+    "check_power_margins.py": "438122434ce2a540e0aa8e0b61b46b87c733d598cb42ba4af28885183b6263d4",
+    "KiCad/Circuit-BOM.csv": "00dce37978d7113eb8b7c0c75e27bda39272f76baf448940f98cbc673742973f"
+  },
+  "voltage_budget": [
+    {
+      "group": "CAN",
+      "target_ref": "U21",
+      "comparison_voltage_V": 3.0,
+      "comparison_meaning": "SN65HVD231 recommended VCC minimum",
+      "conductor_R_multiplier_assumed": 1.0,
+      "source_minimum_V": 3.262881,
+      "positive_feed_drop_V": 0.143922,
+      "budget_for_ALL_remaining_losses_V": 0.11895900000000026,
+      "load_voltage_with_assumed_50mV_return_V": 3.0689590000000004
+    },
+    {
+      "group": "CAN",
+      "target_ref": "U21",
+      "comparison_voltage_V": 3.0,
+      "comparison_meaning": "SN65HVD231 recommended VCC minimum",
+      "conductor_R_multiplier_assumed": 1.45,
+      "source_minimum_V": 3.262881,
+      "positive_feed_drop_V": 0.20868689999999998,
+      "budget_for_ALL_remaining_losses_V": 0.054194100000000134,
+      "load_voltage_with_assumed_50mV_return_V": 3.0041941000000003
+    },
+    {
+      "group": "CAN",
+      "target_ref": "U21",
+      "comparison_voltage_V": 3.0,
+      "comparison_meaning": "SN65HVD231 recommended VCC minimum",
+      "conductor_R_multiplier_assumed": 1.8,
+      "source_minimum_V": 3.262881,
+      "positive_feed_drop_V": 0.2590596,
+      "budget_for_ALL_remaining_losses_V": 0.003821400000000086,
+      "load_voltage_with_assumed_50mV_return_V": 2.9538214000000003
+    },
+    {
+      "group": "Encoders",
+      "target_ref": "J82",
+      "comparison_voltage_V": 3.3,
+      "comparison_meaning": "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown",
+      "conductor_R_multiplier_assumed": 1.0,
+      "source_minimum_V": 3.262881,
+      "positive_feed_drop_V": 0.143458,
+      "budget_for_ALL_remaining_losses_V": -0.18057699999999954,
+      "load_voltage_with_assumed_50mV_return_V": 3.0694230000000005
+    },
+    {
+      "group": "Encoders",
+      "target_ref": "J82",
+      "comparison_voltage_V": 3.3,
+      "comparison_meaning": "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown",
+      "conductor_R_multiplier_assumed": 1.45,
+      "source_minimum_V": 3.262881,
+      "positive_feed_drop_V": 0.2080141,
+      "budget_for_ALL_remaining_losses_V": -0.24513309999999988,
+      "load_voltage_with_assumed_50mV_return_V": 3.0048669
+    },
+    {
+      "group": "Encoders",
+      "target_ref": "J82",
+      "comparison_voltage_V": 3.3,
+      "comparison_meaning": "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown",
+      "conductor_R_multiplier_assumed": 1.8,
+      "source_minimum_V": 3.262881,
+      "positive_feed_drop_V": 0.2582244,
+      "budget_for_ALL_remaining_losses_V": -0.2953433999999997,
+      "load_voltage_with_assumed_50mV_return_V": 2.9546566000000003
+    },
+    {
+      "group": "Pi warning screen",
+      "target_ref": "J70",
+      "comparison_voltage_V": 4.8615,
+      "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
+      "conductor_R_multiplier_assumed": 1.0,
+      "source_minimum_V": 5.014644,
+      "positive_feed_drop_V": 0.158744,
+      "budget_for_ALL_remaining_losses_V": -0.005600000000000271,
+      "load_voltage_with_assumed_50mV_return_V": 4.8059
+    },
+    {
+      "group": "Pi warning screen",
+      "target_ref": "J70",
+      "comparison_voltage_V": 4.8615,
+      "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
+      "conductor_R_multiplier_assumed": 1.45,
+      "source_minimum_V": 5.014644,
+      "positive_feed_drop_V": 0.2301788,
+      "budget_for_ALL_remaining_losses_V": -0.07703480000000074,
+      "load_voltage_with_assumed_50mV_return_V": 4.7344652
+    },
+    {
+      "group": "Pi warning screen",
+      "target_ref": "J70",
+      "comparison_voltage_V": 4.8615,
+      "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
+      "conductor_R_multiplier_assumed": 1.8,
+      "source_minimum_V": 5.014644,
+      "positive_feed_drop_V": 0.2857392,
+      "budget_for_ALL_remaining_losses_V": -0.1325952000000008,
+      "load_voltage_with_assumed_50mV_return_V": 4.6789048
+    }
+  ],
+  "converters": [
+    {
+      "reference": "U40",
+      "rail": "SERVO",
+      "grid": {
+        "vin_V": [
+          8,
+          12,
+          15
+        ],
+        "vout_V": [
+          6.38397,
+          6.6,
+          6.82203
+        ],
+        "inductance_uH_assumed": [
+          3.76,
+          2.63
+        ],
+        "frequency_Hz_assumed": [
+          400000,
+          600000,
+          800000
+        ],
+        "RDSon_multiplier_assumed": [
+          1,
+          1.5,
+          2
+        ],
+        "total_switch_overlap_ns_assumed": [
+          10,
+          20,
+          40
+        ]
+      },
+      "number_of_cases": 486,
+      "number_of_excluded_non_CCM_cases": 0,
+      "extreme_cases": {
+        "highest_modeled_IC_loss": {
+          "vin_V": 15,
+          "vout_V": 6.82203,
+          "current_A": 4.0,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 800000,
+          "RDSon_multiplier_assumed": 2.0,
+          "total_switch_overlap_ns_assumed": 40,
+          "duty_ideal": 0.454802,
+          "CCM_candidate_ripple_A_pp": 1.7677552813403046,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 1.7677552813403046,
+          "peak_A": 4.8838776406701525,
+          "valley_A": 3.1161223593298475,
+          "input_cap_ripple_A_rms_ideal": 2.0213239991668415,
+          "output_cap_ripple_A_rms_ideal": 0.5103069937716037,
+          "conduction_W": 1.244325566127492,
+          "switch_overlap_W_assumed": 0.9600000000000001,
+          "modeled_IC_loss_W_NOT_total": 2.204325566127492,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.38049366953267777,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 38.560547183293814
+        },
+        "highest_input_cap_ripple": {
+          "vin_V": 15,
+          "vout_V": 6.82203,
+          "current_A": 4.0,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.454802,
+          "CCM_candidate_ripple_A_pp": 3.535510562680609,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 3.535510562680609,
+          "peak_A": 5.767755281340305,
+          "valley_A": 2.2322447186596954,
+          "input_cap_ripple_A_rms_ideal": 2.107382281462795,
+          "output_cap_ripple_A_rms_ideal": 1.0206139875432074,
+          "conduction_W": 0.6520549050549841,
+          "switch_overlap_W_assumed": 0.12000000000000001,
+          "modeled_IC_loss_W_NOT_total": 0.7720549050549841,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.398774678130711,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 110.09579687075038
+        },
+        "highest_output_cap_ripple": {
+          "vin_V": 15,
+          "vout_V": 6.82203,
+          "current_A": 4.0,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.454802,
+          "CCM_candidate_ripple_A_pp": 3.535510562680609,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 3.535510562680609,
+          "peak_A": 5.767755281340305,
+          "valley_A": 2.2322447186596954,
+          "input_cap_ripple_A_rms_ideal": 2.107382281462795,
+          "output_cap_ripple_A_rms_ideal": 1.0206139875432074,
+          "conduction_W": 0.6520549050549841,
+          "switch_overlap_W_assumed": 0.12000000000000001,
+          "modeled_IC_loss_W_NOT_total": 0.7720549050549841,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.398774678130711,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 110.09579687075038
+        },
+        "highest_inductor_peak": {
+          "vin_V": 15,
+          "vout_V": 6.82203,
+          "current_A": 4.0,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.454802,
+          "CCM_candidate_ripple_A_pp": 3.535510562680609,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 3.535510562680609,
+          "peak_A": 5.767755281340305,
+          "valley_A": 2.2322447186596954,
+          "input_cap_ripple_A_rms_ideal": 2.107382281462795,
+          "output_cap_ripple_A_rms_ideal": 1.0206139875432074,
+          "conduction_W": 0.6520549050549841,
+          "switch_overlap_W_assumed": 0.12000000000000001,
+          "modeled_IC_loss_W_NOT_total": 0.7720549050549841,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.398774678130711,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 110.09579687075038
+        },
+        "highest_valley": {
+          "vin_V": 8,
+          "vout_V": 6.82203,
+          "current_A": 4.0,
+          "inductance_uH_assumed": 3.76,
+          "frequency_Hz": 800000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.85275375,
+          "CCM_candidate_ripple_A_pp": 0.33394891452377,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 0.33394891452377,
+          "peak_A": 4.166974457261885,
+          "valley_A": 3.833025542738115,
+          "input_cap_ripple_A_rms_ideal": 1.420197777792324,
+          "output_cap_ripple_A_rms_ideal": 0.09640274784794098,
+          "conduction_W": 0.8081417730908885,
+          "switch_overlap_W_assumed": 0.128,
+          "modeled_IC_loss_W_NOT_total": 0.9361417730908885,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.3746174676611476,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 90.7982128811033
+        }
+      },
+      "passive_feedback_network": [
+        {
+          "Cff_pF": 22,
+          "zero_Hz": 72343.15595086153,
+          "pole_Hz": 795774.7154594768,
+          "divider_phase_lead_at_66kHz_deg": 37.63362766198253
+        },
+        {
+          "Cff_pF": 30,
+          "zero_Hz": 53051.647697298446,
+          "pole_Hz": 583568.1246702829,
+          "divider_phase_lead_at_66kHz_deg": 44.75465050179342
+        },
+        {
+          "Cff_pF": 82,
+          "zero_Hz": 19409.139401450655,
+          "pole_Hz": 213500.53341595718,
+          "divider_phase_lead_at_66kHz_deg": 56.43446718893414
+        },
+        {
+          "Cff_pF": 91,
+          "zero_Hz": 17489.554185922567,
+          "pole_Hz": 192385.09604514824,
+          "divider_phase_lead_at_66kHz_deg": 56.222992194976854
+        }
+      ],
+      "capacitor_sensitivity": [
+        {
+          "effective_total_uF_assumed": 11,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 24747.41644418867,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.06981382978723405,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
+          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+        },
+        {
+          "effective_total_uF_assumed": 11,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 24747.41644418867,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.031028368794326248,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
+          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+        },
+        {
+          "effective_total_uF_assumed": 16.842,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 19999.971540300226,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.04559744256380327,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
+          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+        },
+        {
+          "effective_total_uF_assumed": 16.842,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 19999.971540300226,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.020265530028357008,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
+          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+        },
+        {
+          "effective_total_uF_assumed": 22,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 17499.065984533285,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.034906914893617025,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
+          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+        },
+        {
+          "effective_total_uF_assumed": 22,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 17499.065984533285,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.015514184397163124,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
+          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+        },
+        {
+          "effective_total_uF_assumed": 29.92,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 15005.325288314307,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.025666849186483105,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
+          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
+        },
+        {
+          "effective_total_uF_assumed": 29.92,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 15005.325288314307,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.011407488527325827,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
+          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
+        },
+        {
+          "effective_total_uF_assumed": 44,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 12373.708222094336,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.017453457446808512,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
+          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+        },
+        {
+          "effective_total_uF_assumed": 44,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 12373.708222094336,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.007757092198581562,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
+          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+        }
+      ],
+      "max_conduction_25C_typ_R_600kHz_over_8to15V_W": 0.7951239941284677,
+      "max_scenario_IC_loss_W_NOT_guaranteed": 2.204325566127492,
+      "largest_input_cap_ripple_A_rms_in_grid": 2.107382281462795,
+      "largest_output_cap_ripple_A_rms_in_grid": 1.0206139875432074,
+      "max_current_peak_A_in_valid_CCM_grid": 5.767755281340305,
+      "max_inductor_copper_loss_25C_W_in_valid_CCM_grid": 0.398774678130711,
+      "largest_valley_A_in_grid": 3.833025542738115,
+      "min_required_theta_at_40C_C_per_W_in_grid": 38.560547183293814,
+      "output_charge_current_44uF_1p6ms_linear_ramp_A": 0.18149999999999997
+    },
+    {
+      "reference": "U41",
+      "rail": "5V",
+      "grid": {
+        "vin_V": [
+          8,
+          12,
+          15
+        ],
+        "vout_V": [
+          5.014644,
+          5.1,
+          5.185644
+        ],
+        "inductance_uH_assumed": [
+          3.76,
+          2.63
+        ],
+        "frequency_Hz_assumed": [
+          400000,
+          600000,
+          800000
+        ],
+        "RDSon_multiplier_assumed": [
+          1,
+          1.5,
+          2
+        ],
+        "total_switch_overlap_ns_assumed": [
+          10,
+          20,
+          40
+        ]
+      },
+      "number_of_cases": 486,
+      "number_of_excluded_non_CCM_cases": 0,
+      "extreme_cases": {
+        "highest_modeled_IC_loss": {
+          "vin_V": 15,
+          "vout_V": 5.185644,
+          "current_A": 3.3,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 800000,
+          "RDSon_multiplier_assumed": 2.0,
+          "total_switch_overlap_ns_assumed": 40,
+          "duty_ideal": 0.3457096,
+          "CCM_candidate_ripple_A_pp": 1.6126031782403047,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 1.6126031782403047,
+          "peak_A": 4.106301589120152,
+          "valley_A": 2.4936984108798477,
+          "input_cap_ripple_A_rms_ideal": 1.5931652895444643,
+          "output_cap_ripple_A_rms_ideal": 0.46551843952654304,
+          "conduction_W": 0.7755432767405659,
+          "switch_overlap_W_assumed": 0.792,
+          "modeled_IC_loss_W_NOT_total": 1.567543276740566,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.2598969535704179,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 54.22497819437734
+        },
+        "highest_input_cap_ripple": {
+          "vin_V": 12,
+          "vout_V": 5.185644,
+          "current_A": 3.3,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.432137,
+          "CCM_candidate_ripple_A_pp": 2.7991780976920158,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 2.7991780976920158,
+          "peak_A": 4.699589048846008,
+          "valley_A": 1.900410951153992,
+          "input_cap_ripple_A_rms_ideal": 1.7188691401693637,
+          "output_cap_ripple_A_rms_ideal": 0.8080531141060949,
+          "conduction_W": 0.43362944738305037,
+          "switch_overlap_W_assumed": 0.07919999999999999,
+          "modeled_IC_loss_W_NOT_total": 0.5128294473830504,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.27010502614406745,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 165.7471122880167
+        },
+        "highest_output_cap_ripple": {
+          "vin_V": 15,
+          "vout_V": 5.185644,
+          "current_A": 3.3,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.3457096,
+          "CCM_candidate_ripple_A_pp": 3.2252063564806095,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 3.2252063564806095,
+          "peak_A": 4.912603178240305,
+          "valley_A": 1.687396821759695,
+          "input_cap_ripple_A_rms_ideal": 1.6622061074706875,
+          "output_cap_ripple_A_rms_ideal": 0.9310368790530861,
+          "conduction_W": 0.41046954167873184,
+          "switch_overlap_W_assumed": 0.099,
+          "modeled_IC_loss_W_NOT_total": 0.5094695416787318,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.2751098142816717,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 166.84019955328446
+        },
+        "highest_inductor_peak": {
+          "vin_V": 15,
+          "vout_V": 5.185644,
+          "current_A": 3.3,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.3457096,
+          "CCM_candidate_ripple_A_pp": 3.2252063564806095,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 3.2252063564806095,
+          "peak_A": 4.912603178240305,
+          "valley_A": 1.687396821759695,
+          "input_cap_ripple_A_rms_ideal": 1.6622061074706875,
+          "output_cap_ripple_A_rms_ideal": 0.9310368790530861,
+          "conduction_W": 0.41046954167873184,
+          "switch_overlap_W_assumed": 0.099,
+          "modeled_IC_loss_W_NOT_total": 0.5094695416787318,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.2751098142816717,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 166.84019955328446
+        },
+        "highest_valley": {
+          "vin_V": 8,
+          "vout_V": 5.185644,
+          "current_A": 3.3,
+          "inductance_uH_assumed": 3.76,
+          "frequency_Hz": 800000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.6482055,
+          "CCM_candidate_ripple_A_pp": 0.6064764089621011,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 0.6064764089621011,
+          "peak_A": 3.6032382044810505,
+          "valley_A": 2.996761795518949,
+          "input_cap_ripple_A_rms_ideal": 1.5821412068051823,
+          "output_cap_ripple_A_rms_ideal": 0.1750746589857133,
+          "conduction_W": 0.48269178480352715,
+          "switch_overlap_W_assumed": 0.10560000000000001,
+          "modeled_IC_loss_W_NOT_total": 0.5882917848035272,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.25554323658752376,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 144.48612439554566
+        }
+      },
+      "passive_feedback_network": [
+        {
+          "Cff_pF": 22,
+          "zero_Hz": 96457.54126781537,
+          "pole_Hz": 819889.1007764306,
+          "divider_phase_lead_at_66kHz_deg": 29.77913987668075
+        },
+        {
+          "Cff_pF": 30,
+          "zero_Hz": 70735.5302630646,
+          "pole_Hz": 601252.007236049,
+          "divider_phase_lead_at_66kHz_deg": 36.75215009678305
+        },
+        {
+          "Cff_pF": 82,
+          "zero_Hz": 25878.852535267535,
+          "pole_Hz": 219970.24654977405,
+          "divider_phase_lead_at_66kHz_deg": 51.88828709407681
+        },
+        {
+          "Cff_pF": 91,
+          "zero_Hz": 23319.405581230087,
+          "pole_Hz": 198214.94744045573,
+          "divider_phase_lead_at_66kHz_deg": 52.12413925306815
+        }
+      ],
+      "capacitor_sensitivity": [
+        {
+          "effective_total_uF_assumed": 11,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 24747.41644418867,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.06358045212765959,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
+          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+        },
+        {
+          "effective_total_uF_assumed": 11,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 24747.41644418867,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.02825797872340426,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
+          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+        },
+        {
+          "effective_total_uF_assumed": 16.842,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 19999.971540300226,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.041526242334892265,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
+          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+        },
+        {
+          "effective_total_uF_assumed": 16.842,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 19999.971540300226,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.018456107704396558,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
+          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+        },
+        {
+          "effective_total_uF_assumed": 22,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 17499.065984533285,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.03179022606382979,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
+          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+        },
+        {
+          "effective_total_uF_assumed": 22,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 17499.065984533285,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.01412898936170213,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
+          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+        },
+        {
+          "effective_total_uF_assumed": 29.92,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 15005.325288314307,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.023375166223404256,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
+          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
+        },
+        {
+          "effective_total_uF_assumed": 29.92,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 15005.325288314307,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.010388962765957448,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
+          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
+        },
+        {
+          "effective_total_uF_assumed": 44,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 12373.708222094336,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.015895113031914897,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
+          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+        },
+        {
+          "effective_total_uF_assumed": 44,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 12373.708222094336,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.007064494680851065,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
+          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+        }
+      ],
+      "max_conduction_25C_typ_R_600kHz_over_8to15V_W": 0.4802130563667915,
+      "max_scenario_IC_loss_W_NOT_guaranteed": 1.567543276740566,
+      "largest_input_cap_ripple_A_rms_in_grid": 1.7188691401693637,
+      "largest_output_cap_ripple_A_rms_in_grid": 0.9310368790530861,
+      "max_current_peak_A_in_valid_CCM_grid": 4.912603178240305,
+      "max_inductor_copper_loss_25C_W_in_valid_CCM_grid": 0.2751098142816717,
+      "largest_valley_A_in_grid": 2.996761795518949,
+      "min_required_theta_at_40C_C_per_W_in_grid": 54.22497819437734,
+      "output_charge_current_44uF_1p6ms_linear_ramp_A": 0.14024999999999999
+    },
+    {
+      "reference": "U42",
+      "rail": "3V3",
+      "grid": {
+        "vin_V": [
+          8,
+          12,
+          15
+        ],
+        "vout_V": [
+          3.262881,
+          3.318,
+          3.373293
+        ],
+        "inductance_uH_assumed": [
+          3.76,
+          2.63
+        ],
+        "frequency_Hz_assumed": [
+          400000,
+          600000,
+          800000
+        ],
+        "RDSon_multiplier_assumed": [
+          1,
+          1.5,
+          2
+        ],
+        "total_switch_overlap_ns_assumed": [
+          10,
+          20,
+          40
+        ]
+      },
+      "number_of_cases": 486,
+      "number_of_excluded_non_CCM_cases": 144,
+      "extreme_cases": {
+        "highest_modeled_IC_loss": {
+          "vin_V": 15,
+          "vout_V": 3.373293,
+          "current_A": 0.8,
+          "inductance_uH_assumed": 2.63,
+          "frequency_Hz": 800000,
+          "RDSon_multiplier_assumed": 2.0,
+          "total_switch_overlap_ns_assumed": 40,
+          "duty_ideal": 0.22488619999999998,
+          "CCM_candidate_ripple_A_pp": 1.2427214618552282,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 1.2427214618552282,
+          "peak_A": 1.4213607309276142,
+          "valley_A": 0.17863926907238592,
+          "input_cap_ripple_A_rms_ideal": 0.3748359311864477,
+          "output_cap_ripple_A_rms_ideal": 0.35874278526492065,
+          "conduction_W": 0.04797281380328711,
+          "switch_overlap_W_assumed": 0.19200000000000003,
+          "modeled_IC_loss_W_NOT_total": 0.23997281380328714,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.017987495431923413,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 354.20678973109443
+        },
+        "highest_input_cap_ripple": {
+          "vin_V": 8,
+          "vout_V": 3.373293,
+          "current_A": 0.8,
+          "inductance_uH_assumed": 3.76,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.421661625,
+          "CCM_candidate_ripple_A_pp": 1.297144143629571,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 1.297144143629571,
+          "peak_A": 1.4485720718147856,
+          "valley_A": 0.15142792818521456,
+          "input_cap_ripple_A_rms_ideal": 0.4638919820861814,
+          "output_cap_ripple_A_rms_ideal": 0.37445326025113973,
+          "conduction_W": 0.02905912604178652,
+          "switch_overlap_W_assumed": 0.0128,
+          "modeled_IC_loss_W_NOT_total": 0.04185912604178652,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.018257036712237367,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 2030.6205130787353
+        },
+        "highest_output_cap_ripple": {
+          "vin_V": 12,
+          "vout_V": 3.318,
+          "current_A": 0.8,
+          "inductance_uH_assumed": 3.76,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.2765,
+          "CCM_candidate_ripple_A_pp": 1.596125664893617,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 1.596125664893617,
+          "peak_A": 1.5980628324468085,
+          "valley_A": 0.00193716755319151,
+          "input_cap_ripple_A_rms_ideal": 0.4321248718728499,
+          "output_cap_ripple_A_rms_ideal": 0.46076179114340016,
+          "conduction_W": 0.027945727992875084,
+          "switch_overlap_W_assumed": 0.019200000000000005,
+          "modeled_IC_loss_W_NOT_total": 0.047145727992875086,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.01994385341935758,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 1802.9205109070679
+        },
+        "highest_inductor_peak": {
+          "vin_V": 12,
+          "vout_V": 3.318,
+          "current_A": 0.8,
+          "inductance_uH_assumed": 3.76,
+          "frequency_Hz": 400000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.2765,
+          "CCM_candidate_ripple_A_pp": 1.596125664893617,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 1.596125664893617,
+          "peak_A": 1.5980628324468085,
+          "valley_A": 0.00193716755319151,
+          "input_cap_ripple_A_rms_ideal": 0.4321248718728499,
+          "output_cap_ripple_A_rms_ideal": 0.46076179114340016,
+          "conduction_W": 0.027945727992875084,
+          "switch_overlap_W_assumed": 0.019200000000000005,
+          "modeled_IC_loss_W_NOT_total": 0.047145727992875086,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.01994385341935758,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 1802.9205109070679
+        },
+        "highest_valley": {
+          "vin_V": 8,
+          "vout_V": 3.262881,
+          "current_A": 0.8,
+          "inductance_uH_assumed": 3.76,
+          "frequency_Hz": 800000,
+          "RDSon_multiplier_assumed": 1.0,
+          "total_switch_overlap_ns_assumed": 10,
+          "duty_ideal": 0.407860125,
+          "CCM_candidate_ripple_A_pp": 0.6423144772207031,
+          "ccm_assumption_valid": true,
+          "ripple_A_pp": 0.6423144772207031,
+          "peak_A": 1.1211572386103517,
+          "valley_A": 0.4788427613896485,
+          "input_cap_ripple_A_rms_ideal": 0.41059597536259174,
+          "output_cap_ripple_A_rms_ideal": 0.18542021816388335,
+          "conduction_W": 0.024831576433482733,
+          "switch_overlap_W_assumed": 0.0256,
+          "modeled_IC_loss_W_NOT_total": 0.050431576433482735,
+          "inductor_copper_W_at_25C_DCR_upper_23p4mohm": 0.01578050738091225,
+          "required_effective_theta_at_40C_C_per_W_before_other_losses": 1685.4519729739493
+        }
+      },
+      "passive_feedback_network": [
+        {
+          "Cff_pF": 22,
+          "zero_Hz": 159697.91600631684,
+          "pole_Hz": 883129.4755149321,
+          "divider_phase_lead_at_66kHz_deg": 18.180332315698426
+        },
+        {
+          "Cff_pF": 30,
+          "zero_Hz": 117111.80507129901,
+          "pole_Hz": 647628.2820442835,
+          "divider_phase_lead_at_66kHz_deg": 23.585101822175837
+        },
+        {
+          "Cff_pF": 82,
+          "zero_Hz": 42845.78234315817,
+          "pole_Hz": 236937.17635766466,
+          "divider_phase_lead_at_66kHz_deg": 41.44379618128519
+        },
+        {
+          "Cff_pF": 91,
+          "zero_Hz": 38608.28738614253,
+          "pole_Hz": 213503.8292453682,
+          "divider_phase_lead_at_66kHz_deg": 42.4956330197603
+        }
+      ],
+      "capacitor_sensitivity": [
+        {
+          "effective_total_uF_assumed": 11,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 24747.41644418867,
+          "ccm_assumption_valid": false,
+          "capacitive_ripple_V_pp_ideal": null,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
+          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+        },
+        {
+          "effective_total_uF_assumed": 11,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 24747.41644418867,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.021693484042553193,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
+          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+        },
+        {
+          "effective_total_uF_assumed": 16.842,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 19999.971540300226,
+          "ccm_assumption_valid": false,
+          "capacitive_ripple_V_pp_ideal": null,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
+          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+        },
+        {
+          "effective_total_uF_assumed": 16.842,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 19999.971540300226,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.014168645319325799,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
+          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+        },
+        {
+          "effective_total_uF_assumed": 22,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 17499.065984533285,
+          "ccm_assumption_valid": false,
+          "capacitive_ripple_V_pp_ideal": null,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
+          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+        },
+        {
+          "effective_total_uF_assumed": 22,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 17499.065984533285,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.010846742021276596,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
+          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+        },
+        {
+          "effective_total_uF_assumed": 29.92,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 15005.325288314307,
+          "ccm_assumption_valid": false,
+          "capacitive_ripple_V_pp_ideal": null,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
+          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
+        },
+        {
+          "effective_total_uF_assumed": 29.92,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 15005.325288314307,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.007975545603879851,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
+          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
+        },
+        {
+          "effective_total_uF_assumed": 44,
+          "frequency_Hz_assumed": 400000,
+          "LC_pole_Hz_low_L": 12373.708222094336,
+          "ccm_assumption_valid": false,
+          "capacitive_ripple_V_pp_ideal": null,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
+          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+        },
+        {
+          "effective_total_uF_assumed": 44,
+          "frequency_Hz_assumed": 600000,
+          "LC_pole_Hz_low_L": 12373.708222094336,
+          "ccm_assumption_valid": true,
+          "capacitive_ripple_V_pp_ideal": 0.005423371010638298,
+          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
+          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+        }
+      ],
+      "max_conduction_25C_typ_R_600kHz_over_8to15V_W": 0.02598746487392835,
+      "max_scenario_IC_loss_W_NOT_guaranteed": 0.23997281380328714,
+      "largest_input_cap_ripple_A_rms_in_grid": 0.4638919820861814,
+      "largest_output_cap_ripple_A_rms_in_grid": 0.46076179114340016,
+      "max_current_peak_A_in_valid_CCM_grid": 1.5980628324468085,
+      "max_inductor_copper_loss_25C_W_in_valid_CCM_grid": 0.01994385341935758,
+      "largest_valley_A_in_grid": 0.4788427613896485,
+      "min_required_theta_at_40C_C_per_W_in_grid": 354.20678973109443,
+      "output_charge_current_44uF_1p6ms_linear_ramp_A": 0.091245
+    }
+  ],
+  "thermal_loss_budgets_W": [
+    {
+      "ambient_C_assumed": 25,
+      "theta_C_per_W_assumed": 74,
+      "maximum_total_IC_loss_W_for_125C": 1.3513513513513513
+    },
+    {
+      "ambient_C_assumed": 25,
+      "theta_C_per_W_assumed": 100,
+      "maximum_total_IC_loss_W_for_125C": 1.0
+    },
+    {
+      "ambient_C_assumed": 25,
+      "theta_C_per_W_assumed": 150,
+      "maximum_total_IC_loss_W_for_125C": 0.6666666666666666
+    },
+    {
+      "ambient_C_assumed": 40,
+      "theta_C_per_W_assumed": 74,
+      "maximum_total_IC_loss_W_for_125C": 1.1486486486486487
+    },
+    {
+      "ambient_C_assumed": 40,
+      "theta_C_per_W_assumed": 100,
+      "maximum_total_IC_loss_W_for_125C": 0.85
+    },
+    {
+      "ambient_C_assumed": 40,
+      "theta_C_per_W_assumed": 150,
+      "maximum_total_IC_loss_W_for_125C": 0.5666666666666667
+    },
+    {
+      "ambient_C_assumed": 60,
+      "theta_C_per_W_assumed": 74,
+      "maximum_total_IC_loss_W_for_125C": 0.8783783783783784
+    },
+    {
+      "ambient_C_assumed": 60,
+      "theta_C_per_W_assumed": 100,
+      "maximum_total_IC_loss_W_for_125C": 0.65
+    },
+    {
+      "ambient_C_assumed": 60,
+      "theta_C_per_W_assumed": 150,
+      "maximum_total_IC_loss_W_for_125C": 0.43333333333333335
+    }
+  ],
+  "L298_steady_conduction_screens_NOT_permitted_loads": [
+    {
+      "current_A_each_of_two_bridges": 1,
+      "ST_total_bridge_drop_max_V_at_25C_test": 3.2,
+      "two_bridge_conduction_W": 6.4,
+      "target_junction_C_assumed": 125,
+      "ambient_C_assumed": 40,
+      "interface_theta_C_per_W_assumed": 1,
+      "maximum_sink_theta_C_per_W_before_other_losses": 9.28125
+    },
+    {
+      "current_A_each_of_two_bridges": 2,
+      "ST_total_bridge_drop_max_V_at_25C_test": 4.9,
+      "two_bridge_conduction_W": 19.6,
+      "target_junction_C_assumed": 125,
+      "ambient_C_assumed": 40,
+      "interface_theta_C_per_W_assumed": 1,
+      "maximum_sink_theta_C_per_W_before_other_losses": 0.33673469387755084
+    }
+  ],
+  "capacitor_retention_requirements": {
+    "output_44uF_after_minus20percent_tolerance_minus15percent_temp_uF": 29.92,
+    "combined_bias_aging_retention_for_16p842uF": 0.5629010695187165,
+    "input_22uF_after_minus10percent_tolerance_minus15percent_temp_uF": 16.83,
+    "combined_bias_aging_retention_for_10uF_input": 0.5941770647653001,
+    "total_output_uF_for_20kHz_with_2p63uH_assumed": 24.078228051886356,
+    "meaning": "Conditional screening targets, not measured retention or guaranteed combination rules"
+  },
+  "ground_sheet_sensitivity": [
+    {
+      "squares_assumed": 1,
+      "current_A_assumed": 0.8,
+      "drop_V_at_20C_nominal_15p2um": 0.0009052631578947368
+    },
+    {
+      "squares_assumed": 1,
+      "current_A_assumed": 3,
+      "drop_V_at_20C_nominal_15p2um": 0.003394736842105263
+    },
+    {
+      "squares_assumed": 1,
+      "current_A_assumed": 10,
+      "drop_V_at_20C_nominal_15p2um": 0.01131578947368421
+    },
+    {
+      "squares_assumed": 5,
+      "current_A_assumed": 0.8,
+      "drop_V_at_20C_nominal_15p2um": 0.004526315789473684
+    },
+    {
+      "squares_assumed": 5,
+      "current_A_assumed": 3,
+      "drop_V_at_20C_nominal_15p2um": 0.016973684210526314
+    },
+    {
+      "squares_assumed": 5,
+      "current_A_assumed": 10,
+      "drop_V_at_20C_nominal_15p2um": 0.05657894736842105
+    },
+    {
+      "squares_assumed": 10,
+      "current_A_assumed": 0.8,
+      "drop_V_at_20C_nominal_15p2um": 0.009052631578947368
+    },
+    {
+      "squares_assumed": 10,
+      "current_A_assumed": 3,
+      "drop_V_at_20C_nominal_15p2um": 0.03394736842105263
+    },
+    {
+      "squares_assumed": 10,
+      "current_A_assumed": 10,
+      "drop_V_at_20C_nominal_15p2um": 0.1131578947368421
+    }
+  ],
+  "limitations": [
+    "Positive routing is the prior conductor-tree screen, not a nodal copper solve. Ground sheet examples are NOT extracted from board geometry.",
+    "All R multipliers, 50mV return, ambient temperatures and thermal resistances are sensitivity assumptions; none is a measured or guaranteed bound.",
+    "400-800kHz, RDSon multipliers and 10-40ns overlap are assumed sweeps. Datasheet switching frequency and resistances are typical, not max bounds.",
+    "2.63uH is Eaton's full-load minimum at 6.7A and 25C; using it at our loads is a rolloff sensitivity, not a guaranteed minimum over all temperatures/faults.",
+    "Loss omits gate drive, Coss, dead time, reverse recovery, control losses and external inductor/core/capacitor losses. No junction-temperature prediction is made.",
+    "Ideal CCM ripple/loss cases with zero or negative inductor valley are excluded: Eco-mode/DCM requires a different model. Extrema cover valid CCM scenarios only, not every possible operating mode.",
+    "Ideal CCM capacitor-ripple and charge-step equations exclude loop response, ESR/ESL, pulse-skipping and unequal sharing. Inductor copper loss uses 19.5mohm +20% at 25C and omits core/hot losses.",
+    "Divider phase lead is not full-loop phase margin. Cff alternatives are analysis candidates, not BOM changes.",
+    "Exact input/output MLCC bias curves, part-specific aging and PCB thermal impedance are unavailable; no invented values are used.",
+    "Battery, protection, mechanical decisions and actual load duty affect final selection. The current 8-15V/allocated-load sweep remains useful before those decisions."
+  ]
+}

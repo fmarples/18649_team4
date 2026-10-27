@@ -115,3 +115,14 @@ is a comparison metric. Neither establishes our board's temperature. Thus
 4 A continuous servo operation has not been thermally qualified. Complete
 the loss/thermal assessment for the final input/load envelope and test the
 assembled board. See [TI thermal metrics](https://www.ti.com/lit/an/spra953c/spra953c.pdf).
+
+## Extended margin review — October 27
+
+The [power-margin review](Power-margin-review.md) completes the analytical
+capacitor-retention, ripple, feed-forward and loss sensitivities. It includes
+inductor rolloff and output-reference corners and excludes invalid CCM cases
+for the Eco-mode regulator. The calculated demands narrow the remaining
+component/thermal decisions; they do not validate the present capacitors or
+cooling layout. Exact part data, final loop selection and the cooling assessment
+remain open. No capacitor value, voltage setpoint or PCB geometry changed in
+this later calculation-only pass.

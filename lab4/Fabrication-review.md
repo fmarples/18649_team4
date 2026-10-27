@@ -30,6 +30,10 @@ near-opening via sites were moved; the 0.15 mm nominal screen is now clear.
 These checks do not establish ground-return voltage loss, effective capacitor
 bias behavior or board temperature. The source/BOM resistor changes must also
 be reconciled with the October 26 purchasing snapshot.
+The subsequent [power-margin review](Power-margin-review.md) completes voltage,
+capacitor/feed-forward and thermal sensitivity calculations without changing
+CAD. It identifies an encoder supply-range question and limited Pi/CAN margin;
+component-data and design closure remain necessary.
 
 `Fabrication-check.json` records an automated PASS with source hashes and
 ignored rule categories. This establishes the checked CAD connections and
@@ -101,8 +105,11 @@ signal-routing and label work as pending. Before release:
 1. Resolve the input-power/protection and heatsink decisions above, then update
    only their affected schematic, placement and routes.
 2. Close the remaining component and power-margin findings in
-   [Digital-review.md](Digital-review.md): effective output capacitance,
-   converter thermal/loop assessment, and ground-return/tolerance losses.
+   [Digital-review.md](Digital-review.md): encoder supply qualification,
+   Pi/logic feed and return refinement, exact input/output capacitance data,
+   final feed-forward choice and cooling assessment. The analytical screens
+   in [Power-margin-review.md](Power-margin-review.md) are complete; they are
+   not evidence that the outstanding margins have passed.
 3. Recheck any changed footprint, connector, stencil aperture or mechanical
    envelope. The existing mask/paste plots were inspected, but final Gerber,
    drill and stencil exports must follow the final design revision.

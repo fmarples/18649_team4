@@ -15,6 +15,7 @@ released the board for fabrication or tested a built PCB.
 | Current sensing and regulator geometry | Confirmed separate shunt sense traces with no shared load-trace objects. Measured local input/SW/FB and feedback-return paths. Shared ground copper still needs a loss/noise assessment. |
 | Labels and apertures | Added readable interface/button labels, pin signals and a numbered legend. Inspected native front silk and mask/paste plots. C7 keeps thermal relief at a 45-degree spoke angle. |
 | Circuit/package consistency | Fresh netlist verifies regulator pin mapping, polarity, switch contact pairs, interfaces and BOM identities. Placement check verifies the Pi socket pin coordinates and mounting pattern. Assignment/parity does not replace every manufacturer's package drawing. |
+| Power-margin sensitivity | Compared CAN, encoder and Pi limits separately; calculated capacitor-retention targets, feed-forward zeros/poles, converter ripple/loss and L298 cooling requirements. Four independent numerical tests pass. No CAD or BOM change in this analysis pass. See Power-margin-review.md. |
 
 The component centers, pad shapes/nets, mounting geometry, CAN backbone and
 project rules are unchanged. R430/R431 retain their nominal values and 0603
@@ -23,15 +24,17 @@ current CSV BOMs, board previews and verification reports describe this revision
 
 ## Findings that still prevent release
 
-- **Power margin:** the routing model omits ground-plane resistance, contacts,
-  hot copper and converter transients. Its 3.119 V logic result leaves about
-  0.119 V above the CAN transceiver's 3.0 V minimum before those effects.
-  Finish a ground/tolerance margin assessment rather than declare this a
-  guaranteed minimum. Existing rail budgets are planning allocations.
-- **Converters:** obtain the selected output capacitor's DC-bias/aging data
-  and complete the loop/feed-forward assessment. Typical conduction-only
-  estimates are 0.665/0.412/0.024 W for servo/5 V/logic; they do not establish
-  junction temperature. Our 1 oz layout has no validated thermal model.
+- **Supply design:** refine the Pi/logic feed and return model and improve
+  geometry as required. The calculated CAN margin is small; the encoder
+  connector is below its recorded 3.3 V range endpoint even before return
+  losses. Establish the encoder's permitted range or select a suitable supply.
+  The Pi screen cannot guarantee freedom from low-voltage warnings. These
+  findings are design calculations, not observed failures.
+- **Converters:** obtain exact input/output capacitor bias/aging/ESR data or
+  select documented alternatives, then settle the feed-forward values. The
+  completed sensitivity review does not establish full-loop stability. Finish
+  the cooling assessment after the input/load envelope and heatsink placement
+  are fixed; a detailed thermal model with guessed attachment is premature.
 - **Design choices:** settle the battery/charger and input protection, L298
   fault expectations, heatsink attachment/envelope, Pi mounting-margin
   interpretation and servo mating-part rating. These affect the design;
@@ -51,7 +54,9 @@ not require a new general measurement campaign.
   [placement](Placement-check.json) and [revision comparison](Routing-change-check.json).
 - [Supply allocation and limitations](Supply-path-review.md),
   [per-load results](Load-allocation-check.json),
-  [regulator calculations](Power-stage-review.md).
+  [regulator calculations](Power-stage-review.md), and
+  [voltage/capacitor/thermal sensitivities](Power-margin-review.md) with
+  [reproducible results](Power-margin-check.json).
 - [CAN review](CAN-geometry-review.md), [return/sense review](Return-path-review.md),
   [measured path geometry](Digital-geometry-check.json),
   [drill/aperture review](Solder-via-review.md).
@@ -61,3 +66,8 @@ Run the `check_*.py` tools with KiCad's bundled Python. Run
 `check_power_stage.py` before `check_load_allocation.py` and
 `check_supply_paths.py`, since they use its component-tolerance results.
 The native audit uses a fresh output directory and records source hashes.
+The later calculation-only pass leaves CAD/BOM hashes unchanged, so those
+native results still apply. Run `check_power_margins.py` with ordinary Python
+after the upstream reports; `python -m unittest test_power_margins.py` checks
+its arithmetic independently. The four numerical tests do not replace DRC
+or qualify the operating assumptions.

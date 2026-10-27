@@ -5,22 +5,22 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 NiMH-powered supply with a battery/charger purchase still to finalize. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
-**Status, 26 October 2026:** all required PCB connections are routed, with
+**Status, 27 October 2026:** all required PCB connections are routed, with
 zero missing connections and zero native DRC/ERC/schematic-parity findings.
-All 306 targeted connection checks pass. We repaired the sampled CAN ground
-reference by rerouting adjacent 3.3 V/MOSI copper without changing the CAN
-backbone. We also moved 97 existing vias off SMD solder lands and removed
-one redundant ground via, reducing
-nominal drill/land intersections from 98 to zero. Earlier Pi/motor/servo copper
-widening remains in place. The Pi feed screening drop is 0.169 V at 3.3 A;
-the longer 3.3 V feed now needs current-allocation and voltage-margin review.
-Mask/assembly review, supply/return sizing, CAN branches and
-battery/protection/mechanical decisions remain unfinished. The board is not released for fabrication.
+All 306 targeted connection checks pass. Current allocation, CAN branches,
+nominal drill/aperture clearance, labels and current mask/paste plots have
+been reviewed. We widened 474 logic-supply segments, selected precision
+feedback resistors and cleared 32 remaining near-aperture via sites. The
+[power-margin review](Power-margin-review.md) adds verified calculations for
+voltage limits, capacitance, feed-forward behavior and heat. Encoder supply
+qualification, Pi/logic feed/return refinement, exact capacitor data and final
+cooling/battery/protection/mechanical decisions remain open. The board is not
+released for fabrication. See [Digital-review.md](Digital-review.md).
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
-The [supply-path screening](Supply-path-review.md) calculates initial trace resistance;
-load allocation, voltage margin and thermal current capability still need review.
+The [supply-path screening](Supply-path-review.md) includes shared-load allocation;
+remaining voltage and thermal findings are listed in the power-margin review.
 The [CAN geometry audit](CAN-geometry-review.md) records branch lengths and
 the repaired sampled ground reference. The [solder-via review](Solder-via-review.md)
 records the completed overlap correction and remaining mask/assembly checks.

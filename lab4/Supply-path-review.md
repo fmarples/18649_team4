@@ -72,6 +72,16 @@ included in the final DC/thermal model or engineering margin assessment.
 The 20 µm via-plating assumption is also not a guaranteed minimum; JLCPCB's
 capability page lists 18 µm average plating.
 
+The later [voltage-margin comparison](Power-margin-review.md#voltage-available-at-the-loads)
+checks the loads against different limits. The encoder connector's 3.119 V
+screen is below its recorded 3.3–5 V supply range, whose endpoint tolerance
+is unknown. The regulator's 3.263 V low corner itself is below 3.3 V, so copper
+widening alone cannot close that question. The Pi screen also leaves no
+allowance against the upper tolerance of its low-voltage warning detector;
+that threshold is not an operating-voltage specification. Resolve the
+encoder supply and refine feed/return geometry before release. These are
+newly documented design limitations, not measured failures.
+
 A synthetic Y network independently checks shared-current arithmetic:
 a 10 mm common trunk and two 10 mm branches, all 1 mm wide and 35 µm thick,
 with 0.1/0.2 A loads produce 1.966/2.457 mV drops. The checker matches these
