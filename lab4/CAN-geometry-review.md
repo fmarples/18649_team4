@@ -49,13 +49,37 @@ resistance cost of preserving the CAN reference. We also added one ground
 stitch near the CAN_B_L transition at (151.4, 209.4) mm after relocating a
 ground via away from a solder pad. Coordinates are KiCad board coordinates.
 
-Before release, review unequal layer detours, node/test/termination branches
-and the chosen fabrication stack.
-The [transceiver layout guidance](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf)
-and [TI CAN physical-layer guide](https://www.ti.com/lit/an/slla270/slla270.pdf)
-support short branches and low-inductance reference paths. We have not measured
-rise time, reflections, common-mode noise or EMC. Ground-transition distances
-remain recorded separately in [Return-path-check.json](Return-path-check.json).
+## Branch and detour assessment — October 27
+
+The new [digital geometry check](Digital-geometry-check.json) separates the
+termination-to-termination path from branch copper. Whole segments and full
+1.6 mm via barrels are counted; these are not extracted electrical lengths.
+
+| Net | Main path | Vias on main path | Longest bus-side branch |
+| --- | ---: | ---: | ---: |
+| A H | 238.781 mm | 4 | 18.591 mm |
+| A L | 231.967 mm | 8 | 24.921 mm |
+| B H | 220.098 mm | 4 | 24.450 mm |
+| B L | 213.284 mm | 8 | 30.921 mm |
+
+Local transceiver-to-isolation copper adds 24.290–35.468 mm and two vias,
+plus the jumper contact. Even adding the two largest figures gives about
+66.4 mm before the contact, below the 0.3 m stub guideline for 1 Mbps in
+[TI's CAN physical-layer guide](https://www.ti.com/lit/an/slla270/slla270.pdf).
+That comparison is a scale check, not a controlled-impedance guarantee.
+
+At an assumed 7 ps/mm propagation delay, a roughly 0.31 m path including
+local connections has about 2.2 ns one-way delay. This is short relative to
+the transceiver's 25 ns minimum high-speed rise-time test value. We therefore
+keep the short routes rather than add length merely to equalize the counts.
+The recorded main H/L difference is 6.814 mm on each bus; whole-item lengths
+cannot establish precise skew. Preserve ground references, separation from
+switching copper and the documented stack in subsequent edits. Source:
+[SN65HVD231 datasheet](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf).
+
+The digital branch/detour assessment is complete for this revision. Exact
+impedance, reflections and EMC remain unqualified; evaluate the assembled
+bus rather than treating this comparison as a measured waveform result.
 
 The distance calculation passed analytic checks for a point on a segment,
 beside it and beyond its endpoint. Native DRC and targeted connectivity checks

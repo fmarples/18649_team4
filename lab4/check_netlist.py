@@ -43,6 +43,9 @@ assert sum(int(p['Qty_in_current_schematic']) for p in csv_rows('Preliminary-BOM
 # Assembly views must cover each schematic reference once, including unassigned
 # footprints. Carrier alternatives belong in their own column, not the base MPN.
 by_ref = {p['Reference']: p for p in parts}
+for ref, mpn in [('R430','RT0603BRD0745K3L'),('R431','RT0603BRD0710KL')]:
+    assert by_ref[ref]['MPN'] == mpn, (ref, '3.3V precision divider MPN')
+    assert '0.1%' in by_ref[ref]['Value'], (ref, '3.3V divider tolerance')
 for name in ['BOM-Hand-assembly.csv', 'BOM-JLC-hybrid.csv', 'Preliminary-BOM.csv']:
     seen = set()
     for row in csv_rows(name):

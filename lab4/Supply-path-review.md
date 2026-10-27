@@ -25,38 +25,62 @@ For screening, we apply the entire rail allocation to each path separately:
 small-load branches. It is not an estimate of their normal operating current,
 and the omitted losses mean it is not a guaranteed worst-case load voltage.
 
-## Results and remaining design work
+## Shared-trunk load allocation and refinement
 
-| Path | Calculated conductor resistance | Screening drop |
-| --- | ---: | ---: |
-| L2.2 to Pi J70.2 | 0.0495 ohm | 0.164 V at 3.3 A |
-| L2.2 to Pi J70.4 | 0.0511 ohm | 0.169 V at 3.3 A |
-| L3.2 to checked MCU/CAN supply pads | 0.0671–0.3892 ohm | 0.0537–0.3114 V at 0.8 A |
+27 October update: [check_load_allocation.py](check_load_allocation.py) now
+sums downstream currents on a least-resistance routing tree. This includes
+the longer 3.3 V feed. Whole segments are counted, and parallel copper is not
+solved as a network. Each MCU's entire current is assigned to its worst
+supply pin; the Pi's allocation is put on the worse of pins 2/4 even though
+both are wired. These choices are screening assumptions, not observed loads.
 
-For example, subtracting the J70.4 path drop from the regulator's 5.014644 V
-static component-tolerance corner gives 4.846 V before the omitted losses.
-We have not established adequate operating margin from this calculation alone.
+| Allocation | Stated case | Total |
+| --- | --- | ---: |
+| 3.3 V | Two MCUs at 70 mA; six MCP2515s at 10 mA; six transceivers at 77 mA; two encoders at 20 mA; other IC/pull-up allowances | 0.716719 A |
+| 5 V | Pi at 3 A; L298 logic at 40 mA; two ACS712s at 15 mA; four lamp resistor bounds and feedback divider | 3.165525 A |
 
-We widened 107 existing 5 V segments where clearance permitted, added a
-parallel 0.70/0.30 mm via at six Pi supply transitions and enlarged the seventh
-transition to 0.80/0.40 mm. The selected single path still counts seven vias;
-the calculation does not credit the added parallel paths. The larger Pi-path
-screening drop decreased from 0.191 V to 0.169 V. We preserved the narrower
-section beside the Pi antenna reservation.
+The MCU allocation includes GPIO/indicator allowance. The encoder current
+is provisional. For each transceiver we allocate 17 mA no-load plus
+3.6 V / 60 ohms = 60 mA drive current; allocating all six at once overstates
+normal bus operation. The 0.8 A and 3.3 A rail budgets remain unchanged.
+See the per-load assumptions in [Load-allocation-check.json](Load-allocation-check.json).
 
-The CAN-reference repair replaces a 10.833 mm 3.3 V feed with a 47.303 mm
-route and four added vias. Its minimum width is 0.50 mm, with clear sections
-widened as far as 1.50 mm. Moving solder-pad vias also adds local copper.
-Together these changes increase the largest 3.3 V path screening drop from
-0.2803 V to 0.3114 V under the same full-rail stress. Preserving the CAN
-reference does not remove the need to size this longer supply path. The full
-0.8 A stress on each individual MCU/CAN branch is not its expected load.
+We widened 474 retained 3.3 V segments where clearance allowed, as far as
+2 mm, and specified 0.1% R430/R431 feedback resistors. Their nominal values
+and 3.318 V setpoint are unchanged. The static source low corner increases
+from 3.215216 V to 3.262881 V. The largest shared-tree drop falls from about
+0.1626 V to 0.1439 V. Together these changes raise the lowest calculated
+load voltage in this case from about 3.053 V to **3.119 V**.
 
-Before fabrication, assign currents to shared trunks and individual loads,
-include their ground-return paths, and check voltage and thermal margins.
-The 3.3 A stress applied to U80/U2/U3 in the JSON is not their operating current:
-the rail allocation includes the Pi. A native DRC pass does not establish
-current capacity or sufficient Pi input voltage.
+The Pi's calculated shared-tree drop is about 0.159 V at its 3 A allocation,
+giving about **4.856 V** from the 5.014644 V static source low corner. The
+largest 5 V drop is 0.1647 V on a lamp branch. These values exclude ground
+return, cable/contact loss, heating and regulator dynamic behavior. They do
+not establish guaranteed device voltage. The earlier full-rail-per-branch
+screen remains available in [Supply-path-check.json](Supply-path-check.json).
+
+Copper resistance increases with temperature. As a sensitivity example,
+60 °C copper is about 1.16 times its 20 °C resistance; a 20% narrower trace
+has 1.25 times its nominal resistance. Combined, these give about 1.45 times
+trace loss, before thickness/via/ground uncertainty. Do not spend the full
+remaining voltage margin on one omitted effect. Applying 1.45 to the entire
+0.143922 V path drop and reserving an assumed 50 mV for the return leaves
+only about 3.004 V. This deliberately simple sensitivity case is not a
+verified bound: it shows that small additional losses could consume the
+remaining margin. The ground plane must be
+included in the final DC/thermal model or engineering margin assessment.
+The 20 µm via-plating assumption is also not a guaranteed minimum; JLCPCB's
+capability page lists 18 µm average plating.
+
+A synthetic Y network independently checks shared-current arithmetic:
+a 10 mm common trunk and two 10 mm branches, all 1 mm wide and 35 µm thick,
+with 0.1/0.2 A loads produce 1.966/2.457 mV drops. The checker matches these
+analytic values. This validates the mechanism, not the real load assumptions.
+
+Sources: [STM32F401](https://www.st.com/resource/en/datasheet/stm32f401re.pdf),
+[MCP2515](https://ww1.microchip.com/downloads/en/DeviceDoc/MCP2515-Family-Data-Sheet-DS20001801K.pdf),
+[SN65HVD231](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf),
+and [JLCPCB capabilities](https://jlcpcb.com/capabilities/Capabilities).
 
 ## Motor and servo copper
 
@@ -90,11 +114,11 @@ temperature review; a DRC pass does not establish their rating.
 We also moved two transition sites at D804.1 and one at D802.2 outside
 their solder lands, with paired vias at each site. A preceding pass also moved
 D807.1 and U1.4 outside their lands; D807 uses a 0.80/0.40 mm via and 0.80 mm
-bridges. Across the latest routing passes, we relocated 97 existing vias and
+bridges. Before this revision's additional 32 clearance moves, we relocated 97 existing vias and
 removed one redundant ground via. Nominal drill/land intersections fell
 from 98 to zero. See
 [Solder-via-review.md](Solder-via-review.md) for the remaining mask/paste
-limitations. The latest 19 moves add no supply-net vias; the 1.50 mm VBAT
+limitations. That preceding group of 19 moves added no supply-net vias; the 1.50 mm VBAT
 reroute stays on B.Cu. Pi feed resistance is unchanged. Ordinary DRC does not check solder wicking.
 
 ## Checker validation

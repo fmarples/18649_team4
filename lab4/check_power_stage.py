@@ -39,9 +39,9 @@ for i, allocation in enumerate(design['regulators']):
     top, bottom = resistance(f'R{base}'), resistance(f'R{base+1}')
     assert parts[u]['MPN'] == 'TPS564252DRLR'
     assert parts[ind]['MPN'] == 'SDCHA1V8040-4R7-R'
-    tolerance = .001 if i == 1 else .01
+    tolerance = .001 if i in (1, 2) else .01
     for ref in [f'R{base}', f'R{base+1}']:
-        assert ('0.1%' if i == 1 else '1%') in parts[ref]['Value'], ref
+        assert ('0.1%' if i in (1, 2) else '1%') in parts[ref]['Value'], ref
     nominal = .6*(1+top/bottom)
     assert abs(nominal-allocation['voltage']) < 1e-9
     low = .591*(1+top*(1-tolerance)/(bottom*(1+tolerance)))
@@ -85,11 +85,15 @@ for i, allocation in enumerate(design['regulators']):
         'EN_rising_typical_V': round(en_rising_typ, 6),
         'EN_max_at_15V_1percent_external_resistors_no_internal_pulldown_V': round(en_max, 6),
         'allocated_output_A': load,
+        'typical_25C_conduction_only_at_12V_not_total_loss_W': round(
+            (load**2 + (nominal*(12-nominal)/(12*inductance*600000))**2/12) *
+            ((nominal/12)*.055 + (1-nominal/12)*.0243), 6),
         'inductor_at_minus20percent_L_600kHz': {
             'ripple_A_pp': round(ripple, 6), 'peak_A': round(peak, 6),
             'rms_A': round(rms, 6)},
         'output_filter_sensitivity_not_qualification': {
             'nominal_total_capacitance_uF': 44,
+            'minus20percent_tolerance_minus15percent_temperature_before_bias_aging_uF': 44*.8*.85,
             'effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF':
                 round(1/((2*math.pi*20000)**2*inductance)*1e6, 3),
             'cases': filter_cases},
@@ -116,7 +120,8 @@ report = {
         'A 6.7A saturation rating does not cover worst-case 6.7A valley current limit plus ripple.',
         '44uF output is nominal; manufacturer DC-bias/temperature data and loop review remain needed.',
         'TI effective thermal data uses a 2oz EVM; our 1oz board has no validated thermal rating.',
-        'Initial local regulator tracks and ground vias exist; Kelvin return, loop quality and hardware behavior still need review.',
+        'Digital-geometry-check.json measures local paths; shared ground copper is not an isolated quiet return or a measured noise result.',
+        'Typical 25C conduction estimates omit switching/core/gate losses and hot RDSon; they are not total loss or junction-temperature predictions.',
         'EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on.'],
     'source_sha256': {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                       for name in ['KiCad/Lab4.kicad_pcb', 'KiCad/Power.kicad_sch',

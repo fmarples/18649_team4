@@ -1,5 +1,5 @@
 {
-  "source_sha256": "2c4f088cca8c71dfad6316b3bb2576c719431a5183d8421c224647bac5a3a89d",
+  "source_sha256": "cc2385edf2a6b9e605f3df45e81070224e65ce804bfa04e328ca284747cc25ce",
   "fabrication_release": false,
   "status": "No drill/land intersections found",
   "intersecting_vias": 0,
@@ -9,8 +9,8 @@
   "mask_paste_configuration": {
     "checked_smd_pad_sides": 798,
     "via_tenting_counts": {
-      "B.Cu_tented": 970,
-      "F.Cu_tented": 970
+      "B.Cu_tented": 973,
+      "F.Cu_tented": 973
     },
     "nonzero_margin_pad_sides": [],
     "pad_sides_without_direct_mask_or_paste": [
@@ -68,75 +68,9 @@
         "y_mm": 58.5975
       }
     ],
-    "nominal_drill_to_zero_margin_opening_review_gap_mm": 0.1,
-    "nominal_drills_within_review_gap": [
-      {
-        "pad": "C505.2",
-        "via_uuid": "df6f7576-f27e-4608-89ca-74cf7117356f",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "C6.1",
-        "via_uuid": "d8492c3b-186a-4e64-af9e-ffe989df2145",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "C608.2",
-        "via_uuid": "2fbaced2-35f8-4a72-b7d2-220c93c366de",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "R512.1",
-        "via_uuid": "2a271dee-0f4d-4537-b629-0d6a380bfd3d",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "R550.1",
-        "via_uuid": "5a6b2354-59c9-4503-8f93-d0a51489c1f8",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "R651.1",
-        "via_uuid": "13d05f75-0c53-43c2-8d9a-795f3dd1b076",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "SW61.1",
-        "via_uuid": "a962726a-d665-48fb-8861-479f81e4fa43",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "Y10.4",
-        "via_uuid": "bfa89817-ec06-4639-b17a-3d4bef1c84f4",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "Y14.4",
-        "via_uuid": "e144ecb2-539a-444d-b206-7e2731e664e3",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "Y20.4",
-        "via_uuid": "e0582a39-e62e-4796-8cca-ac7a012cb0f8",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "Y24.4",
-        "via_uuid": "b7151081-a9d2-47b9-a667-3292d92e8f0f",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "Y30.4",
-        "via_uuid": "16cf531f-489a-43ef-8872-436a486518d0",
-        "layer": "F.Cu"
-      },
-      {
-        "pad": "Y34.4",
-        "via_uuid": "485f3581-06e0-4627-9298-760429994e9a",
-        "layer": "F.Cu"
-      }
-    ],
-    "note": "0.1 mm is an inspection target, not a qualified fabrication tolerance."
+    "nominal_drill_to_zero_margin_opening_review_gap_mm": 0.15,
+    "nominal_drills_within_review_gap": [],
+    "note": "0.15 mm screens nominal drill separation against published hole-position/diameter allowances; it does not qualify mask registration or tenting."
   },
   "method": "Nominal circular via drill intersects actual SMD copper-pad shape.",
   "limitations": [

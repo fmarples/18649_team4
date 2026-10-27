@@ -1,0 +1,3175 @@
+{
+  "source_sha256": "cc2385edf2a6b9e605f3df45e81070224e65ce804bfa04e328ca284747cc25ce",
+  "fabrication_release": false,
+  "method": "Shortest conductor-item paths: whole segments and full 1.6mm vias, not exact extracted transmission-line lengths. CAN branch length stops at bus-side isolation pad; local transceiver copper and jumper are additional.",
+  "can_topology": [
+    {
+      "net": "/CAN_A_H",
+      "source": "JP20.1",
+      "target": "JP10.1",
+      "main_length_including_full_vias_mm": 238.781,
+      "main_vias": 4,
+      "branches": [
+        {
+          "pad": "JP20.1",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J10.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J20.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "JP10.1",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J31.3",
+          "branch_length_mm": 6.394
+        },
+        {
+          "pad": "J21.3",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J30.2",
+          "branch_length_mm": 18.591
+        },
+        {
+          "pad": "J11.3",
+          "branch_length_mm": 0
+        }
+      ],
+      "max_branch_mm": 18.591
+    },
+    {
+      "net": "/CAN_A_L",
+      "source": "R202.2",
+      "target": "R102.2",
+      "main_length_including_full_vias_mm": 231.967,
+      "main_vias": 8,
+      "branches": [
+        {
+          "pad": "R202.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "R102.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J10.4",
+          "branch_length_mm": 3.1
+        },
+        {
+          "pad": "J20.4",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J31.4",
+          "branch_length_mm": 6.8
+        },
+        {
+          "pad": "J21.4",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J30.4",
+          "branch_length_mm": 24.921
+        },
+        {
+          "pad": "J11.4",
+          "branch_length_mm": 0
+        }
+      ],
+      "max_branch_mm": 24.921
+    },
+    {
+      "net": "/CAN_B_H",
+      "source": "JP24.1",
+      "target": "JP14.1",
+      "main_length_including_full_vias_mm": 220.098,
+      "main_vias": 4,
+      "branches": [
+        {
+          "pad": "JP24.1",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "JP14.1",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J35.3",
+          "branch_length_mm": 12.153
+        },
+        {
+          "pad": "J15.3",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J24.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J25.3",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J34.2",
+          "branch_length_mm": 24.45
+        },
+        {
+          "pad": "J14.2",
+          "branch_length_mm": 0
+        }
+      ],
+      "max_branch_mm": 24.45
+    },
+    {
+      "net": "/CAN_B_L",
+      "source": "R242.2",
+      "target": "R142.2",
+      "main_length_including_full_vias_mm": 213.284,
+      "main_vias": 8,
+      "branches": [
+        {
+          "pad": "R242.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "R142.2",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J35.4",
+          "branch_length_mm": 12.8
+        },
+        {
+          "pad": "J15.4",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J24.4",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J25.4",
+          "branch_length_mm": 0
+        },
+        {
+          "pad": "J34.4",
+          "branch_length_mm": 30.921
+        },
+        {
+          "pad": "J14.4",
+          "branch_length_mm": 3.1
+        }
+      ],
+      "max_branch_mm": 30.921
+    }
+  ],
+  "critical_paths": [
+    {
+      "source": "U40.1",
+      "target": "C411.1",
+      "net": "/VBAT_PROTECTED",
+      "connected": true,
+      "length_mm": 1.974,
+      "vias": 0
+    },
+    {
+      "source": "U40.2",
+      "target": "L1.1",
+      "net": "/Power/P_SERVO_SW",
+      "connected": true,
+      "length_mm": 2.415,
+      "vias": 0
+    },
+    {
+      "source": "U40.6",
+      "target": "R410.2",
+      "net": "/Power/P_SERVO_FB",
+      "connected": true,
+      "length_mm": 2.72,
+      "vias": 0
+    },
+    {
+      "source": "R411.2",
+      "target": "U40.3",
+      "net": "/GND",
+      "connected": true,
+      "length_mm": 9.25,
+      "vias": 0
+    },
+    {
+      "source": "L1.2",
+      "target": "R410.1",
+      "net": "/+6V6_SERVO",
+      "connected": true,
+      "length_mm": 44.811,
+      "vias": 0
+    },
+    {
+      "source": "U41.1",
+      "target": "C421.1",
+      "net": "/VBAT_PROTECTED",
+      "connected": true,
+      "length_mm": 1.974,
+      "vias": 0
+    },
+    {
+      "source": "U41.2",
+      "target": "L2.1",
+      "net": "/Power/P_5V_SW",
+      "connected": true,
+      "length_mm": 2.415,
+      "vias": 0
+    },
+    {
+      "source": "U41.6",
+      "target": "R420.2",
+      "net": "/Power/P_5V_FB",
+      "connected": true,
+      "length_mm": 2.72,
+      "vias": 0
+    },
+    {
+      "source": "R421.2",
+      "target": "U41.3",
+      "net": "/GND",
+      "connected": true,
+      "length_mm": 9.25,
+      "vias": 0
+    },
+    {
+      "source": "L2.2",
+      "target": "R420.1",
+      "net": "/+5V",
+      "connected": true,
+      "length_mm": 44.811,
+      "vias": 0
+    },
+    {
+      "source": "U42.1",
+      "target": "C431.1",
+      "net": "/VBAT_PROTECTED",
+      "connected": true,
+      "length_mm": 1.974,
+      "vias": 0
+    },
+    {
+      "source": "U42.2",
+      "target": "L3.1",
+      "net": "/Power/P_3V3_SW",
+      "connected": true,
+      "length_mm": 2.415,
+      "vias": 0
+    },
+    {
+      "source": "U42.6",
+      "target": "R430.2",
+      "net": "/Power/P_3V3_FB",
+      "connected": true,
+      "length_mm": 2.72,
+      "vias": 0
+    },
+    {
+      "source": "R431.2",
+      "target": "U42.3",
+      "net": "/GND",
+      "connected": true,
+      "length_mm": 9.25,
+      "vias": 0
+    },
+    {
+      "source": "L3.2",
+      "target": "R430.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 44.811,
+      "vias": 0
+    },
+    {
+      "source": "R1.1",
+      "target": "U1.3",
+      "net": "/+6V6_SERVO",
+      "connected": true,
+      "length_mm": 22.912,
+      "vias": 2
+    },
+    {
+      "source": "R1.2",
+      "target": "U1.4",
+      "net": "/Front zone/SERVO_VPLUS",
+      "connected": true,
+      "length_mm": 21.453,
+      "vias": 4
+    },
+    {
+      "source": "R1.2",
+      "target": "J90.2",
+      "net": "/Front zone/SERVO_VPLUS",
+      "connected": true,
+      "length_mm": 98.918,
+      "vias": 1
+    },
+    {
+      "source": "U11.7",
+      "target": "J10.1",
+      "net": "/Front zone/F_A_H_LOCAL",
+      "connected": true,
+      "length_mm": 27.926,
+      "vias": 2
+    },
+    {
+      "source": "U11.6",
+      "target": "J10.3",
+      "net": "/Front zone/F_A_L_LOCAL",
+      "connected": true,
+      "length_mm": 25.012,
+      "vias": 2
+    },
+    {
+      "source": "U15.7",
+      "target": "J14.1",
+      "net": "/Front zone/F_B_H_LOCAL",
+      "connected": true,
+      "length_mm": 28.627,
+      "vias": 2
+    },
+    {
+      "source": "U15.6",
+      "target": "J14.3",
+      "net": "/Front zone/F_B_L_LOCAL",
+      "connected": true,
+      "length_mm": 25.012,
+      "vias": 2
+    },
+    {
+      "source": "U21.7",
+      "target": "J20.1",
+      "net": "/Rear zone/R_A_H_LOCAL",
+      "connected": true,
+      "length_mm": 35.216,
+      "vias": 2
+    },
+    {
+      "source": "U21.6",
+      "target": "J20.3",
+      "net": "/Rear zone/R_A_L_LOCAL",
+      "connected": true,
+      "length_mm": 25.136,
+      "vias": 2
+    },
+    {
+      "source": "U25.7",
+      "target": "J24.1",
+      "net": "/Rear zone/R_B_H_LOCAL",
+      "connected": true,
+      "length_mm": 35.468,
+      "vias": 2
+    },
+    {
+      "source": "U25.6",
+      "target": "J24.3",
+      "net": "/Rear zone/R_B_L_LOCAL",
+      "connected": true,
+      "length_mm": 25.136,
+      "vias": 2
+    },
+    {
+      "source": "U31.7",
+      "target": "J30.1",
+      "net": "/Cockpit zone/PI_A_H_LOCAL",
+      "connected": true,
+      "length_mm": 27.611,
+      "vias": 2
+    },
+    {
+      "source": "U31.6",
+      "target": "J30.3",
+      "net": "/Cockpit zone/PI_A_L_LOCAL",
+      "connected": true,
+      "length_mm": 24.29,
+      "vias": 2
+    },
+    {
+      "source": "U35.7",
+      "target": "J34.1",
+      "net": "/Cockpit zone/PI_B_H_LOCAL",
+      "connected": true,
+      "length_mm": 27.611,
+      "vias": 2
+    },
+    {
+      "source": "U35.6",
+      "target": "J34.3",
+      "net": "/Cockpit zone/PI_B_L_LOCAL",
+      "connected": true,
+      "length_mm": 25.136,
+      "vias": 2
+    }
+  ],
+  "silkscreen_text": [
+    {
+      "text": "J603\nREAR TIMING",
+      "xy": [
+        46.0,
+        81.68678
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SELF",
+      "xy": [
+        46.01309,
+        171.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "STAT",
+      "xy": [
+        46.10833,
+        176.08
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        46.25119,
+        165.92
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        46.25119,
+        168.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "ERR",
+      "xy": [
+        46.32262,
+        173.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "FL",
+      "xy": [
+        47.05833,
+        210.625
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "FR",
+      "xy": [
+        47.15357,
+        213.165
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "NC",
+      "xy": [
+        47.24881,
+        149.085
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "NC",
+      "xy": [
+        47.24881,
+        151.625
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "NC",
+      "xy": [
+        47.24881,
+        154.165
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "NC",
+      "xy": [
+        47.24881,
+        156.705
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "NC",
+      "xy": [
+        47.24881,
+        159.245
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DIR",
+      "xy": [
+        47.4631,
+        111.165
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TXA",
+      "xy": [
+        47.51071,
+        95.925
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TXA",
+      "xy": [
+        47.51071,
+        197.925
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SET",
+      "xy": [
+        47.53452,
+        106.085
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TXB",
+      "xy": [
+        47.58214,
+        98.465
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TXB",
+      "xy": [
+        47.58214,
+        141.465
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TXB",
+      "xy": [
+        47.58214,
+        200.465
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RXA",
+      "xy": [
+        47.62976,
+        192.845
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RXB",
+      "xy": [
+        47.70119,
+        93.385
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RXB",
+      "xy": [
+        47.70119,
+        195.385
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        47.74881,
+        85.765
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        47.74881,
+        128.765
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        47.74881,
+        131.305
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "UDP",
+      "xy": [
+        47.74881,
+        133.845
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        47.74881,
+        187.765
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        47.74881,
+        190.305
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DEGA",
+      "xy": [
+        48.10595,
+        101.005
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DEGA",
+      "xy": [
+        48.10595,
+        203.005
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DEGB",
+      "xy": [
+        48.17738,
+        103.545
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DEGB",
+      "xy": [
+        48.17738,
+        205.545
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RELAY",
+      "xy": [
+        48.43929,
+        215.705
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "ERROR",
+      "xy": [
+        48.70119,
+        218.245
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J503 FRONT TIMING",
+      "xy": [
+        50.0,
+        228.90825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J703\nPI TIMING",
+      "xy": [
+        50.11143,
+        146.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J82\nENC L",
+      "xy": [
+        50.1981,
+        138.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        51.39405,
+        134.19
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SW60\nREAR RESET",
+      "xy": [
+        52.0,
+        116.15178
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        52.25119,
+        102.73
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        52.25119,
+        110.35
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        52.25119,
+        201.73
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        52.25119,
+        209.35
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "B",
+      "xy": [
+        52.275,
+        141.81
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "CLK",
+      "xy": [
+        52.37024,
+        100.19
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "CLK",
+      "xy": [
+        52.37024,
+        199.19
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        52.39405,
+        97.65
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        52.39405,
+        196.65
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RST",
+      "xy": [
+        52.41786,
+        107.81
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RST",
+      "xy": [
+        52.41786,
+        206.81
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DIO",
+      "xy": [
+        52.51309,
+        105.27
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DIO",
+      "xy": [
+        52.51309,
+        204.27
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J2\nMOTOR L I",
+      "xy": [
+        53.0,
+        89.06822
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SW70 PI SELF",
+      "xy": [
+        54.0,
+        179.95675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SW50 FRONT RESET",
+      "xy": [
+        54.0,
+        220.95675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RAW",
+      "xy": [
+        55.19,
+        82.05175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J601 REAR SWD",
+      "xy": [
+        56.0,
+        94.38675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J501 FRONT SWD",
+      "xy": [
+        56.0,
+        193.38675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J704\nPI PROBES",
+      "xy": [
+        56.61143,
+        171.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "A",
+      "xy": [
+        57.65357,
+        139.27
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        58.74881,
+        136.73
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "ADC",
+      "xy": [
+        60.27,
+        82.05175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "1:M1 2:M2",
+      "xy": [
+        62.0,
+        56.3
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J80 MOTOR L",
+      "xy": [
+        64.0,
+        52.99325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SW61\nREAR SELF",
+      "xy": [
+        67.0,
+        120.15178
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J600 REAR BOOT",
+      "xy": [
+        74.07905,
+        93.5
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J42 SERVO / PG / G",
+      "xy": [
+        75.5,
+        238.19675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "1:M1 2:M2",
+      "xy": [
+        78.0,
+        56.3
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "2",
+      "xy": [
+        78.37,
+        128.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "1",
+      "xy": [
+        78.37,
+        137.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "PG",
+      "xy": [
+        78.725,
+        244.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "6V6",
+      "xy": [
+        79.10595,
+        241.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        79.24881,
+        246.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J81 MOTOR R",
+      "xy": [
+        80.0,
+        52.99325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RAW",
+      "xy": [
+        80.19,
+        82.05175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        81.25119,
+        106.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        81.25119,
+        205.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        81.79881,
+        104.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        81.79881,
+        203.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        81.91786,
+        101.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        81.91786,
+        200.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SCL",
+      "xy": [
+        82.73,
+        90.34825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J500\nFRONT BOOT",
+      "xy": [
+        85.0,
+        189.15678
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "ADC",
+      "xy": [
+        85.27,
+        82.05175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J3 MOTOR R I",
+      "xy": [
+        86.0,
+        88.26325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        86.60595,
+        94.225
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        86.60595,
+        193.225
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J602\nREAR UART",
+      "xy": [
+        87.0,
+        110.60822
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "BOOT",
+      "xy": [
+        87.15357,
+        96.765
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "BOOT",
+      "xy": [
+        87.15357,
+        195.765
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        87.81,
+        90.34825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RAW",
+      "xy": [
+        88.46,
+        227.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J502 FRONT UART",
+      "xy": [
+        89.0,
+        210.20325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "STEER",
+      "xy": [
+        89.5131,
+        101.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "STEER",
+      "xy": [
+        89.5131,
+        201.81
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RPWM",
+      "xy": [
+        89.63214,
+        106.08
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RADC",
+      "xy": [
+        89.84643,
+        113.7
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SADC",
+      "xy": [
+        89.87024,
+        206.89
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TASK",
+      "xy": [
+        89.98928,
+        199.27
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "PID",
+      "xy": [
+        90.53691,
+        103.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "PID",
+      "xy": [
+        90.53691,
+        204.35
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J1 SERVO I",
+      "xy": [
+        91.0,
+        221.73675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "ADC",
+      "xy": [
+        91.0,
+        229.84825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        93.54,
+        219.65175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J30 PI CAN A ISO",
+      "xy": [
+        94.0,
+        137.46175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SW51 FRONT SELF",
+      "xy": [
+        96.0,
+        214.95675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        96.725,
+        146.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SET",
+      "xy": [
+        97.46548,
+        194.27
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "DIR",
+      "xy": [
+        97.53691,
+        196.81
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RB",
+      "xy": [
+        97.775,
+        111.08
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RA",
+      "xy": [
+        97.84643,
+        108.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "LB",
+      "xy": [
+        97.87024,
+        106.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "LA",
+      "xy": [
+        97.94167,
+        103.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        99.265,
+        146.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J505 FRONT EXTRA",
+      "xy": [
+        101.0,
+        185.92675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J40 1:BAT+ 2:GND",
+      "xy": [
+        102.0,
+        53.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J504\nFRONT PROBES",
+      "xy": [
+        102.23048,
+        202.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J70 PI GPIO (BOTTOM)",
+      "xy": [
+        102.5,
+        128.30175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "B",
+      "xy": [
+        103.275,
+        120.81
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "A",
+      "xy": [
+        103.34643,
+        118.27
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J604 REAR PROBES",
+      "xy": [
+        103.94476,
+        95.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        104.74881,
+        98.38
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        104.74881,
+        100.92
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        106.19,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J605\nREAR EXTRA",
+      "xy": [
+        108.04,
+        106.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        108.73,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        109.60595,
+        113.19
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        109.725,
+        75.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        109.725,
+        200.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J31 PI CAN A TEST",
+      "xy": [
+        110.0,
+        138.73675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J83\nENC R",
+      "xy": [
+        110.89714,
+        117.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        111.27,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        112.265,
+        66.77675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        112.265,
+        75.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        112.265,
+        200.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J10 FRONT CAN A ISO",
+      "xy": [
+        113.0,
+        190.06175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J43 5V1 / PG / G",
+      "xy": [
+        113.5,
+        238.19675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        113.81,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J40 BAT IN",
+      "xy": [
+        114.0,
+        52.99325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "PIN MAP: count from square pin 1; G = GND",
+      "xy": [
+        115.0,
+        165.5
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J603 2:G 3:RXA 10:LPWM 12:RL 13:RR",
+      "xy": [
+        115.0,
+        167.1
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J703 4:CMD 5:TXA 7:DEGA 8:DEGB",
+      "xy": [
+        115.0,
+        168.7
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J504 1:G 2:G 3:SELF 4:ERR",
+      "xy": [
+        115.0,
+        170.3
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J604 1:G 2:G 3:SELF 4:ERR 5:TASK 9:OVLD 10:LADC",
+      "xy": [
+        115.0,
+        171.9
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J505 1:G 2:G    J605 7:RELAY    J503 9:SERVO",
+      "xy": [
+        115.0,
+        173.5
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J83 2:G    J2 2:SCALED 4:G",
+      "xy": [
+        115.0,
+        175.1
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J10/J20/J30/J34: 1/2=H, 3/4=L (ISO)",
+      "xy": [
+        115.0,
+        176.7
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J21: 1:TX 2:RX 3:H 4:L",
+      "xy": [
+        115.0,
+        178.3
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J41\nVBAT / GND",
+      "xy": [
+        116.0,
+        58.93178
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "PG",
+      "xy": [
+        116.725,
+        244.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "5V1",
+      "xy": [
+        117.10595,
+        241.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        117.24881,
+        246.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        119.19,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "LED+",
+      "xy": [
+        120.79881,
+        226.725
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SINK",
+      "xy": [
+        121.03691,
+        229.265
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        121.73,
+        65.65175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        121.73,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J20 REAR CAN A ISO",
+      "xy": [
+        122.67214,
+        75.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J21 REAR CAN A TEST",
+      "xy": [
+        123.0,
+        67.73675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "JP20 TERM A REAR",
+      "xy": [
+        124.0,
+        94.26325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "JP10 TERM A FRONT",
+      "xy": [
+        124.0,
+        219.26325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        124.27,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J11 FRONT CAN A TEST",
+      "xy": [
+        125.0,
+        192.73675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J550 FRONT L LED",
+      "xy": [
+        125.0,
+        232.53825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "LED+",
+      "xy": [
+        125.79881,
+        116.725
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SINK",
+      "xy": [
+        126.03691,
+        119.265
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J41 1:VBAT 2:GND",
+      "xy": [
+        126.5,
+        47.5
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        126.81,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J34 PI CAN B ISO",
+      "xy": [
+        128.0,
+        137.46175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J650 REAR L LED",
+      "xy": [
+        130.0,
+        122.53825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        130.725,
+        146.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J24 REAR CAN B ISO",
+      "xy": [
+        132.0,
+        77.93825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        133.265,
+        146.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        133.97619,
+        69.725
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        134.09524,
+        72.265
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        136.725,
+        191.77675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        136.725,
+        200.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J14 FRONT CAN B ISO",
+      "xy": [
+        138.0,
+        189.06175
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        139.265,
+        191.77675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        139.265,
+        200.21325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        140.19,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "LED+",
+      "xy": [
+        140.79881,
+        226.725
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SINK",
+      "xy": [
+        141.0369,
+        229.265
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        141.89476,
+        72.265
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        142.01381,
+        69.725
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        142.73,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "1:GND 2:6V6 3:PWM",
+      "xy": [
+        143.0,
+        270.7
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J35 PI CAN B TEST",
+      "xy": [
+        144.0,
+        138.73675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J551 FRONT R LED",
+      "xy": [
+        145.0,
+        232.53825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        145.27,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        146.19,
+        73.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "TX",
+      "xy": [
+        146.19,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J90 SERVO",
+      "xy": [
+        147.0,
+        256.00675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        147.81,
+        144.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        148.73,
+        73.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "RX",
+      "xy": [
+        148.73,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "LED+",
+      "xy": [
+        148.79881,
+        116.725
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "SINK",
+      "xy": [
+        149.0369,
+        119.265
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J25 REAR CAN B TEST",
+      "xy": [
+        150.0,
+        67.73675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J15\nFRONT CAN B TEST",
+      "xy": [
+        150.0,
+        191.93178
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "JP24 TERM B REAR",
+      "xy": [
+        151.0,
+        94.26325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J651 REAR R LED",
+      "xy": [
+        151.0,
+        122.53825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "JP14 TERM B FRONT",
+      "xy": [
+        151.0,
+        219.26325
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        151.27,
+        73.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "H",
+      "xy": [
+        151.27,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "J44 3V3 / PG / G",
+      "xy": [
+        151.5,
+        238.19675
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        153.81,
+        73.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "L",
+      "xy": [
+        153.81,
+        198.94825
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "PG",
+      "xy": [
+        154.725,
+        244.0
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "3V3",
+      "xy": [
+        155.10595,
+        241.46
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    },
+    {
+      "text": "GND",
+      "xy": [
+        155.24881,
+        246.54
+      ],
+      "layer": "F.Silkscreen",
+      "size": [
+        1.0,
+        1.0
+      ],
+      "stroke_mm": 0.15
+    }
+  ]
+}

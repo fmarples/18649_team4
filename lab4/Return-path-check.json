@@ -1,5 +1,5 @@
 {
-  "source_sha256": "2c4f088cca8c71dfad6316b3bb2576c719431a5183d8421c224647bac5a3a89d",
+  "source_sha256": "cc2385edf2a6b9e605f3df45e81070224e65ce804bfa04e328ca284747cc25ce",
   "fabrication_release": false,
   "can": [
     {
@@ -23,7 +23,7 @@
         {
           "x_mm": 121.6,
           "y_mm": 211.9,
-          "nearest_ground_transition_mm": 2.343
+          "nearest_ground_transition_mm": 2.193
         }
       ],
       "reference_void_sample_count": 93,
@@ -444,7 +444,7 @@
         {
           "x_mm": 148.6,
           "y_mm": 211.9,
-          "nearest_ground_transition_mm": 2.343
+          "nearest_ground_transition_mm": 2.193
         }
       ],
       "reference_void_sample_count": 98,

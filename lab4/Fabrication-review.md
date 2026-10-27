@@ -16,22 +16,20 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-The current routing contains 16,446 track segments, 970 vias and six
+The current routing contains 16,605 track segments, 973 vias and six
 ground zones on four copper layers. All 306 targeted connection checks pass.
 Fresh ERC, native PCB DRC and schematic parity have zero findings; native
 DRC and the full connectivity count both report zero missing connections.
 The schematic separates the two unused Pi 3.3 V pins into individual
 no-connect nets. All 284 electrical footprints and eight supports match.
 See [Routing-review.md](Routing-review.md) for the signal and power changes.
-Selected Pi/motor/servo traces are wider; the screened Pi feed drop is now
-0.169 V at 3.3 A. The [CAN review](CAN-geometry-review.md) now records zero
-sampled reference gaps after moving adjacent 3.3 V/MOSI copper; layer/branch
-review remains open. We moved 97 existing vias off SMD solder lands and
-removed one redundant ground via, reducing
-nominal drill/land intersections from 98 to zero. The mask configuration and
-13 small nominal drill-to-opening gaps are recorded in
-[Solder-via-check.json](Solder-via-check.json). These checks do not
-settle load voltage, thermal capability, assembly treatment or signal integrity.
+The latest [digital review](Digital-review.md) records shared-trunk current
+allocation, 474 wider logic-supply segments, precision feedback resistors,
+CAN branches/detours, separate sense taps and functional labels. All 32
+near-opening via sites were moved; the 0.15 mm nominal screen is now clear.
+These checks do not establish ground-return voltage loss, effective capacitor
+bias behavior or board temperature. The source/BOM resistor changes must also
+be reconciled with the October 26 purchasing snapshot.
 
 `Fabrication-check.json` records an automated PASS with source hashes and
 ignored rule categories. This establishes the checked CAD connections and
@@ -67,7 +65,7 @@ included, matching the [October 25 clarification](https://18449-f26.slack.com/ar
 | Pi and chassis stack | Review only remaining layout-dependent cable/port/steering/cooler envelopes and the course interpretation of the Pi mounting margin | Four-hole paper alignment and actual Pi caliper heights are complete. We retain nominal 35 mm chassis and 22 mm Pi spacing, supported by Mechanical-evidence.md. Actual socket mating/fastener retention are assembly checks. Pi holes use a 3 mm radius from the center, not 3 mm from the drilled edge. |
 | Cable interfaces and stock | Confirm second motor harness, servo mating part/current capability and supplied quantities; choose permitted replacements if unavailable | A different PCB connector or part package changes pads and placement. Adapter continuity/temperature tests happen after assembly; the intended mating interface and rating basis must be established first. |
 
-Aim to resolve decisions that change CAD by Monday, October 26. This is a team
+Resolve decisions that change CAD now, before the Wednesday final-export target. This is a team
 planning target, not a separate course deadline. If an answer is unavailable,
 obtain an explicit TA-approved design/deferral; do not infer that an October 24
 review allowance authorizes fabrication of an unresolved circuit.
@@ -94,35 +92,22 @@ The five GCT footprints and their contact mapping are complete. We inspected
 the manufacturer's A1 drawing and used its 1.4 mm square lands. Physical
 terminals 1/2 share logical pad 1; terminals 3/4 share logical pad 2. See
 [Switch-footprint-review.md](Switch-footprint-review.md) for geometry, source
-and checks. Button access and final silkscreen remain part of layout review.
+and checks. Functional silkscreen review is complete for the present placement;
+recheck button access if the heatsink or neighboring placement changes.
 
-Continue the settled local circuits now; only the affected input-power and
-L298 areas depend on the open mechanical/electrical decisions:
+The required electrical connections are routed. Do not treat the completed
+signal-routing and label work as pending. Before release:
 
-1. Review the remaining package-specific pin 1, pitch, polarity, drill,
-   courtyard and rating assumptions. All schematic parts now have footprints;
-   assignment alone does not qualify every package or connector. Nominal
-   via-drill/SMD-land overlaps are resolved. Finish the mask/registration and
-   exported-paste review described in [Solder-via-review.md](Solder-via-review.md).
-   Keep the schematic and all three BOM views consistent with any replacements.
-2. Resolve the heatsink conflict and tighten the power-stage placement according
-   to the [TPS564252 layout guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf).
-   Keep the input switching loop short and feedback away from the switch node.
-   Place bypass capacitors next to their IC supply pins and crystals next to
-   the MCP2515s. Initial regulator routing exists; its loop/thermal review and
-   power/return sizing are unfinished.
-3. Route the battery, motor and regulator current paths with calculated copper
-   widths/pours and returns. The handout's 0.50 mm power minimum is not a current
-   rating. Route servo-shunt sense traces as a Kelvin pair so load-current copper
-   drops are not included in the measurement.
-4. Route separate linear CAN A/B backbones with H/L paired, ground reference
-   beneath them, and terminators on the bus side of isolation jumpers. Keep the
-   two buses separated from one another and from motor/switching copper. Route
-   local SPI, clocks, ADC and remaining signals, then fill the ground plane.
-5. Add usable silkscreen: connector pins/polarity, zone/bus, isolation/termination,
-   test signals, buttons and SWD pin 1. Check reachability with the assembled
-   stack, not just an unobstructed top-down drawing. Recheck the final 1:1 print
-   when outline, hole centers or occupied envelopes change.
+1. Resolve the input-power/protection and heatsink decisions above, then update
+   only their affected schematic, placement and routes.
+2. Close the remaining component and power-margin findings in
+   [Digital-review.md](Digital-review.md): effective output capacitance,
+   converter thermal/loop assessment, and ground-return/tolerance losses.
+3. Recheck any changed footprint, connector, stencil aperture or mechanical
+   envelope. The existing mask/paste plots were inspected, but final Gerber,
+   drill and stencil exports must follow the final design revision.
+4. Have the team review the CAD, access to controls/connectors and the final
+   fabrication stack. Repeat only physical checks affected by changed geometry.
 
 ## Run the checks on the finished board
 

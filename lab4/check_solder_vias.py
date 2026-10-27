@@ -14,7 +14,10 @@ ROOT = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--board', type=Path, default=ROOT/'KiCad/Lab4.kicad_pcb')
 parser.add_argument('--output', type=Path, default=ROOT/'Solder-via-check.json')
+parser.add_argument('--review-gap-mm', type=float, default=.15,
+                    help='Nominal drill-edge to zero-margin aperture screen')
 args = parser.parse_args()
+assert args.review_gap_mm >= 0
 board = p.LoadBoard(str(args.board))
 lands = [a for f in board.GetFootprints() for a in f.Pads()
          if a.GetAttribute() == p.PAD_ATTRIB_SMD]
@@ -47,7 +50,7 @@ for via in board.GetTracks():
         via_tenting[board.GetLayerName(layer)+'_tented' if via.IsTented(layer)
                     else board.GetLayerName(layer)+'_open'] += 1
     search_box = via.GetBoundingBox()
-    search_box.Inflate(p.FromMM(.1))
+    search_box.Inflate(p.FromMM(args.review_gap_mm))
     for pad in lands:
         if not search_box.Intersects(pad.GetBoundingBox()):
             continue
@@ -59,7 +62,7 @@ for via in board.GetTracks():
             # those nominal apertures. Nonzero margins are reported separately.
             if (pad.GetSolderMaskExpansion(layer) == 0 and
                     margin.x == 0 and margin.y == 0 and
-                    drill_shape.Collide(pad.GetEffectiveShape(layer), p.FromMM(.1))):
+                    drill_shape.Collide(pad.GetEffectiveShape(layer), p.FromMM(args.review_gap_mm))):
                 near_openings.append(dict(
                     pad=pad.GetParentFootprint().GetReference()+'.'+pad.GetNumber(),
                     via_uuid=via.m_Uuid.AsString(),
@@ -96,10 +99,10 @@ report = dict(
             for f in board.GetFootprints() for a in f.Pads()
             if (a.IsOnLayer(p.F_Paste) or a.IsOnLayer(p.B_Paste)) and
             not (a.IsOnLayer(p.F_Cu) or a.IsOnLayer(p.B_Cu))],
-        nominal_drill_to_zero_margin_opening_review_gap_mm=.1,
+        nominal_drill_to_zero_margin_opening_review_gap_mm=args.review_gap_mm,
         nominal_drills_within_review_gap=sorted(near_openings,
             key=lambda r: (r['pad'], r['via_uuid'])),
-        note='0.1 mm is an inspection target, not a qualified fabrication tolerance.'),
+        note=f'{args.review_gap_mm:g} mm screens nominal drill separation against published hole-position/diameter allowances; it does not qualify mask registration or tenting.'),
     method='Nominal circular via drill intersects actual SMD copper-pad shape.',
     limitations=[
         'No drill/registration tolerance or exported-Gerber/stencil inspection.',

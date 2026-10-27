@@ -431,3 +431,20 @@ Both preserve the nominal resistor values, specified tolerances and 0603
 footprints, so the nominal feedback calculations do not change. Listings
 showed stock on October 24; stock is not reserved. Record the actual installed
 MPN at assembly and use the required board land pattern.
+
+## Logic-divider tolerance change — October 27
+
+We changed R430 (45.3 kΩ) and R431 (10 kΩ) from 1% to 0.1%, retaining 0603
+footprints and the 3.318 V nominal setpoint. This improves the calculated
+low reference/resistor corner by about 48 mV. The current schematic and CSV
+BOM views agree:
+
+- R430: [YAGEO RT0603BRD0745K3L](https://www.digikey.com/en/products/detail/yageo/RT0603BRD0745K3L/5139111),
+  one installed plus one spare (two requested).
+- R431 and existing R421: [YAGEO RT0603BRD0710KL](https://www.digikey.com/en/products/detail/yageo/RT0603BRD0710KL/4340589),
+  two installed plus two spares (four total requested).
+
+These are additional DigiKey requests, not orders. Do not substitute the
+1% course resistors. The October 26 uploaded purchasing workbook is a fixed
+snapshot and does not include this change; communicate the revised resistor
+lines before procurement. The active CSV is current.

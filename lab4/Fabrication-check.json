@@ -1,11 +1,11 @@
 {
-  "checked_at_utc": "2026-10-27T02:52:49.526116+00:00",
+  "checked_at_utc": "2026-10-27T04:18:26.934132+00:00",
   "automated_status": "PASS",
   "fabrication_release": false,
   "counts": {
     "schematic_components": 284,
     "electrical_footprints": 284,
-    "track_segments_and_vias": 17416,
+    "track_segments_and_vias": 17578,
     "copper_zones": 6,
     "erc_findings": 0,
     "drc_violations": 0,
@@ -72,7 +72,7 @@
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
     "KiCad/Front.kicad_sch": "3d7ea407be613b6f300048d468a36f28fc2d900df20a72a846d9a130528c5448",
     "KiCad/Lab4.kicad_dru": "b562451d1099a56da0d310ce7bc54970528d38ddd1f83eee65d30d4be2682006",
-    "KiCad/Lab4.kicad_pcb": "2c4f088cca8c71dfad6316b3bb2576c719431a5183d8421c224647bac5a3a89d",
+    "KiCad/Lab4.kicad_pcb": "cc2385edf2a6b9e605f3df45e81070224e65ce804bfa04e328ca284747cc25ce",
     "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
     "KiCad/Lab4.kicad_sch": "e9315b3b8b8d16fa63ffbfbd15729678265f9bfb871c27f55df3b86189eb969d",
     "KiCad/Lab4_Logic.kicad_sym": "a7cc334c57f19446561936baf69d1b216339a3ddf4b31bcd6b13f833eb90dc09",
@@ -82,7 +82,7 @@
     "KiCad/Lab4_Power.pretty/Eaton_SDCHA1V8040.kicad_mod": "80921f4555eebe44350508fb43fc90378a24f9d8bc6290b186227981c0098221",
     "KiCad/Lab4_Power.pretty/Vishay_WSL2512_7m_to_500m.kicad_mod": "fe1e3b0b09fe270ecb9d86aa1b9550eddcfea2594fb1b0ae99c69667dbbc75fe",
     "KiCad/Lab4_Switches.pretty/GCT_SWT0210_4.5x4.5mm.kicad_mod": "391ac8f4f5725df85578cf5b2e7597e38724f3f6631b9e31545915236815b8c6",
-    "KiCad/Power.kicad_sch": "7f0ee5bcbe1de82667c6484da8765837757312186e9b98f43b5206c0b4e74ccf",
+    "KiCad/Power.kicad_sch": "632b715a2a1c37530cdf2203c7ec021088f25eb416e343e064d9cfff111c7bf1",
     "KiCad/Rear.kicad_sch": "8f7f22259fb58ffab16d40813558a21cc04c12ca5d67eed0101cf00b46458ead",
     "KiCad/sym-lib-table": "60172994ff6f013cac20eb41c4b72b371a9f3c26b8c7c802c711ed13234c603b"
   },

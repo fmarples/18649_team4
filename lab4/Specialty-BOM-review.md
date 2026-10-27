@@ -48,3 +48,12 @@ The [uploaded workbook](https://docs.google.com/spreadsheets/d/1jn-2KS-h_1bZtQV-
 contains the reviewed file from revision da8d5e6. The upload record is included
 in Specialty-BOM-check.json; open purchasing selections remain identified in
 the workbook.
+
+## Revision difference — October 27
+
+The saved/uploaded workbook remains the October 26 purchasing snapshot.
+It is not synchronized with subsequent circuit revisions. R430/R431 now
+require 0.1% parts; [Parts-review.md](Parts-review.md#logic-divider-tolerance-change--october-27)
+records exact DigiKey parts and quantities, and the active CSVs are updated.
+The revised request must reach the purchasing team before ordering. No updated
+course-folder submission is implied by the Git changes.

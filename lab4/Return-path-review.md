@@ -47,7 +47,8 @@ outside the checker's own-pad/via exclusions. That checker uses In1 for F.Cu
 and B.Cu for In2, unlike the broad In1-only screening in Return-path-check.json.
 We added one further ground stitch near CAN_B_L after moving a ground via
 off a solder land. All CAN transitions remain within our 3 mm review target.
-Final pair/stub refinement and controlled impedance remain unqualified.
+The branch/detour assessment is recorded in CAN-geometry-review.md.
+Controlled impedance and assembled-bus waveforms remain unqualified.
 
 ## Initial supply resistance screening
 
@@ -59,7 +60,8 @@ sizing and battery/protection decisions remain unfinished.
 
 [Supply-path-review.md](Supply-path-review.md) now uses actual saved conductor
 geometry to screen 3.3 V, 5 V, motor and servo paths. It flags the long supply paths for
-load allocation and widening/parallel-via review. The calculation does not
+load allocation and widening/parallel-via review. The October 27 allocation
+and widening results are now recorded in that review. The calculation does not
 establish thermal current capability or guaranteed load voltage.
 
 As a calculation example, using copper resistivity 1.72e-8 ohm-metres at about
@@ -76,3 +78,22 @@ are not a calculation of the complete board. Use actual branch loads and
 route lengths to check the worst load voltage, then widen or parallel supply
 trunks as needed. Check thermal current capability separately. A successful
 connectivity check alone does not settle either requirement.
+
+## Routed sense/feedback geometry — October 27
+
+The three feedback returns are explicit 9.250 mm front traces with no vias.
+The shunt IN+ route is 22.912 mm with two vias; IN− is 21.453 mm with four.
+The servo load route from R1.2 to J90.2 is 98.918 mm with one via. The
+shared-conductor check uses object identities and finds zero shared trace/via
+objects between either sense branch and its corresponding load route.
+This confirms separate routed taps at the shunt. It does not establish
+matched loop area, immunity to switching pickup or zero current in shared
+pad copper. Keep the sense taps at the shunt; do not add balancing meanders
+merely to equalize via count.
+
+The geometry review is complete at this level. A plane-resistance model and
+thermal/noise qualification are not available; zero unconnected items proves
+connectivity, not a bound on ground bounce. The next power decision should
+use the final load envelope and the margins in Supply-path-review.md. Ripple,
+ADC noise and loaded temperature are assembly/bring-up tests, not requests
+to measure the unbuilt PCB before Thursday.

@@ -4358,7 +4358,7 @@
     },
     {
       "reference": "R430",
-      "value": "45.3k 1%",
+      "value": "45.3k 0.1%",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 90.2,
       "y_mm": 205.5,
@@ -4374,7 +4374,7 @@
     },
     {
       "reference": "R431",
-      "value": "10k 1%",
+      "value": "10k 0.1%",
       "footprint": "Resistor_SMD:R_0603_1608Metric",
       "x_mm": 90.2,
       "y_mm": 207.5,

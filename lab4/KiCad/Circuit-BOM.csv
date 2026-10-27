@@ -1,4 +1,4 @@
-﻿Sheet,Reference,Value,MPN,Footprint,Status
+Sheet,Reference,Value,MPN,Footprint,Status
 Front,U10,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
 Front,U11,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Front,Y10,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
@@ -141,8 +141,8 @@ Power,C430,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input ML
 Power,C431,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
 Power,C432,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
 Power,C433,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
-Power,R430,45.3k 1%,RC0603FR-0745K3L,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
-Power,R431,10k 1%,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R430,45.3k 0.1%,RT0603BRD0745K3L,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
+Power,R431,10k 0.1%,RT0603BRD0710KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,C434,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
 Power,R432,22k,RC0603FR-0722KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R433,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated

@@ -270,8 +270,8 @@ R421,10k 0.1%,Resistor_SMD:R_0603_1608Metric,52.2,207.5,180.0,F.Cu,True
 R422,33k,Resistor_SMD:R_0603_1608Metric,54.0,197.5,90.0,F.Cu,True
 R423,10k,Resistor_SMD:R_0603_1608Metric,57.0,199.0,90.0,F.Cu,True
 R424,10k PG pullup,Resistor_SMD:R_0603_1608Metric,52.0,200.0,0.0,F.Cu,True
-R430,45.3k 1%,Resistor_SMD:R_0603_1608Metric,90.2,205.5,0.0,F.Cu,True
-R431,10k 1%,Resistor_SMD:R_0603_1608Metric,90.2,207.5,180.0,F.Cu,True
+R430,45.3k 0.1%,Resistor_SMD:R_0603_1608Metric,90.2,205.5,0.0,F.Cu,True
+R431,10k 0.1%,Resistor_SMD:R_0603_1608Metric,90.2,207.5,180.0,F.Cu,True
 R432,22k,Resistor_SMD:R_0603_1608Metric,92.0,197.5,90.0,F.Cu,True
 R433,10k,Resistor_SMD:R_0603_1608Metric,95.0,199.0,90.0,F.Cu,True
 R434,10k PG pullup,Resistor_SMD:R_0603_1608Metric,90.0,200.0,0.0,F.Cu,True

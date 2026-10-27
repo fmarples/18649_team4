@@ -1,6 +1,6 @@
 # PCB placement review
 
-26 October 2026. The **partially routed 120 x 234 mm PCB** is in
+26 October 2026. The **routed 120 x 234 mm PCB** is in
 `KiCad/Lab4.kicad_pcb`. Its four-hole paper pattern passed the October 24 fit
 check, and actual Pi heights were measured. The populated assembly is not
 verified and the board is not ready for fabrication. See
@@ -17,7 +17,7 @@ rotations as well as centers. All other placements are unchanged.
 We placed all 284 schematic components. The five GCT switch footprints replace
 their drawing reservations; their geometry and internal contact pairs follow
 the manufacturer's A1 drawing. See [Switch-footprint-review.md](Switch-footprint-review.md).
-All 297 exported schematic nets are present, and the placed pads retain their
+All 298 exported schematic nets are present, and the placed pads retain their
 schematic connectivity and reference identities.
 
 The rear MCU, motor-current sensors and L298N/flyback circuits and reserved heatsink area

@@ -1,13 +1,26 @@
 # Power, MCU, CAN and signal routing
 
 26 October 2026. Every required PCB connection is now routed. The saved
-**four-layer** board has **16,446 track segments, 970 through vias
+**four-layer** board has **16,605 track segments, 973 through vias
 and six filled ground zones**. Native DRC, ERC and schematic parity report
 zero findings, and all **306** targeted connection checks pass. Both native
 DRC and the full connectivity count report **zero missing connections**.
 Power/current sizing, switching-loop and CAN return geometry, and the open
 battery/protection/mechanical decisions still require review. This is not a
 fabrication release or a powered test.
+
+## October 27 digital review and corrections
+
+We widened 474 retained logic-supply segments and changed the logic divider
+to 0.1% parts without changing nominal resistance or voltage. We moved 32
+existing vias to clear the 0.15 mm drill-to-opening screen. Local rerouting
+adds three vias; the CAN backbone and component positions are unchanged.
+C7.2 retains thermal relief with its spokes rotated to 45 degrees. We added
+functional connector/jumper/button labels, pin signals and a numbered legend.
+All added text is 1 mm high with 0.15 mm strokes; native silkscreen clearance
+checks pass. [Digital-review.md](Digital-review.md) collects the results and
+remaining engineering limitations. [Routing-change-check.json](Routing-change-check.json)
+compares the saved board against revision 2465acd.
 
 ## CAN reference repair and solder-pad via relocation
 
@@ -373,7 +386,7 @@ design choices, not verified current or temperature ratings. Board-wide feeds,
 two 3.3 V power-good pull-ups, Kelvin-return and switching-loop review,
 effective capacitance and thermal/current qualification remain open.
 
-## Verification
+## Earlier verification checkpoint (superseded by current results)
 
 - `check_routing.py` walks KiCad's physical copper-connectivity graph. All
   **275 targeted connection checks** pass: 21 regulator, 76 local CAN, 14 MCU,
@@ -414,7 +427,7 @@ the full connectivity count. Both now report 59. The earlier regulator-only
 revision had 648 missing connections, although its DRC list stopped at 499.
 See the [KiCad DRC engine source](https://github.com/KiCad/kicad-source-mirror/blob/10.0/pcbnew/drc/drc_engine.cpp).
 
-## Remaining routing
+## Earlier remaining-routing checkpoint (now connected)
 
 Board-wide power/load-current paths and nine MCU-related signal nets still need
 routing. The two Kelvin input connections exist; their final geometry review
