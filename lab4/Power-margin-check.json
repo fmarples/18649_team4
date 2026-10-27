@@ -13,47 +13,47 @@
     "https://www.farnell.com/datasheets/1581373.pdf"
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "cc2385edf2a6b9e605f3df45e81070224e65ce804bfa04e328ca284747cc25ce",
-    "Power-stage-check.json": "b609dddcea2b77b4b36cc2bd6c1299dda43d60a254fecc415f59a1be08c8b22e",
+    "KiCad/Lab4.kicad_pcb": "0d3c6406d0b8a15a157da87e630f6c5ff3738383fec0b43634762c8c4cc48f6d",
+    "Power-stage-check.json": "af224005b9f91030c197683a349cfe9f501f311ca2b868f27a9ebcd5f181c782",
     "Power-calculations.json": "712e124a8aef46dd126c5aceff307ab8cb4b33a9e7a56711b3f986cbbf278c5b",
-    "Load-allocation-check.json": "a4f18a63c63cc5741ee8abbcd7058afc062be0383fc6d9ca33b0ffa582d73442",
-    "Supply-path-check.json": "8f3d120b42870945dbcafae1c9ab83b2ca09f92534a171f5dc133012787e17e8",
+    "Load-allocation-check.json": "7733d11d7ddf8684ac104025fe7226c18e0290c4f18e9a74edc206d032d70284",
+    "Supply-path-check.json": "cf8a09685e2a2ae26a8cd4f1f30b46271f4dd47bcecb12023b5c0cdee985669f",
     "check_power_margins.py": "438122434ce2a540e0aa8e0b61b46b87c733d598cb42ba4af28885183b6263d4",
     "KiCad/Circuit-BOM.csv": "00dce37978d7113eb8b7c0c75e27bda39272f76baf448940f98cbc673742973f"
   },
   "voltage_budget": [
     {
       "group": "CAN",
-      "target_ref": "U21",
+      "target_ref": "U25",
       "comparison_voltage_V": 3.0,
       "comparison_meaning": "SN65HVD231 recommended VCC minimum",
       "conductor_R_multiplier_assumed": 1.0,
       "source_minimum_V": 3.262881,
-      "positive_feed_drop_V": 0.143922,
-      "budget_for_ALL_remaining_losses_V": 0.11895900000000026,
-      "load_voltage_with_assumed_50mV_return_V": 3.0689590000000004
+      "positive_feed_drop_V": 0.094885,
+      "budget_for_ALL_remaining_losses_V": 0.16799600000000003,
+      "load_voltage_with_assumed_50mV_return_V": 3.117996
     },
     {
       "group": "CAN",
-      "target_ref": "U21",
+      "target_ref": "U25",
       "comparison_voltage_V": 3.0,
       "comparison_meaning": "SN65HVD231 recommended VCC minimum",
       "conductor_R_multiplier_assumed": 1.45,
       "source_minimum_V": 3.262881,
-      "positive_feed_drop_V": 0.20868689999999998,
-      "budget_for_ALL_remaining_losses_V": 0.054194100000000134,
-      "load_voltage_with_assumed_50mV_return_V": 3.0041941000000003
+      "positive_feed_drop_V": 0.13758325,
+      "budget_for_ALL_remaining_losses_V": 0.1252977500000001,
+      "load_voltage_with_assumed_50mV_return_V": 3.0752977500000003
     },
     {
       "group": "CAN",
-      "target_ref": "U21",
+      "target_ref": "U25",
       "comparison_voltage_V": 3.0,
       "comparison_meaning": "SN65HVD231 recommended VCC minimum",
       "conductor_R_multiplier_assumed": 1.8,
       "source_minimum_V": 3.262881,
-      "positive_feed_drop_V": 0.2590596,
-      "budget_for_ALL_remaining_losses_V": 0.003821400000000086,
-      "load_voltage_with_assumed_50mV_return_V": 2.9538214000000003
+      "positive_feed_drop_V": 0.170793,
+      "budget_for_ALL_remaining_losses_V": 0.09208799999999995,
+      "load_voltage_with_assumed_50mV_return_V": 3.042088
     },
     {
       "group": "Encoders",
@@ -62,9 +62,9 @@
       "comparison_meaning": "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown",
       "conductor_R_multiplier_assumed": 1.0,
       "source_minimum_V": 3.262881,
-      "positive_feed_drop_V": 0.143458,
-      "budget_for_ALL_remaining_losses_V": -0.18057699999999954,
-      "load_voltage_with_assumed_50mV_return_V": 3.0694230000000005
+      "positive_feed_drop_V": 0.093169,
+      "budget_for_ALL_remaining_losses_V": -0.13028799999999974,
+      "load_voltage_with_assumed_50mV_return_V": 3.1197120000000003
     },
     {
       "group": "Encoders",
@@ -73,9 +73,9 @@
       "comparison_meaning": "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown",
       "conductor_R_multiplier_assumed": 1.45,
       "source_minimum_V": 3.262881,
-      "positive_feed_drop_V": 0.2080141,
-      "budget_for_ALL_remaining_losses_V": -0.24513309999999988,
-      "load_voltage_with_assumed_50mV_return_V": 3.0048669
+      "positive_feed_drop_V": 0.13509505,
+      "budget_for_ALL_remaining_losses_V": -0.17221404999999956,
+      "load_voltage_with_assumed_50mV_return_V": 3.0777859500000004
     },
     {
       "group": "Encoders",
@@ -84,9 +84,9 @@
       "comparison_meaning": "Recorded motor specification's 3.3-5V range; endpoint tolerance unknown",
       "conductor_R_multiplier_assumed": 1.8,
       "source_minimum_V": 3.262881,
-      "positive_feed_drop_V": 0.2582244,
-      "budget_for_ALL_remaining_losses_V": -0.2953433999999997,
-      "load_voltage_with_assumed_50mV_return_V": 2.9546566000000003
+      "positive_feed_drop_V": 0.1677042,
+      "budget_for_ALL_remaining_losses_V": -0.20482319999999987,
+      "load_voltage_with_assumed_50mV_return_V": 3.0451768
     },
     {
       "group": "Pi warning screen",
@@ -95,9 +95,9 @@
       "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
       "conductor_R_multiplier_assumed": 1.0,
       "source_minimum_V": 5.014644,
-      "positive_feed_drop_V": 0.158744,
-      "budget_for_ALL_remaining_losses_V": -0.005600000000000271,
-      "load_voltage_with_assumed_50mV_return_V": 4.8059
+      "positive_feed_drop_V": 0.149796,
+      "budget_for_ALL_remaining_losses_V": 0.0033479999999990184,
+      "load_voltage_with_assumed_50mV_return_V": 4.814848
     },
     {
       "group": "Pi warning screen",
@@ -106,9 +106,9 @@
       "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
       "conductor_R_multiplier_assumed": 1.45,
       "source_minimum_V": 5.014644,
-      "positive_feed_drop_V": 0.2301788,
-      "budget_for_ALL_remaining_losses_V": -0.07703480000000074,
-      "load_voltage_with_assumed_50mV_return_V": 4.7344652
+      "positive_feed_drop_V": 0.21720420000000001,
+      "budget_for_ALL_remaining_losses_V": -0.06406020000000101,
+      "load_voltage_with_assumed_50mV_return_V": 4.7474397999999995
     },
     {
       "group": "Pi warning screen",
@@ -117,9 +117,9 @@
       "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
       "conductor_R_multiplier_assumed": 1.8,
       "source_minimum_V": 5.014644,
-      "positive_feed_drop_V": 0.2857392,
-      "budget_for_ALL_remaining_losses_V": -0.1325952000000008,
-      "load_voltage_with_assumed_50mV_return_V": 4.6789048
+      "positive_feed_drop_V": 0.2696328,
+      "budget_for_ALL_remaining_losses_V": -0.11648880000000084,
+      "load_voltage_with_assumed_50mV_return_V": 4.6950112
     }
   ],
   "converters": [

@@ -15769,5 +15769,6 @@
     "C7.2 retains thermal relief at a 45-degree spoke angle.",
     "One existing 0.8mm logic segment uses 0.6mm over 0.8mm length to clear C244 ground via; included in supply calculation.",
     "In1.Cu remains ground only. New functional silkscreen is recorded in Digital-geometry-check.json."
-  ]
+  ],
+  "scope": "Historical comparison before the latest width-only pass; see Supply-copper-change.json for the current board delta."
 }
