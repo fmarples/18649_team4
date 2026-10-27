@@ -28,14 +28,19 @@ allocation, the latest 768 wider logic and 541 wider five-volt segments,
 precision feedback resistors,
 CAN branches/detours, separate sense taps and functional labels. All 32
 near-opening via sites were moved; the 0.15 mm nominal screen is now clear.
-These checks do not establish ground-return voltage loss, effective capacitor
-bias behavior or board temperature. The source/BOM resistor changes must also
+The later [ground-plane screen](Ground-plane-review.md) calculates bulk In1 DC
+loss in stated scenarios; it does not establish total return loss, effective
+capacitor bias behavior or board temperature. The source/BOM resistor changes must also
 be reconciled with the October 26 purchasing snapshot.
 The subsequent [power-margin review](Power-margin-review.md) completes voltage,
 capacitor/feed-forward and thermal sensitivity calculations. Its voltage
 results now include the wider supply copper. It identifies an encoder
 supply-range question and limited Pi margin;
 component-data and design closure remain necessary.
+The [package review](Critical-package-review.md) now adds both MCUs, all
+CAN controllers/transceivers, both ACS712 sensors and the input MOSFET.
+These 17 checks pass without changing CAD. The selected Pi socket's solder
+process remains subject to the specific note in [Assembly-options.md](Assembly-options.md).
 
 `Fabrication-check.json` records an automated PASS with source hashes and
 ignored rule categories. This establishes the checked CAD connections and

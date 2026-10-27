@@ -17,6 +17,10 @@ voltage limits, capacitance, feed-forward behavior and heat. Encoder supply
 qualification, Pi/logic feed/return refinement, exact capacitor data and final
 cooling/battery/protection/mechanical decisions remain open. The board is not
 released for fabrication. See [Digital-review.md](Digital-review.md).
+The [ground-plane DC screen](Ground-plane-review.md) and 17 additional
+[manufacturer package checks](Critical-package-review.md) are complete for
+their documented scope. They change no CAD/BOM files. Local return/contact
+losses and final component/process qualification remain separate.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.

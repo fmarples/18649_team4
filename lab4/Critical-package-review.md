@@ -30,3 +30,29 @@ References: [TPS564252 pin table and DRL0006A drawing](https://www.ti.com/lit/ds
 [INA180 pinout A/B and DBV0005A drawing](https://www.ti.com/lit/ds/symlink/ina180.pdf),
 [SN74LVC14A pin table and PW0014A drawing](https://www.ti.com/lit/ds/symlink/sn74lvc14a.pdf),
 [Diotec BZT52C12 package identity](https://diotec.com/en/product/BZT52C12.html).
+
+## Seventeen additional components
+
+We checked the saved pad coordinates and critical pin nets against the
+following selected variants. All 17 pass the reproducible checks in
+`check_selected_packages.py`; [Selected-package-check.json](Selected-package-check.json)
+records each result and the unchanged PCB hash. Small land-pattern differences
+below are deliberate library differences, not package substitutions.
+
+| References / variant | Package and land-pattern comparison | Pinout result |
+| --- | --- | --- |
+| U11/U15/U21/U25/U31/U35, SN65HVD231DR | SOIC-8, 1.27 mm pitch. Saved pads 1.95 × 0.60 mm, row centers 4.95 mm; TI example 1.55 × 0.60 mm at 5.40 mm. Saved pads extend inward but overlap the specified lead region. | D/ground/VCC/R/NC/CANL/CANH/RS agree with pins 1–8. RS is grounded; pin 5 is unused. |
+| U2/U3, ACS712ELCTR-05B-T | SOIC-8, 1.27 mm pitch. Same saved pads; Allegro example 1.75 × 0.65 mm at 5.60 mm. Body and lead span match; this does not qualify the high-current copper thermally. | 1/2 IP+, 3/4 IP−, 5 ground, 6 filter, 7 output, 8 supply match. |
+| Q1, DMPH3010LK3-13 | TO-252. Saved lead spacing 4.56 mm versus nominal 4.572 mm; lead pads 2.2 × 1.2 mm and tab pad 6.4 × 5.8 mm overlap the package terminals. | 1 gate, 2 drain/tab, 3 source. The tab carries fused battery voltage; it is not ground. |
+| U10/U14/U20/U24/U30/U34, MCP2515T-I/ST | ST suffix is TSSOP-20, 4.4 × 6.5 mm body, 0.65 mm pitch. Saved pads 1.475 × 0.40 mm at 5.725 mm rows; manufacturer example 1.45 × 0.45 mm at 5.90 mm. Lead regions overlap. | All 20 pin assignments checked, including TSSOP-specific SPI, reset, clock, supply and unused pins. Do not use the SOIC pin numbering. |
+| U50/U60, STM32F401RET6TR | LQFP-64, 10 × 10 mm body, 12 mm nominal lead span and 0.50 mm pitch. Saved pads 1.55 × 0.30 mm at 11.35 mm opposite-row centers cover the specified leads. | VBAT, all supply/ground pins, VDDA, VCAP, reset, boot and SWD agree. GPIO mapping remains covered by the separate pin-map/connection checks. |
+
+Sources: [TI SN65HVD231](https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf),
+[Allegro ACS712](https://www.allegromicro.com/-/media/files/datasheets/acs712-datasheet.pdf),
+[Diodes DMPH3010LK3](https://www.diodes.com/datasheet/download/DMPH3010LK3.pdf),
+[Microchip MCP2515, TSSOP drawing and land pattern](https://ww1.microchip.com/downloads/en/DeviceDoc/MCP2515-Family-Data-Sheet-DS20001801K.pdf),
+[ST STM32F401 pin table and LQFP64 drawing](https://www.st.com/resource/en/datasheet/stm32f401re.pdf).
+
+The remaining manufacturer audit covers inductors, connectors/fuse hardware,
+remaining discrete parts and the L298 installation. Solder-process suitability,
+current capacity and mechanical fit are separate from pad/pinout agreement.

@@ -147,3 +147,15 @@ a via. A 10 mm × 1 mm × 0.035 mm trace produces 4.914 milliohms as expected.
 The saved-board geometry graph must agree with KiCad's zone-excluding
 connectivity for every reported target. These checks validate the calculation
 mechanism, not the assumed material properties or hardware behavior.
+
+## Bulk ground-return follow-up — October 27
+
+[Ground-plane-review.md](Ground-plane-review.md) now screens the saved In1
+fill under the same logic/5 V load allocation plus two whole-system current
+scenarios. It compares each load's ground with the lower feedback resistor's
+ground. The output-loop-only fine-grid case subtracts another 5.68 mV at
+J70, giving 4.8592 V before contact and local-return losses. Other loads can
+move the feedback reference in either direction; favorable offsets are not
+guaranteed headroom. The model leaves the source-minus-feed calculation above
+intact and does not qualify the complete supply voltage. Local connections,
+contacts and regulator load/line behavior still belong in that final budget.

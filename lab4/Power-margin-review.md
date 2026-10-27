@@ -42,6 +42,14 @@ manufacturing or temperature bound. A nominal 15.2 µm copper sheet has about
 17 mV; the real plane's apertures, spreading and shared currents determine its
 loss. This example is not a ground-plane extraction.
 
+The subsequent [ground-plane screen](Ground-plane-review.md) extracts the
+saved In1 fill and balances shared DC currents in three scenarios. Positive
+Pi ground offsets are about 2.6–6.5 mV over its mesh/port sweep. Local tracks,
+spokes, barrels and contacts remain excluded; the 50 mV allowance above is
+still an assumption, not a measured or simulated total-return bound.
+The new review also separates contact-resistance sensitivity from an actual
+connector specification. The full Pi/encoder voltage decisions remain open.
+
 **Design decision:** the latest copper refinement reduces the worst logic
 feed drop by about 34% and the Pi feed drop by about 6% in the same model.
 It does not close the full voltage budget. Before release, include ground,

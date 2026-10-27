@@ -12,20 +12,24 @@ released the board for fabrication or tested a built PCB.
 | Supply currents and static voltage | The latest pass widens 768 logic and 541 five-volt segments. Worst logic feed drop falls from 144 to 95 mV; Pi feed drop falls from 159 to 150 mV. The 0.1% logic divider is retained. Ground/contact/heating/transient losses remain outside this screen. |
 | Drill and aperture clearance | Moved 32 existing vias. No nominal drill/land overlaps or sites inside the 0.15 mm screen remain. This is not a mask-registration or tenting guarantee. |
 | CAN topology | Measured main paths, bus-side branches and local transceiver connections; reviewed their scale against edge time and TI's stub guidance. No added length-matching meanders. Sampled references remain present. |
-| Current sensing and regulator geometry | Confirmed separate shunt sense traces with no shared load-trace objects. Measured local input/SW/FB and feedback-return paths. Shared ground copper still needs a loss/noise assessment. |
+| Current sensing and regulator geometry | Confirmed separate shunt sense traces with no shared load-trace objects. Measured local input/SW/FB and feedback-return paths. The bulk ground DC model is now complete for its stated cases; local connections and switching noise remain outside it. |
 | Labels and apertures | Added readable interface/button labels, pin signals and a numbered legend. Inspected native front silk and mask/paste plots. C7 keeps thermal relief at a 45-degree spoke angle. |
-| Circuit/package consistency | Netlist/pad checks pass. Manufacturer package and pinout review is complete for U40–U42, U1, U81 and D40; see [Critical-package-review.md](Critical-package-review.md). The Pi socket and switch geometry checks remain valid. The remaining package review is not claimed complete. |
+| Circuit/package consistency | Netlist/pad checks pass. Manufacturer package/pinout checks now cover U40–U42, U1, U81, D40, both MCUs, all six CAN controllers/transceivers, both ACS712 sensors and Q1; see [Critical-package-review.md](Critical-package-review.md). The Pi socket and switch geometry checks remain valid. Inductors, connectors/fuse hardware, remaining discretes and L298 installation still need the relevant drawing/process checks. |
 | Power-margin sensitivity | Compared CAN, encoder and Pi limits separately; calculated capacitor-retention targets, feed-forward zeros/poles, converter ripple/loss and L298 cooling requirements. Four independent numerical tests pass; results were regenerated for the wider supply copper. Setpoints and BOM did not change in this pass. See Power-margin-review.md. |
+| Bulk ground-plane DC loss | Extracted saved In1 fill, modeled three DC current cases on three meshes with two port radii, and compared load grounds with feedback-reference grounds. Four independent sheet-solver tests pass. Positive Pi ground offsets are 2.6–6.5 mV in these cases; local connections, contacts and dynamics are excluded. See [Ground-plane-review.md](Ground-plane-review.md). |
 
 The component centers, pad shapes/nets, mounting geometry, CAN backbone and
-project rules are unchanged by this width-only pass. R430/R431 retain the
+project rules are unchanged by the preceding width-only pass. R430/R431 retain the
 precision parts selected in the previous revision. The schematic PDF,
 current CSV BOMs, board previews and verification reports describe this revision.
+The subsequent ground-plane and additional package reviews change no CAD or
+BOM files, so the prior native checks still match their source hashes.
 
 ## Findings that still prevent release
 
-- **Supply design:** complete the Pi/logic return and total-loss budget after
-  the present feed widening; improve the Pi feed further if required. The encoder
+- **Supply design:** add local return connections, contacts and regulator
+  load/line behavior to the Pi/logic budget; the bulk-plane screen is complete
+  for its stated scenarios. Improve the Pi feed further if required. The encoder
   connector is below its recorded 3.3 V range endpoint even before return
   losses. Establish the encoder's permitted range or select a suitable supply.
   The Pi screen cannot guarantee freedom from low-voltage warnings. These
@@ -61,6 +65,9 @@ not require a new general measurement campaign.
   [measured path geometry](Digital-geometry-check.json),
   [drill/aperture review](Solder-via-review.md).
 - [Resistor procurement change](Parts-review.md#logic-divider-tolerance-change--october-27).
+- [Ground-plane model and contact sensitivity](Ground-plane-review.md),
+  [mesh results](Ground-plane-check.json) and
+  [17 additional package checks](Selected-package-check.json).
 
 Run the `check_*.py` tools with KiCad's bundled Python. Run
 `check_power_stage.py` before `check_load_allocation.py` and
@@ -71,3 +78,6 @@ change. Run `check_power_margins.py` with ordinary Python
 after the upstream reports; `python -m unittest test_power_margins.py` checks
 its arithmetic independently. The four numerical tests do not replace DRC
 or qualify the operating assumptions.
+The ground model uses KiCad Python for extraction and a separate interpreter
+with NumPy/SciPy/Shapely for solving; see Ground-plane-review.md for commands.
+Its four additional numerical tests validate the solver independently.

@@ -91,12 +91,13 @@ matched loop area, immunity to switching pickup or zero current in shared
 pad copper. Keep the sense taps at the shunt; do not add balancing meanders
 merely to equalize via count.
 
-The geometry review is complete at this level. A plane-resistance model and
-thermal/noise qualification are not available; zero unconnected items proves
-connectivity, not a bound on ground bounce. The next power decision should
-use the final load envelope and the margins in Supply-path-review.md. Ripple,
-ADC noise and loaded temperature are assembly/bring-up tests, not requests
-to measure the unbuilt PCB before Thursday.
+The geometry review is complete at this level. The later
+[ground-plane DC screen](Ground-plane-review.md) now models the saved In1
+fill and shared return currents. It closes the bulk-plane calculation for
+the stated scenarios, not local connection resistance or thermal/noise
+qualification. Zero unconnected items proves connectivity, not a bound on
+ground bounce. Ripple, ADC noise and loaded temperature are assembly/bring-up
+tests, not requests to measure the unbuilt PCB before Thursday.
 
 ## Supply-width follow-up — October 27
 
