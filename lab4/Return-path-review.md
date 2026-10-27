@@ -40,8 +40,10 @@ The plane-centerline samples also include ordinary pad/via clearance holes.
 A sampled void is a location to inspect, not automatically an electrical
 failure. Check the filled In1 plane and bottom ground fill, especially where
 routes change layers. [Layer-stack.md](Layer-stack.md) explains why In2 signals
-also need the nearby B.Cu reference reviewed. Pair spacing, branch lengths
-and controlled impedance are not yet qualified.
+also need the nearby B.Cu reference reviewed. The [CAN geometry audit](CAN-geometry-review.md) now records branch-inclusive
+lengths, pair proximity and the remaining bus-A reference gaps. These gaps
+coincide with bottom 3.3 V and MOSI routes near the front CAN circuit. Final
+pair/stub refinement and controlled impedance remain unqualified.
 
 ## Initial supply resistance screening
 
@@ -52,7 +54,7 @@ their sensors, connectors and flyback diodes. The existing input-power circuit i
 sizing and battery/protection decisions remain unfinished.
 
 [Supply-path-review.md](Supply-path-review.md) now uses actual saved conductor
-geometry to screen the 3.3 V and 5 V paths. It flags the long supply paths for
+geometry to screen 3.3 V, 5 V, motor and servo paths. It flags the long supply paths for
 load allocation and widening/parallel-via review. The calculation does not
 establish thermal current capability or guaranteed load voltage.
 

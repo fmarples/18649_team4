@@ -29,21 +29,50 @@ and the omitted losses mean it is not a guaranteed worst-case load voltage.
 
 | Path | Calculated conductor resistance | Screening drop |
 | --- | ---: | ---: |
-| L2.2 to Pi J70.2 | 0.0564 ohm | 0.186 V at 3.3 A |
-| L2.2 to Pi J70.4 | 0.0580 ohm | 0.191 V at 3.3 A |
+| L2.2 to Pi J70.2 | 0.0495 ohm | 0.164 V at 3.3 A |
+| L2.2 to Pi J70.4 | 0.0511 ohm | 0.169 V at 3.3 A |
 | L3.2 to checked MCU/CAN supply pads | 0.0642–0.3504 ohm | 0.0513–0.2803 V at 0.8 A |
 
 For example, subtracting the J70.4 path drop from the regulator's 5.014644 V
-static component-tolerance corner gives 4.823 V before the omitted losses.
+static component-tolerance corner gives 4.846 V before the omitted losses.
 We have not established adequate operating margin from this calculation alone.
 
-Before fabrication, assign currents to the shared trunks and individual loads,
-widen or parallel the demanding paths, and review vias and return copper.
-The Pi path currently includes seven through vias in the selected path; their
-current sharing and temperature rise need attention. A native DRC pass does
-not establish current capacity. Motor and servo routes need the same current,
-voltage-drop and return-path review; this script currently screens only 3.3 V
-and 5 V.
+We widened 107 existing 5 V segments where clearance permitted, added a
+parallel 0.70/0.30 mm via at six Pi supply transitions and enlarged the seventh
+transition to 0.80/0.40 mm. The selected single path still counts seven vias;
+the calculation does not credit the added parallel paths. The larger Pi-path
+screening drop decreased from 0.191 V to 0.169 V. We preserved the narrower
+section beside the Pi antenna reservation.
+
+Before fabrication, assign currents to shared trunks and individual loads,
+include their ground-return paths, and check voltage and thermal margins.
+The 3.3 A stress applied to U80/U2/U3 in the JSON is not their operating current:
+the rail allocation includes the Pi. A native DRC pass does not establish
+current capacity or sufficient Pi input voltage.
+
+## Motor and servo copper
+
+We widened 333 existing motor/servo segments while preserving shunt sense
+branches and the U80.1 thermal passages. Sections beside mounting-hole and
+keep-out boundaries retain their original widths. No footprint or pad changed.
+
+| Copper path | Calculated resistance | Screening drop |
+| --- | ---: | ---: |
+| Servo L1.2 to R1.1 | 0.00373 ohm | 0.0149 V at 4 A |
+| Servo R1.2 to J90.2 | 0.02480 ohm | 0.0992 V at 4 A |
+| Left motor: U80 output to sensor, sensor to connector, connector to U80 return | 0.02635 ohm total | 0.0843 V at 3.2 A |
+| Right motor: corresponding three sections | 0.01887 ohm total | 0.0604 V at 3.2 A |
+
+Servo copper contributes about 0.114 V and 0.457 W at the provisional 4 A
+allocation, down from 0.123 V and 0.491 W. The 0.010 ohm shunt adds another
+0.040 V and 0.160 W; it is not included in the copper figures. These values
+still omit the servo ground return and connector/cable losses.
+
+Motor totals add one path through each series section, not both parallel
+ACS712 input pins. They exclude the sensor's internal conductor, L298 bridge,
+external motor wiring and battery supply/ground paths. The 3.2 A value is a
+catalog stall stress case, **not an allowable L298 operating current**.
+Current limiting and thermal behavior remain unresolved.
 
 We moved the five transitions at R1.2, U2.3, U3.4, Q1.3 and C430.1 outside
 their SMD solder lands and used two 0.70/0.30 mm vias at each site. The supply

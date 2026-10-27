@@ -16,13 +16,17 @@ The switch contact pairs, pad dimensions and nets pass the placement checks;
 the circuit and three BOM views agree. The regulator revision moves/rotates
 30 footprints while preserving their pad nets and all unrelated positions.
 The regulator pin/divider review is recorded in [Power-stage-review.md](Power-stage-review.md).
-The current routing contains 15,406 track segments, 949 vias and six
+The current routing contains 15,418 track segments, 955 vias and six
 ground zones on four copper layers. All 306 targeted connection checks pass.
 Fresh ERC, native PCB DRC and schematic parity have zero findings; native
 DRC and the full connectivity count both report zero missing connections.
 The schematic separates the two unused Pi 3.3 V pins into individual
 no-connect nets. All 284 electrical footprints and eight supports match.
-See [Routing-review.md](Routing-review.md) for the signal and power-return changes.
+See [Routing-review.md](Routing-review.md) for the signal and power changes.
+Selected Pi/motor/servo traces are wider; the screened Pi feed drop is now
+0.169 V at 3.3 A. [CAN-geometry-review.md](CAN-geometry-review.md) identifies
+bus-A reference gaps and remaining layer/branch review. These checks do not
+settle load voltage, thermal capability or signal integrity.
 
 `Fabrication-check.json` records an automated PASS with source hashes and
 ignored rule categories. This establishes the checked CAD connections and

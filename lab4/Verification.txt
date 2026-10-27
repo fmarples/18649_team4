@@ -388,3 +388,21 @@ October 26 output-power routing and connectivity-check correction
 - Copper/placement previews and PDF schematic updated and visually inspected.
 - Source checks and return/supply/power screenings regenerated; no manufacturing or submission release.
 - Power/CAN/thermal review and unresolved battery, protection and mechanical decisions remain open.
+
+26 October 2026 — power-width refinement and CAN geometry audit
+- Board SHA256: 29d6cd46095b53525015c990b50795ad0b960cf5855cb1583dffc3030c5dc6b3
+- 15,418 segments, 955 vias, six filled GND zones; In1 ground only.
+- Widened 107 existing 5V and 333 motor/servo segments. Six parallel Pi vias added;
+  seventh transition enlarged to 0.80/0.40mm. Existing endpoints/nets unchanged.
+- All footprint positions, pad geometry/nets, zone connection modes and design rules unchanged.
+- Local widths beside holes, antenna keep-out and U80.1 thermals preserved after DRC review.
+- Fresh native ERC/DRC/parity: zero findings; zero missing connections. All 306 targeted checks pass.
+- Netlist/BOM and placement checks pass: 284 components, 298 nets, eight supports.
+- Single-path screening: Pi J70.4 drop 0.191 -> 0.169V at 3.3A; servo copper
+  0.123 -> 0.114V at 4A. Ground, contacts, heating and parallel sharing are not solved.
+- Added motor/servo path calculations and CAN branch/reference geometry audit.
+- Analytic point-to-segment cases and synthetic copper graph/resistance cases pass.
+- Native four-layer copper previews regenerated and inspected. Reports match saved board hash.
+- Remaining: bus-A reference crossings, load/return/thermal and switching-loop review,
+  effective capacitance, D807.1/U1.4 pad-via treatment and hardware decisions.
+- No fabrication release, submission, hardware measurement or rated-current claim.

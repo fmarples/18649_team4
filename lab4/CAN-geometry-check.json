@@ -1,0 +1,166 @@
+{
+  "source_sha256": "29d6cd46095b53525015c990b50795ad0b960cf5855cb1583dffc3030c5dc6b3",
+  "fabrication_release": false,
+  "status": "Geometry measured; engineering review required",
+  "sample_spacing_max_mm": 0.5,
+  "own_pad_via_exclusion_radius_mm": 1.0,
+  "nets": [
+    {
+      "net": "/CAN_A_H",
+      "branch_inclusive_length_mm": 256.566,
+      "length_by_layer_mm": {
+        "F.Cu": 224.096,
+        "In2.Cu": 32.471
+      },
+      "via_count": 4,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 57.71,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 60.12,
+      "reference_void_samples_away_from_own_holes": [
+        {
+          "x_mm": 118.3,
+          "y_mm": 203.85,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 118.3,
+          "y_mm": 203.35,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 118.55,
+          "y_mm": 204.4,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 118.45,
+          "y_mm": 204.35,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 121.6,
+          "y_mm": 210.65,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 118.35,
+          "y_mm": 204.15,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 118.4,
+          "y_mm": 204.25,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 118.15,
+          "y_mm": 202.95,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 117.85,
+          "y_mm": 202.65,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        }
+      ]
+    },
+    {
+      "net": "/CAN_A_L",
+      "branch_inclusive_length_mm": 251.328,
+      "length_by_layer_mm": {
+        "F.Cu": 185.117,
+        "In2.Cu": 66.21
+      },
+      "via_count": 13,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 59.53,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 62.87,
+      "reference_void_samples_away_from_own_holes": [
+        {
+          "x_mm": 119.771,
+          "y_mm": 202.771,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 119.6,
+          "y_mm": 202.35,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        },
+        {
+          "x_mm": 119.6,
+          "y_mm": 201.85,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu"
+        }
+      ]
+    },
+    {
+      "net": "/CAN_B_H",
+      "branch_inclusive_length_mm": 242.011,
+      "length_by_layer_mm": {
+        "F.Cu": 209.54,
+        "In2.Cu": 32.471
+      },
+      "via_count": 4,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 52.48,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 55.24,
+      "reference_void_samples_away_from_own_holes": []
+    },
+    {
+      "net": "/CAN_B_L",
+      "branch_inclusive_length_mm": 236.772,
+      "length_by_layer_mm": {
+        "F.Cu": 164.062,
+        "In2.Cu": 72.71
+      },
+      "via_count": 13,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 54.42,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 57.83,
+      "reference_void_samples_away_from_own_holes": []
+    }
+  ],
+  "straight_front_pair_microstrip_estimate": {
+    "trace_width_mm": 0.2,
+    "edge_gap_mm": 0.4,
+    "dielectric_height_mm": 0.2104,
+    "copper_thickness_mm": 0.035,
+    "relative_permittivity": 4.4,
+    "single_ended_ohm": 67.29,
+    "differential_ohm": 124.17,
+    "interpretation": "Calculation for the documented nominal main-run dimensions only, not whole-bus or controlled-impedance qualification."
+  },
+  "references": [
+    "https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf",
+    "https://www.ti.com/lit/an/slla270/slla270.pdf",
+    "https://www.ti.com/lit/an/slva531a/slva531a.pdf",
+    "Layer-stack.md"
+  ],
+  "limitations": [
+    "Nearest opposite-line distance does not prove parallel coupled routing or impedance.",
+    "Length includes all branches; total H/L difference is not end-to-end timing skew.",
+    "Samples test centerlines only and exclude normal own-pad/via antipads within 1 mm.",
+    "In2 uses B.Cu fill as its nearest reference. B.Cu traces need separate return review because In2 is a signal layer.",
+    "No rise-time, reflection, crosstalk, EMC or propagation-delay measurements are claimed."
+  ]
+}

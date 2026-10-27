@@ -1,13 +1,39 @@
 # Power, MCU, CAN and signal routing
 
 26 October 2026. Every required PCB connection is now routed. The saved
-**four-layer** board has **15,406 track segments, 949 through vias
+**four-layer** board has **15,418 track segments, 955 through vias
 and six filled ground zones**. Native DRC, ERC and schematic parity report
 zero findings, and all **306** targeted connection checks pass. Both native
 DRC and the full connectivity count report **zero missing connections**.
 Power/current sizing, switching-loop and CAN return geometry, and the open
 battery/protection/mechanical decisions still require review. This is not a
 fabrication release or a powered test.
+
+## Power-width refinement and CAN geometry audit
+
+We widened 107 existing 5 V segments and 333 motor/servo segments where
+clearance permitted. We added six parallel 0.70/0.30 mm vias along the Pi feed,
+with short bridges on both outer layers, and enlarged the seventh transition
+to 0.80/0.40 mm. Narrower sections beside mounting holes, the Pi antenna
+reservation and the U80.1 thermal passages retain their previous widths.
+Footprints, pad nets, thermal settings and design rules are unchanged from
+revision fa1fa24. In1.Cu remains ground only.
+
+The larger calculated Pi feed drop decreased from 0.191 V to 0.169 V at the
+3.3 A rail allocation. Servo copper drop decreased from 0.123 V to 0.114 V at
+4 A, excluding the shunt and ground return. We added motor/servo calculations
+to [Supply-path-review.md](Supply-path-review.md); these are geometry-based
+screenings, not measured voltage or thermal ratings.
+
+The [CAN geometry audit](CAN-geometry-review.md) records lengths, layer detours
+and reference gaps. Bus A crosses bottom-layer 3.3 V and MOSI clearance gaps
+near the front CAN circuit. Their refinement, actual branch-current allocation,
+ground-return loss and switching-loop review remain open. D807.1 and U1.4 still
+have SMD-pad via overlap requiring rerouting or a qualified assembly treatment.
+
+Fresh native ERC/DRC/parity and all 306 targeted checks pass. All 284 electrical
+footprints and eight supports match the schematic and placement data. The
+saved copper previews and calculation reports reference this board revision.
 
 ## Signal completion and feedback returns
 

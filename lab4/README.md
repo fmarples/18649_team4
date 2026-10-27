@@ -7,16 +7,18 @@ its 40-pin header.
 
 **Status, 26 October 2026:** all required PCB connections are routed, with
 zero missing connections and zero native DRC/ERC/schematic-parity findings.
-All 306 targeted connection checks pass. We completed the six remaining rear
-MCU signals, separated the unused Pi 3.3 V pins, added three explicit feedback
-ground branches and moved three more power-via sites outside solder pads.
-Final supply/return sizing, CAN geometry and battery/protection/mechanical
-decisions remain unfinished. The board is not released for fabrication.
+All 306 targeted connection checks pass. We widened selected Pi, motor and
+servo power traces and reinforced seven Pi-supply via transitions. The maximum
+screened Pi feed drop decreased from 0.191 V to 0.169 V at 3.3 A. Motor/servo
+copper calculations and a CAN geometry audit now identify specific remaining
+review locations. Final supply/return sizing, CAN refinement and
+battery/protection/mechanical decisions remain unfinished. The board is not released for fabrication.
 See [Routing-review.md](Routing-review.md) for the completed scope and limits.
 The reference [layer stack](Layer-stack.md) and initial
 [return-path review](Return-path-review.md) document the copper assumptions and remaining checks.
 The [supply-path screening](Supply-path-review.md) calculates initial trace resistance;
 load allocation, voltage margin and thermal current capability still need review.
+The [CAN geometry audit](CAN-geometry-review.md) records branch lengths and localized ground-reference gaps.
 On October 26 staff explicitly allowed four-layer boards. The saved PCB now
 uses F.Cu / In1.Cu ground / In2.Cu signals / B.Cu, with inner-layer keep-outs. Teams
 should plan stencil assembly, not assume board-house assembly. See the dated
@@ -79,14 +81,14 @@ for a TA submission so the reviewed version can be recovered later.
 | --- | --- |
 | [KiCad/Lab4.kicad_pro](KiCad/Lab4.kicad_pro) | Open this project in KiCad 10. |
 | [KiCad/Lab4.kicad_sch](KiCad/Lab4.kicad_sch) | Overview linking the Front, Rear, Cockpit and Power sheets. |
-| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 x 234 mm PCB with partial power, CAN, host and signal routing and measured chassis centers. |
+| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 x 234 mm PCB with all required connections routed; electrical/thermal and mechanical review remains open. |
 | [Placement-overview.png](Placement-overview.png) | Direct Pi stack: bottom socket and top circuitry above the Pi. |
 | [Pi-stack-side-view.png](Pi-stack-side-view.png) | Proposed 22 mm Pi gap and 35 mm chassis spacers; physical fit pending. |
 | [Placement-detail.svg](Placement-detail.svg) | Native KiCad plot with pads and references. |
 | [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
 | [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
 | [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |
-| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | No ordinary DRC violations or missing footprints; 31 unconnected items remain. |
+| [KiCad/Placement-DRC.json](KiCad/Placement-DRC.json) | Fresh native DRC and schematic parity: zero findings and zero missing connections. |
 | [Lab4-Circuits.pdf](Lab4-Circuits.pdf) | Five-page schematic preview. |
 | [Pin-map.csv](Pin-map.csv) | Per-zone signal names, physical pins, modes and unresolved integration notes. |
 | [Power-design.html](Power-design.html) | Proposed power tree, component calculations and validation limits. |

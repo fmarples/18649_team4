@@ -25,7 +25,10 @@ In2 is much closer to B.Cu than to In1.Cu in this arrangement. We therefore
 must review the bottom ground fill beneath inner signal routes as well as the
 In1 plane. Merely moving a signal to an inner layer does not give it a
 continuous nearby ground reference. CAN pair spacing, detours, layer changes
-and return continuity still need a final geometry review.
+and return continuity still need final refinement. The initial
+[CAN geometry audit](CAN-geometry-review.md) records the measured copper and
+specific reference gaps; its nominal front-pair estimate is not a fabrication
+impedance qualification.
 
 The inner copper is thinner than the outer copper. The new supply joins
 establish connectivity; they are not a final current rating. Before release,

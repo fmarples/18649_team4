@@ -119,10 +119,12 @@ def evaluate(net, source, targets, allocated_current, source_minimum):
             r = distance[indices[pad.m_Uuid.AsString()]]
             row.update(path_resistance_ohm=round(r, 6),
                        drop_if_full_rail_current_A_is_applied_V=round(r * allocated_current, 6),
-                       source_minimum_minus_this_drop_V=round(source_minimum - r * allocated_current, 6),
                        included_trace_length_mm=round(sum(p.ToMM(p.Cast_to_PCB_TRACK(x).GetLength())
                            for x in path if x.Type() == p.PCB_TRACE_T), 3),
-                       included_vias=sum(x.Type() == p.PCB_VIA_T for x in path))
+                       included_vias=sum(x.Type() == p.PCB_VIA_T for x in path),
+                       conductor_loss_if_full_rail_current_A_is_applied_W=round(r * allocated_current**2, 6))
+            if source_minimum is not None:
+                row['source_minimum_minus_this_drop_V'] = round(source_minimum-r*allocated_current,6)
         results.append(row)
     return dict(net=net, source='.'.join(source), assumed_full_rail_current_A=allocated_current,
                 static_source_minimum_V=source_minimum, paths=results)
@@ -140,10 +142,27 @@ rails = [
              corners['5V']['allocated_output_A'],
              corners['5V']['static_reference_and_resistor_corners_V'][0]),
 ]
+actuator_paths = [
+    evaluate('/+6V6_SERVO', ('L1','2'), [('R1','1')], 4.0,
+             corners['SERVO']['static_reference_and_resistor_corners_V'][0]),
+    evaluate('/Front zone/SERVO_VPLUS', ('R1','2'), [('J90','2')], 4.0, None),
+]
+for side, sensor, connector, drive, ret in [
+        ('LEFT','U2','J80','2','3'), ('RIGHT','U3','J81','13','14')]:
+    actuator_paths += [
+        evaluate('/Rear zone/'+side+'_BRIDGE', ('U80',drive),
+                 [(sensor,'1'),(sensor,'2')], 3.2, None),
+        evaluate('/Rear zone/'+side+'_MOTOR', (sensor,'3'),
+                 [(connector,'1')], 3.2, None),
+        evaluate('/Rear zone/'+side+'_RETURN', (connector,'2'),
+                 [('U80',ret)], 3.2, None),
+    ]
 report = dict(source_sha256=hashlib.sha256(args.board.read_bytes()).hexdigest(),
               fabrication_release=False, copper_resistivity_ohm_m=rho,
               outer_copper_mm=0.035, inner_copper_mm=0.0152,
               assumed_via_plating_mm=via_plating_mm, rails=rails,
+              actuator_paths=actuator_paths,
+              actuator_interpretation='Servo uses the provisional 4 A rail allocation. Motor 3.2 A is a catalog stall stress calculation, NOT a permissible L298 operating current. Paths omit shunt/sensor/driver and external cable/contact loss; ground returns are not solved.',
               limitations=[
                   'Counts each traversed segment in full, even when a connection touches its middle; parallel paths are not solved.',
                   'Applies the whole allocated rail current to each path separately; actual branch currents must be assigned for a load-flow result.',
