@@ -3,22 +3,22 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 6658,
-    "B.Cu": 4867,
-    "In2.Cu": 4154
+    "F.Cu": 6728,
+    "B.Cu": 4888,
+    "In2.Cu": 4270
   },
   "errors": [],
   "counts": {
-    "track_segments": 15679,
-    "through_vias": 960,
+    "track_segments": 15886,
+    "through_vias": 959,
     "copper_zones": 6,
     "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
-    "0.2": 11469,
+    "0.2": 11642,
     "0.8": 640,
     "0.5": 884,
-    "0.3": 754,
+    "0.3": 788,
     "1.6": 1,
     "0.6": 43,
     "0.25": 98,
@@ -35,7 +35,7 @@
     "1.25": 26
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 893,
+    "0.70/0.30": 892,
     "0.80/0.40": 67
   },
   "checks": [
@@ -3697,5 +3697,5 @@
     "Power-input, motor protection and heatsink decisions remain open; no fabrication release."
   ],
   "unfinished_signal_nets": [],
-  "source_sha256": "73eb6586650cae8aeedbf9f9429d2027f47d2480ba865b94423da091a4cf709e"
+  "source_sha256": "2fafdd1f2d24dd7ce12cd0fb9be1f3a67b1bfe29f4ed01ded549d0737fcb1211"
 }

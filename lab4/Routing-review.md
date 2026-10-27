@@ -1,7 +1,7 @@
 # Power, MCU, CAN and signal routing
 
 26 October 2026. Every required PCB connection is now routed. The saved
-**four-layer** board has **15,679 track segments, 960 through vias
+**four-layer** board has **15,886 track segments, 959 through vias
 and six filled ground zones**. Native DRC, ERC and schematic parity report
 zero findings, and all **306** targeted connection checks pass. Both native
 DRC and the full connectivity count report **zero missing connections**.
@@ -25,8 +25,9 @@ The updated [supply screening](Supply-path-review.md) records the increased
 resistance so the next current-allocation review includes that tradeoff.
 
 We inventoried nominal via-drill intersections with SMD solder lands and moved
-70 existing vias outside those lands, including D807.1 and U1.4. The count fell
-from 98 to 28; [Solder-via-review.md](Solder-via-review.md) identifies the
+78 existing vias outside those lands, including D807.1 and U1.4. We also
+removed one redundant ground via. The count fell
+from 98 to 19; [Solder-via-review.md](Solder-via-review.md) identifies the
 remaining work. D807's relocated via is 0.80/0.40 mm with 0.80 mm bridges.
 One added ground stitch near CAN_B_L preserves a nearby return transition
 after the ground-via moves. All recorded CAN signal transitions are within
@@ -37,6 +38,12 @@ rules are unchanged from revision 6164a13. In1 remains ground only. Fresh
 ERC, DRC and schematic parity have zero findings; all 306 targeted checks
 pass and the full connectivity count is zero. Explicit feedback-ground and
 shunt-sense paths still pass with zones excluded. No hardware tests are claimed.
+
+The follow-up pass moves C140.2, R502.2, U21.7, U25.7 and the four rear/cockpit
+crystal ground vias at Y20/Y24/Y30/Y34. C200.2 uses its existing ground path
+through the via at (105.5, 89.3) mm, so its redundant via through the solder
+land was removed. The pad and every formerly attached trace still connect
+with zones excluded. No new drill/land intersections were introduced.
 
 The sections below record earlier checkpoints. Their then-pending items are
 superseded by the current status above and the linked engineering reviews.

@@ -9,8 +9,9 @@ its 40-pin header.
 zero missing connections and zero native DRC/ERC/schematic-parity findings.
 All 306 targeted connection checks pass. We repaired the sampled CAN ground
 reference by rerouting adjacent 3.3 V/MOSI copper without changing the CAN
-backbone. We also moved 70 existing vias off SMD solder lands, reducing
-nominal drill/land intersections from 98 to 28. Earlier Pi/motor/servo copper
+backbone. We also moved 78 existing vias off SMD solder lands and removed
+one redundant ground via, reducing
+nominal drill/land intersections from 98 to 19. Earlier Pi/motor/servo copper
 widening remains in place. The Pi feed screening drop is 0.169 V at 3.3 A;
 the longer 3.3 V feed now needs current-allocation and voltage-margin review.
 Remaining solder-pad vias, supply/return sizing, CAN branches and
@@ -134,7 +135,7 @@ reported approximately 51.75mm usable height. Strap/lead routing, wiring,
 cost and lead time remain; see Parts-review.md.
 The proposed branches are the unregulated motor supply, 6.6 V servo buck,
 5.1 V Pi/devices buck and 3.318 V logic buck. The protected-input electrical
-target is 8â€“15 V; this does not define the cells' allowed discharge voltage.
+target is 8–15 V; this does not define the cells' allowed discharge voltage.
 
 The pin proposal uses the Lab 3 candidate/WCET overlays at commit `c4fba58` as
 its baseline. Lab 3 CAN, timing and LED assignments are retained or reserved.
@@ -146,12 +147,12 @@ power/decoupling pinout.
 
 Both bare-MCU support circuits are now placed: VDD bypass capacitors, filtered
 VDDA, reset and BOOT0 circuits, separate reset/self-test buttons, SWD and UART
-headers. Each MCU's VCAP1 pin has its own **4.7 ÂµF** capacitor to ground, as
+headers. Each MCU's VCAP1 pin has its own **4.7 µF** capacitor to ground, as
 specified for LQFP64 in the [STM32F401RE datasheet](https://www.st.com/resource/en/datasheet/stm32f401re.pdf).
 VCAP1 is an internal-regulator output, not a GPIO or a 3.3 V supply input.
 The initial clock plan uses internal HSI/PLL; the Nucleo ST-LINK clock is absent.
 
-We added the Pi 40-pin socket, twelve diagnostic LEDs with individual 1 kÎ©
+We added the Pi 40-pin socket, twelve diagnostic LEDs with individual 1 kΩ
 resistors, and probe rows matching the Lab 3 handout. Extra probes have separate
 headers. The Pi's 3.3 V output remains disconnected from the PCB's independent
 3.3 V regulator. Do not connect separate USB-C power while the board supplies

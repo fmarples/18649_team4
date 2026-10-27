@@ -427,3 +427,18 @@ October 26 output-power routing and connectivity-check correction
 - Remaining: 28 solder-pad via sites, mask/paste, current/return/thermal and switching
   geometry, CAN branch/detour review, and unresolved hardware decisions.
 - No fabrication release, hardware test, measurement, purchase or submission claimed.
+
+26 October 2026 — crowded solder-pad via follow-up
+- Board SHA256: 2fafdd1f2d24dd7ce12cd0fb9be1f3a67b1bfe29f4ed01ded549d0737fcb1211
+- 15,886 segments, 959 vias, six ground zones; In1 ground only.
+- Eight additional vias moved: C140.2, R502.2, U21.7, U25.7, Y20.2, Y24.2, Y30.2, Y34.2.
+- Removed redundant C200.2 via; its pad and all formerly attached tracks still
+  connect to the existing nearby ground via with zones excluded.
+- Cumulative result relative to 6164a13: 78 vias moved, one redundant via removed;
+  drill/land intersections decrease from 98 to 19, with no new intersections.
+- Footprints, pad geometry/nets, via sizes, design rules and CAN backbone unchanged.
+- All 306 targeted checks pass. CAN reference samples remain clear; feedback/shunt
+  paths remain connected without zones. Supply and placement reports refreshed.
+- Fresh native ERC/DRC/parity: zero findings and zero missing connections.
+- Copper previews regenerated. Remaining 19 sites and engineering limits are listed
+  in the reviews; no fabrication release or hardware validation is claimed.

@@ -90,8 +90,9 @@ temperature review; a DRC pass does not establish their rating.
 We also moved two transition sites at D804.1 and one at D802.2 outside
 their solder lands, with paired vias at each site. The latest pass also moves
 D807.1 and U1.4 outside their lands; D807 uses a 0.80/0.40 mm via and 0.80 mm
-bridges. Across the latest revision, 70 existing vias were relocated and
-nominal drill/land intersections fell from 98 to 28. See
+bridges. Across the latest routing passes, we relocated 78 existing vias and
+removed one redundant ground via. Nominal drill/land intersections fell
+from 98 to 19. See
 [Solder-via-review.md](Solder-via-review.md) for the remaining sites and
 mask/paste limitations. Ordinary DRC does not check solder wicking.
 
