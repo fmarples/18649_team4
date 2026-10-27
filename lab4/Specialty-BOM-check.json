@@ -1,0 +1,794 @@
+{
+  "source_sha256": {
+    "Preliminary-BOM.csv": "737ea6e18603acd563a8a3c721d1af6f083ae4a3e0885924b5754be5fa5b3b9f",
+    "Course-stock-v3.csv": "98a849fdc9599360227c8f94bbc5c3e783fc400f2ab01439f038a1e567698be9"
+  },
+  "source_commit": "6164a13918b08bc5ddbff36e200d9e7a8c292dcc",
+  "source_active_rows": 121,
+  "zero_quantity_rows_omitted": 6,
+  "sheets": [
+    {
+      "name": "Specialty parts",
+      "consolidated_lines": 49,
+      "source_rows": [
+        5,
+        15,
+        16,
+        23,
+        83,
+        84,
+        24,
+        25,
+        27,
+        28,
+        32,
+        33,
+        80,
+        35,
+        40,
+        41,
+        42,
+        43,
+        44,
+        55,
+        74,
+        81,
+        86,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        98,
+        100,
+        102,
+        103,
+        105,
+        106,
+        107,
+        108,
+        109,
+        111,
+        112,
+        113,
+        114,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128
+      ],
+      "totals": [
+        {
+          "part": "GRM1885C1H180JA01D",
+          "requested": 13,
+          "source_rows": [
+            5
+          ]
+        },
+        {
+          "part": "WSL2512R0100FEA",
+          "requested": 5,
+          "source_rows": [
+            15
+          ]
+        },
+        {
+          "part": "INA180A2IDBVR",
+          "requested": 2,
+          "source_rows": [
+            16
+          ]
+        },
+        {
+          "part": "DF63M-2P-3.96DSA",
+          "requested": 6,
+          "source_rows": [
+            23,
+            83,
+            84
+          ]
+        },
+        {
+          "part": "3568",
+          "requested": 2,
+          "source_rows": [
+            24
+          ]
+        },
+        {
+          "part": "DMPH3010LK3-13",
+          "requested": 2,
+          "source_rows": [
+            25
+          ]
+        },
+        {
+          "part": "BZT52C12",
+          "requested": 2,
+          "source_rows": [
+            27
+          ]
+        },
+        {
+          "part": "UPW1E102MHD",
+          "requested": 2,
+          "source_rows": [
+            28
+          ]
+        },
+        {
+          "part": "GRM32ER61E226KE15L",
+          "requested": 4,
+          "source_rows": [
+            32
+          ]
+        },
+        {
+          "part": "GRM188R71H104KA93D",
+          "requested": 6,
+          "source_rows": [
+            33,
+            80
+          ]
+        },
+        {
+          "part": "RC0603FR-07100KL",
+          "requested": 2,
+          "source_rows": [
+            35
+          ]
+        },
+        {
+          "part": "RT0603BRD0775KL",
+          "requested": 2,
+          "source_rows": [
+            40
+          ]
+        },
+        {
+          "part": "RT0603BRD0710KL",
+          "requested": 2,
+          "source_rows": [
+            41
+          ]
+        },
+        {
+          "part": "RC0603FR-0733KL",
+          "requested": 2,
+          "source_rows": [
+            42
+          ]
+        },
+        {
+          "part": "RC0603FR-0745K3L",
+          "requested": 2,
+          "source_rows": [
+            43
+          ]
+        },
+        {
+          "part": "RC0603FR-0722KL",
+          "requested": 2,
+          "source_rows": [
+            44
+          ]
+        },
+        {
+          "part": "CC0603JRX7R7BB105",
+          "requested": 3,
+          "source_rows": [
+            55
+          ]
+        },
+        {
+          "part": "ESQ-120-44-L-D",
+          "requested": 2,
+          "source_rows": [
+            74
+          ]
+        },
+        {
+          "part": "EEU-FR1E471",
+          "requested": 2,
+          "source_rows": [
+            81
+          ]
+        },
+        {
+          "part": "CRCW0603100RFKEA",
+          "requested": 6,
+          "source_rows": [
+            86
+          ]
+        },
+        {
+          "part": "SN74LVC14APWR",
+          "requested": 2,
+          "source_rows": [
+            88
+          ]
+        },
+        {
+          "part": "DF63M-3P-3.96DSA",
+          "requested": 2,
+          "source_rows": [
+            89
+          ]
+        },
+        {
+          "part": "CRCW06032K20FKEA",
+          "requested": 5,
+          "source_rows": [
+            90
+          ]
+        },
+        {
+          "part": "CRCW0603100KFKEA",
+          "requested": 5,
+          "source_rows": [
+            91
+          ]
+        },
+        {
+          "part": "MMBT3904-7-F",
+          "requested": 5,
+          "source_rows": [
+            92
+          ]
+        },
+        {
+          "part": "CRCW0603220RFKEA",
+          "requested": 5,
+          "source_rows": [
+            93
+          ]
+        },
+        {
+          "part": "SNT-100-BK-T-H",
+          "requested": 20,
+          "source_rows": [
+            98
+          ]
+        },
+        {
+          "part": "0297010.L",
+          "requested": 3,
+          "source_rows": [
+            100
+          ]
+        },
+        {
+          "part": "970350365",
+          "requested": 5,
+          "source_rows": [
+            102
+          ]
+        },
+        {
+          "part": "M1269-2545-AL",
+          "requested": 5,
+          "source_rows": [
+            103
+          ]
+        },
+        {
+          "part": "DF63-2S-3.96C",
+          "requested": 4,
+          "source_rows": [
+            105
+          ]
+        },
+        {
+          "part": "DF63A-1618SC",
+          "requested": 10,
+          "source_rows": [
+            106
+          ]
+        },
+        {
+          "part": "DF63-3S-3.96C",
+          "requested": 2,
+          "source_rows": [
+            107
+          ]
+        },
+        {
+          "part": "DF63A-2022SC",
+          "requested": 6,
+          "source_rows": [
+            108
+          ]
+        },
+        {
+          "part": "M20-1060400",
+          "requested": 3,
+          "source_rows": [
+            109
+          ]
+        },
+        {
+          "part": "97790803111",
+          "requested": 10,
+          "source_rows": [
+            111
+          ]
+        },
+        {
+          "part": "MFW030A",
+          "requested": 10,
+          "source_rows": [
+            112
+          ]
+        },
+        {
+          "part": "50M025045P005",
+          "requested": 10,
+          "source_rows": [
+            113
+          ]
+        },
+        {
+          "part": "M20-1180046",
+          "requested": 12,
+          "source_rows": [
+            114
+          ]
+        },
+        {
+          "part": "3057 (red/black cut lengths)",
+          "requested": 6,
+          "source_rows": [
+            119
+          ]
+        },
+        {
+          "part": "3051 (red/black cut lengths)",
+          "requested": 2,
+          "source_rows": [
+            120
+          ]
+        },
+        {
+          "part": "WP7113ID",
+          "requested": 2,
+          "source_rows": [
+            121
+          ]
+        },
+        {
+          "part": "WP7113QWC/D",
+          "requested": 2,
+          "source_rows": [
+            122
+          ]
+        },
+        {
+          "part": "WP7113YD",
+          "requested": 2,
+          "source_rows": [
+            123
+          ]
+        },
+        {
+          "part": "WP7113QBC/D",
+          "requested": 2,
+          "source_rows": [
+            124
+          ]
+        },
+        {
+          "part": "UNRESOLVED: L298N-to-6396BG attachment",
+          "requested": 1,
+          "source_rows": [
+            125
+          ]
+        },
+        {
+          "part": "PROVISIONAL: Tenergy Amazon B077Y9HNTF",
+          "requested": 1,
+          "source_rows": [
+            126
+          ]
+        },
+        {
+          "part": "UNRESOLVED: NiMH charger",
+          "requested": 1,
+          "source_rows": [
+            127
+          ]
+        },
+        {
+          "part": "UNRESOLVED: servo-side adapter lead",
+          "requested": 1,
+          "source_rows": [
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Common parts",
+      "consolidated_lines": 36,
+      "source_rows": [
+        2,
+        3,
+        4,
+        6,
+        36,
+        38,
+        56,
+        58,
+        63,
+        71,
+        73,
+        7,
+        46,
+        47,
+        48,
+        49,
+        50,
+        54,
+        59,
+        64,
+        8,
+        12,
+        9,
+        13,
+        22,
+        77,
+        85,
+        87,
+        10,
+        14,
+        29,
+        57,
+        94,
+        95,
+        96,
+        97,
+        11,
+        17,
+        18,
+        39,
+        62,
+        19,
+        20,
+        21,
+        26,
+        30,
+        31,
+        34,
+        75,
+        37,
+        45,
+        51,
+        52,
+        53,
+        60,
+        61,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        72,
+        76,
+        78,
+        79,
+        82,
+        101,
+        115
+      ],
+      "totals": [
+        {
+          "part": "MCP2515T-I/ST",
+          "requested": 7,
+          "source_rows": [
+            2
+          ]
+        },
+        {
+          "part": "SN65HVD231DR",
+          "requested": 7,
+          "source_rows": [
+            3
+          ]
+        },
+        {
+          "part": "CX3225SB16000H0FLJCC",
+          "requested": 7,
+          "source_rows": [
+            4
+          ]
+        },
+        {
+          "part": "CRCW060310K0FKEA",
+          "requested": 52,
+          "source_rows": [
+            6,
+            36,
+            38,
+            56,
+            58,
+            63,
+            71,
+            73
+          ]
+        },
+        {
+          "part": "KGM15AR71C104KT",
+          "requested": 55,
+          "source_rows": [
+            7,
+            46,
+            47,
+            48,
+            49,
+            50,
+            54,
+            59,
+            64
+          ]
+        },
+        {
+          "part": "Header 2x02 / 2.54 mm / vertical",
+          "requested": 8,
+          "source_rows": [
+            8,
+            12
+          ]
+        },
+        {
+          "part": "Header 1x04 / 2.54 mm / vertical",
+          "requested": 17,
+          "source_rows": [
+            9,
+            13,
+            22,
+            77,
+            85,
+            87
+          ]
+        },
+        {
+          "part": "Header 1x02 / 2.54 mm / vertical",
+          "requested": 19,
+          "source_rows": [
+            10,
+            14,
+            29,
+            57,
+            94,
+            95,
+            96,
+            97
+          ]
+        },
+        {
+          "part": "RC0603FR-07120RL",
+          "requested": 5,
+          "source_rows": [
+            11
+          ]
+        },
+        {
+          "part": "RC0603FR-074K7L",
+          "requested": 2,
+          "source_rows": [
+            17
+          ]
+        },
+        {
+          "part": "Header 1x03 / 2.54 mm / vertical",
+          "requested": 9,
+          "source_rows": [
+            18,
+            39,
+            62
+          ]
+        },
+        {
+          "part": "ACS712ELCTR-05B-T",
+          "requested": 3,
+          "source_rows": [
+            19
+          ]
+        },
+        {
+          "part": "GCM1885C2A102FA16D",
+          "requested": 3,
+          "source_rows": [
+            20
+          ]
+        },
+        {
+          "part": "ERJ-3EKF1001V",
+          "requested": 15,
+          "source_rows": [
+            21
+          ]
+        },
+        {
+          "part": "RC0603FR-0747KL",
+          "requested": 3,
+          "source_rows": [
+            26
+          ]
+        },
+        {
+          "part": "TPS564252DRLR",
+          "requested": 4,
+          "source_rows": [
+            30
+          ]
+        },
+        {
+          "part": "SDCHA1V8040-4R7-R",
+          "requested": 4,
+          "source_rows": [
+            31
+          ]
+        },
+        {
+          "part": "GRM219R61C226ME15L",
+          "requested": 9,
+          "source_rows": [
+            34,
+            75
+          ]
+        },
+        {
+          "part": "C0603C220J1GACTU",
+          "requested": 4,
+          "source_rows": [
+            37
+          ]
+        },
+        {
+          "part": "STM32F401RET6TR",
+          "requested": 3,
+          "source_rows": [
+            45
+          ]
+        },
+        {
+          "part": "GRM21BR71C475KE51L",
+          "requested": 6,
+          "source_rows": [
+            51,
+            52
+          ]
+        },
+        {
+          "part": "742863160",
+          "requested": 3,
+          "source_rows": [
+            53
+          ]
+        },
+        {
+          "part": "SWT0210-045026GSA",
+          "requested": 6,
+          "source_rows": [
+            60
+          ]
+        },
+        {
+          "part": "Header 1x06 / 2.54 mm / vertical",
+          "requested": 3,
+          "source_rows": [
+            61
+          ]
+        },
+        {
+          "part": "LTST-C190GKT",
+          "requested": 4,
+          "source_rows": [
+            65
+          ]
+        },
+        {
+          "part": "LTST-C190KRKT",
+          "requested": 4,
+          "source_rows": [
+            66
+          ]
+        },
+        {
+          "part": "LTST-C190KSKT",
+          "requested": 8,
+          "source_rows": [
+            67,
+            68
+          ]
+        },
+        {
+          "part": "Header 1x13 / 2.54 mm / vertical",
+          "requested": 4,
+          "source_rows": [
+            69
+          ]
+        },
+        {
+          "part": "Header 1x08 / 2.54 mm / vertical",
+          "requested": 2,
+          "source_rows": [
+            70
+          ]
+        },
+        {
+          "part": "Header 1x11 / 2.54 mm / vertical",
+          "requested": 2,
+          "source_rows": [
+            72
+          ]
+        },
+        {
+          "part": "Header 1x05 / 2.54 mm / vertical",
+          "requested": 2,
+          "source_rows": [
+            76
+          ]
+        },
+        {
+          "part": "Header 1x07 / 2.54 mm / vertical",
+          "requested": 2,
+          "source_rows": [
+            78
+          ]
+        },
+        {
+          "part": "L298N",
+          "requested": 2,
+          "source_rows": [
+            79
+          ]
+        },
+        {
+          "part": "SK520B",
+          "requested": 9,
+          "source_rows": [
+            82
+          ]
+        },
+        {
+          "part": "6396BG",
+          "requested": 1,
+          "source_rows": [
+            101
+          ]
+        },
+        {
+          "part": "FIT0587",
+          "requested": 3,
+          "source_rows": [
+            115
+          ]
+        }
+      ]
+    }
+  ],
+  "workbook": "TEAM_4_BOM_Lab4.xlsx",
+  "workbook_sha256": "88f8391fcda8b1890c6820763b61919118e543eaeb5dbb73d9ffb916d9bd7206",
+  "prepared_date": "2026-10-26",
+  "classification": "Exact course-v3 MPN or specified generic 2.54mm header entry = common; other active request = specialty.",
+  "validation": {
+    "all_121_active_rows_represented_once": true,
+    "requested_totals_preserved": true,
+    "cached_totals_verified": true,
+    "native_links_verified": true,
+    "filter_tables_and_frozen_panes_verified": true,
+    "both_sheets_visually_inspected": true
+  },
+  "purchasing_alternative": {
+    "U81": "Request SN74LVC14APW carrier alternative, 2 individual ICs total. Schematic MPN SN74LVC14APWR is unchanged."
+  }
+}
