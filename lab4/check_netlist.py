@@ -176,6 +176,11 @@ for pin in [11,13]:expect('U81',pin,'/GND')
 for pin,net in {1:'/GND',2:'/+5V',3:rear+'ENC_4V'}.items():expect('U82',pin,net)
 for ref,net in [('C804','/+5V'),('C805',rear+'ENC_4V')]:
     expect(ref,1,net);expect(ref,2,'/GND')
+# Battery sense must be divided/filtered before reaching the ADC.
+expect('R580',1,'/VBAT_PROTECTED')
+for ref,pin in [('R580',2),('R581',1),('C580',1),('U50',17)]:expect(ref,pin,front+'BATTERY_ADC')
+for ref in ['R581','C580']:expect(ref,2,'/GND')
+assert nets[front+'BATTERY_ADC']=={('R580','2'),('R581','1'),('C580','1'),('U50','17')}
 print('Actuator output, diode polarity, sensed current paths and encoder level-domain checks passed.')
 missing = sorted(r for r, c in components.items() if not c.findtext('footprint'))
 print(f'PASS: {len(components)} components; {len(nets)} nets; BOM, regulators, support circuits, interfaces, probe order and zone boundaries.')

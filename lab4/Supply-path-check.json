@@ -1,5 +1,5 @@
 {
-  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
+  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
   "fabrication_release": false,
   "copper_resistivity_ohm_m": 1.72e-08,
   "outer_copper_mm": 0.035,
@@ -15,12 +15,12 @@
         {
           "target": "U50.19",
           "connected": true,
-          "path_resistance_ohm": 0.143616,
-          "drop_if_full_rail_current_A_is_applied_V": 0.114893,
-          "included_trace_length_mm": 166.95,
-          "included_vias": 12,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.091914,
-          "source_minimum_minus_this_drop_V": 3.147988
+          "path_resistance_ohm": 0.171475,
+          "drop_if_full_rail_current_A_is_applied_V": 0.13718,
+          "included_trace_length_mm": 170.177,
+          "included_vias": 14,
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.109744,
+          "source_minimum_minus_this_drop_V": 3.125701
         },
         {
           "target": "U50.32",

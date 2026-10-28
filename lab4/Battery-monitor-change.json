@@ -1,0 +1,75 @@
+{
+  "status": "PASS: scoped battery-monitor revision; not a fabrication release",
+  "baseline_commit": "a695e375fe89503e45365c37156f5b6010d888db",
+  "before_board_sha256": "f2b7dfe9a3e6ab7f7b217f385651286799a0d0f2356b692937811b359fd94edd",
+  "after_board_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
+  "added_footprints": [
+    "C580",
+    "R580",
+    "R581"
+  ],
+  "removed_footprints": [],
+  "existing_footprint_changes": {
+    "C500": {
+      "before_position_mm": [
+        68.0,
+        211.0
+      ],
+      "after_position_mm": [
+        64.5,
+        211.75
+      ]
+    },
+    "U50": {
+      "before_pad": {
+        "number": "17",
+        "at": [
+          -3.75,
+          5.675
+        ],
+        "size": [
+          0.3,
+          1.55
+        ],
+        "drill": [
+          0.0,
+          0.0
+        ],
+        "net": "unconnected-(U50-PA3-Pad17)"
+      },
+      "after_pad": {
+        "number": "17",
+        "at": [
+          -3.75,
+          5.675
+        ],
+        "size": [
+          0.3,
+          1.55
+        ],
+        "drill": [
+          0.0,
+          0.0
+        ],
+        "net": "/Front zone/BATTERY_ADC"
+      }
+    }
+  },
+  "changed_copper_item_counts_by_net": {
+    "added": {
+      "/+3V3": 48,
+      "/GND": 101,
+      "/VBAT_PROTECTED": 10,
+      "/Front zone/BATTERY_ADC": 101
+    },
+    "removed": {
+      "/+3V3": 7,
+      "/GND": 11
+    }
+  },
+  "project_and_custom_rules_unchanged": true,
+  "limitations": [
+    "Copper-fill changes are checked by fresh native DRC/connectivity and the separate return-path/ground-plane checks.",
+    "This comparison does not qualify voltage accuracy, cutoff integration or hardware operation."
+  ]
+}

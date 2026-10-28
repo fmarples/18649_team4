@@ -1,7 +1,7 @@
 {
-  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
+  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
   "fabrication_release": false,
-  "checked_components": 28,
+  "checked_components": 29,
   "results": [
     {
       "ref": "U11",
@@ -2616,6 +2616,36 @@
       "result": "match",
       "terminal_drill_mm": 1.8,
       "guide_drill_mm": 1.6
+    },
+    {
+      "ref": "F1",
+      "part": "3568",
+      "result": "match",
+      "saved_drill_mm": 1.78,
+      "manufacturer_minimum_hole_mm": 1.6,
+      "saved_pad_positions_mm": [
+        [
+          "1",
+          0.0,
+          0.0
+        ],
+        [
+          "1",
+          0.0,
+          3.4
+        ],
+        [
+          "2",
+          9.92,
+          0.0
+        ],
+        [
+          "2",
+          9.92,
+          3.4
+        ]
+      ],
+      "source": "https://www.keyelco.com/product-pdf.cfm?p=306"
     }
   ],
   "limitations": [

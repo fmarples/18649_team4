@@ -241,8 +241,8 @@ def calculate():
             "Ideal CCM ripple/loss cases with zero or negative inductor valley are excluded: Eco-mode/DCM requires a different model. Extrema cover valid CCM scenarios only, not every possible operating mode.",
             "Ideal CCM capacitor-ripple and charge-step equations exclude loop response, ESR/ESL, pulse-skipping and unequal sharing. Inductor copper loss uses 19.5mohm +20% at 25C and omits core/hot losses.",
             "Divider phase lead is not full-loop phase margin. Cff alternatives are analysis candidates, not BOM changes.",
-            "Exact input/output MLCC bias curves, part-specific aging and PCB thermal impedance are unavailable; no invented values are used.",
-            "Battery, protection, mechanical decisions and actual load duty affect final selection. The current 8-15V/allocated-load sweep remains useful before those decisions."],
+            "Manufacturer typical input/output MLCC bias curves and approximate readings are documented in Power-margin-review.md. This sensitivity calculation does not substitute them for guaranteed bias/temperature/aging limits; PCB thermal impedance is unqualified.",
+            "The 3S LiPo pair is selected. Protection coordination, actual load duty and the capacitor/control-loop revision remain open. The 8-15V sweep is a regulator design envelope, not permission to discharge the pack to 8V."],
     }
 
 

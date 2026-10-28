@@ -1,4 +1,4 @@
-Sheet,Reference,Value,MPN,Footprint,Status
+﻿Sheet,Reference,Value,MPN,Footprint,Status
 Front,U10,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
 Front,U11,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Front,Y10,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
@@ -286,3 +286,6 @@ Rear,J651,REAR RIGHT lamp,2.54 mm breakaway header,Connector_PinHeader_2.54mm:Pi
 Rear,U82,MCP1700-4002E/TO,MCP1700-4002E/TO,Package_TO_SOT_THT:TO-92_Inline_Wide,"4V encoder supply; 250mA rating; 40mA planning load; pin1 GND,2 input,3 output"
 Rear,C804,10u 16V 10% low-ESR,TPSB106K016R0800,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,Polarized 10uF/16V tantalum; 0.8ohm maximum ESR at100kHz/25C; pad1 positive; input/output bypass for U82
 Rear,C805,10u 16V 10% low-ESR,TPSB106K016R0800,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,Polarized 10uF/16V tantalum; 0.8ohm maximum ESR at100kHz/25C; pad1 positive; input/output bypass for U82
+Front,R580,100k 0.1%,RT0603BRD07100KL,Resistor_SMD:R_0603_1608Metric,Battery divider high side. 15V design ceiling; 0.1% ratio resistors.
+Front,R581,10k 0.1%,RT0603BRD0710KL,Resistor_SMD:R_0603_1608Metric,Battery divider low side; VADC = VBAT/11.
+Front,C580,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,"Battery ADC filter: 9.09kohm Thevenin and 100nF, nominal tau=0.909ms."

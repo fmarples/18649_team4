@@ -3,32 +3,32 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 7330,
-    "B.Cu": 5838,
-    "In2.Cu": 5323
+    "F.Cu": 7451,
+    "B.Cu": 5901,
+    "In2.Cu": 5368
   },
   "errors": [],
   "counts": {
-    "track_segments": 18491,
-    "through_vias": 1022,
+    "track_segments": 18720,
+    "through_vias": 1035,
     "copper_zones": 6,
     "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
     "0.25": 326,
     "0.6": 246,
-    "0.8": 427,
-    "0.3": 882,
-    "0.2": 12760,
+    "0.8": 425,
+    "0.3": 881,
+    "0.2": 12995,
     "2.0": 178,
     "0.5": 921,
     "2.5": 74,
     "1.75": 77,
     "0.4": 125,
-    "1.0": 682,
+    "1.0": 681,
     "3.0": 271,
     "1.5": 1175,
-    "1.25": 106,
+    "1.25": 104,
     "1.2": 29,
     "1.38": 2,
     "3.5": 31,
@@ -37,10 +37,43 @@
     "2.75": 11
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 956,
+    "0.70/0.30": 969,
     "0.80/0.40": 66
   },
   "checks": [
+    {
+      "reference": "Battery",
+      "group": "ADC divider/filter",
+      "net": "/Front zone/BATTERY_ADC",
+      "pads": [
+        "U50.17",
+        "R580.2",
+        "R581.1",
+        "C580.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "Battery",
+      "group": "protected input",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "R580.1",
+        "C410.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "Battery",
+      "group": "sense ground",
+      "net": "/GND",
+      "pads": [
+        "R581.2",
+        "C580.2",
+        "U50.18"
+      ],
+      "physically_connected": true
+    },
     {
       "reference": "U40",
       "group": "SW",
@@ -3373,6 +3406,7 @@
         "J41.1",
         "C431.1",
         "R432.1",
+        "R580.1",
         "C800.1",
         "C421.1",
         "U41.1",
@@ -3716,7 +3750,7 @@
   ],
   "remaining": [
     "Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.",
-    "The existing input-power circuit and all 3V3 pads are connected; power sizing and final battery/protection choices remain open.",
+    "Input power, the battery divider and all 3V3 pads are connected; the LiPo pair is selected, but power sizing and protection qualification remain open.",
     "5V distribution and motor/servo outputs are connected; review voltage drop, via sharing and thermal current capability separately.",
     "All CAN/MCU and encoder pull-up 3V3 groups now reach the regulator; trunk voltage drop/current capability still need review.",
     "CAN pair geometry, reference-plane continuity and signal-return paths need final review.",
@@ -3724,5 +3758,5 @@
     "Power-input and motor protection decisions remain open. Heatsink mounting is implemented; operating temperature is unqualified. No fabrication release."
   ],
   "unfinished_signal_nets": [],
-  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3"
+  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78"
 }

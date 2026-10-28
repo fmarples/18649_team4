@@ -1,3 +1,29 @@
+Current verification — October 28, 2026
+
+Selected the TA-approved CNHL S220403BK / Hitec 44295 3S LiPo pair.
+Added PA3/ADC1_IN3 battery sensing, three passive parts, and a host-tested
+battery shutdown guard. The guard is not integrated into the MCU application
+and has not been demonstrated on hardware. Circuit, BOM and PCB have 290
+electrical components. Native ERC, DRC, parity and connectivity: zero findings.
+All 311 targeted routed-net checks pass. No new rule exclusions were added.
+See Battery-LiPo.md and Fabrication-check.json for source hashes and limits.
+
+The selected capacitor characteristic plots are now available and identify
+inadequate effective-capacitance margin in the present power filters. This
+remains a fabrication blocker; see Power-margin-review.md. The 29-component
+package check includes the exact fuse-holder drill pattern. Neither passing
+CAD checks nor supplier approval proves operating/thermal safety.
+
+Drive purchasing workbook reconciled to the active CSV in place; both battery
+and charger use the approved Amazon exception. Course allocations, servo lead,
+fuse coordination and final capacitor changes are explicitly unresolved.
+Tom's October 28 instruction requires four holes common to CAD and hardware,
+physically checked. The working measured/cardboard-verified pattern is kept;
+no oversized slot or release exception has been assumed.
+
+Earlier dated verification entries below are historical and are superseded
+where the current summary and linked checks differ.
+
 Verification — 24 October 2026 design-review revision
 
 Battery sourcing update: the TA's 17:44 EDT public reply permits Amazon for

@@ -1,12 +1,12 @@
 # Parts and physical interface review
 
-## Current revision — October 27
+## Current revision — October 28
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All
 eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
 have a separate 4.0 V supply. Current JSON checks carry the active board hash.
-Battery/protection, Pi voltage margin and exact capacitor data remain open.
+Battery/charger selection is complete: Anson approved CNHL S220403BK and Hitec 44295 from Amazon. See [Battery-LiPo.md](Battery-LiPo.md). The active CSV includes the XT60 harness, pack-side fuse holder and charging-bag request. Protection coordination, Pi voltage margin, capacitor/control-loop revision, servo-side lead qualification and course allocations remain open. Typical capacitor curves are documented in [Power-margin-review.md](Power-margin-review.md). The dated records below describe earlier decisions and are superseded where they conflict with this revision.
 
 ## Earlier review record
 

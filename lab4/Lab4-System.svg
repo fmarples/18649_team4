@@ -130,8 +130,8 @@
 <polygon points="1520,545 1531.7058123305849,539.345448056554 1531.7058123305849,550.654551943446" fill="#b1781f"/>
 <text x="1030" y="938" font-family="Arial" font-size="18" fill="#172b3a" font-weight="normal">Analog current → ADC; encoder feedback → STM32</text>
 <rect x="60" y="960" width="340" height="90" rx="12" fill="#e6f3e9" stroke="#24834b" stroke-width="3"/>
-<text x="110.0078125" y="998" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">AA cells + protection</text>
-<text x="131.5" y="1029" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">10 NiMH proposed</text>
+<text x="110.0078125" y="998" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">3S LiPo + protection</text>
+<text x="131.5" y="1029" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">11.1 V / 2.2 Ah</text>
 <rect x="450" y="960" width="1060" height="90" rx="12" fill="#e6f3e9" stroke="#24834b" stroke-width="3"/>
 <text x="760.5" y="998" font-family="Arial" font-size="24" fill="#172b3a" font-weight="bold">Three buck converters + motor branch</text>
 <text x="739.5" y="1029" font-family="Arial" font-size="24" fill="#172b3a" font-weight="normal">Motor rail • 6.6 V servo • 5.1 V Pi • 3.3 V logic</text>

@@ -78,11 +78,23 @@ and technique rather than unlimited dwell. [Hirose drawing and catalog](https://
 Keystone explicitly lists holder 3568 for Littelfuse 297 MINI fuses and
 rates the holder at 30 A. This closes the fuse-family compatibility lookup;
 it does not select the fuse current or prove coordination with the battery,
-wiring and PCB. Its detailed drill-pattern review is still open.
+wiring and PCB. The October 28 drill-pattern comparison is recorded below.
 [Keystone 3568](https://www.keyelco.com/product.cfm/product_id/306).
 
-Remaining drawing/process work covers the fuse-holder drill pattern,
-remaining discrete/passive packages and the chosen soldering process.
+Remaining drawing/process work covers the other discrete/passive packages
+and the chosen soldering process.
 The integrated L298/heatsink installation is reviewed separately in
 Mounting-and-encoder-revision.md. Current capacity, capacitor behavior and
 thermal qualification remain separate from the passed pad/pinout checks.
+
+## Fuse-holder drill pattern — October 28
+
+We checked the exact Keystone 3568 revision C drawing: four holes on a
+9.92 × 3.40 mm pattern, minimum hole diameter 1.60 mm. The saved F1 footprint
+has this pattern and 1.78 mm plated drills. The extra 0.18 mm nominal drill
+diameter is consistent with the drawing's minimum-hole requirement; it is
+not evidence of assembled retention or fuse coordination. Both duplicated
+pad-1 terminals reach BAT_PLUS and both pad-2 terminals reach BAT_FUSED.
+The reproducible package check now covers 29 components. No footprint change
+was needed. [Manufacturer drawing](https://www.keyelco.com/product-pdf.cfm?p=306),
+[readable copy of drawing 3568 C](https://www.allelcoelec.pt/datasheets.c4/3568.pdf).

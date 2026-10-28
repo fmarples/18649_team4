@@ -1,15 +1,14 @@
 {
   "source_sha256": {
-    "Preliminary-BOM.csv": "737ea6e18603acd563a8a3c721d1af6f083ae4a3e0885924b5754be5fa5b3b9f",
+    "Preliminary-BOM.csv": "e5be641462f165938ce3ce54986a7c6b2d4e8bbbc60b07fd02c46080a38d6c83",
     "Course-stock-v3.csv": "98a849fdc9599360227c8f94bbc5c3e783fc400f2ab01439f038a1e567698be9"
   },
-  "source_commit": "6164a13918b08bc5ddbff36e200d9e7a8c292dcc",
-  "source_active_rows": 121,
-  "zero_quantity_rows_omitted": 6,
+  "source_active_rows": 126,
+  "zero_quantity_rows_omitted": 9,
   "sheets": [
     {
       "name": "Specialty parts",
-      "consolidated_lines": 49,
+      "consolidated_lines": 54,
       "source_rows": [
         5,
         15,
@@ -25,7 +24,7 @@
         33,
         80,
         35,
-        40,
+        37,
         41,
         42,
         43,
@@ -54,15 +53,20 @@
         113,
         114,
         119,
-        120,
         121,
         122,
         123,
         124,
         125,
-        126,
-        127,
-        128
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136
       ],
       "totals": [
         {
@@ -146,14 +150,14 @@
           ]
         },
         {
-          "part": "RT0603BRD0775KL",
-          "requested": 2,
+          "part": "RT0603BRD0710KL",
+          "requested": 5,
           "source_rows": [
-            40
+            37
           ]
         },
         {
-          "part": "RT0603BRD0710KL",
+          "part": "RT0603BRD0775KL",
           "requested": 2,
           "source_rows": [
             41
@@ -167,7 +171,7 @@
           ]
         },
         {
-          "part": "RC0603FR-0745K3L",
+          "part": "RT0603BRD0745K3L",
           "requested": 2,
           "source_rows": [
             43
@@ -188,7 +192,7 @@
           ]
         },
         {
-          "part": "ESQ-120-44-L-D",
+          "part": "ESQ-118-44-L-D",
           "requested": 2,
           "source_rows": [
             74
@@ -259,7 +263,7 @@
         },
         {
           "part": "0297010.L",
-          "requested": 3,
+          "requested": 4,
           "source_rows": [
             100
           ]
@@ -349,13 +353,6 @@
           ]
         },
         {
-          "part": "3051 (red/black cut lengths)",
-          "requested": 2,
-          "source_rows": [
-            120
-          ]
-        },
-        {
           "part": "WP7113ID",
           "requested": 2,
           "source_rows": [
@@ -384,24 +381,10 @@
           ]
         },
         {
-          "part": "UNRESOLVED: L298N-to-6396BG attachment",
+          "part": "SPECIFIED: L298N-to-6396BG attachment",
           "requested": 1,
           "source_rows": [
             125
-          ]
-        },
-        {
-          "part": "PROVISIONAL: Tenergy Amazon B077Y9HNTF",
-          "requested": 1,
-          "source_rows": [
-            126
-          ]
-        },
-        {
-          "part": "UNRESOLVED: NiMH charger",
-          "requested": 1,
-          "source_rows": [
-            127
           ]
         },
         {
@@ -409,6 +392,62 @@
           "requested": 1,
           "source_rows": [
             128
+          ]
+        },
+        {
+          "part": "MCP1700-4002E/TO",
+          "requested": 2,
+          "source_rows": [
+            129
+          ]
+        },
+        {
+          "part": "TPSB106K016R0800",
+          "requested": 3,
+          "source_rows": [
+            130
+          ]
+        },
+        {
+          "part": "RT0603BRD07100KL",
+          "requested": 2,
+          "source_rows": [
+            131
+          ]
+        },
+        {
+          "part": "S220403BK / Amazon B0DQP7SKGV",
+          "requested": 1,
+          "source_rows": [
+            132
+          ]
+        },
+        {
+          "part": "44295 / HRC44295",
+          "requested": 1,
+          "source_rows": [
+            133
+          ]
+        },
+        {
+          "part": "PRT-10474 / 10474",
+          "requested": 3,
+          "source_rows": [
+            134
+          ]
+        },
+        {
+          "part": "0FHM0001ZXJ",
+          "requested": 1,
+          "source_rows": [
+            135
+          ]
+        },
+        {
+          "part": "Course LiPo charging bag",
+          "requested": 1,
+          "source_rows": [
+            136
           ]
         }
       ]
@@ -422,7 +461,7 @@
         4,
         6,
         36,
-        38,
+        39,
         56,
         58,
         63,
@@ -456,7 +495,7 @@
         11,
         17,
         18,
-        39,
+        40,
         62,
         19,
         20,
@@ -466,7 +505,7 @@
         31,
         34,
         75,
-        37,
+        38,
         45,
         51,
         52,
@@ -511,11 +550,11 @@
         },
         {
           "part": "CRCW060310K0FKEA",
-          "requested": 52,
+          "requested": 51,
           "source_rows": [
             6,
             36,
-            38,
+            39,
             56,
             58,
             63,
@@ -525,7 +564,7 @@
         },
         {
           "part": "KGM15AR71C104KT",
-          "requested": 55,
+          "requested": 56,
           "source_rows": [
             7,
             46,
@@ -591,7 +630,7 @@
           "requested": 9,
           "source_rows": [
             18,
-            39,
+            40,
             62
           ]
         },
@@ -649,7 +688,7 @@
           "part": "C0603C220J1GACTU",
           "requested": 4,
           "source_rows": [
-            37
+            38
           ]
         },
         {
@@ -776,31 +815,23 @@
       ]
     }
   ],
+  "source_parent_commit": "a695e375fe89503e45365c37156f5b6010d888db",
   "workbook": "TEAM_4_BOM_Lab4.xlsx",
-  "workbook_sha256": "88f8391fcda8b1890c6820763b61919118e543eaeb5dbb73d9ffb916d9bd7206",
-  "prepared_date": "2026-10-26",
-  "classification": "Exact course-v3 MPN or specified generic 2.54mm header entry = common; other active request = specialty.",
+  "workbook_sha256": "9bd7d16c233817e09e028a89bcf9298f499f9b1d94321ea59d49718d6a55cd3d",
+  "prepared_date": "2026-10-28",
+  "classification": "Exact course-v3 MPN or generic specified 2.54mm header = common; other active request = specialty.",
   "validation": {
-    "all_121_active_rows_represented_once": true,
+    "all_active_rows_represented_once": true,
     "requested_totals_preserved": true,
     "cached_totals_verified": true,
     "native_links_verified": true,
     "filter_tables_and_frozen_panes_verified": true,
     "both_sheets_visually_inspected": true
   },
-  "purchasing_alternative": {
-    "U81": "Request SN74LVC14APW carrier alternative, 2 individual ICs total. Schematic MPN SN74LVC14APWR is unchanged."
-  },
   "upload": {
     "file_id": "1jn-2KS-h_1bZtQV-ySlfCStYBRyWNMzS",
-    "folder_id": "15MCRrvGx3S5bV2gtYmitpYQ7jAbZF8_f",
-    "uploaded_at_utc": "2026-10-27T01:51:40.173Z",
-    "local_date": "2026-10-26",
-    "local_time": "21:51 EDT",
-    "file_name": "TEAM_4_BOM_Lab4.xlsx",
-    "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "verified_folder_listing": true,
-    "verified_size_bytes": 20471,
-    "source_revision": "da8d5e6177e99f8e8d73c98c7af88790c400c606"
+    "updated_at_utc": "2026-10-28T22:48:59.068Z",
+    "verified_size_bytes": 24557,
+    "readback_sha256": "9bd7d16c233817e09e028a89bcf9298f499f9b1d94321ea59d49718d6a55cd3d"
   }
 }

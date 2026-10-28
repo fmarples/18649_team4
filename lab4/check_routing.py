@@ -57,6 +57,10 @@ def check_group(reference, name, members):
                    'pads': ['.'.join(m) for m in members],
                    'physically_connected': same_net and not missing})
 
+check_group('Battery', 'ADC divider/filter', [('U50','17'),('R580','2'),('R581','1'),('C580','1')])
+check_group('Battery', 'protected input', [('R580','1'),('C410','1')])
+check_group('Battery', 'sense ground', [('R581','2'),('C580','2'),('U50','18')])
+
 for k in range(3):
     u, ind, j, base = f'U{40+k}', f'L{k+1}', f'J{42+k}', 410+10*k
     groups = {
@@ -486,7 +490,7 @@ report = {
         for net in ['/CAN_A_H', '/CAN_A_L', '/CAN_B_H', '/CAN_B_L']],
     'remaining': [
         'Zone graph checks do not prove island continuity; native DRC unconnected items are authoritative.',
-        'The existing input-power circuit and all 3V3 pads are connected; power sizing and final battery/protection choices remain open.',
+        'Input power, the battery divider and all 3V3 pads are connected; the LiPo pair is selected, but power sizing and protection qualification remain open.',
         '5V distribution and motor/servo outputs are connected; review voltage drop, via sharing and thermal current capability separately.',
         'All CAN/MCU and encoder pull-up 3V3 groups now reach the regulator; trunk voltage drop/current capability still need review.',
         'CAN pair geometry, reference-plane continuity and signal-return paths need final review.',

@@ -112,6 +112,24 @@ for ref, value, nets in [
     rows[-1]["terminal_drill_mm"] = 1.8
     rows[-1]["guide_drill_mm"] = 1.6
 
+# Keystone drawing 3568 revision C: 9.92 x 3.40mm pattern; four
+# minimum 1.60mm holes. The saved library uses 1.78mm finished drills.
+f=fps["F1"]
+assert f.GetFPIDAsString() == "Fuse:Fuseholder_Blade_Mini_Keystone_3568"
+actual=[]
+for pad in f.Pads():
+    if not pad.GetNumber(): continue
+    x,y=(p.ToMM(pad.GetFPRelativePosition().x),p.ToMM(pad.GetFPRelativePosition().y))
+    drill=p.ToMM(pad.GetDrillSize().x)
+    assert pad.GetAttribute()==p.PAD_ATTRIB_PTH
+    assert abs(drill-1.78)<1e-6 and abs(p.ToMM(pad.GetDrillSize().y)-drill)<1e-6
+    assert pad.GetNetname().endswith("BAT_PLUS" if pad.GetNumber()=="1" else "BAT_FUSED")
+    actual.append([pad.GetNumber(),round(x,3),round(y,3)])
+assert sorted(actual)==[["1",0.,0.],["1",0.,3.4],["2",9.92,0.],["2",9.92,3.4]]
+rows.append(dict(ref="F1",part="3568",result="match",saved_drill_mm=1.78,
+                 manufacturer_minimum_hole_mm=1.60,saved_pad_positions_mm=actual,
+                 source="https://www.keyelco.com/product-pdf.cfm?p=306"))
+
 report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
               fabrication_release=False, checked_components=len(rows), results=rows,
               limitations=["Checks only the listed identities, pad coordinates and pin nets.",

@@ -1,6 +1,22 @@
-# Digital design review — October 27
+# Digital design review
 
-## Current revision — October 27
+## Current revision — October 28
+
+The selected LiPo pair, PA3 sensing circuit and standalone cutoff logic are
+documented in [Battery-LiPo.md](Battery-LiPo.md). The current board contains
+290 electrical footprints and 19,755 track/via items. All 311 targeted
+connections and fresh native ERC/DRC/parity checks pass. The exact fuse-holder
+pattern is now checked with the other 28 selected packages. The
+[battery-monitor comparison](Battery-monitor-change.json) confirms the limited
+scope of this routing revision and unchanged project/custom rules.
+
+Typical capacitor curves are now available and expose insufficient effective
+capacitance in the present power filters. Capacitor/loop revision, full Pi
+supply margin, motor/fuse protection, application cutoff integration and final
+manufacturing review remain open. The chassis pattern also needs the course
+CAD/hardware reconciliation requested by staff. No fabrication release is claimed.
+
+## Earlier revision — October 27
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All
@@ -17,7 +33,7 @@ is recorded without changing the selected parts. See
 [Power-margin-review.md](Power-margin-review.md) and
 [Critical-package-review.md](Critical-package-review.md).
 
-**Current release work:** battery/charger and motor-fault decisions; complete
+**Release work recorded October 27:** battery/charger and motor-fault decisions; complete
 Pi feed/return/contact/thermal/dynamic budget; exact input/output capacitor
 and loop qualification; remaining fuse/discrete/assembly-process review;
 servo mating-part rating and stock reconciliation; final exports and review.

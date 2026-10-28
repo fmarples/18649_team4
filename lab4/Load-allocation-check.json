@@ -1,5 +1,5 @@
 {
-  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
+  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
   "fabrication_release": false,
   "method": "Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.",
   "logic": {
@@ -9,12 +9,12 @@
     "loads": [
       {
         "ref": "U50",
-        "pin": "32",
+        "pin": "19",
         "allocation_A": 0.07,
         "basis": "70mA allocation: MCU internal maximum plus ADC and GPIO/indicator allowance; not measured",
-        "path_R_ohm": 0.147131,
-        "shared_tree_drop_V": 0.056465,
-        "static_source_minus_drop_V": 3.206416
+        "path_R_ohm": 0.171475,
+        "shared_tree_drop_V": 0.058214,
+        "static_source_minus_drop_V": 3.204667
       },
       {
         "ref": "U60",
@@ -147,9 +147,9 @@
         "pin": "5",
         "allocation_A": 0.001,
         "basis": "1mA allowance",
-        "path_R_ohm": 0.149856,
-        "shared_tree_drop_V": 0.054612,
-        "static_source_minus_drop_V": 3.208269
+        "path_R_ohm": 0.166447,
+        "shared_tree_drop_V": 0.057009,
+        "static_source_minus_drop_V": 3.205872
       },
       {
         "ref": "R601",
@@ -202,8 +202,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.152386,
-        "shared_tree_drop_V": 0.054943,
-        "static_source_minus_drop_V": 3.207938
+        "shared_tree_drop_V": 0.054585,
+        "static_source_minus_drop_V": 3.208296
       },
       {
         "ref": "R340",
@@ -237,9 +237,9 @@
         "pin": "1",
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
-        "path_R_ohm": 0.191894,
-        "shared_tree_drop_V": 0.054624,
-        "static_source_minus_drop_V": 3.208257
+        "path_R_ohm": 0.208485,
+        "shared_tree_drop_V": 0.057021,
+        "static_source_minus_drop_V": 3.20586
       },
       {
         "ref": "R241",
@@ -377,7 +377,7 @@
         "static_source_minus_drop_V": 3.188206
       }
     ],
-    "total_tree_loss_W": 0.045997,
+    "total_tree_loss_W": 0.046123,
     "largest_drop_V": 0.095229
   },
   "five_volt": {

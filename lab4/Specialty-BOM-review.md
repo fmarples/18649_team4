@@ -1,9 +1,9 @@
 # Specialty-parts BOM
 
-26 October 2026. [TEAM_4_BOM_Lab4.xlsx](TEAM_4_BOM_Lab4.xlsx) separates
+28 October 2026. [TEAM_4_BOM_Lab4.xlsx](TEAM_4_BOM_Lab4.xlsx) separates
 specialty and common parts for the
 [staff purchasing request](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793052274317539).
-The workbook contains 49 consolidated specialty lines and 36 common lines.
+The workbook contains 54 consolidated specialty lines and 36 common lines.
 
 We compared [Preliminary-BOM.csv](Preliminary-BOM.csv) with
 [Course-stock-v3.csv](Course-stock-v3.csv). An exact listed MPN is common.
@@ -17,8 +17,8 @@ among the additions teams must choose.
 
 We consolidated matching part/specification, footprint and unit entries,
 summing design quantities, off-board quantities and proposed spares without
-changing total demand. All 121 active CSV rows appear once in the workbook;
-six zero-quantity historical alternatives are omitted. Wire quantities remain
+changing total demand. All 126 active CSV rows appear once in the workbook;
+nine zero-quantity historical alternatives are omitted. Wire quantities remain
 metres. The U81 purchasing line uses the already reviewed SN74LVC14APW
 carrier alternative, with the schematic's PWR code explained alongside it.
 
@@ -28,11 +28,13 @@ references, footprint and purchasing notes. Common-list membership does not
 establish the quantity allocated to our team. Request only the shortfall
 after checking course/team stock; the totals already include proposed spares.
 
-The provisional battery, charger, servo-side lead, heatsink attachment and
-fuse qualification remain open in the workbook. No new part selection or
-stock reservation is established by this classification. The workbook is a
-formatted purchasing snapshot; the CSV remains the editable source and must
-be reconciled when selections change.
+The TA-approved CNHL S220403BK battery and Hitec 44295 charger replace the
+active NiMH options; Amazon is permitted for both. One battery listing is a
+two-pack (one fitted, one spare), not two listings. New monitor, XT60 and
+inline-fuse parts are included. The shorter Pi socket, encoder supply and
+precision-resistor changes are reconciled. Remaining course allocations,
+servo-side lead, capacitor qualification, fuse coordination and bag supply
+are flagged. Supplier selection is not a purchase or stock reservation.
 
 Checks: all source rows and quantity totals reconcile; formula cached values,
 native supplier/source hyperlinks, filter tables and frozen headings were
@@ -42,18 +44,9 @@ source-row mappings and the workbook hash.
 
 The requested destination is the
 [course BOM folder](https://drive.google.com/drive/folders/15MCRrvGx3S5bV2gtYmitpYQ7jAbZF8_f).
-We uploaded the Excel file on October 26, 2026 at 9:51 p.m. EDT.
-The folder listing confirms the filename, Excel format and 20,471-byte size.
-The [uploaded workbook](https://docs.google.com/spreadsheets/d/1jn-2KS-h_1bZtQV-ySlfCStYBRyWNMzS/edit?usp=drivesdk&ouid=101000648938892436394&rtpof=true&sd=true)
-contains the reviewed file from revision da8d5e6. The upload record is included
-in Specialty-BOM-check.json; open purchasing selections remain identified in
-the workbook.
-
-## Revision difference — October 27
-
-The saved/uploaded workbook remains the October 26 purchasing snapshot.
-It is not synchronized with subsequent circuit revisions. R430/R431 now
-require 0.1% parts; [Parts-review.md](Parts-review.md#logic-divider-tolerance-change--october-27)
-records exact DigiKey parts and quantities, and the active CSVs are updated.
-The revised request must reach the purchasing team before ordering. No updated
-course-folder submission is implied by the Git changes.
+We updated the existing Excel file in place on October 28, 2026 at 18:48 EDT.
+The [Drive workbook](https://docs.google.com/spreadsheets/d/1jn-2KS-h_1bZtQV-ySlfCStYBRyWNMzS/edit)
+retains its original ID and both sheets. The readback is 24,557 bytes and its
+SHA-256 exactly matches the local workbook. The active CSV is the editable
+source; future circuit changes must be reconciled again before ordering.
+No additional archive, purchase, or notification was made.

@@ -20,7 +20,7 @@ S=6;OX=75;OY=180
 def xy(x,y):return OX+S*x,OY+S*y
 def rbox(x,y,w,h):return (*xy(x,y),*xy(x+w,y+h))
 dr.text((75,35),'Lab 4 | Direct Pi connection',font=ft(38,True),fill='#16354e')
-dr.text((75,89),'120 x 234 mm proposal  /  287 electrical footprints placed',font=ft(23),fill='#334b60')
+dr.text((75,89),f"120 x 234 mm proposal  /  {sum(c['schematic'] for c in d['components'])} electrical footprints placed",font=ft(23),fill='#334b60')
 dr.text((75,125),'PLACEMENT PREVIEW - measured hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
 dr.rectangle(rbox(0,0,120,234),fill='white',outline='#16354e',width=3)
 for r in d['reservations']:
@@ -176,7 +176,7 @@ for i,line in enumerate(['Chassis spacers: 35 mm nominal; four-hole paper fit pa
     'Pi-to-PCB gap: 22 mm nominal; calculated socket engagement 5.17 mm.',
     'Reported underside parts <5 mm; calculated nominal metal clearance 6.4 mm.',
     'USB top measured ~18 mm from Pi board bottom; check any added cooler.',
-    'Chassis and Pi hole patterns checked; repeat only if the layout changes.',
+    'Working chassis pattern: final common CAD/physical holes still need resolution.',
     'Still check unknown plug/cable/steering envelopes and assembled socket fit.']):
     pdf.drawString(15*mm,(65-i*7)*mm,line)
 pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi hardware OD <=5.5 mm. All holes: 3 mm from hole edge. Socket first pair aligns to Pi3/4, not1/2.')

@@ -1,6 +1,6 @@
 {
   "status": "Calculated design, not measured",
-  "battery": "Unqualified review candidate: Amazon Tenergy B077Y9HNTF / 11606, 12V 2Ah. Battery-only Amazon exception; other purchases need DigiKey/Mouser or course stock. Published 2A continuous limit and no established 10A pulse rating; final pack/charger selection open. Tenergy11609/01025 are zero-quantity references. See Parts-review.md.",
+  "battery": "Selected3S LiPo CNHL S220403BK2200mAh40C; Hitec44295 balance charger. Amazon permitted for both; not ordered. See Battery-LiPo.md.",
   "protected_input_design_range_V": [
     8,
     15
@@ -58,7 +58,7 @@
   "average_planning_case": {
     "status": "Calculated preliminary scenario, not measured, not a verified conservative bound for all driving",
     "motor_supply_current_A": 0.72,
-    "motor_basis": "Two catalog rated0.36A values treated as supply current under the stated nominal12V planning case; PWM/load dependence unvalidated.",
+    "motor_basis": "Two nominal12V catalog0.36A values retained as a conservative planning proxy at11.1V; actual PWM/load dependence unvalidated.",
     "servo_no_load_fraction_assumed": 0.9,
     "servo_high_load_fraction_assumed": 0.1,
     "servo_high_load_current_assumed_A": 3.0,
@@ -67,9 +67,9 @@
     "pi_devices_sustained_allocation_assumed_A": 3.3,
     "logic_sustained_allocation_assumed_A": 0.8,
     "converter_efficiency_assumed": 0.85,
-    "battery_voltage_assumed_V": 12,
+    "battery_voltage_assumed_V": 11.1,
     "regulated_output_power_W": 22.0584,
-    "battery_input_estimate_A": 2.8825882352941177,
+    "battery_input_estimate_A": 3.057933227344992,
     "runtime": "Unverified; do not infer usable capacity or runtime guarantee from nominalAh."
   },
   "servo_sense_checks": {
@@ -101,10 +101,10 @@
       "J82.1",
       "J83.1"
     ],
-    "rail": "+3V3",
-    "setpoint_V": 3.318,
-    "budget": "Included within provisional 0.8A logic allocation; not a measured or guaranteed maximum",
-    "validation": "Nominal 3.3V matches earlier lab supply; actual tolerance and signals untested"
+    "rail": "ENC_4V",
+    "setpoint_V": 4.0,
+    "budget": "40mA plus4uA LDO inside0.3A other5V allowance",
+    "validation": "MCP1700-4002E/TO schematic and routing implemented; see Mounting-and-encoder-revision.md; hardware untested"
   },
   "estimate_sensitivity": {
     "status": "Calculated scenarios, not measured or guaranteed load/efficiency bounds; not an operating instruction",
@@ -161,5 +161,55 @@
         "allocation_stress_A": 13.5694375
       }
     ]
-  }
+  },
+  "lipo_scenarios": [
+    {
+      "battery_V": 12.6,
+      "efficiency_assumed": 0.85,
+      "planning_A": 2.7796078431372546,
+      "stress_A": 10.684257703081233
+    },
+    {
+      "battery_V": 12.6,
+      "efficiency_assumed": 0.8,
+      "planning_A": 2.908333333333333,
+      "stress_A": 10.952023809523808
+    },
+    {
+      "battery_V": 11.1,
+      "efficiency_assumed": 0.85,
+      "planning_A": 3.057933227344992,
+      "stress_A": 11.26321144674086
+    },
+    {
+      "battery_V": 11.1,
+      "efficiency_assumed": 0.8,
+      "planning_A": 3.204054054054054,
+      "stress_A": 11.567162162162163
+    },
+    {
+      "battery_V": 10.5,
+      "efficiency_assumed": 0.85,
+      "planning_A": 3.191529411764706,
+      "stress_A": 11.54110924369748
+    },
+    {
+      "battery_V": 10.5,
+      "efficiency_assumed": 0.8,
+      "planning_A": 3.346,
+      "stress_A": 11.862428571428572
+    },
+    {
+      "battery_V": 9,
+      "efficiency_assumed": 0.85,
+      "planning_A": 3.6034509803921573,
+      "stress_A": 12.397960784313726
+    },
+    {
+      "battery_V": 9,
+      "efficiency_assumed": 0.8,
+      "planning_A": 3.783666666666666,
+      "stress_A": 12.772833333333335
+    }
+  ]
 }

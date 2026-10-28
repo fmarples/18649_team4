@@ -1,4 +1,4 @@
-Zone,Signal,Pin,Package_or_header_pin,Mode,Voltage,Status,Notes
+﻿Zone,Signal,Pin,Package_or_header_pin,Mode,Voltage,Status,Notes
 Front,SPI1_SCK,PA5,21,AF5 SPI1_SCK,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
 Front,SPI1_MISO,PA6,22,AF5 SPI1_MISO,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
 Front,SPI1_MOSI,PA7,23,AF5 SPI1_MOSI,3.3 V,Lab 3 retained/reserved,Preserve Lab 3. Timing marker is not an actuator control.
@@ -75,7 +75,7 @@ Rear,PC14,PC14,3,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed cry
 Rear,PC15,PC15,4,LSE reserved,3.3 V,Proposed PCB addition,Optional low-speed crystal; do not assume high-current GPIO
 Front,SERVO_PWM,PA9,42,AF1 TIM1_CH2 / 50 Hz,3.3 V,Proposed PCB addition,"New actuator output, separate from PB9 timing marker Lab3 measured build used PB4/D5 for actuator PWM; firmware port to this PCB assignment is not yet implemented."
 Front,SERVO_CURRENT_ADC,PA2,16,ADC1_IN2,3.3 V,Proposed PCB addition,INA180 filtered output; ADC input must remain within VDDA
-Front,BATTERY_MONITOR_RESERVED,PA3,17,ADC1_IN3,0 to VDDA after divider,Proposed PCB addition,Reserve for future divided battery monitor; divider/cutoff firmware not implemented
+Front,BATTERY_ADC,PA3,17,ADC1_IN3,VBAT_PROTECTED / 11; 1.145 V nominal at 12.6 V pack,Divider/filter implemented in schematic and PCB; firmware integration pending,"R580 = 100k 0.1%; R581 = 10k 0.1%; C580 = 100n. PA3 ADC1_IN3; preserve Lab 3 PA0/PA1 markers. See Battery-LiPo.md."
 Rear,LEFT_CURRENT_ADC,PA2,16,ADC1_IN2,3.3 V,Proposed PCB addition,ACS712 divider and RC filter; not the former PA0 timing pin
 Rear,RIGHT_CURRENT_ADC,PA3,17,ADC1_IN3,3.3 V,Proposed PCB addition,ACS712 divider and RC filter; not the former PA1 timing pin
 Rear,LEFT_ENABLE_PWM,PA9,42,AF1 TIM1_CH2 / 10 kHz,3.3 V,Proposed PCB addition,L298 ENA; full-on enable supports braking when both direction inputs match Lab3 measured build used PB4/D5 for actuator PWM; firmware port to this PCB assignment is not yet implemented.

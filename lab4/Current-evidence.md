@@ -1,5 +1,18 @@
 # Current evidence and measurement record
 
+## Selected LiPo scenario — October 28
+
+The approved CNHL 3S pack is 11.1 V nominal and 12.6 V full, with 2.2 Ah
+capacity. Applying the existing 22.0584 W converted-load planning case and
+0.72 A motor proxy gives 3.058 A at 11.1 V / 85% assumed efficiency, or
+3.346 A at the proposed 10.5 V drive-stop point / 80%. These are assumptions,
+not measured averages or guaranteed maxima. The historical 8 V stress point
+below is an electrical design-envelope check, never a LiPo discharge target.
+Battery selection/rating evidence and the unperformed cutoff test are in
+[Battery-LiPo.md](Battery-LiPo.md). Earlier NiMH selection statements below
+are superseded; the underlying current-evidence limitations still apply.
+
+
 25 October 2026. We distinguish component ratings, calculated allocations and
 measurements. Average current on the new PCB is unmeasured; it has not been built.
 

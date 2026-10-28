@@ -13,13 +13,13 @@
     "https://www.farnell.com/datasheets/1581373.pdf"
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
-    "Power-stage-check.json": "4d194c4d7e1b474afbaba42b123da11a0020cfce81c1954b9b3ad49615133e96",
-    "Power-calculations.json": "712e124a8aef46dd126c5aceff307ab8cb4b33a9e7a56711b3f986cbbf278c5b",
-    "Load-allocation-check.json": "09954c1e3349c539fd9625a1480f90368a215e4246bb582c28dc02b93cbdb58d",
-    "Supply-path-check.json": "62ec5dfd0255e84684f3ca5ae0fa3aa39d49249e35f5f728019f30698c807577",
-    "check_power_margins.py": "21250012647a4e50b476399f4b462e8515b92b50c999825a412a0da6b0efbafc",
-    "KiCad/Circuit-BOM.csv": "654ac416edc52da04e9ba884fc23db551fedd83bc2541b220b61c0e177c2b4be"
+    "KiCad/Lab4.kicad_pcb": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
+    "Power-stage-check.json": "bad9baa40c8686f3ca525459a9c344dd6dab937895a5d1f012bbf219ef222064",
+    "Power-calculations.json": "7b291996c845491e60b0be2585cc27e6c32a4cd4d1d9075686c398ed57b20bcb",
+    "Load-allocation-check.json": "5f1e11d7af65e0a5a28d9fabdf45370d69428e983f867d53fe018b18e58bde7c",
+    "Supply-path-check.json": "03ec0fd368eb3a16fa682982cc9a4b45e533d4d942e6445986670d651a03815d",
+    "check_power_margins.py": "02196c7be4d7fef5f426271bed3a5fb367f9239828a6d63b831a8c42b00a55ec",
+    "KiCad/Circuit-BOM.csv": "387ffc2feb1195d074662a5645d4c19c8560be456fc5ff10656359388d17bafc"
   },
   "voltage_budget": [
     {
@@ -1083,7 +1083,7 @@
     "Ideal CCM ripple/loss cases with zero or negative inductor valley are excluded: Eco-mode/DCM requires a different model. Extrema cover valid CCM scenarios only, not every possible operating mode.",
     "Ideal CCM capacitor-ripple and charge-step equations exclude loop response, ESR/ESL, pulse-skipping and unequal sharing. Inductor copper loss uses 19.5mohm +20% at 25C and omits core/hot losses.",
     "Divider phase lead is not full-loop phase margin. Cff alternatives are analysis candidates, not BOM changes.",
-    "Exact input/output MLCC bias curves, part-specific aging and PCB thermal impedance are unavailable; no invented values are used.",
-    "Battery, protection, mechanical decisions and actual load duty affect final selection. The current 8-15V/allocated-load sweep remains useful before those decisions."
+    "Manufacturer typical input/output MLCC bias curves and approximate readings are documented in Power-margin-review.md. This sensitivity calculation does not substitute them for guaranteed bias/temperature/aging limits; PCB thermal impedance is unqualified.",
+    "The 3S LiPo pair is selected. Protection coordination, actual load duty and the capacitor/control-loop revision remain open. The 8-15V sweep is a regulator design envelope, not permission to discharge the pack to 8V."
   ]
 }

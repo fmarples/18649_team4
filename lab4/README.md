@@ -2,7 +2,7 @@
 
 We are designing a four-layer KiCad PCB with two STM32F401RET6 chips, six
 MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
-NiMH-powered supply with a battery/charger purchase still to finalize. The Raspberry Pi remains a separate board connected through
+3S LiPo supply using the CNHL S220403BK / Hitec 44295 pair approved by Anson on October 28. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
 ## October 27 mounting and encoder revision
@@ -21,12 +21,14 @@ and repaired local routing. A new 4.0 V encoder rail replaces the marginal
 See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
-The current board has 287 electrical footprints plus eight supports and
-HS80, 18,193 track segments, 1,017 vias and six filled ground zones.
-All 308 targeted connection checks pass. Native findings are recorded in
+The current board has 290 electrical footprints plus eight supports and
+HS80, 18,720 track segments, 1,035 vias and six filled ground zones.
+All 311 targeted connection checks pass. Native findings are recorded in
 [Fabrication-check.json](Fabrication-check.json); a clean automated result
 does not authorize fabrication. Battery/fault handling, Pi voltage margin,
-exact buck-capacitor data and final purchasing/manufacturing review remain.
+buck-capacitor and control-loop revision, and final purchasing/manufacturing
+review remain. Typical capacitor curves are now available; they expose
+inadequate effective-capacitance margin in the present design.
 
 
 
@@ -45,29 +47,29 @@ The last checked two-layer layout is preserved at the
 [lab4-two-layer-archive tag](https://github.com/fmarples/18649_team4/tree/lab4-two-layer-archive/lab4)
 (commit `59be0b1`). It is a historical, partially routed checkpoint; use the
 current `lab4` branch for further design work.
-The five schematic pages contain 284 components and 298 nets. The proposed
-120 x 234 mm PCB contains 284 assigned electrical footprints and eight
-mechanical supports. The four chassis centers use the team's caliper measurements:
-50 mm front, 105 mm rear, 220 mm longitudinal separation and aligned pair
-midpoints. Chassis holes are confirmed smooth, 4.5 mm through-holes;
-M3/3.2 mm PCB drills remain a proposal.
+The active chassis pattern still uses the team's caliper measurements: 50 mm
+front, 105 mm rear, 220 mm longitudinal separation and aligned pair midpoints.
+The four-hole paper fit passed. However, Tom's October 28 instruction requires
+four holes present in both the actual chassis and the course CAD, physically
+verified. The current pattern is a working design, pending that reconciliation;
+an oversized/slotted hole is not yet justified by a bounded positional error.
+All holes are smooth. Preserve the 3 mm copper/component exclusion from each
+finished hole edge, including any future slot.
 
-Tenergy 11609 with charger 01025 was the earlier design/BOM baseline.
-The October 24 [TA reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792870041277289)
-requires DigiKey or Mouser for parts outside the course list. Its
-[17:44 EDT follow-up](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1792878299024869)
-allows Amazon for the battery only, preferably Prime one- or two-day delivery
-to Pittsburgh. Charger sourcing remains unresolved. See Parts-review.md for
-documented candidates; no replacement has been finalized.
-The October 24 team reply relays Anson's acceptance of the proposed 6396BG
-heatsink and confirms that motor stall/L298 loss/temperature measurements
-are not needed for today's review. Mounting hardware is a staff follow-up;
-thermal performance and protection behavior are not validated. Battery mounting
-and procurement decisions remain unresolved. The TAs confirmed on October 23 that
-teams will assemble all SMD parts themselves, with TechSpark oven access tentative.
-BOM-Hand-assembly.csv is the active assembly list; use course v3 stock first. Power/CAN review, power/heatsink decisions,
-physical fit and hardware validation are unfinished. This is not a fabrication
-or purchasing release. The October 24 review covers schematic, BOM and high-level
+The selected [LiPo battery and charger](Battery-LiPo.md) replace the historical
+NiMH candidates. Anson approved the exact Amazon pair; all other new parts
+must use DigiKey/Mouser or confirmed course stock. The existing Drive purchasing
+workbook matches the current active CSV. A selection/approval is not
+an order or a completed hardware test.
+
+The October 24 team reply relays Anson's acceptance of the 6396BG heatsink
+and deferral of motor stall/L298 loss/temperature measurements for that
+preliminary review. Its drawing-based mounting arrangement is now implemented;
+thermal performance and motor-fault protection are still unvalidated. The
+TAs confirmed on October 23 that teams will assemble all SMD parts themselves,
+with TechSpark oven access tentative. BOM-Hand-assembly.csv is the active
+assembly list; use course v3 stock first. This is not a fabrication or
+purchasing release. The October 24 review covered schematic, BOM and high-level
 design; the board layout deadline is October 29.
 
 ## Shared report and files
@@ -138,14 +140,14 @@ with the repository. The other footprints come from the standard KiCad library.
 
 ## Power and pin decisions
 
-Battery and charger purchasing remain unresolved. Amazon is now permitted
-for the battery only; the charger still needs a permitted source or a specific
-exception. Tenergy 11609/01025 and the unqualified Dantona alternatives are
-zero-quantity reference rows. One pack and one compatible charger are
-explicit unresolved requests; see Parts-review.md. The team checked
-a 115x50x50mm cardboard battery envelope between the chassis plates and
-reported approximately 51.75mm usable height. Strap/lead routing, wiring,
-cost and lead time remain; see Parts-review.md.
+We selected the TA-approved CNHL S220403BK 3S LiPo and Hitec 44295 charger.
+Amazon is permitted for both. All active new non-battery/charger purchases
+use DigiKey/Mouser or explicitly requested course stock. The pack body fits
+the measured battery envelope with the supplier's dimensional allowance;
+actual retention and wiring are assembly checks. Old NiMH entries have zero
+purchase quantity. See [Battery-LiPo.md](Battery-LiPo.md) for ratings, wiring,
+charging and the implemented divider/standalone cutoff guard. MCU integration,
+power-filter qualification and motor/fuse protection are not complete.
 The proposed branches are the unregulated motor supply, 6.6 V servo buck,
 5.1 V Pi/devices buck and 3.318 V logic buck. The protected-input electrical
 target is 8–15 V; this does not define the cells' allowed discharge voltage.

@@ -5,8 +5,8 @@ closer to the Pi and rerouting its connections. The buck setpoints are unchanged
 the separate encoder LDO remains in place. The
 calculations identify limits of the present design; they do not
 qualify it for fabrication. [Power-margin-check.json](Power-margin-check.json)
-records the source hashes, assumptions and numerical results. The existing
-8–15 V input envelope makes this work useful before the battery is selected.
+records the source hashes, assumptions and numerical results. The selected 3S LiPo reaches 12.6 V when full. We retain the existing
+8–15 V design screen; it is not the battery discharge cutoff.
 
 ## Current voltage results
 
@@ -60,24 +60,43 @@ minimum at all temperatures. The LC target follows the
 [TPS564252 design guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf);
 20 kHz is not a pass/fail stability boundary.
 
-The exact selected parts' bias/aging curves were not retrievable in this
-review. Their nominal value and voltage rating do not establish retention.
-Required data are effective C/ESR at approximately 3.37, 5.19 and 6.82 V
-for the output parts and up to 15 V for the inputs, with the applicable
-temperature/aging conditions. [Murata SimSurfing](https://www.murata.com/en-global/tool/simsurfing)
-is the manufacturer data source; a generic X5R curve is not a substitute.
-If exact data cannot support these targets, choose a documented replacement
-or additional capacitance and update the affected footprints/BOM.
+### Selected-part curves retrieved October 28
 
-The follow-up search found Murata's [LTspice dynamic-model library](https://www.murata.com/en-SG/tool/data/librarydata/library-ltspice),
-listed as version 26.06, updated August 27, 2026. Its earlier
-[supported-part list](https://www.murata.com/-/media/webrenewal/tool/library/common-pdf/dynamic-model/component-list-d-mlcc-2504.ashx?cvid=20250523010405000000&la=en)
-includes both selected capacitor families. The model download and SimSurfing
-requests were inaccessible during this review, so we obtained no model-derived
-capacitance or ESR result. Use an accessible manufacturer dynamic model to
-evaluate the exact parts under bias; a zero-bias static model cannot close
-this question. Keep model results separate from guaranteed limits, temperature
-and aging evidence. No capacitor or feed-forward value changed.
+We found manufacturer-authored characteristic sheets for both exact part
+families. These are typical 25 °C curves, not guaranteed production limits.
+We read the plots approximately; the values below must not be described as
+measurements of our board or precise model outputs.
+
+| Fitted bank | Approximate bias loss | Typical capacitance before tolerance/temperature | Screen with negative tolerance and −15% temperature |
+| --- | ---: | ---: | ---: |
+| One 22 µF input at 12.6 V | 60% | 8.8 µF | 6.73 µF |
+| One 22 µF input at 15 V | 67% | 7.26 µF | 5.55 µF |
+| Two 22 µF outputs at 3.3 V | 40% | 26.4 µF | 17.95 µF |
+| Two 22 µF outputs at 5.1 V | 62% | 16.72 µF | 11.37 µF |
+| Two 22 µF outputs at 6.6 V | 70% | 13.2 µF | 8.98 µF |
+
+The input uses ±10% tolerance; outputs use ±20%. Multiplying these factors
+is a sensitivity screen, not a guaranteed combined minimum, and excludes
+aging. Rounded nominal voltages are used here; final qualification must
+include the high setpoint corners. The input is already below TI's >10 µF
+recommendation at full battery voltage in the typical curve. The 5 V and
+servo outputs fall below our 16.84 µF LC-pole planning target in the screen;
+the logic output does not meet the more demanding 24.08 µF rolloff case.
+These are substantive design gaps. They do not prove instability, and a clean
+DRC does not close them. We have not released these filters for fabrication.
+
+Sources: Murata GRM32ER61E226KE15 characteristic sheet, updated 2020-08-18,
+[DC-bias plot p.3](https://static.chipdip.ru/lib/973/DOC031973461.pdf);
+Murata GRM219R61C226ME15 characteristic sheet, updated 2020-05-07,
+[DC-bias plot p.3](https://datasheet.octopart.com/GRM219R61C226ME15L-Murata-datasheet-140706706.pdf).
+Their zero-bias ESR plots do not establish hot, biased ripple capability.
+
+Next design work is to choose additional capacitance or a documented larger
+part, verify its effective C/ESR and ripple heating, then update placement,
+feedback/feed-forward choices and the full-loop review together. This needs
+component evidence and design work, not another chassis measurement. The
+separate dynamic-library download is still inaccessible; no simulation or
+guaranteed temperature/aging model result is claimed.
 
 ### Documented alternative comparison
 
@@ -204,8 +223,8 @@ pass. Source hashes match the saved PCB and prerequisite reports.
 
 Completed: the voltage-limit comparison, capacitor-retention targets,
 feed-forward comparison, ripple/current and thermal sensitivity calculations.
-Still open: the full supply/return budget, exact capacitor data and final
-loop choice, cooling qualification, battery/protection decisions and final
+Still open: the full supply/return budget, qualified capacitor selection and final
+loop choice, cooling qualification, motor/fuse protection decisions and final
 assembly process. Encoder supply calculations and heatsink placement are
 complete for their stated assumptions. These are not all measurement
 dependencies. Physical voltage/ripple/temperature tests belong after assembly;

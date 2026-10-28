@@ -1,14 +1,14 @@
 {
   "status": "PASS",
   "errors": [],
-  "schematic_footprints_present": 287,
+  "schematic_footprints_present": 290,
   "missing_footprints": [],
   "mechanical_holes": 8,
   "board_size_mm": [
     120,
     234
   ],
-  "track_segments_and_vias": 19513,
+  "track_segments_and_vias": 19755,
   "copper_zones": 6,
   "checks": [
     "Placed netlist pads match schematic",
@@ -42,5 +42,5 @@
     "Keep <=3mm tails and choose accessories within the documented envelope; mating, retention, full steering and powered performance are assembly checks",
     "Run check_routing.py and check_fabrication.py for copper connectivity and remaining fabrication blockers"
   ],
-  "source_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3"
+  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78"
 }

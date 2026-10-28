@@ -1,4 +1,9 @@
-# October 24 design review package
+# October 24 design review package — historical record
+
+For the current October 28 design, use [Battery-LiPo.md](Battery-LiPo.md), the
+active purchasing BOM and [Fabrication-review.md](Fabrication-review.md).
+The NiMH selections, old socket and encoder voltage below describe the
+preliminary submission; they are not the current circuit or purchase request.
 
 This package supports the schematic, bill of materials and high-level design
 review. It is not a manufacturing release. Detailed PCB layout is due October 29.

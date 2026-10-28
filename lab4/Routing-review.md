@@ -1,6 +1,17 @@
 # Power, MCU, CAN and signal routing
 
-## Current revision — October 27
+## Current revision — October 28
+
+The [LiPo voltage monitor](Battery-LiPo.md) is routed to Front PA3.
+The current board has 18,720 track segments, 1,035 vias and six ground zones.
+All 311 targeted connection checks and fresh native ERC/DRC/parity pass.
+The four Routing-*.svg previews were regenerated from this saved board.
+[Battery-monitor-change.json](Battery-monitor-change.json) records the scoped
+comparison with the preceding revision; project/custom rules are unchanged.
+Capacitor/control-loop revision, full Pi supply margin, motor/fuse protection
+and mechanical reconciliation still prevent fabrication release.
+
+## Earlier revision — October 27
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All

@@ -23,14 +23,14 @@ and repaired local routing. A new 4.0 V encoder rail replaces the marginal
 See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
-The current board has 287 electrical footprints plus eight supports and
-HS80, 19,513 track/via items and six filled ground zones after the 5 V cell
+The current board has 290 electrical footprints plus eight supports and
+HS80, 19,755 track/via items and six filled ground zones after the 5 V cell
 relocation. The positive-feed Pi screen improves to 4.9116 V at 3 A; local
 return/contact/heating/dynamic losses are not included in that number.
-All 308 targeted connection checks pass. Native findings are recorded in
+All 311 targeted connection checks pass. Native findings are recorded in
 [Fabrication-check.json](Fabrication-check.json); a clean automated result
-does not authorize fabrication. Battery/fault handling, Pi voltage margin,
-exact buck-capacitor data and final purchasing/manufacturing review remain.
+does not authorize fabrication. Cutoff integration, motor/fuse protection, Pi voltage margin, qualified
+buck-capacitor selection and final purchasing/manufacturing review remain.
 
 
 ## October 26 course updates
@@ -60,13 +60,14 @@ rows and 92.860 mm rear-pair spacing; the previously reported 238.650 mm used
 the wrong rear pair. Review the labelled feature correspondence and remaining
 width discrepancy against the physical evidence.
 The completed four-hole physical template fit remains valid evidence; the
-PCB outline and holes were not changed. Reconcile the model revision/feature
-correspondence before claiming a matching CAD assembly or releasing the
-mounting pattern on that basis.
+PCB outline and holes were not changed. The [October 28 TA instruction](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793222343758609) requires four holes common to the CAD and real chassis, physically measured.
+Keep the current pattern for working CAD only until a common set or explicit
+exception is established. Slot tolerances require a bounded offset; they do
+not resolve an unknown model discrepancy.
 
 | Decision | Evidence needed | Why it affects fabrication |
 | --- | --- | --- |
-| Battery and charger | Exact pack, continuous current and any pulse rating with duration, full-charge and discharged voltage bounds, dimensions, connector/polarity and compatible charger from a permitted source | Determines input voltage/current, connector, fuse, wiring and mechanical space. The provisional Amazon pack is not qualified: its published 2 A continuous rating does not cover the assumed 2.883 A planning case; no 10 A pulse rating was established. |
+| LiPo implementation | Approved CNHL S220403BK / Hitec 44295 pair, added PA3 divider and tested standalone guard; complete application integration and harness/fuse review | Selection is complete. The advertised pack capability does not authorize motor stalls. Cutoff demonstration and actual connector polarity/retention checks must precede LiPo operation. |
 | Motor protection and fuse | TA/course expectations for fault handling; chosen fuse time-current behavior versus wiring, connectors, holder and load/startup envelope | A 10 A input fuse is not fast protection for an individual L298 bridge. A circuit change must happen before routing. The raw 3.2 A motor stall figure is not an allowed continuous L298 operating point. |
 | L298 cooling/fault envelope | Mounting geometry is implemented and checked; finalize allowable motor current/duty and fault handling | The heatsink footprint and routing no longer await a measurement. Thermal qualification still depends on the operating envelope. |
 | Pi and chassis stack | Completed drawing-based review: 35 mm chassis / 22 mm Pi gap; all eight supports satisfy the 3 mm hole-edge rule | ESQ-118-44-L-D clears the Pi hole edge by 4.535 mm. Keep accessories and hardware within documented envelopes; actual mating/retention/steering are assembly checks. No rule exception is pending. |
@@ -178,3 +179,8 @@ Target final exports and a second-person review for Wednesday, October 28, with
 Thursday reserved for TA corrections and upload checks. Assembly, powered
 bring-up, adapter continuity and thermal/load tests on the new board occur after
 boards arrive; they must remain marked unperformed in this submission.
+
+The October 28 selected-capacitor curve review identifies inadequate effective
+capacitance in the present input and 5 V/servo output filters. See
+[Power-margin-review.md](Power-margin-review.md). This is a design blocker
+before final exports, not a request for new chassis measurements.
