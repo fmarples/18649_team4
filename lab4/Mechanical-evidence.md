@@ -1,14 +1,21 @@
 # Mechanical evidence and dimensional checks
 
-Updated 27 October 2026. We reconciled the October 23–24 measurement photos, team
+Updated 28 October 2026. We reconciled the October 23–24 measurement photos, team
 confirmations and the replies in the [original checklist](https://docs.google.com/document/d/1P07nc_d7xIuWZ1wto0kTwSsNMT-0vlnfMW1e4U4-y5E/edit).
 These observations support the design; they do not describe an assembled PCB.
+
+The October 28 [chassis CAD comparison](Chassis-CAD-review.md) found a reference
+conflict: visually corresponding holes in the course model give 238.650 mm
+between rows, rather than the recorded 220 mm. The successful four-hole paper
+fit below remains completed evidence, and the PCB geometry is unchanged.
+Resolve the model's correspondence/revision before claiming CAD confirmation
+of the actual chassis; no new general measurement session is requested.
 
 ## Completed observations
 
 | Item | Recorded evidence | What it establishes |
 | --- | --- | --- |
-| Chassis supports | Center-to-center: 50 mm front pair, 105 mm rear pair, 220 mm between rows; pair midpoints aligned. User confirmed 4.5 mm smooth through-holes. | The four chassis coordinates and proposed M3 screw/washer arrangement do not need another measurement. |
+| Chassis supports | Center-to-center: 50 mm front pair, 105 mm rear pair, 220 mm between rows; pair midpoints aligned. User confirmed 4.5 mm smooth through-holes. | Remains the physical basis for the four PCB coordinates and proposed M3 screw/washer arrangement. The newly discovered CAD-reference conflict needs reconciliation, rather than an automatic repeat measurement. |
 | Four-hole fit | The later October 24 photo/report says all four printed-template holes aligned simultaneously with borrowed spacers, approximately 50 mm above the top chassis plate. | Supersedes the earlier opposite-corners-only report. Confirms the paper hole pattern, not all final component/cable clearances. |
 | Pi footprint | Pi paper cutout aligned; 2.7 mm Pi holes reported. | Supports the Pi footprint and M2.5 hardware choice. Chassis and Pi hole diameters need not match. |
 | Actual Pi height | October 24 caliper reply: about 18 mm from Pi board bottom to USB top; USB body about 16 mm; pins/microSD below the board less than 5 mm. | Supports the 22 mm Pi gap and about 11 mm lower clearance. No repeat caliper campaign is needed for these dimensions. |

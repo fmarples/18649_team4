@@ -54,6 +54,13 @@ included, matching the [October 25 clarification](https://18449-f26.slack.com/ar
 
 ## Decisions needed before the layout is fixed
 
+The October 28 [chassis reference comparison](Chassis-CAD-review.md) found
+different row spacing and hole diameters in the downloaded course model.
+The completed four-hole physical template fit remains valid evidence; the
+PCB outline and holes were not changed. Reconcile the model revision/feature
+correspondence before claiming a matching CAD assembly or releasing the
+mounting pattern on that basis.
+
 | Decision | Evidence needed | Why it affects fabrication |
 | --- | --- | --- |
 | Battery and charger | Exact pack, continuous current and any pulse rating with duration, full-charge and discharged voltage bounds, dimensions, connector/polarity and compatible charger from a permitted source | Determines input voltage/current, connector, fuse, wiring and mechanical space. The provisional Amazon pack is not qualified: its published 2 A continuous rating does not cover the assumed 2.883 A planning case; no 10 A pulse rating was established. |

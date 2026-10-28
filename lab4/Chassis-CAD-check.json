@@ -1,0 +1,206 @@
+{
+  "date": "2026-10-28",
+  "result": "CAD_REFERENCE_CONFLICT; PCB GEOMETRY UNCHANGED",
+  "model_filename": "Ackermann Chassis (Single Layer).3dm",
+  "model_sha256": "b83c36c1d7df816716110a03a9ffe05b44c7aa64c3f3ca3b1ee18c2b124bd11c",
+  "model_bytes": 185526936,
+  "canvas_url": "https://canvas.cmu.edu/courses/56453/files/14985787",
+  "canvas_created_and_modified": "2026-10-09",
+  "units": "UnitSystem.Millimeters",
+  "model_tolerance_mm": 0.001,
+  "upper_plate_object_uuid": "520c3531-3412-40e6-9cf7-20c65621038d",
+  "upper_plate_object_index_zero_based": 36,
+  "upper_surface_z_mm": 81.1176928678,
+  "lower_plate_upper_surface_z_mm": 29.1176928678,
+  "upper_plate_lower_surface_z_mm": 79.1176928678,
+  "interplate_surface_gap_mm": 50.0,
+  "visually_corresponding_model_holes": {
+    "front": [
+      {
+        "xy": [
+          -21.45269,
+          -125.71958
+        ],
+        "r": 2.15,
+        "edges": [
+          490
+        ],
+        "angle": 360.0
+      },
+      {
+        "xy": [
+          26.41721,
+          -125.71958
+        ],
+        "r": 2.15,
+        "edges": [
+          493
+        ],
+        "angle": 360.0
+      }
+    ],
+    "rear": [
+      {
+        "xy": [
+          -49.60074,
+          112.93028
+        ],
+        "r": 1.25,
+        "edges": [
+          295,
+          299
+        ],
+        "angle": 360.0000000000026
+      },
+      {
+        "xy": [
+          54.56527,
+          112.93028
+        ],
+        "r": 1.25,
+        "edges": [
+          301,
+          305
+        ],
+        "angle": 359.9999999999974
+      }
+    ],
+    "front_pair_mm": 47.8699,
+    "rear_pair_mm": 104.16601,
+    "row_separation_mm": 238.64986
+  },
+  "pcb_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
+  "pcb_outline_centerline_size_mm": [
+    120,
+    234
+  ],
+  "pcb_holes": {
+    "H1": {
+      "xy_mm": [
+        47.5,
+        47.0
+      ],
+      "drill_mm": 3.2
+    },
+    "H2": {
+      "xy_mm": [
+        152.5,
+        47.0
+      ],
+      "drill_mm": 3.2
+    },
+    "H3": {
+      "xy_mm": [
+        75.0,
+        267.0
+      ],
+      "drill_mm": 3.2
+    },
+    "H4": {
+      "xy_mm": [
+        125.0,
+        267.0
+      ],
+      "drill_mm": 3.2
+    },
+    "H5": {
+      "xy_mm": [
+        73.5,
+        132.5
+      ],
+      "drill_mm": 2.7
+    },
+    "H6": {
+      "xy_mm": [
+        131.5,
+        132.5
+      ],
+      "drill_mm": 2.7
+    },
+    "H7": {
+      "xy_mm": [
+        73.5,
+        181.5
+      ],
+      "drill_mm": 2.7
+    },
+    "H8": {
+      "xy_mm": [
+        131.5,
+        181.5
+      ],
+      "drill_mm": 2.7
+    }
+  },
+  "pcb_pattern_mm": {
+    "front_pair": 50,
+    "rear_pair": 105,
+    "row_separation": 220
+  },
+  "alternative_search": {
+    "scope": "Circular upper-plate holes; horizontal rows within 0.002 mm; translation only, no scale or rotation. Does not qualify slots or tilted mounts.",
+    "hole_count": 83,
+    "horizontal_pair_count": 72,
+    "candidate_pair_combinations": 2442,
+    "best": {
+      "rms_mm": 2.4651893802087033,
+      "max_center_error_mm": 2.4944055134001912,
+      "front": [
+        {
+          "xy": [
+            -21.83679,
+            -102.27013
+          ],
+          "r": 2.1,
+          "edges": [
+            520
+          ],
+          "angle": 360.0
+        },
+        {
+          "xy": [
+            26.80321,
+            -102.27013
+          ],
+          "r": 2.1,
+          "edges": [
+            517
+          ],
+          "angle": 360.0
+        }
+      ],
+      "rear": [
+        {
+          "xy": [
+            -49.60074,
+            112.93028
+          ],
+          "r": 1.25,
+          "edges": [
+            295,
+            299
+          ],
+          "angle": 360.0000000000026
+        },
+        {
+          "xy": [
+            54.56527,
+            112.93028
+          ],
+          "r": 1.25,
+          "edges": [
+            301,
+            305
+          ],
+          "angle": 359.9999999999974
+        }
+      ],
+      "row_separation_mm": 215.20040999999998
+    }
+  },
+  "limits": [
+    "Model-to-physical-chassis revision and selected-hole correspondence unresolved.",
+    "Four-hole physical paper-template fit remains completed evidence; CAD conflict does not invalidate that observation.",
+    "No swept-volume, full assembly collision or electrical functionality pass claimed."
+  ]
+}
