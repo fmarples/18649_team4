@@ -8,6 +8,12 @@ confirm the same pattern, so we cannot yet claim a matching CAD assembly.
 
 ## Source and correspondence
 
+**Correction after the purple-hole recheck:** the earlier rear selection was
+too far rearward. Its 238.650 mm row separation and 2.5 mm rear-hole diameter
+do not describe the purple-marked pair. We replaced those features with the
+larger pair beside the rearmost thin slot. The front selection is retained
+after checking the narrow end slot, large centre hole and nearby small holes.
+
 Canvas lists [Ackermann Chassis (Single Layer).3dm](https://canvas.cmu.edu/courses/56453/files/14985787)
 in the course Labs folder, created and last modified October 9, 2026. Its
 displayed 185.5 MB size agrees with the downloaded file's 185,526,936 bytes.
@@ -15,7 +21,8 @@ The file page provides no revision explanation. Despite its name, the model
 contains both chassis plates, spacers, wheels and steering parts. Its units
 are millimetres, with 0.001 mm model tolerance.
 
-We matched the narrow front pair and the wide rear pair by their locations
+We matched the front pair beside the narrow end slot and the rear pair beside
+the rearmost thin slot by their locations
 in the [marked team photo](measurements/chassis-mounting-2026-10-23.jpg).
 That correspondence is a visual interpretation, not confirmation that this
 CAD revision describes our actual car.
@@ -23,23 +30,28 @@ CAD revision describes our actual car.
 | Dimension | Team evidence / saved PCB | Visually corresponding CAD features |
 | --- | ---: | ---: |
 | Front pair, centre to centre | 50 mm | 47.870 mm |
-| Rear pair, centre to centre | 105 mm | 104.166 mm |
-| Front-to-rear row separation | 220 mm | 238.650 mm |
-| Chassis hole diameters | 4.5 mm, reported smooth holes | Front 4.3 mm; rear 2.5 mm |
+| Rear pair, centre to centre | 105 mm | 92.860 mm |
+| Front-to-rear row separation | 220 mm | 222.246 mm |
+| Chassis hole diameters | 4.5 mm, reported smooth holes | 4.3 mm at all four selected CAD holes |
 | Clear space between chassis plates | Approximately 51.75 mm reported | 50.000 mm |
 
-The 238.650 mm value is **a distance in the reference model**, not a new
-measurement of the team's chassis. The model's 2.5 mm rear holes would not
-accept our proposed M3 screw; this additional difference reinforces the need
-to reconcile the reference instead of automatically moving the PCB holes.
-We have not established whether the cause is a different chassis revision,
-incorrect feature correspondence, or a mismatch between the tested template
-and its recorded dimensions.
+The corrected longitudinal spacing is much closer to the recorded 220 mm,
+but the 12.140 mm difference in rear-pair width still prevents a matching
+four-hole CAD assembly. These values describe the model; they do not replace
+the team's physical measurements. We have not established whether the
+remaining difference comes from a different chassis revision, remaining
+feature correspondence ambiguity, or the tested template's recorded dimensions.
+
+![Labelled selected holes with front and rear details](Chassis-hole-correspondence.png)
+
+A/B identify the front pair; C/D identify the revised rear pair. Grey crosses
+mark the earlier, incorrect rear selection. This figure makes the visual
+correspondence reviewable without needing another set of physical measurements.
 
 ![CAD and current PCB support pattern](Chassis-CAD-comparison.png)
 
 The illustration aligns the rear-pair midpoints and applies no scale change.
-It is a reference comparison, not a fitted assembly. Blue circles identify
+It is a reference comparison, not a fitted assembly. Purple circles identify
 the selected CAD features; orange crosses show the current PCB hole centres.
 
 ## Checks and reproducibility
@@ -51,7 +63,7 @@ The selected hole centres in model coordinates are:
 | Pair | Left X / Y (mm) | Right X / Y (mm) | Boundary-edge indices |
 | --- | --- | --- | --- |
 | Front | −21.45269 / −125.71958 | 26.41721 / −125.71958 | 490; 493 |
-| Rear | −49.60074 / 112.93028 | 54.56527 / 112.93028 | 295 + 299; 301 + 305 |
+| Rear | −43.94773 / 96.52639 | 48.91225 / 96.52639 | 196; 199 |
 
 We extracted circular boundary arcs at the top surface using the model's
 0.001 mm tolerance, joining arcs with the same centre and radius. The check
@@ -83,15 +95,14 @@ The large course CAD file is not duplicated in this repository.
 
 ## Before release
 
-Resolve the model-to-car discrepancy before treating the course model as
-verification of the mounting pattern. The first step is a reference check
-with the TA, not another general measurement session:
+Review the labelled A/B/C/D correspondence before treating the course model
+as verification of the mounting pattern. If these are the intended matching
+features, the remaining focused reference question is:
 
-> Our 1:1 template fits all four chassis holes with 220 mm between the front
-> and rear rows. The matching-looking holes in the Canvas model are about
-> 238.65 mm apart, and their diameters also differ. Is the model for a different
-> chassis version, or are we identifying the wrong holes? Can we use the pattern
-> already checked on our actual car?
+> Our 1:1 template fits the car using 50/105 mm front/rear pair spacing and
+> 220 mm between rows. The labelled matching features in the Canvas model
+> give 47.87/92.86 mm and 222.25 mm. Does that model represent the same chassis
+> revision? Can we use the mounting pattern already checked on our actual car?
 
 Attach the comparison and the existing fit photo when asking. If the model
 is confirmed to represent a different car, retain the documented physical

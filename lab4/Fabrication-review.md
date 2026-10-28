@@ -54,8 +54,11 @@ included, matching the [October 25 clarification](https://18449-f26.slack.com/ar
 
 ## Decisions needed before the layout is fixed
 
-The October 28 [chassis reference comparison](Chassis-CAD-review.md) found
-different row spacing and hole diameters in the downloaded course model.
+The October 28 [chassis reference comparison](Chassis-CAD-review.md) corrects
+the earlier rear-hole selection. The revised pair gives 222.246 mm between
+rows and 92.860 mm rear-pair spacing; the previously reported 238.650 mm used
+the wrong rear pair. Review the labelled feature correspondence and remaining
+width discrepancy against the physical evidence.
 The completed four-hole physical template fit remains valid evidence; the
 PCB outline and holes were not changed. Reconcile the model revision/feature
 correspondence before claiming a matching CAD assembly or releasing the

@@ -5,8 +5,10 @@ confirmations and the replies in the [original checklist](https://docs.google.co
 These observations support the design; they do not describe an assembled PCB.
 
 The October 28 [chassis CAD comparison](Chassis-CAD-review.md) found a reference
-conflict: visually corresponding holes in the course model give 238.650 mm
-between rows, rather than the recorded 220 mm. The successful four-hole paper
+conflict after correcting the rear-hole selection: the revised CAD features
+give 222.246 mm between rows and 92.860 mm rear-pair spacing, versus recorded
+220 mm and 105 mm. The earlier 238.650 mm result used the wrong rear pair.
+The successful four-hole paper
 fit below remains completed evidence, and the PCB geometry is unchanged.
 Resolve the model's correspondence/revision before claiming CAD confirmation
 of the actual chassis; no new general measurement session is requested.

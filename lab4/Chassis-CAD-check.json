@@ -1,6 +1,6 @@
 {
   "date": "2026-10-28",
-  "result": "CAD_REFERENCE_CONFLICT; PCB GEOMETRY UNCHANGED",
+  "result": "REAR HOLE SELECTION CORRECTED; REMAINING CAD_REFERENCE_CONFLICT; PCB GEOMETRY UNCHANGED",
   "model_filename": "Ackermann Chassis (Single Layer).3dm",
   "model_sha256": "b83c36c1d7df816716110a03a9ffe05b44c7aa64c3f3ca3b1ee18c2b124bd11c",
   "model_bytes": 185526936,
@@ -42,32 +42,30 @@
     "rear": [
       {
         "xy": [
-          -49.60074,
-          112.93028
+          -43.94773,
+          96.52639
         ],
-        "r": 1.25,
+        "r": 2.15,
         "edges": [
-          295,
-          299
+          196
         ],
-        "angle": 360.0000000000026
+        "angle": 360.0
       },
       {
         "xy": [
-          54.56527,
-          112.93028
+          48.91225,
+          96.52639
         ],
-        "r": 1.25,
+        "r": 2.15,
         "edges": [
-          301,
-          305
+          199
         ],
-        "angle": 359.9999999999974
+        "angle": 360.0
       }
     ],
     "front_pair_mm": 47.8699,
-    "rear_pair_mm": 104.16601,
-    "row_separation_mm": 238.64986
+    "rear_pair_mm": 92.85998000000001,
+    "row_separation_mm": 222.24597
   },
   "pcb_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
   "pcb_outline_centerline_size_mm": [
@@ -198,8 +196,9 @@
       "row_separation_mm": 215.20040999999998
     }
   },
+  "correction": "Previous rear edges 295/299 and 301/305 were too far rearward; use edges196/199 beside the rearmost narrow slot. Previous238.65mm value does not describe the purple-marked rear pair. Front edges490/493 retained after landmark review.",
   "limits": [
-    "Model-to-physical-chassis revision and selected-hole correspondence unresolved.",
+    "Revised photo-to-CAD correspondence is visual; model-to-physical-chassis dimensional conflict remains unresolved.",
     "Four-hole physical paper-template fit remains completed evidence; CAD conflict does not invalidate that observation.",
     "No swept-volume, full assembly collision or electrical functionality pass claimed."
   ]
