@@ -1,3 +1,15 @@
+October 29 later update: load-specific operating review
+- CAD unchanged: 65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0.
+- New0.05mm Pi mesh at1.5A:35.596mV positive-feed loss; other loads unchanged.
+- Terminal sensitivity4.916-4.934V before transients; planning input2.19-2.50A.
+- Pi buck loss sensitivity0.245-0.521W at1.8A rail load; not measured temperature.
+- Sustained3A Pi optimization deferred. No optional limiter/camera added.
+- Prepared for team/TA prototype fabrication review. Submission/order and
+  controlled bring-up/qualification are not completed.
+- See Prototype-operating-review.md and Prototype-power-check.json.
+
+Earlier verification records follow:
+
 Current package/drill and release review — October 29
 
 The selected-package audit now covers 282 components, up from 186. We

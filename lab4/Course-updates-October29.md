@@ -12,6 +12,13 @@ unbuilt board has passed electrical or mechanical tests.
 | Optional camera | [Ayaan, 12:19 EDT](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793290742831139) and [current clarification](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793290848935289): optional two-pin JST 5 V/GND, 250–500 mA from the global rail, not a Pi/MCU output. | Not part of the required design or present power allocation. No connector or purchase has been added. Adding it would raise our 3.3 A rail allocation to 3.55–3.8 A and require renewed voltage/thermal review and an exact mating connector. |
 | Battery/charger | Anson's latest DM remains [October 28, 17:34 EDT](https://18449-f26.slack.com/archives/D0C53Q3DN9X/p1793223291984229): update the BOM for the approved CNHL/Hitec pair. | The active purchasing BOM already contains that pair. The battery's XT60 does not replace the PCB's Hirose interface; the vehicle adapter and two motor adapters remain. |
 
+## Deadline extension — 15:19 EDT
+
+[Ayaan's announcement](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793301588360959)
+extends PCB Lab submission to Saturday, October 31 at 10 p.m. Staff plan a
+quick review Sunday/Monday before sending the fabrication batch. This
+supersedes the original October 29 deadline; it is not an electrical approval.
+
 ## Why 2 oz is not an order-setting-only change
 
 [JLCPCB's current copper-weight guide](https://jlcpcb.com/help/article/jlcpcb-copper-weight)

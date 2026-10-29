@@ -1,8 +1,8 @@
 REVIEW ONLY - NOT RELEASED FOR FABRICATION
 
 Four copper layers; nominal 1.6 mm JLC04161H-7628 stack.
-This is a review export of the hashed sources, not an approved order.
-See Fabrication-review.md and Power-margin-review.md for open issues.
-3D views use available library models; omitted custom parts are not fit evidence.
-Native positions use KiCad rotation conventions and mm/absolute origin.
-The team hand-assembly plan remains in force. No PCBA upload is authorized.
+Prepared for course prototype review; team/TA acceptance and the order are not completed.
+See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.
+The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.
+3D views omit custom parts without models; they do not prove full fit.
+Positions use KiCad rotation conventions. Course hand assembly; no PCBA order.

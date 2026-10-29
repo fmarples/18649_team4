@@ -103,7 +103,7 @@ def network_solve(n, edges, conductance, current):
                      'unenergized_islands': int(count-1)}
 
 
-def solve(path, output, steps, board_path):
+def solve(path, output, steps, board_path, pi_current=None):
     import numpy as np
     import shapely
     from shapely.geometry import Polygon, Point
@@ -111,6 +111,10 @@ def solve(path, output, steps, board_path):
     data = json.loads(path.read_text())
     assert data['board_sha256'] == sha(board_path)
     assert data['allocation_sha256'] == sha(ROOT / 'Load-allocation-check.json')
+    if pi_current is not None:
+        if not math.isfinite(pi_current) or pi_current < 0:
+            raise ValueError('Pi current must be finite and nonnegative')
+        next(x for x in data['rail']['loads'] if x['ref'] == 'J70')['allocation_A'] = pi_current
     def poly(parts):
         return shapely.unary_union([shapely.make_valid(Polygon(c['outline'], c['holes'])) for c in parts])
     holes = shapely.unary_union([Point(*b['xy']).buffer(b['drill_mm']/2, quad_segs=48) for b in data['barrels']])
@@ -183,6 +187,8 @@ if __name__=='__main__':
     parser.add_argument('--output',type=Path,default=ROOT/'Pi-feed-mesh-check.json')
     parser.add_argument('--steps',type=float,nargs='+',default=[.1,.05])
     parser.add_argument('--board',type=Path,default=ROOT/'KiCad/Lab4.kicad_pcb')
+    parser.add_argument('--pi-current',type=float,default=None,
+                        help='Override only Pi current for a labeled load scenario; other loads are unchanged')
     args=parser.parse_args()
     if args.mode=='extract': extract(args.geometry,args.board)
-    else: solve(args.geometry,args.output,args.steps,args.board)
+    else: solve(args.geometry,args.output,args.steps,args.board,args.pi_current)

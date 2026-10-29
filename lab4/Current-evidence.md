@@ -1,5 +1,21 @@
 # Current evidence and measurement record
 
+## Current operating estimate — October 29
+
+The bare-Pi planning allowance is now 1.5 A plus 0.3 A for other 5 V loads.
+The regulated-output total is 14.4084 W; with the 0.72 A motor proxy,
+Ibat is 2.247 A at 11.1 V / 85% before input losses. The updated 80%-efficiency
+model including stated hot-copper/FET/fuse/harness allowances gives
+2.19–2.50 A across 12.6–10.5 V. None is a measured or guaranteed maximum.
+The servo duty assumption gives 0.39 A average and 0.953 A RMS; heating must
+not be calculated from the average alone. See
+[Prototype-operating-review.md](Prototype-operating-review.md) and
+[Prototype-power-check.json](Prototype-power-check.json).
+
+The older 3.3 A 5 V cases below are retained as dated stress records. They
+are not the current normal-use budget or required sustained 3 A Pi tests.
+Actual startup/workload/temperature tests follow assembly.
+
 ## Selected LiPo scenario — October 28
 
 The approved CNHL 3S pack is 11.1 V nominal and 12.6 V full, with 2.2 Ah

@@ -1,0 +1,49 @@
+{
+  "board_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "allocation_sha256": "fc5e6deb95c3979c047637a1194f32b360cd1bdf6f4c07dff81486532fd0dca0",
+  "fabrication_release": false,
+  "method": "Square-cell multilayer DC mesh; four-sector 20 um plated barrels; uniform current over component pad areas",
+  "assumptions": {
+    "copper_resistivity_ohm_mm": 1.72e-05,
+    "layer_thickness_mm": [
+      0.035,
+      0.0152,
+      0.0152,
+      0.035
+    ],
+    "barrel_plating_mm": 0.02,
+    "Pi_current_A": 1.5
+  },
+  "omits": [
+    "Regulator accuracy and transient response",
+    "Connector resistance",
+    "Component and socket lead resistance",
+    "Ground return",
+    "Temperature rise and copper hot resistance",
+    "AC impedance and current crowding below mesh scale"
+  ],
+  "results": [
+    {
+      "mesh_mm": 0.05,
+      "nodes": 400591,
+      "edges": 779916,
+      "barrel_site_max_projection_mm": 0.03535533905328616,
+      "positive_feed_drop_V": {
+        "U82": 0.04402953340797468,
+        "J70": 0.03559561905828093,
+        "U80": 0.03166464881417995,
+        "U2": 0.030592916814173997,
+        "U3": 0.03199685591902928,
+        "R570": 0.010748026399956642,
+        "R571": 0.01055512893594528,
+        "R670": 0.043068977579849246,
+        "R671": 0.04383689693882685,
+        "R420": 0.0013825615529698583
+      },
+      "max_KCL_residual_A": 4.96732538917766e-10,
+      "copper_loss_W": 0.059942576291552904,
+      "source_work_W": 0.05994257630445951,
+      "unenergized_islands": 0
+    }
+  ]
+}

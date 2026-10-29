@@ -1,5 +1,24 @@
 # Pi positive-feed mesh review — October 29
 
+## Current prototype review — October 29, later update
+
+The selected course scope is ready for final team/TA prototype fabrication
+review. We recommend retaining the present CAD for that review. The new
+[operating review](Prototype-operating-review.md) uses 1.5 A for the bare Pi
+and 0.3 A for other 5 V loads; sustained 3 A Pi operation is a deferred stress
+case. This is a planning assumption, not a measured or enforced limit.
+
+At 1.5 A the calculated Pi voltage is 4.916–4.934 V before transients under
+the stated hot-copper/contact/return assumptions. Planning battery current is
+2.19–2.50 A. The normal-load loss review is complete; startup, actual workload,
+fuse/harness selection and temperature checks remain required during assembly
+and controlled bring-up before LiPo operation. The 10 A fuse does not qualify
+continuous high-current PCB operation or protect every semiconductor.
+
+The following earlier calculations retain their original stress assumptions.
+They are not the current list of unfinished fabrication tasks. See
+[Fabrication-review.md](Fabrication-review.md) for release stage and deadline.
+
 We checked the saved board's entire +5V conductor network rather than one
 selected route. This is a DC calculation, not a transient/thermal simulation.
 The board and allocation hashes are in [Pi-feed-mesh-check.json](Pi-feed-mesh-check.json).

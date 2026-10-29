@@ -14,8 +14,8 @@ copper stack is unchanged; 2 oz would require a revised manufacturing review.
 We selected the required scope only: keep the course L298 and omit extra
 hardware current limiting and the camera. The [input-fuse review](Fuse-and-scope-review.md)
 and [Pi conductor mesh](Pi-feed-review.md) are complete for their stated
-assumptions. The mesh confirms that hidden parallel copper does not remove
-the Pi margin concern. No optional-circuit decision or new hole measurement
+assumptions. The 3 A mesh is retained as a deferred stress case; the current
+load-specific result and limitations are in [Prototype-operating-review.md](Prototype-operating-review.md). No optional-circuit decision or new hole measurement
 is holding up the review. The [Lab 1 revision history](https://docs.google.com/document/d/182TcM6g2DfyiQt0xGXAkl2lv_5BjBLEOPw9v7Lpieis)
 now records the October 29 hardware configuration.
 
@@ -30,8 +30,10 @@ lead-clearance tolerance; pin centers, copper pads and heatsink anchors are unch
 These checks cover the listed package geometry and critical pin nets, not
 complete operating qualification. The [review export](review-package/REVIEW-ONLY.txt)
 contains matching schematic/layer PDFs, 3D views, Gerbers/drills and BOM/CPL
-files. It is **not released for fabrication**. The remaining power envelope
-and protection decisions are described in [Power-margin-review.md](Power-margin-review.md).
+files. It is ready for the course
+prototype fabrication review, with no order or TA acceptance claimed.
+[Prototype-operating-review.md](Prototype-operating-review.md) separates the
+completed planning review from required assembly/bring-up checks and optional stress work.
 
 We selected rear chassis pair A1/A2 after the team confirmed both holes are
 unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
@@ -70,8 +72,9 @@ The current board has 300 electrical footprints plus eight supports and
 HS80, 20,264 track/via items and six filled ground zones. The targeted routing
 check covers 331 connections. Fresh native findings and source hashes are in
 [Fabrication-check.json](Fabrication-check.json). These checks do not authorize
-fabrication. Pi voltage margin, motor/fuse protection, application cutoff
-integration and final purchasing/manufacturing review remain. The capacitor
+an order. The current planning review is complete; team/TA review precedes
+fabrication, and harness/fuse selection, cutoff integration and controlled
+powered validation precede LiPo use. The capacitor
 selection and routing revision is implemented; loop/transient and thermal
 behavior still require qualified review and later prototype validation.
 
@@ -238,13 +241,20 @@ The proposed Pi mapping is A=CE0/IRQ25 and B=CE1/IRQ24. Confirm the installed
 device-tree configuration and physical bus labels before relying on Linux
 `can0`/`can1` enumeration.
 
-## Remaining work
+## Remaining work by stage
 
-- Complete the full Pi voltage/contact/return budget and converter layout/thermal review. The multilayer DC mesh gives 4.9466 V at a 3 A Pi allocation before omitted losses; this is not a measured or guaranteed Pi voltage.
-- Close fuse/branch fault-energy and operating-power qualification for the existing L298 circuit; no additional limiter is planned. Published fuse timing and heat sensitivities are documented. Heatsink mounting geometry and the 4.0 V encoder supply are implemented.
-- Confirm course-stock allocations and the servo mating lead, then reconcile the final purchasing and assembly files.
-- Inspect final manufacturing outputs and assemble the required submission package. Native ERC, DRC, schematic parity and connectivity are zero; 300 electrical footprints and 331 targeted connections are checked.
-- Integrate the battery guard and perform mating, continuity, retention, steering and powered checks during assembly/bring-up before LiPo driving. No further chassis-hole selection is pending.
+- Before fabrication: team/TA review of the matched prototype package and its
+  stated operating assumptions, then the team's Gradescope submission by
+  **Saturday October 31, 10 p.m.** The [extension](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793301588360959)
+  includes staff review before the fabrication batch. No new hole measurements
+  or sustained 3 A Pi qualification are requested.
+- Before ordering/assembly: reconcile actual stock, settle the servo lead and
+  solder process. Current purchasing exceptions remain visible in the BOM.
+- Before LiPo operation: staged bench commissioning, fuse/harness selection,
+  battery-guard application integration and physical/electrical acceptance.
+  These remain required; see [the operating review](Prototype-operating-review.md).
+- Optional/deferred: sustained 3 A Pi tests, extra peripherals/current limiter,
+  deliberate stall tests, a 2 oz redesign and expanded simulation.
 
 ## Rechecking with KiCad
 

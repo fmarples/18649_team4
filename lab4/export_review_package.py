@@ -62,12 +62,17 @@ def main():
                      'Capacitor-bank-review.md', 'Power-route-revision.md',
                      'Power-route-revision-check.json', 'Fuse-and-scope-review.md',
                      'Pi-feed-review.md', 'Pi-feed-mesh-check.json',
+                     'Prototype-operating-review.md', 'Prototype-power-check.json',
+                     'Pi-operating-mesh-check.json', 'Power-budget.csv',
+                     'Current-evidence.md',
                      'Actuator-design.md', 'Parts-review.md'):
         shutil.copy2(ROOT/filename, out/filename)
     warning = ('REVIEW ONLY - NOT RELEASED FOR FABRICATION\n\n'
         'Four copper layers; nominal 1.6 mm JLC04161H-7628 stack.\n'
         'This is a review export of the hashed sources, not an approved order.\n'
-        'See Fabrication-review.md and Power-margin-review.md for open issues.\n'
+        'Prepared for course prototype review; team/TA acceptance and the order are not completed.\n'
+        'See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.\n'
+        'The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.\n'
         '3D views use available library models; omitted custom parts are not fit evidence.\n'
         'Native positions use KiCad rotation conventions and mm/absolute origin.\n'
         'The team hand-assembly plan remains in force. No PCBA upload is authorized.\n')
