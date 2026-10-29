@@ -3,3 +3,8 @@
 ** -text
 # CRLF is intentional in native Windows exports, not trailing whitespace.
 ** whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Retain binary diff/merge handling for exported documents and images.
+*.pdf binary
+*.png binary
+*.jpg binary
