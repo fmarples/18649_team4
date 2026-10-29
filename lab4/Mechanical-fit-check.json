@@ -1,6 +1,6 @@
 {
   "status": "NOMINAL_CALCULATIONS_COMPLETE_NOT_ASSEMBLY_QUALIFICATION",
-  "pcb_sha256": "bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3",
+  "pcb_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
   "pi_stack_mm": {
     "chassis_gap": 35,
     "pi_gap": 22,
@@ -61,7 +61,7 @@
   },
   "port_envelope_limits_mm": {
     "top_side_plug_or_cooler_height_max_with_1mm_margin": 18.0,
-    "pi_usb_ethernet_board_edge_recess": 5,
+    "pi_usb_ethernet_board_edge_recess": 5.0,
     "pi_microsd_board_edge_recess": 30
   },
   "limits": [

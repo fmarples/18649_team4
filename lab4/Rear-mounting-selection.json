@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-28",
+  "status": "CAD_PAIR_SELECTED_AND_IMPLEMENTED",
+  "pcb_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "cad_sha256": "b83c36c1d7df816716110a03a9ffe05b44c7aa64c3f3ca3b1ee18c2b124bd11c",
+  "rear_model_edge_indices": [
+    412,
+    406
+  ],
+  "front_model_edge_indices": [
+    490,
+    493
+  ],
+  "selected_mm": {
+    "front_width": 47.87,
+    "rear_width": 73.01493,
+    "row_separation": 233.21155,
+    "pcb_width": 120,
+    "pcb_length": 247.21155,
+    "rear_extension": 13.21155,
+    "pcb_drill": 4,
+    "chassis_rear_drill_CAD": 3.2,
+    "hole_edge_exclusion": 4
+  },
+  "team_evidence": {
+    "front_width_approx_mm": 48,
+    "rear_width_mm": 73.45,
+    "row_separation_mm": 232.85,
+    "row_measurement": "straight between rows",
+    "rear_holes_present_unused_accessible": true,
+    "request": "Use CAD nominal values",
+    "new_rigid_PCB_fit_tested": false
+  },
+  "allowance": {
+    "nominal_screw_diameter_mm": 3,
+    "nominal_PCB_radial_mm": 0.5,
+    "half_width_difference_mm": 0.21753499999999804,
+    "row_difference_mm": 0.36154999999999404,
+    "combined_rear_offset_with_front_row_fixed_mm": 0.4219477203694728,
+    "limitation": "Nominal arithmetic before manufacturing and measurement tolerances; retention checked at assembly"
+  },
+  "superseded_old_rear_measurements_mm": {
+    "width": 106.8,
+    "row": 222,
+    "same_side_left": 225.77,
+    "same_side_right": 225.08,
+    "predicted_same_side_if_centered": 223.94683794374058
+  },
+  "pending_geometry_selection": false
+}

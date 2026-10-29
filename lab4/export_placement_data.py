@@ -1,6 +1,7 @@
 """Refresh placement previews from the saved routed PCB without changing it.
 
-Run with KiCad Python. Coordinates use the board's (40,40) mm outline origin.
+Run with KiCad Python. Coordinates use the fixed KiCad (40,40) mm datum.
+The October 28 rear extension extends into negative board-relative Y.
 This is a review-data export, not a qualified assembly CPL or drill template.
 """
 from pathlib import Path
@@ -34,6 +35,12 @@ for fp in sorted(board.GetFootprints(),key=lambda f:f.GetReference()):
         records[-1]['edge_exclusion_mm']=4 if int(fp.GetReference()[1:])<=4 else 3
 assert {r['reference'] for r in records if r['schematic']}==electrical
 data['components']=records
+outline=[v for g in board.GetDrawings() if g.GetLayer()==p.Edge_Cuts
+         for v in [g.GetStart(),g.GetEnd()]]
+x0=min(p.ToMM(v.x)-40 for v in outline);x1=max(p.ToMM(v.x)-40 for v in outline)
+y0=min(p.ToMM(v.y)-40 for v in outline);y1=max(p.ToMM(v.y)-40 for v in outline)
+data.update(width_mm=x1-x0,height_mm=y1-y0,outline_bounds_mm=[x0,y0,x1,y1],
+            coordinate_datum='Fixed KiCad (40,40) mm; former rear-left board corner; rear extension has negative Y')
 data['source_sha256']=hashlib.sha256(before).hexdigest()
 (root/'placement-data.json').write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
 with (root/'Placement-coordinates.csv').open('w',encoding='utf-8',newline='') as f:

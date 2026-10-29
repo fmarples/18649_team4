@@ -1,6 +1,6 @@
 """Render a placement overview and a true-size paper fit template from PCB data.
 
-Chassis hole centers use team caliper dimensions. Board outline and stack remain proposed.
+Chassis centers use the team-selected CAD pattern, checked against caliper dimensions.
 Requires reportlab and Pillow. No photograph is altered or used as a ruler.
 """
 from pathlib import Path
@@ -13,16 +13,17 @@ from reportlab.lib.colors import HexColor
 ROOT=Path(__file__).resolve().parent
 d=json.loads((ROOT/'placement-data.json').read_text())
 colors={'missing':'#fff0d2','switch':'#fff0d2','pi':'#e2efff','clearance':'#e2efff','cable':'#ebf3fb','rf':'#fce4df'}
-img=Image.new('RGB',(1440,1740),'#f5f7fa');dr=ImageDraw.Draw(img)
+img=Image.new('RGB',(1440,1860),'#f5f7fa');dr=ImageDraw.Draw(img)
 fontdir=Path('C:/Windows/Fonts')
 def ft(s,bold=False):return ImageFont.truetype(str(fontdir/('arialbd.ttf' if bold else 'arial.ttf')),s)
 S=6;OX=75;OY=180
-def xy(x,y):return OX+S*x,OY+S*y
+LEFT,TOP,RIGHT,BOTTOM=d['outline_bounds_mm']
+def xy(x,y):return OX+S*(x-LEFT),OY+S*(y-TOP)
 def rbox(x,y,w,h):return (*xy(x,y),*xy(x+w,y+h))
 dr.text((75,35),'Lab 4 | Direct Pi connection',font=ft(38,True),fill='#16354e')
-dr.text((75,89),f"120 x 234 mm proposal  /  {sum(c['schematic'] for c in d['components'])} electrical footprints placed",font=ft(23),fill='#334b60')
-dr.text((75,125),'PLACEMENT PREVIEW - measured hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
-dr.rectangle(rbox(0,0,120,234),fill='white',outline='#16354e',width=3)
+dr.text((75,89),f"{d['width_mm']:.0f} x {d['height_mm']:.3f} mm  /  {sum(c['schematic'] for c in d['components'])} electrical footprints placed",font=ft(23),fill='#334b60')
+dr.text((75,125),'PLACEMENT PREVIEW - selected CAD hole centers - NOT FOR FABRICATION',font=ft(22,True),fill='#9b4800')
+dr.rectangle(rbox(LEFT,TOP,d['width_mm'],d['height_mm']),fill='white',outline='#16354e',width=3)
 for r in d['reservations']:
     if r['kind']=='clearance':continue
     dr.rectangle(rbox(r['x'],r['y'],r['w'],r['h']),fill=colors[r['kind']],outline='#b17820' if r['kind'] in ['missing','switch'] else '#7392b6',width=2)
@@ -42,16 +43,16 @@ def onboard(lines,x,y):
 # Pi position is explained in the key; avoid text over the relocated 5 V cell.
 
 dr.text(xy(42,235),'FRONT / STEERING',font=ft(17,True),fill='#16354e')
-dr.text(xy(38,-5),'REAR / DRIVE MOTORS',font=ft(17,True),fill='#16354e')
+dr.text(xy(38,TOP-5),'REAR / DRIVE MOTORS',font=ft(17,True),fill='#16354e')
 side=[('What this establishes',[
     'Actual footprint sizes and saved locations.',
     'Pi underneath; top-side parts overlap it.',
     'A board-size proposal to check on the car.']),
     ('Mounting proposals',[
-    'H1-H4: measured chassis centers.',
-    'Rear 105 mm / front 50 mm spacing.',
+    'H1/H2: selected rear CAD pair A1/A2.',
+    'Front 47.870 mm; rear 73.015 mm.',
     'H5-H8: Pi mounting pattern, 58 x 49 mm.',
-    'Rows 220 mm apart; centers aligned.']),
+    'Rows 233.212 mm apart; centers aligned.']),
     ('Planned electrical connections',[
     'Every placed pad retains its schematic net.',
     'Signal and supply connections routed.',
@@ -76,24 +77,24 @@ for title,lines in side:
     dr.text((860,y),title,font=ft(25,True),fill='#16354e');y+=43
     for line in lines:dr.text((860,y),line,font=ft(20),fill='#334b60');y+=30
     y+=38
-dr.text((75,1626),'Paper mounting pattern and nominal height checked. Socket mating and full steering are assembly checks.',font=ft(20),fill='#334b60')
-dr.text((75,1660),'Source: KiCad placement coordinates. Power qualification and final exports remain; not fabrication approval.',font=ft(20),fill='#334b60')
+dr.text((75,1750),'Rear pair selected and measured on the car. Earlier paper fit used the previous hole pattern.',font=ft(20),fill='#334b60')
+dr.text((75,1790),'Source: KiCad coordinates and course CAD. Power qualification and final exports remain.',font=ft(20),fill='#334b60')
 img.save(ROOT/'Placement-overview.png')
 
 pdf=canvas.Canvas(str(ROOT/'Placement-fit-template.pdf'),pagesize=(210*mm,297*mm))
 pdf.setTitle('Lab 4 - 1:1 PCB fit template - provisional')
-pdf.setFont('Helvetica-Bold',14);pdf.drawString(15*mm,282*mm,'Lab 4 - provisional PCB fit template')
-pdf.setFont('Helvetica',9);pdf.drawString(15*mm,276*mm,'Print at 100% / Actual size. Check the 50 mm bar before comparing with the car.')
-pdf.setFont('Helvetica-Bold',9);pdf.drawString(15*mm,270*mm,'MEASURED HOLE CENTERS - PLACEMENT PREVIEW - NOT FOR FABRICATION')
-BX=45;BY=26
+pdf.setFont('Helvetica-Bold',14);pdf.drawString(15*mm,287*mm,'Lab 4 - revised PCB fit template')
+pdf.setFont('Helvetica',9);pdf.drawString(15*mm,281*mm,'Print at 100% / Actual size. Check the 50 mm bar before comparing with the car.')
+pdf.setFont('Helvetica-Bold',9);pdf.drawString(15*mm,275*mm,'SELECTED CAD HOLE CENTERS - PLACEMENT PREVIEW - NOT FOR FABRICATION')
+BX=45;BY=18
 def p_rect(x,y,w,h,fill=None,stroke='#577386'):
     pdf.setStrokeColor(HexColor(stroke));pdf.setLineWidth(.15*mm)
     if fill:pdf.setFillColor(HexColor(fill))
-    pdf.rect((BX+x)*mm,(BY+234-y-h)*mm,w*mm,h*mm,fill=int(fill is not None),stroke=1)
-p_rect(0,0,120,234,None,'#000000')
+    pdf.rect((BX+x-LEFT)*mm,(BY+BOTTOM-y-h)*mm,w*mm,h*mm,fill=int(fill is not None),stroke=1)
+p_rect(LEFT,TOP,d['width_mm'],d['height_mm'],None,'#000000')
 pdf.setFillColor(HexColor('#000000'));pdf.setFont('Helvetica-Bold',8)
-pdf.drawString(45*mm,263*mm,'REAR / DRIVE MOTORS     (0,0) at upper-left; x right, y down')
-pdf.drawCentredString(105*mm,23*mm,'FRONT / STEERING WHEELS')
+pdf.drawString(45*mm,269*mm,'REAR / DRIVE MOTORS - new rear pair A1/A2')
+pdf.drawCentredString(105*mm,15*mm,'FRONT / STEERING WHEELS')
 for r in d['reservations']:
     if r['kind']!='clearance':p_rect(r['x'],r['y'],r['w'],r['h'],colors[r['kind']])
 for c in d['components']:
@@ -101,7 +102,7 @@ for c in d['components']:
     if c['schematic'] or ref.startswith('HS'):
         p_rect(*c['bbox'],None,'#648293')
     else:
-        cx=(BX+c['x_mm'])*mm;cy=(BY+234-c['y_mm'])*mm
+        cx=(BX+c['x_mm']-LEFT)*mm;cy=(BY+BOTTOM-c['y_mm'])*mm
         pdf.setStrokeColor(HexColor('#000000'));pdf.setLineWidth(.2*mm)
         pdf.circle(cx,cy,c['finished_drill_mm']/2*mm)
         pdf.line(cx-2.5*mm,cy,cx+2.5*mm,cy);pdf.line(cx,cy-2.5*mm,cx,cy+2.5*mm)
@@ -110,11 +111,11 @@ for c in d['components']:
 pdf.setFillColor(HexColor('#183b55'));pdf.setFont('Helvetica-Bold',10)
 pdf.setFont('Helvetica',7);pdf.drawCentredString(115*mm,115*mm,'Pi BELOW PCB / H5-H8 supports')
 pdf.setFillColor(HexColor('#000000'));pdf.setFont('Helvetica',8)
-pdf.drawString(15*mm,20*mm,'H1-H4: measured centers; 4.0 mm PCB drills for M3. Chassis holes measured 4.5 mm.')
-pdf.drawString(15*mm,15*mm,'Check wires, steering travel, Pi below the PCB, port access and separate battery location.')
-pdf.setLineWidth(.4*mm);pdf.line(15*mm,8*mm,65*mm,8*mm)
-pdf.line(15*mm,6*mm,15*mm,10*mm);pdf.line(65*mm,6*mm,65*mm,10*mm)
-pdf.drawString(70*mm,7*mm,'This bar must measure 50 mm.')
+pdf.drawString(15*mm,8*mm,'H1-H4: 4.0 mm PCB drills for M3. Rear chassis holes: 3.2 mm in CAD. PCB: 120 x 247.212 mm.')
+pdf.setLineWidth(.4*mm);pdf.line(20*mm,30*mm,20*mm,80*mm)
+pdf.line(18*mm,30*mm,22*mm,30*mm);pdf.line(18*mm,80*mm,22*mm,80*mm)
+pdf.saveState();pdf.translate(16*mm,30*mm);pdf.rotate(90)
+pdf.drawString(0,0,'This bar must measure 50 mm.');pdf.restoreState()
 
 # Dimensioned schematic section, separate from the true-size top-view template.
 sideimg=Image.new('RGB',(1500,900),'#f5f7fa');sd=ImageDraw.Draw(sideimg)

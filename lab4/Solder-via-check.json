@@ -1,5 +1,5 @@
 {
-  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
+  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
   "fabrication_release": false,
   "status": "No drill/land intersections found",
   "intersecting_vias": 0,
@@ -9,8 +9,8 @@
   "mask_paste_configuration": {
     "checked_smd_pad_sides": 828,
     "via_tenting_counts": {
-      "B.Cu_tented": 1063,
-      "F.Cu_tented": 1063
+      "B.Cu_tented": 1067,
+      "F.Cu_tented": 1067
     },
     "nonzero_margin_pad_sides": [],
     "pad_sides_without_direct_mask_or_paste": [

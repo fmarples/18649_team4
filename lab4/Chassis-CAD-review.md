@@ -1,104 +1,34 @@
-# Chassis reference comparison — October 28
+# Chassis CAD and selected supports — October 28
 
-We kept the current **120 × 234 mm PCB** and its **50 / 105 / 220 mm support
-pattern** unchanged. The team reported that all four holes in its 1:1 paper
-template aligned simultaneously on the physical chassis. That completed fit
-check remains evidence. The downloaded chassis model does not independently
-confirm the same pattern, so we cannot yet claim a matching CAD assembly.
+We use the CAD front pair at **47.870 mm** and newly verified rear pair **A1/A2 at 73.01493 mm**, separated longitudinally by **233.21155 mm**. The team confirmed A1/A2 are present, unused and accessible on the actual chassis. Measurements of approximately 48 mm front, 73.45 mm rear and 232.85 mm straight row separation support this selection; the user chose CAD nominal values.
 
-## Source and correspondence
+![Selected A1/A2 and longer-board alternative B1/B2](Rear-mounting-options.png)
 
-**Correction after the purple-hole recheck:** the earlier rear selection was
-too far rearward. Its 238.650 mm row separation and 2.5 mm rear-hole diameter
-do not describe the purple-marked pair. We replaced those features with the
-larger pair beside the rearmost thin slot. The front selection is retained
-after checking the narrow end slot, large centre hole and nearby small holes.
+## Source
 
-Canvas lists [Ackermann Chassis (Single Layer).3dm](https://canvas.cmu.edu/courses/56453/files/14985787)
-in the course Labs folder, created and last modified October 9, 2026. Its
-displayed 185.5 MB size agrees with the downloaded file's 185,526,936 bytes.
-The file page provides no revision explanation. Despite its name, the model
-contains both chassis plates, spacers, wheels and steering parts. Its units
-are millimetres, with 0.001 mm model tolerance.
+[Ackermann Chassis (Single Layer).3dm on Canvas](https://canvas.cmu.edu/courses/56453/files/14985787) is 185,526,936 bytes, SHA-256 b83c36c1d7df816716110a03a9ffe05b44c7aa64c3f3ca3b1ee18c2b124bd11c. Its units are millimetres and model tolerance is 0.001 mm. The upper plate is object 520c3531-3412-40e6-9cf7-20c65621038d (index 36), with its top surface at Z=81.117693 mm. We extracted circular boundary arcs at that surface, joining arcs with the same centre and radius, and identified 83 complete circular holes. The large course model is not duplicated in Git.
 
-We matched the front pair beside the narrow end slot and the rear pair beside
-the rearmost thin slot by their locations
-in the [marked team photo](measurements/chassis-mounting-2026-10-23.jpg).
-That correspondence is a visual interpretation, not confirmation that this
-CAD revision describes our actual car.
-
-| Dimension | Team evidence / saved PCB | Visually corresponding CAD features |
-| --- | ---: | ---: |
-| Front pair, centre to centre | 50 mm | 47.870 mm |
-| Rear pair, centre to centre | 105 mm | 92.860 mm |
-| Front-to-rear row separation | 220 mm | 222.246 mm |
-| Chassis hole diameters | 4.5 mm, reported smooth holes | 4.3 mm at all four selected CAD holes |
-| Clear space between chassis plates | Approximately 51.75 mm reported | 50.000 mm |
-
-The corrected longitudinal spacing is much closer to the recorded 220 mm,
-but the 12.140 mm difference in rear-pair width still prevents a matching
-four-hole CAD assembly. These values describe the model; they do not replace
-the team's physical measurements. We have not established whether the
-remaining difference comes from a different chassis revision, remaining
-feature correspondence ambiguity, or the tested template's recorded dimensions.
-
-![Labelled selected holes with front and rear details](Chassis-hole-correspondence.png)
-
-A/B identify the front pair; C/D identify the revised rear pair. Grey crosses
-mark the earlier, incorrect rear selection. This figure makes the visual
-correspondence reviewable without needing another set of physical measurements.
-
-![CAD and current PCB support pattern](Chassis-CAD-comparison.png)
-
-The illustration aligns the rear-pair midpoints and applies no scale change.
-It is a reference comparison, not a fitted assembly. Purple circles identify
-the selected CAD features; orange crosses show the current PCB hole centres.
-
-## Checks and reproducibility
-
-The upper plate is object `520c3531-3412-40e6-9cf7-20c65621038d`, object index
-36 in the downloaded model. Its top surface is at Z = 81.117693 mm.
-The selected hole centres in model coordinates are:
-
-| Pair | Left X / Y (mm) | Right X / Y (mm) | Boundary-edge indices |
+| Pair | Left model X/Y (mm) | Right model X/Y (mm) | Diameter; edge indices |
 | --- | --- | --- | --- |
-| Front | −21.45269 / −125.71958 | 26.41721 / −125.71958 | 490; 493 |
-| Rear | −43.94773 / 96.52639 | 48.91225 / 96.52639 | 196; 199 |
+| Front | −21.45269 / −125.71958 | 26.41721 / −125.71958 | 4.3 mm; 490 / 493 |
+| Rear A1/A2 | −34.02520 / 107.49197 | 38.98973 / 107.49197 | 3.2 mm; 412 / 406 |
 
-We extracted circular boundary arcs at the top surface using the model's
-0.001 mm tolerance, joining arcs with the same centre and radius. The check
-found 83 complete circular holes. Across 72 horizontal pairs and 2,442
-front/rear pair combinations, none exactly matched the PCB pattern under
-translation without scaling. The closest alternative uses a different front
-row and has 215.200 mm row separation; its largest residual hole-centre error
-after translation is 2.494 mm. This search covers horizontal circular-hole
-pairs, not slots, tilted supports or a complete steering sweep.
+Transform: PCB X = 100 + model X − 2.48226; PCB Y = 267 − (model Y + 125.71958). Front width is rounded from 47.86990 to the requested 47.87000 mm about X=100.
 
-The saved KiCad PCB independently gives H1/H2 at (47.5, 47) / (152.5, 47) mm
-and H3/H4 at (75, 267) / (125, 267) mm: 105 mm rear, 50 mm front and 220 mm
-between rows. Their PCB drills are 3.2 mm. These are PCB holes, distinct from
-the reported 4.5 mm chassis holes. The outline dimensions use the Edge.Cuts
-centreline, excluding its display stroke width.
+## Why this rear pair
 
-The October 28 native checks on the unchanged board reported zero ERC
-findings, DRC violations, unconnected items and schematic-parity findings
-under the current project settings. There are 287 electrical footprints,
-19,513 track/via items and six copper zones. Those results do not qualify the
-chassis fit or the remaining power/thermal/purchasing decisions.
+| Option | Width / row separation | Consequence |
+| --- | --- | --- |
+| **A1/A2, selected** | 73.015 / 233.212 mm | 3.2 mm chassis holes for M3; extend PCB 13.212 mm; no existing part or trace relocation |
+| B1/B2, farther rearward | 87.640 / 250.262 mm | Also 3.2 mm, but needs a 30.262 mm extension |
+| Near old rear row | 92.860 / 222.246 mm | Left support exclusion intersects HS80's reserved space |
+| Adjacent smaller pairs | 91.995 or 80.005 / 215.251 mm | 2.7 mm holes; interfere with power components and copper |
+| Existing chassis screw pair | 76.183 / 244.180 mm | Occupied in the supplied screenshot; not selected |
 
-Exact extracted values, source hashes and the alternative-pair search result
-are in [Chassis-CAD-check.json](Chassis-CAD-check.json). The CAD SHA-256 is
-`b83c36c1d7df816716110a03a9ffe05b44c7aa64c3f3ca3b1ee18c2b124bd11c`.
-The unchanged PCB SHA-256 is
-`bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3`.
-The large course CAD file is not duplicated in this repository.
+The selected outline is **120 × 247.21155 mm**, with rear supports 7 mm from its new edge. The 4 mm PCB drills and 4 mm hole-edge exclusions give 6 mm clear radii. Those rear circles lie entirely outside the former outline. Details are in [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
 
-## Decision after the comparison
+## Evidence limits and superseded comparison
 
-The team subsequently relayed Ayaan's agreement to use the existing physical
-holes with additional allowance. We keep the tested 50/105/220 mm pattern.
-H1–H4 now use 4 mm NPTH PCB holes for M3 hardware, with a 4 mm all-layer
-hole-edge exclusion. See [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
-The earlier 3.2 mm drills and source hash above describe the comparison
-snapshot, not the current board. We have not stretched the chassis model or
-claimed that extra drill allowance fixes its several-millimetre discrepancy.
+The earlier 238.650 mm result selected the wrong rear features. The subsequent 92.860/222.246 mm correspondence also differed from the old physical rear pair. Neither defines A1/A2. [Chassis-CAD-check.json](Chassis-CAD-check.json) retains that historical comparison; [Rear-mounting-selection.json](Rear-mounting-selection.json) records the current choice.
+
+The previous four-hole cardboard fit used the old pattern. This selection has direct measurements and accessibility confirmation, but no claim of a completed rigid-PCB fit. DRC and exclusion checks establish saved layout geometry, not assembly retention or electrical performance.

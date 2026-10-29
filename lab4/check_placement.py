@@ -51,7 +51,8 @@ for n in tree.findall('nets/net'):
         if not pads or any(pad.GetNetname()!=name for pad in pads):errors.append(f'{ref}.{pin} net mismatch')
 for ref,fp in fps.items():
     x,y,w,h=box(fp)
-    if x<0 or y<0 or x+w>d['width_mm'] or y+h>d['height_mm']:errors.append(f'{ref} extends outside outline')
+    left,top,right,bottom=d['outline_bounds_mm']
+    if x<left or y<top or x+w>right or y+h>bottom:errors.append(f'{ref} extends outside outline')
     if ref in schematic and ref!='J70' and fp.IsFlipped() and hit([x,y,w,h],[30,89,85,56]):errors.append(f'{ref} bottom part occupies Pi space')
     if ref in schematic:
         for hole in [f'H{i}' for i in range(1,9)]:
@@ -71,9 +72,12 @@ for pad in socket.Pads():
     pos=pad.GetPosition();actual=(p.ToMM(pos.x)-40,p.ToMM(pos.y)-40)
     if any(abs(a-e)>.001 for a,e in zip(actual,expected)):errors.append(f'Pi physical pin {n} mirrored or misplaced')
     if abs(p.ToMM(pad.GetDrillSize().x)-1.02)>.001:errors.append(f'J70.{n} drill differs from Samtec print')
-for i,(x,y) in enumerate([(7.5,7),(112.5,7),(35,227),(85,227)],1):
+# October 28: team remeasured the front pair at about 48mm and selected
+# its CAD nominal 47.87mm. The team verified and selected CAD rear pair A1/A2.
+# Keep the original (40,40) datum; the rear edge extends by 13.21155mm.
+for i,(x,y) in enumerate([(23.49254,-6.21155),(96.50747,-6.21155),(36.065,227),(83.935,227)],1):
     pos=fps[f'H{i}'].GetPosition()
-    if abs(p.ToMM(pos.x)-40-x)>.001 or abs(p.ToMM(pos.y)-40-y)>.001:errors.append(f'H{i} measured chassis pattern mismatch')
+    if abs(p.ToMM(pos.x)-40-x)>.001 or abs(p.ToMM(pos.y)-40-y)>.001:errors.append(f'H{i} selected CAD chassis pattern mismatch')
 expected_holes=[(33.5,92.5),(91.5,92.5),(33.5,141.5),(91.5,141.5)]
 for i,(x,y) in enumerate(expected_holes,5):
     pos=fps[f'H{i}'].GetPosition()

@@ -1,12 +1,21 @@
 # PCB placement review
 
-## Current revision — October 27
+## Current revision — October 28
 
-The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
-older socket, heatsink-placement and encoder-voltage statements below. All
-eight supports now meet the 3 mm hole-edge rule; HS80 is installed; encoders
-have a separate 4.0 V supply. Current JSON checks carry the active board hash.
-Battery/protection, Pi voltage margin and exact capacitor data remain open.
+We selected rear chassis pair A1/A2 after the team confirmed both holes are
+unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
+and 233.21155 mm between rows; team measurements are about 48, 73.45 and
+232.85 mm respectively. The PCB is now 120 × 247.21155 mm, extended
+13.21155 mm rearward. H1–H4 use 4.0 mm NPTH holes for M3 with 4 mm edge
+exclusions; Pi supports remain 2.7 mm with 3 mm exclusions. The earlier
+cardboard test used the previous pattern. See
+[Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
+
+All 300 electrical footprints are routed. Pi feed resistance was reduced from
+32.668 to 23.000 mΩ without changing component placement. Native checks and
+331 targeted connections pass. All support exclusions pass. Current JSON
+checks identify the saved PCB hash. Earlier sections below describe dated
+snapshots; their old dimensions, socket and routing counts are superseded.
 
 ## Earlier review record
 

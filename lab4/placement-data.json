@@ -1,6 +1,6 @@
 {
-  "width_mm": 120,
-  "height_mm": 234,
+  "width_mm": 120.0,
+  "height_mm": 247.21155,
   "pi": {
     "x_mm": 30,
     "y_mm": 89,
@@ -1944,13 +1944,13 @@
       "reference": "H1",
       "value": "M3 / 4.0mm clearance / 4mm exclusion",
       "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
-      "x_mm": 7.5,
-      "y_mm": 7.0,
+      "x_mm": 23.4925,
+      "y_mm": -6.2116,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        1.4525059999999996,
-        0.953752999999999,
+        17.445045999999998,
+        -12.257797,
         12.092493,
         12.092493
       ],
@@ -1962,13 +1962,13 @@
       "reference": "H2",
       "value": "M3 / 4.0mm clearance / 4mm exclusion",
       "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
-      "x_mm": 112.5,
-      "y_mm": 7.0,
+      "x_mm": 96.5075,
+      "y_mm": -6.2116,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        106.452506,
-        0.953752999999999,
+        90.45997600000001,
+        -12.257797,
         12.092493,
         12.092493
       ],
@@ -1980,12 +1980,12 @@
       "reference": "H3",
       "value": "M3 / 4.0mm clearance / 4mm exclusion",
       "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
-      "x_mm": 35.0,
+      "x_mm": 36.065,
       "y_mm": 227.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        28.952506,
+        30.017505999999997,
         220.953753,
         12.092493,
         12.092493
@@ -1998,12 +1998,12 @@
       "reference": "H4",
       "value": "M3 / 4.0mm clearance / 4mm exclusion",
       "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
-      "x_mm": 85.0,
+      "x_mm": 83.935,
       "y_mm": 227.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        78.952506,
+        77.887506,
         220.953753,
         12.092493,
         12.092493
@@ -5065,5 +5065,12 @@
     }
   ],
   "missing_footprints": [],
-  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94"
+  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "outline_bounds_mm": [
+    0.0,
+    -13.211549999999999,
+    120.0,
+    234.0
+  ],
+  "coordinate_datum": "Fixed KiCad (40,40) mm; former rear-left board corner; rear extension has negative Y"
 }

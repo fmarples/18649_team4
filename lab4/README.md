@@ -7,10 +7,13 @@ its 40-pin header.
 
 ## October 28 capacitor and chassis allowance revision
 
-We kept the cardboard-verified chassis pattern following the team's relayed
-Ayaan decision. H1–H4 now use 4.0 mm NPTH drills for M3 hardware and a 4 mm
-exclusion from the finished hole edge on every copper layer. Pi supports
-retain 2.7 mm holes and the 3 mm edge exclusion. See
+We selected rear chassis pair A1/A2 after the team confirmed both holes are
+unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
+and 233.21155 mm between rows; team measurements are about 48, 73.45 and
+232.85 mm respectively. The PCB is now 120 × 247.21155 mm, extended
+13.21155 mm rearward. H1–H4 use 4.0 mm NPTH holes for M3 with 4 mm edge
+exclusions; Pi supports remain 2.7 mm with 3 mm exclusions. The earlier
+cardboard test used the previous pattern. See
 [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
 
 We replaced the six small buck-output capacitors and added ten parallel
@@ -38,7 +41,7 @@ See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
 The current board has 300 electrical footprints plus eight supports and
-HS80, 19,997 track/via items and six filled ground zones. The targeted routing
+HS80, 20,264 track/via items and six filled ground zones. The targeted routing
 check covers 331 connections. Fresh native findings and source hashes are in
 [Fabrication-check.json](Fabrication-check.json). These checks do not authorize
 fabrication. Pi voltage margin, motor/fuse protection, application cutoff
@@ -63,14 +66,6 @@ The last checked two-layer layout is preserved at the
 [lab4-two-layer-archive tag](https://github.com/fmarples/18649_team4/tree/lab4-two-layer-archive/lab4)
 (commit `59be0b1`). It is a historical, partially routed checkpoint; use the
 current `lab4` branch for further design work.
-The active chassis pattern still uses the team's caliper measurements: 50 mm
-front, 105 mm rear, 220 mm longitudinal separation and aligned pair midpoints.
-The four-hole paper fit passed. However, Tom's October 28 instruction requires
-four holes present in both the actual chassis and the course CAD, physically
-verified. The current pattern is a working design, pending that reconciliation;
-an oversized/slotted hole is not yet justified by a bounded positional error.
-All holes are smooth. Preserve the 3 mm copper/component exclusion from each
-finished hole edge, including any future slot.
 
 The selected [LiPo battery and charger](Battery-LiPo.md) replace the historical
 NiMH candidates. Anson approved the exact Amazon pair; all other new parts
@@ -141,7 +136,7 @@ for a TA submission so the reviewed version can be recovered later.
 | [BOM-JLC-hybrid.csv](BOM-JLC-hybrid.csv) | Historical catalog comparison; not the selected course assembly plan. |
 | [Assembly-options.md](Assembly-options.md) | Process differences, equipment and sourcing checks. |
 | [Actuator-design.md](Actuator-design.md) | Motor, encoder, servo and lamp circuits; ratings and connector pin definitions. |
-| [Design-review.csv](Design-review.csv) | Remaining engineering decisions and checks. |
+| [Design-review.csv](Design-review.csv) | Earlier preliminary-review snapshot; its battery, mounting and routing status is superseded by the current shared must-do list and dated reviews above. |
 | [Interface-review.csv](Interface-review.csv) | Interface allocation notes and actual host-pin/net connections. |
 | [Measurements-to-record.csv](Measurements-to-record.csv) | Confirmed mounting geometry and remaining physical/electrical measurements. |
 | [Verification.txt](Verification.txt) | Checks performed and their limits. |
@@ -214,37 +209,11 @@ device-tree configuration and physical bus labels before relying on Linux
 
 ## Remaining work
 
-- Resolve the 3.2 A motor stall specification against the L298N's 2 A DC/braking
-  limits. The schematic has no autonomous motor current limiter; the filtered
-  ADC and pack fuse do not establish one. Select the heatsink for the agreed load.
-- Finalize battery retention/lead routing and purchasing, the selected fuse candidate's qualification, operating stop voltage, wiring
-  and exact connector/contact compatibility. J40/J80/J81 now use Hirose power
-  connectors. October 24 servo and pictured motor/encoder wire mappings are
-  documented in Actuator-design.md; second-harness agreement, physical mating
-  and completed-adapter continuity remain unverified.
-- The encoder supply correction is implemented: J82/J83 use nominal 3.3V.
-  Validate its tolerance and the actual encoder signals before operation. See Parts-review.md for this finding and
-  the selected spacer, fastener, shunt, LED and harness part numbers.
-- Finalize component quantities from course stock and the additional-parts request.
-  The course assembly plan is now team assembly; the JLC comparison is historical.
-- The five GCT switch footprints and contact pairs are verified and placed;
-  see [Switch-footprint-review.md](Switch-footprint-review.md). Review remaining
-  package/connector dimensions and the course-stock transceiver's DR code.
-- The four chassis positions, Pi paper footprint and actual-Pi height checks
-  are complete; no repeat measurements are requested. Before layout freeze,
-  resolve remaining cable/port/steering envelopes using drawings or a quick
-  unpowered check where necessary. Check actual mating and retention at assembly.
-  Complete routing, power/thermal design and final DRC before fabrication.
-
-ERC reports zero errors and zero warnings. Netlist checks cover all 284
-references and 297 nets, including motor current paths, flyback polarity,
-servo supply after its shunt, MCU support and Lab 3 pin reservations.
-DRC reports zero ordinary violations and zero missing footprints. Its
-unconnected list and full saved-board connectivity count both report 31.
-Partial routing contains 15,594 segments, 879 vias and six ground zones.
-A package-specific 0.15 mm pad-clearance rule applies only inside U40-U42
-for the proposed 1 oz copper process; general trace clearance stays 0.20 mm.
-See Placement-review.md for the source and remaining limits.
+- Complete the full Pi voltage/contact/return budget and converter layout/thermal review. The revised positive-feed calculation is 4.9424 V at a 3 A Pi allocation before omitted losses; this is not a measured or guaranteed Pi voltage.
+- Resolve the L298 motor-fault operating envelope and fuse coordination. Heatsink mounting geometry and the 4.0 V encoder supply are implemented.
+- Confirm course-stock allocations and the servo mating lead, then reconcile the final purchasing and assembly files.
+- Inspect final manufacturing outputs and assemble the required submission package. Native ERC, DRC, schematic parity and connectivity are zero; 300 electrical footprints and 331 targeted connections are checked.
+- Integrate the battery guard and perform mating, continuity, retention, steering and powered checks during assembly/bring-up before LiPo driving. No further chassis-hole selection is pending.
 
 ## Rechecking with KiCad
 

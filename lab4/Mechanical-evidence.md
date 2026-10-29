@@ -4,20 +4,20 @@ Updated 28 October 2026. We reconciled the October 23–24 measurement photos, t
 confirmations and the replies in the [original checklist](https://docs.google.com/document/d/1P07nc_d7xIuWZ1wto0kTwSsNMT-0vlnfMW1e4U4-y5E/edit).
 These observations support the design; they do not describe an assembled PCB.
 
-The October 28 [chassis CAD comparison](Chassis-CAD-review.md) found a reference
-conflict after correcting the rear-hole selection: the revised CAD features
-give 222.246 mm between rows and 92.860 mm rear-pair spacing, versus recorded
-220 mm and 105 mm. The earlier 238.650 mm result used the wrong rear pair.
-The successful four-hole paper
-fit below remains completed evidence, and the PCB geometry is unchanged.
-Resolve the model's correspondence/revision before claiming CAD confirmation
-of the actual chassis; no new general measurement session is requested.
+We selected rear chassis pair A1/A2 after the team confirmed both holes are
+unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
+and 233.21155 mm between rows; team measurements are about 48, 73.45 and
+232.85 mm respectively. The PCB is now 120 × 247.21155 mm, extended
+13.21155 mm rearward. H1–H4 use 4.0 mm NPTH holes for M3 with 4 mm edge
+exclusions; Pi supports remain 2.7 mm with 3 mm exclusions. The earlier
+cardboard test used the previous pattern. See
+[Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
 
 ## Completed observations
 
 | Item | Recorded evidence | What it establishes |
 | --- | --- | --- |
-| Chassis supports | Center-to-center: 50 mm front pair, 105 mm rear pair, 220 mm between rows; pair midpoints aligned. User confirmed 4.5 mm smooth through-holes. | Remains the physical basis for the four PCB coordinates and proposed M3 screw/washer arrangement. The newly discovered CAD-reference conflict needs reconciliation, rather than an automatic repeat measurement. |
+| Previous chassis supports (superseded) | Center-to-center: 50 mm front pair, 105 mm rear pair, 220 mm between rows; pair midpoints aligned. User confirmed 4.5 mm smooth through-holes. | Historical paper-fit pattern. A1/A2 and revised front CAD positions now supersede these coordinates; see the current selection above. |
 | Four-hole fit | The later October 24 photo/report says all four printed-template holes aligned simultaneously with borrowed spacers, approximately 50 mm above the top chassis plate. | Supersedes the earlier opposite-corners-only report. Confirms the paper hole pattern, not all final component/cable clearances. |
 | Pi footprint | Pi paper cutout aligned; 2.7 mm Pi holes reported. | Supports the Pi footprint and M2.5 hardware choice. Chassis and Pi hole diameters need not match. |
 | Actual Pi height | October 24 caliper reply: about 18 mm from Pi board bottom to USB top; USB body about 16 mm; pins/microSD below the board less than 5 mm. | Supports the 22 mm Pi gap and about 11 mm lower clearance. No repeat caliper campaign is needed for these dimensions. |
@@ -113,7 +113,7 @@ The old 0.595 mm hardware clearance and 1.005 mm rule shortfall describe
 the superseded 40-contact socket. The new socket covers Pi3–38 only;
 assembly must align its first pair to Pi3/4. See Mounting-and-encoder-revision.md.
 
-## October 28 chassis allowance
+## Earlier October 28 chassis allowance (superseded positions)
 
 The cardboard-verified centers remain unchanged. Following the team-relayed
 Ayaan decision, chassis holes H1–H4 now use 4 mm finished NPTH drills for M3,

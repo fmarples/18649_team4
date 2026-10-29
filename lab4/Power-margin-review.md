@@ -15,14 +15,21 @@ static connector screen is 3.792/3.794 V, rather than the earlier 3.17 V
 from the logic rail. The LVC14A and pull-ups remain at 3.3 V. See
 [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md).
 
-The current shared-current positive-feed model gives U25 3.1677 V and
-J70 4.9116 V at the assumed 3 A Pi allocation. Moving the 5 V cell 73.5 mm
-toward the Pi reduces the modeled shared feed drop from about 150 to 103 mV.
-The Pi result improves by 45.4 mV; the necessary logic-rail detour costs
-about 5.6 mV at U25. The new Pi result is 50.1 mV above the 4.8615 V upper
-warning-threshold corner before other losses. This is an improvement, not
-demonstrated full operating margin. The warning threshold is not itself
-the Pi's guaranteed operating specification.
+The revised positive-feed path to Pi pin 4 is 23.000 mΩ, down from
+32.668 mΩ. A wider alternate route avoids the inductor core gap; component
+placement and schematic nets are unchanged. The shared-load calculation now
+gives J70 **4.9424 V** at the assumed 3 A Pi allocation, versus 4.9116 V
+previously: a 30.8 mV improvement. The logic result at U25 remains 3.1677 V.
+This is before contact, local return, hot-copper and dynamic losses. The
+4.8615 V upper undervoltage-warning corner is not a guaranteed operating limit.
+
+The shortened socket supplies 5 V through **one contact (pin 4)** and has
+seven ground contacts. An illustrative 10/20/30 mΩ resistance per contact,
+with equal ground-current sharing, loses 34.3/68.6/102.9 mV at 3 A:
+I × (Rc + Rc/7). These are sensitivity assumptions, not guaranteed contact
+ratings. The complete voltage budget therefore still needs review; a cleaner
+route alone does not guarantee full-load Pi operation. See
+[Samtec's connector specification](https://suddendocs.samtec.com/catalog_english/esq_th.pdf).
 
 These predecessor-tree calculations count whole items, omit parallel copper
 and pad spreading, and omit contact/local return/heating/dynamic losses.

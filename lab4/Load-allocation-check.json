@@ -1,5 +1,5 @@
 {
-  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
+  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
   "fabrication_release": false,
   "method": "Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.",
   "logic": {
@@ -390,45 +390,45 @@
         "pin": "2",
         "allocation_A": 0.040004,
         "basis": "40mA encoder planning load plus4uA maximum quiescent allowance",
-        "path_R_ohm": 0.139812,
-        "shared_tree_drop_V": 0.111539,
-        "static_source_minus_drop_V": 4.903105
+        "path_R_ohm": 0.124764,
+        "shared_tree_drop_V": 0.080544,
+        "static_source_minus_drop_V": 4.9341
       },
       {
         "ref": "J70",
         "pin": "4",
         "allocation_A": 3.0,
         "basis": "Pi planning allocation through physical pin4; socket covers pins3-38",
-        "path_R_ohm": 0.032668,
-        "shared_tree_drop_V": 0.103004,
-        "static_source_minus_drop_V": 4.91164
+        "path_R_ohm": 0.023,
+        "shared_tree_drop_V": 0.072225,
+        "static_source_minus_drop_V": 4.942419
       },
       {
         "ref": "U80",
         "pin": "9",
         "allocation_A": 0.04,
         "basis": "L298 logic allowance",
-        "path_R_ohm": 0.085631,
-        "shared_tree_drop_V": 0.085653,
-        "static_source_minus_drop_V": 4.928991
+        "path_R_ohm": 0.076599,
+        "shared_tree_drop_V": 0.05838,
+        "static_source_minus_drop_V": 4.956264
       },
       {
         "ref": "U2",
         "pin": "8",
         "allocation_A": 0.015,
         "basis": "ACS712 allowance",
-        "path_R_ohm": 0.068072,
-        "shared_tree_drop_V": 0.08463,
-        "static_source_minus_drop_V": 4.930014
+        "path_R_ohm": 0.059011,
+        "shared_tree_drop_V": 0.057376,
+        "static_source_minus_drop_V": 4.957268
       },
       {
         "ref": "U3",
         "pin": "8",
         "allocation_A": 0.015,
         "basis": "ACS712 allowance",
-        "path_R_ohm": 0.11067,
-        "shared_tree_drop_V": 0.086029,
-        "static_source_minus_drop_V": 4.928615
+        "path_R_ohm": 0.095104,
+        "shared_tree_drop_V": 0.058657,
+        "static_source_minus_drop_V": 4.955987
       },
       {
         "ref": "R570",
@@ -436,8 +436,8 @@
         "allocation_A": 0.023863636363636365,
         "basis": "Lamp resistor zero-forward-drop bound, not nominal LED current",
         "path_R_ohm": 0.126,
-        "shared_tree_drop_V": 0.027551,
-        "static_source_minus_drop_V": 4.987093
+        "shared_tree_drop_V": 0.005719,
+        "static_source_minus_drop_V": 5.008925
       },
       {
         "ref": "R571",
@@ -445,39 +445,39 @@
         "allocation_A": 0.023863636363636365,
         "basis": "Lamp resistor zero-forward-drop bound, not nominal LED current",
         "path_R_ohm": 0.118623,
-        "shared_tree_drop_V": 0.027375,
-        "static_source_minus_drop_V": 4.987269
+        "shared_tree_drop_V": 0.005543,
+        "static_source_minus_drop_V": 5.009101
       },
       {
         "ref": "R670",
         "pin": "1",
         "allocation_A": 0.023863636363636365,
         "basis": "Lamp resistor zero-forward-drop bound, not nominal LED current",
-        "path_R_ohm": 0.11869,
-        "shared_tree_drop_V": 0.110326,
-        "static_source_minus_drop_V": 4.904318
+        "path_R_ohm": 0.109022,
+        "shared_tree_drop_V": 0.079547,
+        "static_source_minus_drop_V": 4.935097
       },
       {
         "ref": "R671",
         "pin": "1",
         "allocation_A": 0.023863636363636365,
         "basis": "Lamp resistor zero-forward-drop bound, not nominal LED current",
-        "path_R_ohm": 0.128193,
-        "shared_tree_drop_V": 0.111074,
-        "static_source_minus_drop_V": 4.90357
+        "path_R_ohm": 0.118525,
+        "shared_tree_drop_V": 0.080295,
+        "static_source_minus_drop_V": 4.934349
       },
       {
         "ref": "R420",
         "pin": "1",
         "allocation_A": 7e-05,
         "basis": "Feedback divider bounded by top resistor alone",
-        "path_R_ohm": 0.096748,
-        "shared_tree_drop_V": 7e-06,
-        "static_source_minus_drop_V": 5.014637
+        "path_R_ohm": 0.082243,
+        "shared_tree_drop_V": 0.008,
+        "static_source_minus_drop_V": 5.006644
       }
     ],
-    "total_tree_loss_W": 0.326054,
-    "largest_drop_V": 0.111539
+    "total_tree_loss_W": 0.228057,
+    "largest_drop_V": 0.080544
   },
   "encoder": {
     "net": "/Rear zone/ENC_4V",
@@ -511,7 +511,7 @@
       3.796,
       4.204
     ],
-    "dropout_headroom_V": 0.34910500000000066,
+    "dropout_headroom_V": 0.38010000000000055,
     "rated_output_A": 0.25,
     "planning_output_A": 0.04,
     "thermal_model_W": 0.05818100000000001,

@@ -13,11 +13,11 @@
     "https://www.farnell.com/datasheets/1581373.pdf"
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
-    "Power-stage-check.json": "97629302a612264a445f3c55e235e676717a84d57a7f442e7d498f042a2a5c83",
+    "KiCad/Lab4.kicad_pcb": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+    "Power-stage-check.json": "0ce1289d216e631b4f78ad0aa5d87e1dfd953c4456796c293d7861f484d7db4c",
     "Power-calculations.json": "3f07efa630095f93dfcc88218474b51f86a8b3df53aa7b174c7b7f532510e9ff",
-    "Load-allocation-check.json": "b5dd3e7ca524776d8ba47bcfcfde3bc839280d0b99d1b73fb05379eabd1a842a",
-    "Supply-path-check.json": "554385e7f40ecdcbe9159d51fcbd6f3768f1f39634158b5f3e87aab50896c440",
+    "Load-allocation-check.json": "d1ad56bced18cc0600d9f480c5ee13d5ca28523806073ee8192c7d3cfc108cb8",
+    "Supply-path-check.json": "97184404344c134173d467ef3d1f74b22f5e6e7248d1ccc93972b00c82da7607",
     "check_power_margins.py": "7532d2ab61f5d2818261be740eafbd921a52892161c49e8e1dc966f24ed3aa4c",
     "KiCad/Circuit-BOM.csv": "800c35aab28867dc90f3aa578456ff3f48f61d4abffeb05279a30b3e1818fbff"
   },
@@ -95,9 +95,9 @@
       "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
       "conductor_R_multiplier_assumed": 1.0,
       "source_minimum_V": 5.014644,
-      "positive_feed_drop_V": 0.103004,
-      "budget_for_ALL_remaining_losses_V": 0.05013999999999896,
-      "load_voltage_with_assumed_50mV_return_V": 4.8616399999999995
+      "positive_feed_drop_V": 0.072225,
+      "budget_for_ALL_remaining_losses_V": 0.08091899999999885,
+      "load_voltage_with_assumed_50mV_return_V": 4.892418999999999
     },
     {
       "group": "Pi warning screen",
@@ -106,9 +106,9 @@
       "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
       "conductor_R_multiplier_assumed": 1.45,
       "source_minimum_V": 5.014644,
-      "positive_feed_drop_V": 0.14935579999999998,
-      "budget_for_ALL_remaining_losses_V": 0.003788199999998909,
-      "load_voltage_with_assumed_50mV_return_V": 4.8152881999999995
+      "positive_feed_drop_V": 0.10472624999999999,
+      "budget_for_ALL_remaining_losses_V": 0.04841774999999959,
+      "load_voltage_with_assumed_50mV_return_V": 4.85991775
     },
     {
       "group": "Pi warning screen",
@@ -117,9 +117,9 @@
       "comparison_meaning": "Upper end of documented 4.63V +/-5% low-voltage detector; not a minimum operating specification",
       "conductor_R_multiplier_assumed": 1.8,
       "source_minimum_V": 5.014644,
-      "positive_feed_drop_V": 0.1854072,
-      "budget_for_ALL_remaining_losses_V": -0.032263200000000936,
-      "load_voltage_with_assumed_50mV_return_V": 4.7792368
+      "positive_feed_drop_V": 0.130005,
+      "budget_for_ALL_remaining_losses_V": 0.023138999999999577,
+      "load_voltage_with_assumed_50mV_return_V": 4.834639
     }
   ],
   "converters": [

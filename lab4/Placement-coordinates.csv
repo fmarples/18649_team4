@@ -119,10 +119,10 @@ D807,SK520B,Diode_SMD:D_SMB,60.0225,50.0,0.0,F.Cu,True
 F1,Fuse: rating TBD,Fuse:Fuseholder_Blade_Mini_Keystone_3568,86.3,21.96,90.0,F.Cu,True
 FB50,600R @100MHz,Inductor_SMD:L_0603_1608Metric,20.0,169.0,0.0,F.Cu,True
 FB60,600R @100MHz,Inductor_SMD:L_0603_1608Metric,20.0,70.0,0.0,F.Cu,True
-H1,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,7.5,7.0,0.0,F.Cu,False
-H2,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,112.5,7.0,0.0,F.Cu,False
-H3,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,35.0,227.0,0.0,F.Cu,False
-H4,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,85.0,227.0,0.0,F.Cu,False
+H1,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,23.4925,-6.2116,0.0,F.Cu,False
+H2,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,96.5075,-6.2116,0.0,F.Cu,False
+H3,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,36.065,227.0,0.0,F.Cu,False
+H4,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,83.935,227.0,0.0,F.Cu,False
 H5,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,92.5,0.0,F.Cu,False
 H6,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,91.5,92.5,0.0,F.Cu,False
 H7,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,141.5,0.0,F.Cu,False

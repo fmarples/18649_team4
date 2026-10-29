@@ -9,10 +9,13 @@ The class fabrication batch follows the next morning.
 
 ## October 28 capacitor and chassis allowance revision
 
-We kept the cardboard-verified chassis pattern following the team's relayed
-Ayaan decision. H1–H4 now use 4.0 mm NPTH drills for M3 hardware and a 4 mm
-exclusion from the finished hole edge on every copper layer. Pi supports
-retain 2.7 mm holes and the 3 mm edge exclusion. See
+We selected rear chassis pair A1/A2 after the team confirmed both holes are
+unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
+and 233.21155 mm between rows; team measurements are about 48, 73.45 and
+232.85 mm respectively. The PCB is now 120 × 247.21155 mm, extended
+13.21155 mm rearward. H1–H4 use 4.0 mm NPTH holes for M3 with 4 mm edge
+exclusions; Pi supports remain 2.7 mm with 3 mm exclusions. The earlier
+cardboard test used the previous pattern. See
 [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
 
 We replaced the six small buck-output capacitors and added ten parallel
@@ -40,7 +43,7 @@ See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
 The current board has 300 electrical footprints plus eight supports and
-HS80, 19,997 track/via items and six filled ground zones. The targeted routing
+HS80, 20,264 track/via items and six filled ground zones. The targeted routing
 check covers 331 connections. Fresh native findings and source hashes are in
 [Fabrication-check.json](Fabrication-check.json). These checks do not authorize
 fabrication. Pi voltage margin, motor/fuse protection, application cutoff
@@ -70,11 +73,14 @@ included, matching the [October 25 clarification](https://18449-f26.slack.com/ar
 
 ## Decisions needed before the layout is fixed
 
-The downloaded chassis CAD differs from the actual car. We retain the
-measured, cardboard-verified pattern following the team's relayed Ayaan
-decision and add bounded allowance. The reference comparison remains in
-[Chassis-CAD-review.md](Chassis-CAD-review.md); it is not claimed as a matching
-assembly. No further common-hole selection is pending for this revision.
+We selected rear chassis pair A1/A2 after the team confirmed both holes are
+unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
+and 233.21155 mm between rows; team measurements are about 48, 73.45 and
+232.85 mm respectively. The PCB is now 120 × 247.21155 mm, extended
+13.21155 mm rearward. H1–H4 use 4.0 mm NPTH holes for M3 with 4 mm edge
+exclusions; Pi supports remain 2.7 mm with 3 mm exclusions. The earlier
+cardboard test used the previous pattern. See
+[Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
 
 | Decision | Evidence needed | Why it affects fabrication |
 | --- | --- | --- |

@@ -1,5 +1,13 @@
 # Ground-plane DC screen — October 27
 
+Current October 28 update: the saved PCB uses the revised capacitor banks,
+separate 4.0 V encoder supply, one Pi 5 V contact and seven Pi ground contacts.
+The new Pi positive-feed result is 4.9424 V at the 3 A planning allocation.
+Current calculation JSON files carry the saved board hash; older numerical
+discussion below is a dated review record. See [Power-margin-review.md](Power-margin-review.md)
+and [Capacitor-bank-review.md](Capacitor-bank-review.md) for the active assessment.
+
+
 ## Current revision — October 27
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes

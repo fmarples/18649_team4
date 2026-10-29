@@ -1,3 +1,17 @@
+Current rear selection and Pi feed update — October 28
+
+We selected rear chassis pair A1/A2 after the team confirmed both holes are
+unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
+and 233.21155 mm between rows; team measurements are about 48, 73.45 and
+232.85 mm respectively. The PCB is now 120 × 247.21155 mm, extended
+13.21155 mm rearward. H1–H4 use 4.0 mm NPTH holes for M3 with 4 mm edge
+exclusions; Pi supports remain 2.7 mm with 3 mm exclusions. The earlier
+cardboard test used the previous pattern. See
+[Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
+
+Pi feed resistance 32.668 -> 23.000 mOhm; modeled J70 4.9424 V at 3 A before omitted losses. Native ERC/DRC/parity/connectivity zero; 300 components, 20,264 track/via items. Engineering release remains pending.
+
+Earlier dated verification
 Current verification — October 28, 2026
 
 The selected CNHL S220403BK / Hitec 44295 LiPo pair, PA3 battery sensing

@@ -1,5 +1,5 @@
 {
-  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
+  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
   "fabrication_release": false,
   "method": "Shortest conductor-item paths: whole segments and full 1.6mm vias, not exact extracted transmission-line lengths. CAN branch length stops at bus-side isolation pad; local transceiver copper and jumper are additional.",
   "can_topology": [
@@ -250,7 +250,7 @@
       "target": "R420.1",
       "net": "/+5V",
       "connected": true,
-      "length_mm": 25.148,
+      "length_mm": 21.117,
       "vias": 2
     },
     {
