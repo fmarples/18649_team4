@@ -1,13 +1,20 @@
 # Digital design review
 
-## Current revision — October 28
+## Current revision — October 29
+
+The [latest staff guidance](Course-updates-October29.md) closes the extra-L298-
+protection requirement question and the prescribed-hole question. Additional
+hardware protection and the FPV camera are optional. The current PCB and
+power budget do not include either addition; engineering qualification remains
+separate from those requirement decisions.
 
 The selected LiPo pair, PA3 sensing circuit and standalone cutoff logic are
 documented in [Battery-LiPo.md](Battery-LiPo.md). The current board contains
 300 electrical footprints and 20,264 track/via items. All 331 targeted
 connections and fresh native ERC/DRC/parity checks pass. The selected-package
-check covers 41 components, including the fuse holder, both bulk electrolytics,
-two tantalums and eight motor-clamp diodes. We corrected C802's package and
+check covers 186 components, including the added six crystals, encoder LDO,
+two VDDA beads and 136 selected passive parts. This is a package/pinout check,
+not full operating qualification. We previously corrected C802's package and
 widened 779 power-track segments; see [Power-route-revision.md](Power-route-revision.md).
 
 We replaced the regulator bank capacitors with 25 V 1210 parts and added

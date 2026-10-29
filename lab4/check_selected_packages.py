@@ -6,6 +6,7 @@ Critical-package-review.md. This is not a solder-process or thermal approval.
 from pathlib import Path
 import hashlib
 import json
+import csv
 import pcbnew as p
 
 ROOT = Path(__file__).resolve().parent
@@ -160,7 +161,58 @@ for i, output in enumerate(["LEFT_BRIDGE", "LEFT_RETURN", "RIGHT_BRIDGE", "RIGHT
         check(f"D{800+2*i+offset}", "SK520B", "Diode_SMD:D_SMB", nets,
               {"1": [-2.15, 0, 2.5, 2.3], "2": [2.15, 0, 2.5, 2.3]})
 
+# October 29: additional family dimensions and exact pin-order checks.
+# Passive values are compared with the active BOM, while package/land geometry
+# is independently specified below from the reviewed manufacturer families.
+bom_path = ROOT / "BOM-Hand-assembly.csv"
+bom = list(csv.DictReader(bom_path.open(encoding="utf-8-sig", newline="")))
+by_ref = {ref: row for row in bom for ref in row["References"].split()}
+for ref in ["Y10", "Y14", "Y20", "Y24", "Y30", "Y34"]:
+    assert by_ref[ref]["MPN"] == "CX3225SB16000H0FLJCC", ref
+    check(ref, "16 MHz", "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+          {"1": "OSC1", "2": "/GND", "3": "OSC2", "4": "/GND"},
+          {"1": [-1.1, .85, 1.4, 1.2], "2": [1.1, .85, 1.4, 1.2],
+           "3": [1.1, -.85, 1.4, 1.2], "4": [-1.1, -.85, 1.4, 1.2]})
+    rows[-1]["selected_MPN"] = by_ref[ref]["MPN"]
+for ref, side in [("FB50", "F"), ("FB60", "R")]:
+    assert by_ref[ref]["MPN"] == "742863160", ref
+    check(ref, "600R @100MHz", "Inductor_SMD:L_0603_1608Metric",
+          {"1": "/+3V3", "2": f"{side}_VDDA"},
+          {"1": [-.7875, 0, .875, .95], "2": [.7875, 0, .875, .95]})
+    rows[-1]["selected_MPN"] = by_ref[ref]["MPN"]
+check("U82", "MCP1700-4002E/TO", "Package_TO_SOT_THT:TO-92_Inline_Wide",
+      {"1": "/GND", "2": "/+5V", "3": "ENC_4V"},
+      {"1": [0, 0, 1.5, 1.5], "2": [2.54, 0, 1.5, 1.5],
+       "3": [5.08, 0, 1.5, 1.5]})
+rows[-1]["assembly_note"] = "Wide footprint requires lead forming; TO-92 pin order is GND/VIN/VOUT, not the SOT-23 order."
+
+passive_sources = {
+    "CRCW0603": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "RC0603": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+    "RT0603": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+    "ERJ-3EKF": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+    "KGM15AR71C104KT": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+    "CC0603JRX7R7BB105": "https://yageogroup.com/download/specsheet/CC0603JRX7R7BB105",
+}
+for row in bom:
+    family = next((prefix for prefix in passive_sources if row["MPN"].startswith(prefix)), None)
+    if family is None:
+        continue
+    is_resistor = family in ["CRCW0603", "RC0603", "RT0603", "ERJ-3EKF"]
+    footprint = ("Resistor_SMD:R_0603_1608Metric" if is_resistor
+                 else "Capacitor_SMD:C_0603_1608Metric")
+    assert row["Footprint"] == footprint, row["MPN"]
+    x, length = (.825, .8) if is_resistor else (.775, .9)
+    for ref in row["References"].split():
+        assert ref.startswith("R" if is_resistor else "C"), ref
+        check(ref, row["Value"], footprint, {},
+              {"1": [-x, 0, length, .95], "2": [x, 0, length, .95]})
+        rows[-1].update(selected_MPN=row["MPN"], source=passive_sources[family],
+                        scope="BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification")
+assert len({row["ref"] for row in rows}) == len(rows), "Duplicate package checks"
+
 report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
+              assembly_bom_sha256=hashlib.sha256(bom_path.read_bytes()).hexdigest(),
               fabrication_release=False, checked_components=len(rows), results=rows,
               limitations=["Checks only the listed identities, pad coordinates and pin nets.",
                            "Manufacturer lead/pad interpretation is documented separately; no placement, solder, cooling or lifetime qualification is implied.",
@@ -175,6 +227,10 @@ report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
                        "https://datasheets.kyocera-avx.com/TPS.pdf",
                        "https://www.smc-diodes.com/propdf/SK520B%20N0952%20REV.A.pdf",
                        "https://www.hirose.com/en/product/p/CL0680-0567-0-00",
-                       "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf"])
+                       "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf",
+                       "https://ele.kyocera.com/assets/products/crystal-device/cx3225sb_e.pdf",
+                       "https://www.we-online.com/components/products/datasheet/742863160.pdf",
+                       "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1700-Data-Sheet-20001826F.pdf",
+                       *passive_sources.values()])
 (ROOT / "Selected-package-check.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 print(f"PASS: {len(rows)} selected components; saved pad geometry and critical pin nets match")

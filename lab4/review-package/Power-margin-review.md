@@ -1,6 +1,6 @@
 # Power margins, capacitors and thermal review
 
-Updated 28 October 2026. We recalculated these margins after moving the 5 V regulator
+Updated 29 October 2026. We recalculated these margins after moving the 5 V regulator
 closer to the Pi and rerouting its connections. The buck setpoints are unchanged;
 the separate encoder LDO remains in place. The
 calculations identify limits of the present design; they do not
@@ -9,6 +9,19 @@ records the source hashes, assumptions and numerical results. The selected 3S Li
 8–15 V design screen; it is not the battery discharge cutoff.
 
 ## Current voltage results
+
+The intended Pi load is now explicit: the car software, with no added powered
+USB device, camera, display or fan. We keep the existing **3 A design
+allocation**. We do not need another accessory list or current measurement
+to continue this design review. This closes the input assumption, not the
+electrical margin.
+
+We explored an additional Pi-feed route on a separate working copy. The
+existing congestion forced another long detour; the same conductor-path
+screen improved by only about 0.2 mV. We did not apply that change to the
+active board. Adding copper without a demonstrated useful improvement would
+not close the voltage problem. The remaining work is a deliberate power
+layout/architecture and transient-budget decision, not a mounting-hole task.
 
 The mounting/encoder revision adds a separate 4.0 V supply. Its conservative
 static connector screen is 3.792/3.794 V, rather than the earlier 3.17 V
@@ -158,6 +171,15 @@ published servo stall endpoint is 3 A, and a realistic duty profile must be
 kept separate from the full-allocation sensitivity cases.
 
 ## L298 and heatsink
+
+[Tom's October 29 reply](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793289494772009)
+confirms that extra hardware overcurrent protection is optional for the course.
+No further TA answer is needed on that requirement. Our saved circuit still
+has no autonomous per-motor current limiter; current, fuse coordination and
+thermal conclusions must use the implemented circuit. The optional camera
+is excluded from this budget; its announced 250–500 mA would increase the
+5 V allocation from 3.3 A to 3.55–3.8 A. See
+[Course-updates-October29.md](Course-updates-October29.md).
 
 [ST's 25 °C electrical table](https://www.st.com/resource/en/datasheet/l298.pdf)
 gives maximum total bridge drops of 3.2 V at 1 A and 4.9 V at 2 A.

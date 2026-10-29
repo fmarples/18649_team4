@@ -5,12 +5,20 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 3S LiPo supply using the CNHL S220403BK / Hitec 44295 pair approved by Anson on October 28. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
+The [October 29 course updates](Course-updates-October29.md) close the question
+of whether extra L298 hardware protection is mandatory (it is optional) and
+confirm that rigid mounting, rather than a prescribed hole set, is required.
+The optional camera is not included in the current power allocation. The saved
+copper stack is unchanged; 2 oz would require a revised manufacturing review.
+
 ## October 28 capacitor and chassis allowance revision
 
 The latest [power-route/package correction](Power-route-revision.md) widens
 779 power segments and fixes C802 to the manufacturer's D10/P5 footprint.
-All native checks and 331 targeted connections pass; 41 critical components
-have saved-pad/pinout checks. The [review export](review-package/REVIEW-ONLY.txt)
+All native checks and 331 targeted connections pass; the October 29
+[package audit](Critical-package-review.md) now covers 186 components.
+These checks cover the listed package geometry and critical pin nets, not
+complete operating qualification. The [review export](review-package/REVIEW-ONLY.txt)
 contains matching schematic/layer PDFs, 3D views, Gerbers/drills and BOM/CPL
 files. It is **not released for fabrication**. The remaining power envelope
 and protection decisions are described in [Power-margin-review.md](Power-margin-review.md).
@@ -103,6 +111,11 @@ design; the board layout deadline is October 29.
 
 The shared Google Doc is the report. This repository holds the editable design
 sources, technical calculations and verification records.
+
+Lab 4 disables Git line-ending conversion locally through `.gitattributes`.
+The engineering reports and review manifest hash exact file bytes; preserving
+them makes the checked CAD/export files consistent across checkouts and Git
+archives. A text-only line-ending change still requires refreshing its hashes.
 
 Use this `lab4/` directory on the `lab4` branch as the source of truth for
 KiCad files, local libraries, the editable diagram, BOMs and engineering tables.

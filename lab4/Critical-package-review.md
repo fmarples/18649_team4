@@ -1,8 +1,36 @@
-# Selected package and pinout review — October 27
+# Selected package and pinout review
+
+## October 29 additional package review
+
+The saved-pad audit now covers **186 components**, up from 41. No schematic,
+PCB or purchased-part identity changed in this pass. The additional 145 are
+six crystals, two ferrite beads, the encoder LDO and 136 selected resistors
+and capacitors. The script also hashes the active assembly BOM. This count
+is not a claim that every component has complete electrical qualification.
+
+| Additional check | Result and limitation |
+| --- | --- |
+| Y10/Y14/Y20/Y24/Y30/Y34, CX3225SB16000H0FLJCC | Manufacturer top-view pins 1/3 are the crystal terminals; 2/4 are ground. Saved lands are 1.4 × 1.2 mm at 2.2 × 1.7 mm center spacing. They overlap the specified terminals; the manufacturer's example is 1.3 × 1.05 mm at 2.3 × 1.85 mm. H0 selects 12 pF load, not the catalog's default 8 pF. Equal 18 pF capacitors plus the stated 3 pF stray assumption remain a starting design, not a measured clock accuracy/startup result. |
+| FB50/FB60, 742863160 | 0603 body and two saved lands match the package family. Both connect 3.3 V to their zone's VDDA. The published maximum DC resistance is 0.35 Ω at 20 °C; this is an analog-rail bead, not a motor/power-feed component. |
+| U82, MCP1700-4002E/TO | TO-92 pins 1/2/3 are GND/VIN/VOUT, matching the PCB. The wide 2.54 mm-pitch footprint needs lead forming during assembly; do not copy the different SOT-23 pin order. |
+| CRCW0603, YAGEO RC0603/RT0603 and Panasonic ERJ-3EKF resistor rows | Active BOM values and all selected 0603 lands agree. Saved pads are 0.8 × 0.95 mm, 1.65 mm center spacing. The package-family check does not establish resistor dissipation or assembly yield. |
+| KGM15AR71C104KT and CC0603JRX7R7BB105 capacitor rows | Both are 0603/1608 metric. Saved pads are 0.9 × 0.95 mm, 1.55 mm center spacing. In Kyocera's ordering code, KGM15 means 0603; KGM05 would be 0402. Capacitance under bias is a separate question. |
+
+Manufacturer references: [Kyocera crystal drawing and ordering code](https://ele.kyocera.com/assets/products/crystal-device/cx3225sb_e.pdf),
+[Wurth bead drawing](https://www.we-online.com/components/products/datasheet/742863160.pdf),
+[Microchip TO-92 pinout](https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1700-Data-Sheet-20001826F.pdf),
+[Vishay CRCW](https://www.vishay.com/docs/20035/dcrcwe3.pdf),
+[YAGEO RC](https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL),
+[YAGEO RT](https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL),
+[Panasonic ERJ](https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V),
+[Kyocera KGM](https://datasheets.kyocera-avx.com/KGM_X7R.pdf),
+[YAGEO CC](https://yageogroup.com/download/specsheet/CC0603JRX7R7BB105).
+
+Earlier counts below describe the check coverage at those dates.
 
 ## October 28 bulk-capacitor and clamp review
 
-The reproducible audit now covers **41 components**. We corrected C802:
+That revision expanded the audit to **41 components**. We corrected C802:
 Panasonic EEU-FR1E471 is **10 mm diameter × 12.5 mm body length, 5 mm lead
 pitch**, with 0.6 mm leads. The previous D8/P3.5 footprint was incorrect.
 The saved D10/P5 footprint has 2 mm pads and 1 mm plated holes, with pad 1

@@ -1,7 +1,8 @@
 {
   "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+  "assembly_bom_sha256": "c677f7912bbcd403e8426789e73af6917ae7cadfc0b1003d0a4e77de317cd6ff",
   "fabrication_release": false,
-  "checked_components": 41,
+  "checked_components": 186,
   "results": [
     {
       "ref": "U11",
@@ -2954,6 +2955,3731 @@
         ]
       },
       "result": "match"
+    },
+    {
+      "ref": "Y10",
+      "part": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "numbered_pads": 4,
+      "checked_pin_nets": {
+        "1": "OSC1",
+        "2": "/GND",
+        "3": "OSC2",
+        "4": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "2": [
+          1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "3": [
+          1.1,
+          -0.85,
+          1.4,
+          1.2
+        ],
+        "4": [
+          -1.1,
+          -0.85,
+          1.4,
+          1.2
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CX3225SB16000H0FLJCC"
+    },
+    {
+      "ref": "Y14",
+      "part": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "numbered_pads": 4,
+      "checked_pin_nets": {
+        "1": "OSC1",
+        "2": "/GND",
+        "3": "OSC2",
+        "4": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "2": [
+          1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "3": [
+          1.1,
+          -0.85,
+          1.4,
+          1.2
+        ],
+        "4": [
+          -1.1,
+          -0.85,
+          1.4,
+          1.2
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CX3225SB16000H0FLJCC"
+    },
+    {
+      "ref": "Y20",
+      "part": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "numbered_pads": 4,
+      "checked_pin_nets": {
+        "1": "OSC1",
+        "2": "/GND",
+        "3": "OSC2",
+        "4": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "2": [
+          1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "3": [
+          1.1,
+          -0.85,
+          1.4,
+          1.2
+        ],
+        "4": [
+          -1.1,
+          -0.85,
+          1.4,
+          1.2
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CX3225SB16000H0FLJCC"
+    },
+    {
+      "ref": "Y24",
+      "part": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "numbered_pads": 4,
+      "checked_pin_nets": {
+        "1": "OSC1",
+        "2": "/GND",
+        "3": "OSC2",
+        "4": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "2": [
+          1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "3": [
+          1.1,
+          -0.85,
+          1.4,
+          1.2
+        ],
+        "4": [
+          -1.1,
+          -0.85,
+          1.4,
+          1.2
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CX3225SB16000H0FLJCC"
+    },
+    {
+      "ref": "Y30",
+      "part": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "numbered_pads": 4,
+      "checked_pin_nets": {
+        "1": "OSC1",
+        "2": "/GND",
+        "3": "OSC2",
+        "4": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "2": [
+          1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "3": [
+          1.1,
+          -0.85,
+          1.4,
+          1.2
+        ],
+        "4": [
+          -1.1,
+          -0.85,
+          1.4,
+          1.2
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CX3225SB16000H0FLJCC"
+    },
+    {
+      "ref": "Y34",
+      "part": "16 MHz",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "numbered_pads": 4,
+      "checked_pin_nets": {
+        "1": "OSC1",
+        "2": "/GND",
+        "3": "OSC2",
+        "4": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "2": [
+          1.1,
+          0.85,
+          1.4,
+          1.2
+        ],
+        "3": [
+          1.1,
+          -0.85,
+          1.4,
+          1.2
+        ],
+        "4": [
+          -1.1,
+          -0.85,
+          1.4,
+          1.2
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CX3225SB16000H0FLJCC"
+    },
+    {
+      "ref": "FB50",
+      "part": "600R @100MHz",
+      "footprint": "Inductor_SMD:L_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "/+3V3",
+        "2": "F_VDDA"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.7875,
+          0,
+          0.875,
+          0.95
+        ],
+        "2": [
+          0.7875,
+          0,
+          0.875,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "742863160"
+    },
+    {
+      "ref": "FB60",
+      "part": "600R @100MHz",
+      "footprint": "Inductor_SMD:L_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "/+3V3",
+        "2": "R_VDDA"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.7875,
+          0,
+          0.875,
+          0.95
+        ],
+        "2": [
+          0.7875,
+          0,
+          0.875,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "742863160"
+    },
+    {
+      "ref": "U82",
+      "part": "MCP1700-4002E/TO",
+      "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+      "numbered_pads": 3,
+      "checked_pin_nets": {
+        "1": "/GND",
+        "2": "/+5V",
+        "3": "ENC_4V"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          0,
+          0,
+          1.5,
+          1.5
+        ],
+        "2": [
+          2.54,
+          0,
+          1.5,
+          1.5
+        ],
+        "3": [
+          5.08,
+          0,
+          1.5,
+          1.5
+        ]
+      },
+      "result": "match",
+      "assembly_note": "Wide footprint requires lead forming; TO-92 pin order is GND/VIN/VOUT, not the SOT-23 order."
+    },
+    {
+      "ref": "R100",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R101",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R140",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R141",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R200",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R201",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R240",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R241",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R300",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R301",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R340",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R341",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R3",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R4",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R6",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R7",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R400",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R413",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R423",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R433",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R804",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R805",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R806",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R807",
+      "part": "10k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C102",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C103",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C104",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C142",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C143",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C144",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C202",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C203",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C204",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C242",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C243",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C244",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C302",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C303",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C304",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C342",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C343",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C344",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C1",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C2",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C3",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C5",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C6",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C8",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C701",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C801",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C803",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C580",
+      "part": "100n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R102",
+      "part": "120R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-07120RL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R142",
+      "part": "120R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-07120RL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R202",
+      "part": "120R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-07120RL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R242",
+      "part": "120R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-07120RL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R2",
+      "part": "4.7k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-074K7L",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R5",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R8",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R510",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R511",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R512",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R513",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R610",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R611",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R612",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R613",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R710",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R711",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R712",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R713",
+      "part": "1k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "ERJ-3EKF1001V",
+      "source": "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R401",
+      "part": "47k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-0747KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R412",
+      "part": "47k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-0747KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R410",
+      "part": "100k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-07100KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R411",
+      "part": "10k 1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R431",
+      "part": "10k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RT0603BRD0710KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R421",
+      "part": "10k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RT0603BRD0710KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R581",
+      "part": "10k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RT0603BRD0710KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R414",
+      "part": "10k PG pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R424",
+      "part": "10k PG pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R434",
+      "part": "10k PG pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R420",
+      "part": "75k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RT0603BRD0775KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R422",
+      "part": "33k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-0733KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R430",
+      "part": "45.3k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RT0603BRD0745K3L",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R432",
+      "part": "22k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RC0603FR-0722KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C500",
+      "part": "100n VDD19",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C600",
+      "part": "100n VDD19",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C501",
+      "part": "100n VDD32",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C601",
+      "part": "100n VDD32",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C502",
+      "part": "100n VDD48",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C602",
+      "part": "100n VDD48",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C503",
+      "part": "100n VDD64",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C603",
+      "part": "100n VDD64",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C504",
+      "part": "100n VBAT",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C604",
+      "part": "100n VBAT",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C507",
+      "part": "100n VDDA",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C607",
+      "part": "100n VDDA",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C508",
+      "part": "1u VDDA",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CC0603JRX7R7BB105",
+      "source": "https://yageogroup.com/download/specsheet/CC0603JRX7R7BB105",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C608",
+      "part": "1u VDDA",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CC0603JRX7R7BB105",
+      "source": "https://yageogroup.com/download/specsheet/CC0603JRX7R7BB105",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R500",
+      "part": "10k BOOT0",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R600",
+      "part": "10k BOOT0",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R501",
+      "part": "10k NRST",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R601",
+      "part": "10k NRST",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C509",
+      "part": "100n NRST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C609",
+      "part": "100n NRST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R502",
+      "part": "10k TEST pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R602",
+      "part": "10k TEST pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R700",
+      "part": "10k TEST pullup",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C510",
+      "part": "100n TEST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C610",
+      "part": "100n TEST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "C702",
+      "part": "100n TEST",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "KGM15AR71C104KT",
+      "source": "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R530",
+      "part": "10k PWM pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R630",
+      "part": "10k boot pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R631",
+      "part": "10k boot pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R632",
+      "part": "10k boot pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R633",
+      "part": "10k boot pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R634",
+      "part": "10k boot pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R635",
+      "part": "10k boot pulldown",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW060310K0FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R800",
+      "part": "100R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R801",
+      "part": "100R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R802",
+      "part": "100R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R803",
+      "part": "100R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R540",
+      "part": "100R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R550",
+      "part": "2.2k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW06032K20FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R551",
+      "part": "2.2k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW06032K20FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R650",
+      "part": "2.2k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW06032K20FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R651",
+      "part": "2.2k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW06032K20FKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R560",
+      "part": "100k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100KFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R561",
+      "part": "100k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100KFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R660",
+      "part": "100k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100KFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R661",
+      "part": "100k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603100KFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R570",
+      "part": "220R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603220RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R571",
+      "part": "220R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603220RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R670",
+      "part": "220R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603220RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R671",
+      "part": "220R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "CRCW0603220RFKEA",
+      "source": "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "R580",
+      "part": "100k 0.1%",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.825,
+          0,
+          0.8,
+          0.95
+        ],
+        "2": [
+          0.825,
+          0,
+          0.8,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "RT0603BRD07100KL",
+      "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+      "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
     }
   ],
   "limitations": [
@@ -2972,6 +6698,15 @@
     "https://datasheets.kyocera-avx.com/TPS.pdf",
     "https://www.smc-diodes.com/propdf/SK520B%20N0952%20REV.A.pdf",
     "https://www.hirose.com/en/product/p/CL0680-0567-0-00",
-    "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf"
+    "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf",
+    "https://ele.kyocera.com/assets/products/crystal-device/cx3225sb_e.pdf",
+    "https://www.we-online.com/components/products/datasheet/742863160.pdf",
+    "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1700-Data-Sheet-20001826F.pdf",
+    "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
+    "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
+    "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
+    "https://industrial.panasonic.com/ww/products/pt/general-purpose-chip-resistors/models/ERJ3EKF1001V",
+    "https://datasheets.kyocera-avx.com/KGM_X7R.pdf",
+    "https://yageogroup.com/download/specsheet/CC0603JRX7R7BB105"
   ]
 }

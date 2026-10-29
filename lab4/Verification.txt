@@ -499,3 +499,13 @@ October 26 output-power routing and connectivity-check correction
 - Mask/paste configuration recorded, including Q1's separate paste windows and 13 small nominal drill-to-opening gaps for registration review. Analytic gap fixture passes.
 - Added LC-pole sensitivity cases using effective capacitance; actual DC-bias/temperature/aging values and loop/thermal review remain open.
 - Reviewed regenerated front, back and internal-ground previews. No fabrication release.
+2026-10-29 — Additional package and assembly documentation review
+- Board and active BOM unchanged; board SHA256 33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772.
+- Expanded selected-package check from 41 to 186 components: six crystals, two VDDA beads, encoder LDO, 89 resistors and 47 capacitors added. All saved-pad, BOM-value and specified pin-net assertions pass.
+- Clarified that LiPo retains three vehicle Hirose housings; XT60 is soldered and DF63 contacts are crimped. No quantity or ordering change.
+- Documented exact Pi socket and inductor assembly-process constraints. No new assembly or operating qualification claimed.
+- Rejected an exploratory Pi feed change because the same path-resistance screen improved by only about 0.2mV. Active routing remains unchanged.
+- Existing native ERC/DRC/parity/connectivity results remain applicable to unchanged CAD; fabrication_release remains false.
+- Read October29 class messages/threads and Anson's latest DM. Extra L298 hardware protection is optional; secure mounting is required without a prescribed hole set. Optional camera excluded; 2oz is not selected because its manufacturing/rule review is not complete.
+- Updated the existing shared report and must-do Doc in place; completed research/clarifications are struck through at the bottom. No comment replies, messages, orders or submissions sent.
+- Added Lab4-scoped Git attributes to preserve exact artifact bytes. Prior auto-CRLF conversion made Git blobs disagree with some recorded hashes. Existing files changed only by this preservation step are compared ignoring line endings; no electrical geometry changes are introduced.

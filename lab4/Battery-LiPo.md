@@ -39,6 +39,15 @@ The PCB fuse cannot protect a short in the cable before it. The separately
 listed 10 A fuse is still a coordination candidate; neither fuse establishes
 fast protection of the L298 or permission to stall the motors.
 
+The LiPo change does **not** remove the three DF63-2S-3.96C vehicle housings:
+one mates J40 for the battery adapter, and two mate J80/J81 for the motors.
+The existing spare is additional to those three installed housings. We solder
+the XT60 solder cups and insulated wire transitions; we **crimp** the selected
+DF63A-1618SC contacts before inserting them into the Hirose housings. Do not
+substitute solder-filled crimp barrels. The former NiMH charger adapter
+housing, male crimp contacts and charger-only wire have zero purchase quantity.
+The new charger uses its own XT60/balance interface, not the motor connectors.
+
 For charging, disconnect the pack completely from the vehicle. Use standard
 **LiPo / 3S balance mode, 2.2 A, 4.20 V per cell**, with both the main and
 balance leads attached as shown in the [Hitec manual](https://media.zenobuilder.com/upload/gatcxyxclp/RDX1-Mini-Manual-Web-48795484.pdf).

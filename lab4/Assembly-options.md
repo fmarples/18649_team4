@@ -1,6 +1,46 @@
 # Assembly options for the same Lab 4 design
 
-## Current revision — October 27
+## Current assembly decisions — October 29
+
+We will assemble the SMT parts first and install the through-hole Pi socket,
+power connectors, electrolytics and heatsink hardware afterward. No new
+footprint or paste aperture is required by the package review below. The
+actual solder alloy, stencil and temperature profile must be chosen with the
+course assembly facility before assembly; this is not a request for chassis
+measurements or a claim that a generic reflow profile has been qualified.
+
+- **J70:** keep ESQ-118-44-L-D out of the lead-free SMT reflow cycle. Its
+  [exact family catalog](https://suddendocs.samtec.com/catalog_english/esq_th.pdf)
+  specifies lead wave only. Samtec's general wave note is not a hand-iron
+  specification. Before soldering, obtain a suitable localized process from
+  the course assembler/Samtec, or review a documented replacement. Do not
+  import a profile for a different ESQ lead style or restore the 40-pin part.
+- **L1–L3:** [Eaton ELX1097, p. 3](https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf)
+  recommends at least 0.15 mm paste thickness. Agree on a local step-up/paste
+  deposition process or a separately controlled inductor installation with
+  the assembler. Do not increase the whole stencil thickness just to satisfy
+  these three parts without checking the fine-pitch SOT-563 apertures. The
+  current Gerber apertures are geometry, not proof of deposited paste volume.
+- **Hirose headers and harnesses:** the [DF63 catalog](https://www.hirose.com/en/product/series/DF63/documents?path=/api/v1/series/DF63/documents/product_series_catalog/content?lang%3DEN)
+  gives straight-header manual soldering at 290 °C for 3 seconds and flow at
+  260 °C for 5 seconds. Harness contacts are crimped with the matching wire
+  and tooling; XT60 solder cups and insulated wire transitions are soldered.
+  Wire gauge alone does not establish the crimp: check insulation diameter,
+  strand construction and the contact's crimp-condition table.
+
+The three-position DF63 servo interface is rated 7 A with 22 AWG under the
+catalog conditions; that does not qualify the unknown factory servo mate or
+the proposed 26 AWG donor lead. We therefore keep that donor conditional.
+Researching a higher-rated male header alone cannot establish the rating of
+the complete mated connection. An accepted servo lead or a reviewed splice
+to the factory cable is still needed; finished fit and continuity checks
+follow assembly. See [Actuator-design.md](Actuator-design.md).
+
+The [expanded package audit](Critical-package-review.md) passes for 186
+components. It does not approve the above manufacturing processes. The team
+does not need to repeat the completed hole, cable-photo or paper-fit work.
+
+## Earlier revision — October 27
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All

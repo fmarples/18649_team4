@@ -7,12 +7,23 @@ The [handout](https://drive.google.com/file/d/1BY2rbBwuB3GaSkNRFC7Hki2tzdnRCmCk/
 requires the final files on Gradescope by **October 29, 2026, 11:59 p.m.**
 The class fabrication batch follows the next morning.
 
+## October 29 staff clarification
+
+The [latest course replies](Course-updates-October29.md) say additional L298
+hardware overcurrent protection is optional. This closes the pending course
+requirement question, not the engineering assessment of current, faults and
+heat. Secure mounting is required without a prescribed chassis-hole set.
+The optional 250–500 mA camera is excluded from our present allocation.
+Staff can arrange 2 oz copper, but our current stack and 0.15 mm regulator
+pad-gap exception have not been qualified for that option.
+
 ## October 28 capacitor and chassis allowance revision
 
 The latest [power-route/package correction](Power-route-revision.md) widens
 779 power segments and fixes C802 to D10/P5. The detailed physical stack is
 saved in the PCB. Native ERC/DRC/parity/connectivity and 331 targeted routes
-pass; 41 critical components have package checks. A matching
+pass; the October 29 package audit covers 186 components. The selected passive
+family checks establish geometry, not dissipation or effective capacitance. A matching
 [review package](review-package/REVIEW-ONLY.txt) is exported and independently
 parsed: 11 Gerber layers, 1,330 plated holes, 12 nonplated holes and 300
 electrical position rows. Layer PDFs are scaled to fit; the separate
