@@ -130,6 +130,36 @@ rows.append(dict(ref="F1",part="3568",result="match",saved_drill_mm=1.78,
                  manufacturer_minimum_hole_mm=1.60,saved_pad_positions_mm=actual,
                  source="https://www.keyelco.com/product-pdf.cfm?p=306"))
 
+# Panasonic EEU-FR1E471 is D10 x L12.5mm, with 5mm lead spacing.
+# The previous D8/P3.5 footprint was a genuine package mismatch.
+check("C802", "470u 25V", "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
+      {"1": "/VBAT_PROTECTED", "2": "/GND"},
+      {"1": [0, 0, 2, 2], "2": [5, 0, 2, 2]})
+for pad in fps["C802"].Pads():
+    assert pad.GetAttribute() == p.PAD_ATTRIB_PTH
+    assert abs(p.ToMM(pad.GetDrillSize().x)-1.0) < 1e-6
+rows[-1].update(body_diameter_mm=10, body_length_mm=12.5, lead_pitch_mm=5,
+                manufacturer_lead_diameter_mm=.6, saved_drill_mm=1.0)
+
+check("C400", "1000u / 25V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm",
+      {"1": "/VBAT_PROTECTED", "2": "/GND"},
+      {"1": [0, 0, 2.4, 2.4], "2": [5, 0, 2.4, 2.4]})
+rows[-1].update(body_diameter_mm=12.5, body_length_mm=20, lead_pitch_mm=5)
+
+# AVX TPS B-case: 3.5 x 2.8mm, 2.1mm maximum height; band marks ANODE.
+for ref, positive in [("C804", "/+5V"), ("C805", "ENC_4V")]:
+    check(ref, "10u 16V 10% low-ESR", "Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B",
+          {"1": positive, "2": "/GND"},
+          {"1": [-1.54, 0, 1.34, 2.39], "2": [1.54, 0, 1.34, 2.39]})
+
+# SMC N0952 rev.A, SMB terminals. Cathode is pad 1; motor clamps must
+# point from ground to each output and from each output to the battery rail.
+for i, output in enumerate(["LEFT_BRIDGE", "LEFT_RETURN", "RIGHT_BRIDGE", "RIGHT_RETURN"]):
+    for offset, nets in [(0, {"1": "/VBAT_PROTECTED", "2": output}),
+                         (1, {"1": output, "2": "/GND"})]:
+        check(f"D{800+2*i+offset}", "SK520B", "Diode_SMD:D_SMB", nets,
+              {"1": [-2.15, 0, 2.5, 2.3], "2": [2.15, 0, 2.5, 2.3]})
+
 report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
               fabrication_release=False, checked_components=len(rows), results=rows,
               limitations=["Checks only the listed identities, pad coordinates and pin nets.",
@@ -141,6 +171,9 @@ report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
                        "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP2515-Family-Data-Sheet-DS20001801K.pdf",
                        "https://www.st.com/resource/en/datasheet/stm32f401re.pdf",
                        "https://www.diodes.com/datasheet/download/MMBT3904.pdf",
+                       "https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1259.pdf",
+                       "https://datasheets.kyocera-avx.com/TPS.pdf",
+                       "https://www.smc-diodes.com/propdf/SK520B%20N0952%20REV.A.pdf",
                        "https://www.hirose.com/en/product/p/CL0680-0567-0-00",
                        "https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf"])
 (ROOT / "Selected-package-check.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

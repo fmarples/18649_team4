@@ -98,7 +98,9 @@ iron tip/preheat process; inspect the finished joints.
 
 The documented move is now implemented. U80 is at (66.11, 64.34) mm;
 HS80 is at (75.00, 53.975) mm. C800 is at (88, 71.5), C802 at
-(101.35, 47), and J80 at (67.1, 46.95). Chassis and Pi hole centers did
+(99.85, 47), and J80 at (67.1, 46.95). C802 now uses the correct D10/P5
+footprint, with its ground pad still at (104.85, 47); the enlarged body passes
+the current heatsink and courtyard checks. Chassis and Pi hole centers did
 not move. These coordinates are absolute KiCad millimeters; subtract
 (40, 40) for board-relative positions.
 

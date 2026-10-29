@@ -1,5 +1,5 @@
 {
-  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
   "fabrication_release": false,
   "copper_resistivity_ohm_m": 1.72e-08,
   "outer_copper_mm": 0.035,
@@ -269,11 +269,11 @@
         {
           "target": "J90.2",
           "connected": true,
-          "path_resistance_ohm": 0.025385,
-          "drop_if_full_rail_current_A_is_applied_V": 0.101541,
-          "included_trace_length_mm": 99.682,
+          "path_resistance_ohm": 0.024454,
+          "drop_if_full_rail_current_A_is_applied_V": 0.097817,
+          "included_trace_length_mm": 98.148,
           "included_vias": 1,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.406165
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.391266
         }
       ]
     },
@@ -286,20 +286,20 @@
         {
           "target": "U2.1",
           "connected": true,
-          "path_resistance_ohm": 0.008881,
-          "drop_if_full_rail_current_A_is_applied_V": 0.02842,
+          "path_resistance_ohm": 0.008521,
+          "drop_if_full_rail_current_A_is_applied_V": 0.027268,
           "included_trace_length_mm": 21.954,
           "included_vias": 0,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.090943
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.087259
         },
         {
           "target": "U2.2",
           "connected": true,
-          "path_resistance_ohm": 0.008881,
-          "drop_if_full_rail_current_A_is_applied_V": 0.02842,
+          "path_resistance_ohm": 0.008521,
+          "drop_if_full_rail_current_A_is_applied_V": 0.027268,
           "included_trace_length_mm": 21.954,
           "included_vias": 0,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.090943
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.087259
         }
       ]
     },
@@ -312,11 +312,11 @@
         {
           "target": "J80.1",
           "connected": true,
-          "path_resistance_ohm": 0.016442,
-          "drop_if_full_rail_current_A_is_applied_V": 0.052614,
-          "included_trace_length_mm": 26.627,
+          "path_resistance_ohm": 0.01525,
+          "drop_if_full_rail_current_A_is_applied_V": 0.048799,
+          "included_trace_length_mm": 24.223,
           "included_vias": 3,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.168364
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.156158
         }
       ]
     },
@@ -329,11 +329,11 @@
         {
           "target": "U80.3",
           "connected": true,
-          "path_resistance_ohm": 0.01473,
-          "drop_if_full_rail_current_A_is_applied_V": 0.047135,
+          "path_resistance_ohm": 0.013123,
+          "drop_if_full_rail_current_A_is_applied_V": 0.041992,
           "included_trace_length_mm": 19.094,
           "included_vias": 2,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.150831
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.134375
         }
       ]
     },
@@ -346,20 +346,20 @@
         {
           "target": "U3.1",
           "connected": true,
-          "path_resistance_ohm": 0.00575,
-          "drop_if_full_rail_current_A_is_applied_V": 0.018399,
+          "path_resistance_ohm": 0.003286,
+          "drop_if_full_rail_current_A_is_applied_V": 0.010514,
           "included_trace_length_mm": 11.7,
           "included_vias": 0,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.058877
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.033644
         },
         {
           "target": "U3.2",
           "connected": true,
-          "path_resistance_ohm": 0.005757,
-          "drop_if_full_rail_current_A_is_applied_V": 0.018423,
-          "included_trace_length_mm": 11.745,
+          "path_resistance_ohm": 0.003287,
+          "drop_if_full_rail_current_A_is_applied_V": 0.010519,
+          "included_trace_length_mm": 11.71,
           "included_vias": 0,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.058953
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.033661
         }
       ]
     },
@@ -372,11 +372,11 @@
         {
           "target": "J81.1",
           "connected": true,
-          "path_resistance_ohm": 0.011571,
-          "drop_if_full_rail_current_A_is_applied_V": 0.037028,
+          "path_resistance_ohm": 0.011426,
+          "drop_if_full_rail_current_A_is_applied_V": 0.036564,
           "included_trace_length_mm": 32.966,
           "included_vias": 1,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.118489
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.117006
         }
       ]
     },
@@ -389,11 +389,11 @@
         {
           "target": "U80.14",
           "connected": true,
-          "path_resistance_ohm": 0.018977,
-          "drop_if_full_rail_current_A_is_applied_V": 0.060726,
-          "included_trace_length_mm": 23.68,
+          "path_resistance_ohm": 0.01765,
+          "drop_if_full_rail_current_A_is_applied_V": 0.056479,
+          "included_trace_length_mm": 22.657,
           "included_vias": 1,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.194323
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.180733
         }
       ]
     }

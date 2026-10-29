@@ -7,6 +7,14 @@ its 40-pin header.
 
 ## October 28 capacitor and chassis allowance revision
 
+The latest [power-route/package correction](Power-route-revision.md) widens
+779 power segments and fixes C802 to the manufacturer's D10/P5 footprint.
+All native checks and 331 targeted connections pass; 41 critical components
+have saved-pad/pinout checks. The [review export](review-package/REVIEW-ONLY.txt)
+contains matching schematic/layer PDFs, 3D views, Gerbers/drills and BOM/CPL
+files. It is **not released for fabrication**. The remaining power envelope
+and protection decisions are described in [Power-margin-review.md](Power-margin-review.md).
+
 We selected rear chassis pair A1/A2 after the team confirmed both holes are
 unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
 and 233.21155 mm between rows; team measurements are about 48, 73.45 and

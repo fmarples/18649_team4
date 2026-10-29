@@ -1,5 +1,34 @@
 # Selected package and pinout review — October 27
 
+## October 28 bulk-capacitor and clamp review
+
+The reproducible audit now covers **41 components**. We corrected C802:
+Panasonic EEU-FR1E471 is **10 mm diameter × 12.5 mm body length, 5 mm lead
+pitch**, with 0.6 mm leads. The previous D8/P3.5 footprint was incorrect.
+The saved D10/P5 footprint has 2 mm pads and 1 mm plated holes, with pad 1
+on protected battery and pad 2 on ground. The BOM and schematic now agree.
+[Panasonic series drawing](https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1259.pdf),
+[exact part record](https://na.industrial.panasonic.com/products/capacitors/aluminum-electrolytic-capacitors/series/83367/model/83716).
+
+We checked C400 (Nichicon UPW1E102MHD) against its 12.5 mm diameter,
+20 mm body length and 5 mm pitch; its existing footprint matches. C804/C805
+use AVX TPS B-case tantalums, 3.5 × 2.8 mm body and 2.1 mm maximum height.
+Their band denotes the **positive anode**, which is pad 1; pad 2 is ground.
+Do not apply the aluminum-can negative-stripe convention to these tantalums.
+[AVX TPS drawing and electrical limits](https://datasheets.kyocera-avx.com/TPS.pdf).
+
+All eight SMC SK520B clamps use the SMB package and correct cathode/anode
+nets. Saved pads are 2.5 × 2.3 mm at ±2.15 mm centers, covering the
+manufacturer terminal regions. For every motor output, the lower diode
+points from ground to output and the upper diode from output to protected
+battery. Pad 1 is the banded cathode. This matters because the diodes carry
+motor recirculation current when the bridge switches.
+[SMC N0952 revision A](https://www.smc-diodes.com/propdf/SK520B%20N0952%20REV.A.pdf).
+
+These checks establish the listed package identities, geometry and polarity.
+Ripple, temperature and motor-fault duty are separate from package fit.
+Earlier counts below describe earlier review stages.
+
 We compared the following BOM variants and saved pads with manufacturer
 package drawings and pin tables. This closes these specific checks; it is
 not a claim that every footprint, solder process or mechanical installation

@@ -1,5 +1,5 @@
 {
-  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
   "fabrication_release": false,
   "method": "Shortest conductor-item paths: whole segments and full 1.6mm vias, not exact extracted transmission-line lengths. CAN branch length stops at bus-side isolation pad; local transceiver copper and jumper are additional.",
   "can_topology": [
@@ -210,7 +210,7 @@
       "target": "R410.1",
       "net": "/+6V6_SERVO",
       "connected": true,
-      "length_mm": 43.435,
+      "length_mm": 39.097,
       "vias": 0
     },
     {
@@ -314,7 +314,7 @@
       "target": "J90.2",
       "net": "/Front zone/SERVO_VPLUS",
       "connected": true,
-      "length_mm": 101.282,
+      "length_mm": 99.748,
       "vias": 1
     },
     {

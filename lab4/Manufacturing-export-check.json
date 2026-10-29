@@ -1,0 +1,31 @@
+{
+  "fabrication_release": false,
+  "plated_drills": 1330,
+  "nonplated_drills": 12,
+  "drill_positions_and_diameters_match_saved_board_to_0p001mm": true,
+  "position_rows_match_saved_board": 300,
+  "gerber_layers": 11,
+  "outline_export_bounds_mm": [
+    [
+      39.925,
+      -274.075
+    ],
+    [
+      160.075,
+      -26.71345
+    ]
+  ],
+  "parser_warnings": [
+    "Gerbonara notes native KiCad G90 after header; all parsed coordinates independently matched.",
+    "RoundRect macro has unused parameters; no parser failure."
+  ],
+  "limitations": [
+    "Gerber/PDF parsing and dimension checks do not establish electrical operating margins.",
+    "Native rotations are not calibrated to an assembly-house part library.",
+    "3D render omits custom parts without models."
+  ],
+  "board_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+  "outline_bounds_note": "Gerber aperture-stroke bounds include 0.075mm on each side of the centerline. Finished nominal outline is 120 x 247.21155mm.",
+  "JLC_format_BOM_references": 300,
+  "JLC_format_CPL_rows": 300
+}

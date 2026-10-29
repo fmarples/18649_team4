@@ -4,9 +4,11 @@
 
 The selected LiPo pair, PA3 sensing circuit and standalone cutoff logic are
 documented in [Battery-LiPo.md](Battery-LiPo.md). The current board contains
-300 electrical footprints and 19,997 track/via items. All 331 targeted
+300 electrical footprints and 20,264 track/via items. All 331 targeted
 connections and fresh native ERC/DRC/parity checks pass. The selected-package
-check covers 29 components, including the exact fuse-holder pattern.
+check covers 41 components, including the fuse holder, both bulk electrolytics,
+two tantalums and eight motor-clamp diodes. We corrected C802's package and
+widened 779 power-track segments; see [Power-route-revision.md](Power-route-revision.md).
 
 We replaced the regulator bank capacitors with 25 V 1210 parts and added
 parallel capacitors: 66 uF at each input and 88/66/66 uF at the servo/Pi/logic
@@ -16,12 +18,15 @@ The [capacitor review](Capacitor-bank-review.md) records the calculations and
 their limits: typical bias curves and assumed aging/temperature allowances
 are not guaranteed combined minimum capacitance or a complete loop assessment.
 
-We keep the cardboard-verified chassis pattern following the team-relayed
-TA decision, with 4 mm round NPTH holes for M3 screws and washers. The chassis
+We use the subsequently selected CAD rear pair A1/A2: 47.870 mm front spacing,
+73.01493 mm rear spacing and 233.21155 mm between rows. The team confirmed
+the new rear holes are unused and accessible and supplied supporting measurements.
+The earlier cardboard test checked the previous pattern. We use 4 mm round
+NPTH holes for M3 screws and washers. The chassis
 holes have 4 mm exclusions measured from the finished hole edge; the Pi holes
 keep their 3 mm edge exclusions. The check covers components and copper on
 all four layers. See [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
-This does not establish that the downloaded chassis CAD matches the car.
+This does not turn the earlier cardboard test into a test of the revised pattern.
 
 Full Pi supply margin, capacitor/control-loop and thermal qualification,
 motor/fuse protection, application cutoff integration and final manufacturing

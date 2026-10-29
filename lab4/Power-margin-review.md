@@ -43,6 +43,46 @@ open. A larger power-routing redesign should use the confirmed load and
 battery envelope. No generic efficiency or contact-resistance assumption
 has been promoted to a guaranteed specification.
 
+## October 28 input-power and Pi sensitivity update
+
+After widening the power routes, we added a shared-input calculation using
+`Iin = Pout / (Vin_local × efficiency)`. All cases use an assumed 80%
+converter efficiency, 3.3 A at 5.1 V and 0.8 A at 3.318 V. The planning case
+uses 0.39 A servo and 0.72 A aggregate motor supply current. The two heavier
+sensitivities use 3/4 A servo and 2 A aggregate motor supply current. The
+2 A motor value is not permission to run each bridge at 2 A.
+
+| Pack voltage | Planning input | 3 A servo / 2 A aggregate motors | 4 A servo / 2 A aggregate motors |
+| --- | ---: | ---: | ---: |
+| 10.5 V | 3.41 A | 6.91 A | 7.78 A |
+| 11.1 V | 3.26 A | 6.62 A | 7.44 A |
+| 12.6 V | 2.94 A | 6.03 A | 6.74 A |
+
+At 10.5 V the modeled input-copper losses are 0.57/2.33/3.17 W, and Q1
+losses are 0.17/0.72/0.91 W using an assumed hot 15 mΩ RDS(on). These are
+distributed DC losses, not predicted temperatures or allowed durations.
+Fuse/holder/harness/contact losses, hot copper, return paths, PWM and startup
+are omitted. The results therefore do not qualify the 10 A fuse or sustained
+heavy operation. [Reproducible cases](Load-allocation-check.json).
+
+At the existing 3 A Pi allocation, adding an assumed 20 mV local/plane return
+allowance and equal current sharing over seven ground contacts gives:
+
+| Copper temperature assumption | 5 mΩ per mated contact | 10 mΩ per mated contact | 20 mΩ per mated contact |
+| --- | ---: | ---: | ---: |
+| 20 °C | 4.9053 V | 4.8881 V | 4.8538 V |
+| 60 °C | 4.8939 V | 4.8768 V | 4.8425 V |
+| 80 °C | 4.8882 V | 4.8711 V | 4.8368 V |
+
+These contact and temperature values are explicit sensitivities, not measured
+or guaranteed Pi mating data. Samtec's family catalog current rating and a
+test on another ESQ variant do not establish this assembled Pi contact's
+resistance. The table still excludes regulator dynamics. Against the
+4.8615 V upper warning corner, the 80 °C / 10 mΩ case leaves only 9.6 mV;
+the 20 mΩ cases cross that corner. This is a real margin concern at the
+chosen full load, rather than a hole-fit uncertainty. We have not raised the
+setpoint blindly: that would reduce the opposite, high-voltage margin.
+
 ## Revised capacitors and feed-forward network
 
 We replaced the earlier single 22 µF input / two 0805 output arrangement.

@@ -238,7 +238,7 @@ Rear,J605,Reserved / encoder probes,2.54 mm breakaway header,Connector_PinHeader
 Rear,U80,L298N,L298N,Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical,ST L298 rev5: 2A DC per bridge and 2A braking; no hardware current limiter in this revision
 Rear,C800,100n 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Local decoupling; effective capacitance and layout to verify
 Rear,C801,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Local decoupling; effective capacitance and layout to verify
-Rear,C802,470u 25V,EEU-FR1E471,Capacitor_THT:CP_Radial_D8.0mm_P3.50mm,Local decoupling; effective capacitance and layout to verify
+Rear,C802,470u 25V,EEU-FR1E471,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,"Panasonic drawing: 10 mm diameter, 12.5 mm body length, 5 mm lead pitch; PCB footprint corrected. 25 V rating; application ripple/temperature still to qualify."
 Rear,D800,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
 Rear,D801,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked
 Rear,D802,SK520B,SK520B,Diode_SMD:D_SMB,SMC Diode Solutions 5A/200V SMB; exact MPN appears in course v3 list; motor clamp polarity checked

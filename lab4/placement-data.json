@@ -1495,16 +1495,16 @@
     {
       "reference": "C802",
       "value": "470u 25V",
-      "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
-      "x_mm": 61.35,
+      "footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
+      "x_mm": 59.85,
       "y_mm": 7.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        58.802521,
-        2.703761,
-        8.592478,
-        8.592477
+        57.057497999999995,
+        1.707498000000001,
+        10.587501,
+        10.585004
       ],
       "schematic": true
     },
@@ -5065,7 +5065,7 @@
     }
   ],
   "missing_footprints": [],
-  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
   "outline_bounds_mm": [
     0.0,
     -13.211549999999999,

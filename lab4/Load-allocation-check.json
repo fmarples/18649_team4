@@ -1,5 +1,5 @@
 {
-  "source_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
   "fabrication_release": false,
   "method": "Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.",
   "logic": {
@@ -521,5 +521,591 @@
   "sense_path_shared_conductor_counts": {
     "high_side": 0,
     "low_side": 0
+  },
+  "battery_input": {
+    "cases": [
+      {
+        "case": "planning average",
+        "pack_V": 10.5,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 0.39,
+        "motor_supply_A": 0.72,
+        "total_input_A": 3.406313,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 0.5666571909994373,
+        "FET_loss_assumed_W": 0.17404453748994342,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 3.406313,
+          "source_minimum_V": 10.417724026689607,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 0.72,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.06691,
+              "static_source_minus_drop_V": 10.350814
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 0.3133636370011212,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.1501,
+              "static_source_minus_drop_V": 10.267624
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 2.0500549604752325,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.155804,
+              "static_source_minus_drop_V": 10.26192
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.3228945363967247,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.141923,
+              "static_source_minus_drop_V": 10.275801
+            }
+          ],
+          "total_tree_loss_W": 0.460444,
+          "largest_drop_V": 0.155804
+        }
+      },
+      {
+        "case": "high-load sensitivity",
+        "pack_V": 10.5,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 3.0,
+        "motor_supply_A": 2.0,
+        "total_input_A": 6.907173,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 2.3266469815770856,
+        "FET_loss_assumed_W": 0.7156356456550254,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 6.907173,
+          "source_minimum_V": 10.333164367446921,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 2.0,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.144396,
+              "static_source_minus_drop_V": 10.188769
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 2.485101939383594,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.373814,
+              "static_source_minus_drop_V": 9.95935
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 2.091492390546722,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.274557,
+              "static_source_minus_drop_V": 10.058607
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.3305789735034676,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.296228,
+              "static_source_minus_drop_V": 10.036936
+            }
+          ],
+          "total_tree_loss_W": 1.88992,
+          "largest_drop_V": 0.373814
+        }
+      },
+      {
+        "case": "full regulated allocation sensitivity",
+        "pack_V": 10.5,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 4.0,
+        "motor_supply_A": 2.0,
+        "total_input_A": 7.784663,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 3.1677782556822462,
+        "FET_loss_assumed_W": 0.9090145609432204,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 7.784663,
+          "source_minimum_V": 10.311969522031303,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 2.0,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.158638,
+              "static_source_minus_drop_V": 10.153331
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 3.347614459503299,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.454203,
+              "static_source_minus_drop_V": 9.857766
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 2.1040132120528274,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.313221,
+              "static_source_minus_drop_V": 9.998749
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.3330348599572355,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.349048,
+              "static_source_minus_drop_V": 9.962921
+            }
+          ],
+          "total_tree_loss_W": 2.613039,
+          "largest_drop_V": 0.454203
+        }
+      },
+      {
+        "case": "planning average",
+        "pack_V": 11.1,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 0.39,
+        "motor_supply_A": 0.72,
+        "total_input_A": 3.255244,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 0.5122790409411462,
+        "FET_loss_assumed_W": 0.15894919593117474,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 3.255244,
+          "source_minimum_V": 11.021372947110725,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 0.72,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.064458,
+              "static_source_minus_drop_V": 10.956914
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 0.2957517637559729,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.142317,
+              "static_source_minus_drop_V": 10.879056
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 1.9347186608684424,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.147698,
+              "static_source_minus_drop_V": 10.873674
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.3047735081828197,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.134599,
+              "static_source_minus_drop_V": 10.886773
+            }
+          ],
+          "total_tree_loss_W": 0.415278,
+          "largest_drop_V": 0.147698
+        }
+      },
+      {
+        "case": "high-load sensitivity",
+        "pack_V": 11.1,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 3.0,
+        "motor_supply_A": 2.0,
+        "total_input_A": 6.619023,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 2.1076686330402916,
+        "FET_loss_assumed_W": 0.6571718935441956,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 6.619023,
+          "source_minimum_V": 10.940124350995902,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 2.0,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.139719,
+              "static_source_minus_drop_V": 10.800405
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 2.33790192430582,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.35371,
+              "static_source_minus_drop_V": 10.586415
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 1.969846161452196,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.260356,
+              "static_source_minus_drop_V": 10.679768
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.3112744681855072,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.280721,
+              "static_source_minus_drop_V": 10.659403
+            }
+          ],
+          "total_tree_loss_W": 1.70662,
+          "largest_drop_V": 0.35371
+        }
+      },
+      {
+        "case": "full regulated allocation sensitivity",
+        "pack_V": 11.1,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 4.0,
+        "motor_supply_A": 2.0,
+        "total_input_A": 7.438948,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 2.8521717487036824,
+        "FET_loss_assumed_W": 0.8300692638421561,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 7.438948,
+          "source_minimum_V": 10.920319893436913,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 2.0,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.153027,
+              "static_source_minus_drop_V": 10.767293
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 3.1454268067760496,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.428898,
+              "static_source_minus_drop_V": 10.491422
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 1.980213583507454,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.296466,
+              "static_source_minus_drop_V": 10.623854
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.3133078500802108,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.330097,
+              "static_source_minus_drop_V": 10.590223
+            }
+          ],
+          "total_tree_loss_W": 2.34561,
+          "largest_drop_V": 0.428898
+        }
+      },
+      {
+        "case": "planning average",
+        "pack_V": 12.6,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 0.39,
+        "motor_supply_A": 0.72,
+        "total_input_A": 2.943656,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 0.40905113226141215,
+        "FET_loss_assumed_W": 0.12997665923766238,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 2.943656,
+          "source_minimum_V": 12.528899031725404,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 0.72,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.059401,
+              "static_source_minus_drop_V": 12.469498
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 0.2594206586406309,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.126264,
+              "static_source_minus_drop_V": 12.402635
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 1.6968574884912124,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.130981,
+              "static_source_minus_drop_V": 12.397918
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.26737784768891015,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.119495,
+              "static_source_minus_drop_V": 12.409404
+            }
+          ],
+          "total_tree_loss_W": 0.329731,
+          "largest_drop_V": 0.130981
+        }
+      },
+      {
+        "case": "high-load sensitivity",
+        "pack_V": 12.6,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 3.0,
+        "motor_supply_A": 2.0,
+        "total_input_A": 6.031454,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 1.6968729754212695,
+        "FET_loss_assumed_W": 0.5456765254178911,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 6.031454,
+          "source_minimum_V": 12.454316466819888,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 2.0,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.130182,
+              "static_source_minus_drop_V": 12.324134
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 2.038451705743442,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.312748,
+              "static_source_minus_drop_V": 12.141568
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 1.7211508930022155,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.231391,
+              "static_source_minus_drop_V": 12.222926
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.271851208410575,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.249111,
+              "static_source_minus_drop_V": 12.205206
+            }
+          ],
+          "total_tree_loss_W": 1.363866,
+          "largest_drop_V": 0.312748
+        }
+      },
+      {
+        "case": "full regulated allocation sensitivity",
+        "pack_V": 12.6,
+        "efficiency_assumed": 0.8,
+        "servo_output_A": 4.0,
+        "motor_supply_A": 2.0,
+        "total_input_A": 6.737538,
+        "pre_FET_copper_R_ohm": 0.009153966495981629,
+        "FET_hot_R_assumed_ohm": 0.015,
+        "input_copper_loss_W": 2.265321965957951,
+        "FET_loss_assumed_W": 0.6809162445706396,
+        "regulated_branch_screen": {
+          "net": "/VBAT_PROTECTED",
+          "total_allocated_A": 6.737538,
+          "source_minimum_V": 12.437261736461728,
+          "loads": [
+            {
+              "ref": "U80",
+              "pin": "4",
+              "allocation_A": 2.0,
+              "basis": "Assumed total motor supply current; not phase/stall current",
+              "path_R_ohm": 0.032374,
+              "shared_tree_drop_V": 0.141643,
+              "static_source_minus_drop_V": 12.295619
+            },
+            {
+              "ref": "U40",
+              "pin": "1",
+              "allocation_A": 2.736398276301265,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.092394,
+              "shared_tree_drop_V": 0.377614,
+              "static_source_minus_drop_V": 12.059648
+            },
+            {
+              "ref": "U41",
+              "pin": "1",
+              "allocation_A": 1.7279541794601667,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.056681,
+              "shared_tree_drop_V": 0.26246,
+              "static_source_minus_drop_V": 12.174802
+            },
+            {
+              "ref": "U42",
+              "pin": "1",
+              "allocation_A": 0.2731853960587202,
+              "basis": "Output power / (local input voltage * assumed80% efficiency)",
+              "path_R_ohm": 0.066126,
+              "shared_tree_drop_V": 0.291664,
+              "static_source_minus_drop_V": 12.145598
+            }
+          ],
+          "total_tree_loss_W": 1.849783,
+          "largest_drop_V": 0.377614
+        }
+      }
+    ],
+    "limitations": "DC predecessor-tree model; 20C nominal copper and assumed via plating. Omits fuse/holder/harness/contact and local return losses, parallel copper, hot trace resistance, PWM, inrush, motor recirculation and converter quiescent current. Not a temperature, fault-clearing or allowed-duty qualification. Motor2A is an aggregate supply assumption, not a per-bridge permission."
+  },
+  "pi_full_feed_sensitivity": {
+    "cases": [
+      {
+        "copper_temperature_assumed_C": 20,
+        "per_contact_R_assumed_mohm": 5,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.905276,
+        "margin_to_upper_warning_corner_V": 0.043776
+      },
+      {
+        "copper_temperature_assumed_C": 20,
+        "per_contact_R_assumed_mohm": 10,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.888133,
+        "margin_to_upper_warning_corner_V": 0.026633
+      },
+      {
+        "copper_temperature_assumed_C": 20,
+        "per_contact_R_assumed_mohm": 20,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.853848,
+        "margin_to_upper_warning_corner_V": -0.007652
+      },
+      {
+        "copper_temperature_assumed_C": 60,
+        "per_contact_R_assumed_mohm": 5,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.893922,
+        "margin_to_upper_warning_corner_V": 0.032422
+      },
+      {
+        "copper_temperature_assumed_C": 60,
+        "per_contact_R_assumed_mohm": 10,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.87678,
+        "margin_to_upper_warning_corner_V": 0.01528
+      },
+      {
+        "copper_temperature_assumed_C": 60,
+        "per_contact_R_assumed_mohm": 20,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.842494,
+        "margin_to_upper_warning_corner_V": -0.019006
+      },
+      {
+        "copper_temperature_assumed_C": 80,
+        "per_contact_R_assumed_mohm": 5,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.888245,
+        "margin_to_upper_warning_corner_V": 0.026745
+      },
+      {
+        "copper_temperature_assumed_C": 80,
+        "per_contact_R_assumed_mohm": 10,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.871103,
+        "margin_to_upper_warning_corner_V": 0.009603
+      },
+      {
+        "copper_temperature_assumed_C": 80,
+        "per_contact_R_assumed_mohm": 20,
+        "return_allowance_assumed_V": 0.02,
+        "Pi_terminal_before_transients_V": 4.836817,
+        "margin_to_upper_warning_corner_V": -0.024683
+      }
+    ],
+    "limitations": "10/20mOhm contacts and20mV return are screening assumptions; no measured mate or guaranteed contact specification. 4.8615V is the upper published undervoltage-warning corner, not the Pi operating-voltage specification. Regulator dynamic losses and load steps are omitted."
   }
 }

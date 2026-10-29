@@ -91,7 +91,7 @@ C702,100n TEST,Capacitor_SMD:C_0603_1608Metric,20.0,145.0,0.0,F.Cu,True
 C8,100n,Capacitor_SMD:C_0603_1608Metric,53.0,41.0,90.0,F.Cu,True
 C800,100n 50V,Capacitor_SMD:C_0603_1608Metric,48.0,31.5,0.0,F.Cu,True
 C801,100n,Capacitor_SMD:C_0603_1608Metric,48.0,28.0,0.0,F.Cu,True
-C802,470u 25V,Capacitor_THT:CP_Radial_D8.0mm_P3.50mm,61.35,7.0,0.0,F.Cu,True
+C802,470u 25V,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,59.85,7.0,0.0,F.Cu,True
 C803,100n,Capacitor_SMD:C_0603_1608Metric,106.0,62.0,0.0,F.Cu,True
 C804,10u 16V 10% low-ESR,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,99.5,89.0,0.0,F.Cu,True
 C805,10u 16V 10% low-ESR,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,106.0,89.0,0.0,F.Cu,True

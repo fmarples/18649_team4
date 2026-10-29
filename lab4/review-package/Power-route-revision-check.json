@@ -1,0 +1,104 @@
+{
+  "baseline_commit": "ea2b4b0c88649a9e9301c044f54157b0b721d9e9",
+  "board_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+  "widened_track_segments": 779,
+  "track_and_via_ids_endpoints_layers_nets_unchanged": true,
+  "changed_footprints": [
+    "C802"
+  ],
+  "C802_before": {
+    "uuid": "a0be2103-1827-48a6-905c-8619b2fd1705",
+    "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
+    "position": [
+      101350000,
+      47000000
+    ],
+    "angle": 0.0,
+    "layer": 0,
+    "pads": [
+      [
+        "1",
+        "/VBAT_PROTECTED",
+        [
+          101350000,
+          47000000
+        ],
+        [
+          1600000,
+          1600000
+        ],
+        [
+          800000,
+          800000
+        ],
+        0
+      ],
+      [
+        "2",
+        "/GND",
+        [
+          104850000,
+          47000000
+        ],
+        [
+          1600000,
+          1600000
+        ],
+        [
+          800000,
+          800000
+        ],
+        0
+      ]
+    ]
+  },
+  "C802_after": {
+    "uuid": "a0be2103-1827-48a6-905c-8619b2fd1705",
+    "footprint": "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm",
+    "position": [
+      99850000,
+      47000000
+    ],
+    "angle": 0.0,
+    "layer": 0,
+    "pads": [
+      [
+        "1",
+        "/VBAT_PROTECTED",
+        [
+          99850000,
+          47000000
+        ],
+        [
+          2000000,
+          2000000
+        ],
+        [
+          1000000,
+          1000000
+        ],
+        0
+      ],
+      [
+        "2",
+        "/GND",
+        [
+          104850000,
+          47000000
+        ],
+        [
+          2000000,
+          2000000
+        ],
+        [
+          1000000,
+          1000000
+        ],
+        0
+      ]
+    ]
+  },
+  "zone_and_rule_boundaries_unchanged": true,
+  "board_bounds_unchanged": true,
+  "fabrication_release": false
+}

@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "pcb_sha256": "5473ec0463831af6fc7ef7dbb5373216ab667123cd1116568eacb0c4947aac0a",
+  "pcb_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
   "rule": "4mm from chassis hole edges; 3mm from Pi hole edges; all copper layers and components",
   "holes": [
     {

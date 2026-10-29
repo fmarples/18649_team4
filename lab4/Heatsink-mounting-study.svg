@@ -39,8 +39,6 @@
 <text x="578.0" y="446.5" font-size="11" text-anchor="middle">C800</text>
 <rect x="198.5" y="108.02999999999997" width="473.0" height="291.39" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
 <text x="435.0" y="253.72499999999994" font-size="11" text-anchor="middle">HS80</text>
-<rect x="696.827731" y="129.74137100000002" width="94.517258" height="94.51724700000001" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
-<text x="744.08636" y="176.9999945" font-size="11" text-anchor="middle">C802</text>
 <rect x="669.6025" y="558.755" width="81.28999999999999" height="50.489999999999995" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
 <text x="710.2475" y="584.0" font-size="11" text-anchor="middle">D806</text>
 <rect x="561.2249999999999" y="399.4749999999999" width="33.55" height="17.05" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
@@ -73,6 +71,8 @@
 <text x="358.0" y="551.0" font-size="11" text-anchor="middle">C5</text>
 <rect x="217.80500000000004" y="488.54750000000007" width="82.39" height="60.39" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
 <text x="259.0" y="518.7425000000001" font-size="11" text-anchor="middle">U2</text>
+<rect x="677.632478" y="118.78247800000001" width="116.46251099999999" height="116.43504399999999" fill="#f1f5f9" stroke="#9aa9b5" opacity="1"/>
+<text x="735.8637335" y="177.0" font-size="11" text-anchor="middle">C802</text>
 <rect x="204.495" y="114.02500000000006" width="461.01" height="279.4" fill="none" stroke="#d48a00" opacity="1"/>
 <rect x="204.495" y="114.02500000000006" width="105.48999999999995" height="279.4" fill="#34495e" stroke="#172b3a" opacity="0.32"/>
 <rect x="560.0150000000001" y="114.02500000000006" width="105.48999999999988" height="279.4" fill="#34495e" stroke="#172b3a" opacity="0.32"/>

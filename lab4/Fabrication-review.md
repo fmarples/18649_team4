@@ -9,6 +9,30 @@ The class fabrication batch follows the next morning.
 
 ## October 28 capacitor and chassis allowance revision
 
+The latest [power-route/package correction](Power-route-revision.md) widens
+779 power segments and fixes C802 to D10/P5. The detailed physical stack is
+saved in the PCB. Native ERC/DRC/parity/connectivity and 331 targeted routes
+pass; 41 critical components have package checks. A matching
+[review package](review-package/REVIEW-ONLY.txt) is exported and independently
+parsed: 11 Gerber layers, 1,330 plated holes, 12 nonplated holes and 300
+electrical position rows. Layer PDFs are scaled to fit; the separate
+Placement-fit-template.pdf is the 1:1 template. Custom parts without 3D models
+are omitted from the native renders, so those views do not prove full fit.
+
+The Gerber parser notes KiCad's G90 placement and unused RoundRect macro
+parameters; neither prevented parsing. Every exported drill position/diameter
+matches the saved board within the 0.001 mm file precision. Both outer
+Gerber composites and the four copper PDF pages were inspected. Final
+fabrication release is still withheld for the operating-power and protection
+decisions, followed by the resulting final engineering review.
+
+The review BOM/CPL use JLC column names and retain the course hand-assembly
+status. Missing catalog numbers are N/A, not guessed. Native KiCad rotations
+are only normalized modulo 360; they are not assembly-library rotation
+corrections. No PCBA upload or order is implied.
+[JLC BOM columns](https://jlcpcb.com/help/article/bill-of-materials-for-pcb-assembly),
+[JLC position columns](https://jlcpcb.com/help/article/pick-place-file-for-pcb-assembly).
+
 We selected rear chassis pair A1/A2 after the team confirmed both holes are
 unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear
 and 233.21155 mm between rows; team measurements are about 48, 73.45 and

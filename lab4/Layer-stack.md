@@ -18,8 +18,12 @@ fabrication package and order settings.
 
 Source: [JLCPCB stackup table](https://jlcpcb.com/impedance), checked October 26.
 These are the fabricator's listed nominal values; they are not measurements of
-our board. KiCad currently records four copper layers and nominal 1.6 mm board
-thickness; the detailed physical stack is documented here.
+our board. KiCad now records the detailed copper/dielectric thicknesses and
+dielectric constants above as well as four copper layers and nominal 1.6 mm
+board thickness. The copper/dielectric sum is 1.5862 mm, before solder mask;
+it is consistent with the fabricator's nominal 1.6 mm stack description.
+The same published table was rechecked on October 28. This is still not an
+impedance-controlled order or a production thickness measurement.
 
 In2 is much closer to B.Cu than to In1.Cu in this arrangement. We therefore
 must review the bottom ground fill beneath inner signal routes as well as the

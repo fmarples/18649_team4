@@ -76,11 +76,12 @@ before assembly; it is not a prerequisite to submitting the schematic.
 
 ## Pi socket process note — October 27
 
-The selected J70 is Samtec ESQ-120-44-L-D. The current
+The selected J70 is Samtec ESQ-118-44-L-D, 36 contacts mating Pi pins 3–38. The current
 [ESQ through-hole catalog](https://suddendocs.samtec.com/catalog_english/esq_th.pdf)
 marks lead-free solderability as unavailable and specifies lead wave only.
 Do not assume it may accompany the SMT parts through a lead-free reflow cycle.
 Plan to install it after the SMT thermal cycle, using a hand-solder process
 confirmed suitable for this exact connector by Samtec/course staff, or select
 a mechanically compatible connector with documented process limits. This is
-an assembly-process check; the saved forty-pin placement check remains valid.
+an assembly-process check. The saved shortened-socket placement check covers
+Pi pins 3–38; the old forty-contact socket must not be substituted.

@@ -147,5 +147,64 @@ out['sense_path_shared_conductor_counts']={
                     conductor_ids('/+6V6_SERVO',('R1','1'),k)),
     'low_side':len(conductor_ids('/Front zone/SERVO_VPLUS',('R1','2'),c) &
                    conductor_ids('/Front zone/SERVO_VPLUS',('R1','2'),d))}
+
+# Battery current is not the sum of the three output currents. Each buck draws
+# Pout/(Vin*efficiency). Include shared-trunk currents and iterate the input
+# voltage at each converter so trace loss is not silently omitted from Vin.
+# This remains a DC planning model: no PWM recirculation, startup or fault model.
+input_cases=[]
+for pack_v in (10.5, 11.1, 12.6):
+ for servo_a, motor_a, label in ((.39, .72, 'planning average'),
+                                (3.0, 2.0, 'high-load sensitivity'),
+                                (4.0, 2.0, 'full regulated allocation sensitivity')):
+  eta=.80
+  powers=[6.6*servo_a, 5.1*3.3, 3.318*.8]
+  converter_v=[pack_v]*3
+  pre_paths=[('/Power/BAT_PLUS',('J40','1'),('F1','1')),
+             ('/Power/BAT_FUSED',('F1','2'),('Q1','2'))]
+  pre_r=sum(sum(resistance(tree(net,src)[0][i]) for i in route(net,src,tgt))
+            for net,src,tgt in pre_paths)
+  # 15mOhm FET is a declared hot sensitivity (2x 25C maximum at -10V),
+  # not a guaranteed hot Rds(on). Fuse/holder/wire/contact loss is omitted.
+  fet_r=.015
+  for iteration in range(40):
+   input_a=[power/(eta*v) for power,v in zip(powers,converter_v)]
+   total=motor_a+sum(input_a)
+   source_v=pack_v-total*(pre_r+fet_r)
+   loads=[('U80',['4'],motor_a,'Assumed total motor supply current; not phase/stall current')]
+   loads += [(f'U{40+i}',['1'],amps,'Output power / (local input voltage * assumed80% efficiency)')
+             for i,amps in enumerate(input_a)]
+   screen=allocation('/VBAT_PROTECTED',('Q1','3'),loads,source_v)
+   new_v=[next(x['static_source_minus_drop_V'] for x in screen['loads'] if x['ref']==f'U{40+i}')
+          for i in range(3)]
+   if max(abs(a-b) for a,b in zip(converter_v,new_v))<1e-6:break
+   converter_v=new_v
+  assert min(new_v)>3 and iteration<39, 'Input planning iteration did not converge'
+  input_cases.append(dict(case=label,pack_V=pack_v,efficiency_assumed=eta,
+      servo_output_A=servo_a,motor_supply_A=motor_a,total_input_A=round(total,6),
+      pre_FET_copper_R_ohm=pre_r,FET_hot_R_assumed_ohm=fet_r,
+      input_copper_loss_W=total**2*pre_r+screen['total_tree_loss_W'],
+      FET_loss_assumed_W=total**2*fet_r,regulated_branch_screen=screen))
+out['battery_input']={
+ 'cases':input_cases,
+ 'limitations':'DC predecessor-tree model; 20C nominal copper and assumed via plating. Omits fuse/holder/harness/contact and local return losses, parallel copper, hot trace resistance, PWM, inrush, motor recirculation and converter quiescent current. Not a temperature, fault-clearing or allowed-duty qualification. Motor2A is an aggregate supply assumption, not a per-bridge permission.'}
+
+# Explicit hot/contact/return sensitivity at the already stated Pi3A allocation.
+# 80C copper, 10mOhm per mated contact, equal sharing across seven ground pins,
+# and20mV combined local/plane return allowance are assumptions, not guarantees.
+pi=next(r for r in out['five_volt']['loads'] if r['ref']=='J70')
+pi_scenarios=[]
+for temp in (20,60,80):
+ for contact_mohm in (5,10,20):
+  drop=pi['shared_tree_drop_V']*(1+.00393*(temp-20))
+  contact_drop=3*(contact_mohm/1000)*(1+1/7)
+  terminal=out['five_volt']['source_minimum_V']-drop-contact_drop-.020
+  pi_scenarios.append(dict(copper_temperature_assumed_C=temp,
+       per_contact_R_assumed_mohm=contact_mohm,return_allowance_assumed_V=.020,
+       Pi_terminal_before_transients_V=round(terminal,6),
+       margin_to_upper_warning_corner_V=round(terminal-4.8615,6)))
+out['pi_full_feed_sensitivity']={
+ 'cases':pi_scenarios,
+ 'limitations':'10/20mOhm contacts and20mV return are screening assumptions; no measured mate or guaranteed contact specification. 4.8615V is the upper published undervoltage-warning corner, not the Pi operating-voltage specification. Regulator dynamic losses and load steps are omitted.'}
 args.output.write_text(json.dumps(out,indent=2)+'\n')
 print(json.dumps(out,indent=2),flush=True)
