@@ -17,8 +17,8 @@ port is on the back layer where the underside socket is installed.
 
 | Mesh cell | Nodes | Calculated Pi positive-feed drop | Total +5V copper loss |
 | --- | ---: | ---: | ---: |
-| 0.10 mm | 99,892 | 69.12 mV | 0.2189 W |
-| 0.05 mm | 400,855 | 68.03 mV | 0.2154 W |
+| 0.10 mm | 99,824 | 69.12 mV | 0.2189 W |
+| 0.05 mm | 400,591 | 68.03 mV | 0.2154 W |
 
 Refining the grid changed the Pi result by 1.09 mV (1.6%). Kirchhoff current
 balance residuals were below 1 nA; source work and resistor dissipation agree.
@@ -62,6 +62,39 @@ encrypted PSpice model has not been run in the available KiCad/ngspice setup.
 Neither a guessed response time nor a generic efficiency number closes this
 review. Hardware voltage and temperature checks still belong to prototype
 bring-up; no new chassis measurements are requested.
+
+## Additional October 29 evidence
+
+A second scratch-board trial placed local +5V pours on both B.Cu and In2.Cu
+over x=74–113 mm, y=126–176 mm. At the same 0.10 mm mesh, the drop was
+53.78 mV versus 69.12 mV on the saved design. Native DRC had no electrical
+or unconnected findings; five scratch-library warnings remained. We did
+not adopt the trial: it removes ground copper, needs a return-path review,
+and approximately 15 mV improvement does not settle the startup or thermal
+question. The trial is not part of the fabrication exports.
+
+The [official Pi documentation](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
+lists a recommended 3 A supply and approximately 600 mA typical bare-board
+current. Its dated 2019 Pi 4 measurements show about 850 mA maximum during
+boot and 1.25 A during its stress workload. Those are useful workload
+examples, not guaranteed maxima for every software revision and workload.
+The confirmed application has no additional USB/camera/display/fan loads.
+We therefore distinguish likely operation from the retained 3 A design
+stress case; we have not lowered that case merely to obtain a passing result.
+
+TI's TPS564252 model release 1.00 (April 10, 2023), supplied for PSpice
+17.4, explicitly excludes temperature behavior, quiescent/shutdown current
+and output UVP/OVP. It models startup and several control/current-limit
+functions, but running it would not qualify PCB cooling or every fault mode.
+No compatible PSpice installation is available here and no simulated result
+is claimed. Source: the feature document accompanying the
+[TI model download](https://www.ti.com/product/TPS564252).
+
+The next useful external input is an electrical review of the actual
+5.1 V supply and intended sustained/peak workload, not another chassis
+measurement. That review must either support the chosen prototype envelope
+or identify the necessary regulator/power-path change. Physical transient
+and temperature validation belongs to the assembled prototype.
 
 ## Reproduce
 

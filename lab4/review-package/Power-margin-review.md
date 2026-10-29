@@ -229,9 +229,15 @@ pass. Source hashes match the saved PCB and prerequisite reports.
 
 Completed: the voltage-limit comparison, revised capacitor-bank selection and
 retention screen, feed-forward selection, ripple/current and thermal calculations.
-Still open: the full supply/return budget and complete loop/layout review,
-cooling qualification, motor/fuse protection decisions and final
-assembly process. Encoder supply calculations and heatsink placement are
+Still open before release: the Pi startup/load-step envelope and sustained-load
+cooling assessment, plus review of the main input-power/fuse application.
+The course motor-protection scope is settled: no optional hardware limiter.
+The main fuse is not intended to protect every semiconductor or thin signal
+branch; a complete hypothetical short-circuit certification is not a course
+requirement established by this review. It still must suit the actual battery
+harness and main power path. Assembly-process and servo-harness details are
+needed before those parts are assembled, rather than being new measurement
+requirements for bare-board fabrication. Encoder supply calculations and heatsink placement are
 complete for their stated assumptions. These are not all measurement
 dependencies. Physical voltage/ripple/temperature tests belong after assembly;
 we do not request a new general measurement campaign for this review.

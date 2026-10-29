@@ -94,7 +94,7 @@
     "No claim of full-loop phase margin, ripple heating, transient response or hardware operation."
   ],
   "source_sha256": {
-    "KiCad/Circuit-BOM.csv": "017356c5747696d979fb4d4dd33e4b14220ca89e6bab85e8f083531069541e7c",
+    "KiCad/Circuit-BOM.csv": "4955f2c5d9147d5e8da20333254659e24575726b79a6fe31b202ffc45787c5b0",
     "KiCad/Power.kicad_sch": "442d68d3e394d2661d0d7cd49b8fab038db3bbde52eca3c5096f69d7ac774141"
   }
 }

@@ -1,3 +1,38 @@
+Current package/drill and release review — October 29
+
+The selected-package audit now covers 282 components, up from 186. We
+increased U80's 15 plated pin holes from 1.0 to 1.1 mm using ST's maximum
+lead cross-section and JLCPCB's finished-hole tolerance. Copper pad size,
+pin centers, nets, tracks and heatsink anchors did not change. The schematic,
+PCB, circuit/assembly/purchasing BOMs and Drive workbook use the same local
+footprint identifier. The embedded standard symbol remains unmodified.
+
+Fresh native ERC, DRC, schematic parity and connectivity all report zero
+findings. The 300-component BOM/netlist and placement checks, 331 targeted
+connections, mounting, mechanical, heatsink, solder-via, digital/CAN geometry,
+return-path, capacitor-bank, supply/load and power-margin checks pass for
+their stated scope. Seven independent Pi-feed/ground-model tests pass.
+The refreshed fine Pi mesh gives 68.025 mV positive-feed loss at 3 A.
+
+The review package contains 53 hashed artifacts from 22 hashed CAD sources:
+five schematic pages, eleven layer pages, 3D views, Gerbers/drills, reports,
+300-position BOM/CPL files and the purchasing workbook. Every exported drill
+position and diameter (1,330 plated and 12 nonplated) and all 300 native
+component positions match the saved board. The ZIP matches the individual
+Gerber/drill files. Fresh outer Gerber composites, the drill map and native
+3D views were inspected; missing custom 3D models remain documented.
+The shared report still has four text pages plus two figure pages.
+
+The same Drive must-do document distinguishes electrical release decisions
+from ordering/assembly checks; completed work is struck through at the bottom.
+No new hole measurements or general Lab 2 measurement campaign is requested.
+This is not a fabrication release: Pi voltage/transient margin, converter
+heat and main input-path/fuse protection still need a supported operating
+envelope and electrical review. Stock, harness and solder-process choices
+are due before ordering/assembly; application cutoff integration and powered
+validation precede LiPo operation. No order, message or submission was sent.
+
+Earlier dated verification
 Current rear selection and Pi feed update — October 28
 
 We selected rear chassis pair A1/A2 after the team confirmed both holes are

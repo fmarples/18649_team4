@@ -36,7 +36,7 @@ the complete mated connection. An accepted servo lead or a reviewed splice
 to the factory cable is still needed; finished fit and continuity checks
 follow assembly. See [Actuator-design.md](Actuator-design.md).
 
-The [expanded package audit](Critical-package-review.md) passes for 186
+The [expanded package audit](Critical-package-review.md) passes for 282
 components. It does not approve the above manufacturing processes. The team
 does not need to repeat the completed hole, cable-photo or paper-fit work.
 

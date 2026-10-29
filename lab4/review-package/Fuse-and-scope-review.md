@@ -37,12 +37,12 @@ It explicitly depends on the installation; use it as a sensitivity, not a
 guarantee. The 7.78 A case therefore lacks high-temperature continuous margin.
 
 The [14 A DF63 two-position rating](https://www.hirose.com/en/product/series/DF63/documents?path=/api/v1/series/DF63/documents/product_series_catalog/content?lang%3DEN)
-and fuse's 10 A marking alone do not prove coordination. Fault energy must be
-checked against the actual narrow PCB branches, via barrels, wire lengths,
-contacts and temperature. A main fuse cannot qualify the servo branch or
-protect an L298 bridge at its 2 A DC absolute maximum. The 10 A candidate
-therefore remains explicitly conditional for fabrication review. We do not
-substitute a smaller fuse simply to hide an unqualified branch.
+and fuse's 10 A marking alone do not prove protection of the main input path.
+Review the main input copper/vias, harness transitions, contacts and temperature
+against the fuse's opening behavior. A main fuse is not intended to qualify
+every signal branch or protect an L298 bridge at its 2 A DC absolute maximum.
+The 10 A candidate remains conditional for that input-path review; optional
+per-motor hardware protection is not a missing course requirement.
 
 ## What is complete, and what remains
 
@@ -50,11 +50,14 @@ Complete: the course-scope decision, published fuse opening-time comparison,
 two-fuse loss calculation and temperature sensitivity. No chassis measurements
 or additional hardware-limiter design are needed to complete these records.
 
-Still required before fabrication release: accept or revise the actual power
-paths and their operating envelope, including Pi voltage/transient margin
-and converter heat. Set assembly details with the course facility. The
-existing servo-side donor remains conditional because its current rating is
-undocumented. Stock/order quantities must come from the team or supplier.
+Still required before fabrication release: review the main power path and
+prototype operating envelope, including Pi voltage/transient margin and
+converter heat. This is not a claim that the course requires the main fuse
+to protect every component or thin signal branch during any possible fault.
+Its required purpose is input/harness protection; the optional per-motor
+limiter remains excluded. Assembly-process and servo-harness decisions can
+be settled before assembly. The donor remains conditional because its rating
+is undocumented. Actual stock/order quantities come from the team or supplier.
 
 Before powered operation, integrate and test the existing battery guard and
 motor-enable gating; verify harness polarity/continuity and perform controlled

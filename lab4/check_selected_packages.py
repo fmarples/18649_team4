@@ -209,11 +209,103 @@ for row in bom:
               {"1": [-x, 0, length, .95], "2": [x, 0, length, .95]})
         rows[-1].update(selected_MPN=row["MPN"], source=passive_sources[family],
                         scope="BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification")
+# ST DS0218 rev 5, Multiwatt15L V: E <= .55, F <= .75 mm.
+# A circular hole must fit the lead diagonal. JLC's published finished PTH
+# tolerance is +.13/-.08 mm; 1.0 mm nominal has no worst-case clearance.
+check("U80", "L298N", "Lab4_Power:ST_L298N_Multiwatt15V_D1.1",
+      {"1": "/GND", "2": "LEFT_BRIDGE", "3": "LEFT_RETURN", "4": "/VBAT_PROTECTED",
+       "5": "R_LEFT_IN1", "6": "R_LEFT_ENABLE_PWM", "7": "R_LEFT_IN2", "8": "/GND",
+       "9": "/+5V", "10": "R_RIGHT_IN3", "11": "R_RIGHT_ENABLE_PWM", "12": "R_RIGHT_IN4",
+       "13": "RIGHT_BRIDGE", "14": "RIGHT_RETURN", "15": "/GND"},
+      {str(i+1): [i*1.27, -5.08 if i%2 else 0., 1.8, 1.8] for i in range(15)})
+assert all(a.GetAttribute() == p.PAD_ATTRIB_PTH and
+           abs(p.ToMM(a.GetDrillSize().x)-1.1) < 1e-6 and
+           abs(p.ToMM(a.GetDrillSize().y)-1.1) < 1e-6 for a in fps["U80"].Pads())
+lead_diagonal = (.55**2 + .75**2)**.5
+assert 1.1-.08 > lead_diagonal
+rows[-1].update(finished_drill_mm=1.1, max_lead_diagonal_mm=lead_diagonal,
+                minimum_diametric_clearance_mm=1.1-.08-lead_diagonal,
+                nominal_annular_ring_mm=(1.8-1.1)/2,
+                limitation="Clearance for lead cross-section only; lead forming and final solder fit are assembly checks")
 assert len({row["ref"] for row in rows}) == len(rows), "Duplicate package checks"
+
+# Bring the earlier manual regulator/sensor/clamp checks into this same audit.
+for ref, prefix in [("U40", "P_SERVO"), ("U41", "P_5V"), ("U42", "P_3V3")]:
+    check(ref, "TPS564252DRLR", "Package_TO_SOT_SMD:SOT-563",
+          {"1": "/VBAT_PROTECTED", "2": prefix + "_SW", "3": "/GND",
+           "4": prefix + "_PG", "5": prefix + "_EN", "6": prefix + "_FB"},
+          dual(6, .5, 1.425, .675, .35))
+check("U1", "INA180A2IDBVR", "Package_TO_SOT_SMD:SOT-23-5",
+      {"1": "SERVO_RAW", "2": "/GND", "3": "/+6V6_SERVO", "4": "SERVO_VPLUS", "5": "/+3V3"},
+      {"1": [-1.1375, -.95, 1.325, .6], "2": [-1.1375, 0, 1.325, .6],
+       "3": [-1.1375, .95, 1.325, .6], "4": [1.1375, .95, 1.325, .6],
+       "5": [1.1375, -.95, 1.325, .6]})
+check("U81", "SN74LVC14APWR", "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      {"1": "LEFT_ENC_A_IN", "2": "R_LEFT_ENC_A", "3": "LEFT_ENC_B_IN",
+       "4": "R_LEFT_ENC_B", "5": "RIGHT_ENC_A_IN", "6": "R_RIGHT_ENC_A",
+       "7": "/GND", "8": "R_RIGHT_ENC_B", "9": "RIGHT_ENC_B_IN",
+       "10": "NC", "11": "/GND", "12": "NC", "13": "/GND", "14": "/+3V3"},
+      dual(14, .65, 5.725, 1.475, .4))
+check("D40", "12V gate clamp", "Diode_SMD:D_SOD-123F",
+      {"1": "/VBAT_PROTECTED", "2": "RP_GATE"},
+      {"1": [-1.4, 0, 1.1, 1.1], "2": [1.4, 0, 1.1, 1.1]})
+check("R1", "10mR / 1W / 1%", "Lab4_Power:Vishay_WSL2512_7m_to_500m",
+      {"1": "/+6V6_SERVO", "2": "SERVO_VPLUS"},
+      {"1": [-2.855, 0, 1.65, 3.68], "2": [2.855, 0, 1.65, 3.68]})
+
+# Murata's dimension codes 18/21/32 are 1608/2012/3225 metric respectively.
+# This checks the package family and saved lands, not biased capacitance.
+murata_shapes = {
+    "GRM188": ("0603_1608Metric", .775, .9, .95),
+    "GCM188": ("0603_1608Metric", .775, .9, .95),
+    "GRM21": ("0805_2012Metric", .95, 1., 1.45),
+    "GRM32": ("1210_3225Metric", 1.475, 1.15, 2.7),
+}
+for row in bom:
+    prefix = next((s for s in murata_shapes if row["MPN"].startswith(s)), None)
+    if prefix is None:
+        continue
+    name, x, length, width = murata_shapes[prefix]
+    footprint = "Capacitor_SMD:C_" + name
+    assert row["Footprint"] == footprint, row["MPN"]
+    for ref in row["References"].split():
+        value = fps[ref].GetValue()
+        normalize = lambda s: s.replace("/", "").replace(" ", "")
+        if row["MPN"] == "GRM32ER61E226KE15L":
+            assert value in {"22u / 25V", "22u 25V"} and row["Value"].startswith("22u 25V"), ref
+        else:
+            assert normalize(value) == normalize(row["Value"]), (ref, value, row["Value"])
+        check(ref, value, footprint, {},
+              {"1": [-x, 0, length, width], "2": [x, 0, length, width]})
+        rows[-1].update(selected_MPN=row["MPN"], scope="Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately")
+
+# Course-stock breakaway headers have no exact purchased MPN yet. Verify the
+# actual specified geometry without falsely qualifying an unknown supplier.
+generic_headers = []
+for row in bom:
+    if not row["Footprint"].startswith("Connector_PinHeader_2.54mm:"):
+        continue
+    for ref in row["References"].split():
+        f = fps[ref]
+        pads = sorted(f.Pads(), key=lambda a: int(a.GetNumber()))
+        cols = 2 if "PinHeader_2x" in row["Footprint"] else 1
+        coords = {str(i+1): [(i % cols)*2.54, (i//cols)*2.54, 1.7, 1.7]
+                  for i in range(len(pads))}
+        check(ref, row["Value"], row["Footprint"], {}, coords)
+        assert all(a.GetAttribute() == p.PAD_ATTRIB_PTH and
+                   abs(p.ToMM(a.GetDrillSize().x)-1.) < 1e-6 and
+                   abs(p.ToMM(a.GetDrillSize().y)-1.) < 1e-6 for a in pads), ref
+        rows[-1].update(scope="Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+                        drill_mm=1., pitch_mm=2.54)
+        generic_headers.append(ref)
+assert len({row["ref"] for row in rows}) == len(rows), "Duplicate package checks"
+remaining = sorted(set(by_ref)-{row["ref"] for row in rows})
 
 report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
               assembly_bom_sha256=hashlib.sha256(bom_path.read_bytes()).hexdigest(),
               fabrication_release=False, checked_components=len(rows), results=rows,
+              generic_header_geometry_only=generic_headers,
+              not_covered_by_this_script=remaining,
               limitations=["Checks only the listed identities, pad coordinates and pin nets.",
                            "Manufacturer lead/pad interpretation is documented separately; no placement, solder, cooling or lifetime qualification is implied.",
                            "MCU checks cover power/reset/boot/debug; GPIO alternate-function review remains in the existing pin-map/routing evidence."],
@@ -231,6 +323,9 @@ report = dict(source_sha256=hashlib.sha256(board_path.read_bytes()).hexdigest(),
                        "https://ele.kyocera.com/assets/products/crystal-device/cx3225sb_e.pdf",
                        "https://www.we-online.com/components/products/datasheet/742863160.pdf",
                        "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1700-Data-Sheet-20001826F.pdf",
+                       "https://www.st.com/resource/en/datasheet/l298.pdf",
+                       "https://jlcpcb.com/capabilities/pcb-capabilities/",
+                       "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM32ER61E226KE15-01A.pdf",
                        *passive_sources.values()])
 (ROOT / "Selected-package-check.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 print(f"PASS: {len(rows)} selected components; saved pad geometry and critical pin nets match")

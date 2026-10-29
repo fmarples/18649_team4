@@ -1,8 +1,41 @@
 # Selected package and pinout review
 
-## October 29 additional package review
+## October 29 completion of the saved-package audit
 
-The saved-pad audit now covers **186 components**, up from 41. No schematic,
+The reproducible audit now covers **282 of 300 electrical components**. It
+adds the three buck regulators, current-sense amplifier, encoder buffer,
+gate clamp, servo shunt, Murata capacitors, generic headers and L298 to the
+previous 186 checks. The remaining 18 are 12 LEDs, five switches and the
+Pi socket. Switch and Pi contact geometry already have separate placement
+checks; generic header dimensions do not qualify an unspecified supplier's
+current rating. The count describes saved geometry and listed pin nets,
+not complete electrical or manufacturing qualification.
+
+We increased U80's 15 finished plated holes from **1.0 to 1.1 mm** in the
+local `Lab4_Power:ST_L298N_Multiwatt15V_D1.1` footprint. ST's maximum lead
+cross-section is 0.55 × 0.75 mm, whose diagonal is 0.9301 mm. JLCPCB's
+published through-hole tolerance is +0.13/−0.08 mm. A 1.0 mm nominal hole
+could finish at 0.92 mm; the new minimum is 1.02 mm, giving approximately
+0.090 mm diametric clearance around that maximum cross-section. This fixes
+a tolerance concern; it does not mean every old 1.0 mm hole would fail to fit.
+
+Pin centers, 1.8 mm copper pads, nets, mounting orientation and heatsink
+anchors are unchanged. The nominal copper ring is 0.35 mm; even a 1.23 mm
+finished hole and 0.075 mm center displacement leave 0.210 mm at the
+narrowest side. Lead forming, solder fill and final seating remain assembly
+checks. The BOM and schematic use the same local footprint identifier.
+
+The Murata check covers package codes 18/21/32 (0603/0805/1210), selected
+BOM values and saved lands. Effective capacitance and temperature remain
+covered by the separate capacitor/power reviews.
+
+References: [ST L298, Figures 13–14 and Table 6](https://www.st.com/resource/en/datasheet/l298.pdf),
+[JLCPCB drilling and annular-ring capabilities](https://jlcpcb.com/capabilities/pcb-capabilities/),
+[Murata GRM32ER61E226KE15 reference sheet](https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM32ER61E226KE15-01A.pdf).
+
+## Earlier October 29 package-review stage
+
+At that stage the saved-pad audit covered **186 components**, up from 41. No schematic,
 PCB or purchased-part identity changed in this pass. The additional 145 are
 six crystals, two ferrite beads, the encoder LDO and 136 selected resistors
 and capacitors. The script also hashes the active assembly BOM. This count

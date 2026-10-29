@@ -24,7 +24,9 @@ now records the October 29 hardware configuration.
 The latest [power-route/package correction](Power-route-revision.md) widens
 779 power segments and fixes C802 to the manufacturer's D10/P5 footprint.
 All native checks and 331 targeted connections pass; the October 29
-[package audit](Critical-package-review.md) now covers 186 components.
+[package audit](Critical-package-review.md) now covers 282 components.
+The L298 uses a local footprint with 1.1 mm finished plated holes for better
+lead-clearance tolerance; pin centers, copper pads and heatsink anchors are unchanged.
 These checks cover the listed package geometry and critical pin nets, not
 complete operating qualification. The [review export](review-package/REVIEW-ONLY.txt)
 contains matching schematic/layer PDFs, 3D views, Gerbers/drills and BOM/CPL
@@ -141,7 +143,7 @@ for a TA submission so the reviewed version can be recovered later.
 | --- | --- |
 | [KiCad/Lab4.kicad_pro](KiCad/Lab4.kicad_pro) | Open this project in KiCad 10. |
 | [KiCad/Lab4.kicad_sch](KiCad/Lab4.kicad_sch) | Overview linking the Front, Rear, Cockpit and Power sheets. |
-| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 x 234 mm PCB with all required connections routed; electrical/thermal and mechanical review remains open. |
+| [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 × 247.21155 mm PCB with all required connections routed; electrical release review remains open. |
 | [Placement-overview.png](Placement-overview.png) | Direct Pi stack: bottom socket and top circuitry above the Pi. |
 | [Pi-stack-side-view.png](Pi-stack-side-view.png) | Proposed 22 mm Pi gap and 35 mm chassis spacers; physical fit pending. |
 | [Placement-detail.svg](Placement-detail.svg) | Native KiCad component outlines and references. |
@@ -160,7 +162,7 @@ for a TA submission so the reviewed version can be recovered later.
 | [Review-package.md](Review-package.md) | October 24 deliverables and remaining review decisions. |
 | [Power-calculations.json](Power-calculations.json) | Calculated regulator ripple, peak current and enable thresholds. |
 | [Preliminary-BOM.csv](Preliminary-BOM.csv) | Placed quantities and additional planned parts, with procurement status. |
-| [KiCad/Circuit-BOM.csv](KiCad/Circuit-BOM.csv) | The 284 components currently placed in the schematic. |
+| [KiCad/Circuit-BOM.csv](KiCad/Circuit-BOM.csv) | The 300 components currently placed in the schematic. |
 | [BOM-Hand-assembly.csv](BOM-Hand-assembly.csv) | Active course/team-assembly procurement view. |
 | [BOM-JLC-hybrid.csv](BOM-JLC-hybrid.csv) | Historical catalog comparison; not the selected course assembly plan. |
 | [Assembly-options.md](Assembly-options.md) | Process differences, equipment and sourcing checks. |
@@ -207,20 +209,20 @@ specified for LQFP64 in the [STM32F401RE datasheet](https://www.st.com/resource/
 VCAP1 is an internal-regulator output, not a GPIO or a 3.3 V supply input.
 The initial clock plan uses internal HSI/PLL; the Nucleo ST-LINK clock is absent.
 
-We added the Pi 40-pin socket, twelve diagnostic LEDs with individual 1 kΩ
+We added the Pi socket, twelve diagnostic LEDs with individual 1 kΩ
 resistors, and probe rows matching the Lab 3 handout. Extra probes have separate
 headers. The Pi's 3.3 V output remains disconnected from the PCB's independent
 3.3 V regulator. Do not connect separate USB-C power while the board supplies
-the Pi through pins 2/4; power-path isolation is not implemented.
+the Pi through pin 4; power-path isolation is not implemented.
 
-J70 is now a bottom-mounted Samtec ESQ-120-44-L-D socket candidate, aligned
+J70 is a bottom-mounted Samtec ESQ-118-44-L-D socket covering Pi pins 3–38, aligned
 directly to a component-side-up Pi below the main PCB. No GPIO cable is planned.
 Top-side cockpit CAN circuitry occupies part of that same area. We propose
 22 mm Pi spacers and 35 mm chassis spacers, now supported by the October 24
 Pi caliper measurements and nominal clearance calculations in
 [Mechanical-evidence.md](Mechanical-evidence.md). Actual assembly is untested. See the
 placement review for contact insertion, underside-tail limits, cooling/Wi-Fi
-checks and the Pi mounting-hole clearance interpretation that remains open.
+checks. The implemented 3 mm Pi hole-edge exclusions pass the saved-board audit.
 
 The root sheet explicitly joins the power, ground and two CAN backbones.
 SPI, clocks, reset and actuator signals remain within their owning zones.

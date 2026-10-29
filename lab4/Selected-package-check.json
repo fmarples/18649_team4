@@ -1,8 +1,8 @@
 {
-  "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
-  "assembly_bom_sha256": "c677f7912bbcd403e8426789e73af6917ae7cadfc0b1003d0a4e77de317cd6ff",
+  "source_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "assembly_bom_sha256": "51de7fd6272a72cb0dd7e4dc68945cbca22a21622c9e14804d18d544e04f5c92",
   "fabrication_release": false,
-  "checked_components": 186,
+  "checked_components": 282,
   "results": [
     {
       "ref": "U11",
@@ -6680,7 +6680,3336 @@
       "selected_MPN": "RT0603BRD07100KL",
       "source": "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",
       "scope": "BOM value and manufacturer package-family/land geometry; no power, bias or solder qualification"
+    },
+    {
+      "ref": "U80",
+      "part": "L298N",
+      "footprint": "Lab4_Power:ST_L298N_Multiwatt15V_D1.1",
+      "numbered_pads": 15,
+      "checked_pin_nets": {
+        "1": "/GND",
+        "2": "LEFT_BRIDGE",
+        "3": "LEFT_RETURN",
+        "4": "/VBAT_PROTECTED",
+        "5": "R_LEFT_IN1",
+        "6": "R_LEFT_ENABLE_PWM",
+        "7": "R_LEFT_IN2",
+        "8": "/GND",
+        "9": "/+5V",
+        "10": "R_RIGHT_IN3",
+        "11": "R_RIGHT_ENABLE_PWM",
+        "12": "R_RIGHT_IN4",
+        "13": "RIGHT_BRIDGE",
+        "14": "RIGHT_RETURN",
+        "15": "/GND"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "2": [
+          1.27,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "3": [
+          2.54,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "4": [
+          3.81,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "5": [
+          5.08,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "6": [
+          6.35,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "7": [
+          7.62,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "8": [
+          8.89,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "9": [
+          10.16,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "10": [
+          11.43,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "11": [
+          12.7,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "12": [
+          13.97,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "13": [
+          15.24,
+          0.0,
+          1.8,
+          1.8
+        ],
+        "14": [
+          16.51,
+          -5.08,
+          1.8,
+          1.8
+        ],
+        "15": [
+          17.78,
+          0.0,
+          1.8,
+          1.8
+        ]
+      },
+      "result": "match",
+      "finished_drill_mm": 1.1,
+      "max_lead_diagonal_mm": 0.9300537618869137,
+      "minimum_diametric_clearance_mm": 0.08994623811308633,
+      "nominal_annular_ring_mm": 0.35,
+      "limitation": "Clearance for lead cross-section only; lead forming and final solder fit are assembly checks"
+    },
+    {
+      "ref": "U40",
+      "part": "TPS564252DRLR",
+      "footprint": "Package_TO_SOT_SMD:SOT-563",
+      "numbered_pads": 6,
+      "checked_pin_nets": {
+        "1": "/VBAT_PROTECTED",
+        "2": "P_SERVO_SW",
+        "3": "/GND",
+        "4": "P_SERVO_PG",
+        "5": "P_SERVO_EN",
+        "6": "P_SERVO_FB"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.7125,
+          -0.5,
+          0.675,
+          0.35
+        ],
+        "2": [
+          -0.7125,
+          0.0,
+          0.675,
+          0.35
+        ],
+        "3": [
+          -0.7125,
+          0.5,
+          0.675,
+          0.35
+        ],
+        "4": [
+          0.7125,
+          0.5,
+          0.675,
+          0.35
+        ],
+        "5": [
+          0.7125,
+          0.0,
+          0.675,
+          0.35
+        ],
+        "6": [
+          0.7125,
+          -0.5,
+          0.675,
+          0.35
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "U41",
+      "part": "TPS564252DRLR",
+      "footprint": "Package_TO_SOT_SMD:SOT-563",
+      "numbered_pads": 6,
+      "checked_pin_nets": {
+        "1": "/VBAT_PROTECTED",
+        "2": "P_5V_SW",
+        "3": "/GND",
+        "4": "P_5V_PG",
+        "5": "P_5V_EN",
+        "6": "P_5V_FB"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.7125,
+          -0.5,
+          0.675,
+          0.35
+        ],
+        "2": [
+          -0.7125,
+          0.0,
+          0.675,
+          0.35
+        ],
+        "3": [
+          -0.7125,
+          0.5,
+          0.675,
+          0.35
+        ],
+        "4": [
+          0.7125,
+          0.5,
+          0.675,
+          0.35
+        ],
+        "5": [
+          0.7125,
+          0.0,
+          0.675,
+          0.35
+        ],
+        "6": [
+          0.7125,
+          -0.5,
+          0.675,
+          0.35
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "U42",
+      "part": "TPS564252DRLR",
+      "footprint": "Package_TO_SOT_SMD:SOT-563",
+      "numbered_pads": 6,
+      "checked_pin_nets": {
+        "1": "/VBAT_PROTECTED",
+        "2": "P_3V3_SW",
+        "3": "/GND",
+        "4": "P_3V3_PG",
+        "5": "P_3V3_EN",
+        "6": "P_3V3_FB"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.7125,
+          -0.5,
+          0.675,
+          0.35
+        ],
+        "2": [
+          -0.7125,
+          0.0,
+          0.675,
+          0.35
+        ],
+        "3": [
+          -0.7125,
+          0.5,
+          0.675,
+          0.35
+        ],
+        "4": [
+          0.7125,
+          0.5,
+          0.675,
+          0.35
+        ],
+        "5": [
+          0.7125,
+          0.0,
+          0.675,
+          0.35
+        ],
+        "6": [
+          0.7125,
+          -0.5,
+          0.675,
+          0.35
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "U1",
+      "part": "INA180A2IDBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "numbered_pads": 5,
+      "checked_pin_nets": {
+        "1": "SERVO_RAW",
+        "2": "/GND",
+        "3": "/+6V6_SERVO",
+        "4": "SERVO_VPLUS",
+        "5": "/+3V3"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.1375,
+          -0.95,
+          1.325,
+          0.6
+        ],
+        "2": [
+          -1.1375,
+          0,
+          1.325,
+          0.6
+        ],
+        "3": [
+          -1.1375,
+          0.95,
+          1.325,
+          0.6
+        ],
+        "4": [
+          1.1375,
+          0.95,
+          1.325,
+          0.6
+        ],
+        "5": [
+          1.1375,
+          -0.95,
+          1.325,
+          0.6
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "U81",
+      "part": "SN74LVC14APWR",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "numbered_pads": 14,
+      "checked_pin_nets": {
+        "1": "LEFT_ENC_A_IN",
+        "2": "R_LEFT_ENC_A",
+        "3": "LEFT_ENC_B_IN",
+        "4": "R_LEFT_ENC_B",
+        "5": "RIGHT_ENC_A_IN",
+        "6": "R_RIGHT_ENC_A",
+        "7": "/GND",
+        "8": "R_RIGHT_ENC_B",
+        "9": "RIGHT_ENC_B_IN",
+        "10": "NC",
+        "11": "/GND",
+        "12": "NC",
+        "13": "/GND",
+        "14": "/+3V3"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -2.8625,
+          -1.9500000000000002,
+          1.475,
+          0.4
+        ],
+        "2": [
+          -2.8625,
+          -1.3,
+          1.475,
+          0.4
+        ],
+        "3": [
+          -2.8625,
+          -0.65,
+          1.475,
+          0.4
+        ],
+        "4": [
+          -2.8625,
+          0.0,
+          1.475,
+          0.4
+        ],
+        "5": [
+          -2.8625,
+          0.65,
+          1.475,
+          0.4
+        ],
+        "6": [
+          -2.8625,
+          1.3,
+          1.475,
+          0.4
+        ],
+        "7": [
+          -2.8625,
+          1.9500000000000002,
+          1.475,
+          0.4
+        ],
+        "8": [
+          2.8625,
+          1.9500000000000002,
+          1.475,
+          0.4
+        ],
+        "9": [
+          2.8625,
+          1.3,
+          1.475,
+          0.4
+        ],
+        "10": [
+          2.8625,
+          0.65,
+          1.475,
+          0.4
+        ],
+        "11": [
+          2.8625,
+          0.0,
+          1.475,
+          0.4
+        ],
+        "12": [
+          2.8625,
+          -0.65,
+          1.475,
+          0.4
+        ],
+        "13": [
+          2.8625,
+          -1.3,
+          1.475,
+          0.4
+        ],
+        "14": [
+          2.8625,
+          -1.9500000000000002,
+          1.475,
+          0.4
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "D40",
+      "part": "12V gate clamp",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "/VBAT_PROTECTED",
+        "2": "RP_GATE"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.4,
+          0,
+          1.1,
+          1.1
+        ],
+        "2": [
+          1.4,
+          0,
+          1.1,
+          1.1
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "R1",
+      "part": "10mR / 1W / 1%",
+      "footprint": "Lab4_Power:Vishay_WSL2512_7m_to_500m",
+      "numbered_pads": 2,
+      "checked_pin_nets": {
+        "1": "/+6V6_SERVO",
+        "2": "SERVO_VPLUS"
+      },
+      "saved_pad_geometry_mm": {
+        "1": [
+          -2.855,
+          0,
+          1.65,
+          3.68
+        ],
+        "2": [
+          2.855,
+          0,
+          1.65,
+          3.68
+        ]
+      },
+      "result": "match"
+    },
+    {
+      "ref": "C100",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C101",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C140",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C141",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C200",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C201",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C240",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C241",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C300",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C301",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C340",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C341",
+      "part": "18p C0G 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H180JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C4",
+      "part": "1n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GCM1885C2A102FA16D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C7",
+      "part": "1n",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GCM1885C2A102FA16D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C410",
+      "part": "22u / 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C412",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C413",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C415",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C416",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C417",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C418",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C420",
+      "part": "22u / 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C422",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C423",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C425",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C426",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C427",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C430",
+      "part": "22u / 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C432",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C433",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C435",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C436",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C437",
+      "part": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -1.475,
+          0,
+          1.15,
+          2.7
+        ],
+        "2": [
+          1.475,
+          0,
+          1.15,
+          2.7
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM32ER61E226KE15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C411",
+      "part": "100n / 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM188R71H104KA93D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C421",
+      "part": "100n / 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM188R71H104KA93D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C431",
+      "part": "100n / 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM188R71H104KA93D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C505",
+      "part": "4.7u VDD bulk",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.95,
+          0,
+          1.0,
+          1.45
+        ],
+        "2": [
+          0.95,
+          0,
+          1.0,
+          1.45
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM21BR71C475KE51L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C605",
+      "part": "4.7u VDD bulk",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.95,
+          0,
+          1.0,
+          1.45
+        ],
+        "2": [
+          0.95,
+          0,
+          1.0,
+          1.45
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM21BR71C475KE51L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C506",
+      "part": "4.7u VCAP1",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.95,
+          0,
+          1.0,
+          1.45
+        ],
+        "2": [
+          0.95,
+          0,
+          1.0,
+          1.45
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM21BR71C475KE51L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C606",
+      "part": "4.7u VCAP1",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.95,
+          0,
+          1.0,
+          1.45
+        ],
+        "2": [
+          0.95,
+          0,
+          1.0,
+          1.45
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM21BR71C475KE51L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C700",
+      "part": "22u /16V",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.95,
+          0,
+          1.0,
+          1.45
+        ],
+        "2": [
+          0.95,
+          0,
+          1.0,
+          1.45
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM219R61C226ME15L",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C800",
+      "part": "100n 50V",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM188R71H104KA93D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C414",
+      "part": "68p C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H680JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C424",
+      "part": "91p C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H910JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "C434",
+      "part": "30p C0G",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          -0.775,
+          0,
+          0.9,
+          0.95
+        ],
+        "2": [
+          0.775,
+          0,
+          0.9,
+          0.95
+        ]
+      },
+      "result": "match",
+      "selected_MPN": "GRM1885C1H300JA01D",
+      "scope": "Manufacturer size code, BOM value and saved lands only; effective capacitance checked separately"
+    },
+    {
+      "ref": "J10",
+      "part": "CAN A isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          2.54,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "4": [
+          2.54,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J20",
+      "part": "CAN A isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          2.54,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "4": [
+          2.54,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J30",
+      "part": "CAN A isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          2.54,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "4": [
+          2.54,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J11",
+      "part": "CAN A test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J21",
+      "part": "CAN A test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J31",
+      "part": "CAN A test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "JP10",
+      "part": "TERM A",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "JP20",
+      "part": "TERM A",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J14",
+      "part": "CAN B isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          2.54,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "4": [
+          2.54,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J24",
+      "part": "CAN B isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          2.54,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "4": [
+          2.54,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J34",
+      "part": "CAN B isolation",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          2.54,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "4": [
+          2.54,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J15",
+      "part": "CAN B test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J25",
+      "part": "CAN B test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J35",
+      "part": "CAN B test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "JP14",
+      "part": "TERM B",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "JP24",
+      "part": "TERM B",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J1",
+      "part": "Sense test points",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J2",
+      "part": "Current test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J3",
+      "part": "Current test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J41",
+      "part": "VBAT test",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J42",
+      "part": "Rail / PG / GND",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J43",
+      "part": "Rail / PG / GND",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J44",
+      "part": "Rail / PG / GND",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J500",
+      "part": "BOOT recovery",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J600",
+      "part": "BOOT recovery",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J501",
+      "part": "SWD (2.54mm)",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical",
+      "numbered_pads": 6,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J601",
+      "part": "SWD (2.54mm)",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical",
+      "numbered_pads": 6,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J502",
+      "part": "3.3V TTL UART",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J602",
+      "part": "3.3V TTL UART",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+      "numbered_pads": 3,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J503",
+      "part": "LAB3 rows 1-13",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
+      "numbered_pads": 13,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ],
+        "7": [
+          0.0,
+          15.24,
+          1.7,
+          1.7
+        ],
+        "8": [
+          0.0,
+          17.78,
+          1.7,
+          1.7
+        ],
+        "9": [
+          0.0,
+          20.32,
+          1.7,
+          1.7
+        ],
+        "10": [
+          0.0,
+          22.86,
+          1.7,
+          1.7
+        ],
+        "11": [
+          0.0,
+          25.4,
+          1.7,
+          1.7
+        ],
+        "12": [
+          0.0,
+          27.94,
+          1.7,
+          1.7
+        ],
+        "13": [
+          0.0,
+          30.48,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J603",
+      "part": "LAB3 rows 1-13",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
+      "numbered_pads": 13,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ],
+        "7": [
+          0.0,
+          15.24,
+          1.7,
+          1.7
+        ],
+        "8": [
+          0.0,
+          17.78,
+          1.7,
+          1.7
+        ],
+        "9": [
+          0.0,
+          20.32,
+          1.7,
+          1.7
+        ],
+        "10": [
+          0.0,
+          22.86,
+          1.7,
+          1.7
+        ],
+        "11": [
+          0.0,
+          25.4,
+          1.7,
+          1.7
+        ],
+        "12": [
+          0.0,
+          27.94,
+          1.7,
+          1.7
+        ],
+        "13": [
+          0.0,
+          30.48,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J703",
+      "part": "LAB3 rows 1-13",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical",
+      "numbered_pads": 13,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ],
+        "7": [
+          0.0,
+          15.24,
+          1.7,
+          1.7
+        ],
+        "8": [
+          0.0,
+          17.78,
+          1.7,
+          1.7
+        ],
+        "9": [
+          0.0,
+          20.32,
+          1.7,
+          1.7
+        ],
+        "10": [
+          0.0,
+          22.86,
+          1.7,
+          1.7
+        ],
+        "11": [
+          0.0,
+          25.4,
+          1.7,
+          1.7
+        ],
+        "12": [
+          0.0,
+          27.94,
+          1.7,
+          1.7
+        ],
+        "13": [
+          0.0,
+          30.48,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J504",
+      "part": "Additional probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical",
+      "numbered_pads": 8,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ],
+        "7": [
+          0.0,
+          15.24,
+          1.7,
+          1.7
+        ],
+        "8": [
+          0.0,
+          17.78,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J604",
+      "part": "Additional probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Vertical",
+      "numbered_pads": 11,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ],
+        "7": [
+          0.0,
+          15.24,
+          1.7,
+          1.7
+        ],
+        "8": [
+          0.0,
+          17.78,
+          1.7,
+          1.7
+        ],
+        "9": [
+          0.0,
+          20.32,
+          1.7,
+          1.7
+        ],
+        "10": [
+          0.0,
+          22.86,
+          1.7,
+          1.7
+        ],
+        "11": [
+          0.0,
+          25.4,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J704",
+      "part": "Pi extra probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical",
+      "numbered_pads": 5,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J505",
+      "part": "Reserved / encoder probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J605",
+      "part": "Reserved / encoder probes",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical",
+      "numbered_pads": 7,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ],
+        "5": [
+          0.0,
+          10.16,
+          1.7,
+          1.7
+        ],
+        "6": [
+          0.0,
+          12.7,
+          1.7,
+          1.7
+        ],
+        "7": [
+          0.0,
+          15.24,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J82",
+      "part": "LEFT encoder",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J83",
+      "part": "RIGHT encoder",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+      "numbered_pads": 4,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ],
+        "3": [
+          0.0,
+          5.08,
+          1.7,
+          1.7
+        ],
+        "4": [
+          0.0,
+          7.62,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J550",
+      "part": "FRONT LEFT lamp",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J551",
+      "part": "FRONT RIGHT lamp",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J650",
+      "part": "REAR LEFT lamp",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
+    },
+    {
+      "ref": "J651",
+      "part": "REAR RIGHT lamp",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "numbered_pads": 2,
+      "checked_pin_nets": {},
+      "saved_pad_geometry_mm": {
+        "1": [
+          0.0,
+          0.0,
+          1.7,
+          1.7
+        ],
+        "2": [
+          0.0,
+          2.54,
+          1.7,
+          1.7
+        ]
+      },
+      "result": "match",
+      "scope": "Generic course-stock geometry only; no exact supplier current or solder-process qualification",
+      "drill_mm": 1.0,
+      "pitch_mm": 2.54
     }
+  ],
+  "generic_header_geometry_only": [
+    "J10",
+    "J20",
+    "J30",
+    "J11",
+    "J21",
+    "J31",
+    "JP10",
+    "JP20",
+    "J14",
+    "J24",
+    "J34",
+    "J15",
+    "J25",
+    "J35",
+    "JP14",
+    "JP24",
+    "J1",
+    "J2",
+    "J3",
+    "J41",
+    "J42",
+    "J43",
+    "J44",
+    "J500",
+    "J600",
+    "J501",
+    "J601",
+    "J502",
+    "J602",
+    "J503",
+    "J603",
+    "J703",
+    "J504",
+    "J604",
+    "J704",
+    "J505",
+    "J605",
+    "J82",
+    "J83",
+    "J550",
+    "J551",
+    "J650",
+    "J651"
+  ],
+  "not_covered_by_this_script": [
+    "D510",
+    "D511",
+    "D512",
+    "D513",
+    "D610",
+    "D611",
+    "D612",
+    "D613",
+    "D710",
+    "D711",
+    "D712",
+    "D713",
+    "J70",
+    "SW50",
+    "SW51",
+    "SW60",
+    "SW61",
+    "SW70"
   ],
   "limitations": [
     "Checks only the listed identities, pad coordinates and pin nets.",
@@ -6702,6 +10031,9 @@
     "https://ele.kyocera.com/assets/products/crystal-device/cx3225sb_e.pdf",
     "https://www.we-online.com/components/products/datasheet/742863160.pdf",
     "https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1700-Data-Sheet-20001826F.pdf",
+    "https://www.st.com/resource/en/datasheet/l298.pdf",
+    "https://jlcpcb.com/capabilities/pcb-capabilities/",
+    "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM32ER61E226KE15-01A.pdf",
     "https://www.vishay.com/docs/20035/dcrcwe3.pdf",
     "https://yageogroup.com/component-documentation/download/specsheet/RC0603FR-07120RL",
     "https://yageogroup.com/component-documentation/download/specsheet/RT0603BRD0710KL",

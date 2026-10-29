@@ -53,7 +53,7 @@ def main():
             '--width', '1600', '--height', '1100', '--background', 'opaque', board)
     for filename in ('summary.json', 'drc.json', 'erc.json'):
         shutil.copy2(args.audit_dir/filename, out/filename)
-    for filename in ('BOM-Hand-assembly.csv', 'Preliminary-BOM.csv',
+    for filename in ('BOM-Hand-assembly.csv', 'Preliminary-BOM.csv', 'TEAM_4_BOM_Lab4.xlsx',
                      'Course-stock-v3.csv', 'Layer-stack.md',
                      'Lab4-Writeup.pdf', 'Fabrication-review.md',
                      'Power-margin-review.md', 'Assembly-options.md',

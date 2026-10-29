@@ -29,7 +29,7 @@ fps = {f.GetReference(): f for f in b.GetFootprints()}
 u = fps['U80']
 assert u.GetValue() == 'L298N'
 assert u.GetOrientationDegrees() == 0 and not u.IsFlipped()
-assert u.GetFPIDAsString() == 'Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical'
+assert u.GetFPIDAsString() == 'Lab4_Power:ST_L298N_Multiwatt15V_D1.1'
 mm = p.ToMM
 ox, oy = mm(u.GetPosition().x), mm(u.GetPosition().y)
 # F.Fab back of metal tab is 9.58 mm behind odd-numbered lead row.

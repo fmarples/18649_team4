@@ -1,6 +1,6 @@
 {
   "status": "PASS_IMPLEMENTED_DRAWING_BASED_MOUNTING",
-  "pcb_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+  "pcb_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
   "library_footprint": "Lab4_Mechanical:Boyd_6396BG_StraightPins",
   "library_footprint_check": "PASS: two pads, 25.4 mm pitch, 2.89 mm drills, 4.5 mm pads, one closed courtyard",
   "library_footprint_installed_in_active_board": true,

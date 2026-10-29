@@ -12,8 +12,9 @@ The selected LiPo pair, PA3 sensing circuit and standalone cutoff logic are
 documented in [Battery-LiPo.md](Battery-LiPo.md). The current board contains
 300 electrical footprints and 20,264 track/via items. All 331 targeted
 connections and fresh native ERC/DRC/parity checks pass. The selected-package
-check covers 186 components, including the added six crystals, encoder LDO,
-two VDDA beads and 136 selected passive parts. This is a package/pinout check,
+check covers 282 components, including regulator, capacitor-bank, header and
+L298 geometry. U80's finished plated holes are now 1.1 mm to improve lead
+clearance at published tolerances. This is a package/pinout check,
 not full operating qualification. We previously corrected C802's package and
 widened 779 power-track segments; see [Power-route-revision.md](Power-route-revision.md).
 

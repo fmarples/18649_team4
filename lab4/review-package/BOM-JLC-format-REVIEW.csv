@@ -74,7 +74,7 @@ Pi GPIO pins3-38 / ESQ-118-44-L-D,J70,Lab4_Mechanical:Samtec_ESQ-118-44_2x18_PiP
 Pi extra probes,J704,Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical,N/A,2.54 mm breakaway header,1,Team hand assembly; review only,Course v3 generic header; verify row/pin dimensions,1
 Reserved / encoder probes,J505,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,N/A,2.54 mm breakaway header,1,Team hand assembly; review only,Course v3 generic header; verify row/pin dimensions,1
 Reserved / encoder probes,J605,Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical,N/A,2.54 mm breakaway header,1,Team hand assembly; review only,Course v3 generic header; verify row/pin dimensions,1
-L298N,U80,Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical,N/A,L298N,1,Team hand assembly; review only,Course v3 exact MPN,1
+L298N,U80,Lab4_Power:ST_L298N_Multiwatt15V_D1.1,N/A,L298N,1,Team hand assembly; review only,Course v3 exact MPN,1
 100n 50V,C800,Capacitor_SMD:C_0603_1608Metric,N/A,GRM188R71H104KA93D,1,Team hand assembly; review only,Not in course v3 by exact MPN; additional sourcing,1
 470u 25V,C802,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,N/A,EEU-FR1E471,1,Team hand assembly; review only,Not in course v3 by exact MPN; additional sourcing,1
 SK520B,"D800,D801,D802,D803,D804,D805,D806,D807",Diode_SMD:D_SMB,N/A,SK520B,8,Team hand assembly; review only,Course v3 exact MPN,1

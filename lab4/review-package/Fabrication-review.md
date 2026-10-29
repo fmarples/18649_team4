@@ -19,10 +19,13 @@ pad-gap exception have not been qualified for that option.
 
 The team now explicitly excludes the optional limiter and camera. The
 [required-scope/fuse review](Fuse-and-scope-review.md) and
-[Pi feed mesh](Pi-feed-review.md) are recorded. A separate pour trial was
-not applied. The saved board, schematic and BOM identities are unchanged;
-existing native-check and manufacturing hashes therefore still apply.
-This closes the scope decision, not Pi transient margin, branch fault-energy
+[Pi feed mesh](Pi-feed-review.md) are recorded. The separate pour trials were
+not applied. The October 29 L298 revision increases its 15 plated pin holes
+to 1.1 mm, with unchanged copper pads, pin positions and heatsink anchors.
+The schematic/BOM footprint identity and manufacturing exports were updated
+together. Fresh native checks pass for this revision; old export hashes no
+longer describe the current drill files.
+This closes the scope decision, not Pi transient margin, input-path protection
 coordination or operating-temperature qualification.
 
 ## October 28 capacitor and chassis allowance revision
@@ -30,7 +33,7 @@ coordination or operating-temperature qualification.
 The latest [power-route/package correction](Power-route-revision.md) widens
 779 power segments and fixes C802 to D10/P5. The detailed physical stack is
 saved in the PCB. Native ERC/DRC/parity/connectivity and 331 targeted routes
-pass; the October 29 package audit covers 186 components. The selected passive
+pass; the October 29 package audit covers 282 components. The selected passive
 family checks establish geometry, not dissipation or effective capacitance. A matching
 [review package](review-package/REVIEW-ONLY.txt) is exported and independently
 parsed: 11 Gerber layers, 1,330 plated holes, 12 nonplated holes and 300
@@ -89,8 +92,10 @@ The current board has 300 electrical footprints plus eight supports and
 HS80, 20,264 track/via items and six filled ground zones. The targeted routing
 check covers 331 connections. Fresh native findings and source hashes are in
 [Fabrication-check.json](Fabrication-check.json). These checks do not authorize
-fabrication. Pi voltage margin, motor/fuse protection, application cutoff
-integration and final purchasing/manufacturing review remain. The capacitor
+fabrication. Pi voltage margin, converter heat and input-path protection still
+need a supported operating envelope and final engineering review. Cutoff
+integration is required before powered LiPo operation; stock reconciliation
+and harness/solder-process checks are required before ordering or assembly. The capacitor
 selection and routing revision is implemented; loop/transient and thermal
 behavior still require qualified review and later prototype validation.
 
@@ -128,15 +133,15 @@ cardboard test used the previous pattern. See
 | Decision | Evidence needed | Why it affects fabrication |
 | --- | --- | --- |
 | LiPo implementation | Approved CNHL S220403BK / Hitec 44295 pair, added PA3 divider and tested standalone guard; complete application integration and harness/fuse review | Selection is complete. The advertised pack capability does not authorize motor stalls. Cutoff demonstration and actual connector polarity/retention checks must precede LiPo operation. |
-| Motor protection and fuse | TA/course expectations for fault handling; chosen fuse time-current behavior versus wiring, connectors, holder and load/startup envelope | A 10 A input fuse is not fast protection for an individual L298 bridge. A circuit change must happen before routing. The raw 3.2 A motor stall figure is not an allowed continuous L298 operating point. |
+| Input power and fuse | Review the implemented main input path, fuse timing and load/startup envelope | Extra motor limiting is optional and excluded. The 10 A input fuse is not fast protection for an individual L298 bridge. The raw 3.2 A motor stall figure is not an allowed continuous L298 operating point. |
 | L298 cooling/fault envelope | Mounting geometry is implemented and checked; finalize allowable motor current/duty and fault handling | The heatsink footprint and routing no longer await a measurement. Thermal qualification still depends on the operating envelope. |
 | Pi and chassis stack | Completed drawing-based review: 35 mm chassis / 22 mm Pi gap; all eight supports satisfy the 3 mm hole-edge rule | ESQ-118-44-L-D clears the Pi hole edge by 4.535 mm. Keep accessories and hardware within documented envelopes; actual mating/retention/steering are assembly checks. No rule exception is pending. |
-| Cable interfaces and stock | Select a servo mating part with documented current capability and confirm supplied quantities; choose permitted replacements if unavailable | A different PCB connector or package changes pads and placement. The second motor harness, adapter fit/continuity and temperature are checked during assembly; they do not require a new photo task now. The intended mating interface and rating basis must still be established before release. |
+| Cable interfaces and stock | Settle the servo harness before assembly; confirm supplied quantities before ordering | The existing Hirose PCB interface stays. A documented matching lead or reviewed insulated splice can resolve the cable without changing the board. Fit, continuity and retention are assembly checks; no repeat photo task is requested. Recheck CAD only if the PCB connector is actually replaced. |
 
-Resolve decisions that change CAD now, before the Wednesday final-export target. This is a team
-planning target, not a separate course deadline. If an answer is unavailable,
-obtain an explicit TA-approved design/deferral; do not infer that an October 24
-review allowance authorizes fabrication of an unresolved circuit.
+Resolve decisions that change CAD before approving the final export. The
+October 24 preliminary review does not establish the current design's power
+margin. A reviewer should identify the supported operating envelope or the
+required circuit/layout change; approval wording alone is not electrical evidence.
 
 The motor-stall, L298 drop/temperature and servo-holding prompts appear under
 **Guiding Questions** in Lab 4 (pp. 3–4). The required final brief is specified
@@ -235,8 +240,8 @@ All files must describe the same reviewed source revision:
 - Record the TA's blocking-issue closure and submit the final package to
   Gradescope. The preliminary email is not this final submission.
 
-Target final exports and a second-person review for Wednesday, October 28, with
-Thursday reserved for TA corrections and upload checks. Assembly, powered
+The current review export has been refreshed after the October 29 drill change.
+Electrical release review still precedes the final upload. Assembly, powered
 bring-up, adapter continuity and thermal/load tests on the new board occur after
 boards arrive; they must remain marked unperformed in this submission.
 

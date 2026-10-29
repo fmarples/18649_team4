@@ -13,13 +13,13 @@
     "https://www.farnell.com/datasheets/1581373.pdf"
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
-    "Power-stage-check.json": "35c67924fb9f8f3a07ffddba5f55088dc6cabd8194d46670039a8afa06fa79d0",
+    "KiCad/Lab4.kicad_pcb": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+    "Power-stage-check.json": "ad5c911225f6d4c8dbd59ee6f5abd0206ff3095a39556fdff4db2925804ec357",
     "Power-calculations.json": "3f07efa630095f93dfcc88218474b51f86a8b3df53aa7b174c7b7f532510e9ff",
-    "Load-allocation-check.json": "a086e87a4f09aa904907f9310b08893f72d1cca0f22a443389a31ef65a587119",
-    "Supply-path-check.json": "673edc822df203fa7cd4ab5c469f01ad84d73c190fb1cc376008b2f8d642e85f",
+    "Load-allocation-check.json": "fc5e6deb95c3979c047637a1194f32b360cd1bdf6f4c07dff81486532fd0dca0",
+    "Supply-path-check.json": "15849909d888cba3488df6d5faaf2fe5546c3cff92de4927603006ded91535cd",
     "check_power_margins.py": "7532d2ab61f5d2818261be740eafbd921a52892161c49e8e1dc966f24ed3aa4c",
-    "KiCad/Circuit-BOM.csv": "017356c5747696d979fb4d4dd33e4b14220ca89e6bab85e8f083531069541e7c"
+    "KiCad/Circuit-BOM.csv": "4955f2c5d9147d5e8da20333254659e24575726b79a6fe31b202ffc45787c5b0"
   },
   "voltage_budget": [
     {

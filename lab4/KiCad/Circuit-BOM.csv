@@ -235,7 +235,7 @@ Cockpit,J703,LAB3 rows 1-13,2.54 mm breakaway header,Connector_PinHeader_2.54mm:
 Cockpit,J704,Pi extra probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical,Course stock; label pin 1 and every signal; preserve physical access
 Front,J505,Reserved / encoder probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Test access; not a substitute for final rated actuator connectors
 Rear,J605,Reserved / encoder probes,2.54 mm breakaway header,Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Vertical,Test access; not a substitute for final rated actuator connectors
-Rear,U80,L298N,L298N,Package_TO_SOT_THT:TO-220-15_P2.54x5.08mm_StaggerOdd_Lead4.58mm_Vertical,ST L298 rev5: 2A DC per bridge and 2A braking; no hardware current limiter in this revision
+Rear,U80,L298N,L298N,Lab4_Power:ST_L298N_Multiwatt15V_D1.1,ST L298 rev5: 2A DC per bridge and 2A braking; no hardware current limiter in this revision
 Rear,C800,100n 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Local decoupling; effective capacitance and layout to verify
 Rear,C801,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Local decoupling; effective capacitance and layout to verify
 Rear,C802,470u 25V,EEU-FR1E471,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,"Panasonic drawing: 10 mm diameter, 12.5 mm body length, 5 mm lead pitch; PCB footprint corrected. 25 V rating; application ripple/temperature still to qualify."

@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-10-29T02:35:25.729471+00:00",
+  "checked_at_utc": "2026-10-29T19:01:37.204310+00:00",
   "automated_status": "PASS",
   "fabrication_release": false,
   "counts": {
@@ -73,7 +73,7 @@
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
     "KiCad/Front.kicad_sch": "84d37b382ed1d24392ba441abe4a5c0f26235713312188b34e4be15a042dc968",
     "KiCad/Lab4.kicad_dru": "c6deb3b4968bdd62c1870a5a2d08509afa870baa4c69af7c25982cd938a250c6",
-    "KiCad/Lab4.kicad_pcb": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+    "KiCad/Lab4.kicad_pcb": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
     "KiCad/Lab4.kicad_pro": "d0d3df0a778ca1aa8a0ad20466fe116c3c21e81e3a1f1695739b419a51e326b1",
     "KiCad/Lab4.kicad_sch": "0c45da6657f63049a842790d71dc1c6c8d018283a7512e26832fcd414a09abe1",
     "KiCad/Lab4_Logic.kicad_sym": "9282bfef36f6ec97c9f21daf90d966cb1d9d4c4d2789dc5ea5344dc1be62f463",
@@ -85,10 +85,11 @@
     "KiCad/Lab4_Mechanical.pretty/Samtec_ESQ-120-44_2x20_P2.54mm_H18.67.kicad_mod": "fcfdcc4fb2cb73528ba205da3d1147c2545f5bbea831f2d969c8880d5661aad4",
     "KiCad/Lab4_Power.kicad_sym": "e08ca65b4585dccb5c2fce9aacf0f51d0df46bd4a40a5ee9864203517e7e8241",
     "KiCad/Lab4_Power.pretty/Eaton_SDCHA1V8040.kicad_mod": "80921f4555eebe44350508fb43fc90378a24f9d8bc6290b186227981c0098221",
+    "KiCad/Lab4_Power.pretty/ST_L298N_Multiwatt15V_D1.1.kicad_mod": "1f7e19d22275c295222b41d1ec92e565613bdafe936e2ee3ebb63f074cc22e73",
     "KiCad/Lab4_Power.pretty/Vishay_WSL2512_7m_to_500m.kicad_mod": "fe1e3b0b09fe270ecb9d86aa1b9550eddcfea2594fb1b0ae99c69667dbbc75fe",
     "KiCad/Lab4_Switches.pretty/GCT_SWT0210_4.5x4.5mm.kicad_mod": "391ac8f4f5725df85578cf5b2e7597e38724f3f6631b9e31545915236815b8c6",
     "KiCad/Power.kicad_sch": "442d68d3e394d2661d0d7cd49b8fab038db3bbde52eca3c5096f69d7ac774141",
-    "KiCad/Rear.kicad_sch": "716f8add45f9dd935feb434ed8851d1bbad343a7f8d07beda90e39514d757564",
+    "KiCad/Rear.kicad_sch": "d3f7ab076f61da6aa36b6430d288509b9371e55746cd30cd2617f696d769c0a4",
     "KiCad/sym-lib-table": "60172994ff6f013cac20eb41c4b72b371a9f3c26b8c7c802c711ed13234c603b"
   },
   "limits": [

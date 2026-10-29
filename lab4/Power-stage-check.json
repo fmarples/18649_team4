@@ -175,10 +175,10 @@
     "EN thresholds are not the selected LiPo battery cutoff or proof of regulation at turn-on."
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+    "KiCad/Lab4.kicad_pcb": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
     "KiCad/Power.kicad_sch": "442d68d3e394d2661d0d7cd49b8fab038db3bbde52eca3c5096f69d7ac774141",
-    "KiCad/Circuit-BOM.csv": "017356c5747696d979fb4d4dd33e4b14220ca89e6bab85e8f083531069541e7c",
+    "KiCad/Circuit-BOM.csv": "4955f2c5d9147d5e8da20333254659e24575726b79a6fe31b202ffc45787c5b0",
     "Power-calculations.json": "3f07efa630095f93dfcc88218474b51f86a8b3df53aa7b174c7b7f532510e9ff",
-    "Capacitor-bank-check.json": "50498bbef980d32179c245b1de00ca4c83f764a400d45037098e2a57ca4f9f03"
+    "Capacitor-bank-check.json": "dc73986ac401ac4e49fc7d54cfd2420fb969ea4877409111caf159fd19e54880"
   }
 }

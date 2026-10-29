@@ -1,6 +1,6 @@
 {
-  "source_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
-  "allocation_sha256": "a086e87a4f09aa904907f9310b08893f72d1cca0f22a443389a31ef65a587119",
+  "source_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "allocation_sha256": "fc5e6deb95c3979c047637a1194f32b360cd1bdf6f4c07dff81486532fd0dca0",
   "fabrication_release": false,
   "copper_thickness_um": 15.2,
   "resistivity_ohm_m": 1.72e-08,
