@@ -1,5 +1,17 @@
 # Parts and physical interface review
 
+## October 29 scope and fuse clarification
+
+The three DF63-2S-3.96C housings and six installed DF63A-1618SC contacts
+remain required for one battery and two motor adapters. The LiPo changes
+the battery-side connection to XT60; it does not replace the PCB's Hirose
+header. Old NiMH charger-only parts stay at zero quantity.
+We omit optional additional motor limiting and the camera. See
+[the current fuse review](Fuse-and-scope-review.md) for published opening
+times and temperature/loss sensitivity. This supersedes older nominal-load
+justifications in the dated record and BOM notes; the 10 A part remains a
+review candidate, not a verified per-branch or per-motor protector.
+
 ## Current revision — October 28
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes

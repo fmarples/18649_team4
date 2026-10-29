@@ -17,6 +17,14 @@ The optional 250–500 mA camera is excluded from our present allocation.
 Staff can arrange 2 oz copper, but our current stack and 0.15 mm regulator
 pad-gap exception have not been qualified for that option.
 
+The team now explicitly excludes the optional limiter and camera. The
+[required-scope/fuse review](Fuse-and-scope-review.md) and
+[Pi feed mesh](Pi-feed-review.md) are recorded. A separate pour trial was
+not applied. The saved board, schematic and BOM identities are unchanged;
+existing native-check and manufacturing hashes therefore still apply.
+This closes the scope decision, not Pi transient margin, branch fault-energy
+coordination or operating-temperature qualification.
+
 ## October 28 capacitor and chassis allowance revision
 
 The latest [power-route/package correction](Power-route-revision.md) widens

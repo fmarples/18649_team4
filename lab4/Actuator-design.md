@@ -55,8 +55,10 @@ a safe stall duration or a per-motor current limit; see Current-evidence.md.
 U81 is SN74LVC14APWR powered at 3.3V. Its inputs accept up to 5.5V; its outputs
 stay in the MCU domain. Four Schmitt-trigger channels condition the encoders;
 100-ohm series resistors and 10k pullups use the 3.3V logic domain.
-J82/J83 now supply the encoders from that same nominal 3.3V rail (3.318V
-calculated setpoint), replacing the incompatible nominal 5.1V connection.
+J82/J83 supply the encoders from the separate 4.0V U82 regulator. This
+supersedes the October 24 3.3V proposal, whose tolerance/routing margin was
+insufficient. The signal buffer and its pull-ups remain at 3.3V; see
+[the implemented encoder revision](Mounting-and-encoder-revision.md).
 The recorded JGB37-520 specification gives 3.3-5V; the earlier Lab 2 setup
 used the Nucleo 3.3V supply. Actual rail tolerance, output type and signal
 quality still need verification; this is a schematic correction, not a new test. Both A
@@ -85,7 +87,7 @@ for incandescent bulbs or high-power LED modules.
 | J40 battery | Battery + | GND | | |
 | J80 left motor | ACS712 output to motor | L298 OUT2 | | |
 | J81 right motor | ACS712 output to motor | L298 OUT4 | | |
-| J82/J83 encoders | nominal 3.3V logic rail | GND | A raw | B raw |
+| J82/J83 encoders | nominal 4.0V encoder rail | GND | A raw | B raw |
 | J90 servo | GND | sensed 6.6V | PWM | |
 | J550/J551/J650/J651 LEDs | series-resistor positive | switched negative | | |
 
@@ -152,7 +154,7 @@ jumper wires on the right, not the black motor-side ribbon cable.
 | Photo position | Jumper color | Reported function | Planned PCB adapter destination |
 |---|---|---|---|
 | Top / 1 | Red | Motor lead 1 (+ reference) | J80 or J81 pin 1 |
-| 2 | Orange | Encoder positive supply (VCC) | J82 or J83 pin 1; nominal 3.3V |
+| 2 | Orange | Encoder positive supply (VCC) | J82 or J83 pin 1; nominal 4.0V |
 | 3 | Yellow | Encoder phase A | J82 or J83 pin 3 |
 | 4 | Blue | Encoder phase B | J82 or J83 pin 4 |
 | 5 | Gray | Encoder ground | J82 or J83 pin 2 |
@@ -167,9 +169,9 @@ left/right direction and encoder sign during bring-up.
 Photo collection and the reported order for this harness are complete.
 We have not inferred the second harness's order, exact mating geometry,
 wire gauge or tested adapter continuity from this photo. Check those when
-preparing the adapters. The encoder supply specification is 3.3-5V. The October 24 design revision
-connects both encoder supply pins to the existing nominal 3.3V logic rail.
-Only J82.1 and J83.1 changed net; pull-ups were already on that rail.
+preparing the adapters. The encoder supply specification is 3.3-5V. The
+October 27 revision supersedes the earlier 3.3V connection with the separate
+4.0V regulator at both encoder connectors. The pull-ups stay on 3.3V.
 
 ## Clock and ordering-code corrections
 

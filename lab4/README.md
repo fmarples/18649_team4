@@ -11,6 +11,14 @@ confirm that rigid mounting, rather than a prescribed hole set, is required.
 The optional camera is not included in the current power allocation. The saved
 copper stack is unchanged; 2 oz would require a revised manufacturing review.
 
+We selected the required scope only: keep the course L298 and omit extra
+hardware current limiting and the camera. The [input-fuse review](Fuse-and-scope-review.md)
+and [Pi conductor mesh](Pi-feed-review.md) are complete for their stated
+assumptions. The mesh confirms that hidden parallel copper does not remove
+the Pi margin concern. No optional-circuit decision or new hole measurement
+is holding up the review. The [Lab 1 revision history](https://docs.google.com/document/d/182TcM6g2DfyiQt0xGXAkl2lv_5BjBLEOPw9v7Lpieis)
+now records the October 29 hardware configuration.
+
 ## October 28 capacitor and chassis allowance revision
 
 The latest [power-route/package correction](Power-route-revision.md) widens
@@ -230,8 +238,8 @@ device-tree configuration and physical bus labels before relying on Linux
 
 ## Remaining work
 
-- Complete the full Pi voltage/contact/return budget and converter layout/thermal review. The revised positive-feed calculation is 4.9424 V at a 3 A Pi allocation before omitted losses; this is not a measured or guaranteed Pi voltage.
-- Resolve the L298 motor-fault operating envelope and fuse coordination. Heatsink mounting geometry and the 4.0 V encoder supply are implemented.
+- Complete the full Pi voltage/contact/return budget and converter layout/thermal review. The multilayer DC mesh gives 4.9466 V at a 3 A Pi allocation before omitted losses; this is not a measured or guaranteed Pi voltage.
+- Close fuse/branch fault-energy and operating-power qualification for the existing L298 circuit; no additional limiter is planned. Published fuse timing and heat sensitivities are documented. Heatsink mounting geometry and the 4.0 V encoder supply are implemented.
 - Confirm course-stock allocations and the servo mating lead, then reconcile the final purchasing and assembly files.
 - Inspect final manufacturing outputs and assemble the required submission package. Native ERC, DRC, schematic parity and connectivity are zero; 300 electrical footprints and 331 targeted connections are checked.
 - Integrate the battery guard and perform mating, continuity, retention, steering and powered checks during assembly/bring-up before LiPo driving. No further chassis-hole selection is pending.

@@ -1,0 +1,71 @@
+{
+  "board_sha256": "33fbc2fe2216f94927efff82f3e4c21ded95ef43de366f1626170aaf804a2772",
+  "allocation_sha256": "a086e87a4f09aa904907f9310b08893f72d1cca0f22a443389a31ef65a587119",
+  "fabrication_release": false,
+  "method": "Square-cell multilayer DC mesh; four-sector 20 um plated barrels; uniform current over component pad areas",
+  "assumptions": {
+    "copper_resistivity_ohm_mm": 1.72e-05,
+    "layer_thickness_mm": [
+      0.035,
+      0.0152,
+      0.0152,
+      0.035
+    ],
+    "barrel_plating_mm": 0.02,
+    "Pi_current_A": 3.0
+  },
+  "omits": [
+    "Regulator accuracy and transient response",
+    "Connector resistance",
+    "Component and socket lead resistance",
+    "Ground return",
+    "Temperature rise and copper hot resistance",
+    "AC impedance and current crowding below mesh scale"
+  ],
+  "results": [
+    {
+      "mesh_mm": 0.1,
+      "nodes": 99892,
+      "edges": 189548,
+      "barrel_site_max_projection_mm": 0.07071067811910292,
+      "positive_feed_drop_V": {
+        "U82": 0.07776357699804644,
+        "J70": 0.06911534335579325,
+        "U80": 0.05716166330723245,
+        "U2": 0.05601974244772375,
+        "U3": 0.05750052911620358,
+        "R570": 0.015619871518550543,
+        "R571": 0.015427068710429544,
+        "R670": 0.07677910170577619,
+        "R671": 0.07755905858863794,
+        "R420": 0.002686636825916855
+      },
+      "max_KCL_residual_A": 1.7107370560301774e-10,
+      "copper_loss_W": 0.2188703054902308,
+      "source_work_W": 0.2188703054980621,
+      "unenergized_islands": 0
+    },
+    {
+      "mesh_mm": 0.05,
+      "nodes": 400855,
+      "edges": 780460,
+      "barrel_site_max_projection_mm": 0.03535533905328616,
+      "positive_feed_drop_V": {
+        "U82": 0.0764031534321045,
+        "J70": 0.06802545259100812,
+        "U80": 0.05605978275427275,
+        "U2": 0.054986943319069746,
+        "U3": 0.0563913523385203,
+        "R570": 0.014955919295124083,
+        "R571": 0.014763021831097074,
+        "R670": 0.07544259760417436,
+        "R671": 0.07621051696298256,
+        "R420": 0.0026153334826442554
+      },
+      "max_KCL_residual_A": 8.436462988706955e-10,
+      "copper_loss_W": 0.21537423508583106,
+      "source_work_W": 0.21537423512489273,
+      "unenergized_islands": 0
+    }
+  ]
+}

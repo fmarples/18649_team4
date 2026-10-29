@@ -1,5 +1,21 @@
 # Power margins, capacitors and thermal review
 
+## October 29 required-scope review
+
+We omit the optional motor current limiter and camera. The requirement and
+team scope choice are closed; no further TA answer is needed for that choice.
+[Fuse-and-scope-review.md](Fuse-and-scope-review.md) records the actual
+10 A fuse's opening times, added two-fuse losses and temperature sensitivity.
+Fault-energy coordination is still open; optional circuitry is not a prerequisite.
+
+The new [multilayer DC mesh](Pi-feed-review.md) includes parallel +5V paths
+and pad spreading. It gives 68.03 mV Pi-feed loss at the existing 3 A allocation,
+close to the earlier route screen. The same hot-copper/contact/return
+sensitivity gives about 4.8763 V before transients. A trial copper pour and
+regulator-alternative check did not close the complete operating envelope;
+neither was applied. The calculations below remain dated, reproducible
+screens rather than measured performance or fabrication approval.
+
 Updated 29 October 2026. We recalculated these margins after moving the 5 V regulator
 closer to the Pi and rerouting its connections. The buck setpoints are unchanged;
 the separate encoder LDO remains in place. The

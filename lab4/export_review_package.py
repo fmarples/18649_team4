@@ -54,12 +54,20 @@ def main():
     for filename in ('summary.json', 'drc.json', 'erc.json'):
         shutil.copy2(args.audit_dir/filename, out/filename)
     for filename in ('BOM-Hand-assembly.csv', 'Preliminary-BOM.csv',
-                     'Course-stock-v3.csv', 'Layer-stack.md'):
+                     'Course-stock-v3.csv', 'Layer-stack.md',
+                     'Lab4-Writeup.pdf', 'Fabrication-review.md',
+                     'Power-margin-review.md', 'Assembly-options.md',
+                     'Critical-package-review.md', 'Selected-package-check.json',
+                     'Battery-LiPo.md', 'Course-updates-October29.md',
+                     'Capacitor-bank-review.md', 'Power-route-revision.md',
+                     'Power-route-revision-check.json', 'Fuse-and-scope-review.md',
+                     'Pi-feed-review.md', 'Pi-feed-mesh-check.json',
+                     'Actuator-design.md', 'Parts-review.md'):
         shutil.copy2(ROOT/filename, out/filename)
     warning = ('REVIEW ONLY - NOT RELEASED FOR FABRICATION\n\n'
         'Four copper layers; nominal 1.6 mm JLC04161H-7628 stack.\n'
         'This is a review export of the hashed sources, not an approved order.\n'
-        'See ../Fabrication-review.md and ../Power-margin-review.md for open issues.\n'
+        'See Fabrication-review.md and Power-margin-review.md for open issues.\n'
         '3D views use available library models; omitted custom parts are not fit evidence.\n'
         'Native positions use KiCad rotation conventions and mm/absolute origin.\n'
         'The team hand-assembly plan remains in force. No PCBA upload is authorized.\n')
