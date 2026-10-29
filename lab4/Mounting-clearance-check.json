@@ -1,53 +1,61 @@
 {
   "status": "PASS",
-  "pcb_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
-  "rule": "3mm from finished hole edge, all chassis/Pi supports",
+  "pcb_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
+  "rule": "4mm from chassis hole edges; 3mm from Pi hole edges; all copper layers and components",
   "holes": [
     {
       "reference": "H1",
-      "finished_drill_mm": 3.2,
-      "minimum_clear_radius_mm": 4.6,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4,
+      "minimum_clear_radius_mm": 6.0,
       "layers": 4
     },
     {
       "reference": "H2",
-      "finished_drill_mm": 3.2,
-      "minimum_clear_radius_mm": 4.6,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4,
+      "minimum_clear_radius_mm": 6.0,
       "layers": 4
     },
     {
       "reference": "H3",
-      "finished_drill_mm": 3.2,
-      "minimum_clear_radius_mm": 4.6,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4,
+      "minimum_clear_radius_mm": 6.0,
       "layers": 4
     },
     {
       "reference": "H4",
-      "finished_drill_mm": 3.2,
-      "minimum_clear_radius_mm": 4.6,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4,
+      "minimum_clear_radius_mm": 6.0,
       "layers": 4
     },
     {
       "reference": "H5",
       "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3,
       "minimum_clear_radius_mm": 4.35,
       "layers": 4
     },
     {
       "reference": "H6",
       "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3,
       "minimum_clear_radius_mm": 4.35,
       "layers": 4
     },
     {
       "reference": "H7",
       "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3,
       "minimum_clear_radius_mm": 4.35,
       "layers": 4
     },
     {
       "reference": "H8",
       "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3,
       "minimum_clear_radius_mm": 4.35,
       "layers": 4
     }

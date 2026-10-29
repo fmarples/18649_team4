@@ -36,19 +36,29 @@ C4,1n,Capacitor_SMD:C_0603_1608Metric,25.0,38.0,90.0,F.Cu,True
 C400,1000u / 25V,Capacitor_THT:CP_Radial_D12.5mm_P5.00mm,61.676,21.0,0.0,F.Cu,True
 C410,22u / 25V,Capacitor_SMD:C_1210_3225Metric,18.2,210.5,180.0,F.Cu,True
 C411,100n / 50V,Capacitor_SMD:C_0603_1608Metric,18.2,206.4,180.0,F.Cu,True
-C412,22u / 16V,Capacitor_SMD:C_0805_2012Metric,31.0,201.8,90.0,F.Cu,True
-C413,22u / 16V,Capacitor_SMD:C_0805_2012Metric,31.0,205.8,-90.0,F.Cu,True
-C414,22p C0G,Capacitor_SMD:C_0603_1608Metric,14.2,203.5,0.0,F.Cu,True
+C412,22u 25V,Capacitor_SMD:C_1210_3225Metric,31.0,201.275,90.0,F.Cu,True
+C413,22u 25V,Capacitor_SMD:C_1210_3225Metric,31.0,206.325,-90.0,F.Cu,True
+C414,68p C0G,Capacitor_SMD:C_0603_1608Metric,14.2,203.5,0.0,F.Cu,True
+C415,22u 25V,Capacitor_SMD:C_1210_3225Metric,11.75,210.5,180.0,F.Cu,True
+C416,22u 25V,Capacitor_SMD:C_1210_3225Metric,13.0,217.5,180.0,F.Cu,True
+C417,22u 25V,Capacitor_SMD:C_1210_3225Metric,25.75,218.0,180.0,F.Cu,True
+C418,22u 25V,Capacitor_SMD:C_1210_3225Metric,31.0,218.0,180.0,F.Cu,True
 C420,22u / 25V,Capacitor_SMD:C_1210_3225Metric,56.2,137.0,180.0,F.Cu,True
 C421,100n / 50V,Capacitor_SMD:C_0603_1608Metric,56.2,132.9,180.0,F.Cu,True
-C422,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69.0,128.3,90.0,F.Cu,True
-C423,22u / 16V,Capacitor_SMD:C_0805_2012Metric,69.0,132.3,-90.0,F.Cu,True
-C424,22p C0G,Capacitor_SMD:C_0603_1608Metric,52.2,130.0,0.0,F.Cu,True
+C422,22u 25V,Capacitor_SMD:C_1210_3225Metric,69.2,127.575,90.0,F.Cu,True
+C423,22u 25V,Capacitor_SMD:C_1210_3225Metric,69.0,132.825,-90.0,F.Cu,True
+C424,91p C0G,Capacitor_SMD:C_0603_1608Metric,52.2,130.0,0.0,F.Cu,True
+C425,22u 25V,Capacitor_SMD:C_1210_3225Metric,50.5,137.0,180.0,F.Cu,True
+C426,22u 25V,Capacitor_SMD:C_1210_3225Metric,50.75,141.0,180.0,F.Cu,True
+C427,22u 25V,Capacitor_SMD:C_1210_3225Metric,64.0,141.0,180.0,F.Cu,True
 C430,22u / 25V,Capacitor_SMD:C_1210_3225Metric,94.2,210.5,180.0,F.Cu,True
 C431,100n / 50V,Capacitor_SMD:C_0603_1608Metric,94.2,206.4,180.0,F.Cu,True
-C432,22u / 16V,Capacitor_SMD:C_0805_2012Metric,107.0,201.8,90.0,F.Cu,True
-C433,22u / 16V,Capacitor_SMD:C_0805_2012Metric,107.0,205.8,-90.0,F.Cu,True
-C434,22p C0G,Capacitor_SMD:C_0603_1608Metric,90.2,203.5,0.0,F.Cu,True
+C432,22u 25V,Capacitor_SMD:C_1210_3225Metric,107.0,201.275,90.0,F.Cu,True
+C433,22u 25V,Capacitor_SMD:C_1210_3225Metric,107.0,206.325,-90.0,F.Cu,True
+C434,30p C0G,Capacitor_SMD:C_0603_1608Metric,90.2,203.5,0.0,F.Cu,True
+C435,22u 25V,Capacitor_SMD:C_1210_3225Metric,85.0,208.0,180.0,F.Cu,True
+C436,22u 25V,Capacitor_SMD:C_1210_3225Metric,89.0,218.25,180.0,F.Cu,True
+C437,22u 25V,Capacitor_SMD:C_1210_3225Metric,97.5,218.25,180.0,F.Cu,True
 C5,100n,Capacitor_SMD:C_0603_1608Metric,28.0,41.0,90.0,F.Cu,True
 C500,100n VDD19,Capacitor_SMD:C_0603_1608Metric,24.5,171.75,0.0,F.Cu,True
 C501,100n VDD32,Capacitor_SMD:C_0603_1608Metric,37.0,171.0,0.0,F.Cu,True
@@ -109,10 +119,10 @@ D807,SK520B,Diode_SMD:D_SMB,60.0225,50.0,0.0,F.Cu,True
 F1,Fuse: rating TBD,Fuse:Fuseholder_Blade_Mini_Keystone_3568,86.3,21.96,90.0,F.Cu,True
 FB50,600R @100MHz,Inductor_SMD:L_0603_1608Metric,20.0,169.0,0.0,F.Cu,True
 FB60,600R @100MHz,Inductor_SMD:L_0603_1608Metric,20.0,70.0,0.0,F.Cu,True
-H1,Measured chassis center; M3 PCB drill proposed,Lab4_Mechanical:Chassis_support_M3_3mm_edge,7.5,7.0,0.0,F.Cu,False
-H2,Measured chassis center; M3 PCB drill proposed,Lab4_Mechanical:Chassis_support_M3_3mm_edge,112.5,7.0,0.0,F.Cu,False
-H3,Measured chassis center; M3 PCB drill proposed,Lab4_Mechanical:Chassis_support_M3_3mm_edge,35.0,227.0,0.0,F.Cu,False
-H4,Measured chassis center; M3 PCB drill proposed,Lab4_Mechanical:Chassis_support_M3_3mm_edge,85.0,227.0,0.0,F.Cu,False
+H1,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,7.5,7.0,0.0,F.Cu,False
+H2,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,112.5,7.0,0.0,F.Cu,False
+H3,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,35.0,227.0,0.0,F.Cu,False
+H4,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,85.0,227.0,0.0,F.Cu,False
 H5,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,92.5,0.0,F.Cu,False
 H6,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,91.5,92.5,0.0,F.Cu,False
 H7,Pi support <=5.5mm hardware OD,Lab4_Mechanical:Pi_support_M2.5_D5.5,33.5,141.5,0.0,F.Cu,False

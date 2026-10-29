@@ -1,4 +1,4 @@
-﻿Sheet,Reference,Value,MPN,Footprint,Status
+Sheet,Reference,Value,MPN,Footprint,Status
 Front,U10,MCP2515T-I/ST,MCP2515T-I/ST,Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm,Preliminary; verify before fabrication
 Front,U11,SN65HVD231DR,SN65HVD231DR,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,Exact MPN appears in course v3 stock list; TI SOIC-8 pinout checked
 Front,Y10,16 MHz,CX3225SB16000H0FLJCC,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,Load capacitor values require crystal CL and PCB stray capacitance
@@ -113,11 +113,11 @@ Power,U40,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated desi
 Power,L1,4.7uH / 5.8A,SDCHA1V8040-4R7-R,Lab4_Power:Eaton_SDCHA1V8040,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
 Power,C410,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input MLCC candidate; verify bias capacitance and supply ripple
 Power,C411,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
-Power,C412,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
-Power,C413,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,C412,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C413,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
 Power,R410,100k 1%,RC0603FR-07100KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R411,10k 1%,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
-Power,C414,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
+Power,C414,68p C0G,GRM1885C1H680JA01D,Capacitor_SMD:C_0603_1608Metric,Revised with capacitor banks: servo/Pi zero near 23kHz; logic follows TI 3.3V example. Within 10-100pF guidance. Transient/phase margin unmeasured.
 Power,R412,47k,RC0603FR-0747KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R413,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R414,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
@@ -126,11 +126,11 @@ Power,U41,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated desi
 Power,L2,4.7uH / 5.8A,SDCHA1V8040-4R7-R,Lab4_Power:Eaton_SDCHA1V8040,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
 Power,C420,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input MLCC candidate; verify bias capacitance and supply ripple
 Power,C421,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
-Power,C422,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
-Power,C423,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,C422,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C423,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
 Power,R420,75k 0.1%,RT0603BRD0775KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R421,10k 0.1%,RT0603BRD0710KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
-Power,C424,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
+Power,C424,91p C0G,GRM1885C1H910JA01D,Capacitor_SMD:C_0603_1608Metric,Revised with capacitor banks: servo/Pi zero near 23kHz; logic follows TI 3.3V example. Within 10-100pF guidance. Transient/phase margin unmeasured.
 Power,R422,33k,RC0603FR-0733KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R423,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R424,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
@@ -139,11 +139,11 @@ Power,U42,TPS564252DRLR,TPS564252DRLR,Package_TO_SOT_SMD:SOT-563,Calculated desi
 Power,L3,4.7uH / 5.8A,SDCHA1V8040-4R7-R,Lab4_Power:Eaton_SDCHA1V8040,5.8 A thermal / 6.7 A saturation at datasheet conditions; validate ripple/temperature
 Power,C430,22u / 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,Input MLCC candidate; verify bias capacitance and supply ripple
 Power,C431,100n / 50V,GRM188R71H104KA93D,Capacitor_SMD:C_0603_1608Metric,Higher voltage input bypass than 16 V shelf capacitor
-Power,C432,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
-Power,C433,22u / 16V,GRM219R61C226ME15L,Capacitor_SMD:C_0805_2012Metric,Check effective capacitance under DC bias
+Power,C432,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C433,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
 Power,R430,45.3k 0.1%,RT0603BRD0745K3L,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R431,10k 0.1%,RT0603BRD0710KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
-Power,C434,22p C0G,C0603C220J1GACTU,Capacitor_SMD:C_0603_1608Metric,Feed-forward value is a starting point within TI 10-100 pF guidance; validate stability
+Power,C434,30p C0G,GRM1885C1H300JA01D,Capacitor_SMD:C_0603_1608Metric,Revised with capacitor banks: servo/Pi zero near 23kHz; logic follows TI 3.3V example. Within 10-100pF guidance. Transient/phase margin unmeasured.
 Power,R432,22k,RC0603FR-0722KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R433,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R434,10k PG pullup,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
@@ -289,3 +289,13 @@ Rear,C805,10u 16V 10% low-ESR,TPSB106K016R0800,Capacitor_Tantalum_SMD:CP_EIA-352
 Front,R580,100k 0.1%,RT0603BRD07100KL,Resistor_SMD:R_0603_1608Metric,Battery divider high side. 15V design ceiling; 0.1% ratio resistors.
 Front,R581,10k 0.1%,RT0603BRD0710KL,Resistor_SMD:R_0603_1608Metric,Battery divider low side; VADC = VBAT/11.
 Front,C580,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,"Battery ADC filter: 9.09kohm Thevenin and 100nF, nominal tau=0.909ms."
+Power,C415,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C416,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C417,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C418,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C425,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C426,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C427,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C435,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C436,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.
+Power,C437,22u 25V,GRM32ER61E226KE15L,Capacitor_SMD:C_1210_3225Metric,22uF 25V X5R +/-10%; parallel bank accounts for DC-bias loss. See Capacitor-bank-review.md; loop/thermal behavior not measured.

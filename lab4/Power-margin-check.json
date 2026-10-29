@@ -13,13 +13,13 @@
     "https://www.farnell.com/datasheets/1581373.pdf"
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
-    "Power-stage-check.json": "bad9baa40c8686f3ca525459a9c344dd6dab937895a5d1f012bbf219ef222064",
-    "Power-calculations.json": "7b291996c845491e60b0be2585cc27e6c32a4cd4d1d9075686c398ed57b20bcb",
-    "Load-allocation-check.json": "5f1e11d7af65e0a5a28d9fabdf45370d69428e983f867d53fe018b18e58bde7c",
-    "Supply-path-check.json": "03ec0fd368eb3a16fa682982cc9a4b45e533d4d942e6445986670d651a03815d",
-    "check_power_margins.py": "02196c7be4d7fef5f426271bed3a5fb367f9239828a6d63b831a8c42b00a55ec",
-    "KiCad/Circuit-BOM.csv": "387ffc2feb1195d074662a5645d4c19c8560be456fc5ff10656359388d17bafc"
+    "KiCad/Lab4.kicad_pcb": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
+    "Power-stage-check.json": "97629302a612264a445f3c55e235e676717a84d57a7f442e7d498f042a2a5c83",
+    "Power-calculations.json": "3f07efa630095f93dfcc88218474b51f86a8b3df53aa7b174c7b7f532510e9ff",
+    "Load-allocation-check.json": "b5dd3e7ca524776d8ba47bcfcfde3bc839280d0b99d1b73fb05379eabd1a842a",
+    "Supply-path-check.json": "554385e7f40ecdcbe9159d51fcbd6f3768f1f39634158b5f3e87aab50896c440",
+    "check_power_margins.py": "7532d2ab61f5d2818261be740eafbd921a52892161c49e8e1dc966f24ed3aa4c",
+    "KiCad/Circuit-BOM.csv": "800c35aab28867dc90f3aa578456ff3f48f61d4abffeb05279a30b3e1818fbff"
   },
   "voltage_budget": [
     {
@@ -285,6 +285,12 @@
           "divider_phase_lead_at_66kHz_deg": 44.75465050179342
         },
         {
+          "Cff_pF": 68,
+          "zero_Hz": 23405.13868998461,
+          "pole_Hz": 257456.5255898307,
+          "divider_phase_lead_at_66kHz_deg": 56.09593895552383
+        },
+        {
           "Cff_pF": 82,
           "zero_Hz": 19409.139401450655,
           "pole_Hz": 213500.53341595718,
@@ -297,96 +303,61 @@
           "divider_phase_lead_at_66kHz_deg": 56.222992194976854
         }
       ],
+      "selected_feedforward_pF": 68.0,
       "capacitor_sensitivity": [
         {
-          "effective_total_uF_assumed": 11,
+          "effective_total_uF_assumed": 32.3136,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 24747.41644418867,
+          "LC_pole_Hz_low_L": 14438.880990810274,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.06981382978723405,
+          "capacitive_ripple_V_pp_ideal": 0.02376560109859547,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
-          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+          "droop_per_1A_step_10us_before_response_V": 0.3094672212319271
         },
         {
-          "effective_total_uF_assumed": 11,
+          "effective_total_uF_assumed": 32.3136,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 24747.41644418867,
+          "LC_pole_Hz_low_L": 14438.880990810274,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.031028368794326248,
+          "capacitive_ripple_V_pp_ideal": 0.010562489377153542,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
-          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+          "droop_per_1A_step_10us_before_response_V": 0.3094672212319271
         },
         {
-          "effective_total_uF_assumed": 16.842,
+          "effective_total_uF_assumed": 88,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 19999.971540300226,
+          "LC_pole_Hz_low_L": 8749.532992266642,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.04559744256380327,
+          "capacitive_ripple_V_pp_ideal": 0.008726728723404256,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
-          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+          "droop_per_1A_step_10us_before_response_V": 0.11363636363636365
         },
         {
-          "effective_total_uF_assumed": 16.842,
+          "effective_total_uF_assumed": 88,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 19999.971540300226,
+          "LC_pole_Hz_low_L": 8749.532992266642,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.020265530028357008,
+          "capacitive_ripple_V_pp_ideal": 0.003878546099290781,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
-          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+          "droop_per_1A_step_10us_before_response_V": 0.11363636363636365
         },
         {
-          "effective_total_uF_assumed": 22,
+          "effective_total_uF_assumed": 24.0782,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 17499.065984533285,
+          "LC_pole_Hz_low_L": 16726.851467140594,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.034906914893617025,
+          "capacitive_ripple_V_pp_ideal": 0.031894083762888194,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
-          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+          "droop_per_1A_step_10us_before_response_V": 0.41531343705094237
         },
         {
-          "effective_total_uF_assumed": 22,
+          "effective_total_uF_assumed": 24.0782,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 17499.065984533285,
+          "LC_pole_Hz_low_L": 16726.851467140594,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.015514184397163124,
+          "capacitive_ripple_V_pp_ideal": 0.014175148339061422,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
-          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
-        },
-        {
-          "effective_total_uF_assumed": 29.92,
-          "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 15005.325288314307,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.025666849186483105,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
-          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
-        },
-        {
-          "effective_total_uF_assumed": 29.92,
-          "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 15005.325288314307,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.011407488527325827,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
-          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
-        },
-        {
-          "effective_total_uF_assumed": 44,
-          "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 12373.708222094336,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.017453457446808512,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.024574468085106386,
-          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
-        },
-        {
-          "effective_total_uF_assumed": 44,
-          "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 12373.708222094336,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.007757092198581562,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.01638297872340426,
-          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+          "droop_per_1A_step_10us_before_response_V": 0.41531343705094237
         }
       ],
       "max_conduction_25C_typ_R_600kHz_over_8to15V_W": 0.7951239941284677,
@@ -397,7 +368,7 @@
       "max_inductor_copper_loss_25C_W_in_valid_CCM_grid": 0.398774678130711,
       "largest_valley_A_in_grid": 3.833025542738115,
       "min_required_theta_at_40C_C_per_W_in_grid": 38.560547183293814,
-      "output_charge_current_44uF_1p6ms_linear_ramp_A": 0.18149999999999997
+      "output_charge_current_nominal_bank_1p6ms_linear_ramp_A": 0.36299999999999993
     },
     {
       "reference": "U41",
@@ -561,6 +532,12 @@
           "divider_phase_lead_at_66kHz_deg": 36.75215009678305
         },
         {
+          "Cff_pF": 68,
+          "zero_Hz": 31206.85158664615,
+          "pole_Hz": 265258.2384864922,
+          "divider_phase_lead_at_66kHz_deg": 50.72148247845805
+        },
+        {
           "Cff_pF": 82,
           "zero_Hz": 25878.852535267535,
           "pole_Hz": 219970.24654977405,
@@ -573,96 +550,61 @@
           "divider_phase_lead_at_66kHz_deg": 52.12413925306815
         }
       ],
+      "selected_feedforward_pF": 91.0,
       "capacitor_sensitivity": [
         {
-          "effective_total_uF_assumed": 11,
+          "effective_total_uF_assumed": 30.294,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 24747.41644418867,
+          "LC_pole_Hz_low_L": 14912.41216407441,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.06358045212765959,
+          "capacitive_ripple_V_pp_ideal": 0.023086583924349886,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
-          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+          "droop_per_1A_step_10us_before_response_V": 0.3300983693140556
         },
         {
-          "effective_total_uF_assumed": 11,
+          "effective_total_uF_assumed": 30.294,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 24747.41644418867,
+          "LC_pole_Hz_low_L": 14912.41216407441,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.02825797872340426,
+          "capacitive_ripple_V_pp_ideal": 0.010260703966377727,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
-          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+          "droop_per_1A_step_10us_before_response_V": 0.3300983693140556
         },
         {
-          "effective_total_uF_assumed": 16.842,
+          "effective_total_uF_assumed": 66,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 19999.971540300226,
+          "LC_pole_Hz_low_L": 10103.090456737316,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.041526242334892265,
+          "capacitive_ripple_V_pp_ideal": 0.010596742021276598,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
-          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+          "droop_per_1A_step_10us_before_response_V": 0.15151515151515155
         },
         {
-          "effective_total_uF_assumed": 16.842,
+          "effective_total_uF_assumed": 66,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 19999.971540300226,
+          "LC_pole_Hz_low_L": 10103.090456737316,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.018456107704396558,
+          "capacitive_ripple_V_pp_ideal": 0.004709663120567376,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
-          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+          "droop_per_1A_step_10us_before_response_V": 0.15151515151515155
         },
         {
-          "effective_total_uF_assumed": 22,
+          "effective_total_uF_assumed": 24.0782,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 17499.065984533285,
+          "LC_pole_Hz_low_L": 16726.851467140594,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.03179022606382979,
+          "capacitive_ripple_V_pp_ideal": 0.02904639771263032,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
-          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+          "droop_per_1A_step_10us_before_response_V": 0.41531343705094237
         },
         {
-          "effective_total_uF_assumed": 22,
+          "effective_total_uF_assumed": 24.0782,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 17499.065984533285,
+          "LC_pole_Hz_low_L": 16726.851467140594,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.01412898936170213,
+          "capacitive_ripple_V_pp_ideal": 0.012909510094502365,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
-          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
-        },
-        {
-          "effective_total_uF_assumed": 29.92,
-          "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 15005.325288314307,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.023375166223404256,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
-          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
-        },
-        {
-          "effective_total_uF_assumed": 29.92,
-          "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 15005.325288314307,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.010388962765957448,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
-          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
-        },
-        {
-          "effective_total_uF_assumed": 44,
-          "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 12373.708222094336,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.015895113031914897,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.02238031914893617,
-          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
-        },
-        {
-          "effective_total_uF_assumed": 44,
-          "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 12373.708222094336,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.007064494680851065,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.014920212765957449,
-          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+          "droop_per_1A_step_10us_before_response_V": 0.41531343705094237
         }
       ],
       "max_conduction_25C_typ_R_600kHz_over_8to15V_W": 0.4802130563667915,
@@ -673,7 +615,7 @@
       "max_inductor_copper_loss_25C_W_in_valid_CCM_grid": 0.2751098142816717,
       "largest_valley_A_in_grid": 2.996761795518949,
       "min_required_theta_at_40C_C_per_W_in_grid": 54.22497819437734,
-      "output_charge_current_44uF_1p6ms_linear_ramp_A": 0.14024999999999999
+      "output_charge_current_nominal_bank_1p6ms_linear_ramp_A": 0.21037499999999995
     },
     {
       "reference": "U42",
@@ -837,6 +779,12 @@
           "divider_phase_lead_at_66kHz_deg": 23.585101822175837
         },
         {
+          "Cff_pF": 68,
+          "zero_Hz": 51666.972825573095,
+          "pole_Hz": 285718.3597254192,
+          "divider_phase_lead_at_66kHz_deg": 38.93800039595797
+        },
+        {
           "Cff_pF": 82,
           "zero_Hz": 42845.78234315817,
           "pole_Hz": 236937.17635766466,
@@ -849,96 +797,61 @@
           "divider_phase_lead_at_66kHz_deg": 42.4956330197603
         }
       ],
+      "selected_feedforward_pF": 30.0,
       "capacitor_sensitivity": [
         {
-          "effective_total_uF_assumed": 11,
+          "effective_total_uF_assumed": 32.3136,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 24747.41644418867,
+          "LC_pole_Hz_low_L": 14438.880990810274,
           "ccm_assumption_valid": false,
           "capacitive_ripple_V_pp_ideal": null,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
-          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+          "droop_per_1A_step_10us_before_response_V": 0.3094672212319271
         },
         {
-          "effective_total_uF_assumed": 11,
+          "effective_total_uF_assumed": 32.3136,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 24747.41644418867,
+          "LC_pole_Hz_low_L": 14438.880990810274,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.021693484042553193,
+          "capacitive_ripple_V_pp_ideal": 0.007384764448036899,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
-          "droop_per_1A_step_10us_before_response_V": 0.9090909090909092
+          "droop_per_1A_step_10us_before_response_V": 0.3094672212319271
         },
         {
-          "effective_total_uF_assumed": 16.842,
+          "effective_total_uF_assumed": 66,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 19999.971540300226,
+          "LC_pole_Hz_low_L": 10103.090456737316,
           "ccm_assumption_valid": false,
           "capacitive_ripple_V_pp_ideal": null,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
-          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+          "droop_per_1A_step_10us_before_response_V": 0.15151515151515155
         },
         {
-          "effective_total_uF_assumed": 16.842,
+          "effective_total_uF_assumed": 66,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 19999.971540300226,
+          "LC_pole_Hz_low_L": 10103.090456737316,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.014168645319325799,
+          "capacitive_ripple_V_pp_ideal": 0.0036155806737588653,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
-          "droop_per_1A_step_10us_before_response_V": 0.5937537109606936
+          "droop_per_1A_step_10us_before_response_V": 0.15151515151515155
         },
         {
-          "effective_total_uF_assumed": 22,
+          "effective_total_uF_assumed": 24.0782,
           "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 17499.065984533285,
+          "LC_pole_Hz_low_L": 16726.851467140594,
           "ccm_assumption_valid": false,
           "capacitive_ripple_V_pp_ideal": null,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
-          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
+          "droop_per_1A_step_10us_before_response_V": 0.41531343705094237
         },
         {
-          "effective_total_uF_assumed": 22,
+          "effective_total_uF_assumed": 24.0782,
           "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 17499.065984533285,
+          "LC_pole_Hz_low_L": 16726.851467140594,
           "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.010846742021276596,
+          "capacitive_ripple_V_pp_ideal": 0.009910554961254793,
           "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
-          "droop_per_1A_step_10us_before_response_V": 0.4545454545454546
-        },
-        {
-          "effective_total_uF_assumed": 29.92,
-          "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 15005.325288314307,
-          "ccm_assumption_valid": false,
-          "capacitive_ripple_V_pp_ideal": null,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
-          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
-        },
-        {
-          "effective_total_uF_assumed": 29.92,
-          "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 15005.325288314307,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.007975545603879851,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
-          "droop_per_1A_step_10us_before_response_V": 0.3342245989304813
-        },
-        {
-          "effective_total_uF_assumed": 44,
-          "frequency_Hz_assumed": 400000,
-          "LC_pole_Hz_low_L": 12373.708222094336,
-          "ccm_assumption_valid": false,
-          "capacitive_ripple_V_pp_ideal": null,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": null,
-          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
-        },
-        {
-          "effective_total_uF_assumed": 44,
-          "frequency_Hz_assumed": 600000,
-          "LC_pole_Hz_low_L": 12373.708222094336,
-          "ccm_assumption_valid": true,
-          "capacitive_ripple_V_pp_ideal": 0.005423371010638298,
-          "extra_ripple_V_pp_if_total_ESR_is_10mohm": 0.011454159574468086,
-          "droop_per_1A_step_10us_before_response_V": 0.2272727272727273
+          "droop_per_1A_step_10us_before_response_V": 0.41531343705094237
         }
       ],
       "max_conduction_25C_typ_R_600kHz_over_8to15V_W": 0.02598746487392835,
@@ -949,7 +862,7 @@
       "max_inductor_copper_loss_25C_W_in_valid_CCM_grid": 0.01994385341935758,
       "largest_valley_A_in_grid": 0.4788427613896485,
       "min_required_theta_at_40C_C_per_W_in_grid": 354.20678973109443,
-      "output_charge_current_44uF_1p6ms_linear_ramp_A": 0.091245
+      "output_charge_current_nominal_bank_1p6ms_linear_ramp_A": 0.13686749999999998
     }
   ],
   "thermal_loss_budgets_W": [
@@ -1019,7 +932,79 @@
       "maximum_sink_theta_C_per_W_before_other_losses": 0.33673469387755084
     }
   ],
-  "capacitor_retention_requirements": {
+  "revised_capacitor_banks": [
+    {
+      "rail": "SERVO",
+      "input_refs": [
+        "C410",
+        "C415",
+        "C416"
+      ],
+      "output_refs": [
+        "C412",
+        "C413",
+        "C417",
+        "C418"
+      ],
+      "nominal_input_uF": 66,
+      "nominal_output_uF": 88,
+      "output_voltage_screen_V": 6.82,
+      "assumed_output_bias_loss_fraction": 0.4,
+      "screened_input_uF_at_15V": 12.1176,
+      "screened_input_uF_at_12p6V": 14.1372,
+      "screened_output_uF": 32.3136,
+      "output_target_uF_at_2p63uH_20kHz": 24.0782,
+      "screened_LC_pole_kHz_at_2p63uH": 17.264,
+      "nominal_output_charge_current_A_at_1p6ms_ramp": 0.3751
+    },
+    {
+      "rail": "5V",
+      "input_refs": [
+        "C420",
+        "C425",
+        "C426"
+      ],
+      "output_refs": [
+        "C422",
+        "C423",
+        "C427"
+      ],
+      "nominal_input_uF": 66,
+      "nominal_output_uF": 66,
+      "output_voltage_screen_V": 5.19,
+      "assumed_output_bias_loss_fraction": 0.25,
+      "screened_input_uF_at_15V": 12.1176,
+      "screened_input_uF_at_12p6V": 14.1372,
+      "screened_output_uF": 30.294,
+      "output_target_uF_at_2p63uH_20kHz": 24.0782,
+      "screened_LC_pole_kHz_at_2p63uH": 17.831,
+      "nominal_output_charge_current_A_at_1p6ms_ramp": 0.2141
+    },
+    {
+      "rail": "3V3",
+      "input_refs": [
+        "C430",
+        "C435",
+        "C436"
+      ],
+      "output_refs": [
+        "C432",
+        "C433",
+        "C437"
+      ],
+      "nominal_input_uF": 66,
+      "nominal_output_uF": 66,
+      "output_voltage_screen_V": 3.38,
+      "assumed_output_bias_loss_fraction": 0.2,
+      "screened_input_uF_at_15V": 12.1176,
+      "screened_input_uF_at_12p6V": 14.1372,
+      "screened_output_uF": 32.3136,
+      "output_target_uF_at_2p63uH_20kHz": 24.0782,
+      "screened_LC_pole_kHz_at_2p63uH": 17.264,
+      "nominal_output_charge_current_A_at_1p6ms_ramp": 0.1394
+    }
+  ],
+  "historical_capacitor_retention_requirements_before_bank_revision": {
     "output_44uF_after_minus20percent_tolerance_minus15percent_temp_uF": 29.92,
     "combined_bias_aging_retention_for_16p842uF": 0.5629010695187165,
     "input_22uF_after_minus10percent_tolerance_minus15percent_temp_uF": 16.83,
@@ -1082,8 +1067,8 @@
     "Loss omits gate drive, Coss, dead time, reverse recovery, control losses and external inductor/core/capacitor losses. No junction-temperature prediction is made.",
     "Ideal CCM ripple/loss cases with zero or negative inductor valley are excluded: Eco-mode/DCM requires a different model. Extrema cover valid CCM scenarios only, not every possible operating mode.",
     "Ideal CCM capacitor-ripple and charge-step equations exclude loop response, ESR/ESL, pulse-skipping and unequal sharing. Inductor copper loss uses 19.5mohm +20% at 25C and omits core/hot losses.",
-    "Divider phase lead is not full-loop phase margin. Cff alternatives are analysis candidates, not BOM changes.",
+    "Divider phase lead is not full-loop phase margin. Selected Cff values are 68/91/30pF for servo/Pi/logic; other tabulated values are comparison cases.",
     "Manufacturer typical input/output MLCC bias curves and approximate readings are documented in Power-margin-review.md. This sensitivity calculation does not substitute them for guaranteed bias/temperature/aging limits; PCB thermal impedance is unqualified.",
-    "The 3S LiPo pair is selected. Protection coordination, actual load duty and the capacitor/control-loop revision remain open. The 8-15V sweep is a regulator design envelope, not permission to discharge the pack to 8V."
+    "The 3S LiPo pair and revised capacitor banks are selected. Protection coordination, actual load duty and complete control-loop/thermal qualification remain open. The 8-15V sweep is a regulator design envelope, not permission to discharge the pack to 8V."
   ]
 }

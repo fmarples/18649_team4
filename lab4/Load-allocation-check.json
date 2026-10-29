@@ -1,5 +1,5 @@
 {
-  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
+  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
   "fabrication_release": false,
   "method": "Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.",
   "logic": {

@@ -614,39 +614,39 @@
     },
     {
       "reference": "C412",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
       "x_mm": 31.0,
-      "y_mm": 201.8,
+      "y_mm": 201.275,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
       "bbox": [
-        29.974999999999994,
-        200.055,
-        2.05,
-        3.49
+        29.355000000000004,
+        198.93,
+        3.29,
+        4.69
       ],
       "schematic": true
     },
     {
       "reference": "C413",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
       "x_mm": 31.0,
-      "y_mm": 205.8,
+      "y_mm": 206.325,
       "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
-        29.974999999999994,
-        204.055,
-        2.05,
-        3.49
+        29.355000000000004,
+        203.98,
+        3.29,
+        4.69
       ],
       "schematic": true
     },
     {
       "reference": "C414",
-      "value": "22p C0G",
+      "value": "68p C0G",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
       "x_mm": 14.2,
       "y_mm": 203.5,
@@ -657,6 +657,70 @@
         202.725,
         3.05,
         1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C415",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 11.75,
+      "y_mm": 210.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        9.405000000000001,
+        208.855,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C416",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 13.0,
+      "y_mm": 217.5,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        10.655000000000001,
+        215.855,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C417",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 25.75,
+      "y_mm": 218.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        23.405,
+        216.35500000000002,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C418",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 31.0,
+      "y_mm": 218.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        28.655,
+        216.35500000000002,
+        4.69,
+        3.29
       ],
       "schematic": true
     },
@@ -694,39 +758,39 @@
     },
     {
       "reference": "C422",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
-      "x_mm": 69.0,
-      "y_mm": 128.3,
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 69.2,
+      "y_mm": 127.575,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
       "bbox": [
-        67.975,
-        126.555,
-        2.05,
-        3.49
+        67.555,
+        125.22999999999999,
+        3.29,
+        4.69
       ],
       "schematic": true
     },
     {
       "reference": "C423",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
       "x_mm": 69.0,
-      "y_mm": 132.3,
+      "y_mm": 132.825,
       "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
-        67.975,
-        130.555,
-        2.05,
-        3.49
+        67.355,
+        130.48,
+        3.29,
+        4.69
       ],
       "schematic": true
     },
     {
       "reference": "C424",
-      "value": "22p C0G",
+      "value": "91p C0G",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
       "x_mm": 52.2,
       "y_mm": 130.0,
@@ -737,6 +801,54 @@
         129.225,
         3.05,
         1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C425",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 50.5,
+      "y_mm": 137.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        48.155,
+        135.355,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C426",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 50.75,
+      "y_mm": 141.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        48.405,
+        139.355,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C427",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 64.0,
+      "y_mm": 141.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        61.655,
+        139.355,
+        4.69,
+        3.29
       ],
       "schematic": true
     },
@@ -774,39 +886,39 @@
     },
     {
       "reference": "C432",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
       "x_mm": 107.0,
-      "y_mm": 201.8,
+      "y_mm": 201.275,
       "rotation_deg": 90.0,
       "layer": "F.Cu",
       "bbox": [
-        105.975,
-        200.055,
-        2.05,
-        3.49
+        105.35499999999999,
+        198.93,
+        3.29,
+        4.69
       ],
       "schematic": true
     },
     {
       "reference": "C433",
-      "value": "22u / 16V",
-      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
       "x_mm": 107.0,
-      "y_mm": 205.8,
+      "y_mm": 206.325,
       "rotation_deg": -90.0,
       "layer": "F.Cu",
       "bbox": [
-        105.975,
-        204.055,
-        2.05,
-        3.49
+        105.35499999999999,
+        203.98,
+        3.29,
+        4.69
       ],
       "schematic": true
     },
     {
       "reference": "C434",
-      "value": "22p C0G",
+      "value": "30p C0G",
       "footprint": "Capacitor_SMD:C_0603_1608Metric",
       "x_mm": 90.2,
       "y_mm": 203.5,
@@ -817,6 +929,54 @@
         202.725,
         3.05,
         1.55
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C435",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 85.0,
+      "y_mm": 208.0,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        82.655,
+        206.355,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C436",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 89.0,
+      "y_mm": 218.25,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        86.655,
+        216.60500000000002,
+        4.69,
+        3.29
+      ],
+      "schematic": true
+    },
+    {
+      "reference": "C437",
+      "value": "22u 25V",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "x_mm": 97.5,
+      "y_mm": 218.25,
+      "rotation_deg": 180.0,
+      "layer": "F.Cu",
+      "bbox": [
+        95.155,
+        216.60500000000002,
+        4.69,
+        3.29
       ],
       "schematic": true
     },
@@ -1782,67 +1942,75 @@
     },
     {
       "reference": "H1",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "value": "M3 / 4.0mm clearance / 4mm exclusion",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
       "x_mm": 7.5,
       "y_mm": 7.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        2.8524749999999983,
-        2.353738,
-        9.292524,
-        9.292523
+        1.4525059999999996,
+        0.953752999999999,
+        12.092493,
+        12.092493
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4
     },
     {
       "reference": "H2",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "value": "M3 / 4.0mm clearance / 4mm exclusion",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
       "x_mm": 112.5,
       "y_mm": 7.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        107.852475,
-        2.353738,
-        9.292524,
-        9.292523
+        106.452506,
+        0.953752999999999,
+        12.092493,
+        12.092493
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4
     },
     {
       "reference": "H3",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "value": "M3 / 4.0mm clearance / 4mm exclusion",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
       "x_mm": 35.0,
       "y_mm": 227.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        30.352475,
-        222.35373800000002,
-        9.292524,
-        9.292523
+        28.952506,
+        220.953753,
+        12.092493,
+        12.092493
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4
     },
     {
       "reference": "H4",
-      "value": "Measured chassis center; M3 PCB drill proposed",
-      "footprint": "Lab4_Mechanical:Chassis_support_M3_3mm_edge",
+      "value": "M3 / 4.0mm clearance / 4mm exclusion",
+      "footprint": "Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge",
       "x_mm": 85.0,
       "y_mm": 227.0,
       "rotation_deg": 0.0,
       "layer": "F.Cu",
       "bbox": [
-        80.352475,
-        222.35373800000002,
-        9.292524,
-        9.292523
+        78.952506,
+        220.953753,
+        12.092493,
+        12.092493
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 4.0,
+      "edge_exclusion_mm": 4
     },
     {
       "reference": "H5",
@@ -1858,7 +2026,9 @@
         8.787536,
         8.794922
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3
     },
     {
       "reference": "H6",
@@ -1874,7 +2044,9 @@
         8.787536,
         8.794922
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3
     },
     {
       "reference": "H7",
@@ -1890,7 +2062,9 @@
         8.787536,
         8.794922
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3
     },
     {
       "reference": "H8",
@@ -1906,7 +2080,9 @@
         8.787536,
         8.794922
       ],
-      "schematic": false
+      "schematic": false,
+      "finished_drill_mm": 2.7,
+      "edge_exclusion_mm": 3
     },
     {
       "reference": "HS80",
@@ -4889,5 +5065,5 @@
     }
   ],
   "missing_footprints": [],
-  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78"
+  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94"
 }

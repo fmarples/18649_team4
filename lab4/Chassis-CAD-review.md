@@ -93,22 +93,12 @@ The unchanged PCB SHA-256 is
 `bfb2a79c938132977b585de41a2e6a9b5692a69b79abc8722c8597397bc7b0c3`.
 The large course CAD file is not duplicated in this repository.
 
-## Before release
+## Decision after the comparison
 
-Review the labelled A/B/C/D correspondence before treating the course model
-as verification of the mounting pattern. If these are the intended matching
-features, the remaining focused reference question is:
-
-> Our 1:1 template fits the car using 50/105 mm front/rear pair spacing and
-> 220 mm between rows. The labelled matching features in the Canvas model
-> give 47.87/92.86 mm and 222.25 mm. Does that model represent the same chassis
-> revision? Can we use the mounting pattern already checked on our actual car?
-
-Attach the comparison and the existing fit photo when asking. If the model
-is confirmed to represent a different car, retain the documented physical
-fit as the mounting evidence. If it is confirmed to be the same revision,
-identify the corresponding holes and reconcile the exact template used
-before changing or releasing CAD. Do not stretch the model or move the PCB
-holes merely to force numerical agreement. No new component-placement,
-height or steering-clearance guarantee is inferred from this unresolved
-registration.
+The team subsequently relayed Ayaan's agreement to use the existing physical
+holes with additional allowance. We keep the tested 50/105/220 mm pattern.
+H1–H4 now use 4 mm NPTH PCB holes for M3 hardware, with a 4 mm all-layer
+hole-edge exclusion. See [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
+The earlier 3.2 mm drills and source hash above describe the comparison
+snapshot, not the current board. We have not stretched the chassis model or
+claimed that extra drill allowance fixes its several-millimetre discrepancy.

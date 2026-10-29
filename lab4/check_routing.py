@@ -77,6 +77,10 @@ for k in range(3):
     }
     for name, members in groups.items():
         check_group(u, name, members)
+    for offset in [5,6,7]+([8] if k==0 else []):
+        ref=f'C{base+offset}'
+        check_group(u, ref+' positive',[(ref,'1'),(f'C{base}' if offset in [5,6] else ind,'1' if offset in [5,6] else '2')])
+        check_group(u, ref+' ground',[(ref,'2'),(u,'3')])
 
 for n in [10, 14, 20, 24, 30, 34]:
     u, t, j, test, y, base = f'U{n}', f'U{n+1}', f'J{n}', f'J{n+1}', f'Y{n}', n*10

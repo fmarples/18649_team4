@@ -73,6 +73,7 @@ def buck_scenario(vin, vout, current, inductance, frequency,
 def calculate():
     power, allocation = read("Power-stage-check.json"), read("Load-allocation-check.json")
     design, supply = read("Power-calculations.json"), read("Supply-path-check.json")
+    banks=read('Capacitor-bank-check.json')['banks']
     board_hash = digest(ROOT / "KiCad/Lab4.kicad_pcb")
     assert power["source_sha256"]["KiCad/Lab4.kicad_pcb"] == board_hash
     assert allocation["source_sha256"] == supply["source_sha256"] == board_hash
@@ -120,7 +121,7 @@ def calculate():
         assert parts[f"L{i+1}"]["MPN"] == "SDCHA1V8040-4R7-R"
         assert parts[f"C{base}"]["MPN"] == "GRM32ER61E226KE15L"
         for ref in (f"C{base+2}", f"C{base+3}"):
-            assert parts[ref]["MPN"] == "GRM219R61C226ME15L"
+            assert parts[ref]["MPN"] == "GRM32ER61E226KE15L"
         vout, current = stage["output_nominal_V"], stage["allocated_output_A"]
         inductance = setting["inductance_uH"] * 1e-6 * .8
         voltages = [stage["static_reference_and_resistor_corners_V"][0], vout,
@@ -139,12 +140,12 @@ def calculate():
                      and math.isclose(x["inductance_uH_assumed"], inductance*1e6)]
         top, bottom = setting["feedback_top_ohm"], setting["feedback_bottom_ohm"]
         feedback = []
-        for c in (22, 30, 82, 91):
+        for c in (22, 30, 68, 82, 91):
             zero, pole, phase = feedback_network(top, bottom, c, 66000)
             feedback.append({"Cff_pF": c, "zero_Hz": zero, "pole_Hz": pole,
                              "divider_phase_lead_at_66kHz_deg": phase})
         capacitor = []
-        for effective in (11, 16.842, 22, 29.92, 44):
+        for effective in (banks[i]['screened_output_uF'], banks[i]['nominal_output_uF'], 24.0782):
             for frequency in (400000, 600000):
                 case = buck_scenario(15, vout, current, inductance, frequency, 1, 0)
                 valid = case["ccm_assumption_valid"]
@@ -175,6 +176,7 @@ def calculate():
                     ("highest_inductor_peak", "peak_A"),
                     ("highest_valley", "valley_A")]},
             "passive_feedback_network": feedback,
+            "selected_feedforward_pF": float(parts[f'C{base+4}']['Value'].split()[0].rstrip('p')),
             "capacitor_sensitivity": capacitor,
             "max_conduction_25C_typ_R_600kHz_over_8to15V_W": max(x["conduction_W"] for x in typical_r),
             "max_scenario_IC_loss_W_NOT_guaranteed": max(x["modeled_IC_loss_W_NOT_total"] for x in cases),
@@ -186,7 +188,7 @@ def calculate():
             "largest_valley_A_in_grid": max(x["valley_A"] for x in cases),
             "min_required_theta_at_40C_C_per_W_in_grid": min(
                 x["required_effective_theta_at_40C_C_per_W_before_other_losses"] for x in cases),
-            "output_charge_current_44uF_1p6ms_linear_ramp_A": 44e-6*vout/.0016,
+            "output_charge_current_nominal_bank_1p6ms_linear_ramp_A": banks[i]['nominal_output_uF']*1e-6*vout/.0016,
         })
 
     return {
@@ -220,7 +222,8 @@ def calculate():
              "maximum_sink_theta_C_per_W_before_other_losses":
                  85/(2*amps*drop)-3-1}
             for amps, drop in [(1, 3.2), (2, 4.9)]],
-        "capacitor_retention_requirements": {
+        "revised_capacitor_banks": banks,
+        "historical_capacitor_retention_requirements_before_bank_revision": {
             "output_44uF_after_minus20percent_tolerance_minus15percent_temp_uF": 29.92,
             "combined_bias_aging_retention_for_16p842uF": 16.842/29.92,
             "input_22uF_after_minus10percent_tolerance_minus15percent_temp_uF": 16.83,
@@ -240,9 +243,9 @@ def calculate():
             "Loss omits gate drive, Coss, dead time, reverse recovery, control losses and external inductor/core/capacitor losses. No junction-temperature prediction is made.",
             "Ideal CCM ripple/loss cases with zero or negative inductor valley are excluded: Eco-mode/DCM requires a different model. Extrema cover valid CCM scenarios only, not every possible operating mode.",
             "Ideal CCM capacitor-ripple and charge-step equations exclude loop response, ESR/ESL, pulse-skipping and unequal sharing. Inductor copper loss uses 19.5mohm +20% at 25C and omits core/hot losses.",
-            "Divider phase lead is not full-loop phase margin. Cff alternatives are analysis candidates, not BOM changes.",
+            "Divider phase lead is not full-loop phase margin. Selected Cff values are 68/91/30pF for servo/Pi/logic; other tabulated values are comparison cases.",
             "Manufacturer typical input/output MLCC bias curves and approximate readings are documented in Power-margin-review.md. This sensitivity calculation does not substitute them for guaranteed bias/temperature/aging limits; PCB thermal impedance is unqualified.",
-            "The 3S LiPo pair is selected. Protection coordination, actual load duty and the capacitor/control-loop revision remain open. The 8-15V sweep is a regulator design envelope, not permission to discharge the pack to 8V."],
+            "The 3S LiPo pair and revised capacitor banks are selected. Protection coordination, actual load duty and complete control-loop/thermal qualification remain open. The 8-15V sweep is a regulator design envelope, not permission to discharge the pack to 8V."],
     }
 
 

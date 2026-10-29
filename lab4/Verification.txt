@@ -1,25 +1,31 @@
 Current verification — October 28, 2026
 
-Selected the TA-approved CNHL S220403BK / Hitec 44295 3S LiPo pair.
-Added PA3/ADC1_IN3 battery sensing, three passive parts, and a host-tested
-battery shutdown guard. The guard is not integrated into the MCU application
-and has not been demonstrated on hardware. Circuit, BOM and PCB have 290
-electrical components. Native ERC, DRC, parity and connectivity: zero findings.
-All 311 targeted routed-net checks pass. No new rule exclusions were added.
-See Battery-LiPo.md and Fabrication-check.json for source hashes and limits.
+The selected CNHL S220403BK / Hitec 44295 LiPo pair, PA3 battery sensing
+and standalone shutdown guard are committed. The guard is host-tested and
+ARM-compiled, but not integrated into the application or demonstrated on hardware.
 
-The selected capacitor characteristic plots are now available and identify
-inadequate effective-capacitance margin in the present power filters. This
-remains a fabrication blocker; see Power-margin-review.md. The 29-component
-package check includes the exact fuse-holder drill pattern. Neither passing
-CAD checks nor supplier approval proves operating/thermal safety.
+The team-relayed Ayaan decision retains the cardboard-verified chassis pattern.
+H1–H4 now have 4.0 mm NPTH holes for M3 and 4 mm hole-edge exclusion on
+all four copper layers. Pi holes remain 2.7 mm with 3 mm edge exclusions.
+The original electrical design-rule settings are unchanged.
 
-Drive purchasing workbook reconciled to the active CSV in place; both battery
-and charger use the approved Amazon exception. Course allocations, servo lead,
-fuse coordination and final capacitor changes are explicitly unresolved.
-Tom's October 28 instruction requires four holes common to CAD and hardware,
-physically checked. The working measured/cardboard-verified pattern is kept;
-no oversized slot or release exception has been assumed.
+All nineteen buck-bank capacitors are now 22 µF/25 V 1210 parts, with
+66 µF nominal inputs and 88/66/66 µF servo/Pi/logic outputs. Feed-forward
+parts are 68/91/30 pF. The documented effective-capacitance sensitivity passes;
+full-loop, thermal and loaded-voltage qualification are not claimed.
+
+The schematic, circuit BOM and PCB agree on 300 components and 297 nets.
+Fresh native ERC, DRC, schematic parity and connectivity have zero findings.
+331 targeted connections pass. Mounting, placement, solder-via and the
+29-component selected-package checks pass. Supply/load/ground and power-margin
+screens were refreshed. Four existing power-model unit tests pass.
+See Fabrication-check.json, Capacitor-bank-review.md and Mounting-tolerance-revision.md.
+
+The Drive purchasing workbook was updated in place and readback verified:
+127 active CSV rows, 57 specialty lines, 35 common lines, 10 zero-quantity
+alternatives omitted. Course allocations, servo lead and fuse coordination
+remain open. The report and schematic PDFs and CAD previews are refreshed.
+No fabrication release, order, message or assignment submission was made.
 
 Earlier dated verification entries below are historical and are superseded
 where the current summary and linked checks differ.

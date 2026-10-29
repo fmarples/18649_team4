@@ -110,7 +110,7 @@
     "status": "Calculated scenarios, not measured or guaranteed load/efficiency bounds; not an operating instruction",
     "planning_regulated_output_W": 22.0584,
     "stress_regulated_output_W": 45.8844,
-    "assumptions": "Hold motor supply proxies at 0.72A planning and 6.4A stress; actual motor current depends on voltage/PWM/load. 80% and 85% efficiencies assumed. 8V is not an approved NiMH cutoff. Stress case exceeds L298 limits.",
+    "assumptions": "Hold motor supply proxies at 0.72A planning and 6.4A stress; actual motor current depends on voltage/PWM/load. 80% and 85% efficiencies assumed. 8 V is not a LiPo discharge cutoff; see the selected pack and loaded-stop policy in Battery-LiPo.md. Stress case exceeds L298 limits.",
     "rows": [
       {
         "battery_V": 15,

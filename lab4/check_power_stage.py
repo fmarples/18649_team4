@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent
 with (ROOT/'KiCad/Circuit-BOM.csv').open(encoding='utf-8-sig', newline='') as f:
     parts = {r['Reference']: r for r in csv.DictReader(f)}
 design = json.loads((ROOT/'Power-calculations.json').read_text(encoding='utf-8'))
+banks = json.loads((ROOT/'Capacitor-bank-check.json').read_text(encoding='utf-8'))['banks']
 board = p.LoadBoard(str(ROOT/'KiCad/Lab4.kicad_pcb'))
 fps = {f.GetReference(): f for f in board.GetFootprints()}
 
@@ -60,13 +61,14 @@ for i, allocation in enumerate(design['regulators']):
     peak = load+ripple/2
     rms = math.sqrt(load**2+ripple**2/12)
     assert peak < 6.7 and rms < 5.8, (u, 'allocated-load inductor check')
-    for ref in (f'C{base+2}', f'C{base+3}'):
-        assert parts[ref]['MPN'] == 'GRM219R61C226ME15L', ref
+    bank=banks[i]
+    for ref in bank['input_refs']+bank['output_refs']:
+        assert parts[ref]['MPN'] == 'GRM32ER61E226KE15L', ref
     # TI Eq. 4 uses effective capacitance. These are sensitivity cases,
     # not claimed DC-bias/temperature characteristics of the selected MLCC.
     nominal_l = allocation['inductance_uH']*1e-6
     filter_cases = []
-    for effective_uF in (44, 33, 22, 16.84, 11):
+    for effective_uF in (bank['nominal_output_uF'], bank['screened_output_uF'], 24.0782, 16.84):
         filter_cases.append({
             'assumed_total_effective_capacitance_uF': effective_uF,
             'LC_pole_kHz_nominal_L': round(1/(2*math.pi*math.sqrt(
@@ -92,8 +94,8 @@ for i, allocation in enumerate(design['regulators']):
             'ripple_A_pp': round(ripple, 6), 'peak_A': round(peak, 6),
             'rms_A': round(rms, 6)},
         'output_filter_sensitivity_not_qualification': {
-            'nominal_total_capacitance_uF': 44,
-            'minus20percent_tolerance_minus15percent_temperature_before_bias_aging_uF': 44*.8*.85,
+            'nominal_total_capacitance_uF': bank['nominal_output_uF'],
+            'revised_bank_sensitivity_uF': bank['screened_output_uF'],
             'effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF':
                 round(1/((2*math.pi*20000)**2*inductance)*1e6, 3),
             'cases': filter_cases},
@@ -118,14 +120,14 @@ report = {
         'Static output corners omit wiring drop, load/line regulation, ripple and transients.',
         'Inductor check uses allocated load, -20% inductance and nominal output voltage; not a full fault/temperature/frequency bound.',
         'A 6.7A saturation rating does not cover worst-case 6.7A valley current limit plus ripple.',
-        '44uF output is nominal; manufacturer DC-bias/temperature data and loop review remain needed.',
+        'Revised 88/66/66uF output banks use documented bias/tolerance/temperature/aging sensitivities; these are not guaranteed combined limits.',
         'TI effective thermal data uses a 2oz EVM; our 1oz board has no validated thermal rating.',
         'Digital-geometry-check.json measures local paths; shared ground copper is not an isolated quiet return or a measured noise result.',
         'Typical 25C conduction estimates omit switching/core/gate losses and hot RDSon; they are not total loss or junction-temperature predictions.',
-        'EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on.'],
+        'EN thresholds are not the selected LiPo battery cutoff or proof of regulation at turn-on.'],
     'source_sha256': {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                       for name in ['KiCad/Lab4.kicad_pcb', 'KiCad/Power.kicad_sch',
-                                   'KiCad/Circuit-BOM.csv', 'Power-calculations.json']},
+                                   'KiCad/Circuit-BOM.csv', 'Power-calculations.json', 'Capacitor-bank-check.json']},
 }
 (ROOT/'Power-stage-check.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
 print(json.dumps(report, indent=2))

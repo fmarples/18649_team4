@@ -25,34 +25,29 @@
         "rms_A": 4.027862
       },
       "output_filter_sensitivity_not_qualification": {
-        "nominal_total_capacitance_uF": 44,
-        "minus20percent_tolerance_minus15percent_temperature_before_bias_aging_uF": 29.92,
+        "nominal_total_capacitance_uF": 88,
+        "revised_bank_sensitivity_uF": 32.3136,
         "effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF": 16.842,
         "cases": [
           {
-            "assumed_total_effective_capacitance_uF": 44,
-            "LC_pole_kHz_nominal_L": 11.067,
-            "LC_pole_kHz_minus20percent_L": 12.374
+            "assumed_total_effective_capacitance_uF": 88,
+            "LC_pole_kHz_nominal_L": 7.826,
+            "LC_pole_kHz_minus20percent_L": 8.75
           },
           {
-            "assumed_total_effective_capacitance_uF": 33,
-            "LC_pole_kHz_nominal_L": 12.78,
-            "LC_pole_kHz_minus20percent_L": 14.288
+            "assumed_total_effective_capacitance_uF": 32.3136,
+            "LC_pole_kHz_nominal_L": 12.915,
+            "LC_pole_kHz_minus20percent_L": 14.439
           },
           {
-            "assumed_total_effective_capacitance_uF": 22,
-            "LC_pole_kHz_nominal_L": 15.652,
-            "LC_pole_kHz_minus20percent_L": 17.499
+            "assumed_total_effective_capacitance_uF": 24.0782,
+            "LC_pole_kHz_nominal_L": 14.961,
+            "LC_pole_kHz_minus20percent_L": 16.727
           },
           {
             "assumed_total_effective_capacitance_uF": 16.84,
             "LC_pole_kHz_nominal_L": 17.89,
             "LC_pole_kHz_minus20percent_L": 20.001
-          },
-          {
-            "assumed_total_effective_capacitance_uF": 11,
-            "LC_pole_kHz_nominal_L": 22.135,
-            "LC_pole_kHz_minus20percent_L": 24.747
           }
         ]
       },
@@ -82,34 +77,29 @@
         "rms_A": 3.327989
       },
       "output_filter_sensitivity_not_qualification": {
-        "nominal_total_capacitance_uF": 44,
-        "minus20percent_tolerance_minus15percent_temperature_before_bias_aging_uF": 29.92,
+        "nominal_total_capacitance_uF": 66,
+        "revised_bank_sensitivity_uF": 30.294,
         "effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF": 16.842,
         "cases": [
           {
-            "assumed_total_effective_capacitance_uF": 44,
-            "LC_pole_kHz_nominal_L": 11.067,
-            "LC_pole_kHz_minus20percent_L": 12.374
+            "assumed_total_effective_capacitance_uF": 66,
+            "LC_pole_kHz_nominal_L": 9.036,
+            "LC_pole_kHz_minus20percent_L": 10.103
           },
           {
-            "assumed_total_effective_capacitance_uF": 33,
-            "LC_pole_kHz_nominal_L": 12.78,
-            "LC_pole_kHz_minus20percent_L": 14.288
+            "assumed_total_effective_capacitance_uF": 30.294,
+            "LC_pole_kHz_nominal_L": 13.338,
+            "LC_pole_kHz_minus20percent_L": 14.912
           },
           {
-            "assumed_total_effective_capacitance_uF": 22,
-            "LC_pole_kHz_nominal_L": 15.652,
-            "LC_pole_kHz_minus20percent_L": 17.499
+            "assumed_total_effective_capacitance_uF": 24.0782,
+            "LC_pole_kHz_nominal_L": 14.961,
+            "LC_pole_kHz_minus20percent_L": 16.727
           },
           {
             "assumed_total_effective_capacitance_uF": 16.84,
             "LC_pole_kHz_nominal_L": 17.89,
             "LC_pole_kHz_minus20percent_L": 20.001
-          },
-          {
-            "assumed_total_effective_capacitance_uF": 11,
-            "LC_pole_kHz_nominal_L": 22.135,
-            "LC_pole_kHz_minus20percent_L": 24.747
           }
         ]
       },
@@ -139,34 +129,29 @@
         "rms_A": 0.865639
       },
       "output_filter_sensitivity_not_qualification": {
-        "nominal_total_capacitance_uF": 44,
-        "minus20percent_tolerance_minus15percent_temperature_before_bias_aging_uF": 29.92,
+        "nominal_total_capacitance_uF": 66,
+        "revised_bank_sensitivity_uF": 32.3136,
         "effective_capacitance_for_20kHz_pole_at_minus20percent_L_uF": 16.842,
         "cases": [
           {
-            "assumed_total_effective_capacitance_uF": 44,
-            "LC_pole_kHz_nominal_L": 11.067,
-            "LC_pole_kHz_minus20percent_L": 12.374
+            "assumed_total_effective_capacitance_uF": 66,
+            "LC_pole_kHz_nominal_L": 9.036,
+            "LC_pole_kHz_minus20percent_L": 10.103
           },
           {
-            "assumed_total_effective_capacitance_uF": 33,
-            "LC_pole_kHz_nominal_L": 12.78,
-            "LC_pole_kHz_minus20percent_L": 14.288
+            "assumed_total_effective_capacitance_uF": 32.3136,
+            "LC_pole_kHz_nominal_L": 12.915,
+            "LC_pole_kHz_minus20percent_L": 14.439
           },
           {
-            "assumed_total_effective_capacitance_uF": 22,
-            "LC_pole_kHz_nominal_L": 15.652,
-            "LC_pole_kHz_minus20percent_L": 17.499
+            "assumed_total_effective_capacitance_uF": 24.0782,
+            "LC_pole_kHz_nominal_L": 14.961,
+            "LC_pole_kHz_minus20percent_L": 16.727
           },
           {
             "assumed_total_effective_capacitance_uF": 16.84,
             "LC_pole_kHz_nominal_L": 17.89,
             "LC_pole_kHz_minus20percent_L": 20.001
-          },
-          {
-            "assumed_total_effective_capacitance_uF": 11,
-            "LC_pole_kHz_nominal_L": 22.135,
-            "LC_pole_kHz_minus20percent_L": 24.747
           }
         ]
       },
@@ -183,16 +168,17 @@
     "Static output corners omit wiring drop, load/line regulation, ripple and transients.",
     "Inductor check uses allocated load, -20% inductance and nominal output voltage; not a full fault/temperature/frequency bound.",
     "A 6.7A saturation rating does not cover worst-case 6.7A valley current limit plus ripple.",
-    "44uF output is nominal; manufacturer DC-bias/temperature data and loop review remain needed.",
+    "Revised 88/66/66uF output banks use documented bias/tolerance/temperature/aging sensitivities; these are not guaranteed combined limits.",
     "TI effective thermal data uses a 2oz EVM; our 1oz board has no validated thermal rating.",
     "Digital-geometry-check.json measures local paths; shared ground copper is not an isolated quiet return or a measured noise result.",
     "Typical 25C conduction estimates omit switching/core/gate losses and hot RDSon; they are not total loss or junction-temperature predictions.",
-    "EN thresholds are not a NiMH battery cutoff or proof of regulation at turn-on."
+    "EN thresholds are not the selected LiPo battery cutoff or proof of regulation at turn-on."
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
-    "KiCad/Power.kicad_sch": "632b715a2a1c37530cdf2203c7ec021088f25eb416e343e064d9cfff111c7bf1",
-    "KiCad/Circuit-BOM.csv": "387ffc2feb1195d074662a5645d4c19c8560be456fc5ff10656359388d17bafc",
-    "Power-calculations.json": "7b291996c845491e60b0be2585cc27e6c32a4cd4d1d9075686c398ed57b20bcb"
+    "KiCad/Lab4.kicad_pcb": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
+    "KiCad/Power.kicad_sch": "442d68d3e394d2661d0d7cd49b8fab038db3bbde52eca3c5096f69d7ac774141",
+    "KiCad/Circuit-BOM.csv": "800c35aab28867dc90f3aa578456ff3f48f61d4abffeb05279a30b3e1818fbff",
+    "Power-calculations.json": "3f07efa630095f93dfcc88218474b51f86a8b3df53aa7b174c7b7f532510e9ff",
+    "Capacitor-bank-check.json": "effc9b8897303dd1f5f2e2e57dd7b22dfb95596dd521256eed04b0af212fff1e"
   }
 }

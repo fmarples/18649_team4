@@ -1,5 +1,5 @@
 {
-  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78",
+  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94",
   "fabrication_release": false,
   "copper_resistivity_ohm_m": 1.72e-08,
   "outer_copper_mm": 0.035,
@@ -269,11 +269,11 @@
         {
           "target": "J90.2",
           "connected": true,
-          "path_resistance_ohm": 0.024804,
-          "drop_if_full_rail_current_A_is_applied_V": 0.099217,
-          "included_trace_length_mm": 97.318,
+          "path_resistance_ohm": 0.025385,
+          "drop_if_full_rail_current_A_is_applied_V": 0.101541,
+          "included_trace_length_mm": 99.682,
           "included_vias": 1,
-          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.396869
+          "conductor_loss_if_full_rail_current_A_is_applied_W": 0.406165
         }
       ]
     },

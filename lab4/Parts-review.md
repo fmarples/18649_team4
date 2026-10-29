@@ -250,7 +250,7 @@ Stock was visible on October 24 but is not reserved. Prices may change.
 | Isolation/termination/recovery caps | [Samtec SNT-100-BK-T-H](https://www.samtec.com/products/snt-100-bk-t-h) | 18 + 2 | 2.54mm pitch, handle for removal. Twelve isolation + four termination caps installed normally; two BOOT0 recovery caps stored off-board. Check adjacent-cap access. |
 | Chassis spacers | [Wurth 970350365](https://www.we-online.com/components/products/datasheet/970350365.pdf) | 4 + 1 | M3 female/female, 35mm body, nylon, 6mm across flats. Preserves proposed board height; smooth chassis holes confirmed; check access underneath. |
 | Chassis screws | [Wurth 97790803111](https://www.digikey.com/en/products/detail/w%C3%BCrth-elektronik/97790803111/10056388) | 8 + 2 | M3x8 nylon, one screw into each end of each spacer. Confirm plate thickness and thread engagement. |
-| Chassis washers | [Essentra MFW030A](https://www.digikey.com/en/products/detail/essentra-components/MFW030A/4105389) | 8 + 2 | Nylon, 3.2mm ID, 7mm OD, 0.5mm thick. Under screw heads; lower washer bridges the measured 4.5mm chassis hole. |
+| Chassis washers | [Essentra MFW030A](https://www.digikey.com/en/products/detail/essentra-components/MFW030A/4105389) | 8 + 2 | Nylon, 3.2mm ID, 7mm OD, 0.5mm thick. Under screw heads; washers bridge the 4.0mm PCB and measured 4.5mm chassis holes. |
 | Pi spacers | [RAF M1269-2545-AL](https://www.digikey.com/en/products/detail/raf-electronic-hardware/M1269-2545-AL/7680971) | 4 + 1 | M2.5 female/female, 22mm body, 4.5mm hex across flats, about 5.20mm across corners. Reserve a 5.5mm hardware envelope; actual socket engagement remains untested. |
 | Pi screws | [Essentra 50M025045P005](https://www.digikey.com/en/products/detail/essentra-components/50M025045P005/11639454) | 8 + 2 | M2.5x5 nylon, 5mm pan head. No spacing washers; verify adjacent components and thread depth. |
 | Encoder housings | [Harwin M20-1060400](https://www.harwin.com/products/M20-1060400) | 2 + 1 | Four-position 2.54mm female housing for 0.64mm square pins; not keyed, so mark pin 1. |
@@ -455,3 +455,11 @@ These are additional DigiKey requests, not orders. Do not substitute the
 1% course resistors. The October 26 uploaded purchasing workbook is a fixed
 snapshot and does not include this change; communicate the revised resistor
 lines before procurement. The active CSV is current.
+
+### October 28 capacitor and mounting update
+
+The active CSV includes nineteen GRM32ER61E226KE15L bank capacitors plus four
+spares and the new 68/91/30 pF feed-forward MPNs. All use DigiKey sources.
+The old output-capacitor bank row has zero purchase quantity; C700 remains
+separate. See Capacitor-bank-review.md. Chassis PCB holes are now 4.0 mm with
+4 mm edge exclusions; the M3 hardware and 7 mm OD washers remain selected.

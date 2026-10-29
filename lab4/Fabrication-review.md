@@ -7,6 +7,22 @@ The [handout](https://drive.google.com/file/d/1BY2rbBwuB3GaSkNRFC7Hki2tzdnRCmCk/
 requires the final files on Gradescope by **October 29, 2026, 11:59 p.m.**
 The class fabrication batch follows the next morning.
 
+## October 28 capacitor and chassis allowance revision
+
+We kept the cardboard-verified chassis pattern following the team's relayed
+Ayaan decision. H1–H4 now use 4.0 mm NPTH drills for M3 hardware and a 4 mm
+exclusion from the finished hole edge on every copper layer. Pi supports
+retain 2.7 mm holes and the 3 mm edge exclusion. See
+[Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
+
+We replaced the six small buck-output capacitors and added ten parallel
+capacitors. Each input bank is now 66 µF nominal; servo/Pi/logic output banks
+are 88/66/66 µF. The selected 1210 parts and 68/91/30 pF feed-forward values
+are documented in [Capacitor-bank-review.md](Capacitor-bank-review.md).
+The bias/tolerance/temperature/aging screen passes the stated capacitance
+targets. This is a calculated design screen, not measured transient or
+thermal qualification.
+
 ## October 27 mounting and encoder revision
 
 We implemented the 3 mm clearance from the **finished hole edge** at all
@@ -23,14 +39,14 @@ and repaired local routing. A new 4.0 V encoder rail replaces the marginal
 See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
-The current board has 290 electrical footprints plus eight supports and
-HS80, 19,755 track/via items and six filled ground zones after the 5 V cell
-relocation. The positive-feed Pi screen improves to 4.9116 V at 3 A; local
-return/contact/heating/dynamic losses are not included in that number.
-All 311 targeted connection checks pass. Native findings are recorded in
-[Fabrication-check.json](Fabrication-check.json); a clean automated result
-does not authorize fabrication. Cutoff integration, motor/fuse protection, Pi voltage margin, qualified
-buck-capacitor selection and final purchasing/manufacturing review remain.
+The current board has 300 electrical footprints plus eight supports and
+HS80, 19,997 track/via items and six filled ground zones. The targeted routing
+check covers 331 connections. Fresh native findings and source hashes are in
+[Fabrication-check.json](Fabrication-check.json). These checks do not authorize
+fabrication. Pi voltage margin, motor/fuse protection, application cutoff
+integration and final purchasing/manufacturing review remain. The capacitor
+selection and routing revision is implemented; loop/transient and thermal
+behavior still require qualified review and later prototype validation.
 
 
 ## October 26 course updates
@@ -54,16 +70,11 @@ included, matching the [October 25 clarification](https://18449-f26.slack.com/ar
 
 ## Decisions needed before the layout is fixed
 
-The October 28 [chassis reference comparison](Chassis-CAD-review.md) corrects
-the earlier rear-hole selection. The revised pair gives 222.246 mm between
-rows and 92.860 mm rear-pair spacing; the previously reported 238.650 mm used
-the wrong rear pair. Review the labelled feature correspondence and remaining
-width discrepancy against the physical evidence.
-The completed four-hole physical template fit remains valid evidence; the
-PCB outline and holes were not changed. The [October 28 TA instruction](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793222343758609) requires four holes common to the CAD and real chassis, physically measured.
-Keep the current pattern for working CAD only until a common set or explicit
-exception is established. Slot tolerances require a bounded offset; they do
-not resolve an unknown model discrepancy.
+The downloaded chassis CAD differs from the actual car. We retain the
+measured, cardboard-verified pattern following the team's relayed Ayaan
+decision and add bounded allowance. The reference comparison remains in
+[Chassis-CAD-review.md](Chassis-CAD-review.md); it is not claimed as a matching
+assembly. No further common-hole selection is pending for this revision.
 
 | Decision | Evidence needed | Why it affects fabrication |
 | --- | --- | --- |
@@ -113,8 +124,8 @@ signal-routing and label work as pending. Before release:
    only their affected schematic, placement and routes.
 2. Close the remaining component and power-margin findings in
    [Digital-review.md](Digital-review.md):
-   Pi/logic feed and return refinement, exact input/output capacitance data,
-   final feed-forward choice and cooling assessment. The analytical screens
+   Pi/logic feed and return refinement, the implemented capacitor-bank/control-loop review
+   and cooling assessment. The analytical screens
    in [Power-margin-review.md](Power-margin-review.md) are complete; they are
    not evidence that the outstanding margins have passed.
 3. Recheck any changed footprint, connector, stencil aperture or mechanical
@@ -180,7 +191,7 @@ Thursday reserved for TA corrections and upload checks. Assembly, powered
 bring-up, adapter continuity and thermal/load tests on the new board occur after
 boards arrive; they must remain marked unperformed in this submission.
 
-The October 28 selected-capacitor curve review identifies inadequate effective
-capacitance in the present input and 5 V/servo output filters. See
-[Power-margin-review.md](Power-margin-review.md). This is a design blocker
-before final exports, not a request for new chassis measurements.
+The October 28 capacitor revision addresses the earlier capacitance shortfall
+with larger parallel banks and documented feed-forward choices. See
+[Capacitor-bank-review.md](Capacitor-bank-review.md). Final engineering review
+and startup/load-step/temperature validation must not be inferred from DRC.

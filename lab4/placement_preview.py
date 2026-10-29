@@ -29,7 +29,7 @@ for r in d['reservations']:
 for c in d['components']:
     x,y,w,h=c['bbox'];ref=c['reference']
     if not c['schematic'] and ref.startswith('H') and ref[1:].isdigit():
-        rad=(2.7 if int(ref[1:])>=5 else 3.2)/2
+        rad=c['finished_drill_mm']/2
         cx,cy=c['x_mm'],c['y_mm'];dr.ellipse(rbox(cx-rad,cy-rad,2*rad,2*rad),fill='white',outline='#9b4800' if int(ref[1:])<5 else '#315d9b',width=2)
         dr.text(xy(cx-3,cy-6),ref,font=ft(13,True),fill='#173b53')
     else:
@@ -62,7 +62,7 @@ side=[('What this establishes',[
     'Qualify motor protection and cooling.',
     '1 oz copper; 0.15 mm buck-pad exception.',
     'Check pack mounting and cable space.',
-    '3 mm clearance from all hole edges.']),
+    'Chassis / Pi hole-edge gaps: 4 / 3 mm.']),
     ('Placement key',[
     'Blue block: Pi mounted BELOW this area.',
     'Orange connector: socket on underside.',
@@ -103,14 +103,14 @@ for c in d['components']:
     else:
         cx=(BX+c['x_mm'])*mm;cy=(BY+234-c['y_mm'])*mm
         pdf.setStrokeColor(HexColor('#000000'));pdf.setLineWidth(.2*mm)
-        pdf.circle(cx,cy,(1.35 if int(ref[1:])>=5 else 1.6)*mm)
+        pdf.circle(cx,cy,c['finished_drill_mm']/2*mm)
         pdf.line(cx-2.5*mm,cy,cx+2.5*mm,cy);pdf.line(cx,cy-2.5*mm,cx,cy+2.5*mm)
         pdf.setFillColor(HexColor('#000000'));pdf.setFont('Helvetica-Bold',7)
         pdf.drawString(cx+2*mm,cy+2*mm,ref)
 pdf.setFillColor(HexColor('#183b55'));pdf.setFont('Helvetica-Bold',10)
 pdf.setFont('Helvetica',7);pdf.drawCentredString(115*mm,115*mm,'Pi BELOW PCB / H5-H8 supports')
 pdf.setFillColor(HexColor('#000000'));pdf.setFont('Helvetica',8)
-pdf.drawString(15*mm,20*mm,'H1-H4: measured centers; M3 PCB drills proposed. Chassis holes measured 4.5 mm.')
+pdf.drawString(15*mm,20*mm,'H1-H4: measured centers; 4.0 mm PCB drills for M3. Chassis holes measured 4.5 mm.')
 pdf.drawString(15*mm,15*mm,'Check wires, steering travel, Pi below the PCB, port access and separate battery location.')
 pdf.setLineWidth(.4*mm);pdf.line(15*mm,8*mm,65*mm,8*mm)
 pdf.line(15*mm,6*mm,15*mm,10*mm);pdf.line(65*mm,6*mm,65*mm,10*mm)
@@ -176,9 +176,9 @@ for i,line in enumerate(['Chassis spacers: 35 mm nominal; four-hole paper fit pa
     'Pi-to-PCB gap: 22 mm nominal; calculated socket engagement 5.17 mm.',
     'Reported underside parts <5 mm; calculated nominal metal clearance 6.4 mm.',
     'USB top measured ~18 mm from Pi board bottom; check any added cooler.',
-    'Working chassis pattern: final common CAD/physical holes still need resolution.',
+    'Measured chassis pattern retained per team-relayed Ayaan decision; 4 mm drills.',
     'Still check unknown plug/cable/steering envelopes and assembled socket fit.']):
     pdf.drawString(15*mm,(65-i*7)*mm,line)
-pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi hardware OD <=5.5 mm. All holes: 3 mm from hole edge. Socket first pair aligns to Pi3/4, not1/2.')
+pdf.setFont('Helvetica',7);pdf.drawString(15*mm,16*mm,'Pi hardware OD <=5.5 mm. Chassis / Pi edge exclusions: 4 / 3 mm. Socket first pair aligns to Pi3/4.')
 pdf.save()
 print('Created direct-Pi placement overview, side view and two-page true-size fit template.')

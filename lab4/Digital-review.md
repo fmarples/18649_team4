@@ -4,17 +4,29 @@
 
 The selected LiPo pair, PA3 sensing circuit and standalone cutoff logic are
 documented in [Battery-LiPo.md](Battery-LiPo.md). The current board contains
-290 electrical footprints and 19,755 track/via items. All 311 targeted
-connections and fresh native ERC/DRC/parity checks pass. The exact fuse-holder
-pattern is now checked with the other 28 selected packages. The
-[battery-monitor comparison](Battery-monitor-change.json) confirms the limited
-scope of this routing revision and unchanged project/custom rules.
+300 electrical footprints and 19,997 track/via items. All 331 targeted
+connections and fresh native ERC/DRC/parity checks pass. The selected-package
+check covers 29 components, including the exact fuse-holder pattern.
 
-Typical capacitor curves are now available and expose insufficient effective
-capacitance in the present power filters. Capacitor/loop revision, full Pi
-supply margin, motor/fuse protection, application cutoff integration and final
-manufacturing review remain open. The chassis pattern also needs the course
-CAD/hardware reconciliation requested by staff. No fabrication release is claimed.
+We replaced the regulator bank capacitors with 25 V 1210 parts and added
+parallel capacitors: 66 uF at each input and 88/66/66 uF at the servo/Pi/logic
+outputs. The feed-forward capacitors are now 68/91/30 pF. We rerouted the new
+connections and moved twelve ground vias away from the enlarged solder pads.
+The [capacitor review](Capacitor-bank-review.md) records the calculations and
+their limits: typical bias curves and assumed aging/temperature allowances
+are not guaranteed combined minimum capacitance or a complete loop assessment.
+
+We keep the cardboard-verified chassis pattern following the team-relayed
+TA decision, with 4 mm round NPTH holes for M3 screws and washers. The chassis
+holes have 4 mm exclusions measured from the finished hole edge; the Pi holes
+keep their 3 mm edge exclusions. The check covers components and copper on
+all four layers. See [Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
+This does not establish that the downloaded chassis CAD matches the car.
+
+Full Pi supply margin, capacitor/control-loop and thermal qualification,
+motor/fuse protection, application cutoff integration and final manufacturing
+review remain open. Final mating and retention checks occur during assembly.
+No fabrication release or powered-board test is claimed.
 
 ## Earlier revision — October 27
 

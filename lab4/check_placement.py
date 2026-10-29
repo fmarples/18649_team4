@@ -56,7 +56,7 @@ for ref,fp in fps.items():
     if ref in schematic:
         for hole in [f'H{i}' for i in range(1,9)]:
             pos=fps[hole].GetPosition();hx=p.ToMM(pos.x)-40;hy=p.ToMM(pos.y)-40
-            r=p.ToMM(next(iter(fps[hole].Pads())).GetDrillSize().x)/2+3
+            r=p.ToMM(next(iter(fps[hole].Pads())).GetDrillSize().x)/2+(4 if int(hole[1:])<=4 else 3)
             # Distance from the hole center to the courtyard rectangle.
             dx=max(x-hx,0,hx-(x+w));dy=max(y-hy,0,hy-(y+h))
             if dx*dx+dy*dy < r*r:errors.append(f'{ref} in {hole} support envelope')

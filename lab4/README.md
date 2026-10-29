@@ -5,6 +5,22 @@ MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 3S LiPo supply using the CNHL S220403BK / Hitec 44295 pair approved by Anson on October 28. The Raspberry Pi remains a separate board connected through
 its 40-pin header.
 
+## October 28 capacitor and chassis allowance revision
+
+We kept the cardboard-verified chassis pattern following the team's relayed
+Ayaan decision. H1–H4 now use 4.0 mm NPTH drills for M3 hardware and a 4 mm
+exclusion from the finished hole edge on every copper layer. Pi supports
+retain 2.7 mm holes and the 3 mm edge exclusion. See
+[Mounting-tolerance-revision.md](Mounting-tolerance-revision.md).
+
+We replaced the six small buck-output capacitors and added ten parallel
+capacitors. Each input bank is now 66 µF nominal; servo/Pi/logic output banks
+are 88/66/66 µF. The selected 1210 parts and 68/91/30 pF feed-forward values
+are documented in [Capacitor-bank-review.md](Capacitor-bank-review.md).
+The bias/tolerance/temperature/aging screen passes the stated capacitance
+targets. This is a calculated design screen, not measured transient or
+thermal qualification.
+
 ## October 27 mounting and encoder revision
 
 We implemented the 3 mm clearance from the **finished hole edge** at all
@@ -21,14 +37,14 @@ and repaired local routing. A new 4.0 V encoder rail replaces the marginal
 See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
-The current board has 290 electrical footprints plus eight supports and
-HS80, 18,720 track segments, 1,035 vias and six filled ground zones.
-All 311 targeted connection checks pass. Native findings are recorded in
-[Fabrication-check.json](Fabrication-check.json); a clean automated result
-does not authorize fabrication. Battery/fault handling, Pi voltage margin,
-buck-capacitor and control-loop revision, and final purchasing/manufacturing
-review remain. Typical capacitor curves are now available; they expose
-inadequate effective-capacitance margin in the present design.
+The current board has 300 electrical footprints plus eight supports and
+HS80, 19,997 track/via items and six filled ground zones. The targeted routing
+check covers 331 connections. Fresh native findings and source hashes are in
+[Fabrication-check.json](Fabrication-check.json). These checks do not authorize
+fabrication. Pi voltage margin, motor/fuse protection, application cutoff
+integration and final purchasing/manufacturing review remain. The capacitor
+selection and routing revision is implemented; loop/transient and thermal
+behavior still require qualified review and later prototype validation.
 
 
 
@@ -104,7 +120,7 @@ for a TA submission so the reviewed version can be recovered later.
 | [KiCad/Lab4.kicad_pcb](KiCad/Lab4.kicad_pcb) | Editable 120 x 234 mm PCB with all required connections routed; electrical/thermal and mechanical review remains open. |
 | [Placement-overview.png](Placement-overview.png) | Direct Pi stack: bottom socket and top circuitry above the Pi. |
 | [Pi-stack-side-view.png](Pi-stack-side-view.png) | Proposed 22 mm Pi gap and 35 mm chassis spacers; physical fit pending. |
-| [Placement-detail.svg](Placement-detail.svg) | Native KiCad plot with pads and references. |
+| [Placement-detail.svg](Placement-detail.svg) | Native KiCad component outlines and references. |
 | [Placement-fit-template.pdf](Placement-fit-template.pdf) | Two-page true-size PCB/Pi fit aid, side view and measurement fields; not a drill template. |
 | [Placement-review.md](Placement-review.md) | Placement decisions, verification results and remaining work. |
 | [Placement-check.json](Placement-check.json) | Netlist, outline, Pi-space and mounting-margin checks. |

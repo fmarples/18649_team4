@@ -42,3 +42,12 @@ accepts an explicit `--review-gap-mm`. Nominal geometry and automated DRC
 cannot establish drill registration, solder quality or stencil performance.
 Final manufacturing exports must be inspected after the remaining design
 changes; this review is not a fabrication release.
+
+## October 28 capacitor-bank revision
+
+The larger 1210 output pads initially covered twelve existing ground-via
+holes. We moved those vias and repaired their ground branches, keeping both
+vias per original output ground pad. The refreshed check finds zero drill/land
+intersections and applies the same 0.15 mm nominal drill-separation sensitivity.
+No via filling/capping or reliable tent sealing is assumed. Final mask/paste
+export inspection remains part of manufacturing review.

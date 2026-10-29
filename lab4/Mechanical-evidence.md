@@ -112,3 +112,13 @@ from the nearest Pi hole edge and 3.135 mm from 5.5 mm OD hardware.
 The old 0.595 mm hardware clearance and 1.005 mm rule shortfall describe
 the superseded 40-contact socket. The new socket covers Pi3–38 only;
 assembly must align its first pair to Pi3/4. See Mounting-and-encoder-revision.md.
+
+## October 28 chassis allowance
+
+The cardboard-verified centers remain unchanged. Following the team-relayed
+Ayaan decision, chassis holes H1–H4 now use 4 mm finished NPTH drills for M3,
+with 4 mm from each hole edge to copper/components. Pi holes retain the
+existing 2.7 mm drill and 3 mm exclusion. The 7 mm OD washers cover the
+enlarged PCB holes; retention is checked at assembly. This is bounded
+alignment allowance, not an assertion that the downloaded CAD matches the
+car. See Mounting-tolerance-revision.md.

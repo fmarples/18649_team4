@@ -1,6 +1,6 @@
 # Power margins, capacitors and thermal review
 
-27 October 2026. We recalculated these margins after moving the 5 V regulator
+Updated 28 October 2026. We recalculated these margins after moving the 5 V regulator
 closer to the Pi and rerouting its connections. The buck setpoints are unchanged;
 the separate encoder LDO remains in place. The
 calculations identify limits of the present design; they do not
@@ -36,120 +36,41 @@ open. A larger power-routing redesign should use the confirmed load and
 battery envelope. No generic efficiency or contact-resistance assumption
 has been promoted to a guaranteed specification.
 
-## Effective capacitance and ripple
+## Revised capacitors and feed-forward network
 
-Each output has two GRM219R61C226ME15L 22 µF, ±20%, 16 V X5R parts.
-Their combined nominal 44 µF becomes 29.92 µF after applying −20% tolerance
-and −15% temperature variation, before bias and aging. Each input's
-GRM32ER61E226KE15L is 22 µF, ±10%, 25 V X5R; the corresponding value is
-16.83 µF. These multiplicative screens are assumptions, not guaranteed
-combined limits from a part approval specification.
-See the manufacturer sheets for the [output part](https://www.mouser.com/datasheet/2/281/1/GRM219R61C226ME15_01A-1986409.pdf)
-and [input part](https://www.farnell.com/datasheets/4088151.pdf).
+We replaced the earlier single 22 µF input / two 0805 output arrangement.
+All nineteen bank parts now use Murata GRM32ER61E226KE15L, 22 µF/25 V X5R
+1210, ±10%. Each input has three parts plus 100 nF. Servo/Pi/logic outputs
+have four/three/three parts: 88/66/66 µF nominal. C414/C424/C434 now use
+68/91/30 pF C0G feed-forward parts. C700 remains the separate 0805 Pi bypass.
 
-| Conditional design target | Required effective capacitance | Retention after the tolerance/temperature screen |
-| --- | ---: | ---: |
-| Output LC pole at 20 kHz, L = 3.76 µH | 16.84 µF total | 56.3% of 29.92 µF |
-| Same target with L = 2.63 µH | 24.08 µF total | 80.5% of 29.92 µF |
-| Input decoupling above 10 µF | More than 10 µF | More than 59.4% of 16.83 µF |
+[Capacitor-bank-review.md](Capacitor-bank-review.md) gives exact sources,
+bias readings, selection rationale, ripple/ESR examples and limitations.
+The combined planning screen applies conservative readings of the typical
+bias plot, −10% tolerance, −15% temperature and an assumed −20% aging factor.
+It gives input capacitance 14.14 µF at 12.6 V and 12.12 µF at 15 V. The
+servo/Pi/logic outputs give 32.31/30.29/32.31 µF, with calculated LC poles
+17.26/17.83/17.26 kHz at the 2.63 µH rolloff sensitivity. These exceed the
+stated >10 µF input and 24.08 µF output planning targets; they are not
+manufacturer-guaranteed combined minima or measurements.
 
-The first inductance includes the selected 4.7 µH part's −20% tolerance.
-The second is [Eaton's full-load minimum at 6.7 A and 25 °C](https://www.eaton.com/content/dam/eaton/products/electronic-components/resources/data-sheet/eaton-sdcha1v80-automotive-semi-shielded-power-inductor-data-sheet-elx1097-en.pdf).
-Using it at our loads is a sensitivity to magnetic rolloff, not a guaranteed
-minimum at all temperatures. The LC target follows the
-[TPS564252 design guidance](https://www.ti.com/lit/ds/symlink/tps564252.pdf);
-20 kHz is not a pass/fail stability boundary.
+The earlier typical curves showed why the old design needed revision:
+one input capacitor fell to about 8.8 µF at 12.6 V before tolerances, while
+the small 0805 outputs lost roughly 40/62/70% at 3.3/5.1/6.6 V.
+The [input-family curve](https://static.chipdip.ru/lib/973/DOC031973461.pdf)
+and [old output-family curve](https://datasheet.octopart.com/GRM219R61C226ME15L-Murata-datasheet-140706706.pdf)
+are manufacturer-authored typical characteristic sheets, not production limits.
+The unselected Wurth comparison in Capacitor-candidate-check.json remains a
+historical alternative study; it does not describe the current BOM.
 
-### Selected-part curves retrieved October 28
-
-We found manufacturer-authored characteristic sheets for both exact part
-families. These are typical 25 °C curves, not guaranteed production limits.
-We read the plots approximately; the values below must not be described as
-measurements of our board or precise model outputs.
-
-| Fitted bank | Approximate bias loss | Typical capacitance before tolerance/temperature | Screen with negative tolerance and −15% temperature |
-| --- | ---: | ---: | ---: |
-| One 22 µF input at 12.6 V | 60% | 8.8 µF | 6.73 µF |
-| One 22 µF input at 15 V | 67% | 7.26 µF | 5.55 µF |
-| Two 22 µF outputs at 3.3 V | 40% | 26.4 µF | 17.95 µF |
-| Two 22 µF outputs at 5.1 V | 62% | 16.72 µF | 11.37 µF |
-| Two 22 µF outputs at 6.6 V | 70% | 13.2 µF | 8.98 µF |
-
-The input uses ±10% tolerance; outputs use ±20%. Multiplying these factors
-is a sensitivity screen, not a guaranteed combined minimum, and excludes
-aging. Rounded nominal voltages are used here; final qualification must
-include the high setpoint corners. The input is already below TI's >10 µF
-recommendation at full battery voltage in the typical curve. The 5 V and
-servo outputs fall below our 16.84 µF LC-pole planning target in the screen;
-the logic output does not meet the more demanding 24.08 µF rolloff case.
-These are substantive design gaps. They do not prove instability, and a clean
-DRC does not close them. We have not released these filters for fabrication.
-
-Sources: Murata GRM32ER61E226KE15 characteristic sheet, updated 2020-08-18,
-[DC-bias plot p.3](https://static.chipdip.ru/lib/973/DOC031973461.pdf);
-Murata GRM219R61C226ME15 characteristic sheet, updated 2020-05-07,
-[DC-bias plot p.3](https://datasheet.octopart.com/GRM219R61C226ME15L-Murata-datasheet-140706706.pdf).
-Their zero-bias ESR plots do not establish hot, biased ripple capability.
-
-Next design work is to choose additional capacitance or a documented larger
-part, verify its effective C/ESR and ripple heating, then update placement,
-feedback/feed-forward choices and the full-loop review together. This needs
-component evidence and design work, not another chassis measurement. The
-separate dynamic-library download is still inaccessible; no simulation or
-guaranteed temperature/aging model result is claimed.
-
-### Documented alternative comparison
-
-We implemented the fitted typical voltage-bias model in
-[Wurth ANP114](https://www.we-online.com/components/media/o753710v410%20ANP114a_Polarization%20DC%20Bias%20MLCC_EN.pdf),
-equations 3–5 and Table 2, for two **unselected** 22 µF alternatives.
-[Capacitor-candidate-check.json](Capacitor-candidate-check.json) records
-the arithmetic and its limits; `check_capacitor_candidates.py` reproduces it.
-
-| Candidate | Package | Typical capacitance at 3.37 / 5.19 / 6.82 V, per part |
-| --- | --- | --- |
-| 885012108018 | 1206 | 17.04 / 13.00 / 10.11 µF |
-| 885012109010 | 1210 | 21.31 / 20.40 / 19.33 µF |
-
-The larger candidate retains more capacitance in this published typical model.
-For two parts, applying separate −20% tolerance, −15% temperature and an
-assumed −20% aging sensitivity gives 23.18/22.20/21.03 µF. This multiplication
-is not a manufacturer's guaranteed combined minimum. Both candidates need
-larger lands than our 0805 parts, verified purchasing availability, ESR/heating
-data and a complete loop review. Their 16 V rating also does not replace the
-25 V input-capacitor selection. We have not changed the BOM on the strength
-of a typical capacitance curve alone.
-
-The sensitivity grid gives input-capacitor ripple up to 2.107/1.719/0.464 A
-RMS and combined output-capacitor ripple up to 1.021/0.931/0.461 A RMS for
-servo/5 V/logic. These are valid continuous-current model cases only, not
-component ratings or guaranteed maxima. Two parallel capacitors do not
-necessarily share equally. The selected parts' ESR and heating data are still
-needed; an example capacitor's ripple rating in TI's application circuit
-cannot be assigned to ours. X5R's 85 °C upper operating temperature also
-limits the local capacitor temperature, even if a nearby IC allows more.
-
-For scale, a 1 A load step unsupported by the converter for 10 µs removes
-10 µC of charge. It would drop 44/22/11 µF by 0.227/0.455/0.909 V before
-ESR. These are charge-balance examples, not predicted load steps or response
-times for this regulator.
-
-## Feed-forward network
-
-For a capacitor across the top feedback resistor, the passive divider has
-`fz = 1/(2π Rtop Cff)` and `fp = 1/(2π (Rtop || Rbottom) Cff)`.
-Our 22 pF parts place the zero at 72.3/96.5/159.7 kHz for servo/5 V/logic.
-This calculation does not include the converter's control law or establish
-phase margin.
-
-TI's 5 V example uses 220 kΩ/30 kΩ and 30 pF, giving a 24.1 kHz zero.
-Our 75 kΩ/10 kΩ divider would need about 88 pF to preserve that top-resistor
-time constant; 82 or 91 pF are candidates for review. For the logic divider,
-30 pF is close to the 3.3 V reference example. There is no 6.6 V example
-justifying a direct copy for the servo rail. We did not change C414/C424/C434:
-copying a time constant without the actual effective output capacitance and
-loop behavior would not validate a new value. Final loop/model work follows
-the capacitor selection; bench transient tests follow assembly.
+The new feed-forward values follow TI's documented examples while adapting
+the passive-divider time constant: servo/Pi zeros are about 23.4/23.3 kHz,
+near the 24.1 kHz 5 V example; the logic value follows its 3.3 V example.
+All selected values fall within the 10–100 pF guidance. We have not simulated
+the encrypted PSpice model or established full-loop phase margin. Added bulk
+branches and vias have inductance, so arithmetic capacitance alone does not
+prove switching-frequency behavior. Startup, ripple, representative load
+changes and component temperatures remain prototype validation tests.
 
 ## Converter and inductor heat
 
@@ -221,10 +142,10 @@ integrates sampled switch/inductor waveforms, compares the feedback divider
 with complex impedances and rejects invalid buck/DCM cases. All four tests
 pass. Source hashes match the saved PCB and prerequisite reports.
 
-Completed: the voltage-limit comparison, capacitor-retention targets,
-feed-forward comparison, ripple/current and thermal sensitivity calculations.
-Still open: the full supply/return budget, qualified capacitor selection and final
-loop choice, cooling qualification, motor/fuse protection decisions and final
+Completed: the voltage-limit comparison, revised capacitor-bank selection and
+retention screen, feed-forward selection, ripple/current and thermal calculations.
+Still open: the full supply/return budget and complete loop/layout review,
+cooling qualification, motor/fuse protection decisions and final
 assembly process. Encoder supply calculations and heatsink placement are
 complete for their stated assumptions. These are not all measurement
 dependencies. Physical voltage/ripple/temperature tests belong after assembly;

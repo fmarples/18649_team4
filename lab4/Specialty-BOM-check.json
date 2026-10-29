@@ -1,63 +1,64 @@
 {
   "source_sha256": {
-    "Preliminary-BOM.csv": "e5be641462f165938ce3ce54986a7c6b2d4e8bbbc60b07fd02c46080a38d6c83",
+    "Preliminary-BOM.csv": "5dd2e678cf6c16a24ab8a35281d43e80b474897070dfc1a9d9abdc52878079ad",
     "Course-stock-v3.csv": "98a849fdc9599360227c8f94bbc5c3e783fc400f2ab01439f038a1e567698be9"
   },
-  "source_active_rows": 126,
-  "zero_quantity_rows_omitted": 9,
+  "source_active_rows": 127,
+  "zero_quantity_rows_omitted": 10,
   "sheets": [
     {
       "name": "Specialty parts",
-      "consolidated_lines": 54,
+      "consolidated_lines": 57,
       "source_rows": [
         5,
         15,
         16,
         23,
+        82,
         83,
-        84,
         24,
         25,
         27,
         28,
         32,
         33,
-        80,
+        79,
         35,
         37,
+        40,
         41,
         42,
         43,
-        44,
-        55,
-        74,
-        81,
-        86,
+        54,
+        73,
+        80,
+        85,
+        87,
         88,
         89,
         90,
         91,
         92,
-        93,
-        98,
-        100,
+        97,
+        99,
+        101,
         102,
-        103,
+        104,
         105,
         106,
         107,
         108,
-        109,
+        110,
         111,
         112,
         113,
-        114,
-        119,
+        118,
+        120,
         121,
         122,
         123,
         124,
-        125,
+        127,
         128,
         129,
         130,
@@ -66,7 +67,9 @@
         133,
         134,
         135,
-        136
+        136,
+        137,
+        138
       ],
       "totals": [
         {
@@ -95,8 +98,8 @@
           "requested": 6,
           "source_rows": [
             23,
-            83,
-            84
+            82,
+            83
           ]
         },
         {
@@ -129,7 +132,7 @@
         },
         {
           "part": "GRM32ER61E226KE15L",
-          "requested": 4,
+          "requested": 23,
           "source_rows": [
             32
           ]
@@ -139,7 +142,7 @@
           "requested": 6,
           "source_rows": [
             33,
-            80
+            79
           ]
         },
         {
@@ -160,371 +163,390 @@
           "part": "RT0603BRD0775KL",
           "requested": 2,
           "source_rows": [
-            41
+            40
           ]
         },
         {
           "part": "RC0603FR-0733KL",
           "requested": 2,
           "source_rows": [
-            42
+            41
           ]
         },
         {
           "part": "RT0603BRD0745K3L",
           "requested": 2,
           "source_rows": [
-            43
+            42
           ]
         },
         {
           "part": "RC0603FR-0722KL",
           "requested": 2,
           "source_rows": [
-            44
+            43
           ]
         },
         {
           "part": "CC0603JRX7R7BB105",
           "requested": 3,
           "source_rows": [
-            55
+            54
           ]
         },
         {
           "part": "ESQ-118-44-L-D",
           "requested": 2,
           "source_rows": [
-            74
+            73
           ]
         },
         {
           "part": "EEU-FR1E471",
           "requested": 2,
           "source_rows": [
-            81
+            80
           ]
         },
         {
           "part": "CRCW0603100RFKEA",
           "requested": 6,
           "source_rows": [
-            86
+            85
           ]
         },
         {
           "part": "SN74LVC14APWR",
           "requested": 2,
           "source_rows": [
-            88
+            87
           ]
         },
         {
           "part": "DF63M-3P-3.96DSA",
           "requested": 2,
           "source_rows": [
-            89
+            88
           ]
         },
         {
           "part": "CRCW06032K20FKEA",
           "requested": 5,
           "source_rows": [
-            90
+            89
           ]
         },
         {
           "part": "CRCW0603100KFKEA",
           "requested": 5,
           "source_rows": [
-            91
+            90
           ]
         },
         {
           "part": "MMBT3904-7-F",
           "requested": 5,
           "source_rows": [
-            92
+            91
           ]
         },
         {
           "part": "CRCW0603220RFKEA",
           "requested": 5,
           "source_rows": [
-            93
+            92
           ]
         },
         {
           "part": "SNT-100-BK-T-H",
           "requested": 20,
           "source_rows": [
-            98
+            97
           ]
         },
         {
           "part": "0297010.L",
           "requested": 4,
           "source_rows": [
-            100
+            99
           ]
         },
         {
           "part": "970350365",
           "requested": 5,
           "source_rows": [
-            102
+            101
           ]
         },
         {
           "part": "M1269-2545-AL",
           "requested": 5,
           "source_rows": [
-            103
+            102
           ]
         },
         {
           "part": "DF63-2S-3.96C",
           "requested": 4,
           "source_rows": [
-            105
+            104
           ]
         },
         {
           "part": "DF63A-1618SC",
           "requested": 10,
           "source_rows": [
-            106
+            105
           ]
         },
         {
           "part": "DF63-3S-3.96C",
           "requested": 2,
           "source_rows": [
-            107
+            106
           ]
         },
         {
           "part": "DF63A-2022SC",
           "requested": 6,
           "source_rows": [
-            108
+            107
           ]
         },
         {
           "part": "M20-1060400",
           "requested": 3,
           "source_rows": [
-            109
+            108
           ]
         },
         {
           "part": "97790803111",
           "requested": 10,
           "source_rows": [
-            111
+            110
           ]
         },
         {
           "part": "MFW030A",
           "requested": 10,
           "source_rows": [
-            112
+            111
           ]
         },
         {
           "part": "50M025045P005",
           "requested": 10,
           "source_rows": [
-            113
+            112
           ]
         },
         {
           "part": "M20-1180046",
           "requested": 12,
           "source_rows": [
-            114
+            113
           ]
         },
         {
           "part": "3057 (red/black cut lengths)",
           "requested": 6,
           "source_rows": [
-            119
+            118
           ]
         },
         {
           "part": "WP7113ID",
           "requested": 2,
           "source_rows": [
-            121
+            120
           ]
         },
         {
           "part": "WP7113QWC/D",
           "requested": 2,
           "source_rows": [
-            122
+            121
           ]
         },
         {
           "part": "WP7113YD",
           "requested": 2,
           "source_rows": [
-            123
+            122
           ]
         },
         {
           "part": "WP7113QBC/D",
           "requested": 2,
           "source_rows": [
-            124
+            123
           ]
         },
         {
           "part": "SPECIFIED: L298N-to-6396BG attachment",
           "requested": 1,
           "source_rows": [
-            125
+            124
           ]
         },
         {
           "part": "UNRESOLVED: servo-side adapter lead",
           "requested": 1,
           "source_rows": [
-            128
+            127
           ]
         },
         {
           "part": "MCP1700-4002E/TO",
           "requested": 2,
           "source_rows": [
-            129
+            128
           ]
         },
         {
           "part": "TPSB106K016R0800",
           "requested": 3,
           "source_rows": [
-            130
+            129
           ]
         },
         {
           "part": "RT0603BRD07100KL",
           "requested": 2,
           "source_rows": [
-            131
+            130
           ]
         },
         {
           "part": "S220403BK / Amazon B0DQP7SKGV",
           "requested": 1,
           "source_rows": [
-            132
+            131
           ]
         },
         {
           "part": "44295 / HRC44295",
           "requested": 1,
           "source_rows": [
-            133
+            132
           ]
         },
         {
           "part": "PRT-10474 / 10474",
           "requested": 3,
           "source_rows": [
-            134
+            133
           ]
         },
         {
           "part": "0FHM0001ZXJ",
           "requested": 1,
           "source_rows": [
-            135
+            134
           ]
         },
         {
           "part": "Course LiPo charging bag",
           "requested": 1,
           "source_rows": [
+            135
+          ]
+        },
+        {
+          "part": "GRM1885C1H680JA01D",
+          "requested": 2,
+          "source_rows": [
             136
+          ]
+        },
+        {
+          "part": "GRM1885C1H910JA01D",
+          "requested": 2,
+          "source_rows": [
+            137
+          ]
+        },
+        {
+          "part": "GRM1885C1H300JA01D",
+          "requested": 2,
+          "source_rows": [
+            138
           ]
         }
       ]
     },
     {
       "name": "Common parts",
-      "consolidated_lines": 36,
+      "consolidated_lines": 35,
       "source_rows": [
         2,
         3,
         4,
         6,
         36,
-        39,
-        56,
-        58,
-        63,
-        71,
-        73,
+        38,
+        55,
+        57,
+        62,
+        70,
+        72,
         7,
+        45,
         46,
         47,
         48,
         49,
-        50,
-        54,
-        59,
-        64,
+        53,
+        58,
+        63,
         8,
         12,
         9,
         13,
         22,
-        77,
-        85,
-        87,
+        76,
+        84,
+        86,
         10,
         14,
         29,
-        57,
+        56,
+        93,
         94,
         95,
         96,
-        97,
         11,
         17,
         18,
-        40,
-        62,
+        39,
+        61,
         19,
         20,
         21,
         26,
         30,
         31,
-        34,
-        75,
-        38,
-        45,
+        44,
+        50,
         51,
         52,
-        53,
+        59,
         60,
-        61,
+        64,
         65,
         66,
         67,
         68,
         69,
-        70,
-        72,
-        76,
+        71,
+        74,
+        75,
+        77,
         78,
-        79,
-        82,
-        101,
-        115
+        81,
+        100,
+        114
       ],
       "totals": [
         {
@@ -554,12 +576,12 @@
           "source_rows": [
             6,
             36,
-            39,
-            56,
-            58,
-            63,
-            71,
-            73
+            38,
+            55,
+            57,
+            62,
+            70,
+            72
           ]
         },
         {
@@ -567,14 +589,14 @@
           "requested": 56,
           "source_rows": [
             7,
+            45,
             46,
             47,
             48,
             49,
-            50,
-            54,
-            59,
-            64
+            53,
+            58,
+            63
           ]
         },
         {
@@ -592,9 +614,9 @@
             9,
             13,
             22,
-            77,
-            85,
-            87
+            76,
+            84,
+            86
           ]
         },
         {
@@ -604,11 +626,11 @@
             10,
             14,
             29,
-            57,
+            56,
+            93,
             94,
             95,
-            96,
-            97
+            96
           ]
         },
         {
@@ -630,8 +652,8 @@
           "requested": 9,
           "source_rows": [
             18,
-            40,
-            62
+            39,
+            61
           ]
         },
         {
@@ -677,147 +699,139 @@
           ]
         },
         {
-          "part": "GRM219R61C226ME15L",
-          "requested": 9,
-          "source_rows": [
-            34,
-            75
-          ]
-        },
-        {
-          "part": "C0603C220J1GACTU",
-          "requested": 4,
-          "source_rows": [
-            38
-          ]
-        },
-        {
           "part": "STM32F401RET6TR",
           "requested": 3,
           "source_rows": [
-            45
+            44
           ]
         },
         {
           "part": "GRM21BR71C475KE51L",
           "requested": 6,
           "source_rows": [
-            51,
-            52
+            50,
+            51
           ]
         },
         {
           "part": "742863160",
           "requested": 3,
           "source_rows": [
-            53
+            52
           ]
         },
         {
           "part": "SWT0210-045026GSA",
           "requested": 6,
           "source_rows": [
-            60
+            59
           ]
         },
         {
           "part": "Header 1x06 / 2.54 mm / vertical",
           "requested": 3,
           "source_rows": [
-            61
+            60
           ]
         },
         {
           "part": "LTST-C190GKT",
           "requested": 4,
           "source_rows": [
-            65
+            64
           ]
         },
         {
           "part": "LTST-C190KRKT",
           "requested": 4,
           "source_rows": [
-            66
+            65
           ]
         },
         {
           "part": "LTST-C190KSKT",
           "requested": 8,
           "source_rows": [
-            67,
-            68
+            66,
+            67
           ]
         },
         {
           "part": "Header 1x13 / 2.54 mm / vertical",
           "requested": 4,
           "source_rows": [
-            69
+            68
           ]
         },
         {
           "part": "Header 1x08 / 2.54 mm / vertical",
           "requested": 2,
           "source_rows": [
-            70
+            69
           ]
         },
         {
           "part": "Header 1x11 / 2.54 mm / vertical",
           "requested": 2,
           "source_rows": [
-            72
+            71
+          ]
+        },
+        {
+          "part": "GRM219R61C226ME15L",
+          "requested": 2,
+          "source_rows": [
+            74
           ]
         },
         {
           "part": "Header 1x05 / 2.54 mm / vertical",
           "requested": 2,
           "source_rows": [
-            76
+            75
           ]
         },
         {
           "part": "Header 1x07 / 2.54 mm / vertical",
           "requested": 2,
           "source_rows": [
-            78
+            77
           ]
         },
         {
           "part": "L298N",
           "requested": 2,
           "source_rows": [
-            79
+            78
           ]
         },
         {
           "part": "SK520B",
           "requested": 9,
           "source_rows": [
-            82
+            81
           ]
         },
         {
           "part": "6396BG",
           "requested": 1,
           "source_rows": [
-            101
+            100
           ]
         },
         {
           "part": "FIT0587",
           "requested": 3,
           "source_rows": [
-            115
+            114
           ]
         }
       ]
     }
   ],
-  "source_parent_commit": "a695e375fe89503e45365c37156f5b6010d888db",
+  "source_parent_commit": "298ec51876e25a67ac3126f53d403f2e56d44f94",
   "workbook": "TEAM_4_BOM_Lab4.xlsx",
-  "workbook_sha256": "9bd7d16c233817e09e028a89bcf9298f499f9b1d94321ea59d49718d6a55cd3d",
+  "workbook_sha256": "abe33352987d8257ea4cca84f36a47769121db58995512554a012d0727fab96d",
   "prepared_date": "2026-10-28",
   "classification": "Exact course-v3 MPN or generic specified 2.54mm header = common; other active request = specialty.",
   "validation": {
@@ -830,8 +844,8 @@
   },
   "upload": {
     "file_id": "1jn-2KS-h_1bZtQV-ySlfCStYBRyWNMzS",
-    "updated_at_utc": "2026-10-28T22:48:59.068Z",
-    "verified_size_bytes": 24557,
-    "readback_sha256": "9bd7d16c233817e09e028a89bcf9298f499f9b1d94321ea59d49718d6a55cd3d"
+    "updated_at_utc": "2026-10-29T00:01:01.267Z",
+    "verified_size_bytes": 24720,
+    "readback_sha256": "abe33352987d8257ea4cca84f36a47769121db58995512554a012d0727fab96d"
   }
 }

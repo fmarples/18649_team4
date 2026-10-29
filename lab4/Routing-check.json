@@ -3,42 +3,42 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 7451,
-    "B.Cu": 5901,
+    "F.Cu": 7658,
+    "B.Cu": 5908,
     "In2.Cu": 5368
   },
   "errors": [],
   "counts": {
-    "track_segments": 18720,
-    "through_vias": 1035,
+    "track_segments": 18934,
+    "through_vias": 1063,
     "copper_zones": 6,
     "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
-    "0.25": 326,
-    "0.6": 246,
-    "0.8": 425,
-    "0.3": 881,
     "0.2": 12995,
-    "2.0": 178,
-    "0.5": 921,
-    "2.5": 74,
-    "1.75": 77,
+    "0.3": 881,
+    "0.25": 326,
+    "0.5": 979,
     "0.4": 125,
     "1.0": 681,
+    "0.6": 416,
+    "0.8": 425,
+    "2.0": 164,
+    "2.5": 74,
+    "1.75": 77,
     "3.0": 271,
     "1.5": 1175,
     "1.25": 104,
     "1.2": 29,
     "1.38": 2,
+    "2.25": 39,
     "3.5": 31,
     "4.0": 129,
-    "2.25": 39,
     "2.75": 11
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 969,
-    "0.80/0.40": 66
+    "0.70/0.30": 999,
+    "0.80/0.40": 64
   },
   "checks": [
     {
@@ -161,6 +161,86 @@
       "physically_connected": true
     },
     {
+      "reference": "U40",
+      "group": "C415 positive",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "C415.1",
+        "C410.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C415 ground",
+      "net": "/GND",
+      "pads": [
+        "C415.2",
+        "U40.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C416 positive",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "C416.1",
+        "C410.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C416 ground",
+      "net": "/GND",
+      "pads": [
+        "C416.2",
+        "U40.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C417 positive",
+      "net": "/+6V6_SERVO",
+      "pads": [
+        "C417.1",
+        "L1.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C417 ground",
+      "net": "/GND",
+      "pads": [
+        "C417.2",
+        "U40.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C418 positive",
+      "net": "/+6V6_SERVO",
+      "pads": [
+        "C418.1",
+        "L1.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U40",
+      "group": "C418 ground",
+      "net": "/GND",
+      "pads": [
+        "C418.2",
+        "U40.3"
+      ],
+      "physically_connected": true
+    },
+    {
       "reference": "U41",
       "group": "SW",
       "net": "/Power/P_5V_SW",
@@ -247,6 +327,66 @@
       "physically_connected": true
     },
     {
+      "reference": "U41",
+      "group": "C425 positive",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "C425.1",
+        "C420.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "C425 ground",
+      "net": "/GND",
+      "pads": [
+        "C425.2",
+        "U41.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "C426 positive",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "C426.1",
+        "C420.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "C426 ground",
+      "net": "/GND",
+      "pads": [
+        "C426.2",
+        "U41.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "C427 positive",
+      "net": "/+5V",
+      "pads": [
+        "C427.1",
+        "L2.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U41",
+      "group": "C427 ground",
+      "net": "/GND",
+      "pads": [
+        "C427.2",
+        "U41.3"
+      ],
+      "physically_connected": true
+    },
+    {
       "reference": "U42",
       "group": "SW",
       "net": "/Power/P_3V3_SW",
@@ -329,6 +469,66 @@
         "R431.2",
         "R433.2",
         "J44.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "C435 positive",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "C435.1",
+        "C430.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "C435 ground",
+      "net": "/GND",
+      "pads": [
+        "C435.2",
+        "U42.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "C436 positive",
+      "net": "/VBAT_PROTECTED",
+      "pads": [
+        "C436.1",
+        "C430.1"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "C436 ground",
+      "net": "/GND",
+      "pads": [
+        "C436.2",
+        "U42.3"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "C437 positive",
+      "net": "/+3V3",
+      "pads": [
+        "C437.1",
+        "L3.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "U42",
+      "group": "C437 ground",
+      "net": "/GND",
+      "pads": [
+        "C437.2",
+        "U42.3"
       ],
       "physically_connected": true
     },
@@ -3398,26 +3598,32 @@
         "D40.1",
         "Q1.3",
         "U40.1",
+        "C426.1",
         "R422.1",
         "U42.1",
         "C411.1",
+        "C435.1",
         "R401.1",
         "D802.1",
         "J41.1",
         "C431.1",
         "R432.1",
+        "C425.1",
         "R580.1",
         "C800.1",
+        "C436.1",
         "C421.1",
         "U41.1",
         "C802.1",
         "C420.1",
         "D806.1",
         "C400.1",
+        "C416.1",
         "D800.1",
         "C430.1",
         "R412.1",
-        "D804.1"
+        "D804.1",
+        "C415.1"
       ],
       "physically_connected": true,
       "zones_excluded": true
@@ -3427,7 +3633,6 @@
       "group": "/+3V3",
       "net": "/+3V3",
       "pads": [
-        "C432.1",
         "J601.1",
         "R601.1",
         "C103.1",
@@ -3436,9 +3641,11 @@
         "U11.3",
         "R804.1",
         "C601.1",
+        "C433.1",
         "C104.1",
         "U81.14",
         "R805.1",
+        "C432.1",
         "R602.1",
         "C344.1",
         "R502.1",
@@ -3473,7 +3680,6 @@
         "R430.1",
         "C501.1",
         "U31.3",
-        "C433.1",
         "J501.1",
         "U35.3",
         "FB60.1",
@@ -3529,6 +3735,7 @@
         "U24.7",
         "U24.20",
         "J500.1",
+        "C437.1",
         "J600.1",
         "FB50.1"
       ],
@@ -3758,5 +3965,5 @@
     "Power-input and motor protection decisions remain open. Heatsink mounting is implemented; operating temperature is unqualified. No fabrication release."
   ],
   "unfinished_signal_nets": [],
-  "source_sha256": "b4f5ea140e02375585f2115ff9ab9266e276a90daa235fc4358383396f5d7c78"
+  "source_sha256": "e74d401511558faa8308e255be6593ab906a526b062f53104b385c4fc27b6f94"
 }

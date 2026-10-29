@@ -1,0 +1,100 @@
+{
+  "status": "PASS for the stated capacitance sensitivity; not loop or hardware qualification",
+  "mpn": "GRM32ER61E226KE15L",
+  "quantity": 19,
+  "package": "1210",
+  "rated_voltage_V": 25,
+  "sources": [
+    "https://static.chipdip.ru/lib/973/DOC031973461.pdf",
+    "https://www.ti.com/lit/ds/symlink/tps564252.pdf"
+  ],
+  "assumptions": {
+    "tolerance_multiplier": 0.9,
+    "temperature_multiplier": 0.85,
+    "aging_multiplier_assumed": 0.8,
+    "input_bias_loss_at_15V_assumed": 0.7,
+    "input_bias_loss_at_12p6V_assumed": 0.65
+  },
+  "banks": [
+    {
+      "rail": "SERVO",
+      "input_refs": [
+        "C410",
+        "C415",
+        "C416"
+      ],
+      "output_refs": [
+        "C412",
+        "C413",
+        "C417",
+        "C418"
+      ],
+      "nominal_input_uF": 66,
+      "nominal_output_uF": 88,
+      "output_voltage_screen_V": 6.82,
+      "assumed_output_bias_loss_fraction": 0.4,
+      "screened_input_uF_at_15V": 12.1176,
+      "screened_input_uF_at_12p6V": 14.1372,
+      "screened_output_uF": 32.3136,
+      "output_target_uF_at_2p63uH_20kHz": 24.0782,
+      "screened_LC_pole_kHz_at_2p63uH": 17.264,
+      "nominal_output_charge_current_A_at_1p6ms_ramp": 0.3751
+    },
+    {
+      "rail": "5V",
+      "input_refs": [
+        "C420",
+        "C425",
+        "C426"
+      ],
+      "output_refs": [
+        "C422",
+        "C423",
+        "C427"
+      ],
+      "nominal_input_uF": 66,
+      "nominal_output_uF": 66,
+      "output_voltage_screen_V": 5.19,
+      "assumed_output_bias_loss_fraction": 0.25,
+      "screened_input_uF_at_15V": 12.1176,
+      "screened_input_uF_at_12p6V": 14.1372,
+      "screened_output_uF": 30.294,
+      "output_target_uF_at_2p63uH_20kHz": 24.0782,
+      "screened_LC_pole_kHz_at_2p63uH": 17.831,
+      "nominal_output_charge_current_A_at_1p6ms_ramp": 0.2141
+    },
+    {
+      "rail": "3V3",
+      "input_refs": [
+        "C430",
+        "C435",
+        "C436"
+      ],
+      "output_refs": [
+        "C432",
+        "C433",
+        "C437"
+      ],
+      "nominal_input_uF": 66,
+      "nominal_output_uF": 66,
+      "output_voltage_screen_V": 3.38,
+      "assumed_output_bias_loss_fraction": 0.2,
+      "screened_input_uF_at_15V": 12.1176,
+      "screened_input_uF_at_12p6V": 14.1372,
+      "screened_output_uF": 32.3136,
+      "output_target_uF_at_2p63uH_20kHz": 24.0782,
+      "screened_LC_pole_kHz_at_2p63uH": 17.264,
+      "nominal_output_charge_current_A_at_1p6ms_ramp": 0.1394
+    }
+  ],
+  "limitations": [
+    "Bias-loss factors are conservative rounded readings of a typical manufacturer plot, not guaranteed limits.",
+    "Multiplication of independent temperature/tolerance/aging factors is a sensitivity, not an approval-sheet combined minimum.",
+    "20kHz is TI design guidance for the LC pole, not a pass/fail stability boundary.",
+    "No claim of full-loop phase margin, ripple heating, transient response or hardware operation."
+  ],
+  "source_sha256": {
+    "KiCad/Circuit-BOM.csv": "800c35aab28867dc90f3aa578456ff3f48f61d4abffeb05279a30b3e1818fbff",
+    "KiCad/Power.kicad_sch": "442d68d3e394d2661d0d7cd49b8fab038db3bbde52eca3c5096f69d7ac774141"
+  }
+}

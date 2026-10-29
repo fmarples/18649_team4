@@ -29,6 +29,9 @@ for fp in sorted(board.GetFootprints(),key=lambda f:f.GetReference()):
         bbox=[p.ToMM(box.GetX())-40,p.ToMM(box.GetY())-40,
               p.ToMM(box.GetWidth()),p.ToMM(box.GetHeight())],
         schematic=fp.GetReference() in electrical))
+    if fp.GetReference() in [f'H{i}' for i in range(1,9)]:
+        records[-1]['finished_drill_mm']=p.ToMM(next(iter(fp.Pads())).GetDrillSize().x)
+        records[-1]['edge_exclusion_mm']=4 if int(fp.GetReference()[1:])<=4 else 3
 assert {r['reference'] for r in records if r['schematic']}==electrical
 data['components']=records
 data['source_sha256']=hashlib.sha256(before).hexdigest()
