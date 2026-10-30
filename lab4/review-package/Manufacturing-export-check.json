@@ -24,11 +24,23 @@
     "Native rotations are not calibrated to an assembly-house part library.",
     "3D render omits custom parts without models."
   ],
-  "board_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "board_sha256": "aee9497a605b5bdf8cb3d1d52d0d46286ccc5a79712a2b2a890320a3db468286",
   "outline_bounds_note": "Gerber aperture-stroke bounds include 0.075 mm per side; nominal finished outline is 120 x 247.21155 mm.",
   "JLC_format_BOM_references": 300,
   "JLC_format_CPL_rows": 300,
   "L298_finished_plated_holes_mm": 1.1,
   "L298_pin_holes_checked": 15,
-  "visual_review": "Fresh outer Gerber composites and native 3D views inspected; custom-model omissions remain documented."
+  "unchanged_gerber_layers_except_generation_timestamps": [
+    "Lab4-B_Cu.gbr",
+    "Lab4-B_Mask.gbr",
+    "Lab4-B_Paste.gbr",
+    "Lab4-B_Silkscreen.gbr",
+    "Lab4-Edge_Cuts.gbr",
+    "Lab4-F_Cu.gbr",
+    "Lab4-F_Mask.gbr",
+    "Lab4-F_Paste.gbr",
+    "Lab4-In1_Cu.gbr",
+    "Lab4-In2_Cu.gbr"
+  ],
+  "visual_review": "October 30 identification labels checked in the front Gerber composite and native 3D view. All earlier geometry is unchanged. Custom-model omissions remain documented."
 }

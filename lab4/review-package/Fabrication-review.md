@@ -25,12 +25,19 @@ eight supports and HS80, 20,264 track/via items and six ground zones. Native
 ERC/DRC, schematic parity and unconnected counts are zero. There are 331
 targeted connection checks and 282 components in the package audit.
 
-The latest CAD change gave U80's 15 plated pins 1.1 mm finished holes,
+The October 30 CAD change adds the board name **649 Team 4** and all three
+team members' names to the front silkscreen. Copper, components, holes, outline
+and stack are unchanged; see the [identification and stack handoff](Silkscreen-identification-review.md)
+and its exact previous/current-board comparison. Earlier electrical calculation
+records retain their original hashes and still apply to that unchanged geometry.
+
+The preceding CAD change gave U80's 15 plated pins 1.1 mm finished holes,
 without changing their centers, 1.8 mm pads or heatsink anchors. Matching
 exports contain 11 Gerber layers, 1,330 plated and 12 nonplated holes and
 300 position rows. Independently parsed drill locations/diameters match the
 saved board within 0.001 mm. Outer composites and copper-layer PDFs were
-visually reviewed. This operating-review update changes no CAD or Gerber.
+visually reviewed. The identification revision regenerates the matching
+manufacturing exports and native checks.
 
 Front/rear hole spacing is 47.870/73.01493 mm, row separation 233.21155 mm;
 board outline is 120 × 247.21155 mm. H1–H4 are 4.0 mm NPTH for M3, with
@@ -87,7 +94,9 @@ All files must describe the same reviewed source revision:
   and clean ERC; reconcile every R1/R2.5/R3/R4.1-R4.8/R5/R6/R7 and Lab 3 test-point
   requirement against the final schematic and layout.
 - PDF of each PCB layer plus a 3D render or final 1:1 print-on-chassis photo.
-- Gerber and drill ZIP, stated layer count, and zero-error DRC report. Inspect
+- Gerber and drill ZIP, stated layer count, and zero-error DRC report. State
+  **4 layers, 1.6 mm, JLC04161H-7628, 1 oz outer / 0.5 oz inner copper** in
+  the fabrication handoff; no 2 oz or controlled-impedance order is requested. Inspect
   the generated layers and drills in a Gerber viewer before submission.
 - JLC-format BOM and CPL (component position list), plus course-shelf quantities.
   Include component reference, value, footprint, exact MPN and assembly status;

@@ -1,0 +1,76 @@
+{
+  "previous_commit": "eda2e3807acd540303bda7ba910237c7b0161003",
+  "previous_board_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "board_sha256": "aee9497a605b5bdf8cb3d1d52d0d46286ccc5a79712a2b2a890320a3db468286",
+  "change": "Only four front silkscreen gr_text elements inserted; removing those exact elements reproduces the previous board bytes.",
+  "all_preexisting_CAD_bytes_unchanged": true,
+  "electrical_geometry_unchanged": true,
+  "labels": [
+    {
+      "text": "649 Team 4",
+      "layer": "F.Silkscreen",
+      "bbox_mm": [
+        91.503571,
+        28.47315,
+        108.49643,
+        31.52685
+      ]
+    },
+    {
+      "text": "Tianyi He",
+      "layer": "F.Silkscreen",
+      "bbox_mm": [
+        96.031191,
+        32.35815,
+        103.96881,
+        34.24185
+      ]
+    },
+    {
+      "text": "Felipe Marples Rodriguez",
+      "layer": "F.Silkscreen",
+      "bbox_mm": [
+        89.32643,
+        34.75815,
+        110.67357,
+        36.64185
+      ]
+    },
+    {
+      "text": "Sida Cheng",
+      "layer": "F.Silkscreen",
+      "bbox_mm": [
+        95.140715,
+        37.15815,
+        104.859286,
+        39.04185
+      ]
+    }
+  ],
+  "prior_electrical_reviews_still_apply": true,
+  "limits": "Silkscreen identification only. No hardware test or fabrication release implied.",
+  "native_checks": {
+    "schematic_components": 300,
+    "electrical_footprints": 300,
+    "track_segments_and_vias": 20264,
+    "copper_zones": 6,
+    "erc_findings": 0,
+    "drc_violations": 0,
+    "unconnected_items": 0,
+    "connectivity_unconnected_count": 0,
+    "schematic_parity_findings": 0
+  },
+  "unchanged_gerber_layers_except_generation_timestamps": [
+    "Lab4-B_Cu.gbr",
+    "Lab4-B_Mask.gbr",
+    "Lab4-B_Paste.gbr",
+    "Lab4-B_Silkscreen.gbr",
+    "Lab4-Edge_Cuts.gbr",
+    "Lab4-F_Cu.gbr",
+    "Lab4-F_Mask.gbr",
+    "Lab4-F_Paste.gbr",
+    "Lab4-In1_Cu.gbr",
+    "Lab4-In2_Cu.gbr"
+  ],
+  "visual_review": "Labels legible and unobstructed in regenerated front Gerber and native 3D preview."
+}

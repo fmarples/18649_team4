@@ -1,5 +1,10 @@
 # Lab 4: three-zone controller PCB
 
+The PCB is named **649 Team 4**. The October 30
+[identification update](Silkscreen-identification-review.md) adds all three
+members' names to the silkscreen and records the explicit four-layer fabrication
+stack. Routing, component placement and electrical calculations are unchanged.
+
 We are designing a four-layer KiCad PCB with two STM32F401RET6 chips, six
 MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
 3S LiPo supply using the CNHL S220403BK / Hitec 44295 pair approved by Anson on October 28. The Raspberry Pi remains a separate board connected through

@@ -65,14 +65,21 @@ def main():
                      'Prototype-operating-review.md', 'Prototype-power-check.json',
                      'Pi-operating-mesh-check.json', 'Power-budget.csv',
                      'Current-evidence.md',
-                     'Actuator-design.md', 'Parts-review.md'):
+                     'Actuator-design.md', 'Parts-review.md',
+                     'Silkscreen-identification-review.md',
+                     'Silkscreen-identification-check.json'):
         shutil.copy2(ROOT/filename, out/filename)
     warning = ('REVIEW ONLY - NOT RELEASED FOR FABRICATION\n\n'
+        'Board name: 649 Team 4.\n'
         'Four copper layers; nominal 1.6 mm JLC04161H-7628 stack.\n'
+        'Copper: 1 oz outer / 0.5 oz inner (35 / 15.2 / 15.2 / 35 um nominal).\n'
+        'No 2 oz copper or controlled-impedance order is requested.\n'
         'This is a review export of the hashed sources, not an approved order.\n'
         'Prepared for course prototype review; team/TA acceptance and the order are not completed.\n'
         'See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.\n'
         'The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.\n'
+        'The October 30 identification update changes silkscreen only; earlier electrical reviews remain applicable.\n'
+        'See Silkscreen-identification-check.json for the exact prior/current CAD equivalence record.\n'
         '3D views use available library models; omitted custom parts are not fit evidence.\n'
         'Native positions use KiCad rotation conventions and mm/absolute origin.\n'
         'The team hand-assembly plan remains in force. No PCBA upload is authorized.\n')
@@ -80,7 +87,7 @@ def main():
     with zipfile.ZipFile(out/'Gerbers-REVIEW-ONLY.zip', 'w', zipfile.ZIP_DEFLATED) as z:
         for path in sorted(gerber.iterdir()):
             z.write(path, path.name)
-        z.writestr('REVIEW-ONLY.txt', warning)
+        z.write(out/'REVIEW-ONLY.txt', 'REVIEW-ONLY.txt')
     for name, digest in audit['source_sha256'].items():
         assert sha(ROOT/name) == digest, f'Export changed source: {name}'
     manifest = dict(fabrication_release=False, copper_layers=4,

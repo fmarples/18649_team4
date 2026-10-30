@@ -1,8 +1,15 @@
 REVIEW ONLY - NOT RELEASED FOR FABRICATION
 
+Board name: 649 Team 4.
 Four copper layers; nominal 1.6 mm JLC04161H-7628 stack.
+Copper: 1 oz outer / 0.5 oz inner (35 / 15.2 / 15.2 / 35 um nominal).
+No 2 oz copper or controlled-impedance order is requested.
+This is a review export of the hashed sources, not an approved order.
 Prepared for course prototype review; team/TA acceptance and the order are not completed.
 See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.
 The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.
-3D views omit custom parts without models; they do not prove full fit.
-Positions use KiCad rotation conventions. Course hand assembly; no PCBA order.
+The October 30 identification update changes silkscreen only; earlier electrical reviews remain applicable.
+See Silkscreen-identification-check.json for the exact prior/current CAD equivalence record.
+3D views use available library models; omitted custom parts are not fit evidence.
+Native positions use KiCad rotation conventions and mm/absolute origin.
+The team hand-assembly plan remains in force. No PCBA upload is authorized.

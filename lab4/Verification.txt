@@ -1,3 +1,14 @@
+October 30 update: board identification and fabrication stack
+- Added 649 Team 4 and all three members' names to front silkscreen.
+- Only four text elements were inserted; all pre-existing CAD bytes are unchanged.
+- Fresh ERC, DRC, schematic parity and unconnected counts are zero.
+- Ten other Gerber layers match the preceding export except generation dates.
+- All 1,342 drills and 300 native positions independently match the saved PCB.
+- Handoff: 4 layers, 1.6 mm, JLC04161H-7628, 1 oz outer / 0.5 oz inner.
+- Earlier power calculations retain their original hashes and apply to the
+  unchanged electrical geometry; see Silkscreen-identification-check.json.
+- No fabrication release, order, assignment submission or message was sent.
+
 October 29 later update: load-specific operating review
 - CAD unchanged: 65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0.
 - New0.05mm Pi mesh at1.5A:35.596mV positive-feed loss; other loads unchanged.

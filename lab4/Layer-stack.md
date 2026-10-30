@@ -1,5 +1,11 @@
 # Four-layer routing reference
 
+**October 30 fabrication handoff:** 4 layers, nominal 1.6 mm,
+**JLC04161H-7628, 1 oz outer / 0.5 oz inner copper**. These are the current
+saved-board settings; no 2 oz copper or controlled-impedance order is requested.
+The same specification is included in the review package's `REVIEW-ONLY.txt`.
+This records the intended order settings, not a message sent to staff or an order.
+
 26 October 2026. We use **JLC04161H-7628**, nominal 1.6 mm, as the
 reference stack for the remaining layout review. The intended copper weights
 are 1 oz outer / 0.5 oz inner. This records a design baseline, not an order or
