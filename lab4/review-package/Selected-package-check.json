@@ -1,5 +1,5 @@
 {
-  "source_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
   "assembly_bom_sha256": "51de7fd6272a72cb0dd7e4dc68945cbca22a21622c9e14804d18d544e04f5c92",
   "fabrication_release": false,
   "checked_components": 282,
@@ -2763,7 +2763,7 @@
       "numbered_pads": 2,
       "checked_pin_nets": {
         "1": "/VBAT_PROTECTED",
-        "2": "LEFT_BRIDGE"
+        "2": "LEFT_MOTOR"
       },
       "saved_pad_geometry_mm": {
         "1": [
@@ -2787,7 +2787,7 @@
       "footprint": "Diode_SMD:D_SMB",
       "numbered_pads": 2,
       "checked_pin_nets": {
-        "1": "LEFT_BRIDGE",
+        "1": "LEFT_MOTOR",
         "2": "/GND"
       },
       "saved_pad_geometry_mm": {
@@ -2863,7 +2863,7 @@
       "numbered_pads": 2,
       "checked_pin_nets": {
         "1": "/VBAT_PROTECTED",
-        "2": "RIGHT_BRIDGE"
+        "2": "RIGHT_MOTOR"
       },
       "saved_pad_geometry_mm": {
         "1": [
@@ -2887,7 +2887,7 @@
       "footprint": "Diode_SMD:D_SMB",
       "numbered_pads": 2,
       "checked_pin_nets": {
-        "1": "RIGHT_BRIDGE",
+        "1": "RIGHT_MOTOR",
         "2": "/GND"
       },
       "saved_pad_geometry_mm": {

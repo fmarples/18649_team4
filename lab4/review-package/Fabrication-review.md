@@ -2,13 +2,19 @@
 
 ## Current status
 
-The files are ready for the course's final **prototype fabrication review**.
-We recommend retaining the present CAD for that review. This is not a claim
-of TA acceptance, an order authorization, or completed electrical qualification.
-The [October 29 extension](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793301588360959)
-sets the deadline to **Saturday October 31, 2026, 10:00 p.m.** Staff will check
-boards before the fabrication batch. The October 24 preliminary email is a
-different submission.
+The [November 1 correction](November1-review.md) is the current revision for
+the course's **prototype fabrication review**. It implements the staff's
+motor-side flyback-diode connections and the additional copper checks.
+This is not a claim of TA acceptance, an order authorization, or completed
+electrical qualification.
+
+Revision `6945466` was submitted to Gradescope on October 30 with all three
+team members, and its Gerber/KiCad archives were sent to staff. The new
+correction has not been sent. Staff's
+[November 1 announcement](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793568222872769)
+asks teams to complete review changes before Monday night, November 2;
+office hours are 7–10 p.m., with the location tentative. Preserve the original
+receipt and identify the replacement revision explicitly.
 
 The [load-specific operating review](Prototype-operating-review.md) closes the
 remaining digital planning work for a bare Pi running the car software. It
@@ -21,22 +27,23 @@ requirements. We have not powered the new PCB or guaranteed its behavior.
 
 The board has four copper layers on the documented 1.6 mm
 [JLC04161H-7628 stack](Layer-stack.md). There are 300 electrical footprints,
-eight supports and HS80, 20,264 track/via items and six ground zones. Native
+eight supports and HS80, 20,296 track/via items and six ground zones. Native
 ERC/DRC, schematic parity and unconnected counts are zero. There are 331
 targeted connection checks and 282 components in the package audit.
 
-The October 30 CAD change adds the board name **649 Team 4** and all three
-team members' names to the front silkscreen. Copper, components, holes, outline
-and stack are unchanged; see the [identification and stack handoff](Silkscreen-identification-review.md)
-and its exact previous/current-board comparison. Earlier electrical calculation
-records retain their original hashes and still apply to that unchanged geometry.
+The board name **649 Team 4**, all three names, component placement, holes,
+outline and stack are unchanged in the November 1 correction. Copper has
+changed. The affected routing, ground, supply-path and Pi mesh checks are
+rerun against the new board; the earlier silkscreen-only equivalence record
+is historical. See [November1-review-check.json](November1-review-check.json)
+for the exact placement, pin-net and design-rule comparison.
 
 The preceding CAD change gave U80's 15 plated pins 1.1 mm finished holes,
 without changing their centers, 1.8 mm pads or heatsink anchors. Matching
 exports contain 11 Gerber layers, 1,330 plated and 12 nonplated holes and
 300 position rows. Independently parsed drill locations/diameters match the
 saved board within 0.001 mm. Outer composites and copper-layer PDFs were
-visually reviewed. The identification revision regenerates the matching
+visually reviewed. The current revision regenerates the matching
 manufacturing exports and native checks.
 
 Front/rear hole spacing is 47.870/73.01493 mm, row separation 233.21155 mm;
@@ -62,10 +69,10 @@ change. A higher continuous load or different connector would reopen CAD review.
 
 ## Required work by stage
 
-**Before fabrication:** team/TA review of this matching package, including
-the operating assumptions and conditional input fuse, followed by any necessary
-correction and the course submission. The team should flag the normal-use
-assumptions directly, rather than asking for blanket approval of a 3 A stress case.
+**Before fabrication:** send the corrected matching files to staff, record any
+further review feedback, and complete the course/team release step. Include
+the normal-use assumptions and conditional input fuse. The original Gradescope
+submission is complete; no replacement transmission is claimed here.
 
 **Before ordering/assembly:** confirm actual course-stock shortfalls and exact
 seller/variant; resolve the servo lead; plan local soldering for the Samtec
@@ -110,9 +117,9 @@ All files must describe the same reviewed source revision:
   a ready assembly-order BOM.
 - Update the existing Lab 1 revision-history entry to match final pin, LED and
   message-catalog changes. Do not claim unimplemented firmware changes work.
-- Submit the reviewed package to Gradescope and retain the receipt. The
-  preliminary email is not this final submission. Record any TA changes from
-  the course pre-fabrication review before the order is released.
+- Keep the original Gradescope receipt and identify any replacement revision
+  sent to staff. Record the course pre-fabrication review outcome before the
+  order is released.
 
 
 ## Recheck only affected work
@@ -124,4 +131,5 @@ directory; rerun affected mechanical, netlist, routing and power checks, then
 regenerate/inspect the changed exports. Do not suppress real errors to get a pass.
 The analytical scripts' `fabrication_release: false` fields mean that a
 calculation does not authorize fabrication. The package remains marked review
-until the course/team release step; no order or submission has been performed.
+until the course/team release step. The original submission is complete;
+the revised-file handoff and fabrication order are not.

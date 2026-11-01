@@ -8,8 +8,10 @@ This is a review export of the hashed sources, not an approved order.
 Prepared for course prototype review; team/TA acceptance and the order are not completed.
 See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.
 The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.
-The October 30 identification update changes silkscreen only; earlier electrical reviews remain applicable.
-See Silkscreen-identification-check.json for the exact prior/current CAD equivalence record.
+This revision implements the November 1 motor-side flyback correction and stricter copper checks.
+Affected routing/power/return checks are refreshed; placement, holes and BOM quantities are unchanged.
+See November1-review.md and November1-review-check.json; older revision records are historical.
+The original 6945466 files were submitted; this replacement has not been sent to staff.
 3D views use available library models; omitted custom parts are not fit evidence.
 Native positions use KiCad rotation conventions and mm/absolute origin.
 The team hand-assembly plan remains in force. No PCBA upload is authorized.

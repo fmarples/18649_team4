@@ -1,3 +1,12 @@
+November 1 update: staff diode and copper correction
+- Moved four diode pad nets to motor side of ACS712 sensors; no footprint moves.
+- Added 0.1524 mm copper-neck and 0.381 mm CAN-to-zone checks.
+- Fresh ERC/DRC/parity/unconnected: zero. 331 target connections pass.
+- All 1342 drills and 300 native/CPL positions match the saved PCB.
+- Refreshed power/ground models; planning assumptions and physical-test limits unchanged.
+- Original 6945466 submission complete; replacement files not sent.
+- Earlier dated entries below describe their original revisions.
+
 October 30 update: board identification and fabrication stack
 - Added 649 Team 4 and all three members' names to front silkscreen.
 - Only four text elements were inserted; all pre-existing CAD bytes are unchanged.

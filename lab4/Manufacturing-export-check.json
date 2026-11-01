@@ -24,23 +24,11 @@
     "Native rotations are not calibrated to an assembly-house part library.",
     "3D render omits custom parts without models."
   ],
-  "board_sha256": "aee9497a605b5bdf8cb3d1d52d0d46286ccc5a79712a2b2a890320a3db468286",
-  "outline_bounds_note": "Gerber aperture-stroke bounds include 0.075 mm per side; nominal finished outline is 120 x 247.21155 mm.",
+  "board_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "outline_bounds_note": "Gerber stroke bounds include 0.075 mm per side; finished centerline outline is 120 x 247.21155 mm.",
   "JLC_format_BOM_references": 300,
   "JLC_format_CPL_rows": 300,
   "L298_finished_plated_holes_mm": 1.1,
   "L298_pin_holes_checked": 15,
-  "unchanged_gerber_layers_except_generation_timestamps": [
-    "Lab4-B_Cu.gbr",
-    "Lab4-B_Mask.gbr",
-    "Lab4-B_Paste.gbr",
-    "Lab4-B_Silkscreen.gbr",
-    "Lab4-Edge_Cuts.gbr",
-    "Lab4-F_Cu.gbr",
-    "Lab4-F_Mask.gbr",
-    "Lab4-F_Paste.gbr",
-    "Lab4-In1_Cu.gbr",
-    "Lab4-In2_Cu.gbr"
-  ],
-  "visual_review": "October 30 identification labels checked in the front Gerber composite and native 3D view. All earlier geometry is unchanged. Custom-model omissions remain documented."
+  "visual_review": "November 1: outer Gerber composites, all layer previews, rear motor clamp labels and 6-page report reviewed. Unavailable 3D models are not physical-fit evidence."
 }

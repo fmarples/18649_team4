@@ -29,6 +29,11 @@ for layer in (p.In1_Cu, p.B_Cu):
     planes[layer] = [z.GetFilledPolysList(layer) for z in b.Zones()
                      if not z.GetIsRuleArea() and z.GetNetname()=='/GND' and z.IsOnLayer(layer)]
 nets = ['/CAN_'+bus+'_'+side for bus in 'AB' for side in 'HL']
+can_contacts = [v for v in b.GetTracks()
+                if v.Type()==p.PCB_VIA_T and v.GetNetname() in nets]
+can_contacts += [a for f in b.GetFootprints() for a in f.Pads()
+                 if a.GetAttribute()==p.PAD_ATTRIB_PTH and a.GetNetname() in nets]
+can_zone_clearance_mm = .381  # November 1 course rule in Lab4.kicad_dru
 tracks = {net: [t for t in b.GetTracks() if t.GetNetname()==net and t.Type()==p.PCB_TRACE_T]
           for net in nets}
 records = []
@@ -57,8 +62,17 @@ for net in nets:
             if ref is not None and not near_hole:
                 point=p.VECTOR2I(p.FromMM(q[0]),p.FromMM(q[1]))
                 if not any(poly.Contains(point) for poly in planes[ref]):
+                    # Keep the historical 1 mm sample screen, but distinguish
+                    # deliberate enlarged contact antipads from unexplained
+                    # breaks in the reference plane. A required antipad is not
+                    # a continuous reference or proof of signal integrity.
+                    probe=p.SHAPE_CIRCLE(point,1)
+                    nearby=[o for o in can_contacts if
+                            o.GetEffectiveShape(ref).Collide(probe,p.FromMM(can_zone_clearance_mm))]
                     gaps.append(dict(x_mm=round(q[0],3),y_mm=round(q[1],3),
-                                     signal_layer=t.GetLayerName(),reference_layer=b.GetLayerName(ref)))
+                                     signal_layer=t.GetLayerName(),reference_layer=b.GetLayerName(ref),
+                                     within_required_CAN_contact_clearance=bool(nearby),
+                                     contact_uuids=[o.m_Uuid.AsString() for o in nearby]))
     total=sum(w for _,w in samples)
     fraction=lambda limit: round(100*sum(w for d,w in samples if d is not None and d<=limit)/total,2)
     records.append(dict(net=net,branch_inclusive_length_mm=round(total,3),
@@ -67,7 +81,9 @@ for net in nets:
         trace_widths_mm=sorted(set(round(p.ToMM(t.GetWidth()),3) for t in tracks[net])),
         length_percent_with_opposite_line_on_same_layer_within_0p65mm=fraction(.65),
         length_percent_with_opposite_line_on_same_layer_within_1mm=fraction(1),
-        reference_void_samples_away_from_own_holes=gaps))
+        reference_void_samples_away_from_own_holes=gaps,
+        expected_contact_clearance_void_sample_count=sum(g['within_required_CAN_contact_clearance'] for g in gaps),
+        unexplained_reference_void_samples=[g for g in gaps if not g['within_required_CAN_contact_clearance']]))
 # Approximate straight front-layer pair only. TI SLVA531A equations 1-2;
 # this model omits coplanar fill, solder mask, pads, bends and layer changes.
 w,h,t,er,s=.2,.21040,.035,4.4,.4
@@ -75,7 +91,8 @@ z0=87/math.sqrt(er+1.41)*math.log(5.98*h/(.8*w+t))
 zdiff=2*z0*(1-.48*math.exp(-.96*s/h))
 report=dict(source_sha256=hashlib.sha256(args.board.read_bytes()).hexdigest(),
     fabrication_release=False,status='Geometry measured; engineering review required',
-    sample_spacing_max_mm=.5,own_pad_via_exclusion_radius_mm=1.0,nets=records,
+    sample_spacing_max_mm=.5,own_pad_via_exclusion_radius_mm=1.0,
+    CAN_zone_clearance_mm=can_zone_clearance_mm,nets=records,
     straight_front_pair_microstrip_estimate=dict(trace_width_mm=w,edge_gap_mm=s,
         dielectric_height_mm=h,copper_thickness_mm=t,relative_permittivity=er,
         single_ended_ohm=round(z0,2),differential_ohm=round(zdiff,2),
@@ -86,6 +103,7 @@ report=dict(source_sha256=hashlib.sha256(args.board.read_bytes()).hexdigest(),
     limitations=['Nearest opposite-line distance does not prove parallel coupled routing or impedance.',
         'Length includes all branches; total H/L difference is not end-to-end timing skew.',
         'Samples test centerlines only and exclude normal own-pad/via antipads within 1 mm.',
+        'Additional contact-clearance samples are retained and classified using actual plated-contact shapes plus the 0.381 mm CAN-zone rule; classification does not restore copper or qualify signal integrity.',
         'In2 uses B.Cu fill as its nearest reference. B.Cu traces need separate return review because In2 is a signal layer.',
         'No rise-time, reflection, crosstalk, EMC or propagation-delay measurements are claimed.'])
 args.output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')

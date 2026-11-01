@@ -158,9 +158,10 @@ for part in root.findall('libparts/libpart'):
         assert part.find("pins/pin[@num='17']").attrib['type'] == 'tri_state'
 
 # Actuator integration checks (independent of generator metadata).
+# Nov 1 course correction: clamp both motor-terminal nets, downstream of ACS712.
 rear='/Rear zone/'; front='/Front zone/'
 for pin,name in {1:'/GND',2:rear+'LEFT_BRIDGE',3:rear+'LEFT_RETURN',4:'/VBAT_PROTECTED',5:rear+'R_LEFT_IN1',6:rear+'R_LEFT_ENABLE_PWM',7:rear+'R_LEFT_IN2',8:'/GND',9:'/+5V',10:rear+'R_RIGHT_IN3',11:rear+'R_RIGHT_ENABLE_PWM',12:rear+'R_RIGHT_IN4',13:rear+'RIGHT_BRIDGE',14:rear+'RIGHT_RETURN',15:'/GND'}.items():expect('U80',pin,name)
-for i,net in enumerate(['LEFT_BRIDGE','LEFT_RETURN','RIGHT_BRIDGE','RIGHT_RETURN']):
+for i,net in enumerate(['LEFT_MOTOR','LEFT_RETURN','RIGHT_MOTOR','RIGHT_RETURN']):
     expect(f'D{800+i*2}',1,'/VBAT_PROTECTED');expect(f'D{800+i*2}',2,rear+net)
     expect(f'D{801+i*2}',1,rear+net);expect(f'D{801+i*2}',2,'/GND')
 for j,side in [(80,'LEFT'),(81,'RIGHT')]:

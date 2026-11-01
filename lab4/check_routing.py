@@ -280,9 +280,10 @@ check_group('5V distribution', 'regulator and every load group', [
     ('L2', '2'), ('J70', '4'), ('U80', '9'),
     ('U2', '8'), ('U3', '8'), ('C700', '1'), ('C701', '1'),
     ('R570', '1'), ('R571', '1'), ('R670', '1'), ('R671', '1')])
-for endpoints in ['U80.2 U2.1 U2.2 D800.2 D801.1',
-                  'U80.13 U3.1 U3.2 D804.2 D805.1',
-                  'U2.3 U2.4 J80.1', 'U3.3 U3.4 J81.1',
+for endpoints in ['U80.2 U2.1 U2.2',
+                  'U80.13 U3.1 U3.2',
+                  'U2.3 U2.4 J80.1 D800.2 D801.1',
+                  'U3.3 U3.4 J81.1 D804.2 D805.1',
                   'U80.3 J80.2 D802.2 D803.1',
                   'U80.14 J81.2 D806.2 D807.1']:
     check_group('motor output', endpoints,
@@ -453,7 +454,18 @@ assert tracks and vias, 'No initial routing found'
 assert len({t.m_Uuid.AsString() for t in tracks}) == len(tracks)
 assert all(t.GetStart() != t.GetEnd() for t in segments)
 assert board.GetCopperLayerCount() == 4, 'The reviewed layout uses four copper layers'
-assert all(t.GetNetname() == '/GND' for t in segments if t.GetLayer() == p.In1_Cu)
+# In1 stays a ground reference plane. The November 1 neck-width correction
+# adds only short same-net bridges between existing plated contacts; it does
+# not introduce signal routing across this layer. Verify that restriction.
+plated = list(vias) + [a for a in pads.values() if a.GetAttribute() == p.PAD_ATTRIB_PTH]
+for t in segments:
+    if t.GetLayer() != p.In1_Cu or t.GetNetname() == '/GND':
+        continue
+    assert p.ToMM(t.GetLength()) <= 2.0, 'Nonlocal routing on ground plane'
+    for endpoint in (t.GetStart(), t.GetEnd()):
+        assert any(a.GetNetCode() == t.GetNetCode() and
+                   (a.GetPosition()-endpoint).EuclideanNorm() <= p.FromMM(.002)
+                   for a in plated), 'Plane bridge must join plated contact centers'
 assert any(not z.GetIsRuleArea() and z.GetLayer() == p.In1_Cu and
            z.GetNetname() == '/GND' for z in board.Zones()), 'Missing internal ground plane'
 # Existing antenna/access reservations span the inner layers. The new

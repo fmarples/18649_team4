@@ -1,9 +1,14 @@
 # Lab 4: three-zone controller PCB
 
-The PCB is named **649 Team 4**. The October 30
-[identification update](Silkscreen-identification-review.md) adds all three
-members' names to the silkscreen and records the explicit four-layer fabrication
-stack. Routing, component placement and electrical calculations are unchanged.
+The PCB is named **649 Team 4**. The [November 1 staff-review correction](November1-review.md)
+moves four flyback-diode connections to the motor side of the current sensors,
+adds the course CAN-to-fill and minimum copper-connection checks, and repairs
+the affected copper. Component positions, mounting holes and BOM quantities
+are unchanged. Use the current matching review package for this correction.
+
+The original `6945466` revision was submitted to Gradescope on October 30 and
+its Gerber/KiCad archives were sent to staff. Those receipts do not cover the
+November 1 correction; the replacement handoff still needs to be sent.
 
 We are designing a four-layer KiCad PCB with two STM32F401RET6 chips, six
 MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a
@@ -74,7 +79,7 @@ See [Mounting-and-encoder-revision.md](Mounting-and-encoder-revision.md)
 for exact parts, calculations, checks and remaining limitations.
 
 The current board has 300 electrical footprints plus eight supports and
-HS80, 20,264 track/via items and six filled ground zones. The targeted routing
+HS80, 20,296 track/via items and six filled ground zones. The targeted routing
 check covers 331 connections. Fresh native findings and source hashes are in
 [Fabrication-check.json](Fabrication-check.json). These checks do not authorize
 an order. The current planning review is complete; team/TA review precedes
@@ -119,10 +124,10 @@ design; the board layout deadline is October 29.
 
 ## Shared report and files
 
-- [October 29 fabrication review](Fabrication-review.md): remaining design decisions,
-  final deliverables and fresh-check instructions. The October 24 preliminary
-  package was emailed; the final Gradescope/fabrication submission remains open.
-- [October 29 must-do list](https://docs.google.com/document/d/1k5grd6PXWf11GlPkxlc1w4cDT9LOGJRj_YvyB7UWkLg/edit): team actions and decision targets.
+- [Fabrication review](Fabrication-review.md): current revision, review limits and
+  fresh-check instructions. The original Gradescope submission is complete;
+  staff acceptance and the corrected-file handoff are separate actions.
+- [Must-do list](https://docs.google.com/document/d/1k5grd6PXWf11GlPkxlc1w4cDT9LOGJRj_YvyB7UWkLg/edit): remaining team actions, deferred work and completed items.
 - [Lab 4 Writeup](https://docs.google.com/document/d/1zMR_S5QoFPES1BhswG5bhpLGAib2P71ri6rK2hKzBcc/edit): edit this same report for future revisions.
 - [Team Lab 4 Drive folder](https://drive.google.com/drive/u/1/folders/1j7L880-h1lnl-udWRu19jh2Ww-18leLq).
 - [Editable system diagram](Lab4-System.drawio), with [SVG](Lab4-System.svg) and [PNG](Lab4-System.png) previews.
@@ -248,11 +253,11 @@ device-tree configuration and physical bus labels before relying on Linux
 
 ## Remaining work by stage
 
-- Before fabrication: team/TA review of the matched prototype package and its
-  stated operating assumptions, then the team's Gradescope submission by
-  **Saturday October 31, 10 p.m.** The [extension](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793301588360959)
-  includes staff review before the fabrication batch. No new hole measurements
-  or sustained 3 A Pi qualification are requested.
+- Before fabrication: hand off the corrected matching files, record staff's
+  review and finish any remaining feedback before **Monday night, November 2**.
+  The original Gradescope submission is complete. See the
+  [November 1 announcement](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793568222872769).
+  No new hole measurements or sustained 3 A Pi qualification are requested.
 - Before ordering/assembly: reconcile actual stock, settle the servo lead and
   solder process. Current purchasing exceptions remain visible in the BOM.
 - Before LiPo operation: staged bench commissioning, fuse/harness selection,

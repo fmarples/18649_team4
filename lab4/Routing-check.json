@@ -3,33 +3,34 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 7693,
-    "B.Cu": 6136,
-    "In2.Cu": 5368
+    "F.Cu": 7698,
+    "B.Cu": 6143,
+    "In2.Cu": 5381,
+    "In1.Cu": 7
   },
   "errors": [],
   "counts": {
-    "track_segments": 19197,
+    "track_segments": 19229,
     "through_vias": 1067,
     "copper_zones": 6,
     "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
-    "0.2": 12995,
-    "0.3": 881,
+    "0.2": 12994,
+    "0.3": 888,
     "0.25": 326,
     "0.5": 948,
-    "0.4": 122,
-    "1.0": 588,
-    "0.6": 395,
-    "0.8": 410,
+    "0.4": 124,
+    "0.6": 419,
+    "1.0": 589,
+    "0.8": 411,
     "2.0": 213,
-    "2.5": 157,
+    "2.5": 155,
     "1.75": 121,
-    "3.0": 806,
+    "3.0": 805,
     "1.5": 775,
     "1.25": 128,
-    "1.2": 21,
+    "1.2": 22,
     "1.38": 2,
     "2.25": 37,
     "3.5": 31,
@@ -37,8 +38,9 @@
     "2.75": 11
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 1003,
-    "0.80/0.40": 64
+    "0.70/0.30": 1002,
+    "0.80/0.40": 64,
+    "0.80/0.30": 1
   },
   "checks": [
     {
@@ -3166,12 +3168,34 @@
     },
     {
       "reference": "motor output",
-      "group": "U80.2 U2.1 U2.2 D800.2 D801.1",
+      "group": "U80.2 U2.1 U2.2",
       "net": "/Rear zone/LEFT_BRIDGE",
       "pads": [
         "U80.2",
         "U2.1",
-        "U2.2",
+        "U2.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U80.13 U3.1 U3.2",
+      "net": "/Rear zone/RIGHT_BRIDGE",
+      "pads": [
+        "U80.13",
+        "U3.1",
+        "U3.2"
+      ],
+      "physically_connected": true
+    },
+    {
+      "reference": "motor output",
+      "group": "U2.3 U2.4 J80.1 D800.2 D801.1",
+      "net": "/Rear zone/LEFT_MOTOR",
+      "pads": [
+        "U2.3",
+        "U2.4",
+        "J80.1",
         "D800.2",
         "D801.1"
       ],
@@ -3179,36 +3203,14 @@
     },
     {
       "reference": "motor output",
-      "group": "U80.13 U3.1 U3.2 D804.2 D805.1",
-      "net": "/Rear zone/RIGHT_BRIDGE",
-      "pads": [
-        "U80.13",
-        "U3.1",
-        "U3.2",
-        "D804.2",
-        "D805.1"
-      ],
-      "physically_connected": true
-    },
-    {
-      "reference": "motor output",
-      "group": "U2.3 U2.4 J80.1",
-      "net": "/Rear zone/LEFT_MOTOR",
-      "pads": [
-        "U2.3",
-        "U2.4",
-        "J80.1"
-      ],
-      "physically_connected": true
-    },
-    {
-      "reference": "motor output",
-      "group": "U3.3 U3.4 J81.1",
+      "group": "U3.3 U3.4 J81.1 D804.2 D805.1",
       "net": "/Rear zone/RIGHT_MOTOR",
       "pads": [
         "U3.3",
         "U3.4",
-        "J81.1"
+        "J81.1",
+        "D804.2",
+        "D805.1"
       ],
       "physically_connected": true
     },
@@ -3614,6 +3616,7 @@
         "C436.1",
         "C421.1",
         "U41.1",
+        "C802.1",
         "C420.1",
         "D806.1",
         "C400.1",
@@ -3622,8 +3625,7 @@
         "C430.1",
         "R412.1",
         "D804.1",
-        "C415.1",
-        "C802.1"
+        "C415.1"
       ],
       "physically_connected": true,
       "zones_excluded": true
@@ -3965,5 +3967,5 @@
     "Power-input and motor protection decisions remain open. Heatsink mounting is implemented; operating temperature is unqualified. No fabrication release."
   ],
   "unfinished_signal_nets": [],
-  "source_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0"
+  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077"
 }

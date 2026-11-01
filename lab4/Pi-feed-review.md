@@ -1,5 +1,11 @@
 # Pi positive-feed mesh review — October 29
 
+November 1: current JSON meshes were rerun for the
+[staff-review correction](November1-review.md). Their 0.05 mm drops are
+35.578 mV at 1.5 A and 67.995 mV at 3 A. The detailed tables/trials below are
+the dated October 29 evaluation; the current planning interpretation is in
+[Prototype-operating-review.md](Prototype-operating-review.md).
+
 ## Current prototype review — October 29, later update
 
 The selected course scope is ready for final team/TA prototype fabrication

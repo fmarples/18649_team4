@@ -1,6 +1,15 @@
 # Actuator circuit review
 
-## Current revision — October 27
+## Current revision — November 1
+
+We moved D800/D801 and D804/D805 to the motor-connector side of U2/U3,
+following the [November 1 course correction](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793564724174489).
+Both motor terminals now have an upper clamp to protected battery and a
+lower clamp from ground. The sensors still measure bidirectional current
+in their series bridge leads, but diode recirculation can bypass those
+sensors. The filtered ADC value is therefore not a measurement of all
+instantaneous winding current during PWM. We must calibrate and characterize
+the readings during bring-up; no current-based protection is claimed.
 
 The [mounting and encoder revision](Mounting-and-encoder-revision.md) supersedes
 older socket, heatsink-placement and encoder-voltage statements below. All
@@ -19,10 +28,10 @@ heatsink footprint and local placement/routing repair are still pending.
 
 U80 is the course L298N substitution. Its VS pin uses protected battery power;
 VSS uses 5.1V. Local 100nF capacitors bypass both supplies, and C802 provides a
-proposed 470uF/25V motor bulk capacitor. Each output has one SK520B diode to
-protected battery and one from ground. U2/U3 remain in series with one lead of
-each motor, so they measure winding current in either direction. The other
-motor lead returns to the other bridge output, not ground.
+470uF/25V motor bulk capacitor. Each motor-terminal net has one SK520B diode
+to protected battery and one from ground. U2/U3 remain in series with one
+bridge lead of each motor; see the November 1 sampling limitation above.
+The other motor lead returns to the other bridge output, not ground.
 
 The MCU enables and direction signals retain reset pulldowns. Enable HIGH with
 equal direction inputs commands dynamic braking; enable LOW commands coasting.

@@ -155,7 +155,7 @@ for ref, positive in [("C804", "/+5V"), ("C805", "ENC_4V")]:
 
 # SMC N0952 rev.A, SMB terminals. Cathode is pad 1; motor clamps must
 # point from ground to each output and from each output to the battery rail.
-for i, output in enumerate(["LEFT_BRIDGE", "LEFT_RETURN", "RIGHT_BRIDGE", "RIGHT_RETURN"]):
+for i, output in enumerate(["LEFT_MOTOR", "LEFT_RETURN", "RIGHT_MOTOR", "RIGHT_RETURN"]):
     for offset, nets in [(0, {"1": "/VBAT_PROTECTED", "2": output}),
                          (1, {"1": output, "2": "/GND"})]:
         check(f"D{800+2*i+offset}", "SK520B", "Diode_SMD:D_SMB", nets,

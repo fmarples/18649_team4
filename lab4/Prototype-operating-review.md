@@ -1,5 +1,10 @@
 # Prototype operating review — October 29
 
+November 1 refresh: the affected models were rerun after the
+[staff-review correction](November1-review.md). The values and current CAD
+hash below describe that correction. Operating assumptions and required
+bring-up checks are unchanged.
+
 The required-scope design is ready for the course's final **prototype fabrication
 review**. We recommend keeping the present CAD for that review. This is not an
 unconditional electrical qualification or authorization to place an order.
@@ -24,14 +29,14 @@ Pi optimization is deferred. At actual bring-up, a workload that exceeds the
 planning allowance or produces undervoltage requires reassessment before use.
 
 The updated copper mesh varies only the Pi load and keeps the other modeled
-loads fixed. At 1.5 A, positive-feed loss is **35.596 mV** at 20 °C. The table
+loads fixed. At 1.5 A, positive-feed loss is **35.578 mV** at 20 °C. The table
 adds an assumed 80 °C copper temperature, 20 mV return allowance and the stated
 contact/lead resistance, with seven ground contacts sharing equally.
 
 | Pi current | 10 mΩ per contact/lead allowance | 20 mΩ allowance |
 | --- | ---: | ---: |
 | 1.5 A planning | 4.9335 V | 4.9164 V |
-| 2.0 A higher-load sensitivity | 4.9144 V | 4.8916 V |
+| 2.0 A higher-load sensitivity | 4.9145 V | 4.8916 V |
 | 3.0 A deferred sustained stress | 4.8763 V | 4.8420 V |
 
 These values precede startup and load-step transients. The 4.8615 V upper
@@ -131,9 +136,9 @@ prototype scope. Bench startup and thermal checks above are not optional.
   loss and empirical trace sensitivities, with assumptions and source hashes.
 - [check_prototype_power.py](check_prototype_power.py): reproduces the planning
   calculations using KiCad Python; it does not edit the PCB.
-- [Fabrication-check.json](Fabrication-check.json): unchanged CAD hash, zero
+- [Fabrication-check.json](Fabrication-check.json): current CAD hash, zero
   native ERC/DRC/parity/unconnected findings. Manufacturing checks establish
   file consistency; they do not constitute powered verification.
 
 The matching CAD SHA-256 is
-`65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0`.
+`1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077`.

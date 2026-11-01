@@ -1,98 +1,98 @@
 {
-  "board_sha256": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
+  "board_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
   "calculation_only": true,
   "electrical_design_basis": "Bare Pi 4/car software; 1.5 A Pi sustained planning allowance, 0.3 A other 5 V allowance; 2 A Pi higher-load sensitivity; 3 A sustained is deferred",
   "load_basis": "1.5 A is an engineering allowance 20% above the dated official 1.25 A workload example, not a measured or guaranteed workload maximum",
-  "pi_feed_effective_ohm": 0.021619889021819105,
-  "other_load_feed_drop_V": 0.0031657855255522727,
+  "pi_feed_effective_ohm": 0.021611006039568652,
+  "other_load_feed_drop_V": 0.0031614953385918215,
   "pi_cases": [
     {
       "case": "published workload example",
       "Pi_A": 1.25,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.030190646802826154,
+      "copper_drop_20C_V": 0.030175252888052638,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.01,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.943048684395353,
-      "reserve_to_upper_warning_corner_V": 0.08154868439535257
+      "terminal_before_transients_V": 4.943067708195231,
+      "reserve_to_upper_warning_corner_V": 0.08156770819523018
     },
     {
       "case": "published workload example",
       "Pi_A": 1.25,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.030190646802826154,
+      "copper_drop_20C_V": 0.030175252888052638,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.02,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.928762970109639,
-      "reserve_to_upper_warning_corner_V": 0.06726297010963833
+      "terminal_before_transients_V": 4.928781993909516,
+      "reserve_to_upper_warning_corner_V": 0.06728199390951595
     },
     {
       "case": "sustained planning allowance",
       "Pi_A": 1.5,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.03559561905828093,
+      "copper_drop_20C_V": 0.0355780043979448,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.01,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.933512076824919,
-      "reserve_to_upper_warning_corner_V": 0.07201207682491884
+      "terminal_before_transients_V": 4.933533845022163,
+      "reserve_to_upper_warning_corner_V": 0.0720338450221627
     },
     {
       "case": "sustained planning allowance",
       "Pi_A": 1.5,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.03559561905828093,
+      "copper_drop_20C_V": 0.0355780043979448,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.02,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.916369219682061,
-      "reserve_to_upper_warning_corner_V": 0.05486921968206104
+      "terminal_before_transients_V": 4.916390987879305,
+      "reserve_to_upper_warning_corner_V": 0.05489098787930491
     },
     {
       "case": "brief higher-load sensitivity",
       "Pi_A": 2.0,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.04640556356919048,
+      "copper_drop_20C_V": 0.046383507417729126,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.01,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.914438861684052,
-      "reserve_to_upper_warning_corner_V": 0.052938861684051375
+      "terminal_before_transients_V": 4.914466118676027,
+      "reserve_to_upper_warning_corner_V": 0.05296611867602685
     },
     {
       "case": "brief higher-load sensitivity",
       "Pi_A": 2.0,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.04640556356919048,
+      "copper_drop_20C_V": 0.046383507417729126,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.02,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.8915817188269095,
-      "reserve_to_upper_warning_corner_V": 0.030081718826909132
+      "terminal_before_transients_V": 4.891608975818885,
+      "reserve_to_upper_warning_corner_V": 0.03010897581888461
     },
     {
       "case": "deferred sustained stress case",
       "Pi_A": 3.0,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.06802545259100959,
+      "copper_drop_20C_V": 0.06799451345729778,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.01,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.876292431402316,
-      "reserve_to_upper_warning_corner_V": 0.014792431402315565
+      "terminal_before_transients_V": 4.876330665983756,
+      "reserve_to_upper_warning_corner_V": 0.014830665983756042
     },
     {
       "case": "deferred sustained stress case",
       "Pi_A": 3.0,
       "source_min_V": 5.014644,
-      "copper_drop_20C_V": 0.06802545259100959,
+      "copper_drop_20C_V": 0.06799451345729778,
       "copper_temperature_assumed_C": 80,
       "each_contact_and_lead_R_assumed_ohm": 0.02,
       "ground_allowance_assumed_V": 0.02,
-      "terminal_before_transients_V": 4.842006717116602,
-      "reserve_to_upper_warning_corner_V": -0.019493282883398244
+      "terminal_before_transients_V": 4.842044951698043,
+      "reserve_to_upper_warning_corner_V": -0.019455048301957767
     }
   ],
   "input_cases": [
@@ -6625,10 +6625,10 @@
     "No short-circuit survival or autonomous motor-protection claim. Current-limited bench commissioning is required before LiPo use."
   ],
   "source_sha256": {
-    "KiCad/Lab4.kicad_pcb": "65c7e6d7c2cad47429379644d5696d946711c12c861110e707f4e2eccd0d90d0",
-    "Load-allocation-check.json": "fc5e6deb95c3979c047637a1194f32b360cd1bdf6f4c07dff81486532fd0dca0",
-    "Pi-operating-mesh-check.json": "dcb7414a35128348d47201f5c68ef81545b2d65ecbe6bb8aae883903454772b8",
-    "Pi-feed-mesh-check.json": "a15037db18456816868ed4130809f9fd93cbbf06c356d2e22729cf74abdec1d5",
+    "KiCad/Lab4.kicad_pcb": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+    "Load-allocation-check.json": "50ada2b2b851f5e2fc87a5b19245d5b64392dc892a0033d2efd362e415ff90e5",
+    "Pi-operating-mesh-check.json": "cfd8e40306600eb0c6e0c072048284a89632a313373b6e4e4b38082fac543265",
+    "Pi-feed-mesh-check.json": "762bc4468cbfaf5bedcbfc0f014769d37b946d4208a9ba132eb6ec832fe82dc1",
     "check_prototype_power.py": "63aea1a75f1889d5051a8309f594d6991e8ba7ddf24a07543f152523c3d0defd",
     "check_pi_feed.py": "63746087b6b2d1ab5065ab8ea212e5c512db157cbecd4a2a002e3550cc7f26ef"
   }

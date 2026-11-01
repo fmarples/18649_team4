@@ -67,7 +67,9 @@ def main():
                      'Current-evidence.md',
                      'Actuator-design.md', 'Parts-review.md',
                      'Silkscreen-identification-review.md',
-                     'Silkscreen-identification-check.json'):
+                     'Silkscreen-identification-check.json',
+                     'November1-review.md', 'November1-review-check.json',
+                     'CAN-geometry-review.md', 'CAN-geometry-check.json'):
         shutil.copy2(ROOT/filename, out/filename)
     warning = ('REVIEW ONLY - NOT RELEASED FOR FABRICATION\n\n'
         'Board name: 649 Team 4.\n'
@@ -78,8 +80,10 @@ def main():
         'Prepared for course prototype review; team/TA acceptance and the order are not completed.\n'
         'See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.\n'
         'The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.\n'
-        'The October 30 identification update changes silkscreen only; earlier electrical reviews remain applicable.\n'
-        'See Silkscreen-identification-check.json for the exact prior/current CAD equivalence record.\n'
+        'This revision implements the November 1 motor-side flyback correction and stricter copper checks.\n'
+        'Affected routing/power/return checks are refreshed; placement, holes and BOM quantities are unchanged.\n'
+        'See November1-review.md and November1-review-check.json; older revision records are historical.\n'
+        'The original 6945466 files were submitted; this replacement has not been sent to staff.\n'
         '3D views use available library models; omitted custom parts are not fit evidence.\n'
         'Native positions use KiCad rotation conventions and mm/absolute origin.\n'
         'The team hand-assembly plan remains in force. No PCBA upload is authorized.\n')

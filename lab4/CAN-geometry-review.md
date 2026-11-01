@@ -1,5 +1,18 @@
 # CAN copper geometry review
 
+## November 1 update
+
+The new 0.381 mm CAN-to-zone clearance enlarges the cleared areas around
+plated contacts. The refreshed scan records 41 reference-plane gaps outside
+the older 1 mm hole-exclusion screen: 12 on CAN_A_H, 10 on CAN_A_L, 10 on
+CAN_B_H and 9 on CAN_B_L. All 41 lie within the required clearance around
+the actual CAN pad/via shapes; none is an unexplained gap away from those
+contacts. [CAN-geometry-check.json](CAN-geometry-check.json) retains their
+coordinates and classification. These intentional gaps are still gaps:
+the classification does not establish continuous reference copper or
+qualify signal integrity. The zero-gap result below describes the earlier
+October revision, before the larger clearance rule.
+
 26 October 2026. We measured the saved board geometry with
 `check_can_geometry.py`; [CAN-geometry-check.json](CAN-geometry-check.json)
 records the source hash and individual inspection coordinates. This review

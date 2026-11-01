@@ -1,0 +1,516 @@
+{
+  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "fabrication_release": false,
+  "status": "Geometry measured; engineering review required",
+  "sample_spacing_max_mm": 0.5,
+  "own_pad_via_exclusion_radius_mm": 1.0,
+  "CAN_zone_clearance_mm": 0.381,
+  "nets": [
+    {
+      "net": "/CAN_A_H",
+      "branch_inclusive_length_mm": 248.654,
+      "length_by_layer_mm": {
+        "F.Cu": 216.184,
+        "In2.Cu": 32.471
+      },
+      "via_count": 4,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 47.59,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 50.34,
+      "reference_void_samples_away_from_own_holes": [
+        {
+          "x_mm": 125.05,
+          "y_mm": 195.25,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "7e68585a-f23c-4e8a-9394-162494ff827f"
+          ]
+        },
+        {
+          "x_mm": 116.7,
+          "y_mm": 141.813,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "92de0296-2c65-4f05-9fb4-108b01f4c2b3"
+          ]
+        },
+        {
+          "x_mm": 116.7,
+          "y_mm": 142.187,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "92de0296-2c65-4f05-9fb4-108b01f4c2b3"
+          ]
+        },
+        {
+          "x_mm": 112.05,
+          "y_mm": 141.25,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "e1ae72c0-0930-4ec3-8b75-567273a8289f"
+          ]
+        },
+        {
+          "x_mm": 128.75,
+          "y_mm": 70.55,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "fc1fe30e-92a1-4c6e-97b8-ccb1448b3fcd"
+          ]
+        },
+        {
+          "x_mm": 126.75,
+          "y_mm": 194.8,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "d9cb0bc7-a221-40d1-ae8d-85279c2792a9"
+          ]
+        },
+        {
+          "x_mm": 113.75,
+          "y_mm": 140.8,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "a0173793-4c21-4fe5-8bd0-2238d6750090"
+          ]
+        },
+        {
+          "x_mm": 122.7,
+          "y_mm": 89.9,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "e766b8c4-1b29-4e1c-ab7c-8468f2fd3ebd"
+          ]
+        },
+        {
+          "x_mm": 125.05,
+          "y_mm": 70.25,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "d08c33bf-2354-469e-9ff8-5ea2c61a6b0d"
+          ]
+        },
+        {
+          "x_mm": 115.75,
+          "y_mm": 141.55,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "9aac3cb5-f9bd-4071-8e06-551528f6956d"
+          ]
+        },
+        {
+          "x_mm": 126.75,
+          "y_mm": 69.8,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "6c5855df-c603-4217-ae4d-b42aaeb883e4"
+          ]
+        },
+        {
+          "x_mm": 122.3,
+          "y_mm": 214.85,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "ee1730fb-3b63-4507-85c6-30c473639245"
+          ]
+        }
+      ],
+      "expected_contact_clearance_void_sample_count": 12,
+      "unexplained_reference_void_samples": []
+    },
+    {
+      "net": "/CAN_A_L",
+      "branch_inclusive_length_mm": 242.119,
+      "length_by_layer_mm": {
+        "F.Cu": 175.909,
+        "In2.Cu": 66.21
+      },
+      "via_count": 13,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 49.41,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 53.48,
+      "reference_void_samples_away_from_own_holes": [
+        {
+          "x_mm": 113.05,
+          "y_mm": 142.75,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "a0173793-4c21-4fe5-8bd0-2238d6750090"
+          ]
+        },
+        {
+          "x_mm": 127.93,
+          "y_mm": 196.5,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "d9cb0bc7-a221-40d1-ae8d-85279c2792a9"
+          ]
+        },
+        {
+          "x_mm": 126.05,
+          "y_mm": 196.75,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "d9cb0bc7-a221-40d1-ae8d-85279c2792a9"
+          ]
+        },
+        {
+          "x_mm": 113.133,
+          "y_mm": 73.133,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "04956f6b-9166-4158-bad5-ef87f007d684"
+          ]
+        },
+        {
+          "x_mm": 126.05,
+          "y_mm": 71.75,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "6c5855df-c603-4217-ae4d-b42aaeb883e4"
+          ]
+        },
+        {
+          "x_mm": 118.679,
+          "y_mm": 74.3,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "dcb79e83-b88b-42e5-8966-0482cb2d2702"
+          ]
+        },
+        {
+          "x_mm": 116.75,
+          "y_mm": 197.5,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "286c35ec-2b2e-4b50-8464-b8c62194775a"
+          ]
+        },
+        {
+          "x_mm": 116.718,
+          "y_mm": 197.5,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "286c35ec-2b2e-4b50-8464-b8c62194775a"
+          ]
+        },
+        {
+          "x_mm": 119.3,
+          "y_mm": 74.85,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "dcb79e83-b88b-42e5-8966-0482cb2d2702"
+          ]
+        },
+        {
+          "x_mm": 117.4,
+          "y_mm": 198.125,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "286c35ec-2b2e-4b50-8464-b8c62194775a"
+          ]
+        }
+      ],
+      "expected_contact_clearance_void_sample_count": 10,
+      "unexplained_reference_void_samples": []
+    },
+    {
+      "net": "/CAN_B_H",
+      "branch_inclusive_length_mm": 242.011,
+      "length_by_layer_mm": {
+        "F.Cu": 209.54,
+        "In2.Cu": 32.471
+      },
+      "via_count": 4,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 52.48,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 55.24,
+      "reference_void_samples_away_from_own_holes": [
+        {
+          "x_mm": 146.188,
+          "y_mm": 141.213,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "968256d0-cfec-435d-aa37-4ecad5f1a94c"
+          ]
+        },
+        {
+          "x_mm": 152.05,
+          "y_mm": 195.25,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "e4ac2560-dd66-4e08-8940-f4e2160ed200"
+          ]
+        },
+        {
+          "x_mm": 147.8,
+          "y_mm": 140.8,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "25125c9a-fc97-4fd3-8433-38d50e28797d"
+          ]
+        },
+        {
+          "x_mm": 149.7,
+          "y_mm": 89.9,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "37417821-5c4d-43ef-aad6-31bd38532190"
+          ]
+        },
+        {
+          "x_mm": 155.75,
+          "y_mm": 70.55,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "e31253e9-1308-4ddf-a694-629e887bf1f8"
+          ]
+        },
+        {
+          "x_mm": 153.75,
+          "y_mm": 194.8,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "0c9a357b-1c62-4b31-920e-156b977b8a40"
+          ]
+        },
+        {
+          "x_mm": 149.3,
+          "y_mm": 214.85,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "e3d68133-f607-4da6-9135-72379be7475a"
+          ]
+        },
+        {
+          "x_mm": 153.75,
+          "y_mm": 69.8,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "2231b712-0532-4e49-8b7c-be56ab981c2b"
+          ]
+        },
+        {
+          "x_mm": 149.75,
+          "y_mm": 141.55,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "b15441cb-ce74-4f85-8c5b-2bdd92852c8c"
+          ]
+        },
+        {
+          "x_mm": 152.05,
+          "y_mm": 70.25,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "4b78cf15-43c0-413c-9a3b-08ded1259ae1"
+          ]
+        }
+      ],
+      "expected_contact_clearance_void_sample_count": 10,
+      "unexplained_reference_void_samples": []
+    },
+    {
+      "net": "/CAN_B_L",
+      "branch_inclusive_length_mm": 236.772,
+      "length_by_layer_mm": {
+        "F.Cu": 164.062,
+        "In2.Cu": 72.71
+      },
+      "via_count": 13,
+      "trace_widths_mm": [
+        0.2
+      ],
+      "length_percent_with_opposite_line_on_same_layer_within_0p65mm": 54.42,
+      "length_percent_with_opposite_line_on_same_layer_within_1mm": 57.83,
+      "reference_void_samples_away_from_own_holes": [
+        {
+          "x_mm": 153.05,
+          "y_mm": 71.75,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "2231b712-0532-4e49-8b7c-be56ab981c2b"
+          ]
+        },
+        {
+          "x_mm": 147.05,
+          "y_mm": 142.75,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "25125c9a-fc97-4fd3-8433-38d50e28797d"
+          ]
+        },
+        {
+          "x_mm": 140.133,
+          "y_mm": 73.133,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "8661af51-111a-48ec-86a3-3e53438221fa"
+          ]
+        },
+        {
+          "x_mm": 153.05,
+          "y_mm": 196.75,
+          "signal_layer": "F.Cu",
+          "reference_layer": "In1.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "0c9a357b-1c62-4b31-920e-156b977b8a40"
+          ]
+        },
+        {
+          "x_mm": 144.4,
+          "y_mm": 198.125,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "3a20bade-4888-4cb2-866e-0faa88e9cc76"
+          ]
+        },
+        {
+          "x_mm": 143.718,
+          "y_mm": 197.5,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "3a20bade-4888-4cb2-866e-0faa88e9cc76"
+          ]
+        },
+        {
+          "x_mm": 143.75,
+          "y_mm": 197.5,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "3a20bade-4888-4cb2-866e-0faa88e9cc76"
+          ]
+        },
+        {
+          "x_mm": 146.3,
+          "y_mm": 74.85,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "cc9c82f9-fdfc-48ba-80f2-5b7b6328f986"
+          ]
+        },
+        {
+          "x_mm": 145.679,
+          "y_mm": 74.3,
+          "signal_layer": "In2.Cu",
+          "reference_layer": "B.Cu",
+          "within_required_CAN_contact_clearance": true,
+          "contact_uuids": [
+            "cc9c82f9-fdfc-48ba-80f2-5b7b6328f986"
+          ]
+        }
+      ],
+      "expected_contact_clearance_void_sample_count": 9,
+      "unexplained_reference_void_samples": []
+    }
+  ],
+  "straight_front_pair_microstrip_estimate": {
+    "trace_width_mm": 0.2,
+    "edge_gap_mm": 0.4,
+    "dielectric_height_mm": 0.2104,
+    "copper_thickness_mm": 0.035,
+    "relative_permittivity": 4.4,
+    "single_ended_ohm": 67.29,
+    "differential_ohm": 124.17,
+    "interpretation": "Calculation for the documented nominal main-run dimensions only, not whole-bus or controlled-impedance qualification."
+  },
+  "references": [
+    "https://www.ti.com/lit/ds/symlink/sn65hvd231.pdf",
+    "https://www.ti.com/lit/an/slla270/slla270.pdf",
+    "https://www.ti.com/lit/an/slva531a/slva531a.pdf",
+    "Layer-stack.md"
+  ],
+  "limitations": [
+    "Nearest opposite-line distance does not prove parallel coupled routing or impedance.",
+    "Length includes all branches; total H/L difference is not end-to-end timing skew.",
+    "Samples test centerlines only and exclude normal own-pad/via antipads within 1 mm.",
+    "Additional contact-clearance samples are retained and classified using actual plated-contact shapes plus the 0.381 mm CAN-zone rule; classification does not restore copper or qualify signal integrity.",
+    "In2 uses B.Cu fill as its nearest reference. B.Cu traces need separate return review because In2 is a signal layer.",
+    "No rise-time, reflection, crosstalk, EMC or propagation-delay measurements are claimed."
+  ]
+}
