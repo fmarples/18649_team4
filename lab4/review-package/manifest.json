@@ -2,13 +2,13 @@
   "fabrication_release": false,
   "copper_layers": 4,
   "source_sha256": {
-    "KiCad/Cockpit.kicad_sch": "f708103802421897a8bfacaaa73e95692f2e7a8c559fd8808ba2a05ed42d4d93",
+    "KiCad/Cockpit.kicad_sch": "5075f600d495d5e4435c6f55ee5a956a6403d201aa58ca225a2ce5bbc6ba24f2",
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
-    "KiCad/Front.kicad_sch": "3bc0f25c6ce3505627081f405dc40fcabddf6746271fe5401f3388f27fdee9eb",
+    "KiCad/Front.kicad_sch": "aa4a08939d7348fae3aff039a8638941157644de421673bde0c38a3536062e4c",
     "KiCad/Lab4.kicad_dru": "4b7d831c6c1b80ac890886eaa4d388be78bda28ad236768125278c4e06da06da",
     "KiCad/Lab4.kicad_pcb": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
     "KiCad/Lab4.kicad_pro": "d89f2865b2b36bc1a633fce71fdf6530fdd4964de87f1a9c841947c736102a93",
-    "KiCad/Lab4.kicad_sch": "1623e72a96990fd53b0db2a9032b26e541f52cf53b35f1abadc6c4d87d67148b",
+    "KiCad/Lab4.kicad_sch": "72f9d925fde20bbd4afbbb2b96a8289909e99cd7174267205723cb439d992de1",
     "KiCad/Lab4_Logic.kicad_sym": "9282bfef36f6ec97c9f21daf90d966cb1d9d4c4d2789dc5ea5344dc1be62f463",
     "KiCad/Lab4_Mechanical.pretty/Boyd_6396BG_StraightPins.kicad_mod": "90cf4f9c1046fc00fe304bc5dfa38c6c355bd153551c15de7fd62a02336308c0",
     "KiCad/Lab4_Mechanical.pretty/Chassis_support_M3_3mm_edge.kicad_mod": "9e63df10d245ddd0a7a77ee6fcdb0310515fd84d1a1be500e1ff60584d0d5ba0",
@@ -21,8 +21,8 @@
     "KiCad/Lab4_Power.pretty/ST_L298N_Multiwatt15V_D1.1.kicad_mod": "1f7e19d22275c295222b41d1ec92e565613bdafe936e2ee3ebb63f074cc22e73",
     "KiCad/Lab4_Power.pretty/Vishay_WSL2512_7m_to_500m.kicad_mod": "fe1e3b0b09fe270ecb9d86aa1b9550eddcfea2594fb1b0ae99c69667dbbc75fe",
     "KiCad/Lab4_Switches.pretty/GCT_SWT0210_4.5x4.5mm.kicad_mod": "391ac8f4f5725df85578cf5b2e7597e38724f3f6631b9e31545915236815b8c6",
-    "KiCad/Power.kicad_sch": "fe33ae8542c48ddf5e222b2b8bde18b82e091ce0570b7a5d882650266e667e59",
-    "KiCad/Rear.kicad_sch": "a0e5730ca0c71df19f2b97f2394712c71230d528869f3c2f93fd0535164b18b4",
+    "KiCad/Power.kicad_sch": "9ab1b9acc061f1b61c754fa75f2fbccb4f7305649f14dc6afa1a2303445bc6e8",
+    "KiCad/Rear.kicad_sch": "9957c86f4b93a461362b0a2a4624b42ee9ed6baaf32ce994469d425b7679281a",
     "KiCad/sym-lib-table": "60172994ff6f013cac20eb41c4b72b371a9f3c26b8c7c802c711ed13234c603b"
   },
   "files": {
@@ -40,9 +40,9 @@
     "Critical-package-review.md": "fcc564c87f79d4a778cbd37ee42faf6d1a5b9206cac9beee351441692f8ff52b",
     "Current-evidence.md": "a1d1fa88e93283233d57273623ca54664deeb67fb099e4fd9f65b2fdd3cfe9f9",
     "Digital-geometry-check.json": "db5671777275aadfd232120f481a8c39f51486d3034641b881a7839ae2ae42d3",
-    "drc.json": "7b6dd678c2ca914ed6566b05470d429bd7acd9021f410e28bc6e38fd469918a3",
+    "drc.json": "2a388e7ca7617251cc5439b2f3b62a1637266a091706ec1a61db2332df06a2ae",
     "Drill-report.txt": "de4b5ec597340ae8f63c9f8b0e8de5d17fbbc2543decd8d88d16a54e594a2c9a",
-    "erc.json": "2018666e8286688a0918cd2aefc8963a667f99454f60d652e543be136c8d7c10",
+    "erc.json": "19a1001c01dac3d817e18590850465c68d05640e0d1378e3951cbcdb36e63e36",
     "Fabrication-review.md": "04797f9b301f4fdae06dd3c7871d25b0ff0101e9423046b0f237c27e80a28e55",
     "Fuse-and-scope-review.md": "977d524c0e87a8348c9878f9f6fc336ab9d5f430f54f6095722fc479fb0afab6",
     "Gerber-bottom.png": "a45311458a4a6893c1f2ff96514c0d02f94b7a5687769366e3a41c6c348b7040",
@@ -65,7 +65,7 @@
     "gerbers/Lab4-PTH.drl": "46ead137ad4428d25fe13251c7cb819778d510c401948dbc7a0c9c330db5ea6c",
     "Gerbers-REVIEW-ONLY.zip": "0e6c5dfde7929532c75a39be4dc33cbcabaac5c6e787727b8da516f946c15e7e",
     "Identification-detail.png": "7aaabc3bb70fd032ecb296877b27954c1e90b004fffce2cf69e8444e97e7ef7b",
-    "Lab4-Circuits.pdf": "49e9d1da461eab60810c6fb9c35730e67e4c20512654e20e7f8dfd378681efd1",
+    "Lab4-Circuits.pdf": "c2e3b7af8eac6584409bf8b01b40a79313805aa4df0368f7dccccd30fbef51f2",
     "Lab4-Writeup.pdf": "87dc056d1deed400cc4a86ea486bf8584e57b184f0a1abdc55a0772ba40b6530",
     "Layer-stack.md": "10e8658498db1913e11f74b314f7baa1c4f2348d1c50b66f066341335b90e1e3",
     "Manufacturing-export-check.json": "e86be7331f774fc9d4f368daf4fa10a8a8280250a81e9c1b6028a4cecce4ea58",
@@ -89,14 +89,16 @@
     "Prototype-operating-review.md": "d39dbaeb62504aeefcad81a735145ea5fc3e31e5a00cddaf99d8a4764b892995",
     "Prototype-power-check.json": "fcc8ca27e66952e16d783b911e4affcb15456809f49f45990c7eae3fc43ff724",
     "REVIEW-ONLY.txt": "8a6b2c1e35708b3bc92c1bbd54faf56c1f3f01298518ea9ac45b9d57e324f086",
+    "Schematic-format-check.json": "e5585ae71ed573d1769e007eb2bac0e0786c1e1ac65eb3df9dbe9744f7413be9",
+    "Schematic-format-review.md": "1e862ee35dd525e7f0d63551b1a7df30dff106f697742017c443670cee932466",
     "Selected-package-check.json": "2493003631931c954c0dd78d3b412058daf8f1e1816d6f93c545acf8f35d21ef",
     "Silkscreen-identification-check.json": "11ee2ae02bcbeb9ac9d83707bce46bbadb6d303ce7474f2529d96569e328fc75",
     "Silkscreen-identification-review.md": "bc60ea29b43b74e3a910628ae8152cb4c10e616504c54255910edc5f6520d997",
     "Solder-via-check.json": "c1f2530bb4e9ce8ef2329cf5941a6b50c4dcad9a80a21a8e327e477ea64003e2",
-    "summary.json": "c5a751596456a6ef3b9baaddd7490f466624a16aa32b09e0311ddd08654d7053",
+    "summary.json": "062edba36ea1d546edd16ac5ee9db7173f24e6287995dc5a1c2a97018578fa39",
     "TEAM_4_BOM_Lab4.xlsx": "b2c1c1e4db5bf5057ea8ef1b99d6ea7bf35a44e74637ec623c9aaae4349a1098"
   },
-  "stage": "November 2 Anson review changes prepared; original 6945466 submission complete and 4895895 linked to staff; this revision not sent",
+  "stage": "November 2 review changes and reference-style schematic formatting prepared; this revision not sent",
   "operating_review": "Prototype-operating-review.md",
   "revision_review": "November2-Anson-review.md",
   "fabrication_specification": {
@@ -106,5 +108,6 @@
     "reference_stack": "JLC04161H-7628",
     "outer_copper_oz": 1,
     "inner_copper_oz": 0.5
-  }
+  },
+  "schematic_format_review": "Schematic-format-review.md"
 }

@@ -36,7 +36,7 @@ def main():
         subprocess.run([args.kicad_cli, *map(str, command)], check=True,
                        cwd=ROOT, timeout=300)
     cli('sch', 'export', 'pdf', '-o', out/'Lab4-Circuits.pdf',
-        '--exclude-pdf-property-popups', ROOT/'KiCad/Lab4.kicad_sch')
+        '--no-background-color', '--exclude-pdf-property-popups', ROOT/'KiCad/Lab4.kicad_sch')
     cli('pcb', 'export', 'gerbers', '-o', str(gerber)+'/', '-l', LAYERS,
         '--subtract-soldermask', '--check-zones', '--no-protel-ext', board)
     cli('pcb', 'export', 'drill', '-o', str(gerber)+'/', '--format', 'excellon',
@@ -70,6 +70,7 @@ def main():
                      'Silkscreen-identification-check.json',
                      'November1-review.md', 'November1-review-check.json',
                      'November2-Anson-review.md', 'November2-Anson-review-check.json',
+                     'Schematic-format-review.md', 'Schematic-format-check.json',
                      'Digital-geometry-check.json', 'Solder-via-check.json',
                      'CAN-geometry-review.md', 'CAN-geometry-check.json'):
         shutil.copy2(ROOT/filename, out/filename)

@@ -1,0 +1,40 @@
+{
+  "baseline_commit": "7644128ca9607781ed0af68e5ea94199ed86522d",
+  "scope": "Schematic presentation only",
+  "reference": "https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793596091232639",
+  "schematic_components": 300,
+  "pin_net_assignments": 1077,
+  "component_properties_unchanged": true,
+  "pin_nets_unchanged": true,
+  "library_symbols_unchanged": true,
+  "native_object_identities_preserved": true,
+  "pcb_byte_identical": true,
+  "board_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
+  "blue_dashed_frames": {
+    "Lab4": 4,
+    "Front": 8,
+    "Rear": 10,
+    "Cockpit": 7,
+    "Power": 5
+  },
+  "source_sha256": {
+    "KiCad/Cockpit.kicad_sch": "5075f600d495d5e4435c6f55ee5a956a6403d201aa58ca225a2ce5bbc6ba24f2",
+    "KiCad/Front.kicad_sch": "aa4a08939d7348fae3aff039a8638941157644de421673bde0c38a3536062e4c",
+    "KiCad/Lab4.kicad_sch": "72f9d925fde20bbd4afbbb2b96a8289909e99cd7174267205723cb439d992de1",
+    "KiCad/Power.kicad_sch": "9ab1b9acc061f1b61c754fa75f2fbccb4f7305649f14dc6afa1a2303445bc6e8",
+    "KiCad/Rear.kicad_sch": "9957c86f4b93a461362b0a2a4624b42ee9ed6baaf32ce994469d425b7679281a"
+  },
+  "counts": {
+    "schematic_components": 300,
+    "electrical_footprints": 300,
+    "track_segments_and_vias": 20014,
+    "copper_zones": 6,
+    "erc_findings": 0,
+    "drc_violations": 0,
+    "unconnected_items": 0,
+    "connectivity_unconnected_count": 0,
+    "schematic_parity_findings": 0
+  },
+  "visual_review": "All five PDF pages inspected; function boxes, headings, label orientation and page boundaries reviewed.",
+  "fabrication_release": false
+}

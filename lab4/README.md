@@ -6,6 +6,10 @@ motor clamps/left connector and three bypass capacitors, and improves two
 local CAN pairs. Support holes, stack, part identities and BOM quantities
 are unchanged. Use the current matching review package.
 
+The [schematic formatting update](Schematic-format-review.md) adds blue dashed
+function boxes, stacked CAN sections and consistent headings to match the
+staff example. All connections and the PCB are unchanged from `7644128`.
+
 Original `6945466` was submitted to Gradescope on October 30; its archives
 reached staff. The team linked `4895895` to Anson on November 2. The new
 November 2 files are prepared but have not been sent. Staff acceptance and
