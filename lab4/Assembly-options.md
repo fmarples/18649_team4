@@ -1,6 +1,15 @@
 # Assembly options for the same Lab 4 design
 
-## Current assembly decisions — October 29
+## November 2 placement update
+
+C500, C800 and C801 are bottom-side SMT in the revised board. Install these
+three bypass capacitors before through-hole hardware obstructs access.
+Their courtyards clear the Pi area and through-hole lands; no via drill
+intersects their solder lands. Follow the current native placement file for
+side and rotation. This does not change the course hand-assembly plan.
+
+## Assembly decisions — October 29
+
 
 We will assemble the SMT parts first and install the through-hole Pi socket,
 power connectors, electrolytics and heatsink hardware afterward. No new

@@ -1,3 +1,13 @@
+November 2 update: Anson schematic and PCB review
+- Redrew functional circuit sheets; all 1,077 pin-to-net assignments preserved.
+- F1 now identifies the existing 10 A / 32 V 0297010.L candidate.
+- Moved rear clamps/J80 and three bottom-side bypass capacitors; improved two local CAN pairs.
+- Names retained on bottom; mounting holes, pad nets, identities and stack unchanged.
+- Fresh ERC/DRC/parity/unconnected zero; 331 targeted connections and 282 packages pass.
+- Assembly opening review: zero via drill/SMD land intersections.
+- Refreshed affected power/ground and manufacturing checks; no powered test or staff acceptance claimed.
+- Earlier entries below describe their dated sources.
+
 November 1 update: staff diode and copper correction
 - Moved four diode pad nets to motor side of ACS712 sensors; no footprint moves.
 - Added 0.1524 mm copper-neck and 0.381 mm CAN-to-zone checks.

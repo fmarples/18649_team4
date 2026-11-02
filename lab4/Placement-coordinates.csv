@@ -60,7 +60,7 @@ C435,22u 25V,Capacitor_SMD:C_1210_3225Metric,85.0,208.0,180.0,F.Cu,True
 C436,22u 25V,Capacitor_SMD:C_1210_3225Metric,89.0,218.25,180.0,F.Cu,True
 C437,22u 25V,Capacitor_SMD:C_1210_3225Metric,97.5,218.25,180.0,F.Cu,True
 C5,100n,Capacitor_SMD:C_0603_1608Metric,28.0,41.0,90.0,F.Cu,True
-C500,100n VDD19,Capacitor_SMD:C_0603_1608Metric,24.5,171.75,0.0,F.Cu,True
+C500,100n VDD19,Capacitor_SMD:C_0603_1608Metric,31.0,171.5,-90.0,B.Cu,True
 C501,100n VDD32,Capacitor_SMD:C_0603_1608Metric,37.0,171.0,0.0,F.Cu,True
 C502,100n VDD48,Capacitor_SMD:C_0603_1608Metric,39.0,159.0,90.0,F.Cu,True
 C503,100n VDD64,Capacitor_SMD:C_0603_1608Metric,27.0,155.0,0.0,F.Cu,True
@@ -89,8 +89,8 @@ C700,22u /16V,Capacitor_SMD:C_0805_2012Metric,19.0,85.0,0.0,F.Cu,True
 C701,100n,Capacitor_SMD:C_0603_1608Metric,21.0,80.0,0.0,F.Cu,True
 C702,100n TEST,Capacitor_SMD:C_0603_1608Metric,20.0,145.0,0.0,F.Cu,True
 C8,100n,Capacitor_SMD:C_0603_1608Metric,53.0,41.0,90.0,F.Cu,True
-C800,100n 50V,Capacitor_SMD:C_0603_1608Metric,48.0,31.5,0.0,F.Cu,True
-C801,100n,Capacitor_SMD:C_0603_1608Metric,48.0,28.0,0.0,F.Cu,True
+C800,100n 50V,Capacitor_SMD:C_0603_1608Metric,29.5,21.25,180.0,B.Cu,True
+C801,100n,Capacitor_SMD:C_0603_1608Metric,35.5,22.5,180.0,B.Cu,True
 C802,470u 25V,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,59.85,7.0,0.0,F.Cu,True
 C803,100n,Capacitor_SMD:C_0603_1608Metric,106.0,62.0,0.0,F.Cu,True
 C804,10u 16V 10% low-ESR,Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B,99.5,89.0,0.0,F.Cu,True
@@ -108,15 +108,15 @@ D710,STATUS green,LED_SMD:LED_0603_1608Metric,35.02,85.0,0.0,F.Cu,True
 D711,ERR red,LED_SMD:LED_0603_1608Metric,42.02,85.0,0.0,F.Cu,True
 D712,DEG_A yellow,LED_SMD:LED_0603_1608Metric,49.02,85.0,0.0,F.Cu,True
 D713,DEG_B yellow,LED_SMD:LED_0603_1608Metric,56.02,85.0,0.0,F.Cu,True
-D800,SK520B,Diode_SMD:D_SMB,8.0225,16.0,0.0,F.Cu,True
-D801,SK520B,Diode_SMD:D_SMB,8.0225,22.0,0.0,F.Cu,True
-D802,SK520B,Diode_SMD:D_SMB,8.0225,28.0,0.0,F.Cu,True
-D803,SK520B,Diode_SMD:D_SMB,8.0225,34.0,0.0,F.Cu,True
-D804,SK520B,Diode_SMD:D_SMB,60.0225,32.0,0.0,F.Cu,True
-D805,SK520B,Diode_SMD:D_SMB,60.0225,38.0,0.0,F.Cu,True
-D806,SK520B,Diode_SMD:D_SMB,60.0225,44.0,0.0,F.Cu,True
-D807,SK520B,Diode_SMD:D_SMB,60.0225,50.0,0.0,F.Cu,True
-F1,Fuse: rating TBD,Fuse:Fuseholder_Blade_Mini_Keystone_3568,86.3,21.96,90.0,F.Cu,True
+D800,SK520B,Diode_SMD:D_SMB,5.0,3.0,-90.0,F.Cu,True
+D801,SK520B,Diode_SMD:D_SMB,5.0,11.0,-90.0,F.Cu,True
+D802,SK520B,Diode_SMD:D_SMB,11.0,3.0,-90.0,F.Cu,True
+D803,SK520B,Diode_SMD:D_SMB,11.0,11.0,-90.0,F.Cu,True
+D804,SK520B,Diode_SMD:D_SMB,38.0,-6.0,0.0,F.Cu,True
+D805,SK520B,Diode_SMD:D_SMB,47.0,-6.0,0.0,F.Cu,True
+D806,SK520B,Diode_SMD:D_SMB,56.0,-6.0,0.0,F.Cu,True
+D807,SK520B,Diode_SMD:D_SMB,65.0,-6.0,0.0,F.Cu,True
+F1,10A / 32V (0297010.L),Fuse:Fuseholder_Blade_Mini_Keystone_3568,86.3,21.96,90.0,F.Cu,True
 FB50,600R @100MHz,Inductor_SMD:L_0603_1608Metric,20.0,169.0,0.0,F.Cu,True
 FB60,600R @100MHz,Inductor_SMD:L_0603_1608Metric,20.0,70.0,0.0,F.Cu,True
 H1,M3 / 4.0mm clearance / 4mm exclusion,Lab4_Mechanical:Chassis_support_M3_D4_4mm_edge,23.4925,-6.2116,0.0,F.Cu,False
@@ -167,7 +167,7 @@ J651,REAR RIGHT lamp,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,
 J70,Pi GPIO pins3-38 / ESQ-118-44-L-D,Lab4_Mechanical:Samtec_ESQ-118-44_2x18_PiPins3-38_H18.67,38.37,93.77,-90.0,B.Cu,True
 J703,LAB3 rows 1-13,Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical,4.0,88.765,0.0,F.Cu,True
 J704,Pi extra probes,Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical,10.0,125.92,0.0,F.Cu,True
-J80,LEFT motor,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,27.1,6.95,0.0,F.Cu,True
+J80,LEFT motor,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,7.0,-6.0,0.0,F.Cu,True
 J81,RIGHT motor,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,38.02,6.95,0.0,F.Cu,True
 J82,LEFT encoder,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,15.0,94.19,0.0,F.Cu,True
 J83,RIGHT encoder,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,66.0,73.19,0.0,F.Cu,True

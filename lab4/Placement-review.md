@@ -1,6 +1,16 @@
 # PCB placement review
 
-## Current revision — October 28
+## Current revision — November 2
+
+The [Anson review changes](November2-Anson-review.md) move J80, all eight
+motor clamps and C500/C800/C801. The three capacitors are on the underside;
+the Pi/socket, heatsink, outline and hole pattern do not move. Placement
+coordinates, previews and clearance checks are refreshed from the routed
+board. The October 28 dimensions below still apply; its unchanged-placement
+statement refers only to that earlier Pi-feed revision.
+
+## October 28 revision
+
 
 We selected rear chassis pair A1/A2 after the team confirmed both holes are
 unused and accessible. CAD dimensions are 47.870 mm front, 73.01493 mm rear

@@ -1,11 +1,11 @@
 {
-  "checked_at_utc": "2026-11-01T22:08:35.738013+00:00",
+  "checked_at_utc": "2026-11-02T19:47:26.224822+00:00",
   "automated_status": "PASS",
   "fabrication_release": false,
   "counts": {
     "schematic_components": 300,
     "electrical_footprints": 300,
-    "track_segments_and_vias": 20296,
+    "track_segments_and_vias": 20014,
     "copper_zones": 6,
     "erc_findings": 0,
     "drc_violations": 0,
@@ -69,13 +69,13 @@
     }
   ],
   "source_sha256": {
-    "KiCad/Cockpit.kicad_sch": "f91c95f5288fa3f0db50d23edc9711e6be76f68e408bbfc5445c2541a11b5933",
+    "KiCad/Cockpit.kicad_sch": "f708103802421897a8bfacaaa73e95692f2e7a8c559fd8808ba2a05ed42d4d93",
     "KiCad/fp-lib-table": "75f56a0b679ab6456d1003299be3726d010b0257ae49cf629c7720ef8c915c38",
-    "KiCad/Front.kicad_sch": "84d37b382ed1d24392ba441abe4a5c0f26235713312188b34e4be15a042dc968",
+    "KiCad/Front.kicad_sch": "3bc0f25c6ce3505627081f405dc40fcabddf6746271fe5401f3388f27fdee9eb",
     "KiCad/Lab4.kicad_dru": "4b7d831c6c1b80ac890886eaa4d388be78bda28ad236768125278c4e06da06da",
-    "KiCad/Lab4.kicad_pcb": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+    "KiCad/Lab4.kicad_pcb": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
     "KiCad/Lab4.kicad_pro": "d89f2865b2b36bc1a633fce71fdf6530fdd4964de87f1a9c841947c736102a93",
-    "KiCad/Lab4.kicad_sch": "0c45da6657f63049a842790d71dc1c6c8d018283a7512e26832fcd414a09abe1",
+    "KiCad/Lab4.kicad_sch": "1623e72a96990fd53b0db2a9032b26e541f52cf53b35f1abadc6c4d87d67148b",
     "KiCad/Lab4_Logic.kicad_sym": "9282bfef36f6ec97c9f21daf90d966cb1d9d4c4d2789dc5ea5344dc1be62f463",
     "KiCad/Lab4_Mechanical.pretty/Boyd_6396BG_StraightPins.kicad_mod": "90cf4f9c1046fc00fe304bc5dfa38c6c355bd153551c15de7fd62a02336308c0",
     "KiCad/Lab4_Mechanical.pretty/Chassis_support_M3_3mm_edge.kicad_mod": "9e63df10d245ddd0a7a77ee6fcdb0310515fd84d1a1be500e1ff60584d0d5ba0",
@@ -88,8 +88,8 @@
     "KiCad/Lab4_Power.pretty/ST_L298N_Multiwatt15V_D1.1.kicad_mod": "1f7e19d22275c295222b41d1ec92e565613bdafe936e2ee3ebb63f074cc22e73",
     "KiCad/Lab4_Power.pretty/Vishay_WSL2512_7m_to_500m.kicad_mod": "fe1e3b0b09fe270ecb9d86aa1b9550eddcfea2594fb1b0ae99c69667dbbc75fe",
     "KiCad/Lab4_Switches.pretty/GCT_SWT0210_4.5x4.5mm.kicad_mod": "391ac8f4f5725df85578cf5b2e7597e38724f3f6631b9e31545915236815b8c6",
-    "KiCad/Power.kicad_sch": "442d68d3e394d2661d0d7cd49b8fab038db3bbde52eca3c5096f69d7ac774141",
-    "KiCad/Rear.kicad_sch": "6f704e5da1a2e2fd56b334d4454528a1e6210a23086c7098c8b76c2ff7ea1094",
+    "KiCad/Power.kicad_sch": "fe33ae8542c48ddf5e222b2b8bde18b82e091ce0570b7a5d882650266e667e59",
+    "KiCad/Rear.kicad_sch": "a0e5730ca0c71df19f2b97f2394712c71230d528869f3c2f93fd0535164b18b4",
     "KiCad/sym-lib-table": "60172994ff6f013cac20eb41c4b72b371a9f3c26b8c7c802c711ed13234c603b"
   },
   "limits": [

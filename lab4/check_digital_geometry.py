@@ -134,6 +134,24 @@ for a,z in [(('R1','1'),('U1','3')),(('R1','2'),('U1','4')),(('R1','2'),('J90','
 for k in [10,14,20,24,30,34]:
  for pin,port in [('7','1'),('6','3')]:
   row=path_between((f'U{k+1}',pin),(f'J{k}',port));row.pop('traces',None);out['critical_paths'].append(row)
+# November 2 review: record actual copper paths from each local bypass to
+# its supply pin, and from each flyback clamp to the motor connector.
+out['local_bypass_paths']=[]
+for k in (50,60):
+ for i,pin in enumerate(('19','32','48','64','1')):
+  row=path_between((f'U{k}',pin),(f'C{k*10+i}','1'));row.pop('traces',None);out['local_bypass_paths'].append(row)
+for k in (10,14,20,24,30,34):
+ for u,pin,cap in ((k,'20',k*10+3),(k+1,'3',k*10+4)):
+  row=path_between((f'U{u}',pin),(f'C{cap}','1'));row.pop('traces',None);out['local_bypass_paths'].append(row)
+out['flyback_connector_paths']=[]
+for a,z in [(('U1','5'),('C1','1')), (('U2','8'),('C3','1')),
+            (('U3','8'),('C6','1')), (('U80','4'),('C800','1')),
+            (('U80','9'),('C801','1')), (('U81','14'),('C803','1')),
+            (('U82','2'),('C804','1')), (('U82','3'),('C805','1'))]:
+ row=path_between(a,z);row.pop('traces',None);out['local_bypass_paths'].append(row)
+for k in range(8):
+ row=path_between((f'D{800+k}','2' if k%2==0 else '1'),('J80' if k<4 else 'J81','1' if k%4<2 else '2'))
+ row.pop('traces',None);out['flyback_connector_paths'].append(row)
 out['silkscreen_text']=[dict(text=t.GetText(),xy=xy(t.GetPosition()),layer=t.GetLayerName(),size=xy(t.GetTextSize()),stroke_mm=p.ToMM(t.GetTextThickness())) for t in board.GetDrawings() if t.Type()==p.PCB_TEXT_T and t.GetLayer() in [p.F_SilkS,p.B_SilkS]]
 args.output.write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
 print('CAN topologies',len(can_rows),'critical paths',len(out['critical_paths']),'board silk texts',len(out['silkscreen_text']))

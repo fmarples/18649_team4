@@ -1,0 +1,83 @@
+{
+  "source_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
+  "fabrication_release": false,
+  "status": "No drill/land intersections found",
+  "intersecting_vias": 0,
+  "affected_pads": 0,
+  "counts_by_net": {},
+  "intersections": [],
+  "mask_paste_configuration": {
+    "checked_smd_pad_sides": 828,
+    "via_tenting_counts": {
+      "B.Cu_tented": 1060,
+      "F.Cu_tented": 1060
+    },
+    "nonzero_margin_pad_sides": [],
+    "pad_sides_without_direct_mask_or_paste": [
+      {
+        "pad": "Q1.2",
+        "layer": "F.Cu",
+        "mask_present": true,
+        "paste_present": false,
+        "mask_expansion_mm": 0.0,
+        "paste_margin_mm": [
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "separate_paste_only_pads": [
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 149.425,
+        "y_mm": 55.5475
+      },
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 149.425,
+        "y_mm": 58.5975
+      },
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 152.775,
+        "y_mm": 55.5475
+      },
+      {
+        "reference": "Q1",
+        "number": "",
+        "size_mm": [
+          3.05,
+          2.75
+        ],
+        "x_mm": 152.775,
+        "y_mm": 58.5975
+      }
+    ],
+    "nominal_drill_to_zero_margin_opening_review_gap_mm": 0.15,
+    "nominal_drills_within_review_gap": [],
+    "note": "0.15 mm screens nominal drill separation against published hole-position/diameter allowances; it does not qualify mask registration or tenting."
+  },
+  "method": "Nominal circular via drill intersects actual SMD copper-pad shape.",
+  "limitations": [
+    "No drill/registration tolerance or exported-Gerber/stencil inspection.",
+    "Aperture separation uses copper shape only where effective mask/paste margins are zero; inspect other margins separately.",
+    "Tenting settings are design requests, not a guarantee of a sealed hole.",
+    "A net match or ordinary DRC pass does not qualify solder wicking.",
+    "Resolve listed sites by routing changes or explicitly qualified fabrication/assembly treatment; do not assume tenting equals filling/capping."
+  ]
+}

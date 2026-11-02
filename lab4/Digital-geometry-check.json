@@ -1,5 +1,5 @@
 {
-  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "source_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
   "fabrication_release": false,
   "method": "Shortest conductor-item paths: whole segments and full 1.6mm vias, not exact extracted transmission-line lengths. CAN branch length stops at bus-side isolation pad; local transceiver copper and jumper are additional.",
   "can_topology": [
@@ -338,16 +338,16 @@
       "target": "J14.1",
       "net": "/Front zone/F_B_H_LOCAL",
       "connected": true,
-      "length_mm": 28.627,
-      "vias": 2
+      "length_mm": 37.867,
+      "vias": 1
     },
     {
       "source": "U15.6",
       "target": "J14.3",
       "net": "/Front zone/F_B_L_LOCAL",
       "connected": true,
-      "length_mm": 25.012,
-      "vias": 2
+      "length_mm": 44.375,
+      "vias": 1
     },
     {
       "source": "U21.7",
@@ -402,15 +402,323 @@
       "target": "J34.1",
       "net": "/Cockpit zone/PI_B_H_LOCAL",
       "connected": true,
-      "length_mm": 27.611,
-      "vias": 2
+      "length_mm": 26.058,
+      "vias": 1
     },
     {
       "source": "U35.6",
       "target": "J34.3",
       "net": "/Cockpit zone/PI_B_L_LOCAL",
       "connected": true,
-      "length_mm": 25.136,
+      "length_mm": 34.751,
+      "vias": 1
+    }
+  ],
+  "local_bypass_paths": [
+    {
+      "source": "U50.19",
+      "target": "C500.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 6.607,
+      "vias": 1
+    },
+    {
+      "source": "U50.32",
+      "target": "C501.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.123,
+      "vias": 0
+    },
+    {
+      "source": "U50.48",
+      "target": "C502.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.578,
+      "vias": 0
+    },
+    {
+      "source": "U50.64",
+      "target": "C503.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 1.807,
+      "vias": 0
+    },
+    {
+      "source": "U50.1",
+      "target": "C504.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.578,
+      "vias": 0
+    },
+    {
+      "source": "U60.19",
+      "target": "C600.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.785,
+      "vias": 0
+    },
+    {
+      "source": "U60.32",
+      "target": "C601.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 1.499,
+      "vias": 0
+    },
+    {
+      "source": "U60.48",
+      "target": "C602.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.578,
+      "vias": 0
+    },
+    {
+      "source": "U60.64",
+      "target": "C603.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 1.181,
+      "vias": 0
+    },
+    {
+      "source": "U60.1",
+      "target": "C604.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.578,
+      "vias": 0
+    },
+    {
+      "source": "U10.20",
+      "target": "C103.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.141,
+      "vias": 0
+    },
+    {
+      "source": "U11.3",
+      "target": "C104.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.749,
+      "vias": 0
+    },
+    {
+      "source": "U14.20",
+      "target": "C143.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.141,
+      "vias": 0
+    },
+    {
+      "source": "U15.3",
+      "target": "C144.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.649,
+      "vias": 0
+    },
+    {
+      "source": "U20.20",
+      "target": "C203.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.141,
+      "vias": 0
+    },
+    {
+      "source": "U21.3",
+      "target": "C204.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.749,
+      "vias": 0
+    },
+    {
+      "source": "U24.20",
+      "target": "C243.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.141,
+      "vias": 0
+    },
+    {
+      "source": "U25.3",
+      "target": "C244.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.566,
+      "vias": 0
+    },
+    {
+      "source": "U30.20",
+      "target": "C303.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.141,
+      "vias": 0
+    },
+    {
+      "source": "U31.3",
+      "target": "C304.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 1.6,
+      "vias": 0
+    },
+    {
+      "source": "U34.20",
+      "target": "C343.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 0.141,
+      "vias": 0
+    },
+    {
+      "source": "U35.3",
+      "target": "C344.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 2.649,
+      "vias": 0
+    },
+    {
+      "source": "U1.5",
+      "target": "C1.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 6.789,
+      "vias": 2
+    },
+    {
+      "source": "U2.8",
+      "target": "C3.1",
+      "net": "/+5V",
+      "connected": true,
+      "length_mm": 3.1,
+      "vias": 0
+    },
+    {
+      "source": "U3.8",
+      "target": "C6.1",
+      "net": "/+5V",
+      "connected": true,
+      "length_mm": 4.894,
+      "vias": 2
+    },
+    {
+      "source": "U80.4",
+      "target": "C800.1",
+      "net": "/VBAT_PROTECTED",
+      "connected": true,
+      "length_mm": 1.6,
+      "vias": 0
+    },
+    {
+      "source": "U80.9",
+      "target": "C801.1",
+      "net": "/+5V",
+      "connected": true,
+      "length_mm": 1.8,
+      "vias": 0
+    },
+    {
+      "source": "U81.14",
+      "target": "C803.1",
+      "net": "/+3V3",
+      "connected": true,
+      "length_mm": 4.087,
+      "vias": 0
+    },
+    {
+      "source": "U82.2",
+      "target": "C804.1",
+      "net": "/+5V",
+      "connected": true,
+      "length_mm": 6.505,
+      "vias": 0
+    },
+    {
+      "source": "U82.3",
+      "target": "C805.1",
+      "net": "/Rear zone/ENC_4V",
+      "connected": true,
+      "length_mm": 4.4,
+      "vias": 0
+    }
+  ],
+  "flyback_connector_paths": [
+    {
+      "source": "D800.2",
+      "target": "J80.1",
+      "net": "/Rear zone/LEFT_MOTOR",
+      "connected": true,
+      "length_mm": 12.481,
+      "vias": 0
+    },
+    {
+      "source": "D801.1",
+      "target": "J80.1",
+      "net": "/Rear zone/LEFT_MOTOR",
+      "connected": true,
+      "length_mm": 16.181,
+      "vias": 0
+    },
+    {
+      "source": "D802.2",
+      "target": "J80.2",
+      "net": "/Rear zone/LEFT_RETURN",
+      "connected": true,
+      "length_mm": 14.3,
+      "vias": 2
+    },
+    {
+      "source": "D803.1",
+      "target": "J80.2",
+      "net": "/Rear zone/LEFT_RETURN",
+      "connected": true,
+      "length_mm": 18.0,
+      "vias": 2
+    },
+    {
+      "source": "D804.2",
+      "target": "J81.1",
+      "net": "/Rear zone/RIGHT_MOTOR",
+      "connected": true,
+      "length_mm": 14.883,
+      "vias": 2
+    },
+    {
+      "source": "D805.1",
+      "target": "J81.1",
+      "net": "/Rear zone/RIGHT_MOTOR",
+      "connected": true,
+      "length_mm": 19.583,
+      "vias": 2
+    },
+    {
+      "source": "D806.2",
+      "target": "J81.2",
+      "net": "/Rear zone/RIGHT_RETURN",
+      "connected": true,
+      "length_mm": 24.452,
+      "vias": 2
+    },
+    {
+      "source": "D807.1",
+      "target": "J81.2",
+      "net": "/Rear zone/RIGHT_RETURN",
+      "connected": true,
+      "length_mm": 29.152,
       "vias": 2
     }
   ],
@@ -418,8 +726,8 @@
     {
       "text": "J80 L",
       "xy": [
-        70.0,
-        41.5
+        49.0,
+        29.0
       ],
       "layer": "F.Silkscreen",
       "size": [
@@ -3146,45 +3454,6 @@
       "stroke_mm": 0.15
     },
     {
-      "text": "Tianyi He",
-      "xy": [
-        100.0,
-        33.3
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.1,
-        1.1
-      ],
-      "stroke_mm": 0.17
-    },
-    {
-      "text": "Felipe Marples Rodriguez",
-      "xy": [
-        100.0,
-        35.7
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.1,
-        1.1
-      ],
-      "stroke_mm": 0.17
-    },
-    {
-      "text": "Sida Cheng",
-      "xy": [
-        100.0,
-        38.1
-      ],
-      "layer": "F.Silkscreen",
-      "size": [
-        1.1,
-        1.1
-      ],
-      "stroke_mm": 0.17
-    },
-    {
       "text": "649 Team 4",
       "xy": [
         100.0,
@@ -3226,8 +3495,8 @@
     {
       "text": "1:M1 2:M2",
       "xy": [
-        67.1,
-        43.0
+        49.0,
+        29.0
       ],
       "layer": "B.Silkscreen",
       "size": [
@@ -3248,6 +3517,45 @@
         1.0
       ],
       "stroke_mm": 0.15
+    },
+    {
+      "text": "Tianyi He",
+      "xy": [
+        100.0,
+        33.3
+      ],
+      "layer": "B.Silkscreen",
+      "size": [
+        1.1,
+        1.1
+      ],
+      "stroke_mm": 0.17
+    },
+    {
+      "text": "Felipe Marples Rodriguez",
+      "xy": [
+        100.0,
+        35.7
+      ],
+      "layer": "B.Silkscreen",
+      "size": [
+        1.1,
+        1.1
+      ],
+      "stroke_mm": 0.17
+    },
+    {
+      "text": "Sida Cheng",
+      "xy": [
+        100.0,
+        38.1
+      ],
+      "layer": "B.Silkscreen",
+      "size": [
+        1.1,
+        1.1
+      ],
+      "stroke_mm": 0.17
     }
   ]
 }

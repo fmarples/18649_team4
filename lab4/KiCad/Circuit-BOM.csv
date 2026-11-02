@@ -102,7 +102,7 @@ Rear,R8,1k,ERJ-3EKF1001V,Resistor_SMD:R_0603_1608Metric,Preliminary; verify befo
 Rear,C8,100n,KGM15AR71C104KT,Capacitor_SMD:C_0603_1608Metric,Preliminary; verify before fabrication
 Rear,J3,Current test,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,Preliminary; verify before fabrication
 Power,J40,Battery input: 1=+ 2=GND,DF63M-2P-3.96DSA,Connector_Hirose:Hirose_DF63M-2P-3.96DSA_1x02_P3.96mm_Vertical,Teammate connector proposal; 14A header rating; verify wire/contact derating and fuse
-Power,F1,Fuse: rating TBD,3568,Fuse:Fuseholder_Blade_Mini_Keystone_3568,Fuse must coordinate with holder/wire rating and measured inrush; not selected from peak estimate alone
+Power,F1,10A / 32V (0297010.L),3568,Fuse:Fuseholder_Blade_Mini_Keystone_3568,Fuse must coordinate with holder/wire rating and measured inrush; not selected from peak estimate alone
 Power,Q1,DMPH3010LK3-13,DMPH3010LK3-13,Package_TO_SOT_SMD:TO-252-2,"Reverse-polarity: drain toward battery, source toward load. Manufacturer G1 D2 S3. Not a reverse-current blocker."
 Power,R400,10k,CRCW060310K0FKEA,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated
 Power,R401,47k,RC0603FR-0747KL,Resistor_SMD:R_0603_1608Metric,Calculated design; not bench validated

@@ -3,44 +3,44 @@
   "fabrication_release": false,
   "copper_layer_count": 4,
   "track_segments_by_layer": {
-    "F.Cu": 7698,
-    "B.Cu": 6143,
-    "In2.Cu": 5381,
+    "F.Cu": 7495,
+    "B.Cu": 5722,
+    "In2.Cu": 5730,
     "In1.Cu": 7
   },
   "errors": [],
   "counts": {
-    "track_segments": 19229,
-    "through_vias": 1067,
+    "track_segments": 18954,
+    "through_vias": 1060,
     "copper_zones": 6,
     "full_unconnected_count": 0
   },
   "segment_width_counts_mm": {
-    "0.2": 12994,
-    "0.3": 888,
-    "0.25": 326,
+    "0.2": 13271,
+    "0.3": 863,
+    "0.25": 323,
     "0.5": 948,
-    "0.4": 124,
-    "0.6": 419,
-    "1.0": 589,
-    "0.8": 411,
-    "2.0": 213,
-    "2.5": 155,
-    "1.75": 121,
-    "3.0": 805,
-    "1.5": 775,
-    "1.25": 128,
+    "0.4": 132,
+    "0.6": 422,
+    "1.0": 481,
+    "0.8": 402,
+    "2.0": 166,
+    "2.5": 122,
+    "1.75": 89,
+    "3.0": 693,
+    "1.5": 652,
+    "1.25": 95,
     "1.2": 22,
     "1.38": 2,
-    "2.25": 37,
+    "2.25": 8,
     "3.5": 31,
     "4.0": 230,
-    "2.75": 11
+    "2.75": 2
   },
   "via_diameter_drill_counts_mm": {
-    "0.70/0.30": 1002,
-    "0.80/0.40": 64,
-    "0.80/0.30": 1
+    "0.70/0.30": 974,
+    "0.80/0.40": 63,
+    "0.90/0.30": 23
   },
   "checks": [
     {
@@ -3612,7 +3612,6 @@
         "R432.1",
         "C425.1",
         "R580.1",
-        "C800.1",
         "C436.1",
         "C421.1",
         "U41.1",
@@ -3625,7 +3624,8 @@
         "C430.1",
         "R412.1",
         "D804.1",
-        "C415.1"
+        "C415.1",
+        "C800.1"
       ],
       "physically_connected": true,
       "zones_excluded": true
@@ -3729,7 +3729,6 @@
         "U10.20",
         "R501.1",
         "C143.1",
-        "C500.1",
         "C1.1",
         "R300.1",
         "U24.4",
@@ -3739,7 +3738,8 @@
         "J500.1",
         "C437.1",
         "J600.1",
-        "FB50.1"
+        "FB50.1",
+        "C500.1"
       ],
       "physically_connected": true,
       "zones_excluded": true
@@ -3938,22 +3938,22 @@
   "backbone_nets": [
     {
       "net": "/CAN_A_H",
-      "total_copper_length_mm_all_branches": 248.654,
+      "total_copper_length_mm_all_branches": 248.564,
       "through_vias": 4
     },
     {
       "net": "/CAN_A_L",
-      "total_copper_length_mm_all_branches": 242.119,
+      "total_copper_length_mm_all_branches": 242.089,
       "through_vias": 13
     },
     {
       "net": "/CAN_B_H",
-      "total_copper_length_mm_all_branches": 242.011,
+      "total_copper_length_mm_all_branches": 241.921,
       "through_vias": 4
     },
     {
       "net": "/CAN_B_L",
-      "total_copper_length_mm_all_branches": 236.772,
+      "total_copper_length_mm_all_branches": 236.742,
       "through_vias": 13
     }
   ],
@@ -3967,5 +3967,5 @@
     "Power-input and motor protection decisions remain open. Heatsink mounting is implemented; operating temperature is unqualified. No fabrication release."
   ],
   "unfinished_signal_nets": [],
-  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077"
+  "source_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001"
 }

@@ -1,0 +1,1362 @@
+{
+  "previous_commit": "4895895f59fc603546229aea1c055f9afc5874b4",
+  "previous_board_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "board_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
+  "fabrication_release": false,
+  "review_url": "https://docs.google.com/document/d/1KRUg6gwJZ7ZEjsMl1iB4o16e8cOBPVASS1JjuUOm5Sw",
+  "verified_pin_net_assignments": 1077,
+  "pin_net_differences": 0,
+  "footprint_count": 309,
+  "changed_placements": [
+    {
+      "reference": "D805",
+      "before": {
+        "xy_mm": [
+          100.0225,
+          78.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          87.0,
+          34.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "D801",
+      "before": {
+        "xy_mm": [
+          48.0225,
+          62.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          45.0,
+          51.0
+        ],
+        "rotation_deg": -90.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "D802",
+      "before": {
+        "xy_mm": [
+          48.0225,
+          68.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          51.0,
+          43.0
+        ],
+        "rotation_deg": -90.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "D807",
+      "before": {
+        "xy_mm": [
+          100.0225,
+          90.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          105.0,
+          34.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "C800",
+      "before": {
+        "xy_mm": [
+          88.0,
+          71.5
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          69.5,
+          61.25
+        ],
+        "rotation_deg": 180.0,
+        "layer": "B.Cu"
+      }
+    },
+    {
+      "reference": "D806",
+      "before": {
+        "xy_mm": [
+          100.0225,
+          84.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          96.0,
+          34.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "C801",
+      "before": {
+        "xy_mm": [
+          88.0,
+          68.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          75.5,
+          62.5
+        ],
+        "rotation_deg": 180.0,
+        "layer": "B.Cu"
+      }
+    },
+    {
+      "reference": "D803",
+      "before": {
+        "xy_mm": [
+          48.0225,
+          74.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          51.0,
+          51.0
+        ],
+        "rotation_deg": -90.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "D800",
+      "before": {
+        "xy_mm": [
+          48.0225,
+          56.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          45.0,
+          43.0
+        ],
+        "rotation_deg": -90.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "J80",
+      "before": {
+        "xy_mm": [
+          67.1,
+          46.95
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          47.0,
+          34.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "D804",
+      "before": {
+        "xy_mm": [
+          100.0225,
+          72.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          78.0,
+          34.0
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      }
+    },
+    {
+      "reference": "C500",
+      "before": {
+        "xy_mm": [
+          64.5,
+          211.75
+        ],
+        "rotation_deg": 0.0,
+        "layer": "F.Cu"
+      },
+      "after": {
+        "xy_mm": [
+          71.0,
+          211.5
+        ],
+        "rotation_deg": -90.0,
+        "layer": "B.Cu"
+      }
+    }
+  ],
+  "changed_pad_thermal_settings": [
+    {
+      "pad": "D713.1",
+      "before": [
+        -1,
+        90.0,
+        0.0
+      ],
+      "after": [
+        -1,
+        45.0,
+        0.0
+      ]
+    },
+    {
+      "pad": "D805.2",
+      "before": [
+        -1,
+        90.0,
+        0.0
+      ],
+      "after": [
+        1,
+        90.0,
+        0.0
+      ]
+    },
+    {
+      "pad": "D801.2",
+      "before": [
+        -1,
+        90.0,
+        0.0
+      ],
+      "after": [
+        1,
+        90.0,
+        0.0
+      ]
+    },
+    {
+      "pad": "D807.2",
+      "before": [
+        -1,
+        90.0,
+        0.0
+      ],
+      "after": [
+        1,
+        90.0,
+        0.0
+      ]
+    },
+    {
+      "pad": "D803.2",
+      "before": [
+        -1,
+        90.0,
+        0.0
+      ],
+      "after": [
+        1,
+        90.0,
+        0.0
+      ]
+    }
+  ],
+  "unchanged_supports_socket_heatsink": true,
+  "unchanged_pad_sizes_drills_and_pad_nets": true,
+  "track_via_counts": [
+    20296,
+    20014
+  ],
+  "bypass_paths": [
+    {
+      "source": "U50.19",
+      "target": "C500.1",
+      "before": {
+        "source": "U50.19",
+        "target": "C500.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 11.483,
+        "vias": 2
+      },
+      "after": {
+        "source": "U50.19",
+        "target": "C500.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 6.607,
+        "vias": 1
+      }
+    },
+    {
+      "source": "U50.32",
+      "target": "C501.1",
+      "before": {
+        "source": "U50.32",
+        "target": "C501.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.123,
+        "vias": 0
+      },
+      "after": {
+        "source": "U50.32",
+        "target": "C501.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.123,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U50.48",
+      "target": "C502.1",
+      "before": {
+        "source": "U50.48",
+        "target": "C502.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      },
+      "after": {
+        "source": "U50.48",
+        "target": "C502.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U50.64",
+      "target": "C503.1",
+      "before": {
+        "source": "U50.64",
+        "target": "C503.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.807,
+        "vias": 0
+      },
+      "after": {
+        "source": "U50.64",
+        "target": "C503.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.807,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U50.1",
+      "target": "C504.1",
+      "before": {
+        "source": "U50.1",
+        "target": "C504.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      },
+      "after": {
+        "source": "U50.1",
+        "target": "C504.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U60.19",
+      "target": "C600.1",
+      "before": {
+        "source": "U60.19",
+        "target": "C600.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.785,
+        "vias": 0
+      },
+      "after": {
+        "source": "U60.19",
+        "target": "C600.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.785,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U60.32",
+      "target": "C601.1",
+      "before": {
+        "source": "U60.32",
+        "target": "C601.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.499,
+        "vias": 0
+      },
+      "after": {
+        "source": "U60.32",
+        "target": "C601.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.499,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U60.48",
+      "target": "C602.1",
+      "before": {
+        "source": "U60.48",
+        "target": "C602.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      },
+      "after": {
+        "source": "U60.48",
+        "target": "C602.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U60.64",
+      "target": "C603.1",
+      "before": {
+        "source": "U60.64",
+        "target": "C603.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.181,
+        "vias": 0
+      },
+      "after": {
+        "source": "U60.64",
+        "target": "C603.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.181,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U60.1",
+      "target": "C604.1",
+      "before": {
+        "source": "U60.1",
+        "target": "C604.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      },
+      "after": {
+        "source": "U60.1",
+        "target": "C604.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.578,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U10.20",
+      "target": "C103.1",
+      "before": {
+        "source": "U10.20",
+        "target": "C103.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      },
+      "after": {
+        "source": "U10.20",
+        "target": "C103.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U11.3",
+      "target": "C104.1",
+      "before": {
+        "source": "U11.3",
+        "target": "C104.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.749,
+        "vias": 0
+      },
+      "after": {
+        "source": "U11.3",
+        "target": "C104.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.749,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U14.20",
+      "target": "C143.1",
+      "before": {
+        "source": "U14.20",
+        "target": "C143.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      },
+      "after": {
+        "source": "U14.20",
+        "target": "C143.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U15.3",
+      "target": "C144.1",
+      "before": {
+        "source": "U15.3",
+        "target": "C144.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.649,
+        "vias": 0
+      },
+      "after": {
+        "source": "U15.3",
+        "target": "C144.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.649,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U20.20",
+      "target": "C203.1",
+      "before": {
+        "source": "U20.20",
+        "target": "C203.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      },
+      "after": {
+        "source": "U20.20",
+        "target": "C203.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U21.3",
+      "target": "C204.1",
+      "before": {
+        "source": "U21.3",
+        "target": "C204.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.749,
+        "vias": 0
+      },
+      "after": {
+        "source": "U21.3",
+        "target": "C204.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.749,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U24.20",
+      "target": "C243.1",
+      "before": {
+        "source": "U24.20",
+        "target": "C243.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      },
+      "after": {
+        "source": "U24.20",
+        "target": "C243.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U25.3",
+      "target": "C244.1",
+      "before": {
+        "source": "U25.3",
+        "target": "C244.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.566,
+        "vias": 0
+      },
+      "after": {
+        "source": "U25.3",
+        "target": "C244.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.566,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U30.20",
+      "target": "C303.1",
+      "before": {
+        "source": "U30.20",
+        "target": "C303.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      },
+      "after": {
+        "source": "U30.20",
+        "target": "C303.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U31.3",
+      "target": "C304.1",
+      "before": {
+        "source": "U31.3",
+        "target": "C304.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.6,
+        "vias": 0
+      },
+      "after": {
+        "source": "U31.3",
+        "target": "C304.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 1.6,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U34.20",
+      "target": "C343.1",
+      "before": {
+        "source": "U34.20",
+        "target": "C343.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      },
+      "after": {
+        "source": "U34.20",
+        "target": "C343.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 0.141,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U35.3",
+      "target": "C344.1",
+      "before": {
+        "source": "U35.3",
+        "target": "C344.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.649,
+        "vias": 0
+      },
+      "after": {
+        "source": "U35.3",
+        "target": "C344.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 2.649,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U1.5",
+      "target": "C1.1",
+      "before": {
+        "source": "U1.5",
+        "target": "C1.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 6.789,
+        "vias": 2
+      },
+      "after": {
+        "source": "U1.5",
+        "target": "C1.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 6.789,
+        "vias": 2
+      }
+    },
+    {
+      "source": "U2.8",
+      "target": "C3.1",
+      "before": {
+        "source": "U2.8",
+        "target": "C3.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 3.1,
+        "vias": 0
+      },
+      "after": {
+        "source": "U2.8",
+        "target": "C3.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 3.1,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U3.8",
+      "target": "C6.1",
+      "before": {
+        "source": "U3.8",
+        "target": "C6.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 4.894,
+        "vias": 2
+      },
+      "after": {
+        "source": "U3.8",
+        "target": "C6.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 4.894,
+        "vias": 2
+      }
+    },
+    {
+      "source": "U80.4",
+      "target": "C800.1",
+      "before": {
+        "source": "U80.4",
+        "target": "C800.1",
+        "net": "/VBAT_PROTECTED",
+        "connected": true,
+        "length_mm": 67.307,
+        "vias": 3
+      },
+      "after": {
+        "source": "U80.4",
+        "target": "C800.1",
+        "net": "/VBAT_PROTECTED",
+        "connected": true,
+        "length_mm": 1.6,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U80.9",
+      "target": "C801.1",
+      "before": {
+        "source": "U80.9",
+        "target": "C801.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 15.106,
+        "vias": 0
+      },
+      "after": {
+        "source": "U80.9",
+        "target": "C801.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 1.8,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U81.14",
+      "target": "C803.1",
+      "before": {
+        "source": "U81.14",
+        "target": "C803.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 4.087,
+        "vias": 0
+      },
+      "after": {
+        "source": "U81.14",
+        "target": "C803.1",
+        "net": "/+3V3",
+        "connected": true,
+        "length_mm": 4.087,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U82.2",
+      "target": "C804.1",
+      "before": {
+        "source": "U82.2",
+        "target": "C804.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 6.505,
+        "vias": 0
+      },
+      "after": {
+        "source": "U82.2",
+        "target": "C804.1",
+        "net": "/+5V",
+        "connected": true,
+        "length_mm": 6.505,
+        "vias": 0
+      }
+    },
+    {
+      "source": "U82.3",
+      "target": "C805.1",
+      "before": {
+        "source": "U82.3",
+        "target": "C805.1",
+        "net": "/Rear zone/ENC_4V",
+        "connected": true,
+        "length_mm": 4.4,
+        "vias": 0
+      },
+      "after": {
+        "source": "U82.3",
+        "target": "C805.1",
+        "net": "/Rear zone/ENC_4V",
+        "connected": true,
+        "length_mm": 4.4,
+        "vias": 0
+      }
+    }
+  ],
+  "flyback_paths": [
+    {
+      "source": "D800.2",
+      "target": "J80.1",
+      "before": {
+        "source": "D800.2",
+        "target": "J80.1",
+        "net": "/Rear zone/LEFT_MOTOR",
+        "connected": true,
+        "length_mm": 36.66,
+        "vias": 3
+      },
+      "after": {
+        "source": "D800.2",
+        "target": "J80.1",
+        "net": "/Rear zone/LEFT_MOTOR",
+        "connected": true,
+        "length_mm": 12.481,
+        "vias": 0
+      }
+    },
+    {
+      "source": "D801.1",
+      "target": "J80.1",
+      "before": {
+        "source": "D801.1",
+        "target": "J80.1",
+        "net": "/Rear zone/LEFT_MOTOR",
+        "connected": true,
+        "length_mm": 42.742,
+        "vias": 3
+      },
+      "after": {
+        "source": "D801.1",
+        "target": "J80.1",
+        "net": "/Rear zone/LEFT_MOTOR",
+        "connected": true,
+        "length_mm": 16.181,
+        "vias": 0
+      }
+    },
+    {
+      "source": "D802.2",
+      "target": "J80.2",
+      "before": {
+        "source": "D802.2",
+        "target": "J80.2",
+        "net": "/Rear zone/LEFT_RETURN",
+        "connected": true,
+        "length_mm": 43.59,
+        "vias": 3
+      },
+      "after": {
+        "source": "D802.2",
+        "target": "J80.2",
+        "net": "/Rear zone/LEFT_RETURN",
+        "connected": true,
+        "length_mm": 14.3,
+        "vias": 2
+      }
+    },
+    {
+      "source": "D803.1",
+      "target": "J80.2",
+      "before": {
+        "source": "D803.1",
+        "target": "J80.2",
+        "net": "/Rear zone/LEFT_RETURN",
+        "connected": true,
+        "length_mm": 51.845,
+        "vias": 5
+      },
+      "after": {
+        "source": "D803.1",
+        "target": "J80.2",
+        "net": "/Rear zone/LEFT_RETURN",
+        "connected": true,
+        "length_mm": 18.0,
+        "vias": 2
+      }
+    },
+    {
+      "source": "D804.2",
+      "target": "J81.1",
+      "before": {
+        "source": "D804.2",
+        "target": "J81.1",
+        "net": "/Rear zone/RIGHT_MOTOR",
+        "connected": true,
+        "length_mm": 53.86,
+        "vias": 1
+      },
+      "after": {
+        "source": "D804.2",
+        "target": "J81.1",
+        "net": "/Rear zone/RIGHT_MOTOR",
+        "connected": true,
+        "length_mm": 14.883,
+        "vias": 2
+      }
+    },
+    {
+      "source": "D805.1",
+      "target": "J81.1",
+      "before": {
+        "source": "D805.1",
+        "target": "J81.1",
+        "net": "/Rear zone/RIGHT_MOTOR",
+        "connected": true,
+        "length_mm": 57.254,
+        "vias": 1
+      },
+      "after": {
+        "source": "D805.1",
+        "target": "J81.1",
+        "net": "/Rear zone/RIGHT_MOTOR",
+        "connected": true,
+        "length_mm": 19.583,
+        "vias": 2
+      }
+    },
+    {
+      "source": "D806.2",
+      "target": "J81.2",
+      "before": {
+        "source": "D806.2",
+        "target": "J81.2",
+        "net": "/Rear zone/RIGHT_RETURN",
+        "connected": true,
+        "length_mm": 61.855,
+        "vias": 2
+      },
+      "after": {
+        "source": "D806.2",
+        "target": "J81.2",
+        "net": "/Rear zone/RIGHT_RETURN",
+        "connected": true,
+        "length_mm": 24.452,
+        "vias": 2
+      }
+    },
+    {
+      "source": "D807.1",
+      "target": "J81.2",
+      "before": {
+        "source": "D807.1",
+        "target": "J81.2",
+        "net": "/Rear zone/RIGHT_RETURN",
+        "connected": true,
+        "length_mm": 87.646,
+        "vias": 6
+      },
+      "after": {
+        "source": "D807.1",
+        "target": "J81.2",
+        "net": "/Rear zone/RIGHT_RETURN",
+        "connected": true,
+        "length_mm": 29.152,
+        "vias": 2
+      }
+    }
+  ],
+  "local_CAN_before": [
+    {
+      "interface": "U11/J10",
+      "paths": [
+        {
+          "source": "U11.7",
+          "target": "J10.1",
+          "net": "/Front zone/F_A_H_LOCAL",
+          "connected": true,
+          "length_mm": 27.926,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 3.0
+        },
+        {
+          "source": "U11.6",
+          "target": "J10.3",
+          "net": "/Front zone/F_A_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.012,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.5
+        }
+      ]
+    },
+    {
+      "interface": "U15/J14",
+      "paths": [
+        {
+          "source": "U15.7",
+          "target": "J14.1",
+          "net": "/Front zone/F_B_H_LOCAL",
+          "connected": true,
+          "length_mm": 28.627,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 2.9
+        },
+        {
+          "source": "U15.6",
+          "target": "J14.3",
+          "net": "/Front zone/F_B_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.012,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 1.1
+        }
+      ]
+    },
+    {
+      "interface": "U21/J20",
+      "paths": [
+        {
+          "source": "U21.7",
+          "target": "J20.1",
+          "net": "/Rear zone/R_A_H_LOCAL",
+          "connected": true,
+          "length_mm": 35.216,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.9
+        },
+        {
+          "source": "U21.6",
+          "target": "J20.3",
+          "net": "/Rear zone/R_A_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.136,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.8
+        }
+      ]
+    },
+    {
+      "interface": "U25/J24",
+      "paths": [
+        {
+          "source": "U25.7",
+          "target": "J24.1",
+          "net": "/Rear zone/R_B_H_LOCAL",
+          "connected": true,
+          "length_mm": 35.468,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.0
+        },
+        {
+          "source": "U25.6",
+          "target": "J24.3",
+          "net": "/Rear zone/R_B_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.136,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.8
+        }
+      ]
+    },
+    {
+      "interface": "U31/J30",
+      "paths": [
+        {
+          "source": "U31.7",
+          "target": "J30.1",
+          "net": "/Cockpit zone/PI_A_H_LOCAL",
+          "connected": true,
+          "length_mm": 27.611,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 1.8
+        },
+        {
+          "source": "U31.6",
+          "target": "J30.3",
+          "net": "/Cockpit zone/PI_A_L_LOCAL",
+          "connected": true,
+          "length_mm": 24.29,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 5.9
+        }
+      ]
+    },
+    {
+      "interface": "U35/J34",
+      "paths": [
+        {
+          "source": "U35.7",
+          "target": "J34.1",
+          "net": "/Cockpit zone/PI_B_H_LOCAL",
+          "connected": true,
+          "length_mm": 27.611,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 1.8
+        },
+        {
+          "source": "U35.6",
+          "target": "J34.3",
+          "net": "/Cockpit zone/PI_B_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.136,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 5.6
+        }
+      ]
+    }
+  ],
+  "local_CAN_after": [
+    {
+      "interface": "U11/J10",
+      "paths": [
+        {
+          "source": "U11.7",
+          "target": "J10.1",
+          "net": "/Front zone/F_A_H_LOCAL",
+          "connected": true,
+          "length_mm": 27.926,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 3.0
+        },
+        {
+          "source": "U11.6",
+          "target": "J10.3",
+          "net": "/Front zone/F_A_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.012,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.5
+        }
+      ]
+    },
+    {
+      "interface": "U15/J14",
+      "paths": [
+        {
+          "source": "U15.7",
+          "target": "J14.1",
+          "net": "/Front zone/F_B_H_LOCAL",
+          "connected": true,
+          "length_mm": 37.867,
+          "vias": 1,
+          "same_layer_opposite_line_within_1mm_percent": 93.4
+        },
+        {
+          "source": "U15.6",
+          "target": "J14.3",
+          "net": "/Front zone/F_B_L_LOCAL",
+          "connected": true,
+          "length_mm": 44.375,
+          "vias": 1,
+          "same_layer_opposite_line_within_1mm_percent": 83.2
+        }
+      ]
+    },
+    {
+      "interface": "U21/J20",
+      "paths": [
+        {
+          "source": "U21.7",
+          "target": "J20.1",
+          "net": "/Rear zone/R_A_H_LOCAL",
+          "connected": true,
+          "length_mm": 35.216,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.9
+        },
+        {
+          "source": "U21.6",
+          "target": "J20.3",
+          "net": "/Rear zone/R_A_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.136,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.8
+        }
+      ]
+    },
+    {
+      "interface": "U25/J24",
+      "paths": [
+        {
+          "source": "U25.7",
+          "target": "J24.1",
+          "net": "/Rear zone/R_B_H_LOCAL",
+          "connected": true,
+          "length_mm": 35.468,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.0
+        },
+        {
+          "source": "U25.6",
+          "target": "J24.3",
+          "net": "/Rear zone/R_B_L_LOCAL",
+          "connected": true,
+          "length_mm": 25.136,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 4.8
+        }
+      ]
+    },
+    {
+      "interface": "U31/J30",
+      "paths": [
+        {
+          "source": "U31.7",
+          "target": "J30.1",
+          "net": "/Cockpit zone/PI_A_H_LOCAL",
+          "connected": true,
+          "length_mm": 27.611,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 1.8
+        },
+        {
+          "source": "U31.6",
+          "target": "J30.3",
+          "net": "/Cockpit zone/PI_A_L_LOCAL",
+          "connected": true,
+          "length_mm": 24.29,
+          "vias": 2,
+          "same_layer_opposite_line_within_1mm_percent": 5.9
+        }
+      ]
+    },
+    {
+      "interface": "U35/J34",
+      "paths": [
+        {
+          "source": "U35.7",
+          "target": "J34.1",
+          "net": "/Cockpit zone/PI_B_H_LOCAL",
+          "connected": true,
+          "length_mm": 26.058,
+          "vias": 1,
+          "same_layer_opposite_line_within_1mm_percent": 90.2
+        },
+        {
+          "source": "U35.6",
+          "target": "J34.3",
+          "net": "/Cockpit zone/PI_B_L_LOCAL",
+          "connected": true,
+          "length_mm": 34.751,
+          "vias": 1,
+          "same_layer_opposite_line_within_1mm_percent": 70.4
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Whole-conductor-item path lengths include a full 1.6mm for every via; these are not extracted transmission-line lengths.",
+    "Nearest-line proximity is a geometry screen, not controlled impedance, timing skew or signal-integrity qualification.",
+    "The saved CAD and calculations do not establish powered operation, cable reach or manufacturing acceptance."
+  ]
+}

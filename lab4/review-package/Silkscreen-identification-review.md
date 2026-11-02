@@ -1,5 +1,10 @@
 # October 30 board identification and fabrication handoff
 
+The November 2 revision moves all three names to **bottom silkscreen** to
+free room for the motor clamps; **649 Team 4** remains on top. The unchanged-
+electrical-geometry statement below applies only to the October 30 revision.
+Current placement/copper changes are recorded in [November2-Anson-review.md](November2-Anson-review.md).
+
 We added **649 Team 4**, **Tianyi He**, **Felipe Marples Rodriguez**, and
 **Sida Cheng** to the front silkscreen in the clear area between the rear
 mounting holes. This implements [Tom's October 30 request](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793373919768429).

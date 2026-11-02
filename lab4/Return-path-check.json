@@ -1,5 +1,5 @@
 {
-  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "source_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
   "fabrication_release": false,
   "can": [
     {
@@ -26,7 +26,7 @@
           "nearest_ground_transition_mm": 2.193
         }
       ],
-      "reference_void_sample_count": 110,
+      "reference_void_sample_count": 104,
       "reference_void_samples_mm": [
         [
           122.7,
@@ -185,8 +185,8 @@
           194.8
         ],
         [
-          124.3,
-          71.0
+          112.3,
+          69.7
         ]
       ]
     },
@@ -259,7 +259,7 @@
           "nearest_ground_transition_mm": 2.608
         }
       ],
-      "reference_void_sample_count": 134,
+      "reference_void_sample_count": 128,
       "reference_void_samples_mm": [
         [
           124.5,
@@ -447,7 +447,7 @@
           "nearest_ground_transition_mm": 2.193
         }
       ],
-      "reference_void_sample_count": 115,
+      "reference_void_sample_count": 109,
       "reference_void_samples_mm": [
         [
           145.3,
@@ -680,7 +680,7 @@
           "nearest_ground_transition_mm": 0.922
         }
       ],
-      "reference_void_sample_count": 134,
+      "reference_void_sample_count": 128,
       "reference_void_samples_mm": [
         [
           155.2,

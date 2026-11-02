@@ -1,6 +1,18 @@
 # CAN copper geometry review
 
+## November 2 local-pair update
+
+Front B (U15/J14) and Pi B (U35/J34) now share adjacent In2 runs with short
+front-layer escapes. Each line uses one via. Same-layer proximity within
+1 mm is 93.4%/83.2% for Front B and 90.2%/70.4% for Pi B, with longer local
+paths as the tradeoff. Four other local interfaces retain their existing
+routes. This is not complete pair coupling or signal-integrity qualification.
+See [the complete comparison](November2-Anson-review-check.json).
+The main bus routes are unchanged; the current reference-plane scan below
+is regenerated against the revised fills.
+
 ## November 1 update
+
 
 The new 0.381 mm CAN-to-zone clearance enlarges the cleared areas around
 plated contacts. The refreshed scan records 41 reference-plane gaps outside

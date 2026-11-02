@@ -1,5 +1,5 @@
 {
-  "source_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "source_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
   "fabrication_release": false,
   "method": "Least-resistance predecessor tree with summed downstream load currents. Full item lengths counted. Parallel copper, pad spreading and ground returns omitted. This is a branch-allocation screen, not nodal DC or thermal simulation.",
   "logic": {
@@ -12,9 +12,9 @@
         "pin": "19",
         "allocation_A": 0.07,
         "basis": "70mA allocation: MCU internal maximum plus ADC and GPIO/indicator allowance; not measured",
-        "path_R_ohm": 0.171475,
-        "shared_tree_drop_V": 0.058214,
-        "static_source_minus_drop_V": 3.204667
+        "path_R_ohm": 0.163484,
+        "shared_tree_drop_V": 0.057656,
+        "static_source_minus_drop_V": 3.205225
       },
       {
         "ref": "U60",
@@ -148,8 +148,8 @@
         "allocation_A": 0.001,
         "basis": "1mA allowance",
         "path_R_ohm": 0.166447,
-        "shared_tree_drop_V": 0.057009,
-        "static_source_minus_drop_V": 3.205872
+        "shared_tree_drop_V": 0.057105,
+        "static_source_minus_drop_V": 3.205776
       },
       {
         "ref": "R601",
@@ -238,8 +238,8 @@
         "allocation_A": 0.00036,
         "basis": "Conservative shorted-low load at 3.6V; feedback divider separately bounded by top resistor",
         "path_R_ohm": 0.208485,
-        "shared_tree_drop_V": 0.057021,
-        "static_source_minus_drop_V": 3.20586
+        "shared_tree_drop_V": 0.057117,
+        "static_source_minus_drop_V": 3.205764
       },
       {
         "ref": "R241",
@@ -377,7 +377,7 @@
         "static_source_minus_drop_V": 3.188206
       }
     ],
-    "total_tree_loss_W": 0.046123,
+    "total_tree_loss_W": 0.046084,
     "largest_drop_V": 0.095229
   },
   "five_volt": {

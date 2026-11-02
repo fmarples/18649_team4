@@ -69,6 +69,8 @@ def main():
                      'Silkscreen-identification-review.md',
                      'Silkscreen-identification-check.json',
                      'November1-review.md', 'November1-review-check.json',
+                     'November2-Anson-review.md', 'November2-Anson-review-check.json',
+                     'Digital-geometry-check.json', 'Solder-via-check.json',
                      'CAN-geometry-review.md', 'CAN-geometry-check.json'):
         shutil.copy2(ROOT/filename, out/filename)
     warning = ('REVIEW ONLY - NOT RELEASED FOR FABRICATION\n\n'
@@ -80,10 +82,13 @@ def main():
         'Prepared for course prototype review; team/TA acceptance and the order are not completed.\n'
         'See Prototype-operating-review.md for load assumptions, deferred stress work and required bring-up.\n'
         'The 10 A input fuse is conditional; no sustained high-current or powered qualification is claimed.\n'
-        'This revision implements the November 1 motor-side flyback correction and stricter copper checks.\n'
-        'Affected routing/power/return checks are refreshed; placement, holes and BOM quantities are unchanged.\n'
-        'See November1-review.md and November1-review-check.json; older revision records are historical.\n'
-        'The original 6945466 files were submitted; this replacement has not been sent to staff.\n'
+        'This revision addresses Anson\'s November 2 schematic and placement review.\n'
+        'The schematic is redrawn with unchanged pin nets; F1 identifies the existing 10 A candidate.\n'
+        'Motor clamps, J80 and three bypass capacitors move; C500/C800/C801 are now bottom-side SMT.\n'
+        'Two local CAN pairs are rerouted together; power/return and manufacturing checks are refreshed.\n'
+        'Holes, outline, stack and BOM quantities are unchanged. Group names are on bottom silkscreen.\n'
+        'See November2-Anson-review.md; older revision records describe their dated sources.\n'
+        'Original 6945466 was submitted; 4895895 was linked to staff. These new files have not been sent.\n'
         '3D views use available library models; omitted custom parts are not fit evidence.\n'
         'Native positions use KiCad rotation conventions and mm/absolute origin.\n'
         'The team hand-assembly plan remains in force. No PCBA upload is authorized.\n')

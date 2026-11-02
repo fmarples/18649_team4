@@ -1,14 +1,15 @@
 # Lab 4: three-zone controller PCB
 
-The PCB is named **649 Team 4**. The [November 1 staff-review correction](November1-review.md)
-moves four flyback-diode connections to the motor side of the current sensors,
-adds the course CAN-to-fill and minimum copper-connection checks, and repairs
-the affected copper. Component positions, mounting holes and BOM quantities
-are unchanged. Use the current matching review package for this correction.
+The PCB is named **649 Team 4**. The [November 2 Anson review revision](November2-Anson-review.md)
+redraws the schematic, identifies F1's existing 10 A candidate, moves the
+motor clamps/left connector and three bypass capacitors, and improves two
+local CAN pairs. Support holes, stack, part identities and BOM quantities
+are unchanged. Use the current matching review package.
 
-The original `6945466` revision was submitted to Gradescope on October 30 and
-its Gerber/KiCad archives were sent to staff. Those receipts do not cover the
-November 1 correction; the replacement handoff still needs to be sent.
+Original `6945466` was submitted to Gradescope on October 30; its archives
+reached staff. The team linked `4895895` to Anson on November 2. The new
+November 2 files are prepared but have not been sent. Staff acceptance and
+powered validation are not claimed.
 
 We are designing a four-layer KiCad PCB with two STM32F401RET6 chips, six
 MCP2515/CAN-transceiver interfaces, motor and servo current sensing, and a

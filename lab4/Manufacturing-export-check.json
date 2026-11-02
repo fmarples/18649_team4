@@ -1,6 +1,6 @@
 {
   "fabrication_release": false,
-  "plated_drills": 1330,
+  "plated_drills": 1323,
   "nonplated_drills": 12,
   "drill_positions_and_diameters_match_saved_board_to_0p001mm": true,
   "position_rows_match_saved_board": 300,
@@ -24,11 +24,11 @@
     "Native rotations are not calibrated to an assembly-house part library.",
     "3D render omits custom parts without models."
   ],
-  "board_sha256": "1faf5b55c8d51f3455ca570053b20cbc6d9d9b07c9bf774f6d2a4ad9f8ddf077",
+  "board_sha256": "6e37fbecc1d986d7523a461e1028ad9fe6b43b155bd20230148eac764c15d001",
   "outline_bounds_note": "Gerber stroke bounds include 0.075 mm per side; finished centerline outline is 120 x 247.21155 mm.",
   "JLC_format_BOM_references": 300,
   "JLC_format_CPL_rows": 300,
   "L298_finished_plated_holes_mm": 1.1,
   "L298_pin_holes_checked": 15,
-  "visual_review": "November 1: outer Gerber composites, all layer previews, rear motor clamp labels and 6-page report reviewed. Unavailable 3D models are not physical-fit evidence."
+  "visual_review": "November 2: top/bottom Gerber composites, native board renders, five circuit sheets and six-page report reviewed. Unavailable 3D models are not physical-fit evidence."
 }

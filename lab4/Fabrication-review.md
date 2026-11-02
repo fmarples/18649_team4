@@ -2,19 +2,16 @@
 
 ## Current status
 
-The [November 1 correction](November1-review.md) is the current revision for
-the course's **prototype fabrication review**. It implements the staff's
-motor-side flyback-diode connections and the additional copper checks.
-This is not a claim of TA acceptance, an order authorization, or completed
-electrical qualification.
+The [November 2 Anson review revision](November2-Anson-review.md) is the current
+prototype review package. It redraws the schematic without changing pin nets,
+updates F1's value and improves connector, clamp, bypass and local CAN routing.
+It is not TA acceptance, an order authorization or electrical qualification.
 
-Revision `6945466` was submitted to Gradescope on October 30 with all three
-team members, and its Gerber/KiCad archives were sent to staff. The new
-correction has not been sent. Staff's
-[November 1 announcement](https://18449-f26.slack.com/archives/C0BRYGTD4HH/p1793568222872769)
-asks teams to complete review changes before Monday night, November 2;
-office hours are 7–10 p.m., with the location tentative. Preserve the original
-receipt and identify the replacement revision explicitly.
+Original `6945466` was submitted on October 30; its Gerber/KiCad files reached
+staff. The team linked corrected `4895895` to Anson on November 2. This new
+review revision has not been sent. Preserve the original receipt and identify
+the replacement explicitly. Staff requested review corrections by Monday
+night, November 2.
 
 The [load-specific operating review](Prototype-operating-review.md) closes the
 remaining digital planning work for a bare Pi running the car software. It
@@ -26,25 +23,20 @@ requirements. We have not powered the new PCB or guaranteed its behavior.
 ## Matching CAD and manufacturing checks
 
 The board has four copper layers on the documented 1.6 mm
-[JLC04161H-7628 stack](Layer-stack.md). There are 300 electrical footprints,
-eight supports and HS80, 20,296 track/via items and six ground zones. Native
-ERC/DRC, schematic parity and unconnected counts are zero. There are 331
-targeted connection checks and 282 components in the package audit.
+[JLC04161H-7628 stack](Layer-stack.md), 300 electrical footprints, eight
+supports, HS80, 20,014 track/via items and six ground zones. Native
+ERC/DRC, schematic parity and unconnected counts are zero. All 331 targeted
+connections and 282 package checks pass.
 
-The board name **649 Team 4**, all three names, component placement, holes,
-outline and stack are unchanged in the November 1 correction. Copper has
-changed. The affected routing, ground, supply-path and Pi mesh checks are
-rerun against the new board; the earlier silkscreen-only equivalence record
-is historical. See [November1-review-check.json](November1-review-check.json)
-for the exact placement, pin-net and design-rule comparison.
-
-The preceding CAD change gave U80's 15 plated pins 1.1 mm finished holes,
-without changing their centers, 1.8 mm pads or heatsink anchors. Matching
-exports contain 11 Gerber layers, 1,330 plated and 12 nonplated holes and
-300 position rows. Independently parsed drill locations/diameters match the
-saved board within 0.001 mm. Outer composites and copper-layer PDFs were
-visually reviewed. The current revision regenerates the matching
-manufacturing exports and native checks.
+The three names move to bottom silkscreen; the board name remains on top.
+J80, D800–D807 and C500/C800/C801 move, with the three capacitors now on the
+bottom. Mounting holes, heatsink/socket placement, pad nets, part identities,
+outline and stack are unchanged. The exact before/after record is in
+[November2-Anson-review-check.json](November2-Anson-review-check.json).
+Affected power/return checks and manufacturing exports are regenerated.
+Earlier dated drill counts and placement-equivalence records are historical.
+The current [export check](Manufacturing-export-check.json) records the
+independently verified drill coordinates and all 300 placement rows.
 
 Front/rear hole spacing is 47.870/73.01493 mm, row separation 233.21155 mm;
 board outline is 120 × 247.21155 mm. H1–H4 are 4.0 mm NPTH for M3, with
