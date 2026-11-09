@@ -1,0 +1,13 @@
+{
+  "N": 3,
+  "nodes": {"cockpit": 1, "front": 2, "rear": 3},
+  "default_leader": "cockpit",
+  "heartbeat_ms": 20,
+  "append_ms": 100,
+  "missed_heartbeats": 3,
+  "election_timeout_jitter_ms": 39,
+  "log_size": 30000,
+  "seed": 649,
+  "Debug": true,
+  "can_delay_us": 240
+}

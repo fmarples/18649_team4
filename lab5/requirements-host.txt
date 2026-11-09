@@ -1,0 +1,6 @@
+python-can==4.6.1
+requests==2.34.2
+# Optional cloud tests (no server/Redis process required).
+Flask==3.1.3
+redis==8.1.0
+fakeredis==2.40.0
