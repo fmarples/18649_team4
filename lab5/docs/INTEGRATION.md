@@ -1,6 +1,6 @@
 # Integration review and capture interpretation
 
-This is the technical record for the Lab 5 integration/routing work. The tests use the production C core on a desktop. No vehicle has been flashed or measured by this review; the live cases in [CHECKOFF.md](CHECKOFF.md) remain pending.
+This is the technical record for the Lab 5 integration/routing work. The offline tests below use the production C core on a desktop. Subsequent flashing, three-node integration and partial physical fault checks are recorded separately in [the November 10 bring-up record](BRINGUP_2026-11-10.md); the full cases in [CHECKOFF.md](CHECKOFF.md) remain unfinished.
 
 ## Receive-to-commit path
 
@@ -60,4 +60,4 @@ Pi `STATUS` now includes `evidence`: CSV/console drop counts and the ledger's `d
 
 ## Hardware boundary
 
-The remaining integration work is first boot and mapping validation, healthy capture, six physical cut/restores, the required two-cut bridge, real event/log comparison, and the integrated failure/recovery rehearsal. Save the Git revision, shared config, bus mapping, cut/restore timestamps, CAN capture and all three node logs. Coordinate scope and persistence testing with the other roles rather than repeating them independently. Findings from those runs may require further code changes; passing these offline tests is not a completed hardware checkoff.
+The three nodes have joined using the existing Lab 3 bus mapping. Both Nucleos' A/B LED cut/restore subchecks passed; remaining work includes a qualified healthy capture, Pi link tests, a secure-contact N2 repeat for transition counting, the required two-cut bridge, complete three-node event/log comparison, and the integrated failure/recovery rehearsal. Save the Git revision, shared config, bus mapping, cut/restore timestamps, CAN capture and all three node logs. Coordinate scope and persistence testing with the other roles rather than repeating them independently. Findings from those runs may require further code changes; passing these offline tests is not a completed hardware checkoff.

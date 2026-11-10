@@ -1,6 +1,6 @@
 # Lab 5 bench verification matrix
 
-**All physical cases below are pending.** Host simulations exercise logic; they do not complete the TA demo. Record the Git revision, shared config, board IDs, bus labels, capture filenames and observed values for each run. Preserve all three Raft stores on ordinary reboot/rejoin.
+**No complete checkoff case below is signed off yet.** N2 and N3's single-link A/B LED/recovery subchecks passed on November 10; both Nucleos recorded matching changes with unchanged term and leader. N2 reconnection had a reported shaky contact and repeated down/up entries, so its one-transition check needs a secure-contact repeat. Pi A/B, three-node log comparison and timing remain open. See [bring-up evidence](BRINGUP_2026-11-10.md#n3-single-link-disconnectreconnect-checks). Host simulations exercise logic; they do not complete the TA demo. Record the Git revision, shared config, board IDs, bus labels, capture filenames and observed values for each run. Preserve all three Raft stores on ordinary reboot/rejoin.
 
 | Step | Action | Required observation / evidence |
 |---|---|---|
