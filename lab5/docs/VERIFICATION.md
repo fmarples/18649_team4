@@ -2,8 +2,10 @@
 
 This records software/build checks, not vehicle measurements or a completed checkoff. The implementation is ready for initial bench bring-up. The physical cases in `CHECKOFF.md` remain pending.
 
-**November 10 follow-up:** the suite now passes 72 tests and both updated
-Nucleo builds were flashed. This page retains the November 9 baseline below;
+**November 10 follow-up:** the suite now passes 74 tests and both updated
+Nucleo builds were flashed. The last two tests cover per-node CAN indicators
+with matching Lab 5 traffic and reproduce the legacy-Pi flicker; they did not
+change the flashed images. This page retains the November 9 baseline below;
 see the [bring-up record](BRINGUP_2026-11-10.md) for fixes, current image sizes,
 observations and unresolved hardware gates.
 
