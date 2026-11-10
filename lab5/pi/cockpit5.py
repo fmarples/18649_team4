@@ -147,6 +147,17 @@ class Cockpit5(Cockpit):
         health = dataclasses.replace(health, error=error)
         if error != self.error:
             self.log.write("STATE", "ERROR" if error else "OK")
+            # Keep the existing STATE format for analyzers; record the snapshot
+            # separately so an input timeout is distinguishable from other faults.
+            self.log.write("STATE_CAUSE", json.dumps({
+                "udp_age_ms": None if self.last_udp is None else
+                    round(1000 * (now - self.last_udp[1]), 3),
+                "latched": self.monitor.latched,
+                "no_controls": self.latest is None,
+                "agent_error": bool(self.agent_health["error"]),
+                "raft": self.agent.status,
+                "can_rx_queued": self.rx.qsize(),
+            }))
         self.error, self.health = error, health
         self.gpio.leds(*health.degraded, error)
         return health
@@ -176,6 +187,7 @@ class Cockpit5(Cockpit):
                 super().on_frame(msg, bus, received)
             if self.agent.clock_samples != samples:
                 self.gpio.ref_rx()
+        received_at = time.monotonic()
         udp_ok = self.last_udp is not None and now - self.last_udp[1] < 0.100
         self.agent.update(raw, udp_ok and not self.monitor.latched, self.hb_silenced)
         if self.pending_event:
@@ -184,6 +196,7 @@ class Cockpit5(Cockpit):
                 self.log.write(
                     "EVENT_REJECTED", "no leader, catching up, or storage full"
                 )
+        updated_at = time.monotonic()
         for bus, can_id, data in self.agent.outgoing():
             if 0x81 <= can_id <= 0x83:
                 # Include this tick's durable writes and queue-drain time.
@@ -197,6 +210,7 @@ class Cockpit5(Cockpit):
                 self.log.write(
                     "RAFT_TX", f"bus={bus} id={can_id:03x} data={data.hex()}"
                 )
+        sent_at = time.monotonic()
         for index, term, event, replayed in self.agent.applied():
             row = {
                 "index": index,
@@ -247,6 +261,18 @@ class Cockpit5(Cockpit):
                 self.console.write("RAFT " + json.dumps(state))
             self._last_raft = changed
         super().tick(now)
+        finished_at = time.monotonic()
+        # Diagnostic trigger: one nominal wheel-update period. This is elapsed
+        # wall time (including descheduling), not CPU execution time or WCET.
+        if finished_at - tick_started >= 0.020:
+            self.log.write("TICK_SLOW", json.dumps({
+                "total_ms": round(1000 * (finished_at - tick_started), 3),
+                "can_receive_ms": round(1000 * (received_at - tick_started), 3),
+                "agent_update_ms": round(1000 * (updated_at - received_at), 3),
+                "can_send_ms": round(1000 * (sent_at - updated_at), 3),
+                "apply_outputs_ms": round(1000 * (finished_at - sent_at), 3),
+                "can_rx_queued": self.rx.qsize(),
+            }))
 
     def _blink(self, now):
         mode = self.blinker.mode
@@ -267,6 +293,11 @@ class Cockpit5(Cockpit):
 
     def next_wake(self, now):
         return min(super().next_wake(now), now + 0.0002)
+
+    def emit_status(self):
+        # SSH/terminal backpressure must not block CAN, UDP or consensus work.
+        if self.console is not None:
+            self.console.write(self.status())
 
     def status(self):
         data = json.loads(super().status()[7:])

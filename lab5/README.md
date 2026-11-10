@@ -1,6 +1,6 @@
 # Lab 5: Time and Consensus
 
-This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-module setup**. It starts from `lab3_can` revision `69c50d5`; the Lab 4 PCB branch is independent. Both Nucleos were flashed on November 10 with persistent state preserved. Initial two-node bring-up found and corrected runtime problems; matching Pi integration, scope measurements and the checkoff cases remain pending. See the [bring-up record](docs/BRINGUP_2026-11-10.md).
+This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-module setup**. It starts from `lab3_can` revision `69c50d5`; the Lab 4 PCB branch is independent. All three nodes have joined, both Nucleos' A/B indicator checks passed, and their saved histories agree with the Pi through entry 1801. Initial wheel input cleared error/hazards; intermittent input gaps, remaining fault cases and scope measurements are still open. See the [bring-up record](docs/BRINGUP_2026-11-10.md).
 
 - [Shared writeup](https://docs.google.com/document/d/1kwUk9po3RsTd_NVpE4F1W3hu7zCnjiTFjznqT5k0Chc/edit)
 - [Must-dos](https://docs.google.com/document/d/1fM5APOAQwtd3XQw26Jg4HM-Opq8UdlKVwno77f8kpA0/edit)
@@ -64,6 +64,12 @@ python3 lab5/pi/cockpit5.py --bus-a can0 --bus-b can1
 Nucleo shell commands: `lab5 network` (committed graph), `lab5 event` (request a diagnostic event), `lab5 log` (committed entries; use while idle). Pi `STATUS` lines show Raft/network state; `COMMIT` lines and `display.sqlite` contain the display history. The original wheel/proxy UDP format remains unchanged.
 
 For the Pi process, `SIGUSR1` requests one Lab 5 EVENT. `SIGRTMIN` and `SIGRTMIN+1` preserve test-button latch/clear semantics. The old Lab 3 GUI's bad-input injection uses different USR semantics; do not use those controls against this application. Keep the existing wheel proxy for normal input.
+
+The Windows launcher accepts `--lab5 --pi <Pi-address>` to open only the course
+wheel GUI and input recording, without the old Lab 3 test panel or Lab 2
+telemetry windows. Use the existing course-proxy Python environment with PyQt5
+and the wheel SDK. It does not start transmission unless Connect is clicked
+or `--connect` is explicitly supplied. It does not start or replace the Pi app.
 
 ## Shared configuration
 

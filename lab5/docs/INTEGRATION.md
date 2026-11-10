@@ -58,6 +58,14 @@ Pi `STATUS` now includes `evidence`: CSV/console drop counts and the ledger's `d
 
 `common_prefix_agrees` checks all indices up to the shortest captured history. `identical_complete_logs` additionally requires equal complete contents. `missing_indices` means the evidence lacks rows; `conflicts` means captured nodes disagree on an actual value at the same index. Preserve both histories when there is a conflict. Repeated identical console rows are deduplicated by comparison; exactly-once display and replay ordering still need their own test.
 
+The MCU export takes a fixed committed-end snapshot and releases the protocol
+mutex before each UART write. Check that its `LOG_BEGIN` and `LOG_END` indices
+agree and that every index in that range was captured. A `LOG_ERROR` means the
+export failed. Application diagnostics share the shell's output writer to
+prevent character interleaving. The November 10 live check exported matching
+complete 1844-entry histories from both Nucleos while the protocol continued;
+the Pi comparison covers the previously saved prefix through 1801.
+
 ## Hardware boundary
 
-The three nodes have joined using the existing Lab 3 bus mapping. Both Nucleos' A/B LED cut/restore subchecks passed; remaining work includes a qualified healthy capture, Pi link tests, a secure-contact N2 repeat for transition counting, the required two-cut bridge, complete three-node event/log comparison, and the integrated failure/recovery rehearsal. Save the Git revision, shared config, bus mapping, cut/restore timestamps, CAN capture and all three node logs. Coordinate scope and persistence testing with the other roles rather than repeating them independently. Findings from those runs may require further code changes; passing these offline tests is not a completed hardware checkoff.
+The three nodes have joined using the existing Lab 3 bus mapping. Both Nucleos' A/B LED cut/restore subchecks passed. All three saved histories agree through entry 1801, and a 30-second Pi capture records nominal REF/empty-APPEND cadence with arrival jitter and three incomplete RPC sequences reported. Remaining work includes wheel input, transport qualification, Pi link tests, a secure-contact N2 repeat for transition counting, the required two-cut bridge and integrated failure/recovery rehearsal. Compare all three histories again for those later experiments; the earlier prefix match does not complete them. Save the Git revision, shared config, bus mapping, cut/restore timestamps, CAN capture and all three node logs. Coordinate scope and persistence testing with the other roles rather than repeating them independently. Findings from those runs may require further code changes; passing these offline tests is not a completed hardware checkoff.

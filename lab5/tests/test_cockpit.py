@@ -3,14 +3,14 @@
 import sys
 import json
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from types import SimpleNamespace
 from queue import Queue
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pi"))
 from cockpit5 import Cockpit5, Lab5NoGpio, LEADER, SYNC
-from vehicle.cockpit import EventLog
+from vehicle.cockpit import EventLog, run
 from native import Agent
 from vehicle.can_protocol import valid
 import can
@@ -128,6 +128,53 @@ class CockpitTests(unittest.TestCase):
             ref = next(m for m in bus.sent if m.arbitration_id == 0x81)
             self.assertTrue(valid(bytes(ref.data)))
             self.assertEqual(int.from_bytes(ref.data[3:7], "little"), 6000)
+
+    def test_periodic_status_uses_background_console(self):
+        self.app.console = SimpleNamespace(write=Mock(), dropped=0)
+        stop = Mock()
+        stop.is_set.side_effect = [False, True]
+        with patch("vehicle.cockpit.select.select", return_value=([], [], [])):
+            with patch("builtins.print", side_effect=AssertionError("control-loop print")):
+                run(self.app, Mock(), stop, clock=lambda: 0.001)
+        rows = [c.args[0] for c in self.app.console.write.call_args_list]
+        self.assertEqual(sum(row.startswith("STATUS ") for row in rows), 1)
+
+    def test_slow_tick_reports_elapsed_stage_without_changing_deadline(self):
+        clock = [10.0]
+        update = self.app.agent.update
+        self.app.log.write = Mock()
+
+        def delayed_update(*args):
+            update(*args)
+            clock[0] += 0.125
+
+        with patch("cockpit5.time.monotonic", side_effect=lambda: clock[0]):
+            with patch.object(self.app.agent, "update", side_effect=delayed_update):
+                self.app.tick(0.001)
+        rows = [json.loads(c.args[1]) for c in self.app.log.write.call_args_list
+                if c.args[0] == "TICK_SLOW"]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["total_ms"], 125.0)
+        self.assertEqual(rows[0]["agent_update_ms"], 125.0)
+        self.assertEqual(rows[0]["can_receive_ms"], 0.0)
+
+    def test_error_transition_records_cause_snapshot(self):
+        self.step(400)
+        self.app.latest = (0, 0, 0, 0)
+        for i in range(100):
+            self.app.last_udp = (i, self.now)
+            self.app.monitor.udp(self.now)
+            self.step(1)
+        self.assertFalse(self.app.error)
+        self.app.log.write = Mock()
+        self.step(250)
+        rows = [c for c in self.app.log.write.call_args_list if c.args[0] == "STATE_CAUSE"]
+        self.assertTrue(rows)
+        cause = json.loads(rows[0].args[1])
+        self.assertGreaterEqual(cause["udp_age_ms"], 100)
+        self.assertFalse(cause["latched"])
+        self.assertFalse(cause["no_controls"])
+        self.assertTrue(cause["agent_error"])
 
 
 if __name__ == "__main__":

@@ -709,23 +709,23 @@ static void diagnostics_thread(void *a, void *b, void *c) {
         h.error = zone_error;
         bool latched = monitor.latched, silenced = hb_silenced, commanded = monitor.ctrl_seen;
         k_mutex_unlock(&state_lock);
-        printk("%s state=%s latched=%d hb_silenced=%d isolated=%d alive=N1:%d,N2:%d,N3:%d deg_a=%d "
+        lab5_console_print("%s state=%s latched=%d hb_silenced=%d isolated=%d alive=N1:%d,N2:%d,N3:%d deg_a=%d "
                "deg_b=%d "
                "ctrl_seen=%d steer=%d throttle=%u brake=%u\n",
                APP_NAME, h.error ? "ERROR" : "OK", latched, silenced, h.isolated, h.alive[1],
                h.alive[2], h.alive[3], h.degraded[0], h.degraded[1], commanded, ctrl.steer,
                ctrl.throttle, ctrl.brake);
-        printk("CAN state_a=%d state_b=%d changes_a=%d changes_b=%d int_kicks_a=%d int_kicks_b=%d "
+        lab5_console_print("CAN state_a=%d state_b=%d changes_a=%d changes_b=%d int_kicks_a=%d int_kicks_b=%d "
                "rx_dropped=%d dup=%d bad_crc=%d\n",
                (int)atomic_get(&can_state[0]), (int)atomic_get(&can_state[1]),
                (int)atomic_get(&can_state_changes[0]), (int)atomic_get(&can_state_changes[1]),
                (int)atomic_get(&int_kicks[0]), (int)atomic_get(&int_kicks[1]),
                (int)atomic_get(&rx_dropped), (int)atomic_get(&duplicates),
                (int)atomic_get(&bad_crc));
-        printk("CAN_ERRORS last_state_change tx_a=%d rx_a=%d tx_b=%d rx_b=%d\n",
+        lab5_console_print("CAN_ERRORS last_state_change tx_a=%d rx_a=%d tx_b=%d rx_b=%d\n",
                (int)atomic_get(&can_tx_errors[0]), (int)atomic_get(&can_rx_errors[0]),
                (int)atomic_get(&can_tx_errors[1]), (int)atomic_get(&can_rx_errors[1]));
-        printk("TX_COUNTS rejected_a=%d rejected_b=%d completed_a=%d completed_b=%d failed_a=%d "
+        lab5_console_print("TX_COUNTS rejected_a=%d rejected_b=%d completed_a=%d completed_b=%d failed_a=%d "
                "failed_b=%d\n",
                (int)atomic_get(&tx_rejected[0]), (int)atomic_get(&tx_rejected[1]),
                (int)atomic_get(&tx_completed[0]), (int)atomic_get(&tx_completed[1]),
@@ -734,7 +734,7 @@ static void diagnostics_thread(void *a, void *b, void *c) {
         /* k_cyc_to_us_floor32 may evaluate its argument more than once. */
         uint32_t relay_c_all = (uint32_t)atomic_get(&relay_c_max);
         uint32_t relay_c_window = (uint32_t)atomic_set(&relay_c_window_max, 0);
-        printk("RELAY sent=%d failed=%d stale=%d queue_dropped=%d gated=%d relay_c_us max=%u "
+        lab5_console_print("RELAY sent=%d failed=%d stale=%d queue_dropped=%d gated=%d relay_c_us max=%u "
                "window_max=%u\n",
                (int)atomic_get(&relay_sent), (int)atomic_get(&relay_failed),
                (int)atomic_get(&relay_stale), (int)atomic_get(&relay_dropped),
@@ -746,7 +746,7 @@ static void diagnostics_thread(void *a, void *b, void *c) {
             if (count == 0)
                 continue;
             uint32_t cycles = lab3_timing_max_cycles(id);
-            printk("OBS_TASK zone=%s uptime_ms=%u name=%s max_cycles=%u max_us=%u count=%u\n",
+            lab5_console_print("OBS_TASK zone=%s uptime_ms=%u name=%s max_cycles=%u max_us=%u count=%u\n",
                    MY_ZONE == ZONE_N2 ? "N2" : "N3", k_uptime_get_32(), lab3_timing_name(id),
                    cycles, k_cyc_to_us_ceil32(cycles), count);
         }
@@ -757,13 +757,13 @@ K_THREAD_DEFINE(diag_tid, 1536, diagnostics_thread, NULL, NULL, NULL, 10, 0, 0);
 static int setup_can(unsigned bus) {
     const struct device *dev = can_dev[bus];
     if (!device_is_ready(dev)) {
-        printk("CAN %c not ready\n", 'A' + bus);
+        lab5_console_print("CAN %c not ready\n", 'A' + bus);
         return -ENODEV;
     }
     can_set_state_change_callback(dev, can_state_callback, (void *)(uintptr_t)bus);
     int rc = can_start(dev);
     if (rc && rc != -EALREADY) {
-        printk("can_start %c failed: %d\n", 'A' + bus, rc);
+        lab5_console_print("can_start %c failed: %d\n", 'A' + bus, rc);
         return rc;
     }
     for (unsigned i = 0; i < 1; ++i) {
@@ -771,7 +771,7 @@ static int setup_can(unsigned bus) {
         struct can_filter filter = {.id = 0, .mask = 0};
         rc = can_add_rx_filter(dev, can_rx_callback, (void *)(uintptr_t)bus, &filter);
         if (rc < 0) {
-            printk("CAN %c filter failed: %d\n", 'A' + bus, rc);
+            lab5_console_print("CAN %c filter failed: %d\n", 'A' + bus, rc);
             return rc;
         }
     }
@@ -802,19 +802,19 @@ static int setup_watchdog(void) {
 int main(void) {
     uint32_t reset_cause = 0;
     if (hwinfo_get_reset_cause(&reset_cause) == 0) {
-        printk("%s RESET cause=0x%x watchdog=%u\n", APP_NAME, reset_cause,
+        lab5_console_print("%s RESET cause=0x%x watchdog=%u\n", APP_NAME, reset_cause,
                !!(reset_cause & RESET_WATCHDOG));
         (void)hwinfo_clear_reset_cause();
     }
     zone_monitor_init(&monitor, MY_ZONE, k_uptime_get_32());
     int rc = lab3_trace_init();
     if (rc) {
-        printk("Test-point GPIO setup failed: %d\n", rc);
+        lab5_console_print("Test-point GPIO setup failed: %d\n", rc);
         return rc;
     }
     lab3_trace_set(TP_ERR, 1); /* power-up in error */
     if (!pwm_is_ready_dt(&actuator_pwm)) {
-        printk("PWM not ready\n");
+        lab5_console_print("PWM not ready\n");
         return -ENODEV;
     }
 #if defined(CONFIG_LAB3_ZONE_N3)
@@ -824,7 +824,7 @@ int main(void) {
 #endif
     rc = setup_button();
     if (rc) {
-        printk("Test button setup failed: %d\n", rc);
+        lab5_console_print("Test button setup failed: %d\n", rc);
         return rc;
     }
     for (unsigned bus = 0; bus < 2; ++bus) {
@@ -834,15 +834,15 @@ int main(void) {
     }
     rc = lab5_runtime_init(MY_ZONE, lab5_send);
     if (rc) {
-        printk("Lab 5 storage/config init failed: %d\n", rc);
+        lab5_console_print("Lab 5 storage/config init failed: %d\n", rc);
         return rc;
     }
     rc = setup_watchdog();
     if (rc) {
-        printk("IWDG setup failed: %d\n", rc);
+        lab5_console_print("IWDG setup failed: %d\n", rc);
         return rc;
     }
-    printk("%s Lab 5 online: CAN A/B 500 kbit/s, relay=%d, swap_ab=%d, SPI request %u Hz\n",
+    lab5_console_print("%s Lab 5 online: CAN A/B 500 kbit/s, relay=%d, swap_ab=%d, SPI request %u Hz\n",
            APP_NAME, IS_ENABLED(CONFIG_LAB3_RELAY), IS_ENABLED(CONFIG_LAB3_SWAP_CAN_AB),
            (unsigned)DT_PROP(DT_NODELABEL(can_a), spi_max_frequency));
     lab3_probe_ready();

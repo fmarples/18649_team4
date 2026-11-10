@@ -1,6 +1,9 @@
 #ifndef LAB5_RUNTIME_H
 #define LAB5_RUNTIME_H
 #include <zephyr/drivers/can.h>
+#include <zephyr/toolchain.h>
+/* Thread-only console output; never called from CAN/protocol hot paths. */
+__printf_like(1, 2) void lab5_console_print(const char *format, ...);
 int lab5_runtime_init(unsigned id, void (*send)(unsigned, const struct can_frame *));
 bool lab5_runtime_receive(unsigned bus, const struct can_frame *, uint64_t raw_us);
 uint64_t lab5_raw_us(void);

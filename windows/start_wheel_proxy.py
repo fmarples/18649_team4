@@ -2,6 +2,7 @@
 
 --lab3 replaces those Lab 2 telemetry windows with the Lab 3 test panel
 (lab3_demo/test_panel.py) and takes the Pi address from the `wheelpi` SSH alias.
+--lab5 keeps the wheel/input log only; the Lab 3 controls must not target Lab 5.
 
 The course proxy stays external and unchanged. Pi status telemetry arrives on
 its own port, never on the course proxy's force-feedback input.
@@ -55,7 +56,9 @@ def main():
     parser.add_argument('--connect', action='store_true', help='Connect wheel automatically; keep hands clear')
     parser.add_argument('--ready-file', type=Path, help='Launcher readiness report after wheel SDK connects')
     parser.add_argument('--log-dir', type=Path, default=REPO / 'logs/wheel-gui')
-    parser.add_argument('--lab3', action='store_true', help='Lab 3 test panel instead of Lab 2 telemetry')
+    lab = parser.add_mutually_exclusive_group()
+    lab.add_argument('--lab3', action='store_true', help='Lab 3 test panel instead of Lab 2 telemetry')
+    lab.add_argument('--lab5', action='store_true', help='Wheel/input log only; no legacy test panel or telemetry')
     args = parser.parse_args()
     if not 1 <= args.telemetry_port <= 65535 or args.telemetry_port in (8000, 8001):
         parser.error('Telemetry needs a separate port, not 8000 or 8001')
@@ -102,7 +105,8 @@ def main():
                 timer.setInterval(20)
                 timer.setTimerType(QtCore.Qt.PreciseTimer)
             from windows.wheel_input_log import InputLoggingSocket
-            inputs = InputLoggingSocket(window.send_socket, log)
+            inputs = InputLoggingSocket(window.send_socket, log,
+                                        expiry_ms=100 if args.lab3 or args.lab5 else 80)
             window.send_socket = inputs
             window.connect_button.clicked.connect(inputs.reset)
             window.stop_button.clicked.connect(inputs.reset)
@@ -114,7 +118,7 @@ def main():
             from lab3_demo.test_panel import Lab3Panel
             monitor = Lab3Panel(window, log)
             print('Lab 3 test panel attached. Logs: ' + str(log.path))
-        else:
+        elif not args.lab5:
             monitor = TelemetryWindows(window, pi_address, local_address, args.telemetry_port, log,
                                        connected_channels=args.current_channels)
             print('Raw log and Current chart are read-only. Logs: ' + str(log.path))

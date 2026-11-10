@@ -393,6 +393,10 @@ class Cockpit:
         self.last_blink = now
         self.send(p.BLINK, p.blink_body(self.blink_mode, self.blink_phase))
 
+    def emit_status(self):
+        """Default console sink; Lab 5 overrides this with its queued writer."""
+        print(self.status(), flush=True)
+
     def status(self):
         """One `STATUS {json}` line per second; test_panel.py parses it."""
         h = self.health
@@ -447,7 +451,7 @@ def run(cockpit, udp, stop, sender=None, clock=time.monotonic, status_period=1.0
         now = clock()
         cockpit.tick(now)
         if status_period and now >= next_status:
-            print(cockpit.status(), flush=True)
+            cockpit.emit_status()
             next_status = now + status_period
 
 

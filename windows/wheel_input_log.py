@@ -5,8 +5,9 @@ from windows.telemetry_events import LogEvent
 
 # Wrap only the existing outbound socket; never sample the SDK again or modify commands.
 class InputLoggingSocket:
-    def __init__(self, transport, log):
+    def __init__(self, transport, log, expiry_ms=80):
         self.transport, self.log = transport, log
+        self.expiry_ms = expiry_ms  # Diagnostic label only; never changes Pi policy.
         self.events = WheelInputEvents()
         self.observer_error = None
         self.last_sent = None
@@ -18,7 +19,7 @@ class InputLoggingSocket:
             now = time.monotonic()
             if self.last_sent is not None and now - self.last_sent >= 0.060:
                 self.log.record(f'Wheel command gap: {(now - self.last_sent) * 1000:.1f} ms; '
-                                'Pi input expires at 80 ms', 'Diagnostics')
+                                f'Pi input expires at {self.expiry_ms} ms', 'Diagnostics')
             self.last_sent = now
             for event in self.events.receive(data):
                 self.log.record(event.text, event.category)

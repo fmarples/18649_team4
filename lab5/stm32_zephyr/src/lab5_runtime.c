@@ -9,7 +9,9 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/shell/shell.h>
+#include <zephyr/shell/shell_uart.h>
 #include <zephyr/storage/flash_map.h>
+#include <zephyr/sys/printk.h>
 
 static struct l5_raft raft;
 static struct l5_store store;
@@ -19,6 +21,19 @@ static struct l5_agent agent;
 static const struct flash_area *area;
 static void (*send_frame)(unsigned, const struct can_frame *);
 K_MUTEX_DEFINE(raft_lock);
+void lab5_console_print(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    /* Use the shell's UART writer for both diagnostics and command output.
+     * A separate printk mutex cannot serialize against shell echo/prompt TX.
+     * Only startup messages use printk before the shell becomes active. */
+    const struct shell *sh = shell_backend_uart_get_ptr();
+    if (shell_ready(sh))
+        shell_vfprintf(sh, SHELL_NORMAL, format, args);
+    else
+        vprintk(format, args);
+    va_end(args);
+}
 K_SEM_DEFINE(ready, 0, 1);
 K_MSGQ_DEFINE(applied_queue, 8, 128, 4);
 struct pps_row {
@@ -118,7 +133,7 @@ int lab5_runtime_init(unsigned id, void (*send)(unsigned, const struct can_frame
     if (!l5_store_prepare_boot(&store))
         return -EIO;
     if (store.generation != generation)
-        printk("STORE boot_compaction preserved term=%u vote=%u entries=%u\n",
+        lab5_console_print("STORE boot_compaction preserved term=%u vote=%u entries=%u\n",
                store.term, store.vote, store.length);
     const struct gpio_dt_spec *pins[] = {&pps, &leader_pin, &sync_pin, &ref_pin};
     for (unsigned i = 0; i < ARRAY_SIZE(pins); i++) {
@@ -236,17 +251,17 @@ static void log_thread(void *a, void *b, void *c) {
     struct log_row row;
     while (true) {
         if (!k_msgq_get(&applied_queue, &row, K_MSEC(10)))
-            printk("COMMIT index=%u term=%u event=%s replayed=%u\n", row.index, row.term,
+            lab5_console_print("COMMIT index=%u term=%u event=%s replayed=%u\n", row.index, row.term,
                    l5_event_name(row.event), row.replay);
         struct pps_row p;
         while (!k_msgq_get(&pps_queue, &p, K_NO_WAIT))
-            printk("PPS node=%u global_us=%llu local_us=%llu rate_ppb=%lld correction_us=%lld\n",
+            lab5_console_print("PPS node=%u global_us=%llu local_us=%llu rate_ppb=%lld correction_us=%lld\n",
                    p.node, (unsigned long long)p.global, (unsigned long long)p.raw,
                    (long long)p.rate_ppb, (long long)p.correction);
         struct debug_row d;
         /* A debug burst must not postpone committed entries indefinitely. */
         for (unsigned i = 0; i < 8 && !k_msgq_get(&debug_queue, &d, K_NO_WAIT); i++)
-            printk("RAFT type=%u src=%u dst=%u term=%u index=%u commit=%u role=%u leader=%u "
+            lab5_console_print("RAFT type=%u src=%u dst=%u term=%u index=%u commit=%u role=%u leader=%u "
                    "failed=%u log_drops=%u\n",
                    d.type, d.src, d.dst, d.term, d.index, d.commit, d.role, d.leader, d.failed,
                    log_drops);
@@ -254,35 +269,53 @@ static void log_thread(void *a, void *b, void *c) {
 }
 K_THREAD_DEFINE(log_tid, 1024, log_thread, NULL, NULL, NULL, 11, 0, 0);
 static int network_cmd(const struct shell *sh, size_t argc, char **argv) {
+    ARG_UNUSED(sh);
     ARG_UNUSED(argc);
     ARG_UNUSED(argv);
     k_mutex_lock(&raft_lock, K_FOREVER);
-    shell_print(sh,
-                "NETWORK node=%u term=%u leader=%u commit=%u nodes=0x%x links=0x%x cockpit_ok=%u",
-                raft.id, raft.term, raft.leader, raft.commit, raft.graph.nodes, raft.graph.links,
-                raft.graph.cockpit_ok);
+    uint8_t node = raft.id, leader = raft.leader;
+    uint16_t term = raft.term, commit = raft.commit;
+    struct l5_graph graph = raft.graph;
     k_mutex_unlock(&raft_lock);
+    lab5_console_print(
+                "NETWORK node=%u term=%u leader=%u commit=%u nodes=0x%x links=0x%x cockpit_ok=%u\n",
+                node, term, leader, commit, graph.nodes, graph.links, graph.cockpit_ok);
     return 0;
 }
 static int log_cmd(const struct shell *sh, size_t argc, char **argv) {
+    ARG_UNUSED(sh);
     ARG_UNUSED(argc);
     ARG_UNUSED(argv);
     k_mutex_lock(&raft_lock, K_FOREVER);
-    for (uint16_t i = 1; i <= raft.commit; i++) {
-        struct l5_entry e;
-        if (l5_store_read(&store, i, &e))
-            shell_print(sh, "LOG index=%u term=%u event=%s", i, e.term, l5_event_name(e.event));
-    }
+    uint16_t end = raft.commit;
+    uint8_t node = raft.id;
     k_mutex_unlock(&raft_lock);
+    lab5_console_print("LOG_BEGIN node=%u through_index=%u\n", node, end);
+    /* Committed entries are immutable. Snapshot the end once and copy each
+     * entry under the lock, but never hold it across slow UART output. This
+     * also permits a storage-bank switch between reads without racing one. */
+    for (uint16_t i = 1; i <= end; i++) {
+        struct l5_entry e;
+        k_mutex_lock(&raft_lock, K_FOREVER);
+        bool ok = l5_store_read(&store, i, &e);
+        k_mutex_unlock(&raft_lock);
+        if (!ok) {
+            lab5_console_print("LOG_ERROR node=%u index=%u through_index=%u\n", node, i, end);
+            return -EIO;
+        }
+        lab5_console_print("LOG index=%u term=%u event=%s\n", i, e.term, l5_event_name(e.event));
+    }
+    lab5_console_print("LOG_END node=%u through_index=%u entries=%u\n", node, end, end);
     return 0;
 }
 static int event_cmd(const struct shell *sh, size_t argc, char **argv) {
+    ARG_UNUSED(sh);
     ARG_UNUSED(argc);
     ARG_UNUSED(argv);
     k_mutex_lock(&raft_lock, K_FOREVER);
     bool queued = l5_user_event(&raft);
     k_mutex_unlock(&raft_lock);
-    shell_print(sh, "EVENT %s",
+    lab5_console_print("EVENT %s\n",
                 queued ? "queued; wait for COMMIT"
                        : "not queued: no leader, catching up, or storage full");
     return queued ? 0 : -EAGAIN;
