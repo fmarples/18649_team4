@@ -23,6 +23,9 @@ class Ledger:
                 "CREATE TABLE IF NOT EXISTS events (idx INTEGER PRIMARY KEY, term INTEGER NOT NULL, event INTEGER NOT NULL, row TEXT NOT NULL)"
             )
             db.commit()
+            self.durable_index = db.execute(
+                "SELECT COALESCE(MAX(idx),0) FROM events"
+            ).fetchone()[0]
         self.thread = threading.Thread(
             target=self._run, name="lab5-ledger", daemon=True
         )
@@ -57,6 +60,7 @@ class Ledger:
                         (row["index"], row["term"], row["event"], json.dumps(row)),
                     )
                     db.commit()
+                    self.durable_index = row["index"]
                     self.emit(row)
         except Exception as exc:
             self.error = str(exc)

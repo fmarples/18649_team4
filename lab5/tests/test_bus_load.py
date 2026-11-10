@@ -47,7 +47,7 @@ class Serialized(Network):
             while self.queue and self.queue[0][0] <= self.now:
                 at, _, dst, bus, can_id, data = heapq.heappop(self.queue)
                 if dst in self.active and (dst, bus) in self.links:
-                    self.nodes[dst].receive_can(bus, can_id, data, self.now)
+                    self.deliver(dst, bus, can_id, data, self.now)
             for i in self.active:
                 self.nodes[i].update(self.now, self.upstream if i == 1 else True)
             self.transmit()

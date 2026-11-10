@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 import re
 import statistics
+from can_capture import analyze_capture
 
 
 def edges(path):
@@ -46,31 +47,8 @@ def edges(path):
     return result
 
 
-def traffic(path):
-    groups = {}
-    frames = 0
-    for line in Path(path).read_text(encoding="utf-8").splitlines():
-        m = re.search(r"\(([\d.]+)\)\s+(\S+)\s+([0-9A-Fa-f]+)#([0-9A-Fa-f]+)", line)
-        if not m:
-            continue
-        at, bus, ident, data = m.groups()
-        frames += 1
-        ident = int(ident, 16)
-        if 0x81 <= ident <= 0x83 and len(data) == 16:
-            groups.setdefault(f"{bus}:N{ident-0x80}", []).append(float(at))
-    refs = {}
-    for key, ts in groups.items():
-        intervals = [(b - a) * 1000 for a, b in zip(ts, ts[1:])]
-        refs[key] = dict(
-            frames=len(ts),
-            mean_interval_ms=statistics.mean(intervals) if intervals else None,
-            max_interval_ms=max(intervals) if intervals else None,
-        )
-    return dict(
-        parsed_frames=frames,
-        ref_streams=refs,
-        note="Bus capture timestamps measure reception intervals, not GPIO skew or handover phase.",
-    )
+def traffic(path, decoded_csv=None):
+    return analyze_capture(path, decoded_csv)
 
 
 NAMES = (
@@ -106,13 +84,33 @@ def read_log(path):
             try:
                 data = json.loads(line[line.index("{") :])
                 if all(k in data for k in ("index", "term", "event")):
-                    row = int(data["index"]), (int(data["term"]), NAMES[data["event"]])
-            except (ValueError, KeyError, IndexError, TypeError):
-                pass
+                    index, term, event = (data[k] for k in ("index", "term", "event"))
+                    if (
+                        any(type(v) is not int for v in (index, term, event))
+                        or not 1 <= index <= 30000
+                        or not 1 <= term <= 65534
+                        or not 0 <= event < len(NAMES)
+                    ):
+                        raise ValueError("Invalid committed-entry field")
+                    row = index, (term, NAMES[event])
+                elif "COMMIT" in line:
+                    raise ValueError("Missing committed-entry field")
+            except (ValueError, KeyError, IndexError, TypeError) as exc:
+                raise ValueError(
+                    f"Invalid JSON/committed row in {path}: {line}"
+                ) from exc
         else:
             m = re.search(r"(?:COMMIT|LOG) index=(\d+) term=(\d+) event=(\w+)", line)
             if m:
                 row = int(m[1]), (int(m[2]), m[3])
+                if (
+                    not 1 <= row[0] <= 30000
+                    or not 1 <= row[1][0] <= 65534
+                    or m[3] not in NAMES
+                ):
+                    raise ValueError(f"Invalid committed row in {path}: {line}")
+            elif re.search(r"\b(?:COMMIT|LOG)\b.*index=", line):
+                raise ValueError(f"Malformed committed row in {path}: {line}")
         if row:
             index, value = row
             if index in entries and entries[index] != value:
@@ -122,12 +120,18 @@ def read_log(path):
 
 
 def logs(paths):
+    if len(paths) < 2:
+        raise ValueError(
+            "Compare at least two node logs (all three for the full-cluster check)"
+        )
     data = [read_log(p) for p in paths]
     if not data or any(not d for d in data):
         raise ValueError("Every capture must contain committed entries")
     end = min(max(d) for d in data)
     missing = [[i for i in range(1, end + 1) if i not in d] for d in data]
-    conflicts = [i for i in range(1, end + 1) if len({d.get(i) for d in data}) > 1]
+    conflicts = [
+        i for i in range(1, end + 1) if len({d[i] for d in data if i in d}) > 1
+    ]
     return dict(
         through_index=end,
         last_indices=[max(d) for d in data],
@@ -135,6 +139,7 @@ def logs(paths):
         conflicts=conflicts,
         common_prefix_agrees=not conflicts and not any(missing),
         identical_complete_logs=all(d == data[0] for d in data) and not any(missing),
+        note="A missing capture row is not a proven Raft conflict. Compare full committed histories after traffic settles. Repeated identical rows are deduplicated, so this comparison alone does not prove exactly-once display.",
     )
 
 
@@ -142,13 +147,24 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("kind", choices=("edges", "candump", "logs"))
     ap.add_argument("files", nargs="+", type=Path)
+    ap.add_argument(
+        "--decoded-csv",
+        type=Path,
+        help="candump only: save decoded frames/RPCs for inspection",
+    )
     a = ap.parse_args()
     if a.kind != "logs" and len(a.files) != 1:
         ap.error("Use exactly one capture")
+    if a.decoded_csv and a.kind != "candump":
+        ap.error("--decoded-csv is only for candump")
     result = (
         logs(a.files)
         if a.kind == "logs"
-        else edges(a.files[0]) if a.kind == "edges" else traffic(a.files[0])
+        else (
+            edges(a.files[0])
+            if a.kind == "edges"
+            else traffic(a.files[0], a.decoded_csv)
+        )
     )
     print(json.dumps(result, indent=2))
 

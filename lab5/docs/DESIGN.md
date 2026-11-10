@@ -20,7 +20,7 @@ REF bytes: cycle uint8, term uint16 little-endian, global microseconds low uint3
 
 RPC serialization is 24 bytes, versioned in `l5_encode/l5_decode`; each CAN fragment holds an 8-bit sequence, six payload bytes and CRC-8. Reassembly is bounded, duplicate-aware and checks the complete RPC CRC. Existing Lab 3 CTRL, BLINK, HB, FAULT and FORCE layouts remain unchanged. Empty APPEND cadence is 100 ms; nonempty/commit traffic is sent when needed. REF is an election heartbeat, not a log replication ACK.
 
-Direct presence expires at 60 ms; REPORT liveness at 66 ms allows one report interval/processing margin. A missing direct origin enables repair forwarding after 40 ms, before the earliest 60 ms election timeout. The committed graph selects a bridge; fresh direct observations provide a bootstrap fallback when the graph itself needs repair. The relay cache suppresses loops. The simulator covers the specified N1-off-B/N3-off-A topology and an STM32 leader failure.
+Direct presence expires at 60 ms; REPORT liveness at 66 ms allows one report interval/processing margin. A missing direct origin enables repair forwarding after 40 ms, before the earliest 60 ms election timeout. The committed graph selects a bridge; fresh direct observations provide a bootstrap fallback when the graph itself needs repair. The relay cache suppresses loops. Before indexing the relay tables, the FAULT reporter must be a valid node (1–3), even when its CRC is correct. The simulator covers every single-link failure with each possible leader, all six crossed two-link topologies in both cut orders, and an STM32 leader failure. These logical coverage results do not establish physical latency.
 
 ## Persistent memory
 

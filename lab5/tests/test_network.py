@@ -22,6 +22,11 @@ class Network:
         self.seq = 0
         self.upstream = True
         self.frames = []
+        self.received = []
+
+    def deliver(self, dst, bus, can_id, data, at):
+        self.received.append((at, dst, bus, can_id, data))
+        self.nodes[dst].receive_can(bus, can_id, data, at)
 
     def close(self):
         for n in self.nodes.values():
@@ -51,7 +56,7 @@ class Network:
             while self.queue and self.queue[0][0] <= self.now:
                 at, _, dst, bus, can_id, data = heapq.heappop(self.queue)
                 if dst in self.active and (dst, bus) in self.links:
-                    self.nodes[dst].receive_can(bus, can_id, data, at)
+                    self.deliver(dst, bus, can_id, data, at)
             self.transmit()
 
     def logs(self):

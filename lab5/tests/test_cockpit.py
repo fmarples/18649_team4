@@ -1,8 +1,11 @@
 """Pi adapter tests without SocketCAN, GPIO, UDP sockets or a vehicle."""
 
 import sys
+import json
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
+from queue import Queue
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pi"))
@@ -85,6 +88,30 @@ class CockpitTests(unittest.TestCase):
         )
         self.app.tick(0.001)
         self.assertFalse(self.app.agent.status["failed"])
+
+    def test_status_exposes_evidence_drops_and_ledger_lag(self):
+        self.assertIsNone(json.loads(self.app.status()[7:])["evidence"]["ledger"])
+        pending = Queue()
+        pending.put("one pending row")
+        self.app.ledger = SimpleNamespace(
+            durable_index=3, queue=pending, dropped=2, error="disk error"
+        )
+        self.app.console = SimpleNamespace(dropped=4)
+        self.app.log.dropped = 5
+        data = json.loads(self.app.status()[7:])["evidence"]
+        self.assertEqual(
+            data,
+            {
+                "csv_dropped": 5,
+                "console_dropped": 4,
+                "ledger": {
+                    "durable_index": 3,
+                    "queued": 1,
+                    "dropped": 2,
+                    "error": "disk error",
+                },
+            },
+        )
 
     def test_ref_accounts_for_work_before_send(self):
         clock = [10.0]

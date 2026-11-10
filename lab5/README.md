@@ -7,6 +7,7 @@ This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-mod
 - [Handout](https://drive.google.com/file/d/1t1by1C3fa68qGf46RoKFRM3L3FZnoXNS/view), released November 9; due **November 18, 2026, 11:59 PM**
 - [Protocol, persistence and limitations](docs/DESIGN.md)
 - [Pin additions](docs/PINS.md), [checkoff matrix](docs/CHECKOFF.md), [offline verification](docs/VERIFICATION.md)
+- [Integration review and capture interpretation](docs/INTEGRATION.md)
 - [Optional cloud mirror](cloud/README.md): locally prepared; not deployed.
 
 ## What runs where
@@ -19,6 +20,7 @@ This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-mod
 | `pi/` | Cockpit, durable display history and optional asynchronous HTTPS uplink |
 | `tests/` | Protocol, storage, network, Pi, cloud and analysis tests; no live GPIO/CAN |
 | `tools/analyze.py` | Analysis of real scope edges, candump and committed-log captures |
+| `tools/export_ledger.py` | Read-only JSONL snapshot of the Pi's durable display history |
 
 `pi/vehicle` preserves the Lab 3 Python glue with package-relative imports so its `blinker` module cannot collide with Flask's unrelated package. The original Lab 3 files remain unchanged. The MCU application reuses the tracked Lab 2/3 timing and controller sources by path. This is the Lab 3 GPIO/PWM checkoff workload, not new Lab 4 PCB actuator firmware.
 
@@ -71,8 +73,19 @@ Edit only `config.json`, then rebuild both Nucleo images and distribute that sam
 
 ```sh
 python lab5/tools/analyze.py edges captures/edges.csv
-python lab5/tools/analyze.py candump captures/can.log
+python lab5/tools/analyze.py candump captures/can.log --decoded-csv captures/decoded.csv
 python lab5/tools/analyze.py logs captures/pi-events.csv captures/n2.txt captures/n3.txt
 ```
 
 The edge CSV has `signal,time_s` columns containing rising edges from **one scope timebase**, with `FL` and `RL` labels. Pairing is one-to-one; missing edges do not silently become a pass. `candump -L any` provides the text format for traffic analysis. Capture prefixes must include index 1 for complete-log comparison; otherwise missing history is reported. Measured results belong with their capture/revision; synthetic test data must not be presented as a vehicle measurement.
+
+The CAN decoder validates CRCs, reassembles RPCs separately on each interface, and reports REF and empty-APPEND intervals, voting observations and capture-quality problems. Its CSV includes decoded term/index/event/source/destination fields. It does not infer a passed timing or fault test from an average interval or the absence of a captured vote.
+
+For a complete Pi history after a restart, export the ledger on the Pi while idle:
+
+```sh
+python3 lab5/tools/export_ledger.py ~/.local/state/team4-lab5/display.sqlite captures/pi-history.jsonl
+python3 lab5/tools/analyze.py logs captures/pi-history.jsonl captures/n2.txt captures/n3.txt
+```
+
+Create `captures/` first and choose new filenames for each experiment. The exporter opens SQLite read-only, refuses to overwrite existing evidence and includes durable entries only; wait for the application's ledger queue to drain and check its errors. Do not copy only `display.sqlite` while it is live: recent committed rows may still be in its WAL file. Export on the Pi or use a consistent SQLite backup. Log equality deduplicates repeated identical serial lines; inspect display/replay behavior separately.

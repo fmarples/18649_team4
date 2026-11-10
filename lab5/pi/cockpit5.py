@@ -272,6 +272,21 @@ class Cockpit5(Cockpit):
         data = json.loads(super().status()[7:])
         data["raft"] = self.agent.status
         data["clock"] = self.agent_health
+        # Observe evidence health without doing SQLite I/O in the control loop.
+        data["evidence"] = {
+            "csv_dropped": self.log.dropped,
+            "console_dropped": self.console.dropped if self.console else None,
+            "ledger": (
+                None
+                if self.ledger is None
+                else {
+                    "durable_index": self.ledger.durable_index,
+                    "queued": self.ledger.queue.qsize(),
+                    "dropped": self.ledger.dropped,
+                    "error": self.ledger.error,
+                }
+            ),
+        }
         return "STATUS " + json.dumps(data)
 
 

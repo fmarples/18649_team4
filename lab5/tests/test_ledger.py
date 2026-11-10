@@ -13,13 +13,17 @@ class LedgerTests(unittest.TestCase):
             path = Path(d) / "display.sqlite"
             shown = []
             log = Ledger(path, shown.append)
+            self.assertEqual(log.durable_index, 0)
             for i in range(1, 4):
                 log.submit(dict(index=i, term=1, event=22, replayed=False))
             log.close()
+            self.assertEqual(log.durable_index, 3)
             log = Ledger(path, shown.append)
+            self.assertEqual(log.durable_index, 3)
             for i in range(1, 7):
                 log.submit(dict(index=i, term=1, event=22, replayed=i <= 5))
             log.close()
+            self.assertEqual(log.durable_index, 6)
             self.assertEqual([r["index"] for r in shown], list(range(1, 7)))
             self.assertEqual([r["index"] for r in log.rows()], list(range(1, 7)))
             self.assertEqual([r["replayed"] for r in shown[3:]], [True, True, False])

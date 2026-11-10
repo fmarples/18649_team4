@@ -51,7 +51,9 @@ static void relay(struct l5_agent *a, unsigned bus, const struct l5_packet *p, u
     uint64_t ms = us / 1000;
     uint8_t src = source(p), self = a->raft->id;
     unsigned other = bus ^ 1;
-    if (!src || src == self || a->paused || !peers(a, 0, ms, 60) || !peers(a, 1, ms, 60))
+    /* A valid CRC does not make an untrusted FAULT reporter a valid node ID. */
+    if (src < 1 || src > L5_NODES || src == self || a->paused ||
+        !peers(a, 0, ms, 60) || !peers(a, 1, ms, 60))
         return;
     /* 40 ms discovery repair precedes the earliest 60 ms election timeout.
      * HELLO is never relayed: direct and indirect presence stay distinct. */
