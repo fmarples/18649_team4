@@ -33,6 +33,7 @@ struct host {
     struct applied applied[Q];
     unsigned ah, at;
     unsigned dropped;
+    unsigned entry_reads;
     int fail_write;
     struct l5_agent agent;
     bool agent_enabled;
@@ -78,6 +79,7 @@ static bool erase_flash(void *v, unsigned bank) {
     return persist(h, bank * L5_BANK_SIZE, L5_BANK_SIZE);
 }
 static bool read_entry(void *v, uint16_t i, struct l5_entry *e) {
+    ((struct host *)v)->entry_reads++;
     return l5_store_read(&((struct host *)v)->store, i, e);
 }
 static bool append_entry(void *v, struct l5_entry e) {
@@ -209,6 +211,8 @@ API unsigned l5_host_status(void *v, unsigned field) {
         return h->dropped;
     case 11:
         return r->vote;
+    case 12:
+        return h->entry_reads;
     default:
         return 0;
     }
@@ -233,6 +237,23 @@ API int l5_host_truncate(void *v, unsigned len) {
     return l5_store_truncate(&((struct host *)v)->store, (uint16_t)len);
 }
 API unsigned l5_host_store_length(void *v) { return ((struct host *)v)->store.length; }
+API unsigned l5_host_held_events(void *v) { return l5_held_events(&((struct host *)v)->raft); }
+API int l5_host_store_prepare_boot(void *v) {
+    return l5_store_prepare_boot(&((struct host *)v)->store);
+}
+API int l5_host_store_hardstate(void *v, unsigned term, unsigned vote) {
+    return l5_store_hardstate(&((struct host *)v)->store, (uint16_t)term, (uint8_t)vote);
+}
+API unsigned l5_host_store_state(void *v, unsigned field) {
+    struct l5_store *s = &((struct host *)v)->store;
+    switch (field) {
+    case 0: return s->term;
+    case 1: return s->vote;
+    case 2: return s->journal;
+    case 3: return s->generation;
+    default: return 0;
+    }
+}
 API int l5_host_store_append(void *v, unsigned term, unsigned event) {
     return l5_store_append(&((struct host *)v)->store, (struct l5_entry){term, event});
 }

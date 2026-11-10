@@ -20,6 +20,9 @@ struct l5_store {
     bool failed;
 };
 bool l5_store_open(struct l5_store *, struct l5_flash_io);
+/* Boot-only maintenance, before real-time tasks/watchdog: reclaim a full
+ * term/vote journal without changing its logical contents. */
+bool l5_store_prepare_boot(struct l5_store *);
 bool l5_store_read(void *, uint16_t, struct l5_entry *);
 bool l5_store_append(void *, struct l5_entry);
 bool l5_store_truncate(void *, uint16_t);

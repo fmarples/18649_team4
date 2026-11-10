@@ -75,11 +75,15 @@ struct l5_raft {
     struct l5_config cfg;
     struct l5_io io;
     struct l5_graph graph;
+    /* Projection through the durable suffix; never exposed as committed state. */
+    struct l5_graph pending_graph;
     uint16_t term, length, commit, applied, next[4], match[4];
     uint8_t id, leader, vote, votes, role, prevotes;
     bool failed, replaying, prevoting;
     uint32_t rng;
     uint16_t replay_until, event_wanted, event_committed[4];
+    /* Count the Pi-acknowledged committed EVENT prefix incrementally. */
+    uint16_t held_match, held_acked_events;
     uint64_t deadline_ms, next_append_ms, now_ms, last_leader_ms, next_event_ms;
 };
 bool l5_init(struct l5_raft *, uint8_t id, struct l5_config, struct l5_io, uint16_t persisted_term,

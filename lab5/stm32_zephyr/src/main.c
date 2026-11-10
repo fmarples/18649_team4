@@ -21,6 +21,7 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/can.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/hwinfo.h>
 #include <zephyr/drivers/pwm.h>
 #include <zephyr/drivers/watchdog.h>
 #include <zephyr/kernel.h>
@@ -114,6 +115,7 @@ static struct frame_history history;
 
 static atomic_t rx_dropped, duplicates, bad_crc, tx_rejected[2], tx_completed[2], tx_failed[2];
 static atomic_t can_state[2], can_state_changes[2], int_kicks[2];
+static atomic_t can_tx_errors[2], can_rx_errors[2];
 #if defined(CONFIG_LAB3_RELAY)
 static atomic_t relay_sent, relay_failed, relay_stale, relay_dropped, relay_gated;
 /* RELAY C (clarification #6) per forwarded frame: CAN_RX_x toggle to RELAY_TX
@@ -285,9 +287,10 @@ static void can_rx_callback(const struct device *dev, struct can_frame *frame, v
 static void can_state_callback(const struct device *dev, enum can_state state,
                                struct can_bus_err_cnt err_cnt, void *user_data) {
     ARG_UNUSED(dev);
-    ARG_UNUSED(err_cnt);
     unsigned bus = (unsigned)(uintptr_t)user_data;
     atomic_set(&can_state[bus], state);
+    atomic_set(&can_tx_errors[bus], err_cnt.tx_err_cnt);
+    atomic_set(&can_rx_errors[bus], err_cnt.rx_err_cnt);
     atomic_inc(&can_state_changes[bus]);
 }
 
@@ -719,6 +722,9 @@ static void diagnostics_thread(void *a, void *b, void *c) {
                (int)atomic_get(&int_kicks[0]), (int)atomic_get(&int_kicks[1]),
                (int)atomic_get(&rx_dropped), (int)atomic_get(&duplicates),
                (int)atomic_get(&bad_crc));
+        printk("CAN_ERRORS last_state_change tx_a=%d rx_a=%d tx_b=%d rx_b=%d\n",
+               (int)atomic_get(&can_tx_errors[0]), (int)atomic_get(&can_rx_errors[0]),
+               (int)atomic_get(&can_tx_errors[1]), (int)atomic_get(&can_rx_errors[1]));
         printk("TX_COUNTS rejected_a=%d rejected_b=%d completed_a=%d completed_b=%d failed_a=%d "
                "failed_b=%d\n",
                (int)atomic_get(&tx_rejected[0]), (int)atomic_get(&tx_rejected[1]),
@@ -794,6 +800,12 @@ static int setup_watchdog(void) {
 }
 
 int main(void) {
+    uint32_t reset_cause = 0;
+    if (hwinfo_get_reset_cause(&reset_cause) == 0) {
+        printk("%s RESET cause=0x%x watchdog=%u\n", APP_NAME, reset_cause,
+               !!(reset_cause & RESET_WATCHDOG));
+        (void)hwinfo_clear_reset_cause();
+    }
     zone_monitor_init(&monitor, MY_ZONE, k_uptime_get_32());
     int rc = lab3_trace_init();
     if (rc) {

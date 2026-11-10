@@ -23,7 +23,11 @@ signatures = {
     "reopen": ([P], C.c_int),
     "truncate": ([P, U], C.c_int),
     "store_length": ([P], U),
+    "held_events": ([P], U),
     "store_append": ([P, U, U], C.c_int),
+    "store_prepare_boot": ([P], C.c_int),
+    "store_hardstate": ([P, U, U], C.c_int),
+    "store_state": ([P, U], U),
     "fragment": ([P, B, B], None),
     "packet": ([P, U, B, U64, B], C.c_int),
     "global": ([P, U64], U64),
@@ -85,6 +89,7 @@ class Node:
             "failed",
             "dropped",
             "vote",
+            "entry_reads",
         )
         return {n: int(lib.l5_host_status(self.ptr, i)) for i, n in enumerate(names)}
 

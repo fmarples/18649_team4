@@ -232,6 +232,19 @@ static void become_leader(struct l5_raft *r) {
     /* Current-term barrier commits any preceding entries from older leaders. */
     (void)l5_propose(r, L5_NOOP);
 }
+static bool rebuild_pending_graph(struct l5_raft *r) {
+    struct l5_graph pending = {0};
+    for (uint16_t i = 1; i <= r->length; i++) {
+        struct l5_entry e;
+        if (!r->io.read(r->io.ctx, i, &e)) {
+            r->failed = true;
+            return false;
+        }
+        l5_apply(&pending, e.event);
+    }
+    r->pending_graph = pending;
+    return true;
+}
 bool l5_init(struct l5_raft *r, uint8_t id, struct l5_config c, struct l5_io io, uint16_t term,
              uint8_t vote, uint16_t length, uint64_t now) {
     if (id < 1 || id > 3 || !c.heartbeat_ms || !c.append_ms || !c.missed_heartbeats ||
@@ -251,6 +264,8 @@ bool l5_init(struct l5_raft *r, uint8_t id, struct l5_config c, struct l5_io io,
     r->last_leader_ms = now;
     r->replaying = true;
     deadline(r);
+    if (!rebuild_pending_graph(r))
+        return false;
     /* Default leader is a COLD cluster bootstrap only, never a restart override. */
     if (!term && !length && c.default_leader) {
         if (!hard(r, 1, c.default_leader))
@@ -282,16 +297,25 @@ static void client_event(struct l5_raft *r, uint8_t src, uint32_t serial) {
 uint16_t l5_held_events(struct l5_raft *r) {
     if (r->role != L5_LEADER || r->id == 1)
         return 0;
-    uint16_t count = 0;
-    for (uint16_t i = r->match[1] + 1; i <= r->commit; i++) {
+    uint16_t matched = r->match[1] < r->commit ? r->match[1] : r->commit;
+    if (matched < r->held_match) {
+        /* A new leadership term starts peer acknowledgement at zero. */
+        r->held_match = 0;
+        r->held_acked_events = 0;
+    }
+    for (uint16_t i = r->held_match + 1; i <= matched; i++) {
         struct l5_entry e;
         if (!r->io.read(r->io.ctx, i, &e)) {
             r->failed = true;
-            return count;
+            return 0;
         }
-        count += e.event >= L5_USER_EVENT_BASE;
+        r->held_acked_events += e.event >= L5_USER_EVENT_BASE;
+        r->held_match = i;
     }
-    return count;
+    /* Applied committed entries are immutable. Do not rescan the full backlog
+     * every 20 ms while the Pi is absent; that starves the MCU's lower tasks. */
+    return r->event_committed[1] + r->event_committed[2] + r->event_committed[3] -
+           r->held_acked_events;
 }
 bool l5_user_event(struct l5_raft *r) {
     if (r->failed || !r->leader || r->replaying)
@@ -373,6 +397,7 @@ bool l5_propose(struct l5_raft *r, uint8_t e) {
         return false;
     }
     ++r->length;
+    l5_apply(&r->pending_graph, e);
     r->match[r->id] = r->length;
     broadcast_append(r);
     return true;
@@ -389,18 +414,9 @@ bool l5_request(struct l5_raft *r, uint8_t event) {
         send(r, (struct l5_rpc){.type = L5_CLIENT, .dst = r->leader, .event = event});
         return true;
     }
-    struct l5_graph pending = r->graph;
-    for (uint16_t i = r->commit + 1; i <= r->length; i++) {
-        struct l5_entry e;
-        if (!r->io.read(r->io.ctx, i, &e)) {
-            r->failed = true;
-            return false;
-        }
-        l5_apply(&pending, e.event);
-    }
-    struct l5_graph next = pending;
+    struct l5_graph next = r->pending_graph;
     l5_apply(&next, event);
-    return graph_equal(pending, next) || l5_propose(r, event);
+    return graph_equal(r->pending_graph, next) || l5_propose(r, event);
 }
 bool l5_addNode(struct l5_raft *r, uint8_t n) { return l5_request(r, l5_node_event(n, true)); }
 bool l5_dropNode(struct l5_raft *r, uint8_t n) { return l5_request(r, l5_node_event(n, false)); }
@@ -507,8 +523,11 @@ void l5_receive(struct l5_raft *r, const struct l5_rpc *m, uint64_t now) {
                             else if (!r->io.truncate(r->io.ctx, m->index - 1)) {
                                 r->failed = true;
                                 return;
-                            } else
+                            } else {
                                 r->length = m->index - 1;
+                                if (!rebuild_pending_graph(r))
+                                    return;
+                            }
                         }
                     }
                     if (ok && m->index > r->length) {
@@ -518,6 +537,7 @@ void l5_receive(struct l5_raft *r, const struct l5_rpc *m, uint64_t now) {
                             return;
                         }
                         r->length = m->index;
+                        l5_apply(&r->pending_graph, e.event);
                     }
                     matched = m->index;
                 }
@@ -542,10 +562,13 @@ void l5_receive(struct l5_raft *r, const struct l5_rpc *m, uint64_t now) {
     if (m->type == L5_APPEND_REPLY && r->role == L5_LEADER && m->term == r->term) {
         uint8_t n = m->src;
         if (m->success && m->index <= r->length) {
-            if (m->index > r->match[n]) {
-                r->match[n] = m->index;
-                r->next[n] = m->index + 1;
-            }
+            /* Two buses/retries can deliver the same ACK more than once.
+             * Only progress may launch the next entry: otherwise each duplicate
+             * creates another APPEND/ACK chain during a long catch-up. */
+            if (m->index <= r->match[n])
+                return;
+            r->match[n] = m->index;
+            r->next[n] = m->index + 1;
             for (uint16_t i = r->length; i > r->commit; i--) {
                 unsigned votes = 0;
                 for (unsigned j = 1; j <= 3; j++)

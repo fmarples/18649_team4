@@ -117,6 +117,13 @@ bool l5_store_read(void *ctx, uint16_t i, struct l5_entry *e) {
     e->event = (uint8_t)(w >> 16);
     return true;
 }
+bool l5_store_prepare_boot(struct l5_store *s) {
+    if (s->failed)
+        return false;
+    if (s->journal < JOURNAL_SLOTS)
+        return true;
+    return compact(s, s->length, s->term, s->vote);
+}
 bool l5_store_append(void *ctx, struct l5_entry e) {
     struct l5_store *s = ctx;
     if (s->failed || s->length >= L5_CAPACITY || !e.term || e.term > s->term ||

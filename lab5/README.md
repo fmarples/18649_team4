@@ -1,6 +1,6 @@
 # Lab 5: Time and Consensus
 
-This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-module setup**. It starts from `lab3_can` revision `69c50d5`; the Lab 4 PCB branch is independent. Nothing here has been flashed or measured on the vehicle yet.
+This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-module setup**. It starts from `lab3_can` revision `69c50d5`; the Lab 4 PCB branch is independent. Both Nucleos were flashed on November 10 with persistent state preserved. Initial two-node bring-up found and corrected runtime problems; matching Pi integration, scope measurements and the checkoff cases remain pending. See the [bring-up record](docs/BRINGUP_2026-11-10.md).
 
 - [Shared writeup](https://docs.google.com/document/d/1kwUk9po3RsTd_NVpE4F1W3hu7zCnjiTFjznqT5k0Chc/edit)
 - [Must-dos](https://docs.google.com/document/d/1fM5APOAQwtd3XQw26Jg4HM-Opq8UdlKVwno77f8kpA0/edit)

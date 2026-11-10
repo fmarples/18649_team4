@@ -111,6 +111,15 @@ int lab5_runtime_init(unsigned id, void (*send)(unsigned, const struct can_frame
     struct l5_flash_io flash = {NULL, flash_read_cb, flash_write_cb, flash_erase_cb};
     if (!l5_store_open(&store, flash))
         return -EIO;
+    /* A reset during runtime compaction leaves the old, full journal valid.
+     * Reclaim it before the 1 s watchdog starts, keeping every entry/vote.
+     * This does not establish runtime erase latency; that remains a bench gate. */
+    uint32_t generation = store.generation;
+    if (!l5_store_prepare_boot(&store))
+        return -EIO;
+    if (store.generation != generation)
+        printk("STORE boot_compaction preserved term=%u vote=%u entries=%u\n",
+               store.term, store.vote, store.length);
     const struct gpio_dt_spec *pins[] = {&pps, &leader_pin, &sync_pin, &ref_pin};
     for (unsigned i = 0; i < ARRAY_SIZE(pins); i++) {
         if (!gpio_is_ready_dt(pins[i]))
@@ -235,7 +244,8 @@ static void log_thread(void *a, void *b, void *c) {
                    p.node, (unsigned long long)p.global, (unsigned long long)p.raw,
                    (long long)p.rate_ppb, (long long)p.correction);
         struct debug_row d;
-        while (!k_msgq_get(&debug_queue, &d, K_NO_WAIT))
+        /* A debug burst must not postpone committed entries indefinitely. */
+        for (unsigned i = 0; i < 8 && !k_msgq_get(&debug_queue, &d, K_NO_WAIT); i++)
             printk("RAFT type=%u src=%u dst=%u term=%u index=%u commit=%u role=%u leader=%u "
                    "failed=%u log_drops=%u\n",
                    d.type, d.src, d.dst, d.term, d.index, d.commit, d.role, d.leader, d.failed,
