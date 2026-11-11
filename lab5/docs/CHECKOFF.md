@@ -1,6 +1,6 @@
 # Lab 5 bench verification matrix
 
-**The full TA checkoff remains unfinished.** The November 10 N2-led two-cut functional run and restoration are recorded, and all three saved histories agree through entry 3324. N2/N3 single-link LED checks passed; Pi LEDs were reported correct. The specified Pi-led route, remaining failure/replay cases and scope limits still need evidence. Wheel-input gaps and a pre-cut Pi down/up remain under investigation. No extra single-link repeat is required solely for bounce-free jumper insertion; this does not turn an unperformed post-fix repeat into a pass. See [bring-up evidence](BRINGUP_2026-11-10.md#two-cut-routing-after-the-storage-repair). Host simulations do not complete the TA demo. Record revision/configuration, board IDs, bus labels, capture filenames and observed values. Preserve all three Raft stores on ordinary reboot/rejoin.
+**The full TA checkoff remains unfinished.** The November 10 N2-led and Pi-led two-cut functional runs and restoration are recorded, and all three saved histories agree through entry 3566. N2/N3 single-link LED checks passed; Pi LEDs were reported correct. Steering/brake and both turn commands worked through the Pi-led route. Brief local errors during cut establishment, input/transport faults, remaining failure/replay cases and scope limits still need investigation or evidence. No extra single-link repeat is required solely for bounce-free jumper insertion; this does not turn an unperformed post-fix repeat into a pass. See [Pi-led evidence](BRINGUP_2026-11-10.md#pi-led-two-cut-route-controls-and-final-history-comparison). Host simulations do not complete the TA demo. Record revision/configuration, board IDs, bus labels, capture filenames and observed values. Preserve all three Raft stores on ordinary reboot/rejoin.
 
 | Step | Action | Required observation / evidence |
 |---|---|---|
@@ -42,8 +42,21 @@ The subsequent N2-led two-cut recording shows all nodes in graph `0x7/0x2d`
 and one `EVENT_N2` at index 3230, term 524. Pi capture and all three full
 3324-entry exports confirm delivery and agreement. All links were restored.
 The brief hazard followed stale wheel input at 115.86 ms; the earlier Pi
-down/up has no confirmed cause. Step 5 still needs the Pi-led route and scope
-skew evidence.
+down/up has no confirmed cause. A later Pi-led run completes the functional
+route and controls portion of step 5, as detailed below.
+
+For the Pi-led run, an intentional N2 reset elected N1 in term 525 without
+clearing any state. With N1 off B and N3 off A, event 3418 traveled from N2
+to Pi and then to N3 through N2. All three full histories match through 3566;
+the team confirmed controls, turn signals and restored indicators. No further
+election was observed during the cuts. Brief N3-only error heartbeats during
+cut establishment explain how the rear pair could enter local hazards while
+the front remained normal; the underlying transient cause is unresolved.
+Extra graph entries also occurred, so this run does not establish exactly
+two link-change entries for a clean two-cut transition. Scope skew and the
+complete step-5 timing/transition criteria remain open. A settled 213.8-second
+CAN interval had no error heartbeats; the overlapping 235.1-second application
+interval had no state changes or accepted-input gaps of 100 ms or more.
 
 Capture formats: scope rising edges `signal,time_s` CSV on one timebase; Nucleo serial text; Pi `events.csv`; `candump -L` text. Run `tools/analyze.py` for summaries. A capture of CAN arrival times cannot replace a GPIO phase measurement. A bounded modeled clock correction cannot replace the handover scope trace.
 

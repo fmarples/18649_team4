@@ -12,6 +12,34 @@ from test_core import crc
 
 
 class RoutingMatrixTests(unittest.TestCase):
+    def test_pi_led_cut_transitions_do_not_trigger_local_error_in_models(self):
+        # Inspect the transition, not just the settled graph. A rear-only flash
+        # was observed on the bench; these ideal models do not include SPI,
+        # OS/flash stalls, contact bounce or controller receive loss.
+        for model in (Network, Serialized):
+            with self.subTest(model=model.__name__):
+                net = model(leader=1)
+                try:
+                    net.run(2000)
+                    for connected, link in (
+                        (False, (1, 1)), (False, (3, 0)),
+                        (True, (3, 0)), (True, (1, 1)),
+                    ):
+                        if connected:
+                            net.links.add(link)
+                        else:
+                            net.links.remove(link)
+                        for _ in range(600):
+                            net.run(1)
+                            for node in net.nodes.values():
+                                self.assertFalse(
+                                    node.health(net.now)["error"],
+                                    (model.__name__, connected, link, net.now, node.id),
+                                )
+                    self.settled(net, 1, 63)
+                finally:
+                    net.close()
+
     def settled(self, net, leader, links):
         rows = net.logs()
         self.assertTrue(

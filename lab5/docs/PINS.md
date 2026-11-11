@@ -35,3 +35,12 @@ it is 2 Hz. ERR is a separate state indication and stays high during a sustained
 error. Do not restore the historical Lab 2 front-blinker pins: PB6 and PA5 are
 now used by CAN/SPI. Register sampling and visual agreement are recorded in the
 [bring-up record](BRINGUP_2026-11-10.md); scope timing is still unmeasured.
+
+N2 drives the front pair and N3 drives the rear pair; this division is intentional.
+Both receive the same turn command and derive blink phase from synchronized global
+time. Matching clocks do not guarantee matching modes: the current firmware
+locally overrides the command with hazards when that node enters error. In the
+November 10 Pi-led two-cut run, CAN heartbeats record brief N3-only errors during
+cut establishment, consistent with the reported rear-only flash. This is a
+transition fault to investigate, not a normal turn pattern or evidence that the
+front/rear pin assignments should be combined.
