@@ -367,6 +367,12 @@ API unsigned l5_host_agent_status(void *v, unsigned field, uint64_t us) {
         return h->agent.relay_count;
     case 4:
         return h->agent.held_events;
+    case 5:
+        return l5_agent_error_reason(&h->agent, us);
+    case 6:
+    case 7:
+    case 8:
+        return l5_agent_report_age(&h->agent, field - 5, us);
     default:
         return 0;
     }

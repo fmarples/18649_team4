@@ -203,6 +203,7 @@ class Agent(Node):
         return {
             name: int(lib.l5_host_agent_status(self.ptr, i, raw_us))
             for i, name in enumerate(
-                ("error", "hazard_hz", "synced", "relays", "held_events")
+                ("error", "hazard_hz", "synced", "relays", "held_events",
+                 "reason_mask", "pi_report_age_ms", "n2_report_age_ms", "n3_report_age_ms")
             )
         }

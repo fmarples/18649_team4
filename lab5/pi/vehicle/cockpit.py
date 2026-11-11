@@ -431,8 +431,10 @@ def run(cockpit, udp, stop, sender=None, clock=time.monotonic, status_period=1.0
     next_status = clock()
     while not stop.is_set():
         now = clock()
+        loop_started = now
         timeout = max(0.0, min(cockpit.next_wake(now), now + 0.1) - now)
         readable, _, _ = select.select([udp], [], [], timeout)
+        selected_at = clock()
         if cockpit.pending_test is not None:
             request, cockpit.pending_test = cockpit.pending_test, None
             cockpit.test_fault(request == "clear", clock())
@@ -449,10 +451,22 @@ def run(cockpit, udp, stop, sender=None, clock=time.monotonic, status_period=1.0
                 if cockpit.on_udp(data, now):  # R4.4: a CTRL for every update
                     cockpit.send_ctrl(now, clock=clock)
         now = clock()
+        udp_done = now
         cockpit.tick(now)
+        tick_done = clock()
         if status_period and now >= next_status:
             cockpit.emit_status()
             next_status = now + status_period
+        finished = clock()
+        if finished - loop_started >= max(0.020, timeout + 0.020):
+            cockpit.log.write("LOOP_SLOW", json.dumps({
+                "total_ms": round(1000 * (finished - loop_started), 3),
+                "requested_wait_ms": round(1000 * timeout, 3),
+                "select_ms": round(1000 * (selected_at - loop_started), 3),
+                "udp_work_ms": round(1000 * (udp_done - selected_at), 3),
+                "tick_ms": round(1000 * (tick_done - udp_done), 3),
+                "status_ms": round(1000 * (finished - tick_done), 3),
+            }))
 
 
 def main(argv=None):

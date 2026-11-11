@@ -8,6 +8,7 @@ This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-mod
 - [Protocol, persistence and limitations](docs/DESIGN.md)
 - [Pin additions](docs/PINS.md), [checkoff matrix](docs/CHECKOFF.md), [offline verification](docs/VERIFICATION.md)
 - [Integration review and capture interpretation](docs/INTEGRATION.md)
+- [Hardware-tested revisions and offline hazard correction](docs/HAZARD_REVIEW.md): firmware/Pi `107269a`, final Windows launcher `b693c57`; newer queue/diagnostic changes are not hardware-tested.
 - [Optional cloud mirror](cloud/README.md): locally prepared; not deployed.
 
 ## What runs where

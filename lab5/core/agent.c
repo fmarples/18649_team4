@@ -229,14 +229,27 @@ void l5_agent_tick(struct l5_agent *a, uint64_t raw) {
         observe_graph(a, ms);
     }
 }
-bool l5_agent_error(const struct l5_agent *a, uint64_t raw) {
+unsigned l5_agent_error_reason(const struct l5_agent *a, uint64_t raw) {
     uint64_t ms = raw / 1000;
     bool isolated = true;
     for (unsigned n = 1; n <= 3; n++)
         if (n != a->raft->id && a->report_seen[n] && fresh(ms, a->reports[n], 66))
             isolated = false;
-    return a->paused || a->raft->failed || isolated || !a->report_seen[1] ||
-           !fresh(ms, a->reports[1], 66) || !a->upstream[1];
+    return (a->paused ? L5_HEALTH_PAUSED : 0) |
+           (a->raft->failed ? L5_HEALTH_STORAGE : 0) |
+           (isolated ? L5_HEALTH_ISOLATED : 0) |
+           ((!a->report_seen[1] || !fresh(ms, a->reports[1], 66)) ? L5_HEALTH_PI_STALE : 0) |
+           (!a->upstream[1] ? L5_HEALTH_INPUT : 0);
+}
+bool l5_agent_error(const struct l5_agent *a, uint64_t raw) {
+    return l5_agent_error_reason(a, raw) != 0;
+}
+uint32_t l5_agent_report_age(const struct l5_agent *a, unsigned node, uint64_t raw) {
+    uint64_t ms = raw / 1000;
+    if (node < 1 || node > L5_NODES || !a->report_seen[node] || ms < a->reports[node])
+        return UINT32_MAX;
+    uint64_t age = ms - a->reports[node];
+    return age >= UINT32_MAX ? UINT32_MAX : (uint32_t)age;
 }
 unsigned l5_agent_hazard_hz(const struct l5_agent *a, uint64_t raw) {
     return a->report_seen[1] && fresh(raw / 1000, a->reports[1], 66) ? 2 : 4;

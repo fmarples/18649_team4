@@ -32,6 +32,12 @@ void l5_agent_tick(struct l5_agent *, uint64_t raw_us);
  * true for Lab 5 packets; false lets the application process a Lab 3 packet. */
 bool l5_agent_receive(struct l5_agent *, unsigned bus, const struct l5_packet *, uint64_t raw_us);
 bool l5_agent_error(const struct l5_agent *, uint64_t raw_us);
+enum l5_health_reason {
+    L5_HEALTH_PAUSED = 1, L5_HEALTH_STORAGE = 2, L5_HEALTH_ISOLATED = 4,
+    L5_HEALTH_PI_STALE = 8, L5_HEALTH_INPUT = 16
+};
+unsigned l5_agent_error_reason(const struct l5_agent *, uint64_t raw_us);
+uint32_t l5_agent_report_age(const struct l5_agent *, unsigned node, uint64_t raw_us);
 unsigned l5_agent_hazard_hz(const struct l5_agent *, uint64_t raw_us);
 bool l5_agent_synced(const struct l5_agent *, uint64_t raw_us);
 #endif

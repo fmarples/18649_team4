@@ -22,12 +22,14 @@ Latest Pi A/B evidence: all three histories agree on link DOWN/UP entries
 immediately after B reconnection has a reproduced receive-side cause: stale
 B frames blocked current A reports in shared assembly state. The per-bus fix
 passes host tests and capture replay and is deployed on all three nodes;
-a live repeat remains.
+a standalone post-fix A/B repeat was deferred; subsequent two-cut runs
+exercise routing and restoration but do not count as that exact repeat.
 LEDs were tentatively reported correct. The separate display-replay fix is
 deployed: entry 2201 was recovered and fresh complete histories agree across
 all three nodes through 2434.
-Establish a healthy starting state before repeating cuts. See the bring-up
-record for the capture limits and tested software correction.
+No extra repeat is requested solely for clean jumper insertion. The next
+focused verification follows the [offline hazard correction](HAZARD_REVIEW.md),
+which also identifies the last hardware-tested revisions.
 
 Additional persistence check: preserve a log, reboot each node, and compare committed prefixes. Exercise conflicting uncommitted suffix recovery while scoping PPS and watching the watchdog. Host fault injection proves recovery ordering only under the modeled write boundary; real partial writes and flash stalls must be checked on the actual boards.
 

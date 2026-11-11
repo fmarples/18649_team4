@@ -47,6 +47,12 @@ struct debug_row {
     uint8_t type, src, dst, role, leader, failed;
 };
 K_MSGQ_DEFINE(debug_queue, sizeof(struct debug_row), 64, 4);
+struct health_row {
+    uint64_t raw;
+    uint32_t age[3];
+    unsigned reasons, node;
+};
+K_MSGQ_DEFINE(health_queue, sizeof(struct health_row), 16, 8);
 struct log_row {
     uint16_t index, term;
     uint8_t event, replay, pad[2];
@@ -208,6 +214,7 @@ static void protocol_thread(void *a, void *b, void *c) {
     uint64_t last_second = 0, pulse_end = 0;
     uint16_t previous_term = 0;
     uint8_t previous_role = 255;
+    unsigned previous_health = UINT32_MAX;
     while (true) {
         k_mutex_lock(&raft_lock, K_FOREVER);
         /* Reception can move the clock anchor while this task waits. Read raw
@@ -216,6 +223,15 @@ static void protocol_thread(void *a, void *b, void *c) {
         agent.upstream_ok = true;
         l5_agent_tick(&agent, raw);
         raw = lab5_raw_us();
+        unsigned reasons = l5_agent_error_reason(&agent, raw);
+        if (reasons != previous_health) {
+            struct health_row h = {.raw = raw, .reasons = reasons, .node = raft.id};
+            for (unsigned n = 1; n <= 3; n++)
+                h.age[n - 1] = l5_agent_report_age(&agent, n, raw);
+            if (k_msgq_put(&health_queue, &h, K_NO_WAIT))
+                log_drops++;
+            previous_health = reasons;
+        }
         uint64_t global = l5_global(&net_clock, raw);
         gpio_pin_set_dt(&leader_pin, raft.role == L5_LEADER && !agent.paused && !raft.failed);
         gpio_pin_set_dt(&sync_pin, l5_agent_synced(&agent, raw));
@@ -259,6 +275,12 @@ static void log_thread(void *a, void *b, void *c) {
                    p.node, (unsigned long long)p.global, (unsigned long long)p.raw,
                    (long long)p.rate_ppb, (long long)p.correction);
         struct debug_row d;
+        struct health_row h;
+        for (unsigned i = 0; i < 4 && !k_msgq_get(&health_queue, &h, K_NO_WAIT); i++)
+            lab5_console_print("HEALTH node=%u local_us=%llu reasons=0x%x "
+                               "report_age_ms=%u,%u,%u log_drops=%u\n",
+                               h.node, (unsigned long long)h.raw, h.reasons,
+                               h.age[0], h.age[1], h.age[2], log_drops);
         /* A debug burst must not postpone committed entries indefinitely. */
         for (unsigned i = 0; i < 8 && !k_msgq_get(&debug_queue, &d, K_NO_WAIT); i++)
             lab5_console_print("RAFT type=%u src=%u dst=%u term=%u index=%u commit=%u role=%u leader=%u "

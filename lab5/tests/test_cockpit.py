@@ -2,6 +2,7 @@
 
 import sys
 import json
+import struct
 import unittest
 from unittest.mock import patch, Mock
 from types import SimpleNamespace
@@ -213,6 +214,50 @@ class CockpitTests(unittest.TestCase):
         self.assertFalse(cause["latched"])
         self.assertFalse(cause["no_controls"])
         self.assertTrue(cause["agent_error"])
+
+    def test_udp_gap_records_counter_and_keeps_duplicate_from_refreshing_input(self):
+        def packet(counter):
+            data = bytearray(276)
+            struct.pack_into('<Iii', data, 0, counter, 0, 32767)
+            struct.pack_into('<i', data, 24, 32767)
+            return data
+        self.app.log.write = Mock()
+        self.assertTrue(self.app.on_udp(packet(10), 1.0))
+        self.assertFalse(self.app.on_udp(packet(10), 1.08))
+        self.assertEqual(self.app.last_udp, (10, 1.0))
+        self.assertTrue(self.app.on_udp(packet(17), 1.14))
+        rows = [json.loads(c.args[1]) for c in self.app.log.write.call_args_list
+                if c.args[0] == 'UDP_GAP']
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['gap_ms'], 140.0)
+        self.assertEqual(rows[0]['counter_advance'], 7)
+
+    def test_select_delay_is_logged_even_when_tick_is_fast(self):
+        clock = [0.0]
+        self.app.log.write = Mock()
+        stop = Mock()
+        stop.is_set.side_effect = [False, True]
+        def delayed_select(*args):
+            clock[0] += .125
+            return [], [], []
+        with patch('vehicle.cockpit.select.select', side_effect=delayed_select):
+            run(self.app, Mock(), stop, clock=lambda: clock[0], status_period=0)
+        rows = [json.loads(c.args[1]) for c in self.app.log.write.call_args_list
+                if c.args[0] == 'LOOP_SLOW']
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['select_ms'], 125.0)
+        self.assertEqual(rows[0]['tick_ms'], 0.0)
+
+    def test_local_ctrl_is_not_queued_behind_blocked_protocol(self):
+        import errno
+        self.buses[1].send = Mock(side_effect=OSError(errno.ENOBUFS, 'full'))
+        with patch('cockpit5.time.monotonic', return_value=.001):
+            self.app.tick(.001)
+        self.assertTrue(self.app.protocol_tx[1].frames)
+        self.app.latest = (123, 0, 0, 0)
+        self.app.send_ctrl(.002, clock=lambda: .002)
+        self.assertTrue(any(m.arbitration_id == 0x010 for m in self.buses[0].sent))
+        self.assertTrue(all(ident != 0x010 for _, ident, _ in self.app.protocol_tx[1].frames))
 
 
 if __name__ == "__main__":

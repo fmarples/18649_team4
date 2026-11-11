@@ -1,17 +1,18 @@
 # Offline verification — November 9, 2026
 
-This records software/build checks, not vehicle measurements or a completed checkoff. The implementation is ready for initial bench bring-up. The physical cases in `CHECKOFF.md` remain pending.
+This records software/build checks, not a completed checkoff. Initial bring-up
+and later hardware results are in `BRINGUP_2026-11-10.md`; remaining physical
+cases are tracked in `CHECKOFF.md`.
 
-**November 10 follow-up:** the suite now passes 97 tests. The display-replay
-repair is verified through entry 2434 on all three nodes. Per-bus RPC assembly
-passes the captured reconnect regression and is deployed on Pi/N2/N3; its
-live reconnection repeat remains pending. Runtime flash erases were removed
-after a reproduced N3 watchdog loop; append-only suffix repair, journal spill,
-interrupted boot reclamation and physical-slot exhaustion are host-tested.
-The fix is deployed on all three nodes, whose saved histories agree through
-entry 3217. This page retains the November 9 baseline below;
-see the [bring-up record](BRINGUP_2026-11-10.md) for fixes, current image sizes,
-observations and unresolved hardware gates.
+**November 10 follow-up:** all **111 host tests pass**. The shared C library
+and both firmware profiles build. Current offline images use N2 119900 bytes
+flash / 60064 bytes RAM and N3 125540 / 62752. The new bounded Pi transmit retry
+and health/input diagnostics are **not deployed or hardware-tested**. The last
+hardware firmware/Pi revision is `107269a`, with Windows launcher `b693c57`.
+At that baseline, complete saved histories agree through 3566 and both
+N2-led/Pi-led functional routes worked; brief transition errors remain open.
+See the [hazard review](HAZARD_REVIEW.md) for evidence, new checks and limits.
+The table and image sizes below retain the dated November 9 baseline.
 
 ## Results
 
@@ -43,7 +44,11 @@ python -m unittest discover -s lab3_demo/pi -q
 
 Install dependencies and build Nucleo profiles as described in `../README.md`. The GitHub workflow repeats the shared-core host checks on Linux; a local Windows pass is not a claim that a remote workflow ran.
 
-## Still requires the actual setup
+## November 9 hardware gates — historical baseline
+
+Initial bring-up, selected functional cases and history comparisons have
+since been completed. Use [CHECKOFF.md](CHECKOFF.md) for current status; the
+list below records what had not been tested on November 9.
 
 - First boot, physical CAN bus labels, new GPIO allocations, Pi native-library build, and GPIO/SocketCAN integration.
 - Scope evidence for the 1 ms LED skew, 100 µs handover, 100 ms brake/error response and 1 s leader recovery limits; measured transfer delay, PPS jitter and drift.

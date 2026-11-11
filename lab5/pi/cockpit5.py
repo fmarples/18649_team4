@@ -28,6 +28,7 @@ from vehicle.pi_gpio import NoGpio, PiGpio, PINS
 from native import Agent
 from generate_config import load
 from ledger import Ledger, Console
+from can_outbox import CanOutbox
 
 PPS, LEADER, SYNC, REF_RX = 16, 20, 21, 26
 NEW_PINS = (PPS, LEADER, SYNC, REF_RX)
@@ -112,6 +113,7 @@ class Cockpit5(Cockpit):
         self.ledger, self.console = ledger, console
         self.pending_event = False
         self.uplink, self.offsets = uplink, offsets or {}
+        self.protocol_tx = [CanOutbox(), CanOutbox()]
 
     def raw_us(self, now):
         return max(0, round((now - self.epoch) * 1_000_000))
@@ -123,18 +125,36 @@ class Cockpit5(Cockpit):
         except queue.Full:
             self.counters["lab5_rx_dropped"] += 1
 
+    def on_udp(self, data, now):
+        previous = self.last_udp
+        accepted = super().on_udp(data, now)
+        if accepted and previous is not None and now - previous[1] >= 0.060:
+            self.log.write("UDP_GAP", json.dumps({
+                "gap_ms": round(1000 * (now - previous[1]), 3),
+                "counter_advance": (self.last_udp[0] - previous[0]) & 0xffffffff,
+                "previous_receive_mono_s": previous[1],
+                "receive_mono_s": now,
+            }))
+        return accepted
+
     def _write_one(self, index, frame_id, payload):
-        self.gpio.can_tx(index)
         try:
-            self.buses[index].send(
-                can.Message(
-                    arbitration_id=frame_id, is_extended_id=False, data=payload
-                ),
-                timeout=0,
-            )
+            self._send_now(index, frame_id, payload)
         except (can.CanError, OSError) as e:
             self.counters[f"tx_error_{index}"] += 1
             self.log.write("TX_ERROR", f"0x{frame_id:03x} bus={index} {e}")
+
+    def _send_now(self, index, frame_id, payload):
+        self.gpio.can_tx(index)
+        self.buses[index].send(
+            can.Message(arbitration_id=frame_id, is_extended_id=False, data=payload),
+            timeout=0,
+        )
+
+    def _send_protocol_now(self, bus, can_id, data):
+        self._send_now(bus, can_id, data)
+        if self.config["debug"]:
+            self.log.write("RAFT_TX", f"bus={bus} id={can_id:03x} data={data.hex()}")
 
     def _supervise(self, now):
         with self.lock:
@@ -155,8 +175,10 @@ class Cockpit5(Cockpit):
                 "latched": self.monitor.latched,
                 "no_controls": self.latest is None,
                 "agent_error": bool(self.agent_health["error"]),
+                "agent_health": self.agent_health,
                 "raft": self.agent.status,
                 "can_rx_queued": self.rx.qsize(),
+                "can_tx_queue": [q.status() for q in self.protocol_tx],
             }))
         self.error, self.health = error, health
         self.gpio.leds(*health.degraded, error)
@@ -198,18 +220,7 @@ class Cockpit5(Cockpit):
                 )
         updated_at = time.monotonic()
         for bus, can_id, data in self.agent.outgoing():
-            if 0x81 <= can_id <= 0x83:
-                # Include this tick's durable writes and queue-drain time.
-                # Kernel/controller arbitration still requires measurement.
-                elapsed = max(0, round((time.monotonic() - tick_started) * 1_000_000))
-                stamp = (int.from_bytes(data[3:7], "little") + elapsed) & 0xFFFFFFFF
-                prefix = data[:3] + stamp.to_bytes(4, "little")
-                data = prefix + bytes([p.crc8(prefix)])
-            self._write_one(bus, can_id, data)
-            if self.config["debug"]:
-                self.log.write(
-                    "RAFT_TX", f"bus={bus} id={can_id:03x} data={data.hex()}"
-                )
+            self.protocol_tx[bus].enqueue(can_id, data, tick_started, time.monotonic())
         sent_at = time.monotonic()
         # Replay can confirm thousands of old entries in one receive call.
         # Keep control work interleaved and leave notifications in the C queue
@@ -271,6 +282,13 @@ class Cockpit5(Cockpit):
                 self.console.write("RAFT " + json.dumps(state))
             self._last_raft = changed
         super().tick(now)
+        outputs_at = time.monotonic()
+        # Local CTRL is sent immediately by the UDP path. Local heartbeat,
+        # BLINK and fault work also gets its turn before protocol retries.
+        # A blocked bus never prevents flushing the other one.
+        for bus, outbox in enumerate(self.protocol_tx):
+            outbox.flush(lambda ident, data: self._send_protocol_now(bus, ident, data),
+                         time.monotonic)
         finished_at = time.monotonic()
         # Diagnostic trigger: one nominal wheel-update period. This is elapsed
         # wall time (including descheduling), not CPU execution time or WCET.
@@ -279,8 +297,8 @@ class Cockpit5(Cockpit):
                 "total_ms": round(1000 * (finished_at - tick_started), 3),
                 "can_receive_ms": round(1000 * (received_at - tick_started), 3),
                 "agent_update_ms": round(1000 * (updated_at - received_at), 3),
-                "can_send_ms": round(1000 * (sent_at - updated_at), 3),
-                "apply_outputs_ms": round(1000 * (finished_at - sent_at), 3),
+                "can_send_ms": round(1000 * (sent_at - updated_at + finished_at - outputs_at), 3),
+                "apply_outputs_ms": round(1000 * (outputs_at - sent_at), 3),
                 "can_rx_queued": self.rx.qsize(),
             }))
 
@@ -313,6 +331,7 @@ class Cockpit5(Cockpit):
         data = json.loads(super().status()[7:])
         data["raft"] = self.agent.status
         data["clock"] = self.agent_health
+        data["can_tx_queue"] = [q.status() for q in self.protocol_tx]
         # Observe evidence health without doing SQLite I/O in the control loop.
         data["evidence"] = {
             "csv_dropped": self.log.dropped,
