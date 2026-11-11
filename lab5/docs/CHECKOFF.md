@@ -17,6 +17,15 @@
 
 Before these: confirm new GPIO wiring from `PINS.md`; boot both images; inspect error, queue-drop and stack diagnostics. Verify fresh versus persistent startup intentionally. The default-leader bootstrap is only for fresh histories, not an instruction to delete logs whenever the Pi returns.
 
+Latest Pi A/B evidence: all three histories agree on link DOWN/UP entries
+2367–2370, with N2 remaining leader in term 519. A whole-Pi DOWN/UP transition
+immediately after B reconnection still needs diagnosis; LEDs were tentatively
+reported correct. The Pi display export also lacks older entry 2201 because
+of a reproduced restart-replay queue overflow. Deploy the host/Pi fix and
+verify the complete durable prefix before claiming full history agreement.
+Establish a healthy starting state before repeating cuts. See the bring-up
+record for the capture limits and tested software correction.
+
 Additional persistence check: preserve a log, reboot each node, and compare committed prefixes. Exercise conflicting uncommitted suffix recovery while scoping PPS and watching the watchdog. Host fault injection proves recovery ordering only under the modeled write boundary; real partial writes and flash stalls must be checked on the actual boards.
 
 Capture formats: scope rising edges `signal,time_s` CSV on one timebase; Nucleo serial text; Pi `events.csv`; `candump -L` text. Run `tools/analyze.py` for summaries. A capture of CAN arrival times cannot replace a GPIO phase measurement. A bounded modeled clock correction cannot replace the handover scope trace.

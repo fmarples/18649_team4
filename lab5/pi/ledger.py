@@ -23,9 +23,11 @@ class Ledger:
                 "CREATE TABLE IF NOT EXISTS events (idx INTEGER PRIMARY KEY, term INTEGER NOT NULL, event INTEGER NOT NULL, row TEXT NOT NULL)"
             )
             db.commit()
-            self.durable_index = db.execute(
-                "SELECT COALESCE(MAX(idx),0) FROM events"
-            ).fetchone()[0]
+            self._durable_pending = {
+                row[0] for row in db.execute("SELECT idx FROM events")
+            }
+            self.durable_index = 0
+            self._advance_durable_prefix()
         self.thread = threading.Thread(
             target=self._run, name="lab5-ledger", daemon=True
         )
@@ -40,6 +42,13 @@ class Ledger:
         except queue.Full:
             self.dropped += 1
             return False
+
+    def _advance_durable_prefix(self):
+        # A high row number does not prove that all preceding rows exist.
+        # Keep later durable rows pending until replay fills any older gap.
+        while self.durable_index + 1 in self._durable_pending:
+            self.durable_index += 1
+            self._durable_pending.remove(self.durable_index)
 
     def _run(self):
         try:
@@ -60,7 +69,8 @@ class Ledger:
                         (row["index"], row["term"], row["event"], json.dumps(row)),
                     )
                     db.commit()
-                    self.durable_index = row["index"]
+                    self._durable_pending.add(row["index"])
+                    self._advance_durable_prefix()
                     self.emit(row)
         except Exception as exc:
             self.error = str(exc)

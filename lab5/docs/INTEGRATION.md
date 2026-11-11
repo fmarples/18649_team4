@@ -56,6 +56,14 @@ The first command reads a consistent SQLite transaction and creates a new JSONL 
 
 Pi `STATUS` now includes `evidence`: CSV/console drop counts and the ledger's `durable_index`, queue depth, dropped rows and error. Before exporting, wait until `durable_index` catches up with `raft.commit`, the queue is empty, and errors/drops are absent. Queue depth alone is insufficient: a writer can have removed a row from the queue without finishing its disk commit. The durable index is updated only after the SQLite commit (and restored from the saved database at startup).
 
+`durable_index` denotes the consecutive prefix starting at 1, not the largest
+stored index. The host adapter retains up to the full 30000-entry log's
+applied notifications; the Pi drains at most 64 per tick, limited further by
+free ledger queue slots. This prevents a large restart replay from silently
+losing its tail or flooding the asynchronous writer. A missing old SQLite row
+can be filled by replay of the preserved Raft history; conflicting rows still
+raise an error. Verify the repaired export rather than clearing either store.
+
 `common_prefix_agrees` checks all indices up to the shortest captured history. `identical_complete_logs` additionally requires equal complete contents. `missing_indices` means the evidence lacks rows; `conflicts` means captured nodes disagree on an actual value at the same index. Preserve both histories when there is a conflict. Repeated identical console rows are deduplicated by comparison; exactly-once display and replay ordering still need their own test.
 
 The MCU export takes a fixed committed-end snapshot and releases the protocol

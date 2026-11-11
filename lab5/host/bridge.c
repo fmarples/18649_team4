@@ -17,6 +17,12 @@
 #define SYNC(f) fsync(fileno(f))
 #endif
 #define Q 2048
+/* A single APPEND can confirm the entire saved prefix after restart. Applied
+ * notifications cannot share the smaller transport queue's loss policy.
+ * Each log index is applied once per host lifetime, so the configured maximum
+ * log length also bounds the total number of outstanding notifications. This
+ * storage is host/Pi-only; it does not consume Nucleo RAM. */
+#define APPLIED_Q L5_CAPACITY
 struct applied {
     uint16_t index, term;
     uint8_t event, replay;
@@ -30,7 +36,7 @@ struct host {
     FILE *file;
     struct l5_rpc tx[Q];
     unsigned head, tail;
-    struct applied applied[Q];
+    struct applied applied[APPLIED_Q];
     unsigned ah, at;
     unsigned dropped;
     unsigned entry_reads;
@@ -105,11 +111,11 @@ static void emit(void *v, const struct l5_rpc *m) {
 }
 static void applied(void *v, uint16_t i, struct l5_entry e, bool replay) {
     struct host *h = v;
-    if (h->ah - h->at >= Q) {
+    if (h->ah - h->at >= APPLIED_Q) {
         h->dropped++;
         return;
     }
-    h->applied[h->ah++ % Q] = (struct applied){i, e.term, e.event, replay};
+    h->applied[h->ah++ % APPLIED_Q] = (struct applied){i, e.term, e.event, replay};
 }
 API void *l5_host_new(unsigned id, unsigned leader, unsigned seed, unsigned capacity,
                       const char *path) {
@@ -176,7 +182,7 @@ API int l5_host_applied(void *v, uint16_t *p) {
     struct host *h = v;
     if (h->ah == h->at)
         return 0;
-    struct applied a = h->applied[h->at++ % Q];
+    struct applied a = h->applied[h->at++ % APPLIED_Q];
     p[0] = a.index;
     p[1] = a.term;
     p[2] = a.event;

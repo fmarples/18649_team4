@@ -112,9 +112,13 @@ class Node:
         while lib.l5_host_drain(self.ptr, p):
             yield bytes(p)
 
-    def applied(self):
+    def applied(self, limit=None):
+        if limit is not None and limit < 0:
+            raise ValueError("Applied notification limit must be nonnegative")
         p = (C.c_uint16 * 4)()
-        while lib.l5_host_applied(self.ptr, p):
+        count = 0
+        while (limit is None or count < limit) and lib.l5_host_applied(self.ptr, p):
+            count += 1
             yield tuple(p)
 
     def log(self):

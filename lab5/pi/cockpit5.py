@@ -211,7 +211,17 @@ class Cockpit5(Cockpit):
                     "RAFT_TX", f"bus={bus} id={can_id:03x} data={data.hex()}"
                 )
         sent_at = time.monotonic()
-        for index, term, event, replayed in self.agent.applied():
+        # Replay can confirm thousands of old entries in one receive call.
+        # Keep control work interleaved and leave notifications in the C queue
+        # until the asynchronous ledger has room. Its sole consumer can only
+        # increase this free-space budget while this producer submits rows.
+        delivery_limit = 64
+        if self.ledger and self.ledger.queue.maxsize > 0:
+            delivery_limit = min(
+                delivery_limit,
+                max(0, self.ledger.queue.maxsize - self.ledger.queue.qsize()),
+            )
+        for index, term, event, replayed in self.agent.applied(limit=delivery_limit):
             row = {
                 "index": index,
                 "term": term,

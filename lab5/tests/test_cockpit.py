@@ -89,6 +89,44 @@ class CockpitTests(unittest.TestCase):
         self.app.tick(0.001)
         self.assertFalse(self.app.agent.status["failed"])
 
+    def test_full_display_queue_leaves_commits_pending_until_space_exists(self):
+        pending = [(2, 1, 22, 1)]
+        queue = Queue(maxsize=1)
+        queue.put({"index": 1})
+
+        def applied(limit=None):
+            for _ in range(min(limit, len(pending))):
+                yield pending.pop(0)
+
+        def submit(row):
+            queue.put_nowait(row)
+            return True
+
+        self.app.ledger = SimpleNamespace(queue=queue, submit=submit)
+        with patch.object(self.app.agent, "applied", side_effect=applied):
+            self.app.tick(0.001)
+            self.assertEqual(len(pending), 1)
+            self.assertFalse(self.app.monitor.latched)
+            queue.get_nowait()
+            self.app.tick(0.002)
+            self.assertEqual(pending, [])
+            self.assertEqual(queue.get_nowait()["index"], 2)
+
+    def test_large_replay_is_interleaved_with_control_ticks(self):
+        pending = [(i, 1, 22, 1) for i in range(1, 131)]
+
+        def applied(limit=None):
+            for _ in range(min(limit, len(pending))):
+                yield pending.pop(0)
+
+        with patch.object(self.app.agent, "applied", side_effect=applied):
+            self.app.tick(0.001)
+            self.assertEqual(len(self.app.applied_events), 64)
+            self.app.tick(0.002)
+            self.assertEqual(len(self.app.applied_events), 128)
+            self.app.tick(0.003)
+        self.assertEqual([r["index"] for r in self.app.applied_events], list(range(1, 131)))
+
     def test_status_exposes_evidence_drops_and_ledger_lag(self):
         self.assertIsNone(json.loads(self.app.status()[7:])["evidence"]["ledger"])
         pending = Queue()
