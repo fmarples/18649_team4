@@ -69,6 +69,7 @@ def main():
     app = QtWidgets.QApplication([sys.argv[0]])
     log = SessionLog(args.log_dir)
     monitor = None
+    timing = None
     try:
         print('Course Windows wheel proxy launcher')
         print('Find the Pi address with: nmcli -g IP4.ADDRESS device show wlan0')
@@ -110,6 +111,11 @@ def main():
             window.send_socket = inputs
             window.connect_button.clicked.connect(inputs.reset)
             window.stop_button.clicked.connect(inputs.reset)
+            if args.lab5:
+                from windows.wheel_timing import WheelTimingPolicy, instrument_callbacks
+                timing = WheelTimingPolicy(log)
+                timing.start()
+                window.timing_callbacks = instrument_callbacks(window, log)
             window.setWindowTitle('Wheel proxy')
             print(f'Laptop {local_address} -> Pi {pi_address}, command UDP 8000')
             print('Clamp the wheel and keep hands clear; connect gives a short bump.')
@@ -144,6 +150,8 @@ def main():
         log.exception(*sys.exc_info())
         return 1
     finally:
+        if timing is not None:
+            timing.close()
         if monitor is not None:
             monitor.close()
         log.close()

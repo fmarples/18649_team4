@@ -1,6 +1,6 @@
 # Lab 5: Time and Consensus
 
-This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-module setup**. It starts from `lab3_can` revision `69c50d5`; the Lab 4 PCB branch is independent. All three nodes have joined, both Nucleos' A/B indicator checks passed, and complete saved histories agree through entry 2434 after repairing a Pi display-replay gap. Initial wheel input cleared error/hazards; intermittent input gaps, remaining fault cases and scope measurements are still open. See the [bring-up record](docs/BRINGUP_2026-11-10.md).
+This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-module setup**. It starts from `lab3_can` revision `69c50d5`; the Lab 4 PCB branch is independent. All three nodes have joined, both Nucleos' A/B indicator checks passed, and an N2-led two-cut run delivered a diagnostic event to all three saved histories, which agree through entry 3324. We repaired display replay, CAN reassembly and a flash-erase watchdog loop. Intermittent wheel-input gaps, the specified Pi-led route, remaining fault cases and scope measurements are still open. See the [bring-up record](docs/BRINGUP_2026-11-10.md).
 
 - [Shared writeup](https://docs.google.com/document/d/1kwUk9po3RsTd_NVpE4F1W3hu7zCnjiTFjznqT5k0Chc/edit)
 - [Must-dos](https://docs.google.com/document/d/1fM5APOAQwtd3XQw26Jg4HM-Opq8UdlKVwno77f8kpA0/edit)
