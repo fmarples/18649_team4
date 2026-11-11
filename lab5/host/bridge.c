@@ -41,6 +41,7 @@ struct host {
     unsigned dropped;
     unsigned entry_reads;
     int fail_write;
+    unsigned erase_calls;
     struct l5_agent agent;
     bool agent_enabled;
     struct l5_packet packets[Q];
@@ -77,6 +78,7 @@ static bool write_flash(void *v, uint32_t off, const void *p, size_t n) {
 }
 static bool erase_flash(void *v, unsigned bank) {
     struct host *h = v;
+    h->erase_calls++;
     if (h->fail_write == 0 || bank > 1)
         return false;
     if (h->fail_write > 0)
@@ -257,6 +259,8 @@ API unsigned l5_host_store_state(void *v, unsigned field) {
     case 1: return s->vote;
     case 2: return s->journal;
     case 3: return s->generation;
+    case 4: return s->used;
+    case 5: return ((struct host *)v)->erase_calls;
     default: return 0;
     }
 }

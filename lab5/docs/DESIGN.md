@@ -24,7 +24,11 @@ Direct presence expires at 60 ms; REPORT liveness at 66 ms allows one report int
 
 ## Persistent memory
 
-F401RE flash `0x08000000..0x0803ffff` is firmware (256 KiB maximum). Sectors 6 and 7, `0x08040000..0x0807ffff`, form two 128 KiB log banks. Each bank contains a header, term/vote journal and 30,000 four-byte term/event/CRC records. Bank activation is written last. Interrupted compaction leaves the previous bank readable. An invalid active record fails closed and requires diagnosis; tests do not claim word programming is physically atomic under power loss.
+F401RE flash `0x08000000..0x0803ffff` is firmware (256 KiB maximum). Sectors 6 and 7, `0x08040000..0x0807ffff`, form two 128 KiB log banks. Each bank contains a header, a 508-word term/vote journal and 32,256 four-byte record slots supporting up to 30,000 logical entries. Bank activation is written last. Interrupted compaction leaves the previous bank readable. An invalid record fails closed and requires diagnosis; tests do not claim word programming is physically atomic under power loss.
+
+Runtime log correction appends a CRC-protected rollback record (reserved event 254, retained length in the 16-bit field), then writes replacement entries to fresh slots. A bitmap and count tree map logical indices to retained physical records without copying the log into RAM. When the hard-state journal fills, subsequent term/vote updates use reserved events 240–243 in the record stream. Neither operation erases a sector at runtime. Boot maintenance reclaims obsolete records before application tasks and the watchdog start, preserving the current logical log, term and vote.
+
+The 2,256 extra physical slots provide finite headroom for metadata and discarded suffixes when the logical log is full. Exhaustion fails closed instead of erasing while running; a coordinated restart can reclaim that space. Existing banks are readable without clearing state. Older firmware cannot read the new metadata records: do not downgrade against an updated store. Corrupt/torn records still require diagnosis; this change addresses the observed erase/watchdog loop, not every possible power-loss mode.
 
 The Pi uses a file-backed equivalent of the journal, syncing writes before acknowledgments. A separate SQLite display ledger has a unique Raft-index key. Catch-up replays state, but already recorded display entries are not duplicated. A process crash between durable display insertion and console printing can omit a terminal line; the durable display history remains the source for checking exactly-once records. Restart does not clear either state file.
 
@@ -38,7 +42,7 @@ The 240 µs transfer delay is a planning value, **not measured**. Software RX qu
 
 This is an offline-checked implementation for bench bring-up, not a completed checkoff. In particular:
 
-- F401 single-bank flash programming/erase can stall execution. A conflicting suffix or exhausted term journal triggers bank compaction; its worst-case duration/watchdog effect is unmeasured. Do not claim the <1 s election or phase limits during compaction from these host tests.
+- F401 single-bank flash programming can still stall execution briefly. Runtime sector erase has been removed after reproducing an erase/watchdog reset loop on N3. Boot reclamation and large catch-up/replay can take time; the <1 s election and physical phase limits still require measurements. Do not equate recovery from the observed loop with a complete timing or power-interruption qualification.
 - Pi durable Raft writes are synchronous for consensus safety. Disk latency can delay its control loop; measure REF/PPS under live workload before accepting it. The display logger and optional network mirror are asynchronous, but that does not make Raft persistence asynchronous.
 - Debug/console queues are bounded and report drops; the console is not authoritative if output is lost. Dump the committed log while idle. No network-delivery guarantee exists after a queue overflow.
 - The report body broadly describes node failure; checkoff step 8 explicitly requires no error solely on an STM32-leader failure with a healthy cockpit. We implement the explicit checkoff behavior. Local isolation/test faults and missing/stale cockpit still enter error.

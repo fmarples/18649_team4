@@ -256,12 +256,12 @@ class RaftTests(unittest.TestCase):
             self.assertEqual(n.status["role"], 0)
             n.close()
 
-    def test_truncation_power_loss_keeps_previous_bank(self):
+    def test_failed_truncation_write_keeps_previous_log(self):
         self.c.nodes[1].request(3)
         self.c.run(200)
         n = self.c.nodes[2]
         before = lib.l5_host_store_length(n.ptr)
-        lib.l5_host_fail_write(n.ptr, 3)
+        lib.l5_host_fail_write(n.ptr, 0)
         self.assertFalse(lib.l5_host_truncate(n.ptr, 0))
         lib.l5_host_fail_write(n.ptr, -1)
         self.assertTrue(lib.l5_host_reopen(n.ptr))
