@@ -2,10 +2,14 @@
 
 This records software/build checks, not vehicle measurements or a completed checkoff. The implementation is ready for initial bench bring-up. The physical cases in `CHECKOFF.md` remain pending.
 
-**November 10 follow-up:** the suite now passes 92 tests. The display-replay
+**November 10 follow-up:** the suite now passes 97 tests. The display-replay
 repair is verified through entry 2434 on all three nodes. Per-bus RPC assembly
 passes the captured reconnect regression and is deployed on Pi/N2/N3; its
-live reconnection repeat remains pending. This page retains the November 9 baseline below;
+live reconnection repeat remains pending. Runtime flash erases were removed
+after a reproduced N3 watchdog loop; append-only suffix repair, journal spill,
+interrupted boot reclamation and physical-slot exhaustion are host-tested.
+The fix is deployed on all three nodes, whose saved histories agree through
+entry 3217. This page retains the November 9 baseline below;
 see the [bring-up record](BRINGUP_2026-11-10.md) for fixes, current image sizes,
 observations and unresolved hardware gates.
 

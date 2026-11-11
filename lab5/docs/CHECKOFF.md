@@ -31,6 +31,13 @@ record for the capture limits and tested software correction.
 
 Additional persistence check: preserve a log, reboot each node, and compare committed prefixes. Exercise conflicting uncommitted suffix recovery while scoping PPS and watching the watchdog. Host fault injection proves recovery ordering only under the modeled write boundary; real partial writes and flash stalls must be checked on the actual boards.
 
+November 10 storage update: before the planned two-cut test, N3 entered an
+erase/watchdog reset loop without an operator cut. The append-only repair
+fix is deployed on Pi/N2/N3 at revision 107269a; all three saved histories
+match through 3217, including the unchanged 2501-entry retained prefix.
+The two-cut test had not started during that failure. The recovery comparison
+does not sign off phase, election or physical power-loss timing.
+
 Capture formats: scope rising edges `signal,time_s` CSV on one timebase; Nucleo serial text; Pi `events.csv`; `candump -L` text. Run `tools/analyze.py` for summaries. A capture of CAN arrival times cannot replace a GPIO phase measurement. A bounded modeled clock correction cannot replace the handover scope trace.
 
 Integration evidence: use a separate named capture for the healthy baseline, each of the six single-link cut/restore runs, and the N1-off-B/N3-off-A bridge run. Record the cut/restore times, term, leader and committed graph before/after. Start the capture before pulling a jumper. On the Pi, its own disconnected interface cannot observe the remote segment; combine the capture with N2/N3 serial/network snapshots and endpoint behavior. A missing remote frame in the Pi capture alone does not prove failed relay. See [capture interpretation](INTEGRATION.md).
