@@ -2,10 +2,10 @@
 
 This records software/build checks, not vehicle measurements or a completed checkoff. The implementation is ready for initial bench bring-up. The physical cases in `CHECKOFF.md` remain pending.
 
-**November 10 follow-up:** the suite now passes 74 tests and both updated
-Nucleo builds were flashed. The last two tests cover per-node CAN indicators
-with matching Lab 5 traffic and reproduce the legacy-Pi flicker; they did not
-change the flashed images. This page retains the November 9 baseline below;
+**November 10 follow-up:** the suite now passes 92 tests. The display-replay
+repair is verified through entry 2434 on all three nodes. Per-bus RPC assembly
+passes the captured reconnect regression and is deployed on Pi/N2/N3; its
+live reconnection repeat remains pending. This page retains the November 9 baseline below;
 see the [bring-up record](BRINGUP_2026-11-10.md) for fixes, current image sizes,
 observations and unresolved hardware gates.
 
