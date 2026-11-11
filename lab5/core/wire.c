@@ -11,13 +11,14 @@ void l5_fragment(struct l5_wire *w, const struct l5_rpc *m, struct l5_packet out
         out[f].data[7] = l5_crc(out[f].data, 7);
     }
 }
-bool l5_assemble(struct l5_wire *w, const struct l5_packet *p, uint64_t now, struct l5_rpc *m) {
-    if (p->id < 0x410 || p->id > 0x43f || l5_crc(p->data, 7) != p->data[7]) {
+bool l5_assemble(struct l5_wire *w, unsigned bus, const struct l5_packet *p, uint64_t now,
+                 struct l5_rpc *m) {
+    if (bus > 1 || p->id < 0x410 || p->id > 0x43f || l5_crc(p->data, 7) != p->data[7]) {
         w->rejected++;
         return false;
     }
     uint8_t src = (p->id >> 4) & 3, dst = (p->id >> 2) & 3, f = p->id & 3, seq = p->data[0];
-    struct l5_rx_slot *s = &w->rx[src][dst];
+    struct l5_rx_slot *s = &w->rx[bus][src][dst];
     if (!s->seen || now - s->time_ms > 250 || (seq != s->seq && (uint8_t)(seq - s->seq) < 128)) {
         s->seq = seq;
         s->mask = 0;

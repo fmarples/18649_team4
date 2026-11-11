@@ -15,11 +15,14 @@ struct l5_rx_slot {
 };
 struct l5_wire {
     uint8_t seq;
-    struct l5_rx_slot rx[4][4];
+    /* A reconnecting bus can drain older queued frames after sequence wrap.
+     * Its assembly/sequence state must never suppress the healthy bus. */
+    struct l5_rx_slot rx[2][4][4];
     uint32_t rejected, duplicates;
 };
 void l5_fragment(struct l5_wire *, const struct l5_rpc *, struct l5_packet out[4]);
-bool l5_assemble(struct l5_wire *, const struct l5_packet *, uint64_t now_ms, struct l5_rpc *);
+bool l5_assemble(struct l5_wire *, unsigned bus, const struct l5_packet *, uint64_t now_ms,
+                 struct l5_rpc *);
 void l5_ref_pack(struct l5_packet *, uint8_t src, uint8_t cycle, uint16_t term, uint32_t time_us);
 bool l5_ref_unpack(const struct l5_packet *, uint8_t *src, uint8_t *cycle, uint16_t *term,
                    uint32_t *time_us);

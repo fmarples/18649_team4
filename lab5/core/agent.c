@@ -141,7 +141,7 @@ bool l5_agent_receive(struct l5_agent *a, unsigned bus, const struct l5_packet *
     }
     if (p->id >= 0x410 && p->id <= 0x43f) {
         struct l5_rpc m;
-        if (a->paused || !l5_assemble(a->wire, p, ms, &m) || m.src == a->raft->id)
+        if (a->paused || !l5_assemble(a->wire, bus, p, ms, &m) || m.src == a->raft->id)
             return true;
         if (m.type == L5_REPORT) {
             if ((m.flags & 2) && m.term >= a->raft->term)

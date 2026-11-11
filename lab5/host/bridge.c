@@ -276,12 +276,12 @@ API void l5_host_fragment(void *v, const uint8_t *p, uint8_t *out) {
         memcpy(out + i * 10 + 2, f[i].data, 8);
     }
 }
-API int l5_host_packet(void *v, unsigned id, const uint8_t *p, uint64_t ms, uint8_t *out) {
+API int l5_host_packet(void *v, unsigned bus, unsigned id, const uint8_t *p, uint64_t ms, uint8_t *out) {
     struct host *h = v;
     struct l5_packet f = {.id = (uint16_t)id};
     struct l5_rpc m;
     memcpy(f.data, p, 8);
-    if (!l5_assemble(&h->wire, &f, ms, &m))
+    if (!l5_assemble(&h->wire, bus, &f, ms, &m))
         return 0;
     l5_encode(&m, out);
     return 1;

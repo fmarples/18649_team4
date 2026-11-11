@@ -29,7 +29,7 @@ signatures = {
     "store_hardstate": ([P, U, U], C.c_int),
     "store_state": ([P, U], U),
     "fragment": ([P, B, B], None),
-    "packet": ([P, U, B, U64, B], C.c_int),
+    "packet": ([P, U, U, B, U64, B], C.c_int),
     "global": ([P, U64], U64),
     "ref": ([P, U, U, C.c_uint32, U64, U], C.c_int),
     "lead": ([P, U, U, U64], None),
@@ -140,11 +140,11 @@ class Node:
             for i in range(0, 40, 10)
         ]
 
-    def packet(self, can_id, data, ms):
+    def packet(self, can_id, data, ms, bus=0):
         if len(data) != 8:
             return None
         p = (C.c_uint8 * 24)()
-        if lib.l5_host_packet(self.ptr, can_id, buf(data), ms, p):
+        if lib.l5_host_packet(self.ptr, bus, can_id, buf(data), ms, p):
             return bytes(p)
         return None
 

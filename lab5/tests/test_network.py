@@ -10,6 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
 from native import Agent
+from test_core import crc
 
 
 class Network:
@@ -105,6 +106,32 @@ class NetworkTests(unittest.TestCase):
         self.n.run(400)
         self.agree()
         self.assertEqual(self.n.nodes[1].status["links"], 63)
+
+    def test_reconnecting_b_queue_cannot_remove_pi_heard_on_a(self):
+        self.n.close()
+        self.n = Network(leader=2)
+        self.n.run(1000)
+        self.agree()
+        before = self.n.nodes[2].status["commit"]
+        # Reproduce the capture's +127 stale sequence after B reconnection.
+        # The valid REPORT body describes the same healthy Pi; only its old
+        # transport sequence differs. A continues to deliver fresh reports.
+        last = {}
+        for _, src, bus, can_id, data in self.n.frames:
+            if src == 1 and bus == 1 and 0x410 <= can_id <= 0x413:
+                last[can_id] = data
+        self.assertEqual(len(last), 4)
+        for can_id, data in sorted(last.items()):
+            stale = bytearray(data)
+            stale[0] = (stale[0] + 127) & 255
+            stale[7] = crc(stale[:7])
+            self.n.deliver(2, 1, can_id, bytes(stale), self.n.now + 1)
+        self.n.run(200)
+        self.agree()
+        self.assertEqual(self.n.nodes[2].status["nodes"], 7)
+        self.assertEqual(self.n.nodes[2].status["links"], 63)
+        self.assertEqual(self.n.nodes[2].status["term"], 1)
+        self.assertEqual(self.n.nodes[2].status["commit"], before)
 
     def test_two_cut_hop_keeps_leader_and_clock(self):
         self.n.run(500)

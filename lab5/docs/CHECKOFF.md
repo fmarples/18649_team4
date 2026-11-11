@@ -19,10 +19,12 @@ Before these: confirm new GPIO wiring from `PINS.md`; boot both images; inspect 
 
 Latest Pi A/B evidence: all three histories agree on link DOWN/UP entries
 2367–2370, with N2 remaining leader in term 519. A whole-Pi DOWN/UP transition
-immediately after B reconnection still needs diagnosis; LEDs were tentatively
-reported correct. The Pi display export also lacks older entry 2201 because
-of a reproduced restart-replay queue overflow. Deploy the host/Pi fix and
-verify the complete durable prefix before claiming full history agreement.
+immediately after B reconnection has a reproduced receive-side cause: stale
+B frames blocked current A reports in shared assembly state. The per-bus fix
+passes host tests and capture replay; deployment and a live repeat remain.
+LEDs were tentatively reported correct. The separate display-replay fix is
+deployed: entry 2201 was recovered and fresh complete histories agree across
+all three nodes through 2434.
 Establish a healthy starting state before repeating cuts. See the bring-up
 record for the capture limits and tested software correction.
 
