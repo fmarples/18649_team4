@@ -21,7 +21,8 @@ Latest Pi A/B evidence: all three histories agree on link DOWN/UP entries
 2367–2370, with N2 remaining leader in term 519. A whole-Pi DOWN/UP transition
 immediately after B reconnection has a reproduced receive-side cause: stale
 B frames blocked current A reports in shared assembly state. The per-bus fix
-passes host tests and capture replay; deployment and a live repeat remain.
+passes host tests and capture replay and is flashed on N2/N3; the matching Pi
+update and a live repeat remain.
 LEDs were tentatively reported correct. The separate display-replay fix is
 deployed: entry 2201 was recovered and fresh complete histories agree across
 all three nodes through 2434.
