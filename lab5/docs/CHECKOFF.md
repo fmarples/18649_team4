@@ -38,6 +38,13 @@ match through 3217, including the unchanged 2501-entry retained prefix.
 The two-cut test had not started during that failure. The recovery comparison
 does not sign off phase, election or physical power-loss timing.
 
+The subsequent two-cut recording shows both Nucleos agreeing on graph
+`0x7/0x2d` and one `EVENT_N2` at index 3230, term 524. N2 is leader in this
+run. Pi saved-history/capture verification and restoration are pending;
+a brief cockpit-error pair and an earlier Pi down/up also require review.
+This partial result does not sign off the Pi-led route or scope skew in
+step 5.
+
 Capture formats: scope rising edges `signal,time_s` CSV on one timebase; Nucleo serial text; Pi `events.csv`; `candump -L` text. Run `tools/analyze.py` for summaries. A capture of CAN arrival times cannot replace a GPIO phase measurement. A bounded modeled clock correction cannot replace the handover scope trace.
 
 Integration evidence: use a separate named capture for the healthy baseline, each of the six single-link cut/restore runs, and the N1-off-B/N3-off-A bridge run. Record the cut/restore times, term, leader and committed graph before/after. Start the capture before pulling a jumper. On the Pi, its own disconnected interface cannot observe the remote segment; combine the capture with N2/N3 serial/network snapshots and endpoint behavior. A missing remote frame in the Pi capture alone does not prove failed relay. See [capture interpretation](INTEGRATION.md).
