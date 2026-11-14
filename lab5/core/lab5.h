@@ -79,7 +79,7 @@ struct l5_raft {
     struct l5_graph pending_graph;
     uint16_t term, length, commit, applied, next[4], match[4];
     uint8_t id, leader, vote, votes, role, prevotes;
-    bool failed, replaying, prevoting;
+    bool failed, replaying, prevoting, replay_frozen;
     uint32_t rng;
     uint16_t replay_until, event_wanted, event_committed[4];
     /* Count the Pi-acknowledged committed EVENT prefix incrementally. */
