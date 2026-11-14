@@ -18,7 +18,8 @@ class HostReplayTests(unittest.TestCase):
         for i in range(1, count + 1):
             node.receive(rpc(3, 1, 2, 1, prev=i - 1,
                              prev_term=1 if i > 1 else 0,
-                             index=i, entry_term=1, event=22, flags=1), i)
+                             index=i, entry_term=1, event=22, flags=1,
+                             commit=count), i)
             list(node.drain())
         node.receive(rpc(3, 1, 2, 1, prev=count, prev_term=1,
                          commit=count), count + 1)
