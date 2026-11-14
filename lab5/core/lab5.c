@@ -162,6 +162,7 @@ static bool follower(struct l5_raft *r, uint16_t term, uint8_t leader) {
          r->now_ms - r->last_leader_ms >= r->cfg.heartbeat_ms * r->cfg.missed_heartbeats)) {
         r->replaying = true;
         r->replay_until = r->applied;
+        r->replay_frozen = false;      /* new leader: boundary not set yet */
     }
     if (term > r->term && !hard(r, term, 0))
         return false;
@@ -543,13 +544,17 @@ void l5_receive(struct l5_raft *r, const struct l5_rpc *m, uint64_t now) {
                 }
             }
             if (ok) {
-                if (r->replaying && m->commit > r->replay_until)
-                    r->replay_until = m->commit;
+                if (r->replaying && !r->replay_frozen) {
+                    if (m->commit > r->replay_until)
+                        r->replay_until = m->commit;
+                    r->replay_frozen = true;
+                }
                 uint16_t commit = m->commit < matched ? m->commit : matched;
                 if (commit > r->commit) {
                     r->commit = commit;
                     apply(r);
-                }
+                } else if (r->replaying && r->applied >= r->replay_until)
+                    r->replaying = false;   /* nothing was missed: leave replay mode now */
             }
         }
         send(r, (struct l5_rpc){.type = L5_APPEND_REPLY,
