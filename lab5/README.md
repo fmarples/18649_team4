@@ -90,6 +90,28 @@ Nucleo shell commands: `lab5 network` (committed graph), `lab5 event` (request a
 
 For the Pi process, `SIGUSR1` requests one Lab 5 EVENT. `SIGRTMIN` and `SIGRTMIN+1` preserve test-button latch/clear semantics. The old Lab 3 GUI's bad-input injection uses different USR semantics; do not use those controls against this application. Keep the existing wheel proxy for normal input.
 
+### One-command bench start
+
+```sh
+python lab5/start.py      # or pythonw, which reports through a message box instead of a console
+python lab5/stop.py
+```
+
+**Start connects the wheel; keep hands clear and pedals released.** It starts
+the Pi boot service only if it is down (using the gitignored
+`lab3_demo/pi_sudo_password.txt`, or a prompt), opens the course wheel GUI in
+Lab 5 mode, then prints `READY` or `NOT READY` with the reason: no wheel input,
+a Nucleo not alive, no leader, a missing node or CAN link, or cockpit ERROR.
+The exit status is 0 only when ready. Running it again reuses the open GUI;
+`--restart` reopens it. Stop closes only the GUI that start opened and leaves
+the Pi service running, so the cluster then enters ERROR for lack of input.
+It needs the `wheelpi` SSH alias, `requirements-launcher.txt` and the course
+checkout beside this one. It does not deploy Pi files or flash firmware. Do
+not use the root `start.py` (Lab 2 bridge) or `lab3_demo/start.py` here.
+State and logs: `logs/lab5/session/state.json`, `launcher.log`, and a
+per-run folder with `proxy.log`; GUI input logs and crash reports stay in
+`logs/wheel-gui/`.
+
 The Windows launcher accepts `--lab5 --pi <Pi-address>` to open only the course
 wheel GUI and input recording, without the old Lab 3 test panel or Lab 2
 telemetry windows. Use the existing course-proxy Python environment with PyQt5

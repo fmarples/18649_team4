@@ -109,7 +109,8 @@ def ensure_ghub():
 
 
 # A ready file comes from the GUI only after the SDK reports a connected wheel.
-def launch_proxy(root, course, pi_address, ready, console):
+# `extra` adds launcher flags such as --lab5.
+def launch_proxy(root, course, pi_address, ready, console, extra=()):
     interpreter = course / '.venv' / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
     if not interpreter.is_file():
         raise RuntimeError(f'Course proxy Python environment missing: {interpreter}')
@@ -118,7 +119,7 @@ def launch_proxy(root, course, pi_address, ready, console):
     with console.open('a', encoding='utf-8') as log:
         process = subprocess.Popen([str(interpreter), '-u', '-X', 'faulthandler',
                                     str(root / 'windows/start_wheel_proxy.py'), '--pi', pi_address,
-                                    '--connect', '--ready-file', str(ready)],
+                                    '--connect', '--ready-file', str(ready), *extra],
                                    cwd=course, env=env, stdin=subprocess.DEVNULL,
                                    stdout=log, stderr=subprocess.STDOUT, **background_options())
     identity = {'pid': process.pid, 'created': psutil.Process(process.pid).create_time()}
