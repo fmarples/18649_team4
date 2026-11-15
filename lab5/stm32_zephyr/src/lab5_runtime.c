@@ -38,7 +38,7 @@ K_SEM_DEFINE(ready, 0, 1);
 K_MSGQ_DEFINE(applied_queue, 8, 128, 4);
 struct pps_row {
     uint64_t global, raw;
-    int64_t rate_ppb, correction;
+    int64_t rate_ppb, correction, phase_err;
     uint8_t node;
 };
 K_MSGQ_DEFINE(pps_queue, sizeof(struct pps_row), 4, 8);
@@ -194,6 +194,7 @@ uint64_t lab5_global_us(void) {
     k_mutex_unlock(&raft_lock);
     return t;
 }
+uint64_t global_gettime(void) { return lab5_global_us(); }
 bool lab5_error(void) {
     k_mutex_lock(&raft_lock, K_FOREVER);
     bool e = l5_agent_error(&agent, lab5_raw_us());
@@ -240,8 +241,12 @@ static void protocol_thread(void *a, void *b, void *c) {
             pulse_end = raw + 1000;
             gpio_pin_set_dt(&pps, 1);
             struct pps_row row = {
-                global, raw, (int64_t)((net_clock.rate - 1.0) * 1e9),
-                (int64_t)((raw - net_clock.local_anchor) * (net_clock.rate - 1.0)), raft.id};
+                .global = global,
+                .raw = raw,
+                .rate_ppb = (int64_t)((net_clock.rate - 1.0) * 1e9),
+                .correction = (int64_t)((raw - net_clock.local_anchor) * (net_clock.rate - 1.0)),
+                .phase_err = net_clock.last_error,
+                .node = raft.id};
             if (k_msgq_put(&pps_queue, &row, K_NO_WAIT))
                 log_drops++;
         }
@@ -271,9 +276,10 @@ static void log_thread(void *a, void *b, void *c) {
                    l5_event_name(row.event), row.replay);
         struct pps_row p;
         while (!k_msgq_get(&pps_queue, &p, K_NO_WAIT))
-            lab5_console_print("PPS node=%u global_us=%llu local_us=%llu rate_ppb=%lld correction_us=%lld\n",
+            lab5_console_print("PPS node=%u global_us=%llu local_us=%llu rate_ppb=%lld correction_us=%lld "
+                   "phase_err_us=%lld\n",
                    p.node, (unsigned long long)p.global, (unsigned long long)p.raw,
-                   (long long)p.rate_ppb, (long long)p.correction);
+                   (long long)p.rate_ppb, (long long)p.correction, (long long)p.phase_err);
         struct debug_row d;
         struct health_row h;
         for (unsigned i = 0; i < 4 && !k_msgq_get(&health_queue, &h, K_NO_WAIT); i++)
@@ -290,6 +296,35 @@ static void log_thread(void *a, void *b, void *c) {
     }
 }
 K_THREAD_DEFINE(log_tid, 1024, log_thread, NULL, NULL, NULL, 11, 0, 0);
+/* Part 6.3: periodically sample global_gettime() and report the drift error
+ * currently being corrected. Runs below the protocol and log threads. It does
+ * not wait on `ready` (a binary semaphore owned by protocol_thread); the start
+ * delay and the synced check cover startup instead. */
+static void drift_thread(void *a, void *b, void *c) {
+    ARG_UNUSED(a);
+    ARG_UNUSED(b);
+    ARG_UNUSED(c);
+    while (true) {
+        k_sleep(K_MSEC(1000));
+        uint64_t global = global_gettime(); /* takes raft_lock itself */
+        k_mutex_lock(&raft_lock, K_FOREVER);
+        bool synced = net_clock.synced;
+        uint64_t raw = lab5_raw_us();
+        int64_t phase_err = net_clock.last_error;
+        int64_t rate_ppb = (int64_t)((net_clock.rate - 1.0) * 1e9);
+        int64_t correction = (int64_t)((raw - net_clock.local_anchor) * (net_clock.rate - 1.0));
+        uint32_t samples = net_clock.samples;
+        uint8_t node = raft.id;
+        k_mutex_unlock(&raft_lock);
+        if (!synced)
+            continue;
+        lab5_console_print("DRIFT node=%u global_us=%llu phase_err_us=%lld rate_ppb=%lld "
+                           "correction_us=%lld samples=%u\n",
+                           node, (unsigned long long)global, (long long)phase_err,
+                           (long long)rate_ppb, (long long)correction, samples);
+    }
+}
+K_THREAD_DEFINE(drift_tid, 1536, drift_thread, NULL, NULL, NULL, 12, 0, 1000);
 static int network_cmd(const struct shell *sh, size_t argc, char **argv) {
     ARG_UNUSED(sh);
     ARG_UNUSED(argc);

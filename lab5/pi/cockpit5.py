@@ -254,14 +254,13 @@ class Cockpit5(Cockpit):
         if global_us // 1_000_000 != self.last_second:
             self.last_second = global_us // 1_000_000
             self.pps_until = now + 0.001
-            self.log.write(
-                "PPS",
-                f"global_us={global_us} local_us={raw} rate={self.agent.rate:.9f} correction_us={self.agent.correction(raw)}",
+            pps_line = (
+                f"global_us={global_us} local_us={raw} rate={self.agent.rate:.9f} "
+                f"correction_us={self.agent.correction(raw)} phase_err_us={self.agent.phase_error}"
             )
+            self.log.write("PPS", pps_line)
             if self.console:
-                self.console.write(
-                    f"PPS global_us={global_us} local_us={raw} rate={self.agent.rate:.9f} correction_us={self.agent.correction(raw)}"
-                )
+                self.console.write(f"PPS {pps_line}")
             if self.uplink:
                 self.uplink.status(
                     dict(

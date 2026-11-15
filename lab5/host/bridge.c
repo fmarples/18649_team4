@@ -301,6 +301,7 @@ API void l5_host_lead(void *v, unsigned src, unsigned term, uint64_t raw) {
     l5_clock_lead(&((struct host *)v)->clock, (uint8_t)src, (uint16_t)term, raw);
 }
 API double l5_host_rate(void *v) { return ((struct host *)v)->clock.rate; }
+API int64_t l5_host_phase_error(void *v) { return ((struct host *)v)->clock.last_error; }
 API unsigned l5_host_clock_samples(void *v) { return ((struct host *)v)->clock.samples; }
 API int64_t l5_host_correction(void *v, uint64_t raw) {
     struct l5_clock *c = &((struct host *)v)->clock;

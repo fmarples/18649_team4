@@ -513,7 +513,7 @@ static void blink_thread(void *a, void *b, void *c) {
         bool paused = hb_silenced;
         k_mutex_unlock(&state_lock);
         lab5_pause(paused);
-        uint64_t global = lab5_global_us();
+        uint64_t global = global_gettime();
         uint32_t half_period = error ? 1000000U / (2U * lab5_hazard_hz()) : 500000U;
         bool phase = ((global / half_period) & 1U) == 0;
         if (error)

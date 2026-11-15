@@ -36,6 +36,7 @@ signatures = {
     "rate": ([P], C.c_double),
     "clock_samples": ([P], U),
     "correction": ([P, U64], C.c_int64),
+    "phase_error": ([P], C.c_int64),
     "queue_delay": ([P, U], None),
     "route": ([P, U, U, C.POINTER(U)], C.c_int),
     "agent_enable": ([P, U], None),
@@ -160,6 +161,10 @@ class Node:
     @property
     def rate(self):
         return float(lib.l5_host_rate(self.ptr))
+
+    @property
+    def phase_error(self):
+        return int(lib.l5_host_phase_error(self.ptr))
 
     def route(self, dst):
         b = U()
