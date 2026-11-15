@@ -188,6 +188,47 @@ class RaftTests(unittest.TestCase):
         self.c.agree(self)
         self.assertNotIn(3, [e for _, _, e in self.c.nodes[leader].log()])
 
+    def test_suffix_repair_does_not_reread_the_committed_log(self):
+        # A follower that re-read every entry here went deaf for hundreds of
+        # milliseconds on a 13,000-entry flash log and forced another election.
+        self.c.run(200)
+        for i in range(150):
+            self.c.nodes[1].request(7 if i % 2 == 0 else 8)  # NODE_3_UP / NODE_3_DOWN
+            self.c.run(30)
+        committed = self.c.nodes[1].status["commit"]
+        self.assertGreater(committed, 140)
+        self.c.edges = {(2, 3), (3, 2)}
+        self.c.nodes[1].request(3)  # stranded on the cut-off old leader
+        self.c.run(400)
+        leader = next(i for i in (2, 3) if self.c.nodes[i].status["role"] == 2)
+        self.c.nodes[leader].request(5)
+        self.c.run(200)
+        before = self.c.nodes[1].status["entry_reads"]
+        self.c.edges = {(a, b) for a in (1, 2, 3) for b in (1, 2, 3) if a != b}
+        self.c.run(500)
+        repair_reads = self.c.nodes[1].status["entry_reads"] - before
+        self.c.agree(self)  # reads every entry itself, so count before it
+        self.assertLess(repair_reads, 60)
+
+    def test_held_event_count_reads_nothing_from_the_log(self):
+        # A new STM32 leader used to count held events by reading every entry
+        # the moment the returning Pi acknowledged its log: about 300 ms deaf
+        # on a 13,000-entry flash log, long enough for the other node to depose it.
+        self.c.run(200)
+        for i in range(150):
+            self.c.nodes[1].request(7 if i % 2 == 0 else 8)
+            self.c.run(30)
+        self.c.edges = {(2, 3), (3, 2)}
+        self.c.run(400)
+        leader = next(i for i in (2, 3) if self.c.nodes[i].status["role"] == 2)
+        node = self.c.nodes[leader]
+        self.c.edges = {(a, b) for a in (1, 2, 3) for b in (1, 2, 3) if a != b}
+        self.c.run(300)  # node 1 rejoins and acknowledges the whole log
+        self.assertEqual(node.status["role"], 2)
+        before = node.status["entry_reads"]
+        self.assertEqual(lib.l5_host_held_events(node.ptr), 0)  # no user events exist
+        self.assertEqual(node.status["entry_reads"], before)
+
     def test_lost_messages_eventually_catch_up(self):
         self.c.loss = 0.2
         self.c.run(300)

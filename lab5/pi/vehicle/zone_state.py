@@ -8,7 +8,10 @@ from dataclasses import dataclass, field
 HB_PERIOD_S = 0.020
 ZONE_FAIL_S = 0.066  # R4.5: three missed heartbeats at the +10 % period, 3 x 22 ms
 BUS_SILENT_S = 0.060  # R4.7: three heartbeat periods without traffic / heartbeats
-UDP_FAIL_S = 0.100  # Lab 1 cockpit zone: no UDP update for 100 ms -> N1 failed
+# No wheel update for this long fails N1. Lab 1 sets 100 ms; for Lab 5 the user
+# chose 250 ms on November 16 because Wi-Fi delivers wheel packets in bursts
+# 100-150 ms apart on this bench (lab5/docs/CHECKOFF.md). lab3_demo keeps 100 ms.
+UDP_FAIL_S = 0.250
 ZONES = (1, 2, 3)
 
 

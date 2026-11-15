@@ -190,8 +190,10 @@ static void apply(struct l5_raft *r) {
         }
         ++r->applied;
         l5_apply(&r->graph, e.event);
-        if (e.event >= L5_USER_EVENT_BASE)
+        if (e.event >= L5_USER_EVENT_BASE) {
             r->event_committed[e.event - L5_USER_EVENT_BASE + 1]++;
+            r->event_index[r->event_next++ % L5_EVENT_RING] = r->applied;
+        }
         if (r->io.applied)
             r->io.applied(r->io.ctx, r->applied, e, r->replaying);
     }
@@ -233,9 +235,13 @@ static void become_leader(struct l5_raft *r) {
     /* Current-term barrier commits any preceding entries from older leaders. */
     (void)l5_propose(r, L5_NOOP);
 }
+/* Pending graph = applied graph plus every entry after it. A truncation never
+ * reaches below the commit index, so only the unapplied tail is re-read; a
+ * full re-read of a long flash log stalls the node past an election timeout.
+ * At init nothing is applied yet, so this reads the whole log once. */
 static bool rebuild_pending_graph(struct l5_raft *r) {
-    struct l5_graph pending = {0};
-    for (uint16_t i = 1; i <= r->length; i++) {
+    struct l5_graph pending = r->graph;
+    for (uint16_t i = r->applied + 1; i <= r->length; i++) {
         struct l5_entry e;
         if (!r->io.read(r->io.ctx, i, &e)) {
             r->failed = true;
@@ -295,28 +301,21 @@ static void client_event(struct l5_raft *r, uint8_t src, uint32_t serial) {
     if (serial == (uint32_t)count + 1)
         (void)l5_propose(r, L5_USER_EVENT_BASE + src - 1);
 }
+/* Committed user events the Pi has not acknowledged, for a non-Pi leader.
+ * Uses the applied events' remembered indices and never reads the log: a new
+ * leader starts the Pi's acknowledgement at zero, and counting by re-reading
+ * every entry up to the Pi's first reply stalled the MCU past an election
+ * timeout on a long flash log. With more than L5_EVENT_RING events all still
+ * unacknowledged, the older ones cannot be placed and all are reported held. */
 uint16_t l5_held_events(struct l5_raft *r) {
     if (r->role != L5_LEADER || r->id == 1)
         return 0;
     uint16_t matched = r->match[1] < r->commit ? r->match[1] : r->commit;
-    if (matched < r->held_match) {
-        /* A new leadership term starts peer acknowledgement at zero. */
-        r->held_match = 0;
-        r->held_acked_events = 0;
-    }
-    for (uint16_t i = r->held_match + 1; i <= matched; i++) {
-        struct l5_entry e;
-        if (!r->io.read(r->io.ctx, i, &e)) {
-            r->failed = true;
-            return 0;
-        }
-        r->held_acked_events += e.event >= L5_USER_EVENT_BASE;
-        r->held_match = i;
-    }
-    /* Applied committed entries are immutable. Do not rescan the full backlog
-     * every 20 ms while the Pi is absent; that starves the MCU's lower tasks. */
-    return r->event_committed[1] + r->event_committed[2] + r->event_committed[3] -
-           r->held_acked_events;
+    uint16_t total = r->event_committed[1] + r->event_committed[2] + r->event_committed[3];
+    uint16_t stored = total < L5_EVENT_RING ? total : L5_EVENT_RING, held = 0;
+    for (uint16_t k = 0; k < stored; k++)
+        held += r->event_index[k] > matched;
+    return held == stored ? total : held;
 }
 bool l5_user_event(struct l5_raft *r) {
     if (r->failed || !r->leader || r->replaying)

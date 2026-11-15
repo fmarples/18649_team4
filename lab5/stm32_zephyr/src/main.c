@@ -195,18 +195,30 @@ static void lab5_tx_thread(void *bus_arg, void *b, void *c) {
     struct lab5_tx_item item;
     while (true) {
         k_msgq_get(bus ? &lab5_tx_b : &lab5_tx_a, &item, K_FOREVER);
-        /* Account for our software queue residence in REF. Controller queue,
-         * SPI and interrupt latency still need scope characterization. */
-        if (item.frame.id >= 0x81 && item.frame.id <= 0x83) {
-            uint32_t t = 0;
-            for (unsigned i = 0; i < 4; i++)
-                t |= (uint32_t)item.frame.data[3 + i] << (8 * i);
-            t += (uint32_t)(lab5_raw_us() - item.queued_us);
+        if (item.frame.id < 0x81 || item.frame.id > 0x83) {
+            if (submit(bus, &item.frame, K_MSEC(2)) != 0)
+                atomic_inc(&tx_rejected[bus]);
+            continue;
+        }
+        /* REF carries the time it is handed to the controller: add our queue
+         * residence, and stamp again on every attempt so a wait for a free
+         * transmit buffer is counted too. Frames already in the controller,
+         * SPI and the wire are covered by the fixed can_delay_us. */
+        uint32_t stamp = 0;
+        for (unsigned i = 0; i < 4; i++)
+            stamp |= (uint32_t)item.frame.data[3 + i] << (8 * i);
+        uint64_t started = lab5_raw_us();
+        int rc;
+        do {
+            uint32_t t = stamp + (uint32_t)(lab5_raw_us() - item.queued_us);
             for (unsigned i = 0; i < 4; i++)
                 item.frame.data[3 + i] = (uint8_t)(t >> (8 * i));
             lab3_seal(&item.frame);
-        }
-        if (submit(bus, &item.frame, K_MSEC(2)) != 0)
+            rc = submit(bus, &item.frame, K_NO_WAIT);
+            if (rc == -EAGAIN)
+                k_sleep(K_USEC(100));
+        } while (rc == -EAGAIN && lab5_raw_us() - started < 2000);
+        if (rc != 0)
             atomic_inc(&tx_rejected[bus]);
     }
 }

@@ -79,9 +79,27 @@ class CockpitTests(unittest.TestCase):
             self.step(1)
         self.assertFalse(self.app.error)
         self.assertEqual(self.app.agent.status["cockpit_ok"], 1)
-        self.step(250)
+        self.step(500)
         self.assertTrue(self.app.error)
         self.assertEqual(self.app.agent.status["cockpit_ok"], 0)
+
+    def test_wheel_input_gap_of_200_ms_is_tolerated_and_300_ms_is_not(self):
+        # Wi-Fi delivers wheel packets in bursts 100-150 ms apart on this bench.
+        def feed(count):
+            for i in range(count):
+                self.app.last_udp = (i, self.now)
+                self.app.monitor.udp(self.now)
+                self.step(1)
+
+        self.step(400)
+        self.app.latest = (0, 0, 0, 0)
+        feed(100)
+        self.step(200)
+        self.assertFalse(self.app.error)
+        self.assertEqual(self.app.agent.status["cockpit_ok"], 1)
+        feed(50)
+        self.step(300)
+        self.assertTrue(self.app.error)
 
     def test_malformed_can_does_not_crash(self):
         self.app.on_frame(
@@ -168,6 +186,46 @@ class CockpitTests(unittest.TestCase):
             self.assertTrue(valid(bytes(ref.data)))
             self.assertEqual(int.from_bytes(ref.data[3:7], "little"), 6000)
 
+    def test_frame_age_uses_kernel_receive_time_not_delivery_time(self):
+        # The receive thread can deliver a frame milliseconds after the kernel
+        # stamped it; a relayed REF must be corrected for that whole wait.
+        def frame(stamp):
+            return can.Message(arbitration_id=0x82, is_extended_id=False,
+                               data=bytes(8), timestamp=stamp)
+
+        with patch("cockpit5.time.time", return_value=1000.0), \
+                patch("cockpit5.time.monotonic", return_value=50.0):
+            self.app.on_frame(frame(999.997), 0, 50.0)   # stamped 3 ms before delivery
+            self.app.on_frame(frame(0.0), 0, 50.0)       # no kernel stamp (fake bus)
+            self.app.on_frame(frame(1000.5), 0, 50.0)    # stamp ahead of the clock
+        received = [self.app.rx.get_nowait()[2] for _ in range(3)]
+        self.assertAlmostEqual(received[0], 49.997, places=6)
+        self.assertEqual(received[1:], [50.0, 50.0])
+
+    def test_ref_leaves_on_the_priority_sockets_only(self):
+        frames = [[], []]
+        self.app.ref_tx = [SimpleNamespace(send=frames[b].append) for b in range(2)]
+        for _ in range(60):
+            self.now += 0.001
+            self.app.tick(self.now)
+        for b, bus in enumerate(self.buses):
+            self.assertFalse([m for m in bus.sent if m.arbitration_id == 0x81])
+            self.assertTrue(bus.sent)  # everything else still uses the ordinary bus
+            can_id, dlc, data = struct.unpack("=IB3x8s", frames[b][0])
+            self.assertEqual((can_id, dlc), (0x81, 8))
+            self.assertTrue(valid(data))
+
+    def test_local_echo_of_a_ref_is_not_treated_as_bus_traffic(self):
+        def frame(can_id, is_rx):
+            return can.Message(arbitration_id=can_id, is_extended_id=False,
+                               data=bytes(8), is_rx=is_rx)
+
+        self.app.on_frame(frame(0x82, False), 1, 1.0)  # our own relayed REF, looped back
+        self.assertTrue(self.app.rx.empty())
+        self.app.on_frame(frame(0x82, True), 1, 1.0)   # the same ID arriving from the wire
+        self.app.on_frame(frame(0x100, False), 1, 1.0)  # other local frames are unchanged
+        self.assertEqual(self.app.rx.qsize(), 2)
+
     def test_periodic_status_uses_background_console(self):
         self.app.console = SimpleNamespace(write=Mock(), dropped=0)
         stop = Mock()
@@ -206,11 +264,11 @@ class CockpitTests(unittest.TestCase):
             self.step(1)
         self.assertFalse(self.app.error)
         self.app.log.write = Mock()
-        self.step(250)
+        self.step(400)
         rows = [c for c in self.app.log.write.call_args_list if c.args[0] == "STATE_CAUSE"]
         self.assertTrue(rows)
         cause = json.loads(rows[0].args[1])
-        self.assertGreaterEqual(cause["udp_age_ms"], 100)
+        self.assertGreaterEqual(cause["udp_age_ms"], 250)
         self.assertFalse(cause["latched"])
         self.assertFalse(cause["no_controls"])
         self.assertTrue(cause["agent_error"])

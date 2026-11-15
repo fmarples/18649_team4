@@ -9,5 +9,5 @@
   "log_size": 30000,
   "seed": 649,
   "Debug": true,
-  "can_delay_us": 240
+  "can_delay_us": 1130
 }

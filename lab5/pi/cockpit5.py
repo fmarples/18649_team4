@@ -14,6 +14,7 @@ from pathlib import Path
 import queue
 import signal
 import socket
+import struct
 import sys
 import threading
 import time
@@ -25,6 +26,7 @@ import can
 from vehicle import can_protocol as p
 from vehicle.cockpit import Cockpit, EventLog, run, _BusListener, MIN_INTERVAL_S
 from vehicle.pi_gpio import NoGpio, PiGpio, PINS
+from vehicle.zone_state import UDP_FAIL_S
 from native import Agent
 from generate_config import load
 from ledger import Ledger, Console
@@ -32,6 +34,19 @@ from can_outbox import CanOutbox
 
 PPS, LEADER, SYNC, REF_RX = 16, 20, 21, 26
 NEW_PINS = (PPS, LEADER, SYNC, REF_RX)
+YIELD = getattr(os, "sched_yield", lambda: None)  # Linux only; a no-op on a Windows test host
+
+
+# Send-only CAN socket for REF. The interface's default pfifo_fast queue sends
+# priority 6 ahead of ordinary frames, so a REF stamped just before send() is
+# not held behind a burst already queued in the kernel.
+def priority_socket(channel):
+    sock = socket.socket(socket.AF_CAN, socket.SOCK_RAW, socket.CAN_RAW)
+    sock.setsockopt(socket.SOL_CAN_RAW, socket.CAN_RAW_FILTER, b"")  # receive nothing
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_PRIORITY, 6)
+    sock.setblocking(False)
+    sock.bind((channel,))
+    return sock
 
 
 class Lab5NoGpio(NoGpio):
@@ -114,12 +129,21 @@ class Cockpit5(Cockpit):
         self.pending_event = False
         self.uplink, self.offsets = uplink, offsets or {}
         self.protocol_tx = [CanOutbox(), CanOutbox()]
+        self.ref_tx = None  # main() sets one priority_socket per bus
 
     def raw_us(self, now):
         return max(0, round((now - self.epoch) * 1_000_000))
 
     def on_frame(self, msg, bus, now):
         # Notifier threads only timestamp/enqueue; one main-loop owner runs C.
+        # A notifier can wait milliseconds for the interpreter while the main
+        # loop works, so date the frame from SocketCAN's own receive stamp.
+        # A fake bus has none; then keep the delivery time.
+        if not msg.is_rx and 0x81 <= msg.arbitration_id <= 0x83:
+            return  # our own REF, looped back from the priority socket
+        age = time.time() - msg.timestamp
+        if 0 <= age < 0.1:
+            now = time.monotonic() - age
         try:
             self.rx.put_nowait((msg, bus, now))
         except queue.Full:
@@ -152,7 +176,13 @@ class Cockpit5(Cockpit):
         )
 
     def _send_protocol_now(self, bus, can_id, data):
-        self._send_now(bus, can_id, data)
+        if self.ref_tx and 0x81 <= can_id <= 0x83:
+            self.gpio.can_tx(bus)
+            self.ref_tx[bus].send(struct.pack("=IB3x8s", can_id, 8, data))
+            # Let the CAN driver's worker run now instead of after this tick.
+            YIELD()
+        else:
+            self._send_now(bus, can_id, data)
         if self.config["debug"]:
             self.log.write("RAFT_TX", f"bus={bus} id={can_id:03x} data={data.hex()}")
 
@@ -210,7 +240,7 @@ class Cockpit5(Cockpit):
             if self.agent.clock_samples != samples:
                 self.gpio.ref_rx()
         received_at = time.monotonic()
-        udp_ok = self.last_udp is not None and now - self.last_udp[1] < 0.100
+        udp_ok = self.last_udp is not None and now - self.last_udp[1] < UDP_FAIL_S
         self.agent.update(raw, udp_ok and not self.monitor.latched, self.hb_silenced)
         if self.pending_event:
             self.pending_event = False
@@ -419,6 +449,7 @@ def main(argv=None):
         uplink,
         offsets,
     )
+    app.ref_tx = [priority_socket(x) for x in (args.bus_a, args.bus_b)]
     notifiers = [can.Notifier(b, [_BusListener(app, i)]) for i, b in enumerate(buses)]
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp.setblocking(False)
@@ -437,6 +468,8 @@ def main(argv=None):
             n.stop()
         for b in buses:
             b.shutdown()
+        for sock in app.ref_tx:
+            sock.close()
         gpio.close()
         app.agent.close()
         log.close()

@@ -112,6 +112,34 @@ State and logs: `logs/lab5/session/state.json`, `launcher.log`, and a
 per-run folder with `proxy.log`; GUI input logs and crash reports stay in
 `logs/wheel-gui/`.
 
+### Pristine cold start (erases all three histories)
+
+```sh
+<zephyr-venv>/python lab5/pristine.py      # asks you to type WIPE; --yes skips the prompt
+```
+
+Checkoff step 1 needs every node to boot in term 1 with the Pi leading. The
+firmware does that only on an empty store, so this backs up and erases all
+three: flash sectors 6–7 on each Nucleo (firmware untouched) and the Pi's
+`raft.bin` and `display.sqlite`. **Both Nucleos reset; wheels can move.**
+Nothing is erased until every backup is on the laptop and verified. If a step
+fails, the Pi service is restarted and the Nucleos released, so the cluster
+re-forms from the histories that remain.
+
+**Start order matters.** An empty Nucleo that cannot hear the Pi elects a
+leader within about 100 ms, and the Pi takes far longer than that to boot. The
+script therefore holds both Nucleos halted, starts the Pi service, waits until
+it leads term 1, then releases them. The same applies to a hand power-up of a
+wiped cluster: bring the Pi up first. Once any election has happened the
+stores are no longer empty and step 1 needs another wipe.
+
+It needs pyOCD with the STM32F401RE pack (the Zephyr venv has both), both
+ST-LINKs on USB and the `wheelpi` alias. Backups and `pristine.log` go to
+`logs/lab5/pristine/<time>/`; the Pi keeps a second copy in
+`~/.local/state/team4-lab5/pristine-backup-<time>/`. On November 16 the probe,
+readback, Pi backup and status paths were checked against the live bench
+without halting anything; the erase and reset have not been run yet.
+
 The Windows launcher accepts `--lab5 --pi <Pi-address>` to open only the course
 wheel GUI and input recording, without the old Lab 3 test panel or Lab 2
 telemetry windows. Use the existing course-proxy Python environment with PyQt5

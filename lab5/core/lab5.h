@@ -71,6 +71,7 @@ struct l5_io {
     void (*send)(void *, const struct l5_rpc *);
     void (*applied)(void *, uint16_t index, struct l5_entry, bool replay);
 };
+#define L5_EVENT_RING 32
 struct l5_raft {
     struct l5_config cfg;
     struct l5_io io;
@@ -82,8 +83,8 @@ struct l5_raft {
     bool failed, replaying, prevoting, replay_frozen;
     uint32_t rng;
     uint16_t replay_until, event_wanted, event_committed[4];
-    /* Count the Pi-acknowledged committed EVENT prefix incrementally. */
-    uint16_t held_match, held_acked_events;
+    /* Log indices of the most recent applied user events, for l5_held_events(). */
+    uint16_t event_index[L5_EVENT_RING], event_next;
     uint64_t deadline_ms, next_append_ms, now_ms, last_leader_ms, next_event_ms;
 };
 bool l5_init(struct l5_raft *, uint8_t id, struct l5_config, struct l5_io, uint16_t persisted_term,
