@@ -104,8 +104,12 @@ bool l5_addLink(struct l5_raft *, uint8_t node, uint8_t bus);
 bool l5_dropLink(struct l5_raft *, uint8_t node, uint8_t bus);
 struct l5_graph l5_getNetwork(const struct l5_raft *);
 
+#define L5_RATE_MIN_SPAN_US 1000000u
+#define L5_RATE_HALF_SPAN_US 8000000u
 struct l5_clock {
     uint64_t local_anchor, global_anchor, last_local, last_master, last_return;
+    /* Frequency baseline start, and the later point that replaces it. */
+    uint64_t rate_local, rate_master, next_local, next_master;
     uint64_t epoch_hint;
     double rate;
     int64_t last_error;

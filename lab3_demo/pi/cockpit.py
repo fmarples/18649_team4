@@ -64,9 +64,11 @@ class EventLog:
         self.dropped = 0
         self._thread = None
         if path is not None:
-            self._file = open(path, "w", newline="", encoding="utf-8")
+            # Append: the boot service restarts in the same folder after a Pi reboot.
+            self._file = open(path, "a", newline="", encoding="utf-8")
             self._writer = csv.writer(self._file)
-            self._writer.writerow(self.FIELDS)
+            if self._file.tell() == 0:
+                self._writer.writerow(self.FIELDS)
             self._thread = threading.Thread(target=self._drain, name="event-log", daemon=True)
             self._thread.start()
 

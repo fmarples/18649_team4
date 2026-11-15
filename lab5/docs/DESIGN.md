@@ -34,7 +34,7 @@ The Pi uses a file-backed equivalent of the journal, syncing writes before ackno
 
 ## Time
 
-We use an affine raw-to-global map and the `(leader delta)/(follower raw delta)` frequency ratio. Later phase corrections are capped at 50 µs and global reads are monotonic. Initial synchronization may step; it is not a leader-handover measurement. New leaders preserve their synchronized clock. Nucleo CLOCK_REALTIME is updated on accepted references while raw cycle time stays independent.
+We use an affine raw-to-global map and the `(leader delta)/(follower raw delta)` frequency ratio, measured across a baseline that grows from 1 s and is then kept between 8 and 16 s. A single 20 ms REF interval is too short: arrival jitter there reads as thousands of ppm. Later phase corrections are capped at 50 µs and global reads are monotonic. Initial synchronization may step; it is not a leader-handover measurement. A new leader continues from its synchronized reading and then runs at its own raw rate; it does not keep its follower rate estimate. Nucleo CLOCK_REALTIME is updated on accepted references while raw cycle time stays independent.
 
 The 240 µs transfer delay is a planning value, **not measured**. Software RX queue residence, MCU REF TX queue residence and time spent in the Pi tick before sending REF are compensated. A Nucleo leader stamps its REF at enqueue time after any durable work. Controller arbitration, SPI/interrupt latency, SD/flash stalls and Linux scheduling still require observation. PPS/blink tasks sample global time every 200 µs. Consequently a 50 µs algorithmic correction does **not** prove a ≤100 µs physical edge disturbance.
 

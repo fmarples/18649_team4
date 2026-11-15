@@ -1,21 +1,21 @@
-"""Stop only the recorded demo session: the laptop synthetic sender and the Pi cockpit.
+"""Stop only the recorded demo session: the laptop synthetic sender and the Pi cockpit service.
 
     python lab3_demo/stop.py
 
-Identity is checked (sender create time and script path; cockpit command line)
-before signaling. Logs stay in the remote folder named in the archived state.
+The sender is identified by PID and create time before it is signaled. The Pi
+service is stopped and disabled, so it no longer starts at boot; start.py
+enables it again. Sudo uses the same password source as start.py. Logs stay in
+the remote folder named in the archived state.
 """
 import json
-import subprocess
 from pathlib import Path
 
 import psutil
 
-STATE_DIR = Path(__file__).resolve().parent.parent / "logs/lab3-can/demo"
-FLAGS = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+from pi_ssh import STATE_DIR, UNIT, remote_python, sudo, sudo_password
 
 
-def main():
+def main(password=None):
     state = json.loads((STATE_DIR / "state.json").read_text(encoding="utf-8"))
     (STATE_DIR / "stop.request").touch()
     if state.get("sender_pid"):
@@ -30,28 +30,19 @@ def main():
                 sender.wait(timeout=3)
         except psutil.NoSuchProcess:
             pass
-    code = f"""
-import json, os, signal, socket, time
-from pathlib import Path
-pid, script = {state['pid']!r}, {state['script']!r}
-proc = Path('/proc') / str(pid)
-if proc.exists() and script.encode() in (proc / 'cmdline').read_bytes().split(b'\\0'):
-    os.kill(pid, signal.SIGTERM)
-    end = time.monotonic() + 10
-    while proc.exists() and (proc / 'stat').read_text().split(') ', 1)[1].split()[0] != 'Z':
-        if time.monotonic() > end:
-            raise RuntimeError('cockpit did not stop')
-        time.sleep(0.1)
+    sudo(password or sudo_password(), f"systemctl disable --now {UNIT}")
+    result = remote_python(f"""
+import json, socket, subprocess
+active = subprocess.run(['systemctl', 'is-active', {UNIT!r}], capture_output=True, text=True).stdout.strip()
+assert active != 'active', active
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
     sock.bind(('0.0.0.0', 8000))
-print(json.dumps({{'stopped': pid, 'udp8000_free': True}}))
-"""
-    result = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", "wheelpi", "python3 -"],
-                            input=code.encode(), capture_output=True, creationflags=FLAGS, timeout=20)
-    (STATE_DIR / f"stop-{state['pid']}.log").write_bytes(result.stdout + result.stderr)
-    result.check_returncode()
-    (STATE_DIR / "state.json").rename(STATE_DIR / f"stopped-state-{state['pid']}.json")
-    print(result.stdout.decode().strip())
+print(json.dumps({{'stopped': {UNIT!r}, 'state': active, 'udp8000_free': True}}))
+""")
+    name = Path(state["remote"]).name
+    (STATE_DIR / f"stop-{name}.log").write_text(result, encoding="utf-8")
+    (STATE_DIR / "state.json").replace(STATE_DIR / f"stopped-state-{name}.json")
+    print(result.strip())
 
 
 if __name__ == "__main__":

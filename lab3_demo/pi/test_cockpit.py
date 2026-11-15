@@ -2,10 +2,12 @@
 import json
 import socket
 import struct
+import tempfile
 import threading
 import time
 import unittest
 import uuid
+from pathlib import Path
 from unittest import mock
 
 import can
@@ -329,6 +331,18 @@ class CockpitTests(unittest.TestCase):
         self.assertTrue(self.cockpit.on_udp(wheel(5000), 0.0))
         self.assertFalse(self.cockpit.on_udp(wheel(10), 0.02))
         self.assertTrue(self.cockpit.on_udp(wheel(10), 2.0))
+
+
+class EventLogTests(unittest.TestCase):
+    def test_restart_in_the_same_folder_keeps_earlier_rows(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "events.csv"
+            for event in ("BEFORE_REBOOT", "AFTER_REBOOT"):
+                log = EventLog(path)
+                log.write(event)
+                log.close()
+            rows = path.read_text(encoding="utf-8").splitlines()
+        self.assertEqual([row.split(",")[1] for row in rows], ["event", "BEFORE_REBOOT", "AFTER_REBOOT"])
 
 
 if __name__ == "__main__":

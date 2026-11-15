@@ -17,9 +17,13 @@ uint64_t l5_global(struct l5_clock *c, uint64_t raw) {
     c->last_return = t;
     return t;
 }
+/* Take over as time leader: global time continues from the current reading
+ * and then advances at this node's own raw rate. A follower's rate estimate
+ * is too noisy to keep; followers cannot track an error above their slew. */
 void l5_clock_lead(struct l5_clock *c, uint8_t id, uint16_t term, uint64_t raw) {
     c->global_anchor = l5_global(c, raw);
     c->local_anchor = raw;
+    c->rate = 1.0;
     c->leader = id;
     c->term = term;
     c->synced = true;
@@ -49,11 +53,29 @@ bool l5_clock_ref(struct l5_clock *c, uint8_t leader, uint16_t term, uint32_t lo
             c->rejected++;
             return false;
         }
-        double ratio = (double)(master - c->last_master) / (double)(raw - c->last_local);
-        /* Reject queue spikes from the frequency estimator, still phase-correct.
-         * This is a filter range, not a claim about oscillator specifications. */
-        if (ratio > 0.99 && ratio < 1.01)
-            c->rate = c->samples > 1 ? 0.9 * c->rate + 0.1 * ratio : ratio;
+        /* Measure frequency across seconds, not one 20 ms REF interval where
+         * arrival jitter swamps any real oscillator difference. The baseline
+         * start moves forward so it stays between one and two half-spans old. */
+        uint64_t span = raw - c->rate_local;
+        if (span >= L5_RATE_MIN_SPAN_US) {
+            double ratio = (double)(master - c->rate_master) / (double)span;
+            /* Reject a stalled baseline from the estimator, still phase-correct.
+             * This is a filter range, not a claim about oscillator specifications. */
+            if (ratio > 0.99 && ratio < 1.01)
+                c->rate = ratio;
+        }
+        if (span >= 2 * L5_RATE_HALF_SPAN_US) {
+            c->rate_local = c->next_local;
+            c->rate_master = c->next_master;
+            c->next_local = raw;
+            c->next_master = master;
+        } else if (span >= L5_RATE_HALF_SPAN_US && c->next_local == c->rate_local) {
+            c->next_local = raw;
+            c->next_master = master;
+        }
+    } else {
+        c->rate_local = c->next_local = raw;
+        c->rate_master = c->next_master = master;
     }
     c->last_error = (int64_t)master - (int64_t)predicted;
     if (!c->synced) {

@@ -9,6 +9,7 @@ This branch implements Lab 5 on the **Lab 3 Pi + two NUCLEO-F401RE + six CAN-mod
 - [Pin additions](docs/PINS.md), [checkoff matrix](docs/CHECKOFF.md), [offline verification](docs/VERIFICATION.md)
 - [Integration review and capture interpretation](docs/INTEGRATION.md)
 - [Working hardware-tested baseline and offline hazard correction](docs/HAZARD_REVIEW.md): firmware/Pi `107269a`, final Windows launcher `b693c57`. This setup works for the recorded normal-control, turn-signal, two-cut routing and saved-history checks. Newer queue/diagnostic changes are not hardware-tested; remaining bench verification is handed to Persons 2 and 3.
+- **Deployed November 16:** Pi and both Nucleos run `df259ad`; see [the deployment record](docs/VERIFICATION.md#november-16-deployment-of-df259ad). This includes the queue/diagnostic changes above, which have only had a no-wheel-input rejoin check on hardware.
 - [Optional cloud mirror](cloud/README.md): locally prepared; not deployed.
 
 ## What runs where
@@ -61,6 +62,29 @@ python3 lab5/pi/cockpit5.py --bus-a can0 --bus-b can1
 ```
 
 **The last command runs live control.** Use it during an authorized bench session after checking the wiring and stopping the old application. `--no-gpio` disables GPIO only; it still sends CAN commands. `--fifo 1` requests the team's previous FIFO scheduling setting and requires the appropriate permission; its benefit must be remeasured for Lab 5. State defaults to `~/.local/state/team4-lab5/` and is guarded against two N1 processes.
+
+### Pi boot service
+
+Since November 16 the Pi starts the cockpit at boot through
+`team4-lab5-cockpit.service` ([unit file](pi/team4-lab5-cockpit.service)).
+**Live control therefore starts whenever the Pi powers up.** The service runs
+the `~/18649_team4_lab5` checkout with the `~/.venvs/team4-lab5` Python, sets
+both CAN interfaces to 500 kbit/s, and uses no FIFO priority, matching the
+November 10 bench runs. The old `team4-lab3-cockpit.service` is disabled by the
+team's decision; do not run `lab3_demo/start.py` against this Pi, because it
+re-enables that service and the two units conflict.
+
+```sh
+sudo systemctl restart team4-lab5-cockpit.service   # after git pull and lab5/host/build.py
+sudo systemctl stop team4-lab5-cockpit.service      # release CAN, GPIO and UDP 8000
+pkill -USR1 -f cockpit5.py                          # request one Lab 5 EVENT
+tail -f ~/.local/state/team4-lab5/service.log       # STATUS/COMMIT/PPS lines and Python tracebacks
+```
+
+`service.log` is appended across restarts and is not rotated; it grows by
+roughly 180 MB per day. To install on a fresh Pi, copy the unit file to
+`/etc/systemd/system/`, create the state directory, then run
+`sudo systemctl daemon-reload` and `sudo systemctl enable --now team4-lab5-cockpit.service`.
 
 Nucleo shell commands: `lab5 network` (committed graph), `lab5 event` (request a diagnostic event), `lab5 log` (committed entries; use while idle). Pi `STATUS` lines show Raft/network state; `COMMIT` lines and `display.sqlite` contain the display history. The original wheel/proxy UDP format remains unchanged.
 

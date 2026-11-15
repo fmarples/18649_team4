@@ -146,7 +146,7 @@ is `windows/start_wheel_proxy.py --lab3`. The dialog covers:
 
 | Control | Does | Checkoff step |
 |---|---|---|
-| Start (Restart while running) / Stop, *Bench input* | `start.py [--restart]` / `stop.py`; uses the [local password file](#run-the-cockpit-pi), or asks for the Pi sudo password on each start and passes it on stdin only. Restart redeploys the current `pi/` code and keeps the session's bench setting. *Bench input* adds the laptop sender for use without the wheel | session |
+| Start (Restart while running) / Stop, *Bench input* | `start.py [--restart]` / `stop.py`; uses the [local password file](#run-the-cockpit-pi), or asks for the Pi sudo password on each start or stop and passes it on stdin only. Restart redeploys the current `pi/` code and keeps the session's bench setting. *Bench input* adds the laptop sender for use without the wheel | session |
 | ERR, DEG_A, DEG_B, N2, N3, LATCH lamps | N1's live state from the cockpit's per-second `STATUS` line | 1, 5–8 |
 | Pause bench input | Sender stops, as if the proxy stopped; every zone enters error | 1 |
 | Bus traffic (3 s candump) | Per-ID rate on can0/can1 and recent sequence nibbles | 2 |
@@ -154,8 +154,8 @@ is `windows/start_wheel_proxy.py --lab3`. The dialog covers:
 | Bad CTRL: throttle 101 / CRC | Next CTRL out of range, or with a bad CRC | 10 |
 
 The event pane streams state, degraded, FAULT, injection and TX-error events
-from the Pi. Signals go to the recorded cockpit PID only after checking its
-command line. GUI logs and crash reports go to `logs/wheel-gui/`. Don't run the
+from the Pi and reconnects after a Pi reboot. Signals go to the service's
+current main PID only after checking its command line. GUI logs and crash reports go to `logs/wheel-gui/`. Don't run the
 bench sender while the wheel window is connected and transmitting: the cockpit
 would then get two UDP streams.
 
@@ -171,20 +171,27 @@ python lab3_demo\stop.py
 ```
 
 `start.py` checks the can0=spi0.1 / can1=spi0.0 mapping and that GPIO
-5/6/12/17/22/23/27 are free. It brings both links up at 500 kbit/s with
-`restart-ms 50` (R4.8: bus-off recovery within 100 ms of restoration), taking down
-a link that is up with another restart time, copies `pi/` to a fresh
+5/6/12/17/22/23/27 are free, copies `pi/` to a fresh
 `~/.local/state/team4-lab3/demo-<id>/` folder and runs its tests there. It then
-starts `cockpit.py` detached and applies `chrt -a -f 1`, FIFO 1 as measured in
-Part 3, re-verified on every start. Ownership is recorded in
-`logs/lab3-can/demo/state.json` (ignored). The measurement bridge in
-`logs/lab3-can/pi-scope/` uses the same CAN links and GPIO lines, so run only one
-of the two sessions. Bad-input injection on the Pi:
+installs and enables the system service `team4-lab3-cockpit.service` for that
+folder. **The cockpit starts again after every Pi reboot** until `stop.py`
+disables it. Each service start brings both links up at 500 kbit/s with
+`restart-ms 50` (R4.8: bus-off recovery within 100 ms of restoration) and runs
+`cockpit.py` as `labuser` under FIFO 1 on all threads, as measured in Part 3;
+`start.py` verifies the policy. Ownership is recorded in
+`logs/lab3-can/demo/state.json` (ignored). After a reboot the folder's
+`stdout.log` and `events.csv` continue; `mono_s` restarts from the new boot.
+Verified October 27: after `systemctl reboot` the service came back with FIFO 1 on
+every thread, both links error-active with `restart-ms 50`, and N2/N3 alive.
+The measurement bridge in `logs/lab3-can/pi-scope/` and the Lab 2 root `start.py`
+bridge need the same CAN links, GPIO lines or UDP 8000, so run `stop.py` before
+either of them. Bad-input injection on the Pi:
 
 ```sh
-kill -USR1 <pid>   # next CTRL has throttle 101: N2/N3 enter error and send FAULT
-kill -USR2 <pid>   # next CTRL has a corrupted CRC
-kill -s RTMIN <pid>     # N1 test press (latch); RTMIN+1 clears every zone
+pid=$(systemctl show -p MainPID --value team4-lab3-cockpit)
+kill -USR1 $pid   # next CTRL has throttle 101: N2/N3 enter error and send FAULT
+kill -USR2 $pid   # next CTRL has a corrupted CRC
+kill -s RTMIN $pid     # N1 test press (latch); RTMIN+1 clears every zone
 ```
 
 The wheel A button is N1's test button; a single press latches and stops HB_N1,

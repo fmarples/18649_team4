@@ -1,0 +1,22 @@
+# Boot service for the Lab 5 Pi cockpit (N1). It runs the checkout in
+# ~/18649_team4_lab5 and keeps Raft/display state in ~/.local/state/team4-lab5.
+# Install and operating commands are in lab5/README.md ("Pi boot service").
+[Unit]
+Description=Team 4 Lab 5 N1 cockpit
+Requires=sys-subsystem-net-devices-can0.device sys-subsystem-net-devices-can1.device
+After=sys-subsystem-net-devices-can0.device sys-subsystem-net-devices-can1.device
+# Only one application may own CAN, GPIO and UDP 8000.
+Conflicts=team4-lab3-cockpit.service
+
+[Service]
+User=labuser
+WorkingDirectory=/home/labuser/18649_team4_lab5
+# systemd expands $$ to $ and runs ExecStartPre=+ as root; the cockpit runs as labuser.
+ExecStartPre=+/bin/sh -c 'for n in can0 can1; do ip link set $$n down && ip link set $$n type can bitrate 500000 restart-ms 50 && ip link set $$n up || exit 1; done'
+# The venv holds the pinned lab5/pi/requirements.txt packages used on the bench.
+ExecStart=/home/labuser/.venvs/team4-lab5/bin/python -u lab5/pi/cockpit5.py --bus-a can0 --bus-b can1
+StandardOutput=append:/home/labuser/.local/state/team4-lab5/service.log
+StandardError=append:/home/labuser/.local/state/team4-lab5/service.log
+
+[Install]
+WantedBy=multi-user.target

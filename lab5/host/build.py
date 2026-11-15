@@ -37,6 +37,9 @@ def build():
     ]
     if os.name != "nt":
         cmd += ["-fPIC"]
+    elif "gcc" in Path(cc[0]).stem:
+        # MinGW otherwise imports libgcc_s_seh-1.dll, which Python's DLL search does not find.
+        cmd += ["-static-libgcc"]
     cmd += [
         str(ROOT / "core" / x)
         for x in ("lab5.c", "clock.c", "store.c", "wire.c", "agent.c")

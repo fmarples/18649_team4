@@ -10,7 +10,7 @@ here over the passwordless `wheelpi` SSH alias, in worker threads:
 - live N1 state, degraded buses and FAULT/state events streamed from the
   session's stdout.log and events.csv
 - bad CTRL (throttle 101 / corrupted CRC), N1 test press and clear-all, sent as
-  signals to the recorded cockpit PID
+  signals to the cockpit service's current main PID (it changes on each Pi boot)
 - a 3 s candump of both buses with per-ID rates and recent sequence numbers
 - pausing the bench sender, which stands in for "proxy stopped"
 """
@@ -34,11 +34,13 @@ NAMES = {"010": "CTRL", "020": "FAULT", "100": "HB_N1", "101": "HB_N2", "102": "
          "200": "BLINK", "300": "FORCE"}
 BLINK_MODES = ("off", "left", "right", "hazard")
 CAPTURE_S = 3
-# Remote one-shot: signal the cockpit only if the PID still runs the recorded script.
-SIGNAL_CODE = """import os, signal, sys
-pid, script, name = {pid!r}, {script!r}, {name!r}
-if script.encode() not in open(f'/proc/{{pid}}/cmdline', 'rb').read().split(b'\\0'):
-    sys.exit('recorded PID is not the cockpit')
+# Remote one-shot: signal the service's main PID only if it runs the recorded script.
+SIGNAL_CODE = """import os, signal, subprocess, sys
+unit, script, name = {unit!r}, {script!r}, {name!r}
+pid = int(subprocess.run(['systemctl', 'show', '-p', 'MainPID', '--value', unit],
+                         capture_output=True, text=True).stdout)
+if not pid or script.encode() not in open(f'/proc/{{pid}}/cmdline', 'rb').read().split(b'\\0'):
+    sys.exit('cockpit service is not running the recorded script')
 os.kill(pid, {{'range': signal.SIGUSR1, 'crc': signal.SIGUSR2,
               'latch': signal.SIGRTMIN, 'clear': signal.SIGRTMIN + 1}}[name])
 """
@@ -46,7 +48,7 @@ os.kill(pid, {{'range': signal.SIGUSR1, 'crc': signal.SIGUSR2,
 
 def run(args, timeout, stdin_text=None):
     """subprocess.run without a console window; ssh never inherits stdin."""
-    return subprocess.run(args, input=stdin_text, stdin=None if stdin_text else subprocess.DEVNULL,
+    return subprocess.run(args, input=stdin_text or None, stdin=None if stdin_text else subprocess.DEVNULL,
                           capture_output=True, text=True, encoding="utf-8", errors="replace",
                           timeout=timeout, creationflags=FLAGS)
 
@@ -114,7 +116,7 @@ class Lab3Panel(QtCore.QObject):
         self.start_button = QtWidgets.QPushButton("Start")
         self.stop_button = QtWidgets.QPushButton("Stop")
         self.start_button.clicked.connect(self.start_session)
-        self.stop_button.clicked.connect(lambda: self._work("stop", self._stop))
+        self.stop_button.clicked.connect(self.stop_session)
         row.addWidget(self.session_label, 1)
         row.addWidget(self.bench)
         row.addWidget(self.start_button)
@@ -201,16 +203,21 @@ class Lab3Panel(QtCore.QObject):
             self.done.emit(action, ok, payload)
         threading.Thread(target=worker, name="lab3-" + action, daemon=True).start()
 
+    def _password_stdin(self, title):
+        """"" when start/stop.py can read the local password file, the typed password line,
+        or None if the user cancelled."""
+        if (HERE / "pi_sudo_password.txt").exists():
+            return ""
+        password, ok = QtWidgets.QInputDialog.getText(self.dialog, title, "Pi sudo password:",
+                                                      QtWidgets.QLineEdit.Password)
+        return password + "\n" if ok and password else None
+
     def start_session(self):
         """Start, or Restart a running session (deploying the current pi/ code)."""
         restart = self.state is not None
-        stdin_text = None  # start.py reads the local password file itself
-        if not (HERE / "pi_sudo_password.txt").exists():
-            password, ok = QtWidgets.QInputDialog.getText(self.dialog, "Restart cockpit" if restart else "Start cockpit",
-                                                          "Pi sudo password:", QtWidgets.QLineEdit.Password)
-            if not ok or not password:
-                return
-            stdin_text = password + "\n"
+        stdin_text = self._password_stdin("Restart cockpit" if restart else "Start cockpit")
+        if stdin_text is None:
+            return
         bench = self.state.get("synthetic", False) if restart else self.bench.isChecked()
         args = ([sys.executable, str(HERE / "start.py")] + (["--restart"] if restart else [])
                 + (["--synthetic"] if bench else []))
@@ -222,14 +229,16 @@ class Lab3Panel(QtCore.QObject):
         result = run(args, 180, stdin_text)
         return result.returncode == 0, (result.stdout + result.stderr).strip()
 
-    def _stop(self):
-        return self._script([sys.executable, str(HERE / "stop.py")])
+    def stop_session(self):
+        stdin_text = self._password_stdin("Stop cockpit")
+        if stdin_text is not None:
+            self._work("stop", lambda: self._script([sys.executable, str(HERE / "stop.py")], stdin_text))
 
     def _signal(self, name):
         state = session()
         if state is None:
             return False, "no cockpit session"
-        code = SIGNAL_CODE.format(pid=state["pid"], script=state["script"], name=name)
+        code = SIGNAL_CODE.format(unit=state["unit"], script=state["script"], name=name)
         result = run(SSH + ["python3 -"], 15, code)
         return result.returncode == 0, (result.stdout + result.stderr).strip() or "sent"
 
@@ -274,7 +283,9 @@ class Lab3Panel(QtCore.QObject):
     # ---- live state --------------------------------------------------------
     def _refresh(self):
         state = session()
-        if (state or {}).get("pid") != (self.state or {}).get("pid"):
+        # The ssh tail also ends when the Pi reboots or Wi-Fi drops; reconnect it.
+        stream_ended = self.stream is not None and self.stream.poll() is not None
+        if (state or {}).get("remote") != (self.state or {}).get("remote") or (state and stream_ended):
             self._restart_stream(state)
         self.state = state
         running = state is not None
@@ -285,9 +296,9 @@ class Lab3Panel(QtCore.QObject):
             self.pause.setChecked(False)
             self.pause.blockSignals(False)
         if running and not current:
-            self.session_label.setText(f"PID {state['pid']} runs older code: press Restart")
+            self.session_label.setText("Pi runs older code: press Restart")
         else:
-            self.session_label.setText(f"Running, PID {state['pid']}" + (", bench" if state.get("synthetic") else ", wheel")
+            self.session_label.setText("Enabled at boot" + (", bench" if state.get("synthetic") else ", wheel")
                                        if running else "Stopped")
         self.start_button.setText("Restart" if running else "Start")
         self.start_button.setEnabled("start" not in self.busy and "stop" not in self.busy)

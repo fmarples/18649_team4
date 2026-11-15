@@ -317,6 +317,30 @@ class WireClockTests(unittest.TestCase):
         self.b.lead(2, 3, 1020000)
         self.assertEqual(self.b.global_us(1020000), after)
 
+    def test_new_leader_runs_at_its_own_clock_rate(self):
+        # The old leader looked 0.25% fast to this follower (bench: Pi froze 1.002477).
+        for i in range(1, 200):
+            self.b.ref(1, 1, round(i * 20000 * 1.0025), i * 20000)
+        raw = 200 * 20000
+        self.b.lead(2, 2, raw)
+        start = self.b.global_us(raw)
+        self.assertEqual(self.b.global_us(raw + 1_000_000) - start, 1_000_000)
+
+    def test_follower_tracks_faster_master_despite_arrival_jitter(self):
+        # Bench: the Pi's raw clock runs about 2450 ppm faster than a Nucleo's.
+        # REFs arrive up to 300 us late, so the follower may lag by that much
+        # plus one 50 us correction step, and must still learn the true ratio.
+        rng = random.Random(1)
+        for i in range(1, 3000):
+            sent = i * 20000
+            self.b.ref(1, 1, round(sent * 1.00245) & 0xFFFFFFFF, sent + rng.randrange(300))
+            if i > 1500:
+                probe = sent + 10000
+                error = self.b.global_us(probe) - round(probe * 1.00245)
+                self.assertGreaterEqual(error, -350)
+                self.assertLessEqual(error, 50)
+                self.assertAlmostEqual(self.b.rate, 1.00245, delta=0.0003)
+
     def test_clock_wrap(self):
         self.b.ref(1, 1, 0xFFFF0000, 0xFFFF0000)
         for i in range(1, 10):
