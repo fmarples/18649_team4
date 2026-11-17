@@ -35,6 +35,7 @@ PROBES = {'124020': 'n2', '171333': 'n3'}  # ST-LINK serial ending -> node
 TARGET = 'stm32f401retx'
 STATE_START, STATE_SIZE = 0x08040000, 0x40000  # sectors 6-7; firmware is sectors 0-5
 FLASH_KIB_REGISTER, FLASH_KIB = 0x1FFF7A22, 512  # F401RE; a smaller part has no sector 7
+DBGMCU_APB1_FZ, IWDG_STOP = 0xE0042008, 1 << 12
 UNIT = 'team4-lab5-cockpit.service'
 PI_STATE = '.local/state/team4-lab5'
 PI_FILES = 'raft.bin display.sqlite display.sqlite-wal display.sqlite-shm cloud-ack.txt'
@@ -44,7 +45,7 @@ def sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
-# One Nucleo held at its reset vector, so neither firmware nor its watchdog runs until release().
+# One Nucleo held halted with its watchdog frozen, so its firmware does not run until release().
 class Nucleo:
     def __init__(self, node, unique_id):
         self.node, self.unique_id, self.session = node, unique_id, None
@@ -61,8 +62,18 @@ class Nucleo:
         self.session.open()
         target = self.session.target
         region = target.memory_map.get_region_for_address(STATE_START)
-        if target.get_state() != Target.State.HALTED:
-            raise RuntimeError(f'{self.node} did not halt at reset')
+        # Connecting under reset does not leave the core halted on these boards
+        # (seen on every backup on November 16-18). Halt it, and freeze the
+        # independent watchdog while halted (DBGMCU_APB1_FZ bit 12) so it
+        # cannot reset the MCU mid-read. A watchdog reset can land between
+        # the two, so retry.
+        for _ in range(5):
+            target.halt()
+            target.write32(DBGMCU_APB1_FZ, target.read32(DBGMCU_APB1_FZ) | IWDG_STOP)
+            if target.get_state() == Target.State.HALTED:
+                break
+        else:
+            raise RuntimeError(f'{self.node} did not halt')
         if target.read16(FLASH_KIB_REGISTER) != FLASH_KIB:
             raise RuntimeError(f'{self.node} is not a {FLASH_KIB} KiB part; refusing to erase')
         if not (region and region.is_flash and region.contains_range(STATE_START, length=STATE_SIZE)):

@@ -17,6 +17,9 @@ User=labuser
 CPUSchedulingPolicy=fifo
 CPUSchedulingPriority=1
 WorkingDirectory=/home/labuser/18649_team4_lab5
+# Optional cloud mirror (lab5/cloud/README.md): this private file, mode 600, sets
+# LAB5_CLOUD_URL and LAB5_UPLINK_TOKEN. Without it the cockpit runs with no uplink.
+EnvironmentFile=-/home/labuser/.config/team4-lab5/cloud.env
 # systemd expands $$ to $ and runs ExecStartPre=+ as root; the cockpit runs as labuser.
 ExecStartPre=+/bin/sh -c 'for n in can0 can1; do ip link set $$n down && ip link set $$n type can bitrate 500000 restart-ms 50 && ip link set $$n up || exit 1; done'
 # The venv holds the pinned lab5/pi/requirements.txt packages used on the bench.

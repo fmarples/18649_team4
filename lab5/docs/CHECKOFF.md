@@ -486,4 +486,198 @@ compiled into the firmware. Deployed; one clean NODE_1 set on restart. **Not
 yet measured.** 127 host tests pass. Uncommitted. Log at 18,454. Logs:
 ignored `logs/lab5/20261116-checkoff/run18-blink-fix/`.
 
+## November 18 fifth round: relayed skew with the Pi send allowance (run 19)
+
+N2 leading term 626, relayed through the Pi (N2 off B, N3 off A), about ten
+edges, user-read: **min −0.45 ms, max +0.17 ms, mean −0.17 ms.** With the
+direct readings above, step 9's skew limit is met for an STM32 leader.
+
+Open, seen once in four N2-B pulls today: 0.3 s after N2 left bus B, N3's
+HELLO stopped on both buses for 0.13–0.24 s and NODE_3 then went DOWN/UP
+five times over 2.3 s with link entries for N3 and N1-B (entries
+18,456–18,485), before N3-A was pulled 3.3 s later. Term unchanged. N3
+reported bus A receive-error-passive and bus B transmit-error-passive at the
+time. Cause not established. Restores wrote one entry each.
+
+On-board evidence for step 6's error limit: at each Pi loss both Nucleos log
+`HEALTH reasons=0x8` with the Pi's report age at 66 ms.
+
+Three leader resets (`pyocd reset`) then moved leadership N2 → N3 → N2 → Pi;
+the Pi leads term 629, log at 18,519.
+
+## November 18 Pi-led steps 3, 5, 6 and 7 (run 20)
+
+Pi leading term 629. Scope as before, about ten edges, user-read.
+
+| Step | Min | Max | Mean |
+|---|---|---|---|
+| 3, direct | −0.25 ms | +0.17 ms | −0.03 ms |
+| 5, N1 off B and N3 off A (RL relayed through N2) | −0.67 ms | +0.22 ms | −0.16 ms |
+
+- **Step 3:** passes; the user reports left, right and cancel as expected.
+- **Step 5:** wheel control and lamps worked (user). No election: term 629
+  throughout. `EVENT_N2`, requested on N2's console 12 s after both cuts were
+  committed, is entry 18,534 in term 629 on both N2 and N3. **Not exactly two
+  link entries:** N1-B pull wrote 7 alternating DOWN/UP entries over 2 s, N3-A
+  pull 7 over 1–3 s, N3-A reinsertion 13 over 5 s, N1-B reinsertion 1. The
+  decoded REPORT masks show the pulled interface really received HELLOs in
+  60–70 ms windows during those intervals (the Pi's own frames were also
+  ACKed on bus B), so this is intermittent contact, which the user has ruled
+  correct behavior. A clean two-entry transition is still not on record.
+- **Step 6:** both Nucleos logged `HEALTH reasons=0x8` at a Pi report age of
+  66 ms. N3 was candidate and then leader of term 630 within one 0.2 s console
+  interval of that line; one election. User: hazards fast and steady. Brake
+  latency and the handover phase step were not scoped; N2's logged REF phase
+  error shows no change across the handover, but its ±0.8 ms sample noise
+  cannot resolve 100 µs.
+- **Step 7:** the Pi returned as a follower of N3; entries 18,549–18,551 are
+  marked replayed on the Pi and the later ones are not; one NODE_1 set.
+  About 33 s later the Pi sent FAULT test-button and then FAULT clear 143 ms
+  apart (wheel test button double press in the wheel packets), which wrote
+  one more NODE_1 DOWN/UP set (18,556–18,561) as designed.
+
+Log at 18,561; N3 leads term 630. Logs: ignored
+`logs/lab5/20261116-checkoff/run20-pi-led-step3-5/`.
+
+## November 18 step 10 and the N3 watchdog resets (runs 21–25)
+
+N3 leading term 630 at the start. User-observed lamps, recorder logs.
+
+| Action | Lamps (user) | Log |
+|---|---|---|
+| N2 isolated (both buses), restored | Front pair fast hazards, rear normal | Term 630 unchanged; NODE_2_DOWN, later UP; N2-B reinsertion wrote 21 alternating link entries over 9 s |
+| N3 (leader) isolated, restored | Rear pair fast hazards, front normal | Exactly one new term (631); N3-B reinsertion wrote 13 link entries |
+| N2 test button, then double press | Front fast hazards, rear slower; cleared | One new term (632; N2 had led 631); NODE_2_DOWN, COCKPIT_ERROR |
+| N3 test button, then double press | Rear fast, front slower; cleared | COCKPIT_ERROR, NODE_3_DOWN; no election (N3 was a follower) |
+| Wheel test button, then double press | Both pairs fast and in step; cleared | One new term (633; the Pi had led 632) |
+
+The fast/slow split follows the implemented rule: a node that hears no Pi
+report flashes at 4 Hz, a node in error that still hears the Pi at 2 Hz. A
+latched node stops listening, so it is the fast one; when the Pi is latched
+nobody hears it and all flash at 4 Hz. The handout's wording for this case
+was not re-read.
+
+**Fault found: N3 reset by its watchdog twice**, 1 s after N2's clear and
+1 s after the wheel's clear (`RESET cause=0x11 watchdog=1`), rejoining after
+boot compaction. Reproduced without the user by latching and clearing the
+leading Pi with SIGRTMIN/SIGRTMIN+1 (run 24); a latched follower Pi did not
+trigger it (run 23). Program-counter sampling over SWD (DWT_PCSR, no halt)
+showed no hang: N3 ran about 90% busy in steady state, and the resumed
+leader's catch-up roughly doubled bus traffic (890 to 1,550 frames/s per bus)
+for about 1 s, taking N3 to 100% and starving the priority-6 thread that
+feeds the 1 s watchdog. Spinlock validation alone was about 12% of the CPU.
+
+**Fix (firmware):** `CONFIG_SPIN_VALIDATE=n` (asserts stay on); the blink
+thread sleeps until 250 µs before the next edge, waking on `blink_wake` or
+every 5 ms, instead of polling every 200 µs; the clock copy is published on
+receive only when a REF moved the clock. Flashed to both boards with history
+backups; ELF SHA-256 N2 `1d6c64fb…`, N3 `cc3a5195…`. Same scenario after the
+fix (run 25): both boards about 71% busy, 81% peak at the clear, **no reset**,
+one clean NODE_1 set. Lamp-edge lateness windows stayed at 39–463 µs outside
+mode changes (the counter also counts the phase flip of a rate change). That
+latch took four terms (641–644): both Nucleos stood as candidates three times
+before N3 won, about 0.5 s in all.
+
+Not yet repeated by the user after the fix: the N2 and N3 button sequences,
+and a scope skew reading with the new blink loop. Log at 18,739; N3 leads
+term 644. Uncommitted. Logs: ignored `logs/lab5/20261116-checkoff/run21-step10/`
+through `run25-load-fix-repro/`, `flash-load-fix/`.
+
+## November 18 flap storm after N2's test clear (runs 26–27)
+
+After the load fix, N3 leading term 644, Pi a follower. Direct skew over
+about ten edges, user-read without signs: 0.45, 0, 0.25 (taken as −0.45 to 0,
+mean −0.25 ms).
+
+**N2 test button: failed.** The single press behaved as before. The double
+press cleared N2's and N3's latches (console), but NODE_1 then cycled
+DOWN/UP without stopping: the user saw irregular flashing and stopped. The
+log grew from 18,751 to 21,397 (about 20 entries per second at the end)
+until the Pi service was stopped by hand. No reset, no election (term 644).
+
+Cause, from the capture: at about 15 entries per second the bus went from
+1,220 to 2,165 frames per second per bus (each entry costs roughly 100
+frames in APPENDs and replies on two buses). The Pi's kernel transmit queue
+filled (`ENOBUFS`, about 30 per second; 39,000 frames per bus expired in its
+outbox), its REPORTs fell from 50 to 14 per second, and the leader dropped
+it; each DOWN/UP wrote six more entries, which kept the load up. The Pi's
+control loop itself was on time. Whether running the cockpit at FIFO
+priority reduces the kernel CAN worker's share in this state is not
+established; steady-state transmit counters are clean under FIFO.
+
+**Fix (Pi only):** when a committed NODE_1_DOWN arrives while the Pi is
+announced, it goes quiet and re-qualifies, doubling the steady time for each
+drop within 30 s of an announcement (2 s, 4 s … 30 s). New host test; 128
+pass. On restart with the fix the Pi replayed the 2,650 entries quietly in
+about 25 s and announced once (entries 21,398–21,401). **The N2 button
+sequence has not been repeated with this fix.** Log at 21,401 of 30,000.
+Uncommitted. Logs: ignored `logs/lab5/20261116-checkoff/run26-step10-repeat/`,
+`run27-backoff/`.
+
+## November 18 N2 clear lost on the way out (run 28)
+
+With the back-off deployed and a log-growth guard running. N2 press: FAULT
+test (sequence 11) on both buses, COCKPIT_ERROR and NODE_2_DOWN. Double
+press 5.4 s later: the capture shows FAULT test again (sequence 12) and **no
+FAULT clear on either bus**, while N2's console shows its own latch cleared.
+N3 and the Pi stayed latched, so both pairs flashed at 2 Hz (user). No
+storm: five entries in all, NODE_1 never dropped.
+
+Cause: `send_both` gives a busy MCP2515 1 ms to free a transmit buffer and
+then drops the frame (counted in `rejected_a/b`). The clear is sent once, in
+the same instant that N2's heartbeats and Raft traffic resume. **Fix
+(firmware):** a test press or clear waits up to 50 ms per bus
+(`FAULT_SEND_WAIT_MS`). Flashed to both boards with history backups; ELF
+SHA-256 N2 `8bf8b58c…`, N3 `a373c1af…`. The Pi's leftover latch was cleared
+with SIGRTMIN+1. Not hardened: the Pi drops its own FAULT frames on
+`ENOBUFS` in the same way (20 such errors in the storm). The user's
+expectation, recorded: a clear must take effect without a visible delay.
+**Not yet repeated by the user.** Pi leads term 645; log at 21,440.
+Uncommitted. Logs: ignored `logs/lab5/20261116-checkoff/run28-n2-button/`,
+`flash-fault-send/`.
+
+## November 18 buttons after the FAULT send fix (run 29)
+
+Pi leading term 645. **N2 and N3 press and double press: as expected (user).**
+Wheel press and double press: the Pi's latch and both Nucleos' latches
+cleared (FAULT clear sent and received), but the cockpit stayed in error
+(user: "doesn't reset"), because NODE_1 stayed DOWN. Two causes:
+
+1. The back-off added earlier counted the NODE_1_DOWN that follows the Pi's
+   own test-button silence as a drop and doubled its wait each press: 1, 2,
+   4, 8, 16, 30 s.
+2. Independently, every announcement was followed about 0.3 s later by a
+   real drop, with `ENOBUFS` on the Pi's ordinary CAN socket. Entries now
+   arrive about 55 ms apart at an announcement (120 ms before the Nucleo load
+   fix), so the Pi's APPEND replies fill its ten-frame transmit queue and its
+   HELLO/REPORT frames expire. Not caused by FIFO priority (same at normal
+   priority), nor by N2 leading (same under N3 after resetting N2).
+
+**Fix (Pi only):** HELLO and the Pi's broadcast RPC frames (REPORT, votes) go
+out on the priority socket already used for REF, ahead of the ordinary queue,
+and their local echo is ignored; a NODE_1_DOWN within 1 s of the end of the
+Pi's own silence no longer triggers the back-off. 129 host tests pass. After
+the fix: one clean announcement (21,792–21,795), and two press/clear cycles
+driven by SIGRTMIN/SIGRTMIN+1 with the Pi a follower each restored
+COCKPIT_OK 0.32 s and 0.26 s after the clear with exactly six entries.
+**Not yet repeated by the user with the wheel, nor with the Pi leading.**
+N3 leads term 648; log at 21,807. Uncommitted. Open: N2 reports transmit
+error-passive on both buses within seconds of boot; the Pi's MCP2515s report
+about six receive overflows per second. Logs: ignored
+`logs/lab5/20261116-checkoff/run29-buttons/`.
+
+## November 18 wheel button after the presence-priority fix (run 30)
+
+User: the wheel press and double press now work, including a second cycle
+straight after the first. No reset on either Nucleo, guard not tripped. One
+back-off hold of 1 s was logged when a NODE_1_DOWN arrived just over 1 s
+after a clear. The Pi leads term 651; log at 21,858. **Step 10 is complete
+by observation**: isolation of a follower and of the leader, and the test
+button on N2, N3 and the wheel.
+
+`lab5/pristine.py` now halts each Nucleo explicitly and freezes its watchdog
+(the recipe used for every history backup this week) instead of expecting
+the core to be halted after connecting under reset; its five tests pass. It
+still has not been run on the bench.
+
 Remaining report evidence: measured drift ratio/correction and PPS jitter, FL/RL skew, handover phase, failover/brake latency, equal committed logs/network snapshots for the three body scenarios, and any unpassed limits. The three technical discussion sections have one-page limits. All team members need to explain quorum, votes/terms, commit versus append, pre-vote, phase versus rate correction, and discovery versus committed routing.

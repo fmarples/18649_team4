@@ -208,8 +208,8 @@ bool lab5_runtime_receive(unsigned bus, const struct can_frame *f, uint64_t raw)
         struct timespec t = {.tv_sec = (time_t)(global / 1000000),
                              .tv_nsec = (long)(global % 1000000) * 1000};
         (void)clock_settime(CLOCK_REALTIME, &t); /* uptime/cycle clock is unchanged */
+        publish_blink(); /* the clock moved; other changes reach the lamps via protocol_thread */
     }
-    publish_blink();
     k_mutex_unlock(&raft_lock);
     return used;
 }

@@ -1,0 +1,9 @@
+# Override for a host whose own reverse proxy already holds ports 80/443.
+# The app listens on a loopback port for that proxy; Caddy is not started:
+#   docker compose -f compose.yaml -f compose.proxied.yaml up -d --build redis app
+# The proxy must terminate HTTPS and send X-Forwarded-Proto. Redis stays on the
+# internal network with no host port.
+services:
+  app:
+    ports: ["127.0.0.1:${APP_PORT:?set the loopback port}:8000"]
+    networks: [private, public]

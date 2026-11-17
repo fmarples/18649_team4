@@ -3,5 +3,7 @@ __pycache__/
 *.pyc
 .venv/
 .env
+# Plaintext cloud dashboard login; the repository is public.
+cloud/dashboard_login.txt
 state/
 captures/

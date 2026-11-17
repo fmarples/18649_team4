@@ -101,6 +101,39 @@ class CockpitTests(unittest.TestCase):
         self.step(1200)
         self.assertTrue(self.app.announced)
 
+    def drop_pi(self, index):
+        # A committed NODE_1_DOWN reaches the cockpit, as when peers stop hearing it.
+        rows = [(index, 1, 4, 0)]
+        with patch.object(self.app.agent, "applied",
+                          side_effect=lambda limit=None: [rows.pop()] if rows else []):
+            self.step(1)
+
+    def test_pi_dropped_by_its_peers_goes_quiet_and_waits_longer_each_time(self):
+        self.returning_pi()
+        self.step(2100)
+        self.assertTrue(self.app.announced)
+        self.drop_pi(9001)
+        self.assertFalse(self.app.announced)       # quiet again: no REPORT, so no flapping
+        self.step(1500)
+        self.assertFalse(self.app.announced)       # first repeat within 30 s waits 2 s, not 1 s
+        self.step(700)
+        self.assertTrue(self.app.announced)
+        self.drop_pi(9002)
+        self.step(3500)
+        self.assertFalse(self.app.announced)       # second repeat waits 4 s
+        self.step(700)
+        self.assertTrue(self.app.announced)
+
+    def test_drop_after_own_test_button_silence_does_not_hold_the_announcement(self):
+        self.returning_pi()
+        self.step(2100)
+        self.app.hb_silenced = True                # wheel test press
+        self.step(300)
+        self.app.hb_silenced = False               # double press clears it
+        self.step(5)
+        self.drop_pi(9001)                         # the NODE_1_DOWN committed while silent
+        self.assertTrue(self.app.announced)
+
     def test_proxy_off_stays_error_but_pi_is_time_leader(self):
         self.step(500)
         self.assertTrue(self.app.error)
@@ -248,12 +281,13 @@ class CockpitTests(unittest.TestCase):
         for _ in range(60):
             self.now += 0.001
             self.app.tick(self.now)
+        urgent = {0x81, 0x111, 0x410, 0x411, 0x412, 0x413}  # REF, HELLO, REPORT
         for b, bus in enumerate(self.buses):
-            self.assertFalse([m for m in bus.sent if m.arbitration_id == 0x81])
+            self.assertFalse([m for m in bus.sent if m.arbitration_id in urgent])
             self.assertTrue(bus.sent)  # everything else still uses the ordinary bus
-            can_id, dlc, data = struct.unpack("=IB3x8s", frames[b][0])
-            self.assertEqual((can_id, dlc), (0x81, 8))
-            self.assertTrue(valid(data))
+            sent = [struct.unpack("=IB3x8s", raw) for raw in frames[b]]
+            self.assertEqual({can_id for can_id, _, _ in sent}, urgent)
+            self.assertTrue(all(dlc == 8 and valid(data) for _, dlc, data in sent))
 
     def test_local_echo_of_a_ref_is_not_treated_as_bus_traffic(self):
         def frame(can_id, is_rx):
@@ -261,6 +295,8 @@ class CockpitTests(unittest.TestCase):
                                data=bytes(8), is_rx=is_rx)
 
         self.app.on_frame(frame(0x82, False), 1, 1.0)  # our own relayed REF, looped back
+        self.app.on_frame(frame(0x111, False), 1, 1.0)  # our own HELLO, looped back
+        self.app.on_frame(frame(0x411, False), 1, 1.0)  # our own REPORT fragment
         self.assertTrue(self.app.rx.empty())
         self.app.on_frame(frame(0x82, True), 1, 1.0)   # the same ID arriving from the wire
         self.app.on_frame(frame(0x100, False), 1, 1.0)  # other local frames are unchanged

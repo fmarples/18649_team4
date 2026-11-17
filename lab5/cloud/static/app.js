@@ -13,7 +13,7 @@ async function refresh() {
       e.textContent = `N${n}: ${!known ? 'unknown' : r.nodes & bit ? 'alive' : 'down'} · A: ${!known ? '?' : r.links & a ? 'up' : 'down'} · B: ${!known ? '?' : r.links & (a*2) ? 'up' : 'down'}`;
       return e;
     }));
-    text('timing', `Global: ${h.global_us ?? '?'} µs · Last measured FL/RL offset: ${h.fl_offset_us ?? 'not measured'} / ${h.rl_offset_us ?? 'not measured'} µs`);
+    text('timing', `Global: ${h.global_us ?? '?'} µs · FL/RL offset (scope reading, FL edge minus RL edge): ${h.fl_rl_offset_us == null ? 'not measured' : h.fl_rl_offset_us + ' µs'}`);
     text('held', `Held events: ${h.held_events ?? 'unknown while cockpit is absent'} · Uplink pending: ${h.pending ?? '?'} · Last ACK: ${h.last_ack ?? 'none'}`);
     text('missing', s.missing_entries ? `Mirror gap: ${s.missing_entries} entries fell outside the retained queue.` : 'No reported mirror gaps.');
     document.getElementById('events').replaceChildren(...s.entries.map(row => {

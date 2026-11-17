@@ -41,12 +41,25 @@ YIELD = getattr(os, "sched_yield", lambda: None)
 # ANNOUNCE_STEADY_S without two ticks more than ANNOUNCE_LATE_S apart (two
 # 20 ms report periods, which still fits the 66 ms window).
 ANNOUNCE_STEADY_S = 1.0
-ANNOUNCE_LATE_S = 0.040  # Linux only; a no-op on a Windows test host
+ANNOUNCE_LATE_S = 0.040
+# If the peers drop this node while it is announced (a committed NODE_1_DOWN),
+# it goes quiet and qualifies again, doubling the steady time for each drop
+# within ANNOUNCE_CALM_S of the last announcement, up to ANNOUNCE_MAX_S. Each
+# down/up cycle writes six entries whose traffic delayed this node's REPORTs
+# further; on November 18 that loop ran at 20 entries per second until stopped.
+ANNOUNCE_CALM_S = 30.0
+ANNOUNCE_MAX_S = 30.0
+NODE_1_DOWN = 4  # l5_node_event(1, false)  # Linux only; a no-op on a Windows test host
 
 
 # Send-only CAN socket for REF. The interface's default pfifo_fast queue sends
 # priority 6 ahead of ordinary frames, so a REF stamped just before send() is
 # not held behind a burst already queued in the kernel.
+def presence(can_id):
+    """This node's HELLO, or one of its broadcast RPC frames (REPORT, and votes)."""
+    return can_id == 0x111 or 0x410 <= can_id <= 0x413
+
+
 def priority_socket(channel):
     sock = socket.socket(socket.AF_CAN, socket.SOCK_RAW, socket.CAN_RAW)
     sock.setsockopt(socket.SOL_CAN_RAW, socket.CAN_RAW_FILTER, b"")  # receive nothing
@@ -138,7 +151,9 @@ class Cockpit5(Cockpit):
         self.protocol_tx = [CanOutbox(ref_send_us=c["pi_ref_send_us"]) for _ in range(2)]
         self.ref_tx = None  # main() sets one priority_socket per bus
         self.announced = False
-        self._last_tick = self._steady_from = now
+        self._last_tick = self._steady_from = self._announced_at = now
+        self._steady_need = ANNOUNCE_STEADY_S
+        self._was_silenced, self._unsilenced_at = False, now - ANNOUNCE_STEADY_S
         self._replaying = False
 
     def raw_us(self, now):
@@ -149,8 +164,8 @@ class Cockpit5(Cockpit):
         # A notifier can wait milliseconds for the interpreter while the main
         # loop works, so date the frame from SocketCAN's own receive stamp.
         # A fake bus has none; then keep the delivery time.
-        if not msg.is_rx and 0x81 <= msg.arbitration_id <= 0x83:
-            return  # our own REF, looped back from the priority socket
+        if not msg.is_rx and (0x81 <= msg.arbitration_id <= 0x83 or presence(msg.arbitration_id)):
+            return  # our own frame, looped back from the priority socket
         age = time.time() - msg.timestamp
         if 0 <= age < 0.1:
             now = time.monotonic() - age
@@ -186,11 +201,17 @@ class Cockpit5(Cockpit):
         )
 
     def _send_protocol_now(self, bus, can_id, data):
-        if self.ref_tx and 0x81 <= can_id <= 0x83:
+        if self.ref_tx and (0x81 <= can_id <= 0x83 or presence(can_id)):
+            # The kernel sends this socket's frames ahead of the ten-frame
+            # ordinary queue. REF needs that for timing; HELLO and REPORT need
+            # it because a burst of APPEND replies otherwise holds them past
+            # the peers' 66 ms liveness window (seen at every announcement on
+            # November 18, with ENOBUFS on the ordinary socket).
             self.gpio.can_tx(bus)
             self.ref_tx[bus].send(struct.pack("=IB3x8s", can_id, 8, data))
-            # Let the CAN driver's worker run now instead of after this tick.
-            YIELD()
+            if can_id <= 0x83:
+                # Let the CAN driver's worker run now instead of after this tick.
+                YIELD()
         else:
             self._send_now(bus, can_id, data)
         if self.config["debug"]:
@@ -234,7 +255,7 @@ class Cockpit5(Cockpit):
                      and not (self.ledger and self.ledger.queue.qsize()))
         if not caught_up or now - self._last_tick >= ANNOUNCE_LATE_S:
             self._steady_from = now
-        return now - self._steady_from >= ANNOUNCE_STEADY_S
+        return now - self._steady_from >= self._steady_need
 
     def tick(self, now):
         tick_started = time.monotonic()
@@ -263,8 +284,12 @@ class Cockpit5(Cockpit):
                 self.gpio.ref_rx()
         received_at = time.monotonic()
         udp_ok = self.last_udp is not None and now - self.last_udp[1] < UDP_FAIL_S
+        if self._was_silenced and not self.hb_silenced:
+            self._unsilenced_at = now
+        self._was_silenced = self.hb_silenced
         if not self.announced and self._ready(now):
             self.announced = True
+            self._announced_at = now
             self.log.write("ANNOUNCE", json.dumps(self.agent.status))
             if self.console:
                 self.console.write("ANNOUNCE " + json.dumps(self.agent.status))
@@ -294,6 +319,16 @@ class Cockpit5(Cockpit):
         self._replaying = False
         for index, term, event, replayed in self.agent.applied(limit=delivery_limit):
             self._replaying = self._replaying or bool(replayed)
+            # A drop that follows this node's own test-button silence is expected.
+            if (event == NODE_1_DOWN and self.announced and not self.hb_silenced
+                    and now - self._unsilenced_at >= ANNOUNCE_STEADY_S):
+                calm = now - self._announced_at >= ANNOUNCE_CALM_S
+                self._steady_need = (ANNOUNCE_STEADY_S if calm
+                                     else min(2 * self._steady_need, ANNOUNCE_MAX_S))
+                self.announced = False
+                self._steady_from = now
+                self.log.write("ANNOUNCE_HELD", f"dropped at index {index}; steady for "
+                                                f"{self._steady_need:g} s before announcing")
             row = {
                 "index": index,
                 "term": term,
@@ -330,8 +365,7 @@ class Cockpit5(Cockpit):
                         raft=self.agent.status,
                         time_master=self.agent.status["leader"],
                         held_events=self.agent_health["held_events"],
-                        fl_offset_us=self.offsets.get("fl_offset_us"),
-                        rl_offset_us=self.offsets.get("rl_offset_us"),
+                        fl_rl_offset_us=self.offsets.get("fl_rl_offset_us"),
                     )
                 )
         self.gpio.consensus(lead, self.agent_health["synced"], now < self.pps_until)
@@ -421,12 +455,16 @@ def main(argv=None):
     ap.add_argument("--gpiochip", default="/dev/gpiochip0")
     ap.add_argument("--fifo", type=int)
     ap.add_argument(
-        "--cloud-url", help="Optional HTTPS mirror; requires LAB5_UPLINK_TOKEN"
+        "--cloud-url",
+        default=os.environ.get("LAB5_CLOUD_URL"),
+        help="Optional HTTPS mirror (default: LAB5_CLOUD_URL); requires LAB5_UPLINK_TOKEN",
     )
     ap.add_argument(
         "--offsets-json",
         type=Path,
-        help="Optional actual measured FL/RL offsets in microseconds",
+        default=os.environ.get("LAB5_OFFSETS_JSON"),
+        help='Optional scope reading (default: LAB5_OFFSETS_JSON), read once at start: '
+        '{"fl_rl_offset_us": <FL edge time minus RL edge time, microseconds>}',
     )
     ap.add_argument(
         "--state-dir", type=Path, default=Path.home() / ".local/state/team4-lab5"

@@ -53,6 +53,7 @@
 #define SINGLE_PRESS_MS 50       /* R2.5: presses less than 50 ms apart are one press */
 #define DOUBLE_PRESS_MS 500      /* student clarification: double press within 500 ms */
 #define FAULT_MIN_INTERVAL_MS 20 /* catalog: FAULT minimum interarrival */
+#define FAULT_SEND_WAIT_MS 50    /* per bus, for a test press or clear to get a transmit buffer */
 #define BLINK_HALF_PERIOD_MS 500
 #define RX_QUEUE_DEPTH 32
 
@@ -228,7 +229,9 @@ K_THREAD_DEFINE(lab5_tx_b_tid, 1024, lab5_tx_thread, (void *)1, NULL, NULL, 3, 0
 /* The send helper: one sequence number per logical message, queued on A then B
  * back to back. A disconnected bus keeps its three TX buffers full, so the
  * first pass never waits; only then are full mailboxes retried briefly. */
-static void send_both(struct can_frame *f) {
+/* Send one frame on both buses. `wait` bounds how long a busy controller is
+ * given to free a transmit buffer before the copy for that bus is dropped. */
+static void send_both_within(struct can_frame *f, k_timeout_t wait) {
     k_mutex_lock(&state_lock, K_FOREVER);
     f->data[0] = (f->data[0] & 0xF0) | (tx_seq[f->id] & 0x0F);
     tx_seq[f->id]++;
@@ -239,11 +242,12 @@ static void send_both(struct can_frame *f) {
         rc[bus] = submit(bus, f, K_NO_WAIT);
     for (unsigned bus = 0; bus < 2; ++bus) {
         if (rc[bus] == -EAGAIN)
-            rc[bus] = submit(bus, f, K_MSEC(1));
+            rc[bus] = submit(bus, f, wait);
         if (rc[bus] != 0 && rc[bus] != -EACCES)
             atomic_inc(&tx_rejected[bus]);
     }
 }
+static void send_both(struct can_frame *f) { send_both_within(f, K_MSEC(1)); }
 
 /* FAULT on both buses, at most one per 20 ms (catalog minimum interval) from
  * this node. Test-button press and clear wait for their slot, so only the
@@ -266,7 +270,13 @@ static void send_fault(uint8_t failing_zone, enum fault_reason reason) {
         k_sleep(K_TIMEOUT_ABS_MS(slot));
     struct can_frame f;
     lab3_pack_fault(&f, failing_zone, reason, MY_ZONE);
-    send_both(&f);
+    /* A test press or clear is sent once and nothing repeats it. On November 18
+     * a clear found all transmit buffers busy for 1 ms just after heartbeats
+     * resumed and was dropped on both buses, leaving the other zones latched. */
+    if (must_send)
+        send_both_within(&f, K_MSEC(FAULT_SEND_WAIT_MS));
+    else
+        send_both(&f);
 }
 
 /* Releasing the latch also resumes heartbeats silenced by this node's test button. */
@@ -518,9 +528,12 @@ static atomic_t blink_late_max, blink_late_window, blink_late_over, blink_edges;
 
 /* Every lamp phase is computed from global time; packet arrival never rephases it.
  * Priority 0, above all CAN and Raft work, and no raft_lock: an edge must not
- * wait behind either. It polls every 200 us and busy-waits the last 250 us
- * before a boundary so the edge lands on it. */
+ * wait behind either. It sleeps until 250 us before the next boundary, waking
+ * early for a mode or error change (blink_wake) and at least every 5 ms to
+ * follow clock slew, then busy-waits so the edge lands on the boundary. A
+ * 200 us poll here cost enough CPU to starve the watchdog feed in a burst. */
 #define BLINK_SPIN_US 250U
+#define BLINK_POLL_US 5000U
 static void blink_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a);
     ARG_UNUSED(b);
@@ -568,7 +581,7 @@ static void blink_thread(void *a, void *b, void *c) {
         if (to_edge <= BLINK_SPIN_US)
             k_busy_wait(to_edge);
         else
-            k_sleep(K_USEC(MIN(200U, to_edge - BLINK_SPIN_US)));
+            (void)k_sem_take(&blink_wake, K_USEC(MIN(BLINK_POLL_US, to_edge - BLINK_SPIN_US)));
     }
 }
 K_THREAD_DEFINE(blink_tid, 1024, blink_thread, NULL, NULL, NULL, 0, 0, 0);
