@@ -10,6 +10,12 @@ Conflicts=team4-lab3-cockpit.service
 
 [Service]
 User=labuser
+# FIFO 1 keeps boot work, logins and disk writers from descheduling the control
+# loop. Measured November 18 under a CPU/login/disk load: 15 loop stalls of
+# 30 ms or more (worst 2.9 s) at normal priority, 0 to 2 at FIFO 1. Peers drop
+# a node after 66 ms without a REPORT.
+CPUSchedulingPolicy=fifo
+CPUSchedulingPriority=1
 WorkingDirectory=/home/labuser/18649_team4_lab5
 # systemd expands $$ to $ and runs ExecStartPre=+ as root; the cockpit runs as labuser.
 ExecStartPre=+/bin/sh -c 'for n in can0 can1; do ip link set $$n down && ip link set $$n type can bitrate 500000 restart-ms 50 && ip link set $$n up || exit 1; done'

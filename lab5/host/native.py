@@ -40,7 +40,7 @@ signatures = {
     "queue_delay": ([P, U], None),
     "route": ([P, U, U, C.POINTER(U)], C.c_int),
     "agent_enable": ([P, U], None),
-    "agent_tick": ([P, U64, U, U], None),
+    "agent_tick": ([P, U64, U, U, U], None),
     "agent_receive": ([P, U, U, B, U64], C.c_int),
     "agent_drain": ([P, C.POINTER(C.c_uint16), B], C.c_int),
     "agent_status": ([P, U, U64], U),
@@ -185,8 +185,9 @@ class Agent(Node):
         self.delay_us = delay_us
         lib.l5_host_agent_enable(self.ptr, delay_us)
 
-    def update(self, raw_us, upstream_ok=True, paused=False):
-        lib.l5_host_agent_tick(self.ptr, raw_us, upstream_ok, paused)
+    def update(self, raw_us, upstream_ok=True, paused=False, quiet=False):
+        """Run one agent tick. quiet withholds HELLO and REPORT, so peers keep this node DOWN."""
+        lib.l5_host_agent_tick(self.ptr, raw_us, upstream_ok, paused, quiet)
 
     def receive_can(self, bus, can_id, data, raw_us, queue_us=0):
         if len(data) != 8:

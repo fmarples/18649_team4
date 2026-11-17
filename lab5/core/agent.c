@@ -207,21 +207,25 @@ void l5_agent_tick(struct l5_agent *a, uint64_t raw) {
     a->report_seen[self] = true;
     if (a->raft->role == L5_LEADER)
         a->held_events = l5_held_events(a->raft);
-    struct l5_packet hello = {.id = (uint16_t)(L5_HELLO_BASE + self),
-                              .data = {a->hello_seq++, 0, 0, 0, 0, 0, 0, 0}};
-    hello.data[7] = l5_crc(hello.data, 7);
-    both(a, &hello);
-    struct l5_rpc report = {.type = L5_REPORT,
-                            .src = self,
-                            .term = a->raft->term,
-                            .prev_index = a->masks[self][0],
-                            .prev_term = a->masks[self][1],
-                            .index = a->held_events,
-                            .flags =
-                                (uint8_t)(a->upstream_ok | (a->raft->role == L5_LEADER ? 2 : 0)),
-                            .serial = (uint32_t)(l5_global(a->clock, raw) >> 16)};
-    l5_agent_rpc(a, &report);
-    a->report_count++;
+    /* A quiet node takes part in Raft but sends no HELLO or REPORT, so peers
+     * keep it DOWN. The Pi sets this while it replays history after a restart. */
+    if (!a->quiet) {
+        struct l5_packet hello = {.id = (uint16_t)(L5_HELLO_BASE + self),
+                                  .data = {a->hello_seq++, 0, 0, 0, 0, 0, 0, 0}};
+        hello.data[7] = l5_crc(hello.data, 7);
+        both(a, &hello);
+        struct l5_rpc report = {
+            .type = L5_REPORT,
+            .src = self,
+            .term = a->raft->term,
+            .prev_index = a->masks[self][0],
+            .prev_term = a->masks[self][1],
+            .index = a->held_events,
+            .flags = (uint8_t)(a->upstream_ok | (a->raft->role == L5_LEADER ? 2 : 0)),
+            .serial = (uint32_t)(l5_global(a->clock, raw) >> 16)};
+        l5_agent_rpc(a, &report);
+        a->report_count++;
+    }
     if (a->raft->role == L5_LEADER) {
         struct l5_packet ref;
         l5_ref_pack(&ref, self, a->ref_seq++, a->raft->term, (uint32_t)l5_global(a->clock, raw));

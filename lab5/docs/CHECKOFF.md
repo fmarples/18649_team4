@@ -335,4 +335,155 @@ held 250 ms before error. Uncommitted; 124 host tests pass. In the first 155 s
 after deployment there were 11 gaps of at least 100 ms (largest 182 ms) and
 no error entry.
 
+## November 18 restart after a full unplug and replug
+
+After the user reconnected everything, the Pi's bus-A interface (`can0`) sat
+in BUS-OFF with zero frames transmitted while it still received Nucleo
+traffic; bus B was normal. N1's bus-A link flapped UP/DOWN into the log at
+about 12 entries per second, taking it from about 13,800 to 17,843 entries
+(N3 leading term 621). Stopping the Pi service stopped the growth. A few
+minutes later, with no software change, `can0` transmitted test frames and
+then the restarted service's traffic normally (ERROR-ACTIVE, no error frames
+in 14 s, all six links up, log steady at 17,855). The user then reported the
+cause: a broken bus-A connection, now repaired. With the wheel connected the
+session reports READY (N3 leader, term 621, links 0x3f, no error). 12,145 entries remain before the 30,000
+limit. ST-LINK ports are unchanged: N2 124020/COM6, N3 171333/COM4. Logs:
+ignored `logs/lab5/20261116-checkoff/run12-after-replug/`.
+
+## November 18 skew readings and the Pi's return (run 12)
+
+N3 leading term 621, `can_delay_us` 1130, REF re-stamp and priority socket in
+place. Scope: CH1 = N3 RL, CH2 = N2 FL, delay CH1↑→CH2↑, user-read.
+
+| Path | Min | Max | Mean |
+|---|---|---|---|
+| Direct | −1.19 ms | +0.35 ms | reported as 0.39 ms; taken as −0.39 ms, since a mean above the maximum is impossible |
+| Relayed through the Pi (N2 off B, N3 off A) | −1.04 ms | −0.27 ms | −0.60 ms |
+
+Both exceed 1 ms at one end. The pulls and reinsertions wrote one entry each
+(N2-B reinsertion three), term unchanged.
+
+**Pi power cycle (step 7): failed.** Power-off wrote NODE_1_DOWN and
+COCKPIT_ERROR and the hazards were fast and steady. After power-on, NODE_1
+went UP 37 s later and then cycled DOWN/UP about 35 times over 30 s (entries
+17,865–18,072, 210 entries, term 621 unchanged); the user saw erratic
+blinkers until it settled. Cause, from the Pi's `events.csv`: the service
+starts 12 s into boot with commit index 0 and replays all 17,862 entries in
+about 7 s, with ticks up to 240 ms; ticks of up to 350 ms continued until
+about 29 s while the rest of boot finished. Peers drop a node whose REPORT is
+older than 66 ms, so each long tick wrote NODE_1_DOWN and the next REPORT
+wrote it UP again. A service restart without a reboot gave 3 such cycles at
+this log length. SD-card sync time on the quiet system is 3 ms median, so the
+store's per-entry fsync is not the cause in steady state.
+
+**Fix:** a restarted Pi stays quiet (no HELLO or REPORT, Raft traffic
+unchanged) until it leads, or has a leader, has applied everything committed,
+has no replay backlog, and has gone 1 s without two ticks 40 ms apart
+(`ANNOUNCE_*` in `pi/cockpit5.py`; `quiet` flag in `core/agent.c`, never set
+on the Nucleos). It logs `ANNOUNCE` once. Two new host tests; 126 pass. Two
+service restarts with the fix each wrote exactly NODE_1_DOWN, COCKPIT_ERROR,
+then NODE_1_UP, both links UP and COCKPIT_OK. **A power cycle with the fix is
+not yet tested.**
+
+**Calibration:** `can_delay_us` 1130 → 780, from the direct mean (follower
+390 µs early) and half the relayed mean (300 µs per hop). Not yet measured.
+
+Both Nucleos were reflashed with these changes (sector erase, histories
+backed up first; all three nodes agree at index 18,114 afterwards). ELF SHA-256:
+N2 `2a86d748…32b2af2`, N3 `c6f3ba15…52c1664d`. Halting N3 for its backup made
+the Pi leader for term 623; restarting the Pi service gave N3 term 624. Each
+Nucleo showed one extra DOWN/UP 0.1 s after its flash, which fits pyOCD
+resetting twice; not investigated. Log at 18,114 entries. Uncommitted. Logs:
+ignored `logs/lab5/20261116-checkoff/run12-after-replug/`,
+`run13-announce-gate/`, `flash-announce-delay780/`.
+
+## November 18 second round: delay 780 and the Pi's return (runs 14–16)
+
+N3 leading term 624, `can_delay_us` 780. Same scope setup, user-read.
+
+| Path | Min | Max | Mean |
+|---|---|---|---|
+| Direct | −1.62 ms | +0.54 ms | −0.25 ms |
+| Relayed through the Pi | −0.15 ms | +0.68 ms | +0.23 ms |
+
+**Relayed passes; direct fails at the minimum.** The relayed mean moved
++0.83 ms for the 350 µs change (two hops), the direct mean only +0.14 ms, and
+the direct spread is 2.16 ms, so centring alone cannot bring direct inside
+±1 ms. N2's own REF phase error in the direct window ran −1.67 to +0.38 ms
+per 30 s. The cause of the negative tail is not established.
+
+**Pi power cycle with the quiet start alone: still failed.** The Pi announced
+20.3 s after boot with ticks under 51 ms, then ticks of 60–240 ms returned
+for 17 s and NODE_1 cycled about 25 times (entries 18,121–18,268). Every long
+tick was in CAN receive next to an entry being stored. Measured on the Pi:
+
+- Store sync behind another disk writer: `fsync` up to 4.4 s (3.8 ms idle),
+  `fdatasync` up to 7 ms in the same test. The store now uses `fdatasync`
+  (`host/bridge.c`); its file has a fixed size and is overwritten in place.
+- Under a CPU, login and 100 MB disk-write load, control-loop stalls of 30 ms
+  or more: 15 (worst 2.9 s, 27 entries written) at normal priority; 0 and 2
+  (worst 0.92 s, a store sync behind the disk write, 6 entries) at FIFO 1.
+  The service unit now sets FIFO priority 1.
+
+**Result: two `systemctl reboot` runs each wrote exactly NODE_1_DOWN,
+COCKPIT_ERROR, then 34 s later NODE_1_UP, both links UP and COCKPIT_OK**
+(entries 18,347–18,352 and 18,353–18,358, term 624 unchanged). After the
+announcement the longest loop was 24.8 ms. A physical power cycle with these
+fixes has not been observed by the user yet. Residual: a large disk write on
+the Pi can still stall one store sync. The disk-load tests themselves wrote
+about 60 flap entries. Log at 18,358 entries. Uncommitted; 126 host tests
+pass. Logs: ignored `logs/lab5/20261116-checkoff/run14-delay780/`,
+`run15-reboot-fifo/`, `run16-reboot-fifo/`.
+
+## November 18 third round: lamp edges were late on the boards themselves
+
+User: a physical Pi power cycle now returns with one clean switch. Direct
+skew over about ten edges, N3 leading, delay 780: −1.22/+0.34 (mean −0.25)
+and −1.05/+0.29 ms (mean reported as .168, sign not given). Both miss −1 ms.
+
+Cause found with a new firmware counter (`BLINK_EDGE`, time from each lamp
+phase boundary in the board's own global time to the thread seeing it). On
+N3 before the fix: 24 of the first 33 edges were 500 µs or more late, window
+maxima 0.76–2.16 ms. The blink thread ran at priority 2 and took `raft_lock`
+three times per pass; CAN receive and Raft work hold that lock and run above
+it (`rx_dispatch` maxima 3.6–3.8 ms on both boards).
+
+**Fix (`stm32_zephyr/src/main.c`, `lab5_runtime.c`):** the blink thread runs
+at priority 0, reads a copy of the clock and hazard rate under a spinlock
+instead of `raft_lock`, and busy-waits the last 250 µs before each boundary.
+After the fix, 30 s on each board: window maxima 47–349 µs, no edge at or
+over 500 µs outside boot. `can_delay_us` stays 780 but was calibrated against
+the late edges, so it must be re-measured. Flashed to both boards with
+history backups (sector erase); ELF SHA-256 N2 `03050ad6…`, N3 `167b79b7…`.
+The flashes moved leadership to the Pi (term 625); restarting the Pi service
+gave N2 term 626 with one clean NODE_1 set. Log at 18,444. **Scope skew with
+the fix is not yet measured.** Uncommitted; 126 host tests pass. Logs:
+ignored `logs/lab5/20261116-checkoff/run17-next/`, `flash-blink-diag/`,
+`flash-blink-fix/`.
+
+## November 18 fourth round: skew after the blink fix (run 18)
+
+N2 leading term 626, delay 780, about ten edges per reading, user-read.
+
+| Path | Min | Max | Mean |
+|---|---|---|---|
+| Direct, try 1 | −0.56 ms | +0.32 ms | −0.03 ms |
+| Direct, try 2 | −0.36 ms | +0.27 ms | −0.02 ms |
+| Relayed through the Pi | −0.87 ms | −0.25 ms | −0.50 ms |
+
+**All three are inside ±1 ms.** Direct needs no recalibration. The user also
+confirmed a physical Pi power cycle returns with one clean switch. Over the
+9 minutes, 5 (N2) and 3 (N3) lamp edges were 500 µs or more late out of
+about 1,100 each. Pulls and reinsertions wrote one entry each.
+
+The relayed offset is the Pi's send path. From the capture (3,398 relayed
+REFs): kernel receive to transmit-complete averaged 3.01 ms; the stamp
+credited 2.51 ms including the 780 µs hop, so the Pi takes about 1.28 ms from
+`send()` to transmit-complete where a Nucleo hop is allowed 780 µs. **Fix
+(Pi only):** `pi_ref_send_us` = 500 in `config.json`, added to every REF
+stamp the Pi sends (`pi/can_outbox.py`); from the −0.50 ms scope mean. Not
+compiled into the firmware. Deployed; one clean NODE_1 set on restart. **Not
+yet measured.** 127 host tests pass. Uncommitted. Log at 18,454. Logs:
+ignored `logs/lab5/20261116-checkoff/run18-blink-fix/`.
+
 Remaining report evidence: measured drift ratio/correction and PPS jitter, FL/RL skew, handover phase, failover/brake latency, equal committed logs/network snapshots for the three body scenarios, and any unpassed limits. The three technical discussion sections have one-page limits. All team members need to explain quorum, votes/terms, commit versus append, pre-vote, phase versus rate correction, and discovery versus committed routing.

@@ -34,7 +34,14 @@ from can_outbox import CanOutbox
 
 PPS, LEADER, SYNC, REF_RX = 16, 20, 21, 26
 NEW_PINS = (PPS, LEADER, SYNC, REF_RX)
-YIELD = getattr(os, "sched_yield", lambda: None)  # Linux only; a no-op on a Windows test host
+YIELD = getattr(os, "sched_yield", lambda: None)
+# A restarted Pi replays its whole history and competes with boot work; ticks
+# then overrun the peers' 66 ms liveness window and NODE_1 flaps into the log.
+# It therefore announces itself only once it has caught up and has gone
+# ANNOUNCE_STEADY_S without two ticks more than ANNOUNCE_LATE_S apart (two
+# 20 ms report periods, which still fits the 66 ms window).
+ANNOUNCE_STEADY_S = 1.0
+ANNOUNCE_LATE_S = 0.040  # Linux only; a no-op on a Windows test host
 
 
 # Send-only CAN socket for REF. The interface's default pfifo_fast queue sends
@@ -128,8 +135,11 @@ class Cockpit5(Cockpit):
         self.ledger, self.console = ledger, console
         self.pending_event = False
         self.uplink, self.offsets = uplink, offsets or {}
-        self.protocol_tx = [CanOutbox(), CanOutbox()]
+        self.protocol_tx = [CanOutbox(ref_send_us=c["pi_ref_send_us"]) for _ in range(2)]
         self.ref_tx = None  # main() sets one priority_socket per bus
+        self.announced = False
+        self._last_tick = self._steady_from = now
+        self._replaying = False
 
     def raw_us(self, now):
         return max(0, round((now - self.epoch) * 1_000_000))
@@ -214,6 +224,18 @@ class Cockpit5(Cockpit):
         self.gpio.leds(*health.degraded, error)
         return health
 
+    def _ready(self, now):
+        """True once this node may announce itself: leading, or caught up and steady."""
+        state = self.agent.status
+        if state["role"] == 2:
+            return True
+        caught_up = (state["leader"] and state["commit"]
+                     and state["applied"] == state["commit"] and not self._replaying
+                     and not (self.ledger and self.ledger.queue.qsize()))
+        if not caught_up or now - self._last_tick >= ANNOUNCE_LATE_S:
+            self._steady_from = now
+        return now - self._steady_from >= ANNOUNCE_STEADY_S
+
     def tick(self, now):
         tick_started = time.monotonic()
         raw = self.raw_us(now)
@@ -241,7 +263,14 @@ class Cockpit5(Cockpit):
                 self.gpio.ref_rx()
         received_at = time.monotonic()
         udp_ok = self.last_udp is not None and now - self.last_udp[1] < UDP_FAIL_S
-        self.agent.update(raw, udp_ok and not self.monitor.latched, self.hb_silenced)
+        if not self.announced and self._ready(now):
+            self.announced = True
+            self.log.write("ANNOUNCE", json.dumps(self.agent.status))
+            if self.console:
+                self.console.write("ANNOUNCE " + json.dumps(self.agent.status))
+        self._last_tick = now
+        self.agent.update(raw, udp_ok and not self.monitor.latched, self.hb_silenced,
+                          not self.announced)
         if self.pending_event:
             self.pending_event = False
             if not self.agent.event():
@@ -262,7 +291,9 @@ class Cockpit5(Cockpit):
                 delivery_limit,
                 max(0, self.ledger.queue.maxsize - self.ledger.queue.qsize()),
             )
+        self._replaying = False
         for index, term, event, replayed in self.agent.applied(limit=delivery_limit):
+            self._replaying = self._replaying or bool(replayed)
             row = {
                 "index": index,
                 "term": term,
@@ -360,6 +391,7 @@ class Cockpit5(Cockpit):
         data = json.loads(super().status()[7:])
         data["raft"] = self.agent.status
         data["clock"] = self.agent_health
+        data["announced"] = self.announced
         data["can_tx_queue"] = [q.status() for q in self.protocol_tx]
         # Observe evidence health without doing SQLite I/O in the control loop.
         data["evidence"] = {

@@ -33,6 +33,11 @@ def load(path=ROOT / "config.json"):
         raise ValueError("debug must be boolean")
     if not 0 <= c["can_delay_us"] <= 10000:
         raise ValueError("invalid CAN delay estimate")
+    # Pi only: extra time its Linux CAN send path needs beyond can_delay_us,
+    # added to every REF stamp it sends. Not compiled into the firmware.
+    c.setdefault("pi_ref_send_us", 0)
+    if not 0 <= c["pi_ref_send_us"] <= 10000:
+        raise ValueError("invalid Pi REF send allowance")
     return c
 
 

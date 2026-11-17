@@ -69,8 +69,8 @@ Since November 16 the Pi starts the cockpit at boot through
 `team4-lab5-cockpit.service` ([unit file](pi/team4-lab5-cockpit.service)).
 **Live control therefore starts whenever the Pi powers up.** The service runs
 the `~/18649_team4_lab5` checkout with the `~/.venvs/team4-lab5` Python, sets
-both CAN interfaces to 500 kbit/s, and uses no FIFO priority, matching the
-November 10 bench runs. The old `team4-lab3-cockpit.service` is disabled by the
+both CAN interfaces to 500 kbit/s, and since November 18 runs at FIFO
+priority 1 (measured need: see the checkoff matrix). The old `team4-lab3-cockpit.service` is disabled by the
 team's decision; do not run `lab3_demo/start.py` against this Pi, because it
 re-enables that service and the two units conflict.
 

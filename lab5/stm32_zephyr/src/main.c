@@ -511,12 +511,23 @@ static void actuator_thread(void *a, void *b, void *c) {
 }
 K_THREAD_DEFINE(actuator_tid, 1024, actuator_thread, NULL, NULL, NULL, 3, 0, 0);
 
-/* Every lamp phase is computed from global time; packet arrival never rephases it. */
+/* How long after its global-time boundary each lamp phase change was seen, in
+ * microseconds: all-time and per-diagnostic-window maxima, the count at or over
+ * 500 us, and the number of changes. Printed as BLINK_EDGE. */
+static atomic_t blink_late_max, blink_late_window, blink_late_over, blink_edges;
+
+/* Every lamp phase is computed from global time; packet arrival never rephases it.
+ * Priority 0, above all CAN and Raft work, and no raft_lock: an edge must not
+ * wait behind either. It polls every 200 us and busy-waits the last 250 us
+ * before a boundary so the edge lands on it. */
+#define BLINK_SPIN_US 250U
 static void blink_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a);
     ARG_UNUSED(b);
     ARG_UNUSED(c);
     wait_ready();
+    bool last_phase = false, last_paused = false;
+    uint64_t last_global = 0;
     while (true) {
         k_mutex_lock(&state_lock, K_FOREVER);
         uint8_t mode = blink_mode;
@@ -524,20 +535,43 @@ static void blink_thread(void *a, void *b, void *c) {
         bool fresh = blink_seen && k_uptime_get_32() - blink_ms < BLINK_TIMEOUT_MS;
         bool paused = hb_silenced;
         k_mutex_unlock(&state_lock);
-        lab5_pause(paused);
-        uint64_t global = global_gettime();
-        uint32_t half_period = error ? 1000000U / (2U * lab5_hazard_hz()) : 500000U;
+        if (paused != last_paused) {
+            lab5_pause(paused);
+            last_paused = paused;
+        }
+        unsigned hazard_hz;
+        uint64_t global = lab5_blink_time(&hazard_hz);
+        /* A slew of up to 50 us backwards must not undo an edge just made. */
+        if (global < last_global)
+            global = last_global;
+        last_global = global;
+        uint32_t half_period = error ? 1000000U / (2U * hazard_hz) : 500000U;
         bool phase = ((global / half_period) & 1U) == 0;
+        if (phase != last_phase) {
+            atomic_val_t late = (atomic_val_t)(global % half_period);
+            last_phase = phase;
+            if (late > atomic_get(&blink_late_max))
+                atomic_set(&blink_late_max, late);
+            if (late > atomic_get(&blink_late_window))
+                atomic_set(&blink_late_window, late);
+            if (late >= 500)
+                atomic_inc(&blink_late_over);
+            atomic_inc(&blink_edges);
+        }
         if (error)
             mode = BLINK_HAZARD;
         else if (!fresh)
             mode = BLINK_OFF;
         lab3_trace_set(TP_LEFT, phase && (mode == BLINK_LEFT || mode == BLINK_HAZARD));
         lab3_trace_set(TP_RIGHT, phase && (mode == BLINK_RIGHT || mode == BLINK_HAZARD));
-        k_sleep(K_USEC(200));
+        uint32_t to_edge = half_period - (uint32_t)(global % half_period);
+        if (to_edge <= BLINK_SPIN_US)
+            k_busy_wait(to_edge);
+        else
+            k_sleep(K_USEC(MIN(200U, to_edge - BLINK_SPIN_US)));
     }
 }
-K_THREAD_DEFINE(blink_tid, 1024, blink_thread, NULL, NULL, NULL, 2, 0, 0);
+K_THREAD_DEFINE(blink_tid, 1024, blink_thread, NULL, NULL, NULL, 0, 0, 0);
 
 /* GPIO ISR only wakes TEST_BTN; debounce, state and CAN TX run in the thread. */
 static struct gpio_callback button_callback;
@@ -753,6 +787,9 @@ static void diagnostics_thread(void *a, void *b, void *c) {
                (int)atomic_get(&relay_gated), k_cyc_to_us_floor32(relay_c_all),
                k_cyc_to_us_floor32(relay_c_window));
 #endif
+        lab5_console_print("BLINK_EDGE late_us max=%d window_max=%d over_500us=%d edges=%d\n",
+               (int)atomic_get(&blink_late_max), (int)atomic_set(&blink_late_window, 0),
+               (int)atomic_get(&blink_late_over), (int)atomic_get(&blink_edges));
         for (int id = 0; id < T_COUNT; ++id) {
             uint32_t count = lab3_timing_count(id);
             if (count == 0)

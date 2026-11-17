@@ -82,6 +82,17 @@ class OutboxTests(unittest.TestCase):
         self.assertEqual([int.from_bytes(p[3:7],'little') for p in attempted], [3100,5100])
         self.assertTrue(all(valid(p) for p in attempted))
 
+    def test_reference_stamp_includes_the_send_path_allowance(self):
+        q = CanOutbox(ref_send_us=500)
+        prefix = bytes([1, 2, 0]) + (1000).to_bytes(4, 'little')
+        q.enqueue(0x82, prefix + bytes([crc8(prefix)]), 1, 1)
+        q.enqueue(0x420, bytes(8), 1, 1)
+        sent = []
+        q.flush(lambda can_id, data: sent.append((can_id, data)), lambda: 1.002)
+        self.assertEqual(int.from_bytes(sent[0][1][3:7], 'little'), 1000 + 2000 + 500)
+        self.assertEqual(crc8(sent[0][1][:7]), sent[0][1][7])
+        self.assertEqual(sent[1], (0x420, bytes(8)))  # only references are stamped
+
     def test_permanent_error_is_counted_without_retry_loop(self):
         q=CanOutbox()
         q.enqueue(0x111, bytes(8), 0, 0)

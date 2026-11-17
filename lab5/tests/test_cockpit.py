@@ -63,6 +63,44 @@ class CockpitTests(unittest.TestCase):
                         if dst != src:
                             other.receive_can(b, can_id, data, us)
 
+    def returning_pi(self):
+        """Replace the default-leader Pi with one that has to join as a follower."""
+        self.app.agent.close()
+        self.app = Cockpit5(self.buses, self.gpio, EventLog(None), 0,
+                            config={**self.app.config, "default_leader": "none"})
+        self.heard = set()
+        send = [bus.send for bus in self.buses]
+        for bus, real in zip(self.buses, send):
+            bus.send = lambda msg, real=real, **kw: (self.heard.add(msg.arbitration_id), real(msg, **kw))
+
+    def test_returning_pi_announces_only_after_it_has_caught_up_and_run_on_time(self):
+        self.returning_pi()
+        self.step(900)  # peers elect a leader and the Pi learns the commit index
+        state = self.app.agent.status
+        self.assertEqual(state["role"], 0)
+        self.assertGreater(state["commit"], 0)
+        # Still inside its first steady second: no presence frame has left,
+        # so the leader has not recorded NODE_1 UP.
+        self.assertNotIn(0x111, self.heard)
+        self.assertEqual(self.peers[state["leader"]].status["nodes"] & 1, 0)
+        self.assertFalse(self.app.announced)
+        self.step(1200)
+        self.assertTrue(self.app.announced)
+        self.assertIn(0x111, self.heard)
+        leader = self.peers[self.app.agent.status["leader"]]
+        self.assertEqual(leader.status["nodes"] & 1, 1)  # NODE_1 committed UP
+
+    def test_a_late_tick_restarts_the_wait_before_announcing(self):
+        self.returning_pi()
+        self.step(900)
+        for _ in range(6):  # a 50 ms stall every 0.5 s never gives one steady second
+            self.now += 0.050
+            self.step(500)
+        self.assertFalse(self.app.announced)
+        self.assertNotIn(0x111, self.heard)
+        self.step(1200)
+        self.assertTrue(self.app.announced)
+
     def test_proxy_off_stays_error_but_pi_is_time_leader(self):
         self.step(500)
         self.assertTrue(self.app.error)
@@ -184,7 +222,9 @@ class CockpitTests(unittest.TestCase):
         for bus in self.buses:
             ref = next(m for m in bus.sent if m.arbitration_id == 0x81)
             self.assertTrue(valid(bytes(ref.data)))
-            self.assertEqual(int.from_bytes(ref.data[3:7], "little"), 6000)
+            # 1 ms of global time, the 5 ms of work, and the Pi send allowance.
+            self.assertEqual(int.from_bytes(ref.data[3:7], "little"),
+                             6000 + self.app.config["pi_ref_send_us"])
 
     def test_frame_age_uses_kernel_receive_time_not_delivery_time(self):
         # The receive thread can deliver a frame milliseconds after the kernel

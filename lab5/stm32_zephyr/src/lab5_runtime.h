@@ -10,6 +10,7 @@ uint64_t lab5_raw_us(void);
 uint64_t lab5_global_us(void);
 /* Part 6.3: drift-adjusted global time in microseconds. */
 uint64_t global_gettime(void);
+uint64_t lab5_blink_time(unsigned *hazard_hz);
 bool lab5_error(void);
 unsigned lab5_hazard_hz(void);
 void lab5_pause(bool paused);

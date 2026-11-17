@@ -19,7 +19,7 @@ struct l5_agent {
     uint16_t rx_ref_term, clock_term;
     uint16_t held_events;
     uint8_t clock_leader;
-    bool direct_seen[4][2], report_seen[4], upstream_ok, paused, ref_seen;
+    bool direct_seen[4][2], report_seen[4], upstream_ok, paused, quiet, ref_seen;
     struct l5_seen_packet seen[128];
     unsigned seen_next;
     uint32_t delay_us, relay_count, report_count;

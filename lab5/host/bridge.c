@@ -1,5 +1,6 @@
 /* Host ABI uses the exact production C core and flash journal. No Raft model
- * is substituted in Python. Linux file writes are fsync'd before ACK/voting. */
+ * is substituted in Python. Linux file writes are synced to the card before
+ * ACK/voting. */
 #include "agent.h"
 #include "lab5.h"
 #include "store.h"
@@ -14,7 +15,12 @@
 #else
 #include <unistd.h>
 #define API __attribute__((visibility("default")))
-#define SYNC(f) fsync(fileno(f))
+/* fdatasync, not fsync: the store file has a fixed size and is overwritten in
+ * place, so its data is all that must reach the card. fsync also waits for the
+ * filesystem journal, which on the Pi's SD card took up to 4.4 s behind other
+ * writers (3.8 ms idle) against 7 ms for fdatasync; the control loop stalled,
+ * peers saw no REPORT for over 66 ms and NODE_1 flapped. Measured November 18. */
+#define SYNC(f) fdatasync(fileno(f))
 #endif
 #define Q 2048
 /* A single APPEND can confirm the entire saved prefix after restart. Applied
@@ -333,10 +339,12 @@ API void l5_host_agent_enable(void *v, unsigned delay) {
     while (h->head != h->tail)
         l5_agent_rpc(&h->agent, &h->tx[h->tail++ % Q]);
 }
-API void l5_host_agent_tick(void *v, uint64_t us, unsigned upstream, unsigned paused) {
+API void l5_host_agent_tick(void *v, uint64_t us, unsigned upstream, unsigned paused,
+                            unsigned quiet) {
     struct host *h = v;
     h->agent.upstream_ok = upstream;
     h->agent.paused = paused;
+    h->agent.quiet = quiet;
     l5_agent_tick(&h->agent, us);
 }
 API int l5_host_agent_receive(void *v, unsigned bus, unsigned id, const uint8_t *p, uint64_t us) {

@@ -14,7 +14,10 @@ from vehicle.can_protocol import crc8
 
 
 class CanOutbox:
-    def __init__(self, capacity=128, lifetime_s=0.020, retry_s=0.001):
+    def __init__(self, capacity=128, lifetime_s=0.020, retry_s=0.001, ref_send_us=0):
+        # ref_send_us: how much longer this host takes from send() to the
+        # frame being on the bus than the per-hop delay already allows.
+        self.ref_send_us = ref_send_us
         self.capacity = capacity
         self.lifetime_s = lifetime_s
         self.retry_s = retry_s
@@ -49,7 +52,7 @@ class CanOutbox:
             if 0x81 <= can_id <= 0x83:
                 # Recompute from the original every attempt; a failed attempt
                 # must not accumulate the same residence time twice.
-                elapsed = max(0, round((now - created) * 1_000_000))
+                elapsed = max(0, round((now - created) * 1_000_000)) + self.ref_send_us
                 stamp = (int.from_bytes(data[3:7], 'little') + elapsed) & 0xffffffff
                 prefix = data[:3] + stamp.to_bytes(4, 'little')
                 data = prefix + bytes([crc8(prefix)])

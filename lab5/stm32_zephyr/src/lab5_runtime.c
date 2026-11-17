@@ -21,6 +21,13 @@ static struct l5_agent agent;
 static const struct flash_area *area;
 static void (*send_frame)(unsigned, const struct can_frame *);
 K_MUTEX_DEFINE(raft_lock);
+/* Copy of the clock and hazard rate for the blink thread. Protocol work holds
+ * raft_lock for milliseconds (measured: lamp edges up to 2.2 ms late while the
+ * blink thread waited for it), so the lamps read this copy under a spinlock
+ * held only for the copy. Refreshed by publish_blink() with raft_lock held. */
+static struct k_spinlock blink_snap_lock;
+static struct l5_clock blink_clock;
+static unsigned blink_hazard_hz = 2;
 void lab5_console_print(const char *format, ...) {
     va_list args;
     va_start(args, format);
@@ -151,6 +158,7 @@ int lab5_runtime_init(unsigned id, void (*send)(unsigned, const struct can_frame
     }
     l5_clock_init(&net_clock, lab5_raw_us());
     l5_agent_init(&agent, &raft, &net_clock, &wire, NULL, send_packet, L5_CFG_CAN_DELAY_US);
+    blink_clock = net_clock;
     struct l5_config cfg = {L5_CFG_HEARTBEAT_MS, L5_CFG_APPEND_MS, L5_CFG_MISSED_HEARTBEATS,
                             L5_CFG_JITTER_MS,    L5_CFG_CAPACITY,  L5_CFG_DEFAULT_LEADER,
                             L5_CFG_SEED,         L5_CFG_DEBUG};
@@ -161,6 +169,22 @@ int lab5_runtime_init(unsigned id, void (*send)(unsigned, const struct can_frame
                : -EIO;
 }
 void lab5_ready(void) { k_sem_give(&ready); }
+static void publish_blink(void) {
+    unsigned hz = l5_agent_hazard_hz(&agent, lab5_raw_us());
+    k_spinlock_key_t key = k_spin_lock(&blink_snap_lock);
+    blink_clock = net_clock;
+    blink_hazard_hz = hz;
+    k_spin_unlock(&blink_snap_lock, key);
+}
+/* Global time for lamp phase, plus the current hazard rate, without raft_lock.
+ * The caller keeps its own monotonic guard; see blink_thread. */
+uint64_t lab5_blink_time(unsigned *hazard_hz) {
+    k_spinlock_key_t key = k_spin_lock(&blink_snap_lock);
+    struct l5_clock c = blink_clock;
+    *hazard_hz = blink_hazard_hz;
+    k_spin_unlock(&blink_snap_lock, key);
+    return l5_global(&c, lab5_raw_us());
+}
 void lab5_pause(bool paused) {
     k_mutex_lock(&raft_lock, K_FOREVER);
     agent.paused = paused;
@@ -185,6 +209,7 @@ bool lab5_runtime_receive(unsigned bus, const struct can_frame *f, uint64_t raw)
                              .tv_nsec = (long)(global % 1000000) * 1000};
         (void)clock_settime(CLOCK_REALTIME, &t); /* uptime/cycle clock is unchanged */
     }
+    publish_blink();
     k_mutex_unlock(&raft_lock);
     return used;
 }
@@ -260,6 +285,7 @@ static void protocol_thread(void *a, void *b, void *c) {
             previous_term = raft.term;
             previous_role = raft.role;
         }
+        publish_blink();
         k_mutex_unlock(&raft_lock);
         k_sleep(K_USEC(200));
     }
