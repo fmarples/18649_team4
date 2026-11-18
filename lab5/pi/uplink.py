@@ -77,28 +77,43 @@ class Uplink:
             row = dict(self.pending[0]) if self.pending else None
             hb = dict(self.heartbeat) if self.heartbeat else None
             count = len(self.pending)
+        # A refused entry must not stop the heartbeat: after a pristine start the
+        # mirror answers 409 to every entry until its old history is cleared, and
+        # the dashboard then showed "stale" for 78 minutes with the car running
+        # (November 18). The heartbeat carries the refusal instead.
+        entry_error = None
         if row:
-            result = self._post("/ingest/entry", row)
-            expected = str(row["index"]) + "-0"
-            if result.get("stream_id") != expected:
-                raise RuntimeError("Unexpected acknowledgement")
-            # Atomic local ACK replacement; a crash before this just retries the
-            # idempotent Redis stream ID, never invents a successful upload.
-            self.ack_path.parent.mkdir(parents=True, exist_ok=True)
-            tmp = self.ack_path.with_suffix(".tmp")
-            tmp.write_text(expected, encoding="utf-8")
-            tmp.replace(self.ack_path)
-            with self.lock:
-                self.last_ack = expected
-                if self.pending and self.pending[0]["index"] == row["index"]:
-                    self.pending.popleft()
+            try:
+                self._upload(row)
+            except Exception as exc:
+                entry_error = exc
         now = time.monotonic()
         if hb and now - self.last_heartbeat >= 1:
+            status = getattr(getattr(entry_error, "response", None), "status_code", None)
             hb.update(
-                pending=count, last_ack=self.last_ack, uplink_dropped=self.dropped
+                pending=count, last_ack=self.last_ack, uplink_dropped=self.dropped,
+                uplink_error=None if entry_error is None else status or type(entry_error).__name__,
             )
             self._post("/ingest/heartbeat", hb)
             self.last_heartbeat = now
+        if entry_error:
+            raise entry_error
+
+    def _upload(self, row):
+        result = self._post("/ingest/entry", row)
+        expected = str(row["index"]) + "-0"
+        if result.get("stream_id") != expected:
+            raise RuntimeError("Unexpected acknowledgement")
+        # Atomic local ACK replacement; a crash before this just retries the
+        # idempotent Redis stream ID, never invents a successful upload.
+        self.ack_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = self.ack_path.with_suffix(".tmp")
+        tmp.write_text(expected, encoding="utf-8")
+        tmp.replace(self.ack_path)
+        with self.lock:
+            self.last_ack = expected
+            if self.pending and self.pending[0]["index"] == row["index"]:
+                self.pending.popleft()
 
     def _run(self):
         while not self.stop.is_set():

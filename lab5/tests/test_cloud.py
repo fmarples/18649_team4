@@ -69,6 +69,38 @@ class CloudTests(unittest.TestCase):
             json.loads(self.db.get("vehicle:last_heartbeat"))["global_us"], 42
         )
 
+    def test_refused_entry_still_sends_the_heartbeat_with_the_refusal(self):
+        client = self.client
+
+        class Refused(Exception):
+            response = type("R", (), {"status_code": 409})()
+
+        class Response:
+            def __init__(self, response):
+                self.response, self.status_code = response, response.status_code
+
+            def raise_for_status(self):
+                if self.status_code >= 400:
+                    raise Refused()
+
+            def json(self):
+                return self.response.json
+
+        class Session:
+            def post(self, url, json, headers, **kwargs):
+                return Response(client.post("/ingest/" + url.rsplit("/", 1)[1], json=json, headers=headers))
+
+        # The mirror already holds a different entry 1, as after a pristine start.
+        self.client.post("/ingest/entry", json=dict(self.entry(1), term=9), headers=self.auth)
+        with tempfile.TemporaryDirectory() as d:
+            u = Uplink("https://lab.invalid", TOKEN, Path(d) / "ack", Session(), start=False)
+            u.submit(self.entry(1))
+            u.status({"raft": {"term": 2}})
+            with self.assertRaises(Refused):
+                u.once()
+        self.assertEqual(json.loads(self.db.hget("vehicle:heartbeat", "uplink_error")), 409)
+        self.assertEqual(json.loads(self.db.hget("vehicle:heartbeat", "pending")), 1)
+
     def test_uplink_retry_backlog_bound_and_ack_resume(self):
         client = self.client
 

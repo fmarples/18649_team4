@@ -14,7 +14,7 @@ async function refresh() {
       return e;
     }));
     text('timing', `Global: ${h.global_us ?? '?'} µs · FL/RL offset (scope reading, FL edge minus RL edge): ${h.fl_rl_offset_us == null ? 'not measured' : h.fl_rl_offset_us + ' µs'}`);
-    text('held', `Held events: ${h.held_events ?? 'unknown while cockpit is absent'} · Uplink pending: ${h.pending ?? '?'} · Last ACK: ${h.last_ack ?? 'none'}`);
+    text('held', `Held events: ${h.held_events ?? 'unknown while cockpit is absent'} · Uplink pending: ${h.pending ?? '?'} · Last ACK: ${h.last_ack ?? 'none'}${h.uplink_error ? ' · Upload refused: ' + h.uplink_error : ''}`);
     text('missing', s.missing_entries ? `Mirror gap: ${s.missing_entries} entries fell outside the retained queue.` : 'No reported mirror gaps.');
     document.getElementById('events').replaceChildren(...s.entries.map(row => {
       const tr = document.createElement('tr');

@@ -944,4 +944,44 @@ All inside 1 ms; the handover moved the PPS mean by 1 µs.
 - Some failovers take two to four terms (split votes) within about 0.5 s.
 - Nothing was measured with the cloud uplink actually uploading.
 
+## November 18 cloud mirror test, first part
+
+The mirror is reachable and its containers are up, but it was stale for 78
+minutes because of the pristine start, not an outage. It still holds the old
+history through index 21,907 (term 652), so it answers **409 Conflict** to
+entry 1 of the new history, as `lab5/cloud/README.md` says it will until its
+Redis data is cleared. A defect made that invisible: `Uplink.once()` posted
+the entry first and raised on the refusal, so no heartbeat was ever sent.
+
+**Fix (`pi/uplink.py`):** the heartbeat is sent even when the entry is
+refused and carries `uplink_error`; the dashboard line shows "Upload
+refused". New host test; 132 pass. Deployed to the Pi. The mirror now
+reports a live heartbeat (leader N2, term 20, length 340), `pending` 340,
+`last_ack` 0-0, `uplink_error` 409. With the uplink retrying once a second
+the Pi logged no loop of 40 ms or more and was not dropped.
+
+**Not done:** clearing the mirror's Redis (needs the user's go-ahead: it
+deletes the old history copy on a team member's VM), after which entries can
+flow and the upload, resume-after-outage and load-while-uploading checks can
+run. The dashboard change is not yet on the VM. Uncommitted.
+
+## November 18 cloud mirror test, second part
+
+With the user's approval: the dashboard file was copied to the VM and the
+app container rebuilt, then the mirror's Redis was cleared (`FLUSHDB`).
+
+| Check | Result |
+|---|---|
+| Backlog upload | 340 entries accepted and acknowledged in about 12 s; `cloud-ack.txt` 340-0; `missing_entries` 0 |
+| Content | The mirror's stream (index, term, event) is identical to the Pi's `display.sqlite` for all 340 entries |
+| Live entry | A SIGUSR1 diagnostic event (341) was on the mirror at the first poll 1 s later |
+| Mirror outage | App container stopped about 30 s (nginx 502): three events committed on the car, ACK held at 341; on restart all three were on the mirror within 3 s, no gap |
+| Pi absent | Pi service stopped 9 s: `stale` true; restarted: `stale` false, entries 345–346 flagged replayed and 347–350 live, ACK 350-0 |
+| Access | `/api/state` and `/ingest/heartbeat` without credentials return 401 |
+| Effect on the car | Through all of this the Pi logged no loop of 40 ms or more (worst 24 ms) and was never dropped |
+
+Not done: a scope skew reading with the uplink on against off, and a
+physical Pi power cycle watched on the dashboard. N2 leads term 20; log at
+350. Uncommitted.
+
 Remaining report evidence: measured drift ratio/correction and PPS jitter, FL/RL skew, handover phase, failover/brake latency, equal committed logs/network snapshots for the three body scenarios, and any unpassed limits. The three technical discussion sections have one-page limits. All team members need to explain quorum, votes/terms, commit versus append, pre-vote, phase versus rate correction, and discovery versus committed routing.

@@ -32,7 +32,7 @@ The existing proxy must terminate HTTPS for the hostname and forward to that por
 
 ### After a pristine start
 
-`lab5/pristine.py` removes the Pi's `cloud-ack.txt`, so the Pi republishes from index 1. The mirror still holds the old history and answers 409 (conflicting history) until its Redis data is cleared on the cloud host:
+`lab5/pristine.py` removes the Pi's `cloud-ack.txt`, so the Pi republishes from index 1. The mirror still holds the old history and answers 409 (conflicting history) until its Redis data is cleared on the cloud host; meanwhile the heartbeat keeps arriving and the dashboard shows "Upload refused: 409":
 
 ```sh
 docker compose -p team4-lab5 exec redis redis-cli FLUSHDB
@@ -44,6 +44,6 @@ November 17: Redis and the app run from `~/team4-lab5-cloud` on the VM as Compos
 
 The FL/RL offset on the dashboard is the November 18 direct scope reading with N3 leading term 644 (mean −250 µs, FL before RL; range −450 to 0), from `~/.config/team4-lab5/offsets.json` on the Pi. Update that file when a newer reading replaces it.
 
-Not done yet: the scope capture with the uplink on and off, the uplink-unplug resume check, and the Pi power-cycle demonstration. The first restart with the uplink wrote one extra N1 down/up pair right after rejoining, while the 1,000-entry backlog was uploading; whether the upload caused it was not determined.
+November 18, after the second pristine start: the mirror was cleared and re-tested (backlog upload, identical content, live entry, 30 s app outage with resume, stale flag with the Pi service stopped, no late control loop on the Pi; see the checkoff matrix). Not done yet: the scope capture with the uplink on and off, and the physical Pi power-cycle demonstration. The first restart with the uplink wrote one extra N1 down/up pair right after rejoining, while the 1,000-entry backlog was uploading; whether the upload caused it was not determined.
 
 Sources: [Redis streams](https://redis.io/docs/latest/develop/data-types/streams/), [Flask production deployment](https://flask.palletsprojects.com/en/stable/deploying/), [Caddy](https://caddyserver.com/docs/).
