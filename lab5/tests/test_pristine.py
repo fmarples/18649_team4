@@ -62,6 +62,19 @@ class WipeOrderTests(unittest.TestCase):
             'pi.start', 'pi.wait', 'n2.release', 'n3.release', 'pi.wait'])
         self.assertEqual(pristine.cold_start_problems(result), [])
 
+    def test_random_leader_mode_releases_the_nucleos_before_starting_the_pi(self):
+        calls = []
+        nucleos = [FakeNucleo(node, calls) for node in ('n2', 'n3')]
+        pi = FakePi(calls, led=status(role=0, leader=3))
+        result = pristine.wipe(nucleos, pi, Path('unused'), pi_first=False)
+        self.assertEqual(calls, [
+            'pi.stop', 'n2.halt', 'n3.halt',
+            'n2.backup', 'n3.backup', 'pi.backup',
+            'n2.erase', 'n3.erase', 'pi.clear',
+            'n2.release', 'n3.release', 'pi.start', 'pi.wait'])
+        self.assertEqual(pristine.elected_problems(result), [])
+        self.assertEqual(pristine.elected_problems(status(role=0, leader=0)), ['no leader elected'])
+
     def test_failed_backup_destroys_nothing_and_restores_the_cluster(self):
         for node in ('n2', 'n3', 'pi'):
             calls, _, error = run(node, 'backup')

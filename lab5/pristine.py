@@ -9,6 +9,10 @@ the Pi elects a leader within about 100 ms. So this holds both Nucleos halted
 under reset, erases flash sectors 6-7 only, clears the Pi store, starts the Pi
 service, waits until it leads term 1, and only then releases the Nucleos.
 
+With `default_leader` set to `random` or `none` in config.json (handout step 8)
+there is no pre-defined leader: the Nucleos are released first, as on a real
+power-up, hold the first election, and the Pi joins whichever of them won.
+
 Nothing is erased until all three backups are on this laptop and verified. If
 any step fails, the Pi service is restarted and the Nucleos released, so the
 cluster re-forms from whichever histories remain. Backups and `pristine.log`
@@ -204,8 +208,37 @@ def cold_start_problems(status):
     return found
 
 
-# The whole procedure. Returns the settled Pi status; raises if the Pi never led term 1.
-def wipe(nucleos, pi, directory):
+# What separates the cluster from a settled random-leader cold start (handout step 8).
+def elected_problems(status):
+    if status is None:
+        return ['no STATUS line from the restarted cockpit']
+    raft = status['raft']
+    found = [] if raft['leader'] else ['no leader elected']
+    if raft['failed']:
+        found.append('Pi Raft store failed')
+    found += [f'{name} is not alive on CAN' for name in ('N2', 'N3') if not status['alive'].get(name)]
+    if raft['nodes'] != 7:
+        found.append(f"committed node set is {raft['nodes']:#x}, not 0x7")
+    if raft['links'] != 63:
+        found.append(f"committed CAN links are {raft['links']:#x}, not all six (0x3f)")
+    return found
+
+
+# The whole procedure; returns the settled Pi status. With pi_first (default_leader
+# cockpit) the Nucleos stay halted until the Pi leads term 1, and it raises if the
+# Pi never does. Otherwise (random or none) the Nucleos are released first, as on a
+# real power-up where they boot in 2 s and the Pi in 20 s, and they hold the election.
+def wipe(nucleos, pi, directory, pi_first=True):
+    held = list(nucleos)
+
+    def release():
+        while held:
+            nucleo = held.pop(0)
+            try:
+                nucleo.release()
+            except Exception:
+                LOG.exception('Could not release %s; press its reset button', nucleo.node)
+
     pi.stop()
     try:
         for nucleo in nucleos:
@@ -217,8 +250,10 @@ def wipe(nucleos, pi, directory):
         for nucleo in nucleos:
             nucleo.erase()
         pi.clear()
+        if not pi_first:
+            release()
         pi.start()
-        problems = leader_problems(pi.wait(leader_problems, 30))
+        problems = leader_problems(pi.wait(leader_problems, 30)) if pi_first else []
         if problems:
             raise RuntimeError('Pi did not become the cold-start leader: ' + '; '.join(problems))
     except BaseException:
@@ -228,12 +263,8 @@ def wipe(nucleos, pi, directory):
             LOG.exception('Could not restart %s', UNIT)
         raise
     finally:
-        for nucleo in nucleos:
-            try:
-                nucleo.release()
-            except Exception:
-                LOG.exception('Could not release %s; press its reset button', nucleo.node)
-    return pi.wait(cold_start_problems, 15)
+        release()
+    return pi.wait(cold_start_problems, 15) if pi_first else pi.wait(elected_problems, 45)
 
 
 def find_nucleos():
@@ -271,8 +302,10 @@ def main():
         if not args.yes and input('Type WIPE to continue: ') != 'WIPE':
             print('Nothing changed.')
             return 1
-        status = wipe(nucleos, pi, directory)
-        problems = cold_start_problems(status)
+        from lab5.generate_config import load
+        pi_first = load()['default_leader'] == 'cockpit'
+        status = wipe(nucleos, pi, directory, pi_first)
+        problems = cold_start_problems(status) if pi_first else elected_problems(status)
         raft = status['raft'] if status else {}
         LOG.info('%s | leader N%s, term %s, commit %s, error %s, wheel input %s | backups %s',
                  'COLD START OK' if not problems else 'NOT A CLEAN COLD START: ' + '; '.join(problems),

@@ -38,6 +38,12 @@ def load(path=ROOT / "config.json"):
     c.setdefault("pi_ref_send_us", 0)
     if not 0 <= c["pi_ref_send_us"] <= 10000:
         raise ValueError("invalid Pi REF send allowance")
+    # Pi only: the per-hop delay it applies to frames it receives, in place of
+    # can_delay_us. Its kernel timestamps a frame sooner after the wire than
+    # a Nucleo does. Not compiled into the firmware.
+    c.setdefault("pi_can_delay_us", c["can_delay_us"])
+    if not 0 <= c["pi_can_delay_us"] <= 10000:
+        raise ValueError("invalid Pi CAN delay estimate")
     return c
 
 

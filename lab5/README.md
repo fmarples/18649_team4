@@ -74,6 +74,12 @@ priority 1 (measured need: see the checkoff matrix). The old `team4-lab3-cockpit
 team's decision; do not run `lab3_demo/start.py` against this Pi, because it
 re-enables that service and the two units conflict.
 
+The Pi's two MCP2515 overlays in `/boot/firmware/config.txt` must use
+`spimaxfrequency=5000000` (`dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25,spimaxfrequency=5000000`
+and the same for `can1` with `interrupt=24`). At the Lab 3 value of 1 MHz the
+SPI link saturates at Lab 5 traffic: receive overflows, `ENOBUFS` on send and
+NODE_1 flapping (measured November 18; see the checkoff matrix).
+
 ```sh
 sudo systemctl restart team4-lab5-cockpit.service   # after git pull and lab5/host/build.py
 sudo systemctl stop team4-lab5-cockpit.service      # release CAN, GPIO and UDP 8000

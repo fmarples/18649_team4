@@ -169,6 +169,9 @@ int lab5_runtime_init(unsigned id, void (*send)(unsigned, const struct can_frame
                : -EIO;
 }
 void lab5_ready(void) { k_sem_give(&ready); }
+/* The PPS pin, driven from the lamp-edge thread so the pulse lands on the
+ * whole second; this file's protocol thread only logs the PPS row. */
+void lab5_pps_set(bool on) { gpio_pin_set_dt(&pps, on); }
 static void publish_blink(void) {
     unsigned hz = l5_agent_hazard_hz(&agent, lab5_raw_us());
     k_spinlock_key_t key = k_spin_lock(&blink_snap_lock);
@@ -237,7 +240,7 @@ static void protocol_thread(void *a, void *b, void *c) {
     ARG_UNUSED(b);
     ARG_UNUSED(c);
     k_sem_take(&ready, K_FOREVER);
-    uint64_t last_second = 0, pulse_end = 0;
+    uint64_t last_second = 0;
     uint16_t previous_term = 0;
     uint8_t previous_role = 255;
     unsigned previous_health = UINT32_MAX;
@@ -263,8 +266,6 @@ static void protocol_thread(void *a, void *b, void *c) {
         gpio_pin_set_dt(&sync_pin, l5_agent_synced(&agent, raw));
         if (global / 1000000 != last_second) {
             last_second = global / 1000000;
-            pulse_end = raw + 1000;
-            gpio_pin_set_dt(&pps, 1);
             struct pps_row row = {
                 .global = global,
                 .raw = raw,
@@ -275,8 +276,6 @@ static void protocol_thread(void *a, void *b, void *c) {
             if (k_msgq_put(&pps_queue, &row, K_NO_WAIT))
                 log_drops++;
         }
-        if (raw >= pulse_end)
-            gpio_pin_set_dt(&pps, 0);
         if (raft.term != previous_term || raft.role != previous_role) {
             struct debug_row row = {raft.term, raft.length, raft.commit, 0,          raft.id,
                                     0,         raft.role,   raft.leader, raft.failed};

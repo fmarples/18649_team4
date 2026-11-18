@@ -680,4 +680,268 @@ button on N2, N3 and the wheel.
 the core to be halted after connecting under reset; its five tests pass. It
 still has not been run on the bench.
 
+## November 18 pristine cold start: steps 1 and 2
+
+The user approved the wipe. `lab5/pristine.py --yes` at 07:17 (laptop time),
+history at term 652 and 21,907 entries beforehand: all three stores backed
+up and hash-checked (`logs/lab5/pristine/20261118-071724/`, second copy on
+the Pi), sectors 6–7 erased and read back blank on both Nucleos, Pi store
+cleared, Pi started and leading term 1, then both Nucleos released. **Result:
+COLD START OK**, 44 s end to end.
+
+- **Step 1:** N2 and N3 booted straight into term 1 with leader N1 (role
+  follower, no candidate row); entries 1–11 are identical on both consoles
+  (NOOP, NODE_1_UP, COCKPIT_OK, the Pi's two links, then each Nucleo and its
+  links). The Pi reports role leader, synced, no error. The wheel proxy was
+  running, so "error before the proxy, clear after valid input" and the
+  LEADER/SYNC pins were not observed in this run.
+- **Step 2:** 30 s `candump -L any` of the healthy default cluster,
+  `lab5/tools/analyze.py candump`: REF from N1 in term 1 on both buses, mean
+  interval 20.18 ms (5.8–35.6 ms as received), no missing cycle; empty APPEND
+  to each follower every 100.24 ms mean; **0 vote and 0 pre-vote requests**;
+  one FAULT frame per bus (not examined). Capture:
+  ignored `logs/lab5/20261116-checkoff/step2-pristine/candump-healthy.log`.
+
+Handout step 8, re-read: reboot everything with `LEADER=random`, an STM32
+leads; power off that STM32 (new leader within 1 s, no failure mode); power
+off the Pi (failure mode, held events, replay); "then the seed that makes
+the Pi win, and step 6 again". In this implementation a seed fixes each
+node's first election jitter only when all three start their Raft timers
+together; a freshly booted node also refuses pre-votes for its first 60 ms.
+With the Pi's boot taking about 20 s against 2 s for a Nucleo, the Nucleos
+elect one of themselves before the Pi exists, whatever the seed.
+
+## November 18 random-leader cold start and the Pi's SPI clock (run 32)
+
+The user chose: show step 8's first three parts as written, and for "the
+seed that makes the Pi win" bring the Pi up first and reset the Nucleos until
+it wins, telling the TA that boot timing decides it.
+
+`config.json` `default_leader` set to `random` for the bench (the repository
+default stays `cockpit`; six cockpit host tests assume it). Both Nucleos
+reflashed (ELF SHA-256 N2 `361789c4…`, N3 `d04579f5…`). `pristine.py` now
+releases the Nucleos before starting the Pi when there is no pre-defined
+leader (new test). Second wipe at 07:28, backups in
+`logs/lab5/pristine/20261118-072757/`: **N2 won term 1** with N3, and the Pi
+joined as a follower. On joining, NODE_1 was dropped three times in 1.5 s.
+
+**Root cause of the Pi's transmit congestion all day:**
+`/boot/firmware/config.txt` asked for `spimaxfrequency=1000000` on both
+MCP2515 overlays (0.66 MHz measured in Lab 3), against 5.25 MHz actual on the
+Nucleos. At about 1,200 frames per second per bus the Pi's SPI link was
+saturated: 5.5 receive-overflow error frames per second on `can0`, `ENOBUFS`
+bursts at every announcement. **Changed to 5000000** (MCP2515 limit 10 MHz;
+5 MHz is the rate already in use on the Nucleos with the same modules); the
+old file is `~/config.txt.before-spi5m` on the Pi. After a reboot: 0 overflow
+error frames in 6 s, 0 `TX_ERROR`, backpressure 0–1.
+
+With the log empty the Pi announced 11.8 s into boot and was dropped once
+0.5 s later. **Fix:** no announcement before 25 s of uptime (`BOOT_SETTLE_S`;
+systemd reports boot finished at 20.6 s). Next reboot: announced at 26.0 s,
+exactly NODE_1_DOWN, COCKPIT_ERROR, then NODE_1_UP, both links and
+COCKPIT_OK (entries 48–53). 131 host tests pass under the default config.
+N2 leads term 1; log at 53. Uncommitted. The FL/RL skew and `pi_ref_send_us`
+were calibrated with the slow SPI link and **must be re-measured**.
+
+## November 18 step 8 in random-leader mode (run 33)
+
+Random mode, cold-started with N2 leading term 1, Pi and N3 followers.
+
+| Action | Lamps and LEDs (user) | Log |
+|---|---|---|
+| Power off N2, the leader | No hazards; ERR and DEG off on the remaining nodes | **The Pi won term 2**; N3 saw the new term within one 0.2 s console interval of N2's port vanishing; NODE_2_DOWN, no COCKPIT_ERROR |
+| Power N2 on | Front pair flashed briefly | NODE_2_UP and its two links, three entries |
+| (N2 off again for 277 s, then on) | | NODE_2_DOWN; later NODE_2_UP and links |
+| Power off the Pi, then leading term 2 | Fast hazards, as expected | Both Nucleos `HEALTH reasons=0x8` at report age 66 ms; N2 candidate and leader of term 3 in the same console interval; NODE_1_DOWN, COCKPIT_ERROR |
+| Power the Pi on | One clean switch, as expected | Pi a follower of N2; entries 65–67 marked replayed on the Pi, then NODE_1_UP, both links and COCKPIT_OK live |
+
+ERR and DEG off with N2 unpowered is the designed behavior: an STM32
+failure alone is not the failure mode (handout step 8), and DEG marks a bus
+on which a node hears nobody, which is not the case while the Pi and N3 are
+on both buses.
+
+**Step 8 is complete** with one stated difference from the handout: the Pi
+led in random mode because it won the election after the STM32 leader was
+powered off, not because of a boot-time seed. Then `default_leader` was
+restored to `cockpit`: both Nucleos reflashed (ELFs identical to the
+`flash-fault-send` builds, `8bf8b58c…` and `a373c1af…`), config redeployed,
+131 host tests pass. N3 leads term 6; log at 99. Uncommitted.
+
+## November 18 relayed skew after the SPI change (run 34)
+
+N3 leading term 6, relayed through the Pi (N2 off B, N3 off A), about ten
+edges, user-read: **min −1.09 ms, max +0.01 ms, mean −0.80 ms. Fails at the
+minimum.** With N3 leading, negative means the follower N2 is ahead, so the
+relay path was over-credited by about 0.8 ms.
+
+From the capture (9,867 relayed REFs): Pi kernel receive to transmit-complete
+now averages 2.55 ms (3.01 ms at the old SPI clock); the stamp credited
+3.03 ms, 0.47 ms too much, which is the `pi_ref_send_us` allowance measured
+against the slow link. The remaining 0.33 ms is attributed to the Pi's
+kernel now stamping a received frame sooner after the wire, so the shared
+780 µs hop is too long for frames the Pi receives; that part is inferred
+from the scope total, not measured separately.
+
+**Recalibration (Pi only):** `pi_ref_send_us` 500 → 0, and a new
+`pi_can_delay_us` = 450 used by the Pi in place of `can_delay_us`. Predicted
+relayed range about −0.3 to +0.8 ms. Deployed; 131 host tests pass.
+**Not yet measured.** Uncommitted. Logs: ignored
+`logs/lab5/20261116-checkoff/run34-skew-spi5m/`.
+
+## November 18 relayed skew after recalibration (run 35)
+
+N3 leading term 6, relayed through the Pi, about ten edges, user-read:
+**min −0.27 ms, max +0.33 ms, mean +0.05 ms.** With `can_delay_us` 780,
+`pi_can_delay_us` 450, `pi_ref_send_us` 0 and the Pi's SPI clock at 5 MHz,
+the STM32-led relayed case (step 9) is centred and inside the limit. The
+direct STM32-led reading (−0.45 to 0 ms, signs assumed) predates the SPI
+change, which does not touch that path.
+
+## November 18 PPS across a Pi-to-STM32 handover (run 35, first attempt)
+
+Scope: CH1 = N3 PPS, CH2 = N2 PPS (PA8, D7, CN10-23), delay CH1 rising to
+CH2 rising over about ten pulses, user-read.
+
+| | Min | Max | Mean |
+|---|---|---|---|
+| Pi leading term 8 | −1.64 ms | +0.99 ms | −0.005 ms |
+| After unplugging the Pi (N3 leading term 10) | −0.55 ms | −0.18 ms | −0.30 ms |
+
+The handover took two terms (9 and 10) in about 0.2 s. Two defects:
+
+1. **PPS jitter.** The pulse was written by the protocol thread, which runs
+   below CAN receive and takes `raft_lock`, as the blink thread did before
+   its fix. **Fix:** the edge thread (priority 0) now drives PPS: high on the
+   whole global second, low 1 ms later.
+2. **A 0.3 ms shift between the two boards at handover.** Under the Pi both
+   boards carry the same error and their difference averages zero; under an
+   STM32 leader the follower sat 0.3 ms ahead, so each board's phase moves
+   by that much over the few REFs after a handover, more than the 100 µs
+   limit even though no single correction exceeds 50 µs. The direct delay
+   was last centred before `CONFIG_SPIN_VALIDATE=n` made the Nucleos handle
+   a received REF sooner. **Recalibration:** `can_delay_us` 780 → 480, and
+   `pi_ref_send_us` 0 → 300 so the path through the Pi keeps its total.
+
+Both Nucleos reflashed with history backups (ELF SHA-256 N2 `73967960…`,
+N3 `922df695…`), config redeployed to the Pi, 131 host tests pass. **Not yet
+measured.** This moves every skew case: direct and relayed STM32-led, and
+the Pi-led relay through N2, all need one reading again. Uncommitted.
+
+## November 18 PPS across the handover, after the fixes (run 36)
+
+Same scope setup, about ten pulses each, user-read.
+
+| | Min | Max | Mean |
+|---|---|---|---|
+| Pi leading term 12 | −0.27 ms | +0.36 ms | −0.006 ms |
+| After unplugging the Pi (N2 leading term 13, one election) | −0.19 ms | +0.20 ms | −0.005 ms |
+
+**The mean difference between the two boards' PPS moved by 1 µs across the
+handover** (limit 100 µs), and the pulse-to-pulse spread fell from 2.6 ms to
+0.6 ms and 0.4 ms. Both boards logged `HEALTH reasons=0x8` at a Pi report
+age of 66 ms. This is the step 6 phase evidence; brake latency on the scope
+is still not taken.
+
+## November 18 final STM32-led skew, and N3's bus-B transmitter (run 37)
+
+N2 leading term 13, `can_delay_us` 480, `pi_can_delay_us` 450,
+`pi_ref_send_us` 300, PPS in the edge thread.
+
+- **Direct:** user-read 0.26, 0.17, −0.06 (taken as min −0.26, max +0.17,
+  mean −0.06 ms). Passes.
+- **Relayed through the Pi: no valid reading.** The scope minimum grew past
+  −200 ms because N3 was not synchronized at all. Committed entries:
+  CANLINK_2_B_DOWN, then at the N3-A pull CANLINK_1_B_DOWN and NODE_3_DOWN.
+
+Cause: **N3's bus-B transmitter had stopped completing frames** long before
+the pulls. Its console shows `completed_b` frozen at 65,933 while
+`rejected_b` climbed about 360 per second, bus B still error-active and
+receiving, no INT kick. From run 36 the freeze began within 5 s of the Pi's
+power being plugged back in (N3's bus-B completions were normal while the Pi
+was off). With bus A connected nothing shows it, because every N3 frame also
+goes out on A; with N3 on bus B only, it is mute. This matches the October
+21 note "N3 CAN B latched dead until reset". A checkoff that power-cycles
+the Pi (steps 6–7) and then runs step 9 would hit it.
+
+**Fix (firmware):** the 20 ms monitor restarts a controller (`can_stop`,
+`can_start`) that has finished no transmission for 25 periods while sends to
+it are refused, at most every 2 s; `TX_COUNTS` now reports `restarted_a/b`.
+An unplugged bus is restarted too, which only aborts frames nobody would
+acknowledge. Flashed to both boards with history backups (ELF SHA-256 N2
+`1bc495a2…`, N3 `873a53de…`). With the jumpers still out after the flash,
+N2 shows `restarted_b` and N3 `restarted_a` counting as expected, N3's bus B
+completing normally, and all three nodes alive through the relay.
+**Not yet shown:** that the restart clears the latched state itself; that
+needs a Pi power cycle. Uncommitted.
+
+The user reports the cloud mirror was unreachable all day. The uplink runs
+in its own thread with a 1,000-row bounded queue and 1 s/2 s HTTP timeouts,
+and the control loop only appends to that queue under a short lock, so an
+unreachable server does not delay it; `cloud-ack.txt` does not exist on the
+Pi, consistent with no upload ever succeeding. Nothing today was measured
+with the uplink actually uploading.
+
+## November 18 relayed skew with final values, and the recovery in action (run 38)
+
+N2 leading term 15, relayed through the Pi, about ten edges, user-read.
+
+| Reading | Min | Max | Mean |
+|---|---|---|---|
+| Fresh firmware, jumpers still out | −0.60 ms | +0.22 ms | −0.03 ms |
+| After a Pi power cycle and fresh pulls | −0.13 ms | +0.37 ms | +0.10 ms |
+
+**Both pass.** The Pi power cycle wrote one clean NODE_1 set each way.
+
+The controller restart fired for real: this time N3's bus-B transmitter
+did not stall at the Pi's power-on but within about 2 s of N3's bus-A jumper
+being pulled (`completed_b` advanced 1,539 in 5 s instead of about 2,000,
+`rejected_b` +359). `restarted_b` went 0 → 1 and completions resumed; in run
+37 the same state was permanent. Cost: NODE_3 dropped and returned twice
+over 3 s, ten extra entries. So the trigger is not specific to the Pi's
+power; both occurrences followed an electrical event on the bench.
+
+## November 18 Pi-led skew with final values, and a clean step 5 (run 39)
+
+Pi leading term 19, about ten edges, user-read.
+
+| Step | Min | Max | Mean |
+|---|---|---|---|
+| 3, direct | −0.20 ms | +0.35 ms | +0.014 ms |
+| 5, N1 off B and N3 off A (RL relayed through N2) | −0.18 ms | +0.05 ms | −0.07 ms |
+
+**Step 5 now has the clean transition on record:** exactly two link entries
+for the two pulls (323 CANLINK_1_B_DOWN, 324 CANLINK_3_A_DOWN), `EVENT_N2`
+at index 325 on both N2 and N3, term 19 throughout. The N3-A reinsertion
+wrote one UP and then a NODE_3 down/up with link entries (contact bounce).
+
+### Skew summary with the final configuration
+
+`can_delay_us` 480, `pi_can_delay_us` 450, `pi_ref_send_us` 300, Pi SPI
+clock 5 MHz, lamp edges and PPS from the priority-0 edge thread.
+
+| Case | Min | Max | Mean |
+|---|---|---|---|
+| Pi-led, direct (step 3) | −0.20 ms | +0.35 ms | +0.01 ms |
+| Pi-led, relayed through N2 (step 5) | −0.18 ms | +0.05 ms | −0.07 ms |
+| STM32-led, direct (step 9) | −0.26 ms | +0.17 ms | −0.06 ms (signs assumed) |
+| STM32-led, relayed through the Pi (step 9) | −0.60 ms | +0.22 ms | −0.03 ms |
+| STM32-led, relayed, after a Pi power cycle | −0.13 ms | +0.37 ms | +0.10 ms |
+| PPS, N3 to N2, Pi leading | −0.27 ms | +0.36 ms | −0.006 ms |
+| PPS, N3 to N2, after handover to an STM32 | −0.19 ms | +0.20 ms | −0.005 ms |
+
+All inside 1 ms; the handover moved the PPS mean by 1 µs.
+
+### Not observed or still open on November 18
+
+- Step 1: hazards before the wheel proxy and their clearing after input; the
+  LEADER and SYNC pins.
+- Step 6: brake latency on the scope (boards log the error at 66 ms).
+- Step 8: the Pi led in random mode by winning an election, not through a
+  boot-time seed.
+- N3's CAN controllers stall on bench electrical events; auto-restart
+  recovers them at a cost of about ten entries.
+- Reinserting a jumper can write several link entries (contact bounce).
+- Some failovers take two to four terms (split votes) within about 0.5 s.
+- Nothing was measured with the cloud uplink actually uploading.
+
 Remaining report evidence: measured drift ratio/correction and PPS jitter, FL/RL skew, handover phase, failover/brake latency, equal committed logs/network snapshots for the three body scenarios, and any unpassed limits. The three technical discussion sections have one-page limits. All team members need to explain quorum, votes/terms, commit versus append, pre-vote, phase versus rate correction, and discovery versus committed routing.

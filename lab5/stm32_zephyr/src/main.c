@@ -115,7 +115,7 @@ K_MUTEX_DEFINE(history_lock);
 static struct frame_history history;
 
 static atomic_t rx_dropped, duplicates, bad_crc, tx_rejected[2], tx_completed[2], tx_failed[2];
-static atomic_t can_state[2], can_state_changes[2], int_kicks[2];
+static atomic_t can_state[2], can_state_changes[2], int_kicks[2], tx_recoveries[2];
 static atomic_t can_tx_errors[2], can_rx_errors[2];
 #if defined(CONFIG_LAB3_RELAY)
 static atomic_t relay_sent, relay_failed, relay_stale, relay_dropped, relay_gated;
@@ -531,16 +531,20 @@ static atomic_t blink_late_max, blink_late_window, blink_late_over, blink_edges;
  * wait behind either. It sleeps until 250 us before the next boundary, waking
  * early for a mode or error change (blink_wake) and at least every 5 ms to
  * follow clock slew, then busy-waits so the edge lands on the boundary. A
- * 200 us poll here cost enough CPU to starve the watchdog feed in a burst. */
+ * 200 us poll here cost enough CPU to starve the watchdog feed in a burst.
+ * It also drives PPS: high on each whole global second (always a lamp
+ * boundary) and low 1 ms later. From the protocol thread the pulse was up to
+ * 1.6 ms off between the two boards (scope, November 18). */
 #define BLINK_SPIN_US 250U
+#define PPS_PULSE_US 1000U
 #define BLINK_POLL_US 5000U
 static void blink_thread(void *a, void *b, void *c) {
     ARG_UNUSED(a);
     ARG_UNUSED(b);
     ARG_UNUSED(c);
     wait_ready();
-    bool last_phase = false, last_paused = false;
-    uint64_t last_global = 0;
+    bool last_phase = false, last_paused = false, pps_high = false;
+    uint64_t last_global = 0, pps_second = UINT64_MAX, pps_off = 0;
     while (true) {
         k_mutex_lock(&state_lock, K_FOREVER);
         uint8_t mode = blink_mode;
@@ -558,6 +562,17 @@ static void blink_thread(void *a, void *b, void *c) {
         if (global < last_global)
             global = last_global;
         last_global = global;
+        if (pps_second == UINT64_MAX)
+            pps_second = global / 1000000U; /* no pulse for the second we started in */
+        if (global / 1000000U != pps_second) {
+            pps_second = global / 1000000U;
+            lab5_pps_set(true);
+            pps_high = true;
+            pps_off = global + PPS_PULSE_US;
+        } else if (pps_high && global >= pps_off) {
+            lab5_pps_set(false);
+            pps_high = false;
+        }
         uint32_t half_period = error ? 1000000U / (2U * hazard_hz) : 500000U;
         bool phase = ((global / half_period) & 1U) == 0;
         if (phase != last_phase) {
@@ -578,6 +593,8 @@ static void blink_thread(void *a, void *b, void *c) {
         lab3_trace_set(TP_LEFT, phase && (mode == BLINK_LEFT || mode == BLINK_HAZARD));
         lab3_trace_set(TP_RIGHT, phase && (mode == BLINK_RIGHT || mode == BLINK_HAZARD));
         uint32_t to_edge = half_period - (uint32_t)(global % half_period);
+        if (pps_high)
+            to_edge = MIN(to_edge, (uint32_t)(pps_off - global));
         if (to_edge <= BLINK_SPIN_US)
             k_busy_wait(to_edge);
         else
@@ -679,6 +696,37 @@ static void kick_stuck_int(bool *was_active) {
     }
 }
 
+/* A controller that has finished no transmission for TX_STALL_CHECKS monitor
+ * periods while frames for it keep being refused is restarted, at most once
+ * per TX_RESTART_MS. N3's bus B has been found in this state twice (October
+ * 21 and November 18): still receiving and error-active, every send refused,
+ * no completion, cured only by a board reset. An unplugged bus looks the same
+ * and is restarted too; that only aborts the frames nobody would acknowledge. */
+#define TX_STALL_CHECKS 25
+#define TX_RESTART_MS 2000
+static void recover_stuck_tx(void) {
+    static atomic_val_t finished[2], refused[2];
+    static uint8_t stalled[2];
+    static int64_t restarted_ms[2];
+    for (unsigned bus = 0; bus < 2; ++bus) {
+        atomic_val_t done = atomic_get(&tx_completed[bus]) + atomic_get(&tx_failed[bus]);
+        atomic_val_t no = atomic_get(&tx_rejected[bus]);
+        if (done != finished[bus])
+            stalled[bus] = 0;
+        else if (no != refused[bus] && stalled[bus] < UINT8_MAX)
+            stalled[bus]++;
+        finished[bus] = done;
+        refused[bus] = no;
+        if (stalled[bus] >= TX_STALL_CHECKS && k_uptime_get() - restarted_ms[bus] >= TX_RESTART_MS) {
+            (void)can_stop(can_dev[bus]);
+            (void)can_start(can_dev[bus]);
+            atomic_inc(&tx_recoveries[bus]);
+            stalled[bus] = 0;
+            restarted_ms[bus] = k_uptime_get();
+        }
+    }
+}
+
 /* HB_MON: every 20 ms, per-bus liveness to DEG_A/DEG_B, error state to ERR,
  * FAULT on a peer zone's failure, and the only watchdog feed. */
 static void monitor_thread(void *a, void *b, void *c) {
@@ -700,6 +748,7 @@ static void monitor_thread(void *a, void *b, void *c) {
             was_alive[zone] = h.alive[zone];
         }
         kick_stuck_int(int_was_active);
+        recover_stuck_tx();
         (void)wdt_feed(watchdog_dev, watchdog_channel);
         lab3_task_end(T_HB_MON, start);
         periodic_wait(&next, HB_PERIOD_MS);
@@ -785,10 +834,11 @@ static void diagnostics_thread(void *a, void *b, void *c) {
                (int)atomic_get(&can_tx_errors[0]), (int)atomic_get(&can_rx_errors[0]),
                (int)atomic_get(&can_tx_errors[1]), (int)atomic_get(&can_rx_errors[1]));
         lab5_console_print("TX_COUNTS rejected_a=%d rejected_b=%d completed_a=%d completed_b=%d failed_a=%d "
-               "failed_b=%d\n",
+               "failed_b=%d restarted_a=%d restarted_b=%d\n",
                (int)atomic_get(&tx_rejected[0]), (int)atomic_get(&tx_rejected[1]),
                (int)atomic_get(&tx_completed[0]), (int)atomic_get(&tx_completed[1]),
-               (int)atomic_get(&tx_failed[0]), (int)atomic_get(&tx_failed[1]));
+               (int)atomic_get(&tx_failed[0]), (int)atomic_get(&tx_failed[1]),
+               (int)atomic_get(&tx_recoveries[0]), (int)atomic_get(&tx_recoveries[1]));
 #if defined(CONFIG_LAB3_RELAY)
         /* k_cyc_to_us_floor32 may evaluate its argument more than once. */
         uint32_t relay_c_all = (uint32_t)atomic_get(&relay_c_max);

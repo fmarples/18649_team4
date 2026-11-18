@@ -49,7 +49,11 @@ ANNOUNCE_LATE_S = 0.040
 # further; on November 18 that loop ran at 20 entries per second until stopped.
 ANNOUNCE_CALM_S = 30.0
 ANNOUNCE_MAX_S = 30.0
-NODE_1_DOWN = 4  # l5_node_event(1, false)  # Linux only; a no-op on a Windows test host
+NODE_1_DOWN = 4  # l5_node_event(1, false)
+# No announcement before this much system uptime: the service starts about 11 s
+# into a boot that systemd reports finished at 20.6 s, and an announcement at
+# 11.8 s was dropped 0.5 s later (November 18, empty log, so no replay delay).
+BOOT_SETTLE_S = 25.0
 
 
 # Send-only CAN socket for REF. The interface's default pfifo_fast queue sends
@@ -135,7 +139,7 @@ class Cockpit5(Cockpit):
             leader=1 if c["default_leader"] == "cockpit" else 0,
             seed=c["seed"],
             path=store,
-            delay_us=c["can_delay_us"],
+            delay_us=c["pi_can_delay_us"],
         )
         self.epoch = now
         self.rx = queue.Queue(maxsize=4096)
@@ -153,6 +157,7 @@ class Cockpit5(Cockpit):
         self.announced = False
         self._last_tick = self._steady_from = self._announced_at = now
         self._steady_need = ANNOUNCE_STEADY_S
+        self.announce_not_before = 0.0  # main() sets BOOT_SETTLE_S; `now` is uptime there
         self._was_silenced, self._unsilenced_at = False, now - ANNOUNCE_STEADY_S
         self._replaying = False
 
@@ -250,6 +255,9 @@ class Cockpit5(Cockpit):
         state = self.agent.status
         if state["role"] == 2:
             return True
+        if now < self.announce_not_before:
+            self._steady_from = now
+            return False
         caught_up = (state["leader"] and state["commit"]
                      and state["applied"] == state["commit"] and not self._replaying
                      and not (self.ledger and self.ledger.queue.qsize()))
@@ -520,6 +528,7 @@ def main(argv=None):
         offsets,
     )
     app.ref_tx = [priority_socket(x) for x in (args.bus_a, args.bus_b)]
+    app.announce_not_before = BOOT_SETTLE_S  # time.monotonic() counts from boot on Linux
     notifiers = [can.Notifier(b, [_BusListener(app, i)]) for i, b in enumerate(buses)]
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     udp.setblocking(False)

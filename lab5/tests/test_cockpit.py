@@ -90,6 +90,14 @@ class CockpitTests(unittest.TestCase):
         leader = self.peers[self.app.agent.status["leader"]]
         self.assertEqual(leader.status["nodes"] & 1, 1)  # NODE_1 committed UP
 
+    def test_no_announcement_while_the_system_is_still_booting(self):
+        self.returning_pi()
+        self.app.announce_not_before = 3.0
+        self.step(2900)
+        self.assertFalse(self.app.announced)
+        self.step(1200)
+        self.assertTrue(self.app.announced)
+
     def test_a_late_tick_restarts_the_wait_before_announcing(self):
         self.returning_pi()
         self.step(900)

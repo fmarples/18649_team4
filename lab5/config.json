@@ -9,6 +9,7 @@
   "log_size": 30000,
   "seed": 649,
   "Debug": true,
-  "can_delay_us": 780,
-  "pi_ref_send_us": 500
+  "can_delay_us": 480,
+  "pi_can_delay_us": 450,
+  "pi_ref_send_us": 300
 }
